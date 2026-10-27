@@ -23,6 +23,10 @@ faq:
     a: The distance from the tip to the edge of the base along the side, s = √(r² + h²).
   - q: How do I calculate a hopper or funnel volume?
     a: For a full cone, use this calculator. For a truncated cone (cut off at the bottom), subtract the small cone from the large one.
+  - q: How do I find the height of a cone from the slant height?
+    a: h = √(s² − r²). With s = 5 and r = 3, h = 4.
+  - q: How many litres does a cone hold?
+    a: Work out the volume in cm³ and divide by 1,000. The calculator can show the volume in litres directly.
 related: [math/cylinder-volume, math/sphere, math/pythagorean-theorem]
 ---
 
@@ -42,6 +46,41 @@ A cone with a 3 cm radius and 4 cm height:
 - Volume = ⅓ × π × 9 × 4 = **37.7 cm³**
 - Lateral area = π × 3 × 5 = **47.1 cm²**
 - Total surface = 47.1 + 28.3 = **75.4 cm²**
+
+## Cone examples
+
+| Radius | Height | Slant height | Volume | Total surface |
+|---|---|---|---|---|
+| 3 | 4 | 5.00 | 37.70 | 75.40 |
+| 5 | 12 | 13.00 | 314.16 | 282.74 |
+| 2 | 10 | 10.20 | 41.89 | 76.64 |
+| 10 | 10 | 14.14 | 1047.20 | 758.45 |
+| 6 | 8 | 10.00 | 301.59 | 301.59 |
+
+## Cone vs cylinder
+
+A cone holds exactly **one-third** of a cylinder with the same base and height. Fill a cone with water three times and it fills the cylinder.
+
+## Frustum (cut-off cone)
+
+Buckets, lampshades and many hoppers are frustums — cones with the top sliced off:
+
+<p class="formula">V = π × h ÷ 3 × (R² + R·r + r²)</p>
+
+A bucket 30 cm tall with a 15 cm top radius and 10 cm bottom radius holds π × 30 ÷ 3 × (225 + 150 + 100) = **14.92 litres**.
+
+## Making a cone from paper
+
+To roll a cone from a flat sheet, cut a sector with:
+
+- **Radius** = the cone's slant height s
+- **Angle** = 360° × r ÷ s
+
+For a cone with r = 3 and s = 5, cut a sector of 216° from a circle of radius 5.
+
+## Piles of sand and gravel
+
+A loose pile forms a cone. Measure the base circumference and height, find r = C ÷ 2π, then use the volume formula. Multiply by the material density to get its weight.
 
 ## Practical uses
 

@@ -17,6 +17,10 @@ faq:
     a: Use base e ≈ 2.718281828. Enter 2.718281828 as the base. ln 20 ≈ 2.996.
   - q: How do I find the antilog?
     a: Press × on Number, then enter the base and the logarithm. The antilog of 2 in base 10 is 100.
+  - q: What is log base 2 of 1024?
+    a: 10, because 2¹⁰ = 1,024.
+  - q: What is the natural log of e?
+    a: 1, because e¹ = e.
 related: [math/exponent]
 ---
 
@@ -45,6 +49,46 @@ Common bases: **10** (common log), **2** (binary log), **2.718281828** (natural 
 - log(a ÷ b) = log a − log b
 - log(aⁿ) = n × log a
 - log<sub>b</sub>(1) = 0 for any base
+
+## Common log values
+
+| x | log₁₀ x | ln x | log₂ x |
+|---|---|---|---|
+| 0.5 | -0.3010 | -0.6931 | -1.0000 |
+| 1 | 0.0000 | 0.0000 | 0.0000 |
+| 2 | 0.3010 | 0.6931 | 1.0000 |
+| 3 | 0.4771 | 1.0986 | 1.5850 |
+| 5 | 0.6990 | 1.6094 | 2.3219 |
+| 10 | 1.0000 | 2.3026 | 3.3219 |
+| 100 | 2.0000 | 4.6052 | 6.6439 |
+| 1000 | 3.0000 | 6.9078 | 9.9658 |
+
+## Change of base
+
+Any logarithm can be found with natural logs (or base-10 logs):
+
+<p class="formula">log<sub>b</sub>(x) = ln(x) ÷ ln(b)</p>
+
+This is exactly what the calculator does.
+
+## Solving exponential equations
+
+Logs undo exponents. To solve 3<sup>x</sup> = 50, take the log of both sides: x = ln 50 ÷ ln 3 = **3.561**. In the calculator, set the base to 3 and the number to 50.
+
+## Log scales in real life
+
+| Scale | What it measures | One step means |
+|---|---|---|
+| pH | Acidity | 10× change in hydrogen ion concentration |
+| Decibels (dB) | Sound level | +10 dB = 10× the intensity |
+| Richter / moment magnitude | Earthquakes | +1 = about 32× the energy |
+| Octaves in music | Pitch | 2× the frequency |
+
+## Common mistakes
+
+- log(a + b) is **not** log a + log b. The rule is log(a × b) = log a + log b.
+- Logs of zero and negative numbers are undefined for real numbers.
+- “log” means base 10 on most calculators but base e in many programming languages.
 
 ## Where logs are used
 

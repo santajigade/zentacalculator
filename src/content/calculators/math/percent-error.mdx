@@ -19,6 +19,10 @@ faq:
     a: The standard form uses the absolute value, so it is always positive. The signed difference (shown as absolute error here) tells you whether the measurement was high or low.
   - q: What is a good percent error?
     a: It depends on the field. School experiments often aim for under 5%; industrial instruments are often specified at 0.1–1% of reading or span.
+  - q: Is 5% error good in a lab?
+    a: For most school and undergraduate experiments, under 5% is considered good and under 10% acceptable, depending on the equipment.
+  - q: What is the difference between accuracy and precision?
+    a: Accuracy is how close results are to the true value. Precision is how close repeated results are to each other. You can be precise but inaccurate if there is a systematic error.
 related: [math/percentage-change, math/average]
 ---
 
@@ -41,6 +45,37 @@ A student measures gravity as 9.6 m/s². The accepted value is 9.81 m/s².
 
 - **Percent error** compares a measurement with a known correct value.
 - **Percent change** compares a new value with an old one — use the [percentage change calculator](/math/percentage-change/).
+
+## Percent error examples
+
+| Measured | True | Percent error |
+|---|---|---|
+| 9.6 | 9.81 | 2.14% |
+| 2.48 | 2.5 | 0.80% |
+| 101 | 100 | 1.00% |
+| 0.95 | 1.0 | 5.00% |
+| 343 | 340 | 0.88% |
+| 1.05 | 1.0 | 5.00% |
+
+## Absolute, relative and percent error
+
+| Error type | Formula | Units |
+|---|---|---|
+| Absolute error | measured − true | Same as the measurement |
+| Relative error | abs(measured − true) ÷ abs(true) | None (a ratio) |
+| Percent error | relative error × 100 | % |
+
+## Sources of error in experiments
+
+- **Random errors**: small unpredictable variations, reduced by repeating and averaging.
+- **Systematic errors**: consistent bias, such as an uncalibrated scale or reaction time. Repeating does not remove them.
+- **Human errors**: misreading a scale or recording a value wrongly.
+
+Discuss which type is likely when you write up a lab report.
+
+## When the true value is zero
+
+Percent error is undefined when the accepted value is zero, because you would divide by zero. Report the absolute error instead.
 
 ## Accuracy specs in instrumentation
 

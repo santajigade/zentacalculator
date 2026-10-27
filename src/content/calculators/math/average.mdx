@@ -32,6 +32,10 @@ faq:
     a: The mean is the sum divided by the count. The median is the middle value when the numbers are sorted. The median is less affected by unusually large or small values.
   - q: How is the median found with an even number of values?
     a: Take the average of the two middle values. For 3, 5, 8, 10 the median is (5 + 8) ÷ 2 = 6.5.
+  - q: What is the average of 10, 20 and 30?
+    a: (10 + 20 + 30) ÷ 3 = 20.
+  - q: Can the average be a value that is not in the data?
+    a: Yes. The mean of 1 and 2 is 1.5, which is not one of the values. The median of an even number of values can also fall between two values.
 related: [math/percentage, math/percent-error]
 ---
 
@@ -64,6 +68,38 @@ Numbers: 12, 15, 9, 21, 15, 18, 10
 | Most common choice (shoe size, rating) | Mode |
 
 Example: incomes of 30, 32, 35, 38 and 400 (thousand) have a mean of 107 but a median of 35. The median describes the typical person far better.
+
+## Mean, median and mode compared
+
+For the data 2, 3, 3, 5, 7, 10, 40:
+
+| Measure | Value | How |
+|---|---|---|
+| Mean | 10 | Sum 70 ÷ 7 values |
+| Median | 5 | Middle value when sorted |
+| Mode | 3 | Most frequent value |
+| Range | 38 | 40 − 2 |
+
+The single large value (40) pulls the mean up to 10, while the median stays at 5. That is why median income and median house prices are often reported instead of the mean.
+
+## Other kinds of average
+
+| Average | Use it for | Example |
+|---|---|---|
+| Arithmetic mean | Most everyday data | Test scores |
+| Weighted mean | Values with different importance | Course grades with credits |
+| Geometric mean | Growth rates and ratios | Average yearly investment return |
+| Harmonic mean | Rates over the same distance | Average speed for a round trip |
+
+Example: driving 60 km at 60 km/h and back at 40 km/h is **48 km/h** on average (harmonic mean), not 50.
+
+## Finding a missing value for a target average
+
+To reach an average of 80 over 5 tests when the first four average 76, you need 80 × 5 − 76 × 4 = **96** on the last test. The [grade needed calculator](/everyday-life/grade-needed/) does this for exams.
+
+## Pasting data
+
+You can paste numbers separated by commas, spaces or new lines, straight from a spreadsheet column. For spread and variability, see the [standard deviation calculator](/statistics/standard-deviation/).
 
 ## Weighted averages
 

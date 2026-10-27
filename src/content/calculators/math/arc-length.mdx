@@ -22,6 +22,10 @@ faq:
     a: Sector area = ½ × r² × θ (radians), which is the circle's area times θ ÷ 360°.
   - q: What is the difference between arc length and chord length?
     a: The arc follows the curve; the chord is the straight line between the arc's ends. The chord is always shorter.
+  - q: How do I find arc length without the angle?
+    a: If you know the chord c and radius r, the angle is θ = 2 × asin(c ÷ 2r). Then arc length = r × θ.
+  - q: What is the arc length of a semicircle?
+    a: "Half the circumference: π × r. For radius 10 it is about 31.42."
 related: [math/circle, math/right-triangle-trig]
 ---
 
@@ -43,6 +47,41 @@ Radius 10 cm, angle 60°:
 - Arc length = 10 × 1.0472 = **10.47 cm**
 - Sector area = ½ × 100 × 1.0472 = **52.36 cm²**
 - Chord = 2 × 10 × sin 30° = **10 cm**
+
+## Arc, sector and chord for radius 10
+
+| Angle | Radians | Arc length | Sector area | Chord |
+|---|---|---|---|---|
+| 30° | 0.5236 | 5.24 | 26.18 | 5.18 |
+| 45° | 0.7854 | 7.85 | 39.27 | 7.65 |
+| 60° | 1.0472 | 10.47 | 52.36 | 10.00 |
+| 90° | 1.5708 | 15.71 | 78.54 | 14.14 |
+| 120° | 2.0944 | 20.94 | 104.72 | 17.32 |
+| 180° | 3.1416 | 31.42 | 157.08 | 20.00 |
+| 270° | 4.7124 | 47.12 | 235.62 | 14.14 |
+| 360° | 6.2832 | 62.83 | 314.16 | 0.00 |
+
+## Degrees and radians
+
+<p class="formula">radians = degrees × π ÷ 180</p>
+
+The arc-length formula L = rθ only works with the angle in **radians**. If you prefer degrees, use L = 2πr × (θ ÷ 360). The calculator converts automatically when you pick degrees.
+
+## Segment area
+
+The area between the chord and the arc (a circular segment) is the sector minus the triangle:
+
+<p class="formula">Segment area = r² ÷ 2 × (θ − sin θ)</p>
+
+For r = 10 and θ = 60°, that is 50 × (1.0472 − 0.8660) = **9.06**.
+
+## Finding the angle or radius
+
+- Angle from arc length: θ = L ÷ r
+- Radius from arc length: r = L ÷ θ
+- Radius from a chord and height (sagitta s): r = (c² ÷ 4 + s²) ÷ (2s)
+
+The last one is handy for measuring large curves, such as an arch or a curved wall, where you cannot reach the centre.
 
 ## Practical uses
 

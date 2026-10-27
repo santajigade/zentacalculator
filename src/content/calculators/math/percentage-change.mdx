@@ -20,6 +20,10 @@ faq:
     a: Yes. A negative percentage change means the value fell. From 92 back to 80 is −13.04%.
   - q: Why is the change from 80 to 92 not the same as from 92 to 80?
     a: Percentage change is always measured against the starting value. 12 is 15% of 80 but only 13.04% of 92.
+  - q: How do I calculate a percentage increase?
+    a: "(new − old) ÷ old × 100. From 80 to 92: 12 ÷ 80 × 100 = 15%."
+  - q: How do I find the original value before a percentage increase?
+    a: Divide the new value by (1 + change). After a 15% rise to 92, the original was 92 ÷ 1.15 = 80.
 related: [math/percentage, finance/cagr, finance/discount]
 ---
 
@@ -56,6 +60,39 @@ That is because each change is measured against a different base. To undo a 15% 
 ## Percentage change vs percentage points
 
 If an interest rate moves from 4% to 5%, it rose by **1 percentage point**, which is a **25% increase** in the rate itself. News reports often mix these up — this calculator gives the percentage change.
+
+## Percentage change examples
+
+| From | To | Change |
+|---|---|---|
+| 50 | 75 | +50.0% |
+| 75 | 50 | -33.3% |
+| 100 | 250 | +150.0% |
+| 200 | 150 | -25.0% |
+| 1200 | 1380 | +15.0% |
+| 40 | 10 | -75.0% |
+
+## Percentage difference (no “original” value)
+
+When neither value is the starting point — comparing two shops' prices, say — use percentage difference, which divides by the average:
+
+<p class="formula">% difference = |a − b| ÷ ((a + b) ÷ 2) × 100</p>
+
+For 80 and 92 that is 12 ÷ 86 × 100 = **13.95%**.
+
+## Reversing a percentage change
+
+To undo a change, you need a different percentage:
+
+| Change | To get back you need |
+|---|---|
+| +10% | −9.09% |
+| +25% | −20% |
+| +50% | −33.3% |
+| −20% | +25% |
+| −50% | +100% |
+
+This is why a stock that falls 50% must double to recover.
 
 ## Over several years
 

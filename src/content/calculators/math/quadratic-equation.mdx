@@ -22,6 +22,10 @@ faq:
     a: If it is positive there are two real roots; if zero, one repeated root; if negative, no real roots (the roots are complex).
   - q: What if a = 0?
     a: Then it is not quadratic — it is the linear equation bx + c = 0, with the single solution x = −c ÷ b.
+  - q: How do I find the roots of x² − 5x + 6 = 0?
+    a: a = 1, b = −5, c = 6. The discriminant is 1, so x = (5 ± 1) ÷ 2, giving 3 and 2.
+  - q: What is the vertex form of a quadratic?
+    a: y = a(x − h)² + k, where (h, k) is the vertex. It comes from completing the square.
 related: [math/exponent, math/slope]
 ---
 
@@ -52,6 +56,35 @@ Check: 2(3)² − 7(3) + 3 = 18 − 21 + 3 = 0 ✓
 | Positive | Two different real roots |
 | Zero | One repeated real root |
 | Negative | Two complex roots (no real solution) |
+
+## Other ways to solve a quadratic
+
+| Method | Best when |
+|---|---|
+| Factoring | Roots are whole numbers or simple fractions |
+| Completing the square | Deriving the vertex form or the formula itself |
+| Quadratic formula | Always works |
+| Graphing | Seeing roughly where the roots are |
+
+Example by factoring: 2x² − 7x + 3 = (2x − 1)(x − 3), so x = 0.5 or x = 3 — the same as the calculator.
+
+## Vertex of the parabola
+
+The turning point of y = ax² + bx + c is at:
+
+<p class="formula">x = −b ÷ (2a), &nbsp; y = c − b² ÷ (4a)</p>
+
+For 2x² − 7x + 3, the vertex is at x = 1.75, y = −3.125. The parabola opens upward when a > 0 and downward when a < 0.
+
+## Real-world quadratics
+
+- **Projectile motion**: height h = −4.9t² + vt + h₀ (metres, seconds). Set h = 0 to find when it lands.
+- **Area problems**: a rectangle with perimeter 20 and area 21 gives x² − 10x + 21 = 0, so the sides are 3 and 7.
+- **Profit**: revenue minus cost often forms a quadratic; the vertex gives the maximum profit.
+
+## Complex roots
+
+When the discriminant is negative, the roots are complex: x = −b ÷ 2a ± i√(−D) ÷ 2a. For x² + 2x + 5 = 0, the roots are −1 ± 2i.
 
 ## Sum and product of roots
 

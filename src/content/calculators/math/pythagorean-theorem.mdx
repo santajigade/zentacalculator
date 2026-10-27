@@ -18,6 +18,10 @@ faq:
     a: Rearrange to a = √(c² − b²). Press × on side a, then enter b and c. The hypotenuse must be the longest side.
   - q: What are Pythagorean triples?
     a: Whole-number sets that satisfy the theorem, such as 3-4-5, 5-12-13, 8-15-17 and 7-24-25.
+  - q: Does the Pythagorean theorem work for all triangles?
+    a: "No, only right-angled triangles. For other triangles use the law of cosines: c² = a² + b² − 2ab cos C."
+  - q: How do I find the hypotenuse of a 45-45-90 triangle?
+    a: Multiply a leg by √2 (about 1.414). Legs of 10 give a hypotenuse of 14.14.
 related: [math/triangle-area, math/circle]
 ---
 
@@ -51,6 +55,33 @@ c = √(6² + 2.5²) = √(36 + 6.25) = √42.25 = **6.5 m**
 | 20 | 21 | 29 |
 
 Any multiple of a triple also works — 6-8-10 and 30-40-50 are both right triangles.
+
+## Distance between two points
+
+The distance formula is the Pythagorean theorem on a grid:
+
+<p class="formula">d = √((x₂ − x₁)² + (y₂ − y₁)²)</p>
+
+From (1, 2) to (7, 10): √(36 + 64) = **10**. In 3D, add a third term: √(Δx² + Δy² + Δz²).
+
+## Is the triangle right-angled?
+
+Check whether a² + b² equals c² (with c the longest side):
+
+| Sides | a² + b² | c² | Result |
+|---|---|---|---|
+| 5, 12, 13 | 169 | 169 | Right angle |
+| 6, 7, 9 | 85 | 81 | Acute (a² + b² > c²) |
+| 4, 5, 7 | 41 | 49 | Obtuse (a² + b² < c²) |
+
+## The 3-4-5 rule on site
+
+Builders mark a right angle by measuring 3 units along one line, 4 along the other and checking that the diagonal is exactly 5. Multiples work too: 6-8-10 or 9-12-15 for larger layouts.
+
+## Screen and ladder examples
+
+- A TV 1.2 m wide and 0.68 m tall has a diagonal of √(1.44 + 0.46) = **1.38 m** (about 54 inches).
+- A 5 m ladder with its foot 1.5 m from a wall reaches √(25 − 2.25) = **4.77 m** up the wall.
 
 ## Practical uses
 

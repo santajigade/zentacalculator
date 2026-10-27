@@ -18,6 +18,10 @@ faq:
     a: Yes, as long as the height is measured at a right angle to the chosen base. For obtuse triangles, the height may fall outside the triangle.
   - q: How do I find the height from the area?
     a: Height = 2 × area ÷ base. Press × on Height, then type the area.
+  - q: What is the area of a triangle with base 10 and height 6?
+    a: 10 × 6 ÷ 2 = 30.
+  - q: Can I find the area with only the three sides?
+    a: Yes, using Heron's formula shown above.
 related: [math/pythagorean-theorem, math/circle]
 ---
 
@@ -46,6 +50,32 @@ At 40 litres of compost per m², you would need 200 litres.
 ## Which side is the base?
 
 Any side can be the base, as long as you use the height measured to that side. All three choices give the same area.
+
+## Heron's formula: area from three sides
+
+When you know all three sides but not the height:
+
+<p class="formula">s = (a + b + c) ÷ 2, &nbsp; Area = √(s(s − a)(s − b)(s − c))</p>
+
+For sides 7, 8 and 9: s = 12, Area = √(12 × 5 × 4 × 3) = √720 = **26.83**.
+
+## Area from two sides and an angle
+
+<p class="formula">Area = ½ × a × b × sin C</p>
+
+Sides of 10 and 12 with a 40° angle between them: ½ × 10 × 12 × 0.6428 = **38.57**.
+
+## Equilateral triangle
+
+All sides equal to s: Area = √3 ÷ 4 × s² ≈ 0.433 × s². A 10 cm equilateral triangle has an area of **43.3 cm²**.
+
+## Area from coordinates
+
+For points (x₁, y₁), (x₂, y₂), (x₃, y₃):
+
+<p class="formula">Area = |x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)| ÷ 2</p>
+
+For (0, 0), (4, 0) and (0, 3), the area is 6.
 
 ## Right triangles
 

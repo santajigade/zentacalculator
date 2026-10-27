@@ -20,6 +20,10 @@ faq:
     a: Doubling time = ln 2 ÷ µ.
   - q: Can I use optical density?
     a: Yes, OD600 readings in the linear range of the spectrophotometer are proportional to biomass.
+  - q: "What is the specific growth rate?"
+    a: "The rate of increase of biomass per unit of biomass, µ = ln(X₂ ÷ X₁) ÷ Δt, in units of 1/time."
+  - q: "How is µ related to doubling time?"
+    a: "Doubling time = ln 2 ÷ µ ≈ 0.693 ÷ µ."
 related: [biology/cell-doubling-time, biology/bacterial-growth]
 ---
 
@@ -37,3 +41,33 @@ OD600 rises from 0.1 to 0.8 in 6 hours:
 
 - µ = ln 8 ÷ 6 = **0.3466 h⁻¹**
 - Doubling time = **2.0 h**
+
+## µ and doubling time
+
+| µ (per hour) | Doubling time |
+|---|---|
+| 0.1 | 6.93 h (416 min) |
+| 0.2 | 3.47 h (208 min) |
+| 0.35 | 1.98 h (119 min) |
+| 0.5 | 1.39 h (83 min) |
+| 0.693 | 1.00 h (60 min) |
+| 1.0 | 0.69 h (42 min) |
+| 2.0 | 0.35 h (21 min) |
+
+## Measuring µ correctly
+
+- Use two points in the **exponential phase**, where ln(OD) rises in a straight line.
+- Better still, take several readings and fit a straight line to ln(OD) against time. The slope is µ.
+- Keep OD600 readings in the linear range of the spectrophotometer (often below 0.4–0.8); dilute dense cultures before reading.
+
+## µ in bioprocesses
+
+In a chemostat at steady state, the specific growth rate equals the dilution rate D (flow ÷ volume). Running D above the maximum µ washes the culture out.
+
+## Monod equation
+
+Growth rate depends on the limiting nutrient concentration S:
+
+<p class="formula">µ = µ<sub>max</sub> × S ÷ (K<sub>s</sub> + S)</p>
+
+K<sub>s</sub> is the nutrient level at which µ is half of µ<sub>max</sub>.

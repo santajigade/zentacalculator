@@ -20,6 +20,10 @@ faq:
     a: The fraction of templates copied each cycle. Good qPCR assays run at about 90–105%.
   - q: Does amplification continue forever?
     a: No — after 25–35 cycles it plateaus as primers and nucleotides run out.
+  - q: "How many copies after 30 cycles?"
+    a: "In theory 2³⁰ ≈ 1.07 × 10⁹ times the starting amount at 100% efficiency, but reactions plateau earlier in practice."
+  - q: "What is a good qPCR efficiency?"
+    a: "Between 90% and 110%, with a standard curve R² above 0.98."
 related: [biology/dna-copy-number, biology/primer-tm]
 ---
 
@@ -39,3 +43,31 @@ Enter the **starting copies**, **number of cycles** and **efficiency**. The theo
 - Copies = **2.3e+11**
 
 At 100% efficiency the same reaction would reach 1.07e+12 copies — showing how much efficiency matters.
+
+## Fold amplification by efficiency
+
+| Cycles | 100% efficiency | 90% | 80% |
+|---|---|---|---|
+| 10 | 1.02e+03 | 613 | 357 |
+| 20 | 1.05e+06 | 3.76e+05 | 1.27e+05 |
+| 25 | 3.36e+07 | 9.31e+06 | 2.41e+06 |
+| 30 | 1.07e+09 | 2.3e+08 | 4.55e+07 |
+| 35 | 3.44e+10 | 5.71e+09 | 8.6e+08 |
+
+A small drop in efficiency makes a big difference after 30 cycles.
+
+## Plateau phase
+
+In practice, PCR slows and stops (plateau) as primers and nucleotides run out and the polymerase loses activity. Most reactions plateau somewhere around 10¹¹–10¹² copies, regardless of the theoretical number.
+
+## qPCR efficiency from a standard curve
+
+Run a 10-fold dilution series and plot Ct against log₁₀(copies). The slope gives efficiency:
+
+<p class="formula">E = 10<sup>−1/slope</sup> − 1</p>
+
+A slope of −3.32 means 100% efficiency. Acceptable assays are usually 90–110% (slope −3.6 to −3.1).
+
+## Ct and starting amount
+
+Each cycle difference in Ct means about a 2-fold difference in starting template (at 100% efficiency). A sample with a Ct 3.3 cycles lower has about 10 times more template.

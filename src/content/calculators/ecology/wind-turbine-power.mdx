@@ -20,6 +20,10 @@ faq:
     a: No turbine can capture more than 59.3% (16/27) of the wind's energy. Modern turbines reach about 40–50%.
   - q: Why does wind speed matter so much?
     a: Doubling the wind speed gives eight times the power, which is why turbine siting is crucial.
+  - q: "How much power does a wind turbine produce?"
+    a: "P = ½ × ρ × A × v³ × Cp. A 2 m rotor in 6 m/s wind produces about 170 W at Cp 0.4."
+  - q: "What is the Betz limit?"
+    a: "The theoretical maximum share of wind energy a turbine can extract: 59.3%."
 related: [ecology/solar-output, physics/kinetic-energy]
 ---
 
@@ -38,3 +42,40 @@ Enter the **rotor diameter**, **wind speed**, **air density** and **power coeffi
 P = 0.5 × 1.225 × 5027 × 512 × 0.4 = **631 kW**
 
 Real turbines cap output at their rated power (for example 2 MW) above the rated wind speed.
+
+## Power vs wind speed
+
+2 m rotor, Cp 0.4, air density 1.225 kg/m³:
+
+| Wind speed | Power |
+|---|---|
+| 3 m/s (11 km/h) | 21 W |
+| 4 m/s (14 km/h) | 49 W |
+| 5 m/s (18 km/h) | 96 W |
+| 6 m/s (22 km/h) | 166 W |
+| 8 m/s (29 km/h) | 394 W |
+| 10 m/s (36 km/h) | 770 W |
+| 12 m/s (43 km/h) | 1,330 W |
+
+Doubling the wind speed gives **8 times** the power, because power depends on the cube of speed.
+
+## The Betz limit
+
+No turbine can capture more than 16/27 (59.3%) of the wind's energy. Modern utility turbines reach about 45–50% at their best operating point.
+
+## Capacity factor
+
+A turbine rarely runs at full power. Capacity factor = actual yearly energy ÷ (rated power × 8,760 hours).
+
+| Turbine type | Typical capacity factor |
+|---|---|
+| Small urban turbine | 5–15% |
+| Small rural turbine, good site | 15–25% |
+| Onshore wind farm | 25–40% |
+| Offshore wind farm | 40–50% |
+
+## Siting small turbines
+
+- Mount the turbine well above obstacles — ideally 10 m higher than anything within 100 m.
+- Average wind speed of at least 5 m/s is usually needed for a worthwhile output.
+- Rooftop turbines in towns often produce far less than expected because of turbulence.

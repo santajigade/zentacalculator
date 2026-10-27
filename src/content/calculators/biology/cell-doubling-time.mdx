@@ -21,6 +21,10 @@ faq:
     a: Yes. Doubling time is only meaningful during exponential (log-phase) growth.
   - q: What is a typical doubling time?
     a: E. coli can double in about 20 minutes in rich media; many mammalian cell lines take 18–36 hours.
+  - q: "How do I calculate doubling time?"
+    a: "Doubling time = time × ln 2 ÷ ln(final ÷ initial). From 100,000 to 800,000 in 72 hours is 3 doublings, so 24 hours."
+  - q: "Why is my doubling time longer than expected?"
+    a: "Common causes are over-confluence, old medium, high passage number, contamination or a long lag phase after passaging."
 related: [biology/bacterial-growth, biology/specific-growth-rate, biology/hemocytometer]
 ---
 
@@ -38,3 +42,42 @@ Cells grow from 100,000 to 800,000 in 72 hours:
 
 - Doublings = log₂(8) = **3**
 - Doubling time = 72 ÷ 3 = **24 hours**
+
+## Typical doubling times of cell lines
+
+| Cell line | Approximate doubling time |
+|---|---|
+| HEK293 | 24–36 h |
+| HeLa | about 24 h |
+| CHO | 14–24 h |
+| Jurkat | 25–50 h |
+| Primary human fibroblasts | 24–72 h, slows with passages |
+| Mouse embryonic stem cells | 12–16 h |
+
+Doubling time depends on medium, serum, confluence and passage number.
+
+## Fold change and doublings
+
+| Fold increase | Doublings |
+|---|---|
+| 2× | 1.00 |
+| 4× | 2.00 |
+| 8× | 3.00 |
+| 10× | 3.32 |
+| 16× | 4.00 |
+| 100× | 6.64 |
+| 1000× | 9.97 |
+
+## Population doubling level (PDL)
+
+For primary cells, track the cumulative population doublings across passages. Normal human fibroblasts typically stop dividing after about 40–60 doublings (the Hayflick limit).
+
+## Planning experiments
+
+To have 5 million cells from 500,000 with a 24-hour doubling time: log₂(10) = 3.32 doublings, so about **80 hours**. Add time for the lag phase after seeding.
+
+## Tips for accurate counts
+
+- Count in the exponential phase, not when cells are confluent.
+- Use the same counting method each time — see the [hemocytometer calculator](/biology/hemocytometer/).
+- Exclude dead cells with trypan blue.

@@ -21,6 +21,10 @@ faq:
     a: No. Nutrients run out and waste builds up, so growth slows into a stationary phase. This calculator models the exponential phase only.
   - q: Why does food left out become unsafe so quickly?
     a: Starting from 1,000 bacteria with a 20-minute generation time, there are over 4 million after 4 hours.
+  - q: "How many bacteria after 24 hours?"
+    a: "In theory, 72 doublings at 20 minutes — about 4.7 × 10²¹ cells from one. In reality, growth stops at the stationary phase, often around 10⁹ cells per mL."
+  - q: "What is generation time?"
+    a: "The time it takes for a bacterial population to double during exponential growth."
 related: [biology/cell-doubling-time, biology/logistic-growth]
 ---
 
@@ -38,3 +42,43 @@ Enter the **starting population**, the **generation time** and the **time** elap
 
 - Generations = 240 ÷ 20 = **12**
 - N = 1,000 × 2¹² = **4,096,000**
+
+## Typical generation times
+
+| Organism | Conditions | Generation time |
+|---|---|---|
+| *Escherichia coli* | Rich medium, 37 °C | about 20 min |
+| *Bacillus subtilis* | Rich medium, 37 °C | about 25–30 min |
+| *Staphylococcus aureus* | Optimal | about 30 min |
+| *Saccharomyces cerevisiae* (yeast) | 30 °C | about 90 min |
+| *Mycobacterium tuberculosis* | Optimal | about 15–20 h |
+
+## Growth from one cell (20-minute doubling)
+
+| Time | Generations | Cells |
+|---|---|---|
+| 1 h | 3 | 8 |
+| 2 h | 6 | 64 |
+| 4 h | 12 | 4,096 |
+| 6 h | 18 | 262,144 |
+| 8 h | 24 | 16,777,216 |
+| 10 h | 30 | 1,073,741,824 |
+
+Unchecked growth would be astronomical, but nutrients run out and waste builds up long before.
+
+## The four growth phases
+
+| Phase | What happens |
+|---|---|
+| Lag | Cells adapt to the medium; little division |
+| Exponential (log) | Steady doubling — this calculator applies here |
+| Stationary | Growth equals death as nutrients run out |
+| Death | Cells die faster than they divide |
+
+## Food safety
+
+The “danger zone” for food is roughly 5–60 °C, where many bacteria multiply quickly. Food left at room temperature for a few hours can reach risky levels, which is why guidelines say to refrigerate within 2 hours.
+
+## Measuring growth
+
+Labs track growth by optical density (OD600), colony counts (CFU/mL) or cell counters. Use the [specific growth rate calculator](/biology/specific-growth-rate/) to get µ and doubling time from OD readings.

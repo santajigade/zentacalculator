@@ -22,6 +22,10 @@ faq:
     a: About 80–95% for lithium iron phosphate (LFP) batteries and about 50% for lead-acid to protect battery life.
   - q: How do I convert kWh to Ah?
     a: Ah = kWh × 1,000 ÷ battery voltage.
+  - q: "How many kWh battery do I need for my home?"
+    a: "Divide your daily energy need by DoD × efficiency. For 6 kWh a day with LFP (80% DoD, 90% efficiency), about 8.3 kWh."
+  - q: "How do I convert kWh to Ah?"
+    a: "Ah = kWh × 1,000 ÷ battery voltage. 10 kWh at 48 V is about 208 Ah."
 related: [ecology/solar-output, ecology/solar-system-size]
 ---
 
@@ -35,3 +39,39 @@ Enter the **daily energy** you want covered, **days of autonomy**, usable **dept
 
 - Capacity = 6 ÷ 0.81 = **7.4 kWh**
 - = **154 Ah** at 48 V
+
+## Battery chemistries compared
+
+| Chemistry | Usable depth of discharge | Cycle life (approx.) | Round-trip efficiency |
+|---|---|---|---|
+| Lead-acid (flooded) | 50% | 500–1,500 | 75–85% |
+| AGM / gel lead-acid | 50–60% | 500–1,500 | 80–85% |
+| Lithium iron phosphate (LFP) | 80–100% | 3,000–6,000+ | 90–95% |
+| Lithium NMC | 80–90% | 1,000–3,000 | 90–95% |
+
+LFP is now the most common choice for home solar storage because of its long life and safety.
+
+## Capacity by daily load
+
+1 day of autonomy, 80% DoD, 90% efficiency:
+
+| Daily load | Battery needed | At 48 V |
+|---|---|---|
+| 2 kWh | 2.8 kWh | 58 Ah |
+| 4 kWh | 5.6 kWh | 116 Ah |
+| 6 kWh | 8.3 kWh | 174 Ah |
+| 10 kWh | 13.9 kWh | 289 Ah |
+| 15 kWh | 20.8 kWh | 434 Ah |
+| 20 kWh | 27.8 kWh | 579 Ah |
+
+## Essential loads only
+
+For backup during outages, many homes size the battery for **essential loads** only: lights, fridge, internet, fans and a few sockets. This can cut the battery size by half or more.
+
+## Inverter size
+
+The inverter must handle the highest power drawn at once, not the daily energy. A home with a 3 kW peak load needs at least a 3–4 kW inverter, with extra surge capacity for motor starts.
+
+## Battery life in years
+
+Cycle life ÷ cycles per year gives a rough lifetime. An LFP battery rated for 6,000 cycles, used once a day, could last over 15 years, though calendar ageing also reduces capacity.

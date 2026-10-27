@@ -21,6 +21,10 @@ faq:
     a: It is less biased when the number recaptured is small.
   - q: What assumptions are made?
     a: A closed population (no births, deaths or migration between samples), marks are not lost, and marked animals are equally likely to be caught.
+  - q: "Why use the Chapman estimator?"
+    a: "It is less biased than Lincoln–Petersen when the number of recaptures is small, and it works even when no marked animals are recaptured."
+  - q: "How long should I wait between samples?"
+    a: "Long enough for marked animals to mix back in, but short enough that births, deaths and migration are minimal — often a day to a week."
 related: [ecology/population-density, biology/logistic-growth]
 ---
 
@@ -38,3 +42,40 @@ Enter the number **marked** in the first sample, the number **caught** in the se
 
 - Lincoln–Petersen = **250**
 - Chapman = 51 × 41 ÷ 9 − 1 = **231**
+
+## How the estimate changes with recaptures
+
+M = 50 marked, C = 40 caught in the second sample:
+
+| Recaptured (R) | Lincoln–Petersen | Chapman |
+|---|---|---|
+| 2 | 1000 | 696 |
+| 4 | 500 | 417 |
+| 8 | 250 | 231 |
+| 12 | 167 | 160 |
+| 20 | 100 | 99 |
+
+Few recaptures give large, uncertain estimates. Aim for at least 7–10 recaptures for a reasonable estimate.
+
+## Assumptions
+
+1. The population is **closed** — no births, deaths or migration between samples.
+2. Marks are not lost and do not harm the animal.
+3. Marked animals mix randomly back into the population.
+4. Every animal has an equal chance of being caught in each sample.
+
+If animals become trap-shy or trap-happy, the estimate will be biased.
+
+## Confidence interval
+
+An approximate 95% interval for the Chapman estimate uses its variance:
+
+<p class="formula">Var = (M + 1)(C + 1)(M − R)(C − R) ÷ [(R + 1)²(R + 2)]</p>
+
+The interval is roughly N ± 1.96 × √Var.
+
+## Field examples
+
+- **Fish** in a pond, marked with fin clips or tags.
+- **Butterflies** marked with a small dot of paint.
+- **Snails** marked with nail varnish on the shell.

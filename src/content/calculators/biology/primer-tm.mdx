@@ -23,6 +23,10 @@ faq:
     a: Start about 3–5 °C below the lower primer Tm, then optimise with a gradient PCR.
   - q: What is an ideal primer?
     a: Typically 18–25 bases, 40–60% GC, Tm of 55–65 °C, and primer pairs within about 5 °C of each other.
+  - q: "What is the Wallace rule?"
+    a: "Tm = 2 × (A + T) + 4 × (G + C) °C, a quick estimate for short primers."
+  - q: "How far below Tm should I anneal?"
+    a: "Usually 3–5 °C below the lower of the two primer Tms."
 related: [biology/gc-content, biology/pcr-amplification]
 ---
 
@@ -43,3 +47,34 @@ A 20-mer with 5 of each base:
 - GC = **50%**
 
 For longer primers or exact work, nearest-neighbour methods that account for salt concentration are more accurate.
+
+## Primer design guidelines
+
+| Property | Recommended |
+|---|---|
+| Length | 18–25 nucleotides |
+| GC content | 40–60% |
+| Tm | 52–65 °C |
+| Tm difference between primers | Within 2–5 °C |
+| 3′ end | End in G or C (GC clamp), avoid more than 3 G/C in the last 5 bases |
+| Repeats | Avoid runs of 4+ identical bases |
+
+## Other Tm methods
+
+| Method | Best for |
+|---|---|
+| Wallace rule (this calculator) | Primers under about 14–20 nt, quick estimates |
+| Basic GC formula: 64.9 + 41(GC − 16.4)/N | Longer oligos |
+| Nearest-neighbour thermodynamics | Most accurate; accounts for salt and primer concentration |
+
+The Wallace rule tends to overestimate Tm for longer primers. Many polymerase suppliers provide nearest-neighbour Tm calculators tuned to their buffers.
+
+## Annealing temperature
+
+Start about 3–5 °C below the lower primer Tm. If you see non-specific bands, raise it; if there is no product, lower it or run a gradient PCR.
+
+## Primer problems to avoid
+
+- **Self-dimers and hairpins**: primers binding to themselves.
+- **Primer-dimers**: forward and reverse primers binding each other at the 3′ ends.
+- **Off-target binding**: check specificity against the genome with a sequence search tool.

@@ -21,6 +21,10 @@ faq:
     a: From the amino-acid sequence (tryptophan, tyrosine and cystine content) using a tool such as ExPASy ProtParam.
   - q: What is the default protein?
     a: Bovine serum albumin (BSA), with ε ≈ 43,824 M⁻¹cm⁻¹ and MW ≈ 66,463 Da.
+  - q: "What is the A280 of 1 mg/mL BSA?"
+    a: "About 0.66."
+  - q: "Why use A280 to measure protein?"
+    a: "Tryptophan and tyrosine absorb UV light at 280 nm, so absorbance is proportional to concentration."
 related: [biology/dna-concentration, chemistry/beer-lambert, biology/protein-molecular-weight]
 ---
 
@@ -38,3 +42,33 @@ A280 = 0.8, ε = 43,824 M⁻¹cm⁻¹, 1 cm:
 
 - c = 0.8 ÷ 43,824 = **18.25 µM**
 - × 66,463 g/mol = **1.213 mg/mL**
+
+## Extinction coefficients of common proteins
+
+| Protein | MW (Da) | ε₂₈₀ (M⁻¹cm⁻¹) | A280 of 1 mg/mL |
+|---|---|---|---|
+| BSA | 66,463 | 43,824 | 0.66 |
+| Lysozyme (hen egg) | 14,313 | 37,970 | 2.65 |
+| IgG (typical) | 150,000 | 210,000 | 1.40 |
+| GFP | 26,900 | 21,890 | 0.81 |
+| Insulin | 5,808 | 5,960 | 1.03 |
+
+## Calculating ε from sequence
+
+ε₂₈₀ can be estimated from the amino acid composition:
+
+<p class="formula">ε = (number of Trp × 5,500) + (number of Tyr × 1,490) + (number of cystines × 125)</p>
+
+Proteins without tryptophan or tyrosine absorb very little at 280 nm and need another method.
+
+## Other protein assays
+
+| Assay | Range | Notes |
+|---|---|---|
+| A280 | about 0.1–100 mg/mL | Fast, non-destructive; needs pure protein |
+| Bradford | 1–1,500 µg/mL | Simple; sensitive to detergents |
+| BCA | 20–2,000 µg/mL | Tolerates detergents; sensitive to reducing agents |
+
+## Nucleic acid contamination
+
+Nucleic acids absorb strongly at 260 nm and also at 280 nm. An A260/A280 ratio around 0.57 suggests pure protein; higher values indicate nucleic acid contamination.

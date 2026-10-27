@@ -19,6 +19,10 @@ faq:
     a: Ligation depends on the number of DNA ends (molecules), not mass. A smaller insert has more molecules per ng.
   - q: How much vector should I use?
     a: Typically 20–100 ng in a standard ligation reaction.
+  - q: "What insert-to-vector ratio should I use?"
+    a: "Start with 3:1 for most cloning, and try 1:1 and 5:1 if colonies are few."
+  - q: "Why use molar ratios instead of mass?"
+    a: "Because ligation depends on the number of DNA ends, not their mass. A small insert has many more molecules per ng."
 related: [biology/dna-copy-number, biology/dna-concentration]
 ---
 
@@ -35,3 +39,38 @@ Enter the **vector amount** and **length**, the **insert length** and the desire
 50 ng of a 3,000 bp vector, 1,000 bp insert, 3:1 ratio:
 
 ng insert = 50 × (1,000 ÷ 3,000) × 3 = **50 ng**
+
+## Insert amounts for common ratios
+
+50 ng of 3,000 bp vector:
+
+| Insert size | 1:1 | 3:1 | 5:1 |
+|---|---|---|---|
+| 100 bp | 1.7 ng | 5.0 ng | 8.3 ng |
+| 250 bp | 4.2 ng | 12.5 ng | 20.8 ng |
+| 500 bp | 8.3 ng | 25.0 ng | 41.7 ng |
+| 1,000 bp | 16.7 ng | 50.0 ng | 83.3 ng |
+| 2,000 bp | 33.3 ng | 100.0 ng | 166.7 ng |
+| 5,000 bp | 83.3 ng | 250.0 ng | 416.7 ng |
+
+## Choosing a ratio
+
+| Situation | Typical insert : vector ratio |
+|---|---|
+| Standard sticky-end cloning | 3:1 |
+| Blunt-end cloning | 3:1 to 5:1 |
+| Very small inserts (under 200 bp) | 5:1 to 10:1 |
+| Large inserts (similar to vector size) | 1:1 |
+
+## Controls
+
+- **Vector only** (no insert): shows background from uncut or self-ligated vector.
+- **No ligase**: shows uncut vector.
+- **Positive control**: a known insert that works.
+
+## Improving ligation
+
+- Dephosphorylate the vector to stop self-ligation.
+- Gel-purify the vector and insert to remove small fragments.
+- Use fresh ligase buffer — ATP degrades with freeze–thaw cycles.
+- Keep total DNA around 50–200 ng in a 10–20 µL reaction.

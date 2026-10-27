@@ -21,6 +21,10 @@ faq:
     a: Only while resources are plentiful. Real populations slow down as they approach the carrying capacity — see the logistic growth calculator.
   - q: What is the rule of 70?
     a: Doubling time ≈ 70 ÷ growth rate (%). At 5% per year, a population doubles in about 14 years.
+  - q: "What is the doubling time at 2% growth?"
+    a: "About 34.7 years (ln 2 ÷ 0.02)."
+  - q: "Can r be negative?"
+    a: "Yes. A negative r means the population is shrinking; the calculator then gives the half-life instead of a doubling time."
 related: [biology/logistic-growth, biology/bacterial-growth, finance/doubling-time]
 ---
 
@@ -38,3 +42,33 @@ Enter the **initial population**, **growth rate** and **time**. The final popula
 
 - N = 500 × e<sup>0.5</sup> = **824**
 - Doubling time = ln 2 ÷ 0.05 = **13.9 years**
+
+## Growth rates and doubling times
+
+| Yearly growth rate | Doubling time |
+|---|---|
+| 0.5% | 138.6 years |
+| 1% | 69.3 years |
+| 2% | 34.7 years |
+| 3% | 23.1 years |
+| 5% | 13.9 years |
+| 10% | 6.9 years |
+
+## Discrete vs continuous growth
+
+- **Continuous** (this calculator): N = N₀ × e<sup>rt</sup>, for populations that reproduce throughout the year.
+- **Discrete**: N = N₀ × (1 + r)<sup>t</sup>, for populations that breed once a year.
+
+For small r they give similar answers. At 5% for 10 years, continuous gives 1.649× and discrete 1.629×.
+
+## Finding r from data
+
+If a population grew from N₀ to N in t years: r = ln(N ÷ N₀) ÷ t. From 500 to 800 in 10 years, r = ln 1.6 ÷ 10 = **4.7% per year**.
+
+## Limits to growth
+
+Exponential growth cannot continue forever. Food, space and disease eventually slow it, producing an S-shaped curve. See the [logistic growth calculator](/biology/logistic-growth/).
+
+## Human population
+
+The world population took until about 1804 to reach 1 billion, but only about 12 years to go from 7 to 8 billion (2011–2022). The growth rate has since fallen below 1% a year, so doubling now takes much longer than in the 1960s, when the rate peaked above 2%.

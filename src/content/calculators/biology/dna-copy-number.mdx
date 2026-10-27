@@ -19,6 +19,10 @@ faq:
     a: Use about 330 g/mol per nucleotide instead of 650 per base pair.
   - q: How do I make a qPCR standard curve?
     a: Calculate copies per µL of your stock, then make 10-fold serial dilutions.
+  - q: "How many copies are in 1 ng of a 3 kb plasmid?"
+    a: "About 3.1 × 10⁸ copies."
+  - q: "What molecular weight per base pair should I use?"
+    a: "650 g/mol for double-stranded DNA is the common value; some calculators use 660."
 related: [biology/dna-concentration, biology/ligation-ratio, biology/pcr-amplification]
 ---
 
@@ -35,3 +39,32 @@ Enter the **amount of DNA** in ng and its **length** in base pairs. The number o
 10 ng of a 5,000 bp plasmid:
 
 copies = 10 × 6.022 × 10²³ ÷ (5,000 × 650 × 10⁹) = **1.85e+09**
+
+## Copies per ng for common templates
+
+| Template | Size | Copies per ng |
+|---|---|---|
+| PCR product | 200 bp | 4.63e+09 |
+| PCR product | 1,000 bp | 9.26e+08 |
+| Plasmid | 3,000 bp | 3.09e+08 |
+| Plasmid | 5,000 bp | 1.85e+08 |
+| Lambda phage genome | 48,502 bp | 1.91e+07 |
+| E. coli genome | 4,600,000.0 bp | 2.01e+05 |
+| Human genome (haploid) | 3,100,000,000.0 bp | 299 |
+
+## The formula
+
+<p class="formula">Copies = mass (ng) × 6.022 × 10²³ ÷ (length (bp) × 650 × 10⁹)</p>
+
+650 g/mol is the average mass of one base pair of double-stranded DNA (about 618 for the sodium salt without water; 650 is the common working value). For single-stranded DNA use about 330 g/mol per base.
+
+## Making a qPCR standard curve
+
+1. Quantify the plasmid or PCR product accurately.
+2. Calculate copies per µL.
+3. Dilute to a top standard, for example 10⁷ copies per µL.
+4. Make 10-fold serial dilutions down to about 10 copies per µL — see the [serial dilution calculator](/biology/serial-dilution/).
+
+## Human genome copies
+
+One haploid human genome weighs about 3.3 pg. So 10 ng of human genomic DNA contains roughly 3,000 haploid genome copies — a useful check for single-copy gene assays.

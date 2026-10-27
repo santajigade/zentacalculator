@@ -20,6 +20,10 @@ faq:
     a: At half the carrying capacity (N = K/2), where the S-shaped curve is steepest.
   - q: Where is the logistic model used?
     a: Ecology, fisheries management, the spread of innovations and epidemics in their early stages.
+  - q: "What is carrying capacity?"
+    a: "The maximum population size an environment can support indefinitely with its available resources."
+  - q: "When is logistic growth fastest?"
+    a: "When the population is at half the carrying capacity."
 related: [biology/exponential-population-growth, ecology/mark-recapture]
 ---
 
@@ -36,3 +40,38 @@ Enter the **initial population**, **carrying capacity**, **growth rate** and **t
 N₀ = 50, K = 1,000, r = 0.4 per year, after 10 years:
 
 N = 1,000 ÷ (1 + 19 × e⁻⁴) = **742**
+
+## Logistic vs exponential
+
+| Feature | Exponential | Logistic |
+|---|---|---|
+| Shape | J-curve | S-curve |
+| Limit | None | Carrying capacity K |
+| Fastest growth | At the end | At N = K ÷ 2 |
+| Best for | Early growth, plenty of resources | Populations reaching resource limits |
+
+## Population over time (N₀ = 50, K = 1,000, r = 0.4)
+
+| Time | Population |
+|---|---|
+| 0 | 50 |
+| 2 | 105 |
+| 4 | 207 |
+| 6 | 367 |
+| 8 | 564 |
+| 10 | 742 |
+| 12 | 865 |
+| 15 | 955 |
+| 20 | 994 |
+
+## Maximum growth rate
+
+The population grows fastest when it reaches half the carrying capacity, at a rate of r × K ÷ 4 individuals per time unit. Fisheries use this idea for “maximum sustainable yield”: harvest at the level that keeps the population near K/2.
+
+## Time to reach a level
+
+<p class="formula">t = ln[(K − N₀) × N ÷ (N₀ × (K − N))] ÷ r</p>
+
+## Beyond biology
+
+The logistic curve also models technology adoption, the spread of rumours and some epidemics in their early stages.

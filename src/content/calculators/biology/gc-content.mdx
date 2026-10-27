@@ -21,6 +21,10 @@ faq:
     a: G–C pairs have three hydrogen bonds versus two for A–T, so GC-rich DNA is more stable and melts at a higher temperature.
   - q: What is a typical GC content?
     a: About 40–42% for the human genome; bacteria range from under 25% to over 70%.
+  - q: "What is a good GC content for primers?"
+    a: "40–60%."
+  - q: "Does high GC content make DNA more stable?"
+    a: "Yes. Higher GC content generally raises the melting temperature."
 related: [biology/primer-tm, biology/dna-copy-number]
 ---
 
@@ -35,3 +39,32 @@ Enter the counts of **G, C, A and T** (use T for U in RNA). The total length and
 ## Example
 
 G = 120, C = 110, A = 140, T = 130 → total 500 bases → GC = **46%**
+
+## GC content across organisms
+
+| Organism | GC content (approx.) |
+|---|---|
+| *Plasmodium falciparum* (malaria parasite) | about 19% |
+| *Saccharomyces cerevisiae* (yeast) | about 38% |
+| Human | about 41% |
+| *Escherichia coli* | about 51% |
+| *Streptomyces coelicolor* | about 72% |
+
+## Why GC content matters
+
+- **Stability**: G–C pairs form three hydrogen bonds and stack more strongly than A–T pairs, raising the melting temperature.
+- **PCR primers**: aim for 40–60% GC, with a G or C at the 3′ end (a “GC clamp”). See the [primer Tm calculator](/biology/primer-tm/).
+- **Sequencing**: very high or low GC regions are harder to sequence and amplify evenly.
+- **Gene density**: in mammals, GC-rich regions tend to be gene-rich.
+
+## Melting temperature of long DNA
+
+For DNA longer than about 50 bp, a common estimate is:
+
+<p class="formula">Tm ≈ 64.9 + 41 × (G + C − 16.4) ÷ N</p>
+
+For a 500 bp fragment with 46% GC: Tm ≈ 64.9 + 41 × (230 − 16.4) ÷ 500 = **82.4 °C**.
+
+## Codon usage
+
+Organisms with high GC content tend to use G or C in the third position of codons. This affects how well a gene from one organism expresses in another, which is why genes are often codon-optimised.

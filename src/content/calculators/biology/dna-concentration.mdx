@@ -28,6 +28,10 @@ faq:
     a: About 1.8 for pure DNA and about 2.0 for pure RNA. Lower values suggest protein or phenol contamination.
   - q: Are µg/mL and ng/µL the same?
     a: Yes, they are equal.
+  - q: "What is a good A260/A280 ratio?"
+    a: "About 1.8 for DNA and 2.0 for RNA."
+  - q: "Is ng/µL the same as µg/mL?"
+    a: "Yes, they are numerically identical."
 related: [biology/dna-copy-number, biology/protein-concentration-a280, chemistry/beer-lambert]
 ---
 
@@ -45,6 +49,40 @@ dsDNA diluted 1:10 with A260 = 0.45 and A280 = 0.24:
 
 - Concentration = 0.45 × 50 × 10 = **225 µg/mL**
 - A260/A280 = **1.88** → acceptable purity
+
+## Conversion factors
+
+| Nucleic acid | 1 A260 unit equals |
+|---|---|
+| Double-stranded DNA | 50 µg/mL |
+| Single-stranded DNA | 33 µg/mL |
+| RNA | 40 µg/mL |
+| Oligonucleotides | about 20–33 µg/mL (sequence-dependent) |
+
+## Purity ratios
+
+| Ratio | Pure DNA | Pure RNA | Low values suggest |
+|---|---|---|---|
+| A260/A280 | about 1.8 | about 2.0 | Protein or phenol contamination |
+| A260/A230 | 2.0–2.2 | 2.0–2.2 | Salts, guanidine, carbohydrates |
+
+## From concentration to copies
+
+Once you know the mass, convert to copy number with the [DNA copy number calculator](/biology/dna-copy-number/) — essential for qPCR standards and cloning.
+
+## Other quantification methods
+
+| Method | Advantage |
+|---|---|
+| UV absorbance (A260) | Fast, no reagents |
+| Fluorescent dyes (e.g. dsDNA-specific) | More sensitive, ignores RNA and free nucleotides |
+| Gel electrophoresis | Shows size and integrity |
+
+Fluorometric assays are preferred for low concentrations and for next-generation sequencing library preparation.
+
+## Micro-volume spectrophotometers
+
+Instruments that measure 1–2 µL drops use short path lengths and automatically normalise to 1 cm. Enter the reading as shown and set the dilution factor to 1 if you did not dilute.
 
 ## Reliable readings
 

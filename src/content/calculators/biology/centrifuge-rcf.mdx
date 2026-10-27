@@ -18,6 +18,10 @@ faq:
     a: In the rotor manual — use the maximum radius (rmax) measured from the centre to the bottom of the tube.
   - q: What speed gives 10,000 × g?
     a: Press × on Speed and enter 10,000 as RCF. With an 8.5 cm rotor that is about 10,260 rpm.
+  - q: "How do I convert rpm to g?"
+    a: "RCF = 1.118 × 10⁻⁵ × radius (cm) × rpm². At 12,000 rpm and 8 cm, RCF ≈ 12,880 × g."
+  - q: "What radius should I use?"
+    a: "Use r_max (centre of rotation to the tube bottom) from the rotor manual unless your protocol says otherwise."
 related: [physics/centripetal-force, biology/serial-dilution]
 ---
 
@@ -34,3 +38,39 @@ Enter the **speed** in rpm and the **rotor radius**. The RCF is calculated. To c
 12,000 rpm with an 8.5 cm rotor:
 
 RCF = 1.118 × 10⁻⁵ × 8.5 × 12,000² = **13,684 × g**
+
+## RCF at common speeds
+
+| rpm | Radius 6 cm | Radius 8 cm | Radius 10 cm | Radius 15 cm |
+|---|---|---|---|---|
+| 1,000 | 67 | 89 | 112 | 168 |
+| 2,000 | 268 | 358 | 447 | 671 |
+| 3,000 | 604 | 805 | 1,006 | 1,509 |
+| 5,000 | 1,677 | 2,236 | 2,795 | 4,192 |
+| 10,000 | 6,708 | 8,944 | 11,180 | 16,770 |
+| 13,000 | 11,337 | 15,115 | 18,894 | 28,341 |
+| 15,000 | 15,093 | 20,124 | 25,155 | 37,732 |
+
+## rpm from RCF
+
+<p class="formula">rpm = √(RCF ÷ (1.118 × 10⁻⁵ × r))</p>
+
+To get 1,500 × g in a rotor with a 10 cm radius: rpm = √(1,500 ÷ 0.0001118) ≈ **3,663 rpm**. Press × on Speed in the calculator and type the RCF.
+
+## Why protocols use × g
+
+Different centrifuges have different rotor radii, so the same rpm gives different forces. Always report and follow **× g** rather than rpm so results are reproducible.
+
+## Typical spins
+
+| Task | Typical force |
+|---|---|
+| Pelleting mammalian cells | 200–400 × g, 5 min |
+| Separating plasma from blood | 1,000–2,000 × g, 10–15 min |
+| Pelleting bacteria | 3,000–5,000 × g |
+| Microcentrifuge DNA spins | 12,000–16,000 × g |
+| Ultracentrifugation | 100,000 × g and above |
+
+## Which radius?
+
+Use the radius to the bottom of the tube (r<sub>max</sub>) for the maximum force, or the average radius (r<sub>av</sub>) to compare rotors. The rotor manual lists both.

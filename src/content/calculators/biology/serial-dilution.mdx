@@ -20,6 +20,10 @@ faq:
     a: Mix 1 part sample with 9 parts diluent — for example 100 µL into 900 µL.
   - q: How do I count CFU from a plate?
     a: CFU/mL = colonies ÷ (volume plated in mL × total dilution).
+  - q: "What is a 1:10 serial dilution?"
+    a: "Each step dilutes the previous one tenfold, for example 100 µL into 900 µL."
+  - q: "What is the total dilution after 6 tenfold steps?"
+    a: "10⁶, or one million-fold."
 related: [chemistry/dilution, biology/hemocytometer]
 ---
 
@@ -39,3 +43,38 @@ Enter the **starting concentration**, the **dilution factor per step** and the *
 - Final concentration = **100 cells/mL**
 
 Plating 100 µL gives about 10 colonies — easy to count.
+
+## 10-fold dilution series
+
+Starting at 10⁸ per mL:
+
+| Tube | Total dilution | Concentration |
+|---|---|---|
+| 1 | 10<sup>1</sup> | 1e+07 per mL |
+| 2 | 10<sup>2</sup> | 1e+06 per mL |
+| 3 | 10<sup>3</sup> | 1e+05 per mL |
+| 4 | 10<sup>4</sup> | 1e+04 per mL |
+| 5 | 10<sup>5</sup> | 1e+03 per mL |
+| 6 | 10<sup>6</sup> | 1e+02 per mL |
+| 7 | 10<sup>7</sup> | 1e+01 per mL |
+| 8 | 10<sup>8</sup> | 1e+00 per mL |
+
+## Plate counts (CFU)
+
+To count bacteria, plate dilutions and choose the plate with **30–300 colonies**:
+
+<p class="formula">CFU/mL = colonies ÷ (volume plated in mL × dilution)</p>
+
+If 150 colonies grow from 0.1 mL of the 10⁻⁶ dilution: 150 ÷ (0.1 × 10⁻⁶) = **1.5 × 10⁹ CFU/mL**.
+
+## 2-fold dilutions
+
+Two-fold series are used for antibiotic MIC tests and antibody titres. After n steps the dilution is 2ⁿ: 10 steps give 1:1,024.
+
+## Making each step
+
+For a 1:10 step with a final volume of 1 mL, transfer 100 µL into 900 µL of diluent. Mix well and use a fresh tip for each transfer to avoid carry-over errors.
+
+## Error build-up
+
+Small pipetting errors multiply across steps. Use calibrated pipettes and, for critical work, make the dilution in fewer, larger steps.

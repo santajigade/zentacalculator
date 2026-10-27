@@ -4,6 +4,7 @@ import { compileAll, solve, fmtNum, type SolveResult } from '../lib/solver.ts';
 import { findUnit, getUnits, toBase, fromBase } from '../lib/units.ts';
 import Chart from './Chart.tsx';
 import { SITE } from "../site.config.ts";
+import { siWhatsapp, siFacebook, siX, siTelegram, siReddit } from 'simple-icons';
 import { detectRegion, type Region } from "../lib/region.ts";
 import { parseList, listStats } from "../lib/stats.ts";
 
@@ -76,6 +77,12 @@ export default function Calculator({ spec, path, embed = false }: { spec: CalcSp
   const pre = (v: VarSpec) => v.prefix ?? (v.family === 'currency' ? region?.currency ?? '$' : '');
   const [showSteps, setShowSteps] = useState(false);
   const [toast, setToast] = useState('');
+  const [shareOpen, setShareOpen] = useState(false);
+  useEffect(() => {
+    if (!shareOpen) return;
+    const k = (e: KeyboardEvent) => { if (e.key === 'Escape') setShareOpen(false); };
+    addEventListener('keydown', k); return () => removeEventListener('keydown', k);
+  }, [shareOpen]);
   const lastResult = useRef<SolveResult | null>(null);
 
   // After hydration: apply the visitor's region, then restore from URL (?V=12&V.u=kV)
@@ -268,7 +275,7 @@ export default function Calculator({ spec, path, embed = false }: { spec: CalcSp
 
       <div class="calc__actions">
         <button type="button" class="btn btn--primary" onClick={() => copy(resultText, 'Result copied')}>Copy result</button>
-        {!embed && <button type="button" class="btn" onClick={() => copy(shareUrl(), 'Link copied')}>Share link</button>}
+        {!embed && <button type="button" class="btn" onClick={() => setShareOpen(true)}>Share</button>}
         <button type="button" class="btn" onClick={() => setShowSteps((s) => !s)} aria-expanded={showSteps}>
           {showSteps ? 'Hide steps' : 'Show steps'}
         </button>
@@ -296,6 +303,44 @@ export default function Calculator({ spec, path, embed = false }: { spec: CalcSp
           selectIds={selectIds} units={state.units} bounds={bounds} />
       )}
 
+
+      {shareOpen && (() => {
+        const url = shareUrl();
+        const text = `${spec.title}: try it free on ${SITE.name}`;
+        const u = encodeURIComponent(url), t = encodeURIComponent(text);
+        const ico: Record<string, string> = { WhatsApp: siWhatsapp.path, Facebook: siFacebook.path, X: siX.path, Telegram: siTelegram.path, Reddit: siReddit.path,
+          Email: 'M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.2V17h16V7.2l-8 5.3-8-5.3zM5.2 7l6.8 4.5L18.8 7H5.2z' };
+        const nets: [string, string, string][] = [
+          ['WhatsApp', '#25d366', `https://wa.me/?text=${t}%20${u}`],
+          ['Facebook', '#1877f2', `https://www.facebook.com/sharer/sharer.php?u=${u}`],
+          ['LinkedIn', '#0a66c2', `https://www.linkedin.com/sharing/share-offsite/?url=${u}`],
+          ['X', '#000000', `https://twitter.com/intent/tweet?text=${t}&url=${u}`],
+          ['Telegram', '#229ed9', `https://t.me/share/url?url=${u}&text=${t}`],
+          ['Reddit', '#ff4500', `https://www.reddit.com/submit?url=${u}&title=${t}`],
+          ['Email', '#5b6275', `mailto:?subject=${t}&body=${u}`],
+        ];
+        const canNative = typeof navigator !== 'undefined' && 'share' in navigator;
+        return (
+          <div class="share" role="dialog" aria-modal="true" aria-label="Share this calculation" onClick={(e) => { if (e.target === e.currentTarget) setShareOpen(false); }}>
+            <div class="share__box">
+              <div class="share__head"><b>Share this calculation</b><button type="button" class="share__x" aria-label="Close" onClick={() => setShareOpen(false)}>×</button></div>
+              <p class="share__note">The link opens this calculator with your current values filled in.</p>
+              <div class="share__nets">
+                {nets.map(([name, color, href]) => (
+                  <a class="share__net" style={{ '--c': color }} href={href} target="_blank" rel="noopener nofollow">
+                    <span class="share__dot">{ico[name] ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d={ico[name]} fill="#fff" /></svg> : <b>in</b>}</span>{name}
+                  </a>
+                ))}
+                {canNative && <button type="button" class="share__net" style={{ '--c': '#4f5bff' }} onClick={() => navigator.share({ title: spec.title, text, url }).catch(() => {})}><span class="share__dot">⋯</span>More</button>}
+              </div>
+              <div class="share__link">
+                <input readOnly value={url} onFocus={(e) => (e.currentTarget as HTMLInputElement).select()} aria-label="Link" />
+                <button type="button" class="btn btn--primary" onClick={() => copy(url, 'Link copied')}>{toast === 'Link copied' ? 'Copied ✓' : 'Copy'}</button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
       {embed && <a class="calc__credit" href={path} target="_blank" rel="noopener">Powered by {SITE.name}</a>}
     </div>
   );

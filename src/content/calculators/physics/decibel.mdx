@@ -1,0 +1,80 @@
+---
+title: Decibel Calculator (dB Power and Voltage Ratios)
+description: Convert power and voltage ratios to decibels and back — dB gain and loss for audio, RF and signal chains, plus sound levels.
+category: physics
+keywords: [decibel calculator, db calculator, power ratio to db, voltage ratio to db, db gain, 3 db, 10 log, 20 log, sound level]
+updated: 2026-10-27
+variables:
+  - { id: P1, label: Reference power (P₁), family: power, unit: W, default: 1, min: 0 }
+  - { id: P2, label: Power (P₂), family: power, unit: W, default: 100, min: 0 }
+  - { id: dbp, label: Power ratio in dB, suffix: dB, decimals: 2 }
+  - { id: V1, label: Reference voltage (V₁), family: voltage, unit: V, default: 1, min: 0 }
+  - { id: V2, label: Voltage (V₂), family: voltage, unit: V, default: 10, min: 0 }
+  - { id: dbv, label: Voltage ratio in dB, suffix: dB, decimals: 2 }
+equations:
+  - dbp = 10 * log10(P2 / P1)
+  - dbv = 20 * log10(V2 / V1)
+faq:
+  - q: Why is power 10 log but voltage 20 log?
+    a: Power is proportional to voltage squared, so 10 log(V²) = 20 log(V). A tenfold voltage increase is a hundredfold power increase — both 20 dB.
+  - q: What does 3 dB mean?
+    a: A doubling of power (or halving for −3 dB). For voltage, doubling is about 6 dB.
+  - q: How do I add gains in a signal chain?
+    a: Add the dB values. An amplifier of +20 dB followed by a cable loss of −3 dB gives +17 dB overall.
+  - q: What is dBm?
+    a: Power relative to 1 mW. 0 dBm = 1 mW, 30 dBm = 1 W.
+related: [math/logarithm, physics/wavelength-frequency, physics/ohms-law, physics/doppler-effect]
+---
+
+## How to use this calculator
+
+Use the top section for **power** ratios and the bottom for **voltage** (or current, or sound pressure) ratios. Enter the reference and the measured value to get decibels, or enter dB and a reference to find the other value.
+
+## The formulas
+
+<p class="formula">dB = 10 log₁₀(P₂ ÷ P₁) &nbsp;·&nbsp; dB = 20 log₁₀(V₂ ÷ V₁)</p>
+
+## dB reference table
+
+| dB | Power ratio | Voltage ratio |
+|---|---|---|
+| -20 | 0.01× | 0.1× |
+| -10 | 0.1× | 0.3162× |
+| -6 | 0.2512× | 0.5012× |
+| -3 | 0.5012× | 0.7079× |
+| +0 | 1× | 1× |
+| +3 | 1.995× | 1.413× |
+| +6 | 3.981× | 1.995× |
+| +10 | 10× | 3.162× |
+| +20 | 100× | 10× |
+| +30 | 1000× | 31.62× |
+| +40 | 1e+04× | 100× |
+| +60 | 1e+06× | 1000× |
+
+## dB units with references
+
+| Unit | Reference |
+|---|---|
+| dBm | 1 mW |
+| dBW | 1 W |
+| dBV | 1 V |
+| dBu | 0.775 V |
+| dB SPL | 20 µPa sound pressure |
+
+## Sound levels (dB SPL)
+
+| Sound | Level |
+|---|---|
+| Threshold of hearing | 0 dB |
+| Quiet room | 30 dB |
+| Normal conversation | 60 dB |
+| Busy traffic | 80 dB |
+| Hearing damage risk with long exposure | 85 dB and above |
+| Rock concert | 110 dB |
+| Pain threshold | 120–130 dB |
+
+Every 10 dB increase sounds roughly twice as loud and carries ten times the sound power.
+
+## Signal chains
+
+In RF and audio systems, gains and losses in dB simply add, which is why engineers prefer them to multiplying ratios.

@@ -1,0 +1,76 @@
+---
+title: Heat Conduction Calculator (Fourier's Law)
+description: Calculate heat flow through a wall, window or insulation layer using Fourier's law — with thermal conductivity, U-values and R-values.
+category: physics
+keywords: [heat conduction calculator, fouriers law, heat transfer through wall, thermal conductivity, u value calculator, r value, heat loss calculator]
+updated: 2026-10-27
+variables:
+  - { id: k, label: Thermal conductivity (k), suffix: W/m·K, default: 0.04, min: 0 }
+  - { id: A, label: Area, family: area, unit: m2, imperialUnit: ft2, default: 10, min: 0 }
+  - { id: dT, label: Temperature difference, family: tempdiff, unit: K, imperialUnit: F, default: 20, min: 0 }
+  - { id: d, label: Thickness, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: Q, label: Heat flow, family: power, unit: W, min: 0 }
+  - { id: U, label: U-value, suffix: W/m²·K, min: 0, decimals: 3 }
+  - { id: Rv, label: R-value, suffix: m²·K/W, min: 0, decimals: 2 }
+equations:
+  - Q = k * A * dT / d
+  - U = k / d
+  - Rv = d / k
+faq:
+  - q: What is Fourier's law?
+    a: Heat flow through a material is proportional to its conductivity, area and temperature difference, and inversely proportional to its thickness — Q = kAΔT ÷ d.
+  - q: What is the difference between U-value and R-value?
+    a: R-value measures resistance to heat flow (higher is better insulation). U-value is its inverse, heat flow per m² per degree (lower is better).
+  - q: How do I combine layers?
+    a: Add the R-values of each layer, then U = 1 ÷ total R. Include surface resistances for walls and windows.
+  - q: How much heat does a wall lose in a day?
+    a: Multiply heat flow in watts by 24 and divide by 1,000 for kWh per day.
+related: [chemistry/specific-heat, engineering/heat-duty, engineering/thermal-expansion, everyday-life/electricity-cost]
+---
+
+## How to use this calculator
+
+Enter the material's **thermal conductivity**, the **area**, the **temperature difference** across it and its **thickness**. You get the heat flow, U-value and R-value of that layer.
+
+## Fourier's law
+
+<p class="formula">Q = k × A × ΔT ÷ d</p>
+
+## Thermal conductivity of materials
+
+| Material | k (W/m·K) |
+|---|---|
+| Copper | 385–400 |
+| Aluminium | 205–237 |
+| Steel | 45–50 |
+| Concrete | 1.0–1.8 |
+| Brick | 0.6–1.0 |
+| Glass | about 1.0 |
+| Water | 0.6 |
+| Wood (softwood) | 0.12–0.15 |
+| Mineral wool | 0.032–0.040 |
+| Expanded polystyrene (EPS) | 0.033–0.038 |
+| Polyurethane (PIR) foam | 0.022–0.028 |
+| Still air | 0.026 |
+
+## Example
+
+10 m² of 100 mm mineral wool (k = 0.04) with a 20 °C difference:
+
+- Q = 0.04 × 10 × 20 ÷ 0.1 = **80 W**
+- U = 0.4 W/m²·K, R = 2.5 m²·K/W
+
+The same area of 100 mm concrete would lose 3,600 W — 45 times more.
+
+## Windows
+
+| Glazing | Typical U-value (W/m²·K) |
+|---|---|
+| Single glazing | 5.0–5.8 |
+| Double glazing | 2.6–2.8 |
+| Double, low-e, argon | 1.2–1.6 |
+| Triple glazing | 0.6–0.8 |
+
+## Imperial R-values
+
+US R-values use ft²·°F·h/BTU. Multiply SI R-values by 5.678 to convert: R 2.5 SI ≈ R-14 US.

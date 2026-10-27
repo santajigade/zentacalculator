@@ -1,0 +1,61 @@
+---
+title: Torque Calculator (Force × Lever Arm)
+description: Calculate torque from force and lever length at any angle — or the force needed to reach a target torque with a spanner or wrench.
+category: physics
+keywords: [torque calculator, torque formula, force times distance, moment of force, wrench torque, lever arm, newton metre]
+updated: 2026-10-27
+variables:
+  - { id: F, label: Force, family: force, unit: N, imperialUnit: lbf, default: 200, min: 0 }
+  - { id: r, label: Lever arm length, family: length, unit: m, imperialUnit: ft, default: 0.3, min: 0 }
+  - { id: th, label: Angle between force and lever, family: angle, unit: deg, default: 90, min: 0, max: 3.1416 }
+  - { id: T, label: Torque, family: torque, unit: Nm, imperialUnit: lbft, min: 0 }
+equations:
+  - T = F * r * sin(th)
+faq:
+  - q: What is the torque formula?
+    a: τ = F × r × sin θ, where F is the force, r the distance from the pivot and θ the angle between them.
+  - q: Why is a longer spanner easier to use?
+    a: Torque is force × distance. Doubling the handle length halves the force needed for the same torque.
+  - q: What is the difference between torque and work?
+    a: Both use newton-metres, but torque is a turning effect (a vector), while work is energy (a scalar), usually written in joules.
+  - q: How do I convert N·m to ft-lb?
+    a: Multiply by 0.7376. 100 N·m ≈ 73.8 lbf·ft.
+related: [conversion/torque-converter, engineering/torque-power-speed, physics/force, physics/work-and-power]
+---
+
+## How to use this calculator
+
+Enter the **force**, the **lever arm length** (distance from the pivot to where the force acts) and the **angle** between them (90° for a push at right angles). The calculator gives the torque. To find the force needed for a given torque, press × on Force.
+
+## The formula
+
+<p class="formula">τ = F × r × sin θ</p>
+
+Torque is greatest when the force is perpendicular to the lever (θ = 90°) and zero when pushing along the lever.
+
+## Force needed for common torques
+
+| Torque | 20 cm spanner | 30 cm spanner | 50 cm breaker bar |
+|---|---|---|---|
+| 25 N·m | 125 N (12.7 kgf) | 83 N (8.5 kgf) | 50 N (5.1 kgf) |
+| 50 N·m | 250 N (25.5 kgf) | 167 N (17.0 kgf) | 100 N (10.2 kgf) |
+| 100 N·m | 500 N (51.0 kgf) | 333 N (34.0 kgf) | 200 N (20.4 kgf) |
+| 150 N·m | 750 N (76.5 kgf) | 500 N (51.0 kgf) | 300 N (30.6 kgf) |
+| 250 N·m | 1250 N (127.4 kgf) | 833 N (84.9 kgf) | 500 N (51.0 kgf) |
+
+## Levers and balance
+
+A lever balances when torques on both sides are equal: F₁ × r₁ = F₂ × r₂. A 50 kg child 2 m from a see-saw pivot balances a 100 kg adult 1 m from it.
+
+## Torque in everyday life
+
+| Task | Typical torque |
+|---|---|
+| Opening a jar lid | 1–3 N·m |
+| Bicycle pedal (hard effort) | 50–100 N·m |
+| Car wheel nuts | 80–140 N·m |
+| Small car engine (peak) | 100–250 N·m |
+
+## Torque wrenches
+
+Use a calibrated torque wrench for bolts with a specified torque. Hold the handle at its marked grip point — pulling elsewhere changes the effective lever length.

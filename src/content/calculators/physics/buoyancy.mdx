@@ -1,0 +1,63 @@
+---
+title: Buoyancy Calculator (Archimedes' Principle)
+description: Calculate the buoyant force on an object in water or another fluid, its apparent weight and whether it will float — using Archimedes' principle.
+category: physics
+keywords: [buoyancy calculator, buoyant force, archimedes principle, will it float, apparent weight, displacement calculator, upthrust]
+updated: 2026-10-27
+variables:
+  - { id: V, label: Volume submerged, family: volume, unit: L, imperialUnit: ft3, default: 10, min: 0 }
+  - { id: rf, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
+  - { id: m, label: Object mass, family: mass, unit: kg, imperialUnit: lb, default: 8, min: 0 }
+  - { id: Fb, label: Buoyant force, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: W, label: Weight, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: Wa, label: Apparent weight (negative = floats up), family: force, unit: N, imperialUnit: lbf }
+equations:
+  - Fb = rf * g0 * V
+  - W = m * g0
+  - Wa = W - Fb
+faq:
+  - q: What is Archimedes' principle?
+    a: An object immersed in a fluid is pushed up by a force equal to the weight of fluid it displaces.
+  - q: How do I know if something will float?
+    a: If its average density is less than the fluid’s, it floats. In the calculator, a negative apparent weight when fully submerged means it will float up.
+  - q: How much of a floating object is underwater?
+    a: The fraction submerged equals object density ÷ fluid density. Ice (917 kg/m³) floats with about 90% underwater in seawater.
+  - q: Why do ships made of steel float?
+    a: Their hollow hulls displace a large volume of water, so their average density is less than water.
+related: [physics/density, physics/pressure, engineering/hydrostatic-pressure, physics/weight]
+---
+
+## How to use this calculator
+
+Enter the **volume** of the object under the fluid, the **fluid density** and the object's **mass**. You get the buoyant force, the object's weight and its apparent weight while submerged. A negative apparent weight means the object would rise and float.
+
+## The formula
+
+<p class="formula">F<sub>b</sub> = ρ<sub>fluid</sub> × g × V<sub>submerged</sub></p>
+
+## Fluid densities
+
+| Fluid | Density (kg/m³) |
+|---|---|
+| Fresh water | 1,000 |
+| Seawater | 1,025 |
+| Dead Sea water | about 1,240 |
+| Olive oil | 910 |
+| Mercury | 13,534 |
+| Air (20 °C) | 1.2 |
+
+## Example
+
+A 10 L object weighing 8 kg, fully submerged in fresh water:
+
+- Buoyant force = 1,000 × 9.81 × 0.01 = **98.1 N**
+- Weight = 8 × 9.81 = **78.5 N**
+- Apparent weight = **−19.6 N** → it floats, with 80% of its volume underwater.
+
+## Weighing in water
+
+Apparent weight lets you find density without measuring volume: density = ρ<sub>water</sub> × weight in air ÷ (weight in air − weight in water). Archimedes is said to have used this to test whether a crown was pure gold.
+
+## Hot-air balloons
+
+Balloons float in air for the same reason. Heating the air inside lowers its density; the difference in density times the balloon volume gives the lift.

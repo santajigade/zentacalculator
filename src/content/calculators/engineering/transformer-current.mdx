@@ -1,0 +1,79 @@
+---
+title: Transformer Current Calculator (Full-Load Amps)
+description: Calculate primary and secondary full-load current of single-phase and three-phase transformers from kVA and voltages.
+category: engineering
+keywords: [transformer current calculator, transformer full load current, kva to amps transformer, primary current, secondary current, 3 phase transformer current]
+updated: 2026-10-27
+variables:
+  - { id: S, label: Transformer rating, suffix: kVA, default: 500, min: 0 }
+  - id: ph
+    label: Phases
+    default: 1.7320508
+    options:
+      - { label: Three-phase, value: 1.7320508 }
+      - { label: Single-phase, value: 1 }
+  - { id: Vp, label: Primary voltage (line), family: voltage, unit: kV, default: 11, min: 0 }
+  - { id: Vs, label: Secondary voltage (line), family: voltage, unit: V, default: 433, min: 0 }
+  - { id: Ip, label: Primary full-load current, family: current, unit: A, min: 0 }
+  - { id: Is, label: Secondary full-load current, family: current, unit: A, min: 0 }
+  - { id: n, label: Voltage ratio, min: 0, decimals: 2 }
+equations:
+  - Ip = S * 1000 / (ph * Vp)
+  - Is = S * 1000 / (ph * Vs)
+  - n = Vp / Vs
+faq:
+  - q: How do I calculate transformer full-load current?
+    a: Three-phase I = kVA × 1,000 ÷ (√3 × V); single-phase I = kVA × 1,000 ÷ V, using line voltage.
+  - q: What is the full-load current of a 500 kVA, 11 kV/433 V transformer?
+    a: About 26.2 A on the 11 kV side and 667 A on the 433 V side.
+  - q: Why is distribution secondary voltage 433 V, not 415 V?
+    a: The no-load secondary is set slightly higher to allow for voltage drop under load, so customers receive close to 415 V.
+  - q: Does power factor affect transformer current?
+    a: Not the rating calculation — transformers are rated in kVA, so full-load current depends only on kVA and voltage.
+related: [engineering/transformer-short-circuit, engineering/kva-to-kw, engineering/kw-to-amps, engineering/cable-voltage-drop]
+---
+
+## How to use this calculator
+
+Enter the **transformer rating** in kVA, choose **three-phase** or **single-phase** and enter the **primary** and **secondary line voltages**. You get the full-load current on each side and the voltage ratio.
+
+## The formulas
+
+| Supply | Full-load current |
+|---|---|
+| Three-phase | I = kVA × 1,000 ÷ (√3 × V<sub>L</sub>) |
+| Single-phase | I = kVA × 1,000 ÷ V |
+
+## Full-load currents (three-phase)
+
+| kVA | 11 kV side | 433 V side | 415 V side |
+|---|---|---|---|
+| 25 | 1.3 A | 33 A | 35 A |
+| 63 | 3.3 A | 84 A | 88 A |
+| 100 | 5.2 A | 133 A | 139 A |
+| 160 | 8.4 A | 213 A | 223 A |
+| 250 | 13.1 A | 333 A | 348 A |
+| 315 | 16.5 A | 420 A | 438 A |
+| 400 | 21.0 A | 533 A | 556 A |
+| 500 | 26.2 A | 667 A | 696 A |
+| 630 | 33.1 A | 840 A | 876 A |
+| 1000 | 52.5 A | 1333 A | 1391 A |
+| 1600 | 84.0 A | 2133 A | 2226 A |
+| 2000 | 105.0 A | 2667 A | 2782 A |
+| 2500 | 131.2 A | 3333 A | 3478 A |
+
+A useful shortcut at 415–433 V three-phase: full-load current ≈ 1.33–1.39 × kVA.
+
+## Selecting protection
+
+- **LV breaker**: rated at or just above the secondary full-load current.
+- **HV fuse or breaker**: sized for full-load current while riding through magnetising inrush (often 8–12 × rated current for a few cycles).
+- **Cables and busbars**: rated for full-load current with installation derating factors.
+
+## Loading
+
+Distribution transformers are most efficient at about 40–60% load. Continuous overloading shortens insulation life; follow the manufacturer's loading guide (IEC 60076-7).
+
+## Fault current
+
+Short-circuit current depends on the transformer's impedance. See the [transformer short-circuit calculator](/engineering/transformer-short-circuit/).

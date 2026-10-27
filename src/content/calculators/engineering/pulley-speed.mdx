@@ -1,0 +1,76 @@
+---
+title: Pulley Speed and Belt Length Calculator
+description: Calculate driven pulley rpm, speed ratio, belt speed and belt length for two-pulley belt drives — or the pulley size for a target speed.
+category: engineering
+keywords: [pulley speed calculator, pulley rpm calculator, belt length calculator, pulley ratio, v belt calculator, belt speed, driven pulley diameter]
+updated: 2026-10-27
+variables:
+  - { id: N1, label: Driver speed, suffix: rpm, default: 1440, min: 0 }
+  - { id: D1, label: Driver pulley diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: D2, label: Driven pulley diameter, family: length, unit: mm, imperialUnit: in, default: 250, min: 0 }
+  - { id: C, label: Centre distance, family: length, unit: mm, imperialUnit: in, default: 500, min: 0 }
+  - { id: N2, label: Driven speed, suffix: rpm, min: 0, decimals: 0 }
+  - { id: i, label: Speed ratio (D2 ÷ D1), min: 0, decimals: 3 }
+  - { id: v, label: Belt speed, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+  - { id: Lb, label: Belt length (pitch), family: length, unit: mm, imperialUnit: in, min: 0 }
+equations:
+  - N2 = N1 * D1 / D2
+  - i = D2 / D1
+  - v = pi * D1 * N1 / 60
+  - Lb = 2*C + pi * (D1 + D2) / 2 + (D2 - D1)^2 / (4*C)
+faq:
+  - q: How do I calculate pulley rpm?
+    a: Driven rpm = driver rpm × driver diameter ÷ driven diameter. A 1,440 rpm motor with a 100 mm pulley driving a 250 mm pulley gives 576 rpm.
+  - q: What size pulley do I need for a target speed?
+    a: Enter the target as Driven speed and press × on Driven pulley diameter.
+  - q: What is a good belt speed for V-belts?
+    a: Classical V-belts work best at about 5–25 m/s, with around 20 m/s often most efficient. Very low speeds need high tension; very high speeds cause centrifugal losses.
+  - q: Does torque change with pulley size?
+    a: Yes. Torque increases by the same ratio that speed decreases (ignoring losses). A 2.5:1 reduction gives about 2.5 times the torque.
+related: [engineering/torque-power-speed, sports/cycling-gear-speed, physics/torque, engineering/three-phase-motor-power]
+---
+
+## How to use this calculator
+
+Enter the **driver speed**, **driver pulley diameter**, **driven pulley diameter** and **centre distance** between shafts. You get the driven speed, speed ratio, belt speed and approximate belt length.
+
+## The formulas
+
+| Quantity | Formula |
+|---|---|
+| Driven speed | N₂ = N₁ × D₁ ÷ D₂ |
+| Belt speed | v = π × D₁ × N₁ ÷ 60 |
+| Belt length | L ≈ 2C + π(D₁ + D₂)/2 + (D₂ − D₁)²/(4C) |
+
+Use pitch diameters for V-belts.
+
+## Example
+
+1,440 rpm motor, 100 mm → 250 mm, 500 mm centres:
+
+- Driven speed = **576 rpm**
+- Belt speed = π × 0.1 × 1,440 ÷ 60 = **7.54 m/s**
+- Belt length ≈ **1561 mm**
+
+## Driven speeds from a 1,440 rpm motor
+
+| Driver / driven (mm) | Ratio | Driven speed |
+|---|---|---|
+| 100 / 100 | 1.00 | 1440 rpm |
+| 100 / 150 | 1.50 | 960 rpm |
+| 100 / 200 | 2.00 | 720 rpm |
+| 100 / 250 | 2.50 | 576 rpm |
+| 80 / 300 | 3.75 | 384 rpm |
+| 150 / 100 | 0.67 | 2160 rpm |
+| 200 / 100 | 0.50 | 2880 rpm |
+
+## Belt drive tips
+
+- Keep the speed ratio below about 6:1 for single V-belt stages to maintain wrap angle on the small pulley.
+- Do not go below the minimum recommended pulley diameter for the belt section — small pulleys shorten belt life.
+- Check alignment and tension; misalignment is a leading cause of belt failure.
+- Real speed is 1–3% lower than calculated because of belt slip and creep.
+
+## Choosing a standard belt
+
+Round the calculated length to the nearest standard belt size, then adjust the centre distance with the motor slide rails to set tension.

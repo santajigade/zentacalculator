@@ -1,0 +1,68 @@
+---
+title: Coulomb's Law Calculator (Electric Force)
+description: Calculate the electrostatic force between two point charges, or the distance or charge needed for a given force, using Coulomb's law.
+category: physics
+keywords: [coulombs law calculator, electric force calculator, electrostatic force, point charges, coulomb constant, force between charges]
+updated: 2026-10-27
+variables:
+  - { id: q1, label: Charge 1, suffix: µC, default: 2 }
+  - { id: q2, label: Charge 2, suffix: µC, default: -3 }
+  - { id: r, label: Distance between charges, family: length, unit: cm, imperialUnit: in, default: 10, min: 0 }
+  - { id: F, label: Force (negative = attraction), family: force, unit: N, imperialUnit: lbf }
+equations:
+  - F = 8.9875517923e9 * q1 * 1e-6 * q2 * 1e-6 / r^2
+faq:
+  - q: What is Coulomb's law?
+    a: F = k q₁q₂ ÷ r², where k ≈ 8.99 × 10⁹ N·m²/C². Like charges repel and opposite charges attract.
+  - q: What does a negative force mean?
+    a: The charges have opposite signs, so the force is attractive.
+  - q: How does distance affect the force?
+    a: Force falls with the square of distance. Doubling the distance cuts the force to a quarter.
+  - q: How big is one coulomb?
+    a: Very large for static charges — about 6.24 × 10¹⁸ electrons. Everyday static charges are usually nanocoulombs to microcoulombs.
+related: [physics/gravitational-force, physics/ohms-law, physics/force, physics/rc-time-constant]
+---
+
+## How to use this calculator
+
+Enter the two **charges** in microcoulombs (use a minus sign for negative charges) and the **distance** between them. The calculator gives the force in newtons. A negative result means attraction; positive means repulsion.
+
+## The formula
+
+<p class="formula">F = k × q₁ × q₂ ÷ r²</p>
+
+with k = 8.9875 × 10⁹ N·m²/C² (1 ÷ 4πε₀).
+
+## Example
+
++2 µC and −3 µC, 10 cm apart:
+
+F = 8.99 × 10⁹ × (2 × 10⁻⁶) × (−3 × 10⁻⁶) ÷ 0.1² = **-5.39 N** (attractive)
+
+## Force vs distance (+1 µC and +1 µC)
+
+| Distance | Force |
+|---|---|
+| 1 cm | 89.9 N |
+| 2 cm | 22.5 N |
+| 5 cm | 3.6 N |
+| 10 cm | 0.899 N |
+| 20 cm | 0.225 N |
+| 50 cm | 0.036 N |
+| 100 cm | 0.00899 N |
+
+## Electric vs gravitational force
+
+Between a proton and an electron, the electric force is about **10³⁹ times** stronger than gravity. Gravity dominates on large scales only because matter is usually electrically neutral.
+
+## In a material
+
+In a medium other than vacuum, divide by the relative permittivity εᵣ. In water (εᵣ ≈ 80) the force between ions is about 80 times weaker, which is why salts dissolve.
+
+## Practical charges
+
+| Situation | Typical charge |
+|---|---|
+| Rubbed balloon | 0.1–1 µC |
+| Van de Graaff dome | 1–10 µC |
+| Lightning strike | 5–20 C |

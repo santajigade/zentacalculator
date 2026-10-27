@@ -1,0 +1,67 @@
+---
+title: Doppler Effect Calculator (Sound)
+description: Calculate the frequency heard from a moving sound source or by a moving observer using the Doppler effect formula — sirens, trains and more.
+category: physics
+keywords: [doppler effect calculator, doppler shift, observed frequency, moving source frequency, siren frequency, doppler formula]
+updated: 2026-10-27
+variables:
+  - { id: f, label: Source frequency, suffix: Hz, default: 700, min: 0 }
+  - { id: v, label: Speed of sound, family: velocity, unit: ms, default: 343, min: 1 }
+  - { id: vo, label: Observer speed (towards the source is positive), family: velocity, unit: kmh, imperialUnit: mph, default: 0 }
+  - { id: vs, label: Source speed (towards the observer is positive), family: velocity, unit: kmh, imperialUnit: mph, default: 72 }
+  - { id: fo, label: Observed frequency, suffix: Hz, min: 0, decimals: 1 }
+  - { id: sh, label: Shift, family: percent, unit: '%' }
+equations:
+  - fo = f * (v + vo) / (v - vs)
+  - sh = fo / f - 1
+faq:
+  - q: What is the Doppler effect?
+    a: The change in frequency heard when a sound source and listener move relative to each other — higher when approaching, lower when moving apart.
+  - q: Why does a siren drop in pitch as it passes?
+    a: While the ambulance approaches, sound waves are squeezed together (higher pitch); after it passes, they are stretched out (lower pitch).
+  - q: How do I calculate a receding source?
+    a: Enter the source speed as a negative number. A source moving away at 72 km/h makes a 700 Hz siren sound about 660 Hz.
+  - q: Does the Doppler effect apply to light?
+    a: Yes. Light from galaxies moving away is shifted towards red (redshift), which is how astronomers know the universe is expanding. Light uses a relativistic formula.
+related: [physics/wavelength-frequency, physics/speed-distance-time, conversion/speed-converter, physics/decibel]
+---
+
+## How to use this calculator
+
+Enter the **source frequency**, the **speed of sound** (343 m/s in air at 20 °C) and the speeds of the **observer** and **source**. Use positive speeds when moving **towards** each other and negative when moving **apart**.
+
+## The formula
+
+<p class="formula">f′ = f × (v + v<sub>o</sub>) ÷ (v − v<sub>s</sub>)</p>
+
+## Siren passing at 72 km/h (700 Hz)
+
+| Situation | Frequency heard |
+|---|---|
+| Approaching | 743 Hz |
+| At the moment it passes | 700 Hz |
+| Moving away | 661 Hz |
+
+The drop of about 80 Hz — roughly a whole tone — is what you hear as the siren goes by.
+
+## Speed of sound in different media
+
+| Medium | Speed |
+|---|---|
+| Air, 0 °C | 331 m/s |
+| Air, 20 °C | 343 m/s |
+| Water | about 1,480 m/s |
+| Steel | about 5,900 m/s |
+
+Speed of sound in air rises about 0.6 m/s for each °C.
+
+## Uses of the Doppler effect
+
+- **Radar speed guns** measure the frequency shift of reflected radio waves.
+- **Doppler ultrasound** measures blood flow in arteries and in pregnancy scans.
+- **Weather radar** detects wind speeds inside storms.
+- **Astronomy** measures how fast stars and galaxies move towards or away from us.
+
+## Sonic booms
+
+If a source moves faster than sound, the formula breaks down — waves pile up into a shock wave heard as a sonic boom.

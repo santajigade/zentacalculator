@@ -1,0 +1,56 @@
+---
+title: Orbital Period Calculator (Kepler's Third Law)
+description: Calculate the orbital period and speed of a satellite or planet from the central mass and orbit radius — ISS, GPS, geostationary orbits and more.
+category: physics
+keywords: [orbital period calculator, keplers third law, satellite orbit calculator, orbital speed, geostationary orbit, iss orbit period, orbital velocity]
+updated: 2026-10-27
+variables:
+  - { id: M, label: Central mass, suffix: kg, default: 5.972e24, min: 0 }
+  - { id: a, label: Orbit radius (from centre), family: length, unit: km, imperialUnit: mi, default: 6779, min: 0 }
+  - { id: T, label: Orbital period, family: seconds, unit: min, min: 0 }
+  - { id: v, label: Orbital speed, family: velocity, unit: kmh, imperialUnit: mph, min: 0 }
+equations:
+  - T = 2 * pi * sqrt(a^3 / (6.6743e-11 * M))
+  - v = sqrt(6.6743e-11 * M / a)
+faq:
+  - q: What is Kepler's third law?
+    a: "The square of the orbital period is proportional to the cube of the orbit's semi-major axis: T² = 4π²a³ ÷ (GM)."
+  - q: How long does the ISS take to orbit Earth?
+    a: About 92–93 minutes at roughly 400–420 km altitude, travelling at about 27,600 km/h.
+  - q: What is a geostationary orbit?
+    a: A circular orbit 35,786 km above the equator with a period of one sidereal day (23 h 56 min), so the satellite stays above one point on Earth.
+  - q: Should I enter altitude or radius?
+    a: Radius from the centre — add the planet’s radius to the altitude. For Earth, add 6,371 km.
+related: [physics/escape-velocity, physics/gravitational-force, physics/centripetal-force, physics/weight]
+---
+
+## How to use this calculator
+
+Enter the **central mass** (Earth by default) and the **orbit radius** measured from the centre (altitude + planet radius). You get the period and the orbital speed for a circular orbit.
+
+## The formulas
+
+<p class="formula">T = 2π √(a³ ÷ GM) &nbsp;·&nbsp; v = √(GM ÷ a)</p>
+
+## Earth orbits
+
+| Orbit | Altitude | Period | Speed |
+|---|---|---|---|
+| Low Earth orbit (ISS) | 420 km | 1 h 32 min | 27,580 km/h |
+| Starlink shell | 550 km | 1 h 35 min | 27,320 km/h |
+| Polar weather satellites | 850 km | 1 h 41 min | 26,746 km/h |
+| GPS (MEO) | 20,200 km | 11 h 58 min | 13,943 km/h |
+| Geostationary | 35,786 km | 23 h 55 min | 11,070 km/h |
+| Moon | 378,029 km | 658 h 51 min | 3,666 km/h |
+
+## Kepler's law for planets
+
+For bodies orbiting the Sun, T² (in years) ≈ a³ (in astronomical units). Mars at 1.52 AU has a period of √(1.52³) ≈ **1.88 years**.
+
+## Higher orbits are slower
+
+Satellites in higher orbits move more slowly and take longer to go round. To catch up with a satellite ahead, a spacecraft actually drops to a lower orbit first.
+
+## Elliptical orbits
+
+For an elliptical orbit, use the semi-major axis (average of the closest and farthest distances from the centre) as a. The period depends only on a, not on how elongated the orbit is.

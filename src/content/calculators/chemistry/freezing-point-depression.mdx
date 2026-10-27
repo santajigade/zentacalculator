@@ -1,0 +1,75 @@
+---
+title: Freezing Point Depression Calculator
+description: Calculate how much a solute lowers the freezing point of a solvent with ΔTf = i·Kf·m — for water, benzene, cyclohexane and more.
+category: chemistry
+keywords: [freezing point depression calculator, delta tf, kf constant, colligative properties, van t hoff factor, molality freezing point, antifreeze]
+updated: 2026-10-27
+variables:
+  - id: Kf
+    label: Solvent
+    default: 1.86
+    options:
+      - { label: 'Water (Kf 1.86, mp 0 °C)', value: 1.86 }
+      - { label: 'Benzene (Kf 5.12, mp 5.5 °C)', value: 5.12 }
+      - { label: 'Acetic acid (Kf 3.90, mp 16.6 °C)', value: 3.9 }
+      - { label: 'Cyclohexane (Kf 20.0, mp 6.5 °C)', value: 20.0 }
+      - { label: 'Camphor (Kf 37.7, mp 179 °C)', value: 37.7 }
+  - { id: i, label: Van 't Hoff factor (i), default: 2, min: 0, help: '1 for sugars, about 2 for NaCl, about 3 for CaCl₂.' }
+  - { id: m, label: Molality, suffix: mol/kg, default: 0.5, min: 0 }
+  - { id: Tf0, label: Normal freezing point of solvent, suffix: °C, default: 0 }
+  - { id: dT, label: Freezing point depression (ΔTf), suffix: °C, min: 0, decimals: 3 }
+  - { id: Tf, label: New freezing point, suffix: °C, decimals: 2 }
+equations:
+  - dT = i * Kf * m
+  - Tf = Tf0 - dT
+faq:
+  - q: What is freezing point depression?
+    a: Dissolving a solute lowers the temperature at which a solvent freezes. The drop depends on the number of solute particles, not their identity.
+  - q: Why does salt melt ice on roads?
+    a: Salt dissolves in the thin layer of water on ice, lowering its freezing point so the ice melts at temperatures below 0 °C — down to about −10 °C in practice for rock salt.
+  - q: How can I find the molar mass of an unknown solute?
+    a: Measure ΔTf, calculate molality m = ΔTf ÷ (i·Kf), then molar mass = grams of solute ÷ (m × kg of solvent).
+  - q: Does the formula work for concentrated solutions?
+    a: It is accurate for dilute solutions. At high concentrations, ions interact and the effective i falls, so measured depressions are smaller.
+related: [chemistry/boiling-point-elevation, chemistry/molality, chemistry/osmotic-pressure, chemistry/molarity]
+---
+
+## How to use this calculator
+
+Choose the **solvent** (which sets Kf), enter the **van 't Hoff factor** and the **molality** of the solution, and the solvent's normal freezing point. You get the freezing point depression and the new freezing point.
+
+## The formula
+
+<p class="formula">ΔT<sub>f</sub> = i × K<sub>f</sub> × m</p>
+
+- **i** = particles per formula unit (van 't Hoff factor)
+- **K<sub>f</sub>** = cryoscopic constant of the solvent (°C·kg/mol)
+- **m** = molality (mol solute per kg solvent)
+
+## Salt water freezing points (ideal estimate)
+
+| NaCl (g per kg water) | Molality | Freezing point |
+|---|---|---|
+| 10 | 0.171 | -0.64 °C |
+| 20 | 0.342 | -1.27 °C |
+| 35 | 0.599 | -2.23 °C |
+| 50 | 0.856 | -3.18 °C |
+| 100 | 1.711 | -6.37 °C |
+
+Seawater (about 35 g/kg of salts) actually freezes at about −1.9 °C; the ideal formula slightly overestimates the effect at higher concentrations.
+
+## Van 't Hoff factors
+
+| Solute | Ideal i | Typical measured i (dilute) |
+|---|---|---|
+| Glucose, sucrose, urea | 1 | 1.0 |
+| NaCl, KCl | 2 | 1.8–1.9 |
+| CaCl₂, MgCl₂ | 3 | 2.5–2.7 |
+| AlCl₃ | 4 | about 3.2 |
+
+## Uses
+
+- **Road de-icing** with NaCl or CaCl₂ (calcium chloride works to lower temperatures).
+- **Antifreeze**: ethylene glycol in car radiators.
+- **Ice cream making**: salt and ice reach about −10 to −20 °C to freeze the mix.
+- **Molar mass determination** in the lab (cryoscopy).

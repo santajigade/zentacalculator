@@ -1,0 +1,63 @@
+---
+title: Nernst Equation Calculator
+description: Calculate the cell potential under non-standard conditions with the Nernst equation, from E°, electrons transferred, temperature and reaction quotient.
+category: chemistry
+keywords: [nernst equation calculator, cell potential, electrode potential, reaction quotient, electrochemistry, nernst potential, emf calculator]
+updated: 2026-10-27
+variables:
+  - { id: E0, label: Standard potential (E°), suffix: V, default: 1.10 }
+  - { id: n, label: Electrons transferred (n), default: 2, min: 1 }
+  - { id: T, label: Temperature, family: temperature, unit: C, default: 25, min: 0 }
+  - { id: Q, label: Reaction quotient (Q), default: 0.01, min: 1e-30 }
+  - { id: E, label: Cell potential (E), suffix: V, decimals: 4 }
+equations:
+  - E = E0 - 8.314462618 * T / (n * 96485.33212) * ln(Q)
+faq:
+  - q: What is the Nernst equation?
+    a: E = E° − (RT ÷ nF) ln Q. It gives the electrode or cell potential when concentrations are not 1 M.
+  - q: What is the simplified form at 25 °C?
+    a: E = E° − (0.05916 ÷ n) log₁₀ Q.
+  - q: What happens at equilibrium?
+    a: The cell potential falls to zero and Q equals the equilibrium constant K. Then E° = (RT ÷ nF) ln K.
+  - q: How is the Nernst equation used in pH meters?
+    a: A glass electrode’s potential changes by about 59 mV per pH unit at 25 °C, as the Nernst equation predicts for hydrogen ions.
+related: [chemistry/ph, chemistry/gibbs-free-energy, chemistry/henderson-hasselbalch, chemistry/molarity]
+---
+
+## How to use this calculator
+
+Enter the **standard potential** E°, the number of **electrons transferred**, the **temperature** and the **reaction quotient** Q (products over reactants, each raised to its coefficient). The calculator gives the cell potential.
+
+## The Nernst equation
+
+<p class="formula">E = E° − (RT ÷ nF) × ln Q</p>
+
+with R = 8.314 J/(mol·K) and F = 96,485 C/mol. At 25 °C this becomes E = E° − (0.05916 ÷ n) log₁₀ Q.
+
+## Example: Daniell cell (Zn/Cu, E° = 1.10 V)
+
+Zn | Zn²⁺ (0.01 M) ∥ Cu²⁺ (1 M) | Cu, so Q = [Zn²⁺] ÷ [Cu²⁺] = 0.01:
+
+E = 1.10 − (0.05916 ÷ 2) × log₁₀(0.01) = **1.159 V**
+
+## How Q changes the potential (n = 2, 25 °C)
+
+| Q | E − E° |
+|---|---|
+| 0.0001 | +118.3 mV |
+| 0.01 | +59.2 mV |
+| 0.1 | +29.6 mV |
+| 1 | -0.0 mV |
+| 10 | -29.6 mV |
+| 100 | -59.2 mV |
+| 10000 | -118.3 mV |
+
+Each tenfold change in Q shifts E by 59.16 ÷ n mV at 25 °C.
+
+## pH electrodes
+
+For the hydrogen electrode, n = 1 and the Nernst slope is 59.16 mV per pH unit at 25 °C, rising with temperature (about 61.5 mV at 37 °C). pH meters use temperature compensation for this reason.
+
+## Membrane potentials
+
+In biology, the Nernst equation gives the equilibrium potential for an ion across a cell membrane. For potassium (about 140 mM inside, 5 mM outside) at 37 °C, it is about −89 mV.

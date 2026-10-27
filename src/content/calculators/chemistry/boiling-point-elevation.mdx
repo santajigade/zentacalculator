@@ -1,0 +1,76 @@
+---
+title: Boiling Point Elevation Calculator
+description: Calculate how much a dissolved solute raises the boiling point of a solvent using ΔTb = i·Kb·m — for water, ethanol, benzene and more.
+category: chemistry
+keywords: [boiling point elevation calculator, delta tb, kb constant, ebullioscopic constant, colligative properties, salt in water boiling point]
+updated: 2026-10-27
+variables:
+  - id: Kb
+    label: Solvent
+    default: 0.512
+    options:
+      - { label: 'Water (Kb 0.512, bp 100 °C)', value: 0.512 }
+      - { label: 'Ethanol (Kb 1.22, bp 78.4 °C)', value: 1.22 }
+      - { label: 'Benzene (Kb 2.53, bp 80.1 °C)', value: 2.53 }
+      - { label: 'Chloroform (Kb 3.63, bp 61.2 °C)', value: 3.63 }
+      - { label: 'Acetic acid (Kb 3.07, bp 118 °C)', value: 3.07 }
+  - { id: i, label: Van 't Hoff factor (i), default: 2, min: 0 }
+  - { id: m, label: Molality, suffix: mol/kg, default: 1, min: 0 }
+  - { id: Tb0, label: Normal boiling point of solvent, suffix: °C, default: 100 }
+  - { id: dT, label: Boiling point elevation (ΔTb), suffix: °C, min: 0, decimals: 3 }
+  - { id: Tb, label: New boiling point, suffix: °C, decimals: 2 }
+equations:
+  - dT = i * Kb * m
+  - Tb = Tb0 + dT
+faq:
+  - q: Does adding salt to pasta water make it boil hotter?
+    a: Only slightly. A tablespoon of salt (about 18 g) in 4 litres of water raises the boiling point by less than 0.1 °C. Salt is for flavour.
+  - q: What is the ebullioscopic constant?
+    a: Kb, the boiling point rise for a 1 mol/kg solution of a non-dissociating solute. For water it is 0.512 °C·kg/mol.
+  - q: Why is boiling point elevation smaller than freezing point depression?
+    a: Because Kb for most solvents is smaller than Kf. For water, Kf is 1.86 but Kb is only 0.512.
+  - q: Does altitude affect boiling point?
+    a: Yes, much more than solutes do. Water boils at about 95 °C at 1,500 m and about 90 °C at 3,000 m because air pressure is lower.
+related: [chemistry/freezing-point-depression, chemistry/molality, chemistry/osmotic-pressure, chemistry/specific-heat]
+---
+
+## How to use this calculator
+
+Choose the **solvent**, enter the **van 't Hoff factor**, the **molality** and the solvent's normal boiling point. The calculator gives the rise in boiling point and the new boiling point.
+
+## The formula
+
+<p class="formula">ΔT<sub>b</sub> = i × K<sub>b</sub> × m</p>
+
+## Salt in water
+
+| Salt (g per kg water) | Boiling point rise (ideal) |
+|---|---|
+| 5 g | 0.088 °C |
+| 10 g | 0.175 °C |
+| 30 g | 0.526 °C |
+| 58.44 g | 1.024 °C |
+| 100 g | 1.752 °C |
+| 200 g | 3.504 °C |
+
+Even very salty water boils only a degree or two above 100 °C.
+
+## Boiling point and altitude
+
+| Altitude | Approximate boiling point of water |
+|---|---|
+| Sea level | 100 °C |
+| 1,000 m | 96.7 °C |
+| 2,000 m | 93.4 °C |
+| 3,000 m | 90.0 °C |
+| 5,000 m | 83.3 °C |
+
+Pressure cookers raise the pressure so water boils at about 120 °C, speeding up cooking.
+
+## Molar mass from boiling point
+
+Ebullioscopy works like cryoscopy: m = ΔTb ÷ (i × Kb), then molar mass = mass of solute ÷ (m × kg of solvent). Freezing point depression is usually preferred because the effect is larger.
+
+## Colligative properties
+
+Freezing point depression, boiling point elevation, vapour pressure lowering and [osmotic pressure](/chemistry/osmotic-pressure/) all depend on the number of dissolved particles, not their identity.

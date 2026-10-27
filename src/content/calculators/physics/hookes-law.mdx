@@ -1,0 +1,69 @@
+---
+title: Hooke's Law Calculator (Spring Force)
+description: Calculate spring force, spring constant or extension with Hooke's law (F = kx), plus the elastic energy stored in the spring.
+category: physics
+keywords: [hookes law calculator, spring constant calculator, spring force, f = kx, elastic potential energy, spring extension, stiffness]
+updated: 2026-10-27
+variables:
+  - { id: k, label: Spring constant (k), suffix: N/m, default: 500, min: 0 }
+  - { id: x, label: Extension or compression, family: length, unit: cm, imperialUnit: in, default: 4, min: 0 }
+  - { id: F, label: Spring force, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: E, label: Stored energy, family: energy, unit: J, min: 0 }
+equations:
+  - F = k * x
+  - E = 0.5 * k * x^2
+faq:
+  - q: What is Hooke's law?
+    a: The force needed to stretch or compress a spring is proportional to the distance — F = kx — as long as the spring stays within its elastic limit.
+  - q: How do I find the spring constant?
+    a: Hang a known weight from the spring and measure the extension. k = F ÷ x. A 10 N weight stretching a spring by 2 cm gives k = 500 N/m.
+  - q: What happens beyond the elastic limit?
+    a: The spring deforms permanently and no longer returns to its original length, so Hooke's law stops applying.
+  - q: How much energy does a spring store?
+    a: E = ½kx². A 500 N/m spring compressed 4 cm stores 0.4 J.
+related: [physics/force, physics/potential-energy, physics/work-and-power, physics/pendulum]
+---
+
+## How to use this calculator
+
+Enter the **spring constant** and the **extension or compression**. The calculator gives the force and the elastic energy stored. Fill any two fields to solve for the others — for example, force and extension to find k.
+
+## The formulas
+
+<p class="formula">F = k × x &nbsp;·&nbsp; E = ½ × k × x²</p>
+
+- **k** = spring constant (stiffness), N/m
+- **x** = change in length from the natural length, m
+
+## Example
+
+A spring with k = 500 N/m stretched by 4 cm (0.04 m):
+
+- Force = 500 × 0.04 = **20 N**
+- Energy = ½ × 500 × 0.04² = **0.4 J**
+
+## Springs in series and parallel
+
+| Arrangement | Combined stiffness |
+|---|---|
+| Parallel (side by side) | k = k₁ + k₂ |
+| Series (end to end) | 1/k = 1/k₁ + 1/k₂ |
+
+Two identical springs in parallel are twice as stiff; in series they are half as stiff.
+
+## Typical spring constants
+
+| Spring | Approximate k |
+|---|---|
+| Ballpoint pen spring | 100–500 N/m |
+| Kitchen scale spring | 1,000–5,000 N/m |
+| Car suspension spring | 20,000–60,000 N/m |
+| Railway buffer | over 1,000,000 N/m |
+
+## Mass on a spring
+
+A mass m on a spring oscillates with period T = 2π√(m ÷ k). A 0.5 kg mass on a 500 N/m spring bounces with a period of **0.199 s**.
+
+## Beyond springs
+
+Hooke's law also describes small stretches of solid materials, where stress = Young's modulus × strain. Steel has a Young's modulus of about 200 GPa.

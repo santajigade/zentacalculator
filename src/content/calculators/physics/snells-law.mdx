@@ -1,0 +1,68 @@
+---
+title: Snell's Law Calculator (Refraction and Critical Angle)
+description: Calculate the angle of refraction, refractive index or critical angle when light passes between two materials, using Snell's law.
+category: physics
+keywords: [snells law calculator, refraction calculator, angle of refraction, refractive index, critical angle, total internal reflection, n1 sin theta1]
+updated: 2026-10-27
+variables:
+  - { id: n1, label: Refractive index of first medium (n₁), default: 1.0003, min: 1 }
+  - { id: t1, label: Angle of incidence (θ₁), family: angle, unit: deg, default: 30, min: 0, max: 1.5708 }
+  - { id: n2, label: Refractive index of second medium (n₂), default: 1.333, min: 1 }
+  - { id: t2, label: Angle of refraction (θ₂), family: angle, unit: deg, min: 0, max: 1.5708 }
+equations:
+  - n1 * sin(t1) = n2 * sin(t2)
+faq:
+  - q: What is Snell's law?
+    a: n₁ sin θ₁ = n₂ sin θ₂. Light bends towards the normal when it enters a denser medium (higher n) and away from it when it leaves.
+  - q: What is the critical angle?
+    a: The angle of incidence beyond which light cannot leave a denser medium and is totally reflected. sin θc = n₂ ÷ n₁. For glass to air (n 1.5), θc ≈ 41.8°.
+  - q: Why does the calculator show no solution?
+    a: When going from a denser to a less dense medium above the critical angle, no refracted ray exists — this is total internal reflection.
+  - q: What is the refractive index of water?
+    a: About 1.333 for visible light at 20 °C.
+related: [physics/thin-lens, physics/wavelength-frequency, physics/projectile-motion, math/right-triangle-trig]
+---
+
+## How to use this calculator
+
+Enter the **refractive indices** of the two materials and the **angle of incidence** (measured from the normal — the line perpendicular to the surface). The calculator finds the angle of refraction. Fill any three values to solve for the fourth.
+
+## The formula
+
+<p class="formula">n₁ sin θ₁ = n₂ sin θ₂</p>
+
+## Refractive indices (visible light)
+
+| Material | n |
+|---|---|
+| Vacuum | 1 (exactly) |
+| Air | 1.0003 |
+| Water | 1.333 |
+| Ethanol | 1.36 |
+| Acrylic (PMMA) | 1.49 |
+| Crown glass | 1.52 |
+| Flint glass | 1.62 |
+| Diamond | 2.42 |
+
+## Critical angles
+
+| From → to air | Critical angle |
+|---|---|
+| Water (n = 1.333) | 48.6° |
+| Acrylic (n = 1.49) | 42.2° |
+| Crown glass (n = 1.52) | 41.2° |
+| Flint glass (n = 1.62) | 38.1° |
+| Diamond (n = 2.42) | 24.4° |
+
+Diamond's small critical angle traps light inside, making it sparkle.
+
+## Example
+
+Light from air into water at 30°: sin θ₂ = 1.0003 × sin 30° ÷ 1.333 = 0.3752, so θ₂ = **22.0°**.
+
+## Applications
+
+- **Optical fibres** carry light by total internal reflection.
+- **Lenses** in glasses, cameras and microscopes bend light to focus it.
+- **Prisms** split white light because n varies slightly with wavelength (dispersion).
+- **Mirages** form when air layers of different temperature bend light.

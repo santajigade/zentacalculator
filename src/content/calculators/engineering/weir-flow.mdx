@@ -1,0 +1,84 @@
+---
+title: Weir Flow Calculator (V-Notch and Rectangular)
+description: Calculate open-channel flow over a V-notch or rectangular weir from the head — for effluent, irrigation and flow measurement.
+category: engineering
+keywords: [weir flow calculator, v notch weir, rectangular weir, francis formula, open channel flow, weir head flow, thomson weir]
+updated: 2026-10-27
+variables:
+  - id: t
+    label: Weir type
+    default: 1
+    options:
+      - { label: V-notch (triangular), value: 1 }
+      - { label: "Rectangular (contracted, Francis)", value: 0 }
+  - { id: h, label: Head above crest or notch, family: length, unit: mm, imperialUnit: in, default: 150, min: 0 }
+  - { id: th, label: V-notch angle, family: angle, unit: deg, default: 90, min: 0.1, max: 3.1 }
+  - { id: cd, label: Discharge coefficient (V-notch), default: 0.585, min: 0.1, max: 1 }
+  - { id: L, label: Crest length (rectangular), family: length, unit: m, imperialUnit: ft, default: 0.5, min: 0 }
+  - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+equations:
+  - Q = t * (8/15) * cd * sqrt(2*g0) * tan(th/2) * h^2.5 + (1 - t) * 1.84 * (L - 0.2*h) * h^1.5
+faq:
+  - q: What is a V-notch weir used for?
+    a: Measuring small and varying flows accurately — the triangular shape gives good resolution at low heads. 90° V-notches are common for effluent and wastewater.
+  - q: Where should I measure the head?
+    a: Upstream of the weir, at a distance of about 4–5 times the maximum head, where the water surface is level and unaffected by drawdown.
+  - q: What is the Francis formula?
+    a: Q = 1.84 (L − 0.2h) h^1.5 in SI units, for a rectangular weir with end contractions on both sides.
+  - q: How accurate are weir formulas?
+    a: Typically within 2–5% when the weir is installed to standard (sharp crest, free fall, ventilated nappe, adequate approach channel).
+related: [engineering/orifice-flow, engineering/pipe-flow-velocity, engineering/hydrostatic-pressure, conversion/flow-rate-converter]
+---
+
+## How to use this calculator
+
+Choose the **weir type** and enter the **head** — the height of the water surface above the bottom of the notch or the crest. For a V-notch, set the notch angle and discharge coefficient; for a rectangular weir, set the crest length.
+
+## The formulas
+
+**V-notch (Kindsvater–Shen form)**
+
+<p class="formula">Q = (8/15) × C<sub>d</sub> × √(2g) × tan(θ/2) × h<sup>5/2</sup></p>
+
+**Rectangular, contracted (Francis)**
+
+<p class="formula">Q = 1.84 × (L − 0.2h) × h<sup>3/2</sup></p>
+
+with Q in m³/s and L and h in metres.
+
+## 90° V-notch flow table
+
+| Head | Flow |
+|---|---|
+| 25 mm | 0.49 m³/h (0.14 L/s) |
+| 50 mm | 2.78 m³/h (0.77 L/s) |
+| 75 mm | 7.66 m³/h (2.13 L/s) |
+| 100 mm | 15.73 m³/h (4.37 L/s) |
+| 150 mm | 43.35 m³/h (12.04 L/s) |
+| 200 mm | 88.98 m³/h (24.72 L/s) |
+| 250 mm | 155.45 m³/h (43.18 L/s) |
+| 300 mm | 245.21 m³/h (68.11 L/s) |
+
+Flow rises with h<sup>2.5</sup>, so doubling the head increases flow about 5.7 times.
+
+## Rectangular weir, 0.5 m crest
+
+| Head | Flow |
+|---|---|
+| 25 mm | 13.0 m³/h |
+| 50 mm | 36.3 m³/h |
+| 100 mm | 100.5 m³/h |
+| 150 mm | 180.9 m³/h |
+| 200 mm | 272.5 m³/h |
+
+## Installation guidelines
+
+- Sharp, thin crest (bevelled downstream).
+- Free-falling, aerated nappe — the water must spring clear of the weir plate.
+- Head measured at 4–5 × h<sub>max</sub> upstream with a stilling well or level sensor.
+- Approach channel straight and wide enough for low approach velocity.
+- Minimum head about 50 mm for V-notches to avoid surface-tension errors.
+
+## Automating with level sensors
+
+Ultrasonic or radar level transmitters above the weir measure head continuously. The flow computer then applies the weir equation — a common setup for effluent flow monitoring.

@@ -1,0 +1,55 @@
+---
+title: Gravitational Force Calculator (Newton's Law of Gravitation)
+description: Calculate the gravitational force between two masses with F = Gm₁m₂/r² — from everyday objects to planets and moons.
+category: physics
+keywords: [gravitational force calculator, newtons law of gravitation, universal gravitation, gravity between two objects, gravitational constant, force of gravity]
+updated: 2026-10-27
+variables:
+  - { id: m1, label: Mass 1, suffix: kg, default: 5.972e24, min: 0 }
+  - { id: m2, label: Mass 2, suffix: kg, default: 7.342e22, min: 0 }
+  - { id: r, label: Distance between centres, family: length, unit: km, imperialUnit: mi, default: 384400, min: 0 }
+  - { id: F, label: Gravitational force, family: force, unit: N, imperialUnit: lbf, min: 0 }
+equations:
+  - F = 6.6743e-11 * m1 * m2 / r^2
+faq:
+  - q: What is Newton's law of universal gravitation?
+    a: Every mass attracts every other mass with a force F = Gm₁m₂ ÷ r², where G = 6.674 × 10⁻¹¹ N·m²/kg².
+  - q: What is the force between the Earth and the Moon?
+    a: About 1.98 × 10²⁰ N.
+  - q: Why don't I feel gravity from people near me?
+    a: Because G is tiny. Two 70 kg people 1 m apart attract each other with about 3.3 × 10⁻⁷ N — far too small to notice.
+  - q: Do I use the surface distance?
+    a: No — use the distance between the centres of mass. For a person on Earth, that is Earth's radius.
+related: [physics/weight, physics/escape-velocity, physics/orbital-period, physics/coulombs-law]
+---
+
+## How to use this calculator
+
+Enter the two **masses** in kilograms (scientific notation like 5.972e24 works) and the **distance between their centres**. The default values are the Earth and the Moon.
+
+## The formula
+
+<p class="formula">F = G × m₁ × m₂ ÷ r²</p>
+
+with G = 6.6743 × 10⁻¹¹ N·m²/kg².
+
+## Examples
+
+| Pair | Masses | Distance | Force |
+|---|---|---|---|
+| Earth–Moon | 5.97 × 10²⁴ and 7.34 × 10²² kg | 384,400 km | 1.98e+20 N |
+| Earth–Sun | 5.97 × 10²⁴ and 1.99 × 10³⁰ kg | 149.6 million km | 3.54e+22 N |
+| Person on Earth | 70 kg and Earth | 6,371 km | 687 N |
+| Two people | 70 kg each | 1 m | 3.3e-07 N |
+
+## Inverse-square law
+
+Double the distance and the force falls to a quarter; triple it and it falls to a ninth. At the International Space Station's altitude (about 400 km), gravity is still about 90% of its surface value.
+
+## Gravity at the surface
+
+Setting m₂ as a small object gives the gravitational acceleration: g = G × M ÷ r². For Earth this gives about 9.82 m/s², close to the standard 9.81 m/s². See the [weight calculator](/physics/weight/) for other planets.
+
+## Measuring G
+
+Henry Cavendish first measured G in 1798 with a torsion balance, using lead spheres. It remains one of the least precisely known fundamental constants.

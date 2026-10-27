@@ -1,0 +1,57 @@
+---
+title: Escape Velocity Calculator
+description: Calculate the escape velocity from any planet, moon or star from its mass and radius — with values for the Earth, Moon, Mars and more.
+category: physics
+keywords: [escape velocity calculator, escape velocity of earth, escape speed, 11.2 km/s, planet escape velocity, sqrt 2gm/r]
+updated: 2026-10-27
+variables:
+  - { id: M, label: Mass of the body, suffix: kg, default: 5.972e24, min: 0 }
+  - { id: R, label: Radius (or distance from centre), family: length, unit: km, imperialUnit: mi, default: 6371, min: 0 }
+  - { id: v, label: Escape velocity, family: velocity, unit: kmh, imperialUnit: mph, min: 0 }
+  - { id: g, label: Surface gravity, suffix: m/s², min: 0, decimals: 3 }
+equations:
+  - v = sqrt(2 * 6.6743e-11 * M / R)
+  - g = 6.6743e-11 * M / R^2
+faq:
+  - q: What is the escape velocity of Earth?
+    a: About 11.2 km/s (40,300 km/h) from the surface, ignoring air resistance.
+  - q: Does escape velocity depend on the mass of the rocket?
+    a: No. It depends only on the mass and radius of the planet. A heavier rocket needs more energy, but the same speed.
+  - q: Do rockets really travel at escape velocity?
+    a: Not necessarily — rockets keep firing their engines, so they can escape at lower speeds. Escape velocity is the speed needed for an unpowered object launched once.
+  - q: What has an escape velocity faster than light?
+    a: A black hole, inside its event horizon.
+related: [physics/orbital-period, physics/gravitational-force, physics/weight, physics/kinetic-energy]
+---
+
+## How to use this calculator
+
+Enter the **mass** of the planet or moon and its **radius**. The calculator gives the escape velocity and the surface gravity. Defaults are for the Earth. Choose km/s by switching to m/s and dividing by 1,000, or read km/h directly.
+
+## The formula
+
+<p class="formula">v<sub>esc</sub> = √(2GM ÷ R)</p>
+
+It comes from setting kinetic energy equal to the gravitational energy needed to reach infinity: ½mv² = GMm ÷ R.
+
+## Escape velocities in the solar system
+
+| Body | Mass (kg) | Radius (km) | Escape velocity |
+|---|---|---|---|
+| Moon | 7.34e+22 | 1,737 | 2.38 km/s |
+| Mercury | 3.3e+23 | 2,440 | 4.25 km/s |
+| Mars | 6.42e+23 | 3,390 | 5.03 km/s |
+| Venus | 4.87e+24 | 6,052 | 10.36 km/s |
+| Earth | 5.97e+24 | 6,371 | 11.19 km/s |
+| Neptune | 1.02e+26 | 24,622 | 23.56 km/s |
+| Saturn | 5.68e+26 | 58,232 | 36.09 km/s |
+| Jupiter | 1.9e+27 | 69,911 | 60.20 km/s |
+| Sun | 1.99e+30 | 696,340 | 617.48 km/s |
+
+## Escape vs orbital velocity
+
+Escape velocity is √2 (about 1.414) times the circular orbital velocity at the same distance. Low Earth orbit needs about 7.8 km/s; escaping from that altitude needs about 11 km/s. See the [orbital period calculator](/physics/orbital-period/).
+
+## Why the Moon has no atmosphere
+
+Gas molecules move at hundreds of metres per second. On the Moon, with an escape velocity of only 2.4 km/s, the fastest molecules eventually escape, so it cannot hold a thick atmosphere.

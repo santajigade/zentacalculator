@@ -1,0 +1,72 @@
+---
+title: Venturi Meter Flow Calculator
+description: Calculate liquid flow through a Venturi tube from the differential pressure, inlet and throat diameters — with permanent pressure loss.
+category: engineering
+keywords: [venturi meter calculator, venturi flow, venturi tube, differential pressure flow, throat diameter, beta ratio, venturi coefficient]
+updated: 2026-10-27
+variables:
+  - { id: D, label: Inlet (pipe) diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: d, label: Throat diameter, family: length, unit: mm, imperialUnit: in, default: 60, min: 0 }
+  - { id: b, label: Beta ratio (d/D), min: 0, max: 0.99, decimals: 3 }
+  - { id: cd, label: Discharge coefficient, default: 0.985, min: 0.5, max: 1 }
+  - { id: dP, label: Differential pressure, family: pressure, unit: mbar, imperialUnit: inH2O, default: 200, min: 0 }
+  - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
+  - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+  - { id: v, label: Throat velocity, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+equations:
+  - b = d / D
+  - Q = cd * (pi * d^2 / 4) * sqrt(2 * dP / (rho * (1 - b^4)))
+  - v = Q / (pi * d^2 / 4)
+faq:
+  - q: What is a typical Venturi discharge coefficient?
+    a: About 0.98–0.995 for classical Venturi tubes, much higher than the 0.6 of an orifice plate, because flow follows the smooth contraction.
+  - q: Why use a Venturi instead of an orifice plate?
+    a: Venturis recover most of the pressure drop (permanent loss typically 5–20% of the DP), saving pumping energy, and handle dirty or slurry flows better.
+  - q: What beta ratio is typical?
+    a: Between about 0.4 and 0.75 under ISO 5167-4.
+  - q: How does a Venturi measure flow?
+    a: Fluid speeds up in the throat, lowering its pressure (Bernoulli). The pressure difference between inlet and throat is proportional to flow squared.
+related: [engineering/orifice-flow, engineering/dp-flow-square-root, engineering/pitot-tube-velocity, engineering/pipe-flow-velocity]
+---
+
+## How to use this calculator
+
+Enter the **inlet diameter**, **throat diameter**, **discharge coefficient**, **differential pressure** and **liquid density**. You get the flow rate and the throat velocity. Press × on Differential pressure to find the DP for a given flow.
+
+## The formula
+
+<p class="formula">Q = C<sub>d</sub> × (πd²/4) × √[2ΔP ÷ (ρ(1 − β⁴))]</p>
+
+## Example
+
+D = 100 mm, d = 60 mm, ΔP = 200 mbar, water:
+
+- β = 0.6, Q = **68.0 m³/h**
+
+## Flow vs DP (100/60 mm, water)
+
+| DP | Flow |
+|---|---|
+| 10 mbar | 15.2 m³/h |
+| 25 mbar | 24.1 m³/h |
+| 50 mbar | 34.0 m³/h |
+| 100 mbar | 48.1 m³/h |
+| 200 mbar | 68.0 m³/h |
+| 400 mbar | 96.2 m³/h |
+| 600 mbar | 117.8 m³/h |
+
+## Venturi vs other DP meters
+
+| Element | Typical C<sub>d</sub> | Permanent pressure loss | Straight run needed |
+|---|---|---|---|
+| Classical Venturi | 0.98–0.995 | 5–20% of DP | Short |
+| Flow nozzle | 0.93–0.99 | 30–60% | Medium |
+| Orifice plate | 0.60–0.62 | 50–90% | Long |
+
+## Where Venturis are used
+
+- Large water and wastewater mains, where pumping energy matters.
+- Slurries and dirty liquids, as the smooth shape does not trap solids.
+- Irrigation and cooling-water systems.
+
+For a 4–20 mA DP transmitter on a Venturi, use the [square-root flow calculator](/engineering/dp-flow-square-root/) to scale the signal.

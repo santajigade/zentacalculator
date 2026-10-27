@@ -1,0 +1,68 @@
+---
+title: Thin Lens Equation Calculator (Lens and Mirror Formula)
+description: Find focal length, object distance, image distance and magnification for lenses and mirrors using 1/f = 1/dₒ + 1/dᵢ.
+category: physics
+keywords: [thin lens equation, lens formula calculator, mirror equation, focal length calculator, image distance, magnification calculator, 1/f = 1/u + 1/v]
+updated: 2026-10-27
+variables:
+  - { id: f, label: Focal length, family: length, unit: cm, imperialUnit: in, default: 10, help: Positive for converging lenses and concave mirrors; negative for diverging lenses and convex mirrors. }
+  - { id: do, label: Object distance, family: length, unit: cm, imperialUnit: in, default: 30, min: 0 }
+  - { id: di, label: Image distance, family: length, unit: cm, imperialUnit: in }
+  - { id: m, label: Magnification, decimals: 3 }
+  - { id: P, label: Lens power, suffix: dioptres, decimals: 2 }
+equations:
+  - 1 / f = 1 / do + 1 / di
+  - m = -di / do
+  - P = 1 / f
+faq:
+  - q: What is the thin lens equation?
+    a: 1/f = 1/dₒ + 1/dᵢ, where f is the focal length, dₒ the object distance and dᵢ the image distance. The same formula works for curved mirrors.
+  - q: What does a negative image distance mean?
+    a: The image is virtual — on the same side as the object for a lens — and cannot be projected on a screen. Magnifying glasses produce virtual images.
+  - q: What does negative magnification mean?
+    a: The image is upside down (inverted). Positive magnification means upright.
+  - q: What is a dioptre?
+    a: "Lens power in reciprocal metres: P = 1 ÷ f. A +2.5 dioptre reading lens has a focal length of 40 cm."
+related: [physics/snells-law, biology/magnification, biology/field-of-view, physics/wavelength-frequency]
+---
+
+## How to use this calculator
+
+Enter the **focal length** and **object distance**. The calculator finds the image distance, magnification and lens power. Use the sign convention below. Any two of f, dₒ and dᵢ determine the third.
+
+## The equations
+
+<p class="formula">1/f = 1/dₒ + 1/dᵢ &nbsp;·&nbsp; m = −dᵢ ÷ dₒ &nbsp;·&nbsp; P = 1 ÷ f</p>
+
+## Sign convention (real-is-positive)
+
+| Quantity | Positive | Negative |
+|---|---|---|
+| f | Converging lens, concave mirror | Diverging lens, convex mirror |
+| dᵢ | Real image | Virtual image |
+| m | Upright image | Inverted image |
+
+## Converging lens, f = 10 cm
+
+| Object distance | Image distance | Magnification | Image |
+|---|---|---|---|
+| 50 cm | 12.5 cm | -0.25 | real, inverted, reduced |
+| 30 cm | 15.0 cm | -0.50 | real, inverted, reduced |
+| 20 cm | 20.0 cm | -1.00 | real, inverted, reduced |
+| 15 cm | 30.0 cm | -2.00 | real, inverted, enlarged |
+| 12 cm | 60.0 cm | -5.00 | real, inverted, enlarged |
+| 8 cm | -40.0 cm | 5.00 | virtual, upright, enlarged |
+| 5 cm | -10.0 cm | 2.00 | virtual, upright, enlarged |
+
+- Object beyond 2f: real, inverted, smaller image (cameras, eyes).
+- Object at 2f: same-size inverted image.
+- Object between f and 2f: enlarged inverted image (projectors).
+- Object inside f: virtual, upright, enlarged (magnifying glass).
+
+## Lenses in contact
+
+Powers add: P = P₁ + P₂. Two +5 D lenses together make a +10 D lens with a 10 cm focal length.
+
+## Spectacles
+
+Short-sighted (myopic) people wear diverging lenses with negative dioptres; long-sighted people and reading glasses use positive lenses.

@@ -1,0 +1,69 @@
+---
+title: Reactance and Impedance Calculator (XL, XC and Z)
+description: Calculate inductive reactance, capacitive reactance and series RLC impedance at any frequency — with phase angle.
+category: engineering
+keywords: [reactance calculator, inductive reactance, capacitive reactance, impedance calculator, rlc impedance, xl xc, phase angle]
+updated: 2026-10-27
+variables:
+  - { id: f, label: Frequency, suffix: Hz, default: 50, min: 0 }
+  - { id: L, label: Inductance, suffix: mH, default: 100, min: 0 }
+  - { id: C, label: Capacitance, family: capacitance, unit: uF, default: 100, min: 0 }
+  - { id: R, label: Resistance (series), family: resistance, unit: ohm, default: 20, min: 0 }
+  - { id: XL, label: Inductive reactance (XL), family: resistance, unit: ohm, min: 0 }
+  - { id: XC, label: Capacitive reactance (XC), family: resistance, unit: ohm, min: 0 }
+  - { id: Z, label: Series RLC impedance (Z), family: resistance, unit: ohm, min: 0 }
+  - { id: ph, label: Phase angle, family: angle, unit: deg }
+equations:
+  - XL = 2 * pi * f * L / 1000
+  - XC = 1 / (2 * pi * f * C)
+  - Z = sqrt(R^2 + (XL - XC)^2)
+  - ph = atan((XL - XC) / R)
+faq:
+  - q: What is inductive reactance?
+    a: The opposition of an inductor to AC current, XL = 2πfL. It rises with frequency.
+  - q: What is capacitive reactance?
+    a: The opposition of a capacitor to AC current, XC = 1 ÷ (2πfC). It falls with frequency.
+  - q: What does the phase angle mean?
+    a: Positive means the circuit is inductive (current lags voltage); negative means capacitive (current leads voltage).
+  - q: When is impedance lowest?
+    a: At resonance, when XL = XC. The impedance then equals R alone. See the resonant frequency calculator.
+related: [engineering/resonant-frequency, physics/ohms-law, physics/rc-time-constant, engineering/kva-to-kw]
+---
+
+## How to use this calculator
+
+Enter the **frequency**, **inductance**, **capacitance** and series **resistance**. You get both reactances, the total impedance of the series RLC circuit and the phase angle. Set L or C to zero to analyse an RC or RL circuit (for an RL circuit, set C very large).
+
+## The formulas
+
+| Quantity | Formula |
+|---|---|
+| Inductive reactance | XL = 2πfL |
+| Capacitive reactance | XC = 1 ÷ (2πfC) |
+| Series impedance | Z = √(R² + (XL − XC)²) |
+| Phase angle | φ = atan((XL − XC) ÷ R) |
+
+## Reactance vs frequency
+
+| Frequency | XL of 100 mH | XC of 100 µF |
+|---|---|---|
+| 10 Hz | 6.28 Ω | 159.15 Ω |
+| 50 Hz | 31.42 Ω | 31.83 Ω |
+| 60 Hz | 37.70 Ω | 26.53 Ω |
+| 100 Hz | 62.83 Ω | 15.92 Ω |
+| 1000 Hz | 628.32 Ω | 1.59 Ω |
+| 10000 Hz | 6283.19 Ω | 0.16 Ω |
+
+## Current in an AC circuit
+
+Ohm's law works with impedance: I = V ÷ Z. With 230 V across the default circuit, the current is 230 ÷ Z.
+
+## Power factor
+
+For a series circuit, power factor = cos φ = R ÷ Z. Inductive loads such as motors have lagging power factor; capacitors are added to correct it — see the [kVA to kW converter](/engineering/kva-to-kw/).
+
+## Applications
+
+- **Filters**: reactance changes with frequency, letting RC and LC circuits pass or block certain frequencies.
+- **Motors and transformers**: their inductance limits current and sets power factor.
+- **Speaker crossovers**: inductors send bass to woofers; capacitors send treble to tweeters.

@@ -1,0 +1,67 @@
+---
+title: Transformer Short-Circuit Current Calculator
+description: Estimate the maximum fault current on a transformer secondary from kVA, voltage and percentage impedance (infinite-bus method).
+category: engineering
+keywords: [transformer short circuit current, fault current calculator, transformer impedance, percent impedance, fault level, breaking capacity, short circuit mva]
+updated: 2026-10-27
+variables:
+  - { id: S, label: Transformer rating, suffix: kVA, default: 1000, min: 0 }
+  - { id: V, label: Secondary line voltage, family: voltage, unit: V, default: 415, min: 0 }
+  - { id: Z, label: Impedance, family: percent, unit: '%', default: 5, min: 0.001, max: 0.5 }
+  - { id: Ifl, label: Full-load current, family: current, unit: A, min: 0 }
+  - { id: Isc, label: Short-circuit current (3-phase), family: current, unit: kA, min: 0 }
+  - { id: MVA, label: Fault level, suffix: MVA, min: 0, decimals: 2 }
+equations:
+  - Ifl = S * 1000 / (sqrt(3) * V)
+  - Isc = Ifl / Z
+  - MVA = S / Z / 1000
+faq:
+  - q: How do I calculate transformer fault current?
+    a: Isc = full-load current ÷ (percentage impedance ÷ 100). A 1,000 kVA, 415 V, 5% transformer gives about 27.8 kA.
+  - q: Why is this the maximum fault current?
+    a: The method assumes an infinite source with zero impedance upstream. Real upstream impedance, cables and arc resistance reduce the actual fault current.
+  - q: Where do I find the impedance?
+    a: On the transformer nameplate, usually 4–6% for distribution transformers and higher for large units.
+  - q: Why does fault current matter?
+    a: Breakers and switchgear must have a breaking capacity higher than the prospective fault current, and cables must withstand it until protection operates.
+related: [engineering/transformer-current, engineering/kva-to-kw, engineering/cable-voltage-drop, engineering/kw-to-amps]
+---
+
+## How to use this calculator
+
+Enter the **transformer rating**, **secondary voltage** and **percentage impedance** from the nameplate. You get the full-load current, the maximum symmetrical three-phase short-circuit current and the fault level in MVA.
+
+## The formulas
+
+<p class="formula">I<sub>FL</sub> = kVA × 1,000 ÷ (√3 × V) &nbsp;·&nbsp; I<sub>sc</sub> = I<sub>FL</sub> ÷ (Z% ÷ 100)</p>
+
+<p class="formula">Fault MVA = kVA ÷ (Z% ÷ 100) ÷ 1,000</p>
+
+## Fault current at 415 V
+
+| kVA | Z% | Full-load current | Short-circuit current |
+|---|---|---|---|
+| 100 | 4% | 139 A | 3.5 kA |
+| 250 | 4% | 348 A | 8.7 kA |
+| 500 | 4.5% | 696 A | 15.5 kA |
+| 630 | 4.5% | 876 A | 19.5 kA |
+| 1000 | 5% | 1391 A | 27.8 kA |
+| 1600 | 6.25% | 2226 A | 35.6 kA |
+| 2000 | 6.25% | 2782 A | 44.5 kA |
+| 2500 | 6.25% | 3478 A | 55.6 kA |
+
+Typical impedances follow IEC 60076-5 guidance for distribution transformers.
+
+## Choosing breaker breaking capacity
+
+Select LV breakers with a rated short-circuit breaking capacity (Icu/Ics) above the prospective fault current at their location — for example, 36 kA or 50 kA breakers for a 1,000 kVA, 5% transformer.
+
+## Reducing fault current
+
+- Choose transformers with higher impedance (at the cost of more voltage regulation).
+- Split loads across multiple smaller transformers instead of paralleling.
+- Use current-limiting fuses or reactors.
+
+## Beyond this estimate
+
+A full short-circuit study (IEC 60909) includes source impedance, motor contribution, cable impedance and X/R ratios. Use this calculator for quick, conservative checks.

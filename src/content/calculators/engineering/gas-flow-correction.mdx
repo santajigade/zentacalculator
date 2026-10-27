@@ -1,0 +1,74 @@
+---
+title: Gas Flow Correction Calculator (Actual to Normal m³/h)
+description: Convert actual gas flow (Am³/h) to normal or standard flow (Nm³/h, Sm³/h) using line pressure and temperature — for flow meters and compressors.
+category: engineering
+keywords: [actual to normal flow, nm3/h to am3/h, gas flow correction, standard cubic meters, pressure temperature compensation, scfm to acfm, gas volume correction]
+updated: 2026-10-27
+variables:
+  - { id: Qa, label: Actual flow (at line conditions), family: flow, unit: m3h, imperialUnit: cfm, default: 100, min: 0 }
+  - { id: Pg, label: Line pressure (gauge), family: pressure, unit: bar, imperialUnit: psi, default: 5, min: -1 }
+  - { id: T, label: Line temperature, family: temperature, unit: C, imperialUnit: F, default: 30 }
+  - id: Tn
+    label: Reference conditions
+    default: 273.15
+    options:
+      - { label: 'Normal: 0 °C, 1.01325 bar(a)', value: 273.15 }
+      - { label: 'Standard: 15 °C, 1.01325 bar(a)', value: 288.15 }
+      - { label: 'Standard: 20 °C, 1.01325 bar(a)', value: 293.15 }
+  - { id: Qn, label: Flow at reference conditions, family: flow, unit: m3h, imperialUnit: cfm, min: 0 }
+  - { id: k, label: Correction factor, min: 0, decimals: 4 }
+equations:
+  - k = ((Pg + 101325) / 101325) * (Tn / T)
+  - Qn = Qa * k
+faq:
+  - q: What is the difference between Am³/h and Nm³/h?
+    a: Am³/h is the volume flow at actual line pressure and temperature. Nm³/h converts it to normal reference conditions (0 °C and 1.01325 bar absolute) so flows at different conditions can be compared.
+  - q: How do I convert actual flow to normal flow?
+    a: Qn = Qa × (P_actual ÷ P_ref) × (T_ref ÷ T_actual), using absolute pressures and temperatures in kelvin.
+  - q: Why does compressed gas show a higher normal flow?
+    a: At 5 bar(g), gas is compressed about six times, so each actual cubic metre contains about six normal cubic metres.
+  - q: Does this include compressibility?
+    a: No. It assumes ideal gas behaviour. At high pressures, divide by the compressibility factor Z for accuracy.
+related: [physics/ideal-gas-law, chemistry/combined-gas-law, engineering/mass-flow-rate, conversion/flow-rate-converter]
+---
+
+## How to use this calculator
+
+Enter the **actual flow** at line conditions, the **gauge pressure** and the **temperature** in the pipe, and choose the **reference conditions**. You get the flow at reference conditions and the correction factor. To go from Nm³/h to actual flow, press × on Actual flow.
+
+## The formula
+
+<p class="formula">Q<sub>N</sub> = Q<sub>A</sub> × (P<sub>A</sub> ÷ P<sub>N</sub>) × (T<sub>N</sub> ÷ T<sub>A</sub>)</p>
+
+Pressures must be **absolute** (gauge + atmospheric) and temperatures in **kelvin**.
+
+## Correction factors (to 0 °C, 1.01325 bar a)
+
+| Gauge pressure | 0 °C | 20 °C | 40 °C |
+|---|---|---|---|
+| 0 bar(g) | 1.000 | 0.932 | 0.872 |
+| 0.5 bar(g) | 1.493 | 1.392 | 1.303 |
+| 1 bar(g) | 1.987 | 1.851 | 1.733 |
+| 2 bar(g) | 2.974 | 2.771 | 2.594 |
+| 4 bar(g) | 4.948 | 4.610 | 4.316 |
+| 6 bar(g) | 6.922 | 6.449 | 6.037 |
+| 7 bar(g) | 7.908 | 7.369 | 6.898 |
+| 10 bar(g) | 10.869 | 10.128 | 9.481 |
+| 16 bar(g) | 16.791 | 15.645 | 14.646 |
+
+Multiply actual flow by the factor to get Nm³/h.
+
+## Which reference?
+
+| Term | Typical reference |
+|---|---|
+| Nm³ (normal) | 0 °C, 1.01325 bar(a) — common in Europe and Asia |
+| Sm³ (standard, ISO 13443) | 15 °C, 1.01325 bar(a) — natural gas |
+| SCF (US) | 60 °F (15.6 °C), 14.696 psia |
+| Compressed air (ISO 1217 FAD) | Inlet conditions, often 20 °C, 1 bar(a) |
+
+Always state the reference conditions with a standard flow figure.
+
+## Flow meter compensation
+
+Volumetric gas meters (vortex, turbine, ultrasonic) measure actual flow. Flow computers or multivariable transmitters add pressure and temperature inputs to report normal flow or mass flow in real time.

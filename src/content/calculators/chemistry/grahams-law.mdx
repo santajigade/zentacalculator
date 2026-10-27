@@ -1,0 +1,59 @@
+---
+title: Graham's Law Calculator (Effusion Rate)
+description: Compare effusion or diffusion rates of two gases from their molar masses using Graham's law — or find an unknown molar mass.
+category: chemistry
+keywords: [grahams law calculator, rate of effusion, diffusion rate, molar mass from effusion, grahams law of effusion, gas diffusion]
+updated: 2026-10-27
+variables:
+  - { id: M1, label: Molar mass of gas 1, suffix: g/mol, default: 2.016, min: 0.0001 }
+  - { id: M2, label: Molar mass of gas 2, suffix: g/mol, default: 32.00, min: 0.0001 }
+  - { id: r, label: Rate ratio (gas 1 ÷ gas 2), min: 0, decimals: 4 }
+  - { id: tr, label: Time ratio (gas 1 ÷ gas 2), min: 0, decimals: 4 }
+equations:
+  - r = sqrt(M2 / M1)
+  - tr = 1 / r
+faq:
+  - q: What is Graham's law?
+    a: The rate of effusion of a gas is inversely proportional to the square root of its molar mass — lighter gases escape faster.
+  - q: How much faster does hydrogen effuse than oxygen?
+    a: About 3.98 times faster, since √(32 ÷ 2.016) ≈ 3.98.
+  - q: How do I find an unknown molar mass?
+    a: Measure the rate ratio against a known gas, enter it with the known molar mass, and press × on the unknown molar mass.
+  - q: Why do helium balloons deflate faster than air balloons?
+    a: Helium atoms are light (4 g/mol) and escape through the balloon material much faster than nitrogen and oxygen.
+related: [chemistry/daltons-law, physics/ideal-gas-law, chemistry/moles, chemistry/combined-gas-law]
+---
+
+## How to use this calculator
+
+Enter the **molar masses** of two gases. The calculator gives how many times faster gas 1 effuses than gas 2, and the ratio of times taken for the same amount to escape.
+
+## The formula
+
+<p class="formula">Rate₁ ÷ Rate₂ = √(M₂ ÷ M₁)</p>
+
+## Effusion relative to air (29 g/mol)
+
+| Gas | Molar mass | Speed relative to air |
+|---|---|---|
+| Hydrogen (H₂) | 2.016 | 3.79× |
+| Helium (He) | 4.003 | 2.69× |
+| Methane (CH₄) | 16.04 | 1.34× |
+| Ammonia (NH₃) | 17.03 | 1.30× |
+| Nitrogen (N₂) | 28.01 | 1.02× |
+| Oxygen (O₂) | 32.0 | 0.95× |
+| Carbon dioxide (CO₂) | 44.01 | 0.81× |
+| Sulphur hexafluoride (SF₆) | 146.06 | 0.45× |
+
+## Effusion vs diffusion
+
+- **Effusion**: gas escaping through a tiny hole into a vacuum — Graham's law applies closely.
+- **Diffusion**: gas spreading through another gas — Graham's law gives the right trend but collisions make it approximate.
+
+## The classic demonstration
+
+Cotton wool soaked in ammonia (17 g/mol) and hydrochloric acid (HCl, 36.5 g/mol) at opposite ends of a glass tube produce a white ring of ammonium chloride closer to the HCl end, because ammonia diffuses about 1.47 times faster.
+
+## Uranium enrichment
+
+Gaseous diffusion plants separated uranium-235 from uranium-238 as UF₆. The masses differ so little (349 vs 352 g/mol) that each stage enriched by only a factor of about 1.004, requiring thousands of stages.

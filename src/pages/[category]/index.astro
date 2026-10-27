@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../site.config.ts';
 import { CATEGORIES, catBySlug } from '../../data/categories.ts';
+import { CAT_SEO } from '../../data/catseo.ts';
 import { allCalcs, urlOf } from '../../lib/calcs.ts';
 import { POPULAR } from '../../data/popular.ts';
 
@@ -9,35 +10,77 @@ export async function getStaticPaths() {
   return CATEGORIES.map((c) => ({ params: { category: c.slug } }));
 }
 const cat = catBySlug(Astro.params.category!)!;
+const seo = CAT_SEO[cat.slug];
 const calcs = (await allCalcs()).filter((c) => c.data.category === cat.slug);
-const pop = POPULAR.map((id) => calcs.find((c) => `${c.data.category}/${c.id.split('/').pop()}` === id)).filter((c): c is NonNullable<typeof c> => !!c);
+const slugOf = (c: (typeof calcs)[number]) => c.id.split('/').pop()!;
+const pop = POPULAR.map((id) => calcs.find((c) => `${c.data.category}/${slugOf(c)}` === id)).filter((c): c is NonNullable<typeof c> => !!c);
 const top = [...pop, ...calcs.filter((c) => c.data.featured && !pop.includes(c))].slice(0, 8);
-const schema = [
+
+// grouped sections; anything not listed goes to "More"
+const groups = (seo?.groups ?? []).map((g) => ({ name: g.name, items: g.ids.map((id) => calcs.find((c) => slugOf(c) === id)).filter((c): c is NonNullable<typeof c> => !!c) })).filter((g) => g.items.length);
+const grouped = new Set(groups.flatMap((g) => g.items));
+const rest = calcs.filter((c) => !grouped.has(c));
+if (groups.length && rest.length) groups.push({ name: `More ${cat.name.toLowerCase()} calculators`, items: rest });
+const slugify = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+const md = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+  .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_m, l, u) => /^https?:/.test(u) ? `<a href="${u}" target="_blank" rel="noopener">${l}</a>` : `<a href="${u}">${l}</a>`);
+
+const schema: object[] = [
   { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
     { '@type': 'ListItem', position: 2, name: cat.name, item: `${SITE.url}/${cat.slug}/` } ] },
-  { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: calcs.map((c, i) => (
-    { '@type': 'ListItem', position: i + 1, url: `${SITE.url}${urlOf(c)}`, name: c.data.title })) },
+  { '@context': 'https://schema.org', '@type': 'CollectionPage', name: seo?.h1 ?? `${cat.name} calculators`, url: `${SITE.url}/${cat.slug}/`, description: seo?.description,
+    mainEntity: { '@type': 'ItemList', numberOfItems: calcs.length, itemListElement: calcs.map((c, i) => (
+      { '@type': 'ListItem', position: i + 1, url: `${SITE.url}${urlOf(c)}`, name: c.data.title })) } },
 ];
+if (seo?.faq?.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: seo.faq.map((f) => (
+  { '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
+const title = seo?.title ?? `${cat.name} Calculators`;
+const description = seo?.description ?? `${calcs.length} free ${cat.name.toLowerCase()} calculators. ${cat.blurb}`;
 ---
-<Base title={`${cat.name} Calculators`} description={`${calcs.length} free ${cat.name.toLowerCase()} calculators. ${cat.blurb}`} schema={schema} activeCat={cat.slug} noindex={calcs.length === 0}>
+<Base title={title} description={description} schema={schema} activeCat={cat.slug} noindex={calcs.length === 0}>
   <div class="wrap" style={`--accent:${cat.color}`}>
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>{cat.name}</span></nav>
-    <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.03em;margin:6px 0 4px">{cat.icon} {cat.name} calculators</h1>
-    <p class="muted">{cat.blurb} {calcs.length} calculator{calcs.length === 1 ? '' : 's'}.</p>
+    <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.03em;margin:6px 0 8px">{cat.icon} {seo?.h1 ?? `${cat.name} calculators`}</h1>
+    {seo?.intro ? <p class="intro" set:html={md(seo.intro)} /> : <p class="muted">{cat.blurb}</p>}
+    <p class="muted" style="margin-top:-6px">{calcs.length} free calculator{calcs.length === 1 ? '' : 's'} · no sign-up · works on mobile</p>
+
+    {groups.length > 1 && (
+      <p class="cat-links">{groups.map((g) => <a href={`#${slugify(g.name)}`}>{g.name}</a>)}</p>
+    )}
+
     {top.length > 0 && <>
-      <h2 style="margin:26px 0 10px;font-size:1.15rem">Most popular</h2>
+      <h2 class="cat-h2">Most popular {cat.name.toLowerCase()} calculators</h2>
       <ul class="calc-list">
         {top.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}
       </ul>
-      <h2 style="margin:30px 0 10px;font-size:1.15rem">All {cat.name.toLowerCase()} calculators</h2>
     </>}
-    {calcs.length ? (
-      <ul class="calc-list" style={top.length ? '' : 'margin-top:24px'}>
+
+    {groups.length ? groups.map((g) => <>
+      <h2 class="cat-h2" id={slugify(g.name)}>{g.name}</h2>
+      <ul class="calc-list">
+        {g.items.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}
+      </ul>
+    </>) : calcs.length ? <>
+      <h2 class="cat-h2">All {cat.name.toLowerCase()} calculators</h2>
+      <ul class="calc-list">
         {calcs.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}
       </ul>
-    ) : <p class="muted" style="padding:40px 0">Calculators coming soon.</p>}
-    <h2 style="margin:36px 0 10px;font-size:1.15rem">Explore other categories</h2>
+    </> : <p class="muted" style="padding:40px 0">Calculators coming soon.</p>}
+
+    {(seo?.about?.length || seo?.faq?.length) && (
+      <div class="prose cat-prose">
+        {seo?.about?.map((a) => <><h2>{a.h}</h2><p set:html={md(a.p)} /></>)}
+        {seo?.faq?.length && <section class="faq">
+          <h2>Frequently asked questions</h2>
+          {seo.faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+        </section>}
+      </div>
+    )}
+
+    <h2 class="cat-h2">Explore other categories</h2>
     <p class="cat-links">{CATEGORIES.filter((c) => c.slug !== cat.slug).map((c) => <a href={`/${c.slug}/`}>{c.icon} {c.name}</a>)}</p>
   </div>
 </Base>

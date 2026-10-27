@@ -15,7 +15,7 @@ const schema = [{
   potentialAction: { '@type': 'SearchAction', target: `${SITE.url}/?q={query}`, 'query-input': 'required name=query' },
 }];
 ---
-<Base title={SITE.name} description={SITE.description} schema={schema}>
+<Base title="Free Online Calculators for Engineering, Science, Math & Finance" description={`${calcs.length}+ free online calculators: electrical, electronics, engineering, physics, chemistry, math, statistics, unit conversion, finance and health. Solve for any value with steps and charts.`} schema={schema}>
   <section class="hero wrap">
     <h1>Calculators that solve <em>for any value</em></h1>
     <p>Fill in whatever you know. We calculate the rest, show every step, and plot how the result changes.</p>

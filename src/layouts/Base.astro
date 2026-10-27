@@ -3,10 +3,12 @@ import '@fontsource-variable/plus-jakarta-sans';
 import '@fontsource/jetbrains-mono/500.css';
 import '../styles/global.css';
 import { SITE } from '../site.config.ts';
-import { CATEGORIES } from '../data/categories.ts';
+import { CATEGORIES, NAV_GROUPS, catBySlug } from '../data/categories.ts';
 import Logo from '../components/Logo.astro';
 import { allCalcs, findCalc, urlOf } from '../lib/calcs.ts';
 const total = (await allCalcs()).length;
+const _all = await allCalcs();
+const catCount = (slug: string) => _all.filter((c) => c.data.category === slug).length;
 
 interface Props { title: string; description: string; schema?: object[]; activeCat?: string; noindex?: boolean; }
 const { title, description, schema = [], activeCat, noindex = false } = Astro.props;
@@ -62,8 +64,17 @@ const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);
       <button class="theme" id="theme" type="button" aria-label="Toggle dark mode">◐</button>
     </div>
     <nav class="cats wrap" aria-label="Categories">
-      {CATEGORIES.map((c) => (
-        <a href={`/${c.slug}/`} class:list={['cats__a', { 'is-active': activeCat === c.slug }]}>{c.name}</a>
+      {NAV_GROUPS.map((g, i) => g.cats.length === 1 ? (
+        <a href={`/${g.cats[0]}/`} class:list={['cats__a', { 'is-active': activeCat === g.cats[0] }]}>{g.name}</a>
+      ) : (
+        <div class="navg">
+          <button type="button" class:list={['cats__a', 'navg__btn', { 'is-active': g.cats.includes(activeCat ?? '') }]} aria-expanded="false" aria-controls={`navg-${i}`}>{g.name}<span class="navg__car" aria-hidden="true">▾</span></button>
+          <div class="navg__menu" id={`navg-${i}`}>
+            {g.cats.map((slug) => { const c = catBySlug(slug)!; return (
+              <a href={`/${c.slug}/`} class:list={{ 'is-active': activeCat === c.slug }}><span class="navg__ic" aria-hidden="true">{c.icon}</span><span><b>{c.name}</b><small>{catCount(c.slug)} calculators</small></span></a>
+            ); })}
+          </div>
+        </div>
       ))}
     </nav>
   </header>
@@ -90,6 +101,17 @@ const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);
     <p class="wrap muted ftr__copy">© {new Date().getFullYear()} {SITE.name}. Results are for information only.</p>
   </footer>
 
+  <script>
+    // category dropdowns: hover on desktop (CSS), click/tap toggles everywhere
+    const groups = [...document.querySelectorAll<HTMLElement>('.navg')];
+    const closeAll = (except?: HTMLElement) => groups.forEach((g) => { if (g !== except) { g.classList.remove('open'); g.querySelector('button')!.setAttribute('aria-expanded', 'false'); } });
+    groups.forEach((g) => {
+      const b = g.querySelector('button')!;
+      b.addEventListener('click', (ev) => { ev.stopPropagation(); const o = !g.classList.contains('open'); closeAll(g); g.classList.toggle('open', o); b.setAttribute('aria-expanded', String(o)); });
+    });
+    document.addEventListener('click', () => closeAll());
+    document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeAll(); });
+  </script>
   <script>
     // Theme toggle
     const root = document.documentElement;

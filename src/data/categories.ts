@@ -21,4 +21,14 @@ export const CATEGORIES: Category[] = [
   { slug: 'other', name: 'Other', icon: '✨', color: '#64748b', blurb: 'Everything that does not fit elsewhere.' },
 ];
 
+// Top navigation groups (each opens a dropdown of categories).
+export const NAV_GROUPS: { name: string; cats: string[] }[] = [
+  { name: 'Engineering', cats: ['engineering', 'electrical', 'electronics', 'construction'] },
+  { name: 'Science', cats: ['physics', 'chemistry', 'biology', 'ecology'] },
+  { name: 'Math', cats: ['math', 'statistics', 'conversion'] },
+  { name: 'Finance', cats: ['finance'] },
+  { name: 'Health', cats: ['health', 'food', 'sports'] },
+  { name: 'Everyday', cats: ['everyday-life', 'other'] },
+];
+
 export const catBySlug = (slug: string) => CATEGORIES.find((c) => c.slug === slug);

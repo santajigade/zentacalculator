@@ -18,6 +18,10 @@ faq:
     a: When pH is close to pKa (within about ±1), where the acid and base concentrations are similar.
   - q: What is the pKa of acetic acid?
     a: About 4.76 at 25 °C.
+  - q: "What pH does a buffer have when acid and base are equal?"
+    a: "pH = pKa, because log(1) = 0."
+  - q: "How do I make a phosphate buffer at pH 7.4?"
+    a: "Use the H₂PO₄⁻/HPO₄²⁻ pair (pKa about 7.2). The base-to-acid ratio is about 10^0.2 ≈ 1.6."
 related: [chemistry/ph, chemistry/molarity]
 ---
 
@@ -34,6 +38,44 @@ Enter the acid's **pKa** and the concentrations of the **conjugate base** and **
 pKa 4.76, [acetate] = 0.15 M, [acetic acid] = 0.10 M:
 
 pH = 4.76 + log₁₀(1.5) = **4.94**
+
+## Base-to-acid ratio and pH
+
+| [A⁻] ÷ [HA] | pH − pKa |
+|---|---|
+| 0.1 | -1.00 |
+| 0.25 | -0.60 |
+| 0.5 | -0.30 |
+| 1 | +0.00 |
+| 2 | +0.30 |
+| 4 | +0.60 |
+| 10 | +1.00 |
+
+A buffer works best within **±1 pH unit** of its pKa, where the ratio is between 0.1 and 10.
+
+## Preparing a buffer of a given pH
+
+Rearrange to find the ratio needed:
+
+<p class="formula">[A⁻] ÷ [HA] = 10<sup>(pH − pKa)</sup></p>
+
+For an acetate buffer at pH 5.00 (pKa 4.76), the ratio is 10<sup>0.24</sup> = **1.74**. With a total buffer concentration of 0.1 M, use 0.0635 M acetate and 0.0365 M acetic acid.
+
+## Buffer capacity
+
+Capacity is how much acid or base a buffer can absorb before the pH changes significantly. It is highest when [A⁻] = [HA] (pH = pKa) and rises with total concentration.
+
+## The blood buffer
+
+Blood pH (about 7.4) is held mainly by the bicarbonate system:
+
+<p class="formula">pH = 6.1 + log([HCO₃⁻] ÷ (0.03 × pCO₂))</p>
+
+with pCO₂ in mmHg. Doctors use this to interpret blood gas results.
+
+## Limits of the equation
+
+It assumes concentrations are not too dilute and activity effects are small. For very dilute buffers or extreme pH, a full equilibrium calculation is more accurate.
 
 ## Common buffer systems
 

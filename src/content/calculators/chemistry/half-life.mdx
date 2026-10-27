@@ -21,6 +21,10 @@ faq:
     a: Living things keep a steady level of carbon-14. After death it decays with a half-life of about 5,730 years, so the remaining fraction gives the age.
   - q: Can this be used for medicines?
     a: Yes — drug elimination half-lives follow the same maths. Enter hours instead of years.
+  - q: "How long until only 1% remains?"
+    a: "About 6.64 half-lives, because 0.5^6.64 ≈ 0.01."
+  - q: "Is half-life the same as average lifetime?"
+    a: "No. The mean lifetime is half-life ÷ ln 2, about 1.44 times the half-life."
 related: [chemistry/arrhenius-equation, math/logarithm]
 ---
 
@@ -37,6 +41,44 @@ Enter the **initial amount**, **half-life** and **time elapsed** to get the amou
 Half-life 5,730 years. After 10,000 years, of 100 units:
 
 N = 100 × 0.5<sup>10,000/5,730</sup> = **29.8** units remaining (29.8%)
+
+## Fraction remaining after each half-life
+
+| Half-lives passed | Fraction remaining |
+|---|---|
+| 1 | 50% |
+| 2 | 25% |
+| 3 | 12.5% |
+| 4 | 6.25% |
+| 5 | 3.12% |
+| 7 | 0.781% |
+| 10 | 0.0977% |
+
+After about 10 half-lives, less than 0.1% remains.
+
+## Decay constant
+
+The half-life and the decay constant λ are related:
+
+<p class="formula">λ = ln 2 ÷ T<sub>½</sub>, &nbsp; N = N₀ × e<sup>−λt</sup></p>
+
+## Radiocarbon dating
+
+To find age from the fraction remaining:
+
+<p class="formula">t = T<sub>½</sub> × log₂(N₀ ÷ N)</p>
+
+A sample with 25% of its original carbon-14 is 2 half-lives old: about **11,460 years**. Carbon dating works up to roughly 50,000 years.
+
+## Half-life in medicine
+
+Drug half-lives determine dosing intervals. A medicine with a 6-hour half-life falls to about 6% of its peak after 24 hours (4 half-lives). It takes about 4–5 half-lives to reach a steady state with regular doses.
+
+## Other uses
+
+- **First-order chemical reactions** have a constant half-life, independent of concentration.
+- **Biological half-life**: how long the body takes to eliminate half of a substance.
+- **Radioactive waste**: long half-lives mean safe storage for very long periods.
 
 ## Common half-lives
 

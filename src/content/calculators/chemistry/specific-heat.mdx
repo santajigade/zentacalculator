@@ -29,6 +29,10 @@ faq:
     a: Heating 500 g of water from 20 °C to 100 °C needs about 167 kJ — about 0.046 kWh.
   - q: Does this include melting or boiling?
     a: No. Phase changes need extra latent heat (334 J/g to melt ice, 2,257 J/g to boil water).
+  - q: "Why does water have such a high specific heat?"
+    a: "Hydrogen bonds between water molecules absorb energy, so more heat is needed to raise the temperature."
+  - q: "What is the difference between specific heat and heat capacity?"
+    a: "Specific heat is per gram (or kg). Heat capacity is for a whole object: mass × specific heat."
 related: [engineering/heat-duty, conversion/energy-converter]
 ---
 
@@ -47,6 +51,45 @@ Heating 500 g of water from 20 °C to 100 °C (ΔT = 80 K):
 q = 500 × 4.186 × 80 = **167.4 kJ** (0.047 kWh)
 
 A 2 kW kettle would take about 84 s (plus losses).
+
+## Specific heat of common substances
+
+| Substance | c (J/g·K) |
+|---|---|
+| Water | 4.186 |
+| Ice | 2.09 |
+| Steam | 2.01 |
+| Ethanol | 2.44 |
+| Olive oil | about 1.97 |
+| Air (constant pressure) | 1.005 |
+| Aluminium | 0.897 |
+| Glass | about 0.84 |
+| Iron / steel | 0.45–0.49 |
+| Copper | 0.385 |
+| Lead | 0.129 |
+
+## Phase changes need extra energy
+
+When a substance melts or boils, energy goes into the phase change without raising temperature:
+
+| Change (water) | Latent heat |
+|---|---|
+| Melting ice at 0 °C | 334 J/g |
+| Boiling water at 100 °C | 2,257 J/g |
+
+Turning 1 kg of ice at 0 °C into steam at 100 °C takes 334 + 418.6 + 2,257 = **3,010 kJ**.
+
+## Calorimetry
+
+When two substances at different temperatures mix, heat lost by one equals heat gained by the other:
+
+<p class="formula">m₁c₁(T₁ − T<sub>f</sub>) = m₂c₂(T<sub>f</sub> − T₂)</p>
+
+200 g of iron at 100 °C dropped into 500 g of water at 20 °C reaches about **23.3 °C**.
+
+## Heating time
+
+Time = energy ÷ power. Heating 1.5 L of water from 20 °C to 100 °C needs 502 kJ; a 2 kW kettle does it in about 4.2 minutes, ignoring losses.
 
 ## Why water's high specific heat matters
 

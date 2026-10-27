@@ -25,6 +25,10 @@ faq:
     a: Where ΔG = 0, so T = ΔH ÷ ΔS. Press × on Temperature and set ΔG to 0.
   - q: Why are units mixed?
     a: ΔH is usually given in kJ/mol and ΔS in J/mol·K. The calculator divides ΔS by 1,000 for you.
+  - q: "What does a negative ΔG mean?"
+    a: "The reaction is thermodynamically favourable (spontaneous) under those conditions."
+  - q: "What is the Gibbs free energy equation?"
+    a: "ΔG = ΔH − TΔS, where T is the absolute temperature in kelvin."
 related: [chemistry/arrhenius-equation, chemistry/specific-heat]
 ---
 
@@ -43,6 +47,40 @@ N₂ + 3H₂ → 2NH₃, ΔH = −92.2 kJ/mol, ΔS = −198.7 J/mol·K, at 25 °
 ΔG = −92.2 − 298.15 × (−0.1987) = **-33.0 kJ/mol** → spontaneous
 
 It stops being spontaneous above T = 92.2 ÷ 0.1987 ≈ 464 K (191 °C).
+
+## Crossover temperature
+
+When ΔH and ΔS have the same sign, the reaction switches between spontaneous and non-spontaneous at:
+
+<p class="formula">T = ΔH ÷ ΔS</p>
+
+For ammonia synthesis (ΔH = −92.2 kJ/mol, ΔS = −198.7 J/mol·K), T = 92,200 ÷ 198.7 = **464 K (191 °C)**. Below this temperature the forward reaction is favoured; above it, the reverse.
+
+## Gibbs energy and equilibrium
+
+ΔG° is linked to the equilibrium constant:
+
+<p class="formula">ΔG° = −R × T × ln K</p>
+
+| ΔG° (kJ/mol, 25 °C) | K |
+|---|---|
+| -40 | 1.02e+07 |
+| -20 | 3.19e+03 |
+| -10 | 56.5 |
+| 0 | 1 |
+| 10 | 0.0177 |
+| 20 | 0.000313 |
+| 40 | 9.82e-08 |
+
+Every 5.7 kJ/mol change in ΔG° at 25 °C changes K by a factor of 10.
+
+## Spontaneous is not the same as fast
+
+A negative ΔG means a reaction can proceed, not that it will be quick. Diamond turning into graphite has a negative ΔG at room conditions but takes an immeasurably long time. Speed depends on activation energy — see the [Arrhenius calculator](/chemistry/arrhenius-equation/).
+
+## Units
+
+ΔH is usually in kJ/mol and ΔS in J/mol·K. Divide ΔS by 1,000 before combining them, as the calculator does.
 
 ## The four cases
 

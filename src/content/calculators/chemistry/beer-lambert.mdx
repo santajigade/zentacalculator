@@ -20,6 +20,10 @@ faq:
     a: Divide absorbance by (ε × l). Press × on Concentration and type the measured absorbance.
   - q: What absorbance range is reliable?
     a: Usually about 0.1–1.0. Above roughly 1.5–2, very little light gets through and readings become inaccurate.
+  - q: "What does an absorbance of 1 mean?"
+    a: "Only 10% of the light passes through; 90% is absorbed."
+  - q: "Why is absorbance unitless?"
+    a: "It is a logarithm of a ratio of light intensities, so the units cancel."
 related: [chemistry/molarity, chemistry/dilution]
 ---
 
@@ -37,6 +41,47 @@ Enter the **molar absorptivity**, **path length** and **concentration** to get a
 
 - A = 6,220 × 1 × 0.0001 = **0.622**
 - T = 10⁻⁰·⁶²² = **23.9%**
+
+## Absorbance to transmittance table
+
+| Absorbance | Transmittance | Light absorbed |
+|---|---|---|
+| 0.05 | 89.1% | 10.9% |
+| 0.1 | 79.4% | 20.6% |
+| 0.2 | 63.1% | 36.9% |
+| 0.3 | 50.1% | 49.9% |
+| 0.5 | 31.6% | 68.4% |
+| 1.0 | 10.0% | 90.0% |
+| 1.5 | 3.2% | 96.8% |
+| 2.0 | 1.0% | 99.0% |
+| 3.0 | 0.1% | 99.9% |
+
+Most spectrophotometers are most accurate between about **A = 0.1 and 1.0**. Dilute samples that read above this range.
+
+## Building a calibration curve
+
+1. Prepare standards of known concentration.
+2. Measure absorbance at the chosen wavelength (λ<sub>max</sub>).
+3. Plot absorbance against concentration — it should be a straight line through the origin.
+4. Use the slope (ε × l) to find unknown concentrations.
+
+## Common molar absorptivities
+
+| Substance | Wavelength | ε (L/mol·cm) |
+|---|---|---|
+| NADH | 340 nm | 6,220 |
+| DNA (per base, approx.) | 260 nm | about 6,600 |
+| Potassium permanganate | 525 nm | about 2,400 |
+| p-Nitrophenolate | 405 nm | about 18,000 |
+
+## When Beer–Lambert breaks down
+
+- **High concentrations** (above about 0.01 M): molecules interact and the line curves.
+- **Scattering**: cloudy or turbid samples.
+- **Stray light** and non-monochromatic light in the instrument.
+- **Chemical changes**: equilibria that shift with dilution.
+
+For nucleic acid samples, see the [DNA concentration calculator](/biology/dna-concentration/).
 
 ## Absorbance vs transmittance
 

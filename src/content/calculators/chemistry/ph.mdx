@@ -27,6 +27,10 @@ faq:
     a: pH = −log₁₀[H⁺]. A concentration of 1 × 10⁻³ mol/L gives pH 3.
   - q: Why does pH + pOH = 14?
     a: Because water's ion product Kw is 1.0 × 10⁻¹⁴ at 25 °C. At other temperatures the sum changes slightly.
+  - q: "What pH is neutral?"
+    a: "pH 7 at 25 °C, where hydrogen and hydroxide ions are equal."
+  - q: "How much more acidic is pH 3 than pH 5?"
+    a: "100 times, because each pH unit is a tenfold difference."
 related: [chemistry/henderson-hasselbalch, chemistry/molarity]
 ---
 
@@ -44,6 +48,47 @@ pH 4.5:
 
 - [H⁺] = 10⁻⁴·⁵ = **3.16e-05 mol/L**
 - pOH = **9.5**, [OH⁻] = **3.16e-10 mol/L**
+
+## pH and [H⁺] table
+
+| pH | [H⁺] (mol/L) | Compared with pH 7 |
+|---|---|---|
+| 1 | 1 × 10<sup>−1</sup> | 1e+06× more H⁺ |
+| 3 | 1 × 10<sup>−3</sup> | 10000× more H⁺ |
+| 5 | 1 × 10<sup>−5</sup> | 100× more H⁺ |
+| 7 | 1 × 10<sup>−7</sup> | — |
+| 9 | 1 × 10<sup>−9</sup> | 100× less H⁺ |
+| 11 | 1 × 10<sup>−11</sup> | 10000× less H⁺ |
+| 13 | 1 × 10<sup>−13</sup> | 1e+06× less H⁺ |
+
+Each pH unit is a **tenfold** change in hydrogen ion concentration.
+
+## pH of strong acids and bases
+
+- Strong acid: pH = −log₁₀(concentration). 0.01 M HCl has pH 2.
+- Strong base: pOH = −log₁₀([OH⁻]), then pH = 14 − pOH. 0.01 M NaOH has pH 12.
+
+## Weak acids
+
+For a weak acid of concentration C with dissociation constant Ka:
+
+<p class="formula">[H⁺] ≈ √(Ka × C)</p>
+
+0.1 M acetic acid (Ka = 1.8 × 10⁻⁵) has [H⁺] ≈ 1.34 × 10⁻³ M, so pH ≈ **2.87**.
+
+## pH and temperature
+
+The value 14 for pH + pOH applies at 25 °C. At higher temperatures, water ionises more, so neutral pH falls — about 6.14 at 100 °C. A neutral solution is one where [H⁺] = [OH⁻], not necessarily pH 7.
+
+## Measuring pH
+
+| Method | Accuracy |
+|---|---|
+| Universal indicator paper | ±0.5–1 pH |
+| Indicator solutions | ±0.2–0.5 pH |
+| Calibrated pH meter | ±0.01–0.05 pH |
+
+Calibrate pH meters with at least two buffers (often pH 4 and 7, or 7 and 10) bracketing your sample.
 
 ## pH of everyday substances
 

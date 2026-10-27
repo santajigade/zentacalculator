@@ -19,6 +19,10 @@ faq:
     a: Roughly, for activation energies around 50 kJ/mol near room temperature. It is a rule of thumb, not a law.
   - q: What units does k have?
     a: The same as A, which depends on the reaction order (for example s⁻¹ for first-order reactions).
+  - q: "What are the units of the rate constant?"
+    a: "They depend on the reaction order. The calculator gives k in the same units as A."
+  - q: "Why does a small temperature rise speed reactions so much?"
+    a: "Because the fraction of molecules with energy above Ea grows exponentially with temperature."
 related: [chemistry/half-life, chemistry/gibbs-free-energy]
 ---
 
@@ -36,6 +40,44 @@ A = 1 × 10¹⁰ s⁻¹, Ea = 50 kJ/mol:
 
 - At 25 °C: k = **17.4 s⁻¹**
 - At 35 °C: k = **33.5 s⁻¹** — about **1.92×** faster
+
+## How temperature changes the rate
+
+For Ea = 50 kJ/mol, the rate constant relative to 25 °C:
+
+| Temperature | Relative rate |
+|---|---|
+| 0 °C | 0.16× |
+| 10 °C | 0.34× |
+| 25 °C | 1.00× |
+| 35 °C | 1.92× |
+| 50 °C | 4.76× |
+| 75 °C | 18.11× |
+| 100 °C | 57.62× |
+
+The old rule of thumb that “rates double every 10 °C” holds roughly for activation energies around 50 kJ/mol near room temperature.
+
+## Two-temperature form
+
+If you know the rate constants at two temperatures, find Ea without A:
+
+<p class="formula">ln(k₂ ÷ k₁) = −Ea ÷ R × (1 ÷ T₂ − 1 ÷ T₁)</p>
+
+If a reaction is 3 times faster at 40 °C than at 20 °C, Ea = R × ln 3 ÷ (1/293.15 − 1/313.15) ≈ **41.9 kJ/mol**.
+
+## Arrhenius plot
+
+Plotting ln k against 1/T gives a straight line with slope −Ea/R and intercept ln A. This is the standard way to find activation energy from experimental data.
+
+## Catalysts
+
+A catalyst lowers the activation energy. Cutting Ea from 50 to 40 kJ/mol at 25 °C speeds the reaction up by a factor of about **56** — a huge effect from a modest change.
+
+## Real-world uses
+
+- **Food storage**: refrigeration slows spoilage reactions.
+- **Shelf-life testing**: accelerated ageing at high temperature predicts room-temperature stability.
+- **Industrial chemistry**: choosing reactor temperatures.
 
 ## Why it matters
 

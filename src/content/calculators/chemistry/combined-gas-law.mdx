@@ -20,6 +20,10 @@ faq:
     a: When you need the amount of gas (moles). The combined law only compares two states of the same gas sample.
   - q: Which units must I use?
     a: Absolute pressure and absolute temperature. The calculator converts units automatically.
+  - q: "What is the combined gas law?"
+    a: "P₁V₁ ÷ T₁ = P₂V₂ ÷ T₂ for a fixed amount of gas, combining Boyle’s, Charles’s and Gay-Lussac’s laws."
+  - q: "Can I use it for real gases?"
+    a: "Yes for most gases near room conditions. At very high pressure or low temperature, real-gas corrections are needed."
 related: [chemistry/boyles-law, chemistry/charles-law, physics/ideal-gas-law]
 ---
 
@@ -36,6 +40,35 @@ Enter **five** of the six values (initial and final pressure, volume and tempera
 10 L of air at 101.325 kPa and 25 °C is compressed to 200 kPa and warms to 60 °C:
 
 V₂ = 101.325 × 10 × 333.15 ÷ (298.15 × 200) = **5.66 L**
+
+## Standard conditions
+
+Gas volumes are often reported at standard conditions so they can be compared:
+
+| Standard | Temperature | Pressure |
+|---|---|---|
+| STP (IUPAC, since 1982) | 0 °C (273.15 K) | 100 kPa |
+| STP (older) | 0 °C | 101.325 kPa (1 atm) |
+| NTP | 20 °C | 101.325 kPa |
+| Normal (industrial Nm³) | 0 °C | 101.325 kPa |
+
+## Correcting gas volume to standard conditions
+
+A gas meter reads 10 m³ at 2 bar(g) (3.013 bar absolute) and 30 °C. At normal conditions:
+
+<p class="formula">V<sub>N</sub> = 10 × (3.013 ÷ 1.01325) × (273.15 ÷ 303.15) = 26.8 Nm³</p>
+
+This is how gas flow is billed and compared in industry.
+
+## Adding the amount of gas
+
+If the amount of gas changes too, use the full [ideal gas law](/physics/ideal-gas-law/): PV = nRT. The combined gas law is the special case where n is constant.
+
+## Common errors
+
+- Using **gauge pressure** instead of absolute.
+- Using **°C instead of kelvin**.
+- Mixing units — keep P₁ and P₂ in the same unit, and V₁ and V₂ in the same unit. The calculator handles this for you.
 
 ## Special cases
 

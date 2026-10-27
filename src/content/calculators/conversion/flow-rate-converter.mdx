@@ -24,6 +24,10 @@ faq:
     a: "0.2271 m³/h."
   - q: What does CFM mean?
     a: "Cubic feet per minute, common for air flow in HVAC and compressors."
+  - q: "How many litres per minute is 1 m³/h?"
+    a: "1 m³/h is 16.67 L/min."
+  - q: "How do I convert gpm to m³/h?"
+    a: "Multiply US gpm by 0.2271. 100 gpm is 22.71 m³/h."
 related: [engineering/pipe-flow-velocity, engineering/mass-flow-rate, conversion/volume-converter]
 ---
 
@@ -60,6 +64,40 @@ Type a flow rate in **any** unit and the others update instantly — handy for p
 | 50 US gpm | 11.3562 m³/h |
 | 100 US gpm | 22.7125 m³/h |
 | 500 US gpm | 113.562 m³/h |
+
+## Flow rate equivalents
+
+| m³/h | L/min | L/s | US gpm | ft³/min |
+|---|---|---|---|---|
+| 0.5 | 8.33 | 0.139 | 2.20 | 0.294 |
+| 1 | 16.67 | 0.278 | 4.40 | 0.589 |
+| 2 | 33.33 | 0.556 | 8.81 | 1.177 |
+| 5 | 83.33 | 1.389 | 22.01 | 2.943 |
+| 10 | 166.67 | 2.778 | 44.03 | 5.886 |
+| 20 | 333.33 | 5.556 | 88.06 | 11.772 |
+| 50 | 833.33 | 13.889 | 220.14 | 29.429 |
+| 100 | 1666.67 | 27.778 | 440.29 | 58.858 |
+| 250 | 4166.67 | 69.444 | 1100.72 | 147.144 |
+| 500 | 8333.33 | 138.889 | 2201.43 | 294.289 |
+
+## Flow, velocity and pipe size
+
+Flow rate equals velocity times pipe area:
+
+<p class="formula">Q = v × A = v × π × d² ÷ 4</p>
+
+10 m³/h in a 50 mm pipe flows at about 1.41 m/s. Typical design velocities are 1–3 m/s for water pipes. Use the [pipe flow calculator](/engineering/pipe-flow-velocity/) to size pipes.
+
+## Filling and emptying times
+
+Time = volume ÷ flow rate. A 1,000-litre tank filled at 20 L/min takes **50 minutes**. At 10 m³/h (167 L/min) it takes about 6 minutes.
+
+## Units by industry
+
+- **Water and process plants**: m³/h, L/s.
+- **US plumbing and pumps**: gallons per minute (gpm).
+- **HVAC airflow**: cubic feet per minute (CFM) or m³/h.
+- **Gas**: normal or standard m³/h (Nm³/h, Sm³/h), corrected to reference conditions.
 
 ## Liquids vs gases
 

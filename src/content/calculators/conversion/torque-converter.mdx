@@ -22,6 +22,10 @@ faq:
     a: "1.35582 N·m."
   - q: How do I convert lbf·in to lbf·ft?
     a: "Divide by 12."
+  - q: "How many lbf·ft is 100 N·m?"
+    a: "100 N·m is 73.76 lbf·ft."
+  - q: "How many N·m is 50 ft-lbs?"
+    a: "50 lbf·ft is 67.79 N·m."
 related: [engineering/torque-power-speed, conversion/power-converter]
 ---
 
@@ -63,6 +67,42 @@ Type a torque value in **any** unit and the others update instantly — useful f
 ## lbf·ft vs "ft-lbs"
 
 Torque is often written "ft-lbs" on wrenches and manuals; strictly, foot-pounds is a unit of energy, but in torque specs the two mean the same thing.
+
+## Torque conversion table
+
+| N·m | lbf·ft | lbf·in | kgf·m |
+|---|---|---|---|
+| 1 | 0.74 | 8.9 | 0.102 |
+| 5 | 3.69 | 44.3 | 0.510 |
+| 10 | 7.38 | 88.5 | 1.020 |
+| 20 | 14.75 | 177.0 | 2.039 |
+| 25 | 18.44 | 221.3 | 2.549 |
+| 50 | 36.88 | 442.5 | 5.099 |
+| 80 | 59.00 | 708.1 | 8.158 |
+| 100 | 73.76 | 885.1 | 10.197 |
+| 150 | 110.63 | 1327.6 | 15.296 |
+| 200 | 147.51 | 1770.1 | 20.394 |
+| 300 | 221.27 | 2655.2 | 30.591 |
+| 500 | 368.78 | 4425.4 | 50.986 |
+
+## Typical tightening torques
+
+| Application | Typical torque |
+|---|---|
+| Car wheel nuts | 80–140 N·m (59–103 lbf·ft) |
+| Spark plugs | 20–30 N·m |
+| Bicycle stem bolts | 4–6 N·m |
+| Engine head bolts | Varies — follow the manual |
+
+Always use the value from the manufacturer's manual and a calibrated torque wrench.
+
+## Torque and power
+
+Power = torque × angular speed. In practical units:
+
+<p class="formula">P (kW) = T (N·m) × rpm ÷ 9,549</p>
+
+An engine producing 300 N·m at 4,000 rpm delivers about 126 kW.
 
 ## Torque and motors
 

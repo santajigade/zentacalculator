@@ -31,6 +31,10 @@ faq:
     a: "6.895 bar."
   - q: Is mbar the same as hPa?
     a: "Yes. 1 mbar = 1 hPa = 100 Pa."
+  - q: "How many psi is 1 bar?"
+    a: "1 bar is 14.504 psi."
+  - q: "How many kPa is 1 atm?"
+    a: "1 standard atmosphere is 101.325 kPa."
 related: [conversion/psi-to-bar, engineering/hydrostatic-pressure, engineering/4-20ma-scaling]
 ---
 
@@ -77,6 +81,38 @@ Type a pressure in **any** unit and every other field updates instantly — idea
 ## Gauge vs absolute pressure
 
 Most gauges read **gauge pressure** (barg, psig) — relative to the surrounding atmosphere. **Absolute pressure** (bara, psia) includes the atmosphere: bara ≈ barg + 1.013. Always check which a datasheet means.
+
+## Pressure conversion table
+
+| bar | psi | kPa | atm | mmHg | mH₂O |
+|---|---|---|---|---|---|
+| 0.01 | 0.15 | 1 | 0.0099 | 7.5 | 0.10 |
+| 0.1 | 1.45 | 10 | 0.0987 | 75.0 | 1.02 |
+| 0.5 | 7.25 | 50 | 0.4935 | 375.0 | 5.10 |
+| 1 | 14.50 | 100 | 0.9869 | 750.1 | 10.20 |
+| 2 | 29.01 | 200 | 1.9738 | 1500.1 | 20.39 |
+| 2.5 | 36.26 | 250 | 2.4673 | 1875.2 | 25.49 |
+| 5 | 72.52 | 500 | 4.9346 | 3750.3 | 50.99 |
+| 10 | 145.04 | 1000 | 9.8692 | 7500.6 | 101.97 |
+| 16 | 232.06 | 1600 | 15.7908 | 12001.0 | 163.15 |
+| 25 | 362.59 | 2500 | 24.6731 | 18751.5 | 254.93 |
+| 40 | 580.15 | 4000 | 39.4769 | 30002.5 | 407.89 |
+| 100 | 1450.38 | 10000 | 98.6923 | 75006.2 | 1019.72 |
+
+## Pressure in everyday life
+
+| Example | Typical pressure |
+|---|---|
+| Atmosphere at sea level | 1.013 bar, 14.7 psi |
+| Car tyre | 2.0–2.5 bar, 29–36 psi |
+| Bicycle tyre (road) | 6–8 bar, 80–120 psi |
+| Domestic water supply | 1.5–4 bar |
+| Pressure cooker | about 1 bar above atmospheric |
+| Scuba tank | 200–300 bar |
+
+## Water column
+
+10 metres of water exerts about 1 bar. That is why pressure in a tank rises by about 0.1 bar for every metre of depth. See the [hydrostatic pressure calculator](/engineering/hydrostatic-pressure/).
 
 ## Units by industry
 

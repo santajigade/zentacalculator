@@ -133,9 +133,9 @@ export default function Calculator({ spec, path, embed = false }: { spec: CalcSp
     return `${pre(v)}${n.toLocaleString(region?.locale ?? SITE.locale, { maximumFractionDigits: v.decimals ?? 2 })}${v.suffix ? ` ${v.suffix}` : ''}`;
   };
 
-  // keep URL in sync so any calculation is shareable
-  useEffect(() => {
-    if (embed) return;
+  // Shareable link with the current values (built only when the visitor clicks "Share link",
+  // so the address bar stays clean for SEO and analytics)
+  const shareUrl = (): string => {
     const q = new URLSearchParams();
     for (const id of [...state.order, ...selectIds]) {
       if (state.raw[id]) q.set(id, state.raw[id]);
@@ -143,8 +143,8 @@ export default function Calculator({ spec, path, embed = false }: { spec: CalcSp
     if (spec.dataset && state.raw[DATA] && state.raw[DATA] !== (spec.dataset.default ?? '')) q.set('data', state.raw[DATA]);
     for (const v of vars) if (state.units[v.id] !== defaultUnit(v, region).id) q.set(`${v.id}.u`, state.units[v.id]);
     const qs = q.toString();
-    history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
-  }, [state]);
+    return location.origin + location.pathname + (qs ? `?${qs}` : '');
+  };
 
   // ---- handlers ----
   const onInput = (id: string, text: string) => {
@@ -268,7 +268,7 @@ export default function Calculator({ spec, path, embed = false }: { spec: CalcSp
 
       <div class="calc__actions">
         <button type="button" class="btn btn--primary" onClick={() => copy(resultText, 'Result copied')}>Copy result</button>
-        {!embed && <button type="button" class="btn" onClick={() => copy(location.href, 'Link copied')}>Share link</button>}
+        {!embed && <button type="button" class="btn" onClick={() => copy(shareUrl(), 'Link copied')}>Share link</button>}
         <button type="button" class="btn" onClick={() => setShowSteps((s) => !s)} aria-expanded={showSteps}>
           {showSteps ? 'Hide steps' : 'Show steps'}
         </button>

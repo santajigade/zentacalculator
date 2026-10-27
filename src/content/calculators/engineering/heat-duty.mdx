@@ -19,6 +19,10 @@ faq:
     a: 4.186 kJ/kg·K is standard. It changes only slightly between 0 and 100 °C.
   - q: Can I use volumetric flow?
     a: Convert it to mass flow first by multiplying by density. Use the mass flow rate calculator.
+  - q: "What is the heat duty formula?"
+    a: "Q = ṁ × cp × ΔT: mass flow × specific heat × temperature change."
+  - q: "How much heat to warm 1,000 L of water by 10 °C?"
+    a: "About 41,860 kJ, or 11.6 kWh."
 related: [engineering/mass-flow-rate, engineering/pt100-resistance, engineering/thermal-expansion]
 ---
 
@@ -45,6 +49,36 @@ Q̇ = 2 × 4.186 × 10 = **83.7 kW**
 | Thermal oil | ~2.0 – 2.5 |
 | Air | 1.005 |
 | Steel | 0.49 |
+
+## Heat duty examples
+
+| Fluid | Mass flow | ΔT | Heat duty |
+|---|---|---|---|
+| Water | 1 kg/s | 10 K | 42 kW |
+| Water | 2 kg/s | 20 K | 167 kW |
+| Thermal oil | 3 kg/s | 30 K | 189 kW |
+| Air | 5 kg/s | 25 K | 126 kW |
+| Milk | 1.5 kg/s | 60 K | 351 kW |
+
+## Steam heating
+
+When heating with steam, the steam gives up latent heat as it condenses:
+
+<p class="formula">Steam flow = Heat duty ÷ latent heat</p>
+
+At about 7 bar(g), saturated steam has a latent heat of roughly 2,050 kJ/kg. A 100 kW duty needs about 0.049 kg/s, or **175 kg/h** of steam.
+
+## Log mean temperature difference
+
+To size a heat exchanger, combine duty with the overall heat-transfer coefficient U and area A:
+
+<p class="formula">Q = U × A × LMTD</p>
+
+where LMTD = (ΔT₁ − ΔT₂) ÷ ln(ΔT₁ ÷ ΔT₂), using the temperature differences at each end of the exchanger.
+
+## Cooling towers and chillers
+
+Cooling capacity is often quoted in tons of refrigeration (TR): 1 TR = 3.517 kW. A chiller cooling 10 kg/s of water by 5 K removes 209 kW, about **59.5 TR**.
 
 ## Practical uses
 

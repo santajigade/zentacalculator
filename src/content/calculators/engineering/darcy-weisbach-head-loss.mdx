@@ -23,6 +23,10 @@ faq:
     a: For laminar flow (Re below 2,300), f = 64/Re. For turbulent flow, use the Moody chart or the Colebrook equation with the pipe's roughness. 0.015–0.03 covers most commercial steel pipes in turbulent water flow.
   - q: Does this include losses from valves and fittings?
     a: No — only straight pipe. Add fittings as an equivalent length of pipe, or use their K factors separately.
+  - q: "What is the difference between Darcy and Fanning friction factors?"
+    a: "The Darcy factor is four times the Fanning factor. Make sure your chart or correlation uses the same one as your formula."
+  - q: "How does diameter affect head loss?"
+    a: "For the same flow, head loss varies roughly with 1 ÷ D⁵, so a slightly larger pipe greatly reduces losses."
 related: [engineering/pump-power, engineering/reynolds-number, engineering/pipe-flow-velocity]
 ---
 
@@ -44,6 +48,46 @@ Enter the **friction factor**, **pipe length**, **inner diameter**, **velocity**
 ## Velocity matters most
 
 Pressure drop rises with the **square** of velocity. Doubling the flow in the same pipe gives four times the loss — the chart shows the curve. Going up one pipe size usually cuts losses dramatically.
+
+## Finding the friction factor
+
+The Darcy friction factor depends on Reynolds number and pipe roughness:
+
+- **Laminar flow** (Re < 2,300): f = 64 ÷ Re.
+- **Turbulent flow**: use the Colebrook equation or the explicit Swamee–Jain approximation:
+
+<p class="formula">f = 0.25 ÷ [log₁₀(ε ÷ 3.7D + 5.74 ÷ Re<sup>0.9</sup>)]²</p>
+
+Find Re with the [Reynolds number calculator](/engineering/reynolds-number/).
+
+## Pipe roughness values
+
+| Material | Absolute roughness ε (mm) |
+|---|---|
+| Drawn copper, PVC, PE | 0.0015 |
+| Stainless steel | 0.015 |
+| Commercial steel (new) | 0.045 |
+| Galvanised steel | 0.15 |
+| Cast iron | 0.26 |
+| Concrete | 0.3–3.0 |
+
+Old pipes become rougher with scale and corrosion, which raises friction losses over time.
+
+## Minor losses in fittings
+
+Valves, bends and tees add losses: h = K × v² ÷ 2g.
+
+| Fitting | Typical K |
+|---|---|
+| 90° long-radius elbow | 0.3–0.5 |
+| 90° standard elbow | 0.75–0.9 |
+| Tee, flow through branch | 1.0–1.8 |
+| Gate valve, fully open | 0.15–0.2 |
+| Globe valve, fully open | 6–10 |
+| Pipe entrance (sharp) | 0.5 |
+| Pipe exit | 1.0 |
+
+Add the K values for all fittings and include them with the straight-pipe loss to get total head loss for [pump sizing](/engineering/pump-power/).
 
 ## Typical friction factors (turbulent water)
 

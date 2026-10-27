@@ -27,6 +27,10 @@ faq:
     a: In pipes, flow is usually laminar below about 2,300 and turbulent above about 4,000. Between them it is transitional and unpredictable.
   - q: Why does the Reynolds number matter for flow meters?
     a: Many flow meters, such as vortex and orifice meters, are only accurate above a minimum Reynolds number, often 10,000 or more. Viscous liquids can fall below this.
+  - q: "What Reynolds number is turbulent?"
+    a: "In pipes, flow is turbulent above about 4,000, laminar below about 2,300, and transitional in between."
+  - q: "Is Reynolds number dimensionless?"
+    a: "Yes. Use consistent units (for example SI) so the units cancel."
 related: [engineering/pipe-flow-velocity, engineering/hydrostatic-pressure]
 ---
 
@@ -58,6 +62,41 @@ Re = 998.2 × 2 × 0.1 ÷ 0.001002 ≈ **199,000** → turbulent
 | < 2,300 | Laminar |
 | 2,300 – 4,000 | Transitional |
 | > 4,000 | Turbulent |
+
+## Reynolds number for water in pipes
+
+At 20 °C (ρ = 998 kg/m³, μ = 1.002 mPa·s):
+
+| Diameter | 0.5 m/s | 1 m/s | 2 m/s |
+|---|---|---|---|
+| 15 mm | 7,470 | 14,940 | 29,880 |
+| 25 mm | 12,450 | 24,900 | 49,800 |
+| 50 mm | 24,900 | 49,800 | 99,601 |
+| 100 mm | 49,800 | 99,601 | 199,202 |
+| 200 mm | 99,601 | 199,202 | 398,403 |
+
+Water in industrial pipes is almost always turbulent.
+
+## Kinematic viscosity form
+
+If you have kinematic viscosity ν (in m²/s or centistokes), use:
+
+<p class="formula">Re = v × D ÷ ν</p>
+
+1 cSt = 10<sup>−6</sup> m²/s. Water at 20 °C is about 1.0 cSt.
+
+## Why it matters for flow meters
+
+Many flow meters have Reynolds-number limits:
+
+- **Orifice plates**: discharge coefficients are well defined above about Re = 5,000–10,000.
+- **Vortex meters**: need Re above about 10,000–20,000 to shed vortices reliably.
+- **Turbine meters**: calibration shifts with viscosity at low Re.
+- **Electromagnetic and Coriolis meters**: largely unaffected.
+
+## Viscous liquids
+
+Oils and syrups can have viscosities hundreds of times higher than water. Flow of a 100 cP oil at 1 m/s in a 50 mm pipe gives Re ≈ 450 — laminar. Pressure-drop and meter behaviour are then very different from water.
 
 ## Typical viscosities at 20 °C
 

@@ -18,6 +18,10 @@ faq:
     a: Divide pulses per US gallon by 3.785. A K-factor of 1,700 pulses/gal is about 449 pulses/L.
   - q: How do I count total volume?
     a: Divide the total pulse count by the K-factor. 9,000 pulses at 450 pulses/L is 20 litres.
+  - q: "How do I find the K-factor of a flow meter?"
+    a: "Count the pulses while passing a known volume, then divide pulses by volume. Repeat at several flows for accuracy."
+  - q: "How do I convert pulses to total volume?"
+    a: "Total volume = total pulses ÷ K-factor."
 related: [engineering/pipe-flow-velocity, engineering/4-20ma-scaling]
 ---
 
@@ -41,6 +45,37 @@ At the maximum flow of 20 L/min the output reaches 150 Hz — check the PLC inpu
 ## Totalising
 
 Volume = pulse count ÷ K-factor. 9,000 pulses ÷ 450 = **20 litres**.
+
+## K-factor examples
+
+| Meter type | Typical K-factor |
+|---|---|
+| Small paddle-wheel sensor (DN15) | 300–500 pulses/L |
+| Turbine meter, DN25 | 50–150 pulses/L |
+| Turbine meter, DN100 | 1–5 pulses/L |
+| Positive displacement meter | 1–100 pulses/L |
+| Mag meter pulse output | Configurable, e.g. 1 pulse per 10 L |
+
+Always use the calibrated K-factor printed on the meter certificate.
+
+## Units conversions
+
+| From | To | Multiply by |
+|---|---|---|
+| pulses/L | pulses/US gal | 3.785 |
+| pulses/L | pulses/m³ | 1,000 |
+| pulses/US gal | pulses/L | 0.2642 |
+
+## Linearity and the K-factor curve
+
+A turbine meter's K-factor is not perfectly constant; it varies with flow rate and viscosity. Calibration certificates often give K at several flow points. Many flow computers apply a **linearisation table** to correct for this.
+
+## Choosing the pulse output
+
+Make sure the maximum pulse frequency is within the counter input's limit, and the minimum gives enough resolution:
+
+- At maximum flow, frequency should be below the input's maximum (for example 10 kHz).
+- At minimum flow, at least a few pulses per second gives a stable rate display.
 
 ## Tips
 

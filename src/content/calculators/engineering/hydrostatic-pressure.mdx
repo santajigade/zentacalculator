@@ -21,6 +21,10 @@ faq:
     a: No. Hydrostatic pressure depends only on liquid height and density, not on the tank's shape or volume.
   - q: Is this gauge or absolute pressure?
     a: Gauge pressure, as read by a vented level transmitter. Add atmospheric pressure (about 1.013 bar) for absolute.
+  - q: "What pressure does 10 m of water create?"
+    a: "About 0.98 bar (98 kPa or 14.2 psi)."
+  - q: "Does tank shape affect hydrostatic pressure?"
+    a: "No. Pressure depends only on liquid height and density, not on the shape or volume of the tank."
 related: [engineering/4-20ma-scaling, engineering/pipe-flow-velocity]
 ---
 
@@ -58,6 +62,29 @@ The same pressure would show only 2.5 m on a transmitter calibrated for water �
 | Petrol | 720 – 775 |
 | Ethylene glycol | 1,113 |
 | Sulphuric acid (98%) | 1,830 |
+
+## Pressure per metre of liquid
+
+| Liquid | Density (kg/m³) | Pressure per metre |
+|---|---|---|
+| Water | 998 | 97.9 mbar (1.419 psi) |
+| Seawater | 1025 | 100.5 mbar (1.458 psi) |
+| Diesel | 840 | 82.4 mbar (1.195 psi) |
+| Petrol | 740 | 72.6 mbar (1.053 psi) |
+| Sulphuric acid 98% | 1840 | 180.4 mbar (2.617 psi) |
+| Mercury | 13534 | 1327.2 mbar (19.250 psi) |
+
+## Pressure at the bottom of a tank
+
+Total pressure at the bottom = liquid pressure + pressure above the liquid. In a **closed** tank, the vapour or blanket pressure adds to the reading, which is why level in pressurised tanks is measured with a **differential pressure** transmitter connected to both the bottom and the top.
+
+## Density changes with temperature
+
+Water at 80 °C has a density of about 972 kg/m³, nearly 3% less than at 20 °C. A level transmitter calibrated for cold water will read about 3% low on hot water. Compensate in the DCS or recalibrate for the operating temperature.
+
+## Interface level
+
+When two immiscible liquids are present (oil on water), a DP transmitter measures the combined effect. If the total level is known, the interface position can be calculated from the two densities.
 
 ## Ranging a level transmitter
 

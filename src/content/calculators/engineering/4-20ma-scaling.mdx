@@ -24,6 +24,10 @@ faq:
     a: Many devices follow NAMUR NE 43. Readings below about 3.6 mA or above about 21 mA signal a fault, such as a sensor failure or open circuit.
   - q: Can I calculate the mA output for a given value?
     a: Yes. Press × on Loop current, then type the process value. The calculator gives the expected current, useful for loop checks.
+  - q: "What is 12 mA in percent?"
+    a: "50% of span. 4 mA is 0% and 20 mA is 100%, so each 1.6 mA is 10%."
+  - q: "What does a reading below 3.8 mA mean?"
+    a: "Under NAMUR NE 43, values below 3.8 mA indicate a fault or a reading below range, and below 3.6 mA a failure signal."
 related: [engineering/hydrostatic-pressure, engineering/pt100-resistance, physics/ohms-law]
 ---
 
@@ -70,6 +74,37 @@ To check a loop the other way round, press × on Loop current and type the proce
 | ≥ 21 mA | Fault (upscale failure) |
 
 Check your transmitter's manual — some manufacturers use slightly different limits.
+
+## Reverse scaling: process value to mA
+
+To find the current a transmitter should output for a known process value:
+
+<p class="formula">I = 4 + 16 × (V − L) ÷ (H − L)</p>
+
+For a 0–10 bar transmitter reading 6.5 bar: I = 4 + 16 × 0.65 = **14.4 mA**. In the calculator, press × on Loop current and type the process value.
+
+## Why 4–20 mA?
+
+- **Live zero**: 4 mA at 0% lets you tell a real zero from a broken wire (0 mA).
+- **Current is immune to wire resistance**: the same current flows through the whole loop, so long cables do not change the reading, within the supply's limits.
+- **Loop-powered devices**: 4 mA is enough to power two-wire transmitters.
+
+## Loop power budget
+
+The supply must cover every voltage drop in the loop:
+
+<p class="formula">V<sub>supply</sub> ≥ V<sub>transmitter min</sub> + I<sub>max</sub> × (R<sub>load</sub> + R<sub>cable</sub>)</p>
+
+With a 24 V supply, a transmitter needing 12 V and a 250 Ω input card, the maximum cable resistance at 20 mA (or 22 mA for alarms) is (24 − 12) ÷ 0.022 − 250 ≈ **295 Ω**.
+
+## Reversed and split ranges
+
+- **Reverse acting**: 20 mA at 0% and 4 mA at 100%. Enter the range high as the value at 4 mA and the range low as the value at 20 mA.
+- **Split range**: two valves share one signal, e.g. valve A over 4–12 mA and valve B over 12–20 mA. Scale each half separately.
+
+## HART on top of 4–20 mA
+
+HART adds a digital signal on top of the analog current, letting you read the tag, range and diagnostics without disturbing the 4–20 mA value. Check the transmitter's LRV and URV via HART when commissioning to make sure they match the DCS scaling.
 
 ## Converting mA to volts
 

@@ -22,6 +22,10 @@ faq:
     a: Pick the next standard motor size above the shaft power at the highest expected duty, often with a 10–15% margin.
   - q: What is total head?
     a: The total energy the pump must add, expressed as a height of liquid. It includes static lift, pressure difference and friction losses.
+  - q: "How do I calculate pump power?"
+    a: "Hydraulic power = ρ × g × Q × H. Divide by pump efficiency for shaft power. 50 m³/h at 30 m of head with 70% efficiency needs about 5.8 kW."
+  - q: "What is a typical centrifugal pump efficiency?"
+    a: "About 50–75% for small pumps and 75–90% for large pumps at their best efficiency point."
 related: [engineering/darcy-weisbach-head-loss, engineering/three-phase-motor-power, engineering/pipe-flow-velocity]
 ---
 
@@ -49,6 +53,40 @@ Enter the **flow**, **total head**, **density** and **pump efficiency** to get t
 | Medium centrifugal | 65 – 80% |
 | Large centrifugal | 80 – 90% |
 | Positive displacement | 70 – 90% |
+
+## Motor selection
+
+Select a motor larger than the shaft power, to cover end-of-curve operation and fluid density changes:
+
+| Shaft power | Typical service factor | Motor size |
+|---|---|---|
+| Up to 7.5 kW | +20–25% | Next standard size up |
+| 7.5–22 kW | +15% | Next standard size up |
+| Above 22 kW | +10% | Next standard size up |
+
+Standard IEC motor sizes include 0.75, 1.1, 1.5, 2.2, 3, 4, 5.5, 7.5, 11, 15, 18.5, 22, 30, 37, 45 and 55 kW.
+
+## Electrical input power
+
+<p class="formula">P<sub>electrical</sub> = P<sub>shaft</sub> ÷ η<sub>motor</sub></p>
+
+A 6 kW shaft load on a 90% efficient motor draws about 6.67 kW. Over 8,000 hours a year at 0.12 per kWh, that is about **6,400** in electricity, often more than the pump's purchase price.
+
+## Affinity laws
+
+For a centrifugal pump at different speeds:
+
+| Quantity | Changes with speed |
+|---|---|
+| Flow | ∝ n |
+| Head | ∝ n² |
+| Power | ∝ n³ |
+
+Reducing speed by 20% with a VFD cuts power to about 51% — a large energy saving compared with throttling a valve.
+
+## NPSH
+
+To avoid cavitation, the net positive suction head available (NPSHa) must exceed the pump's required NPSH (NPSHr), with a margin of at least 0.5–1 m.
 
 ## Finding total head
 

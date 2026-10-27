@@ -24,6 +24,10 @@ faq:
     a: No. It calculates the cylindrical shell only. Heads add extra volume; the calculator gives the shell part, which is most of the tank for long vessels.
   - q: Can I find the level for a given volume?
     a: Yes. Press × on Liquid level, then type the volume. The level is solved numerically.
+  - q: "Is 25% level the same as 25% volume in a horizontal tank?"
+    a: "No. At 25% of the diameter, a horizontal cylinder holds about 19.6% of its volume, because the bottom is narrower."
+  - q: "How do I include dished heads?"
+    a: "Add the head volumes from the table above when full. For partial levels, use the vendor strapping table or a detailed head-volume formula."
 related: [engineering/hydrostatic-pressure, engineering/4-20ma-scaling, math/cylinder-volume]
 ---
 
@@ -54,6 +58,34 @@ A tank 2 m in diameter and 5 m long with 0.5 m of liquid:
 | 50% | 50% |
 | 75% | 80.4% |
 | 87.5% | 92.8% |
+
+## Dished ends
+
+Many horizontal tanks have dished (torispherical or ellipsoidal) heads that add volume beyond the cylindrical shell:
+
+| Head type | Volume of one head (full) |
+|---|---|
+| 2:1 ellipsoidal | π × D³ ÷ 24 |
+| Hemispherical | π × D³ ÷ 12 |
+| Flat | 0 |
+
+For a 2 m diameter tank, each 2:1 ellipsoidal head adds about **1.05 m³** when full. Partly filled heads need extra calculation; tank vendors provide strapping tables.
+
+## Strapping tables
+
+A strapping table lists volume at each level, usually every 10 mm or 1 cm. It is used in the DCS or tank gauge to convert level to volume. You can build one quickly with this calculator by stepping the level.
+
+## Level transmitter range
+
+For a level transmitter on a horizontal tank:
+
+- **Range** = 0 to the tank inner diameter (plus any nozzle offset).
+- The volume is **not** linear with level, so configure a characterisation table rather than linear scaling.
+- At 50% level the tank is exactly 50% full by volume, but at 25% level it is only about 19.6% full.
+
+## Vertical vs horizontal
+
+In a vertical cylinder, volume is proportional to level. A horizontal tank uses floor space differently and has a non-linear level–volume curve, which is why this calculator exists.
 
 ## Using it with a level transmitter
 

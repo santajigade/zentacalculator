@@ -18,6 +18,10 @@ faq:
     a: Ignoring losses, power stays the same. Reducing speed by a ratio of 10:1 increases torque by about 10 times.
   - q: What is the hp version?
     a: T (lbf·ft) = 5252 × P (hp) ÷ n (rpm). Switch the units in the calculator to use it.
+  - q: "How do I calculate torque from kW and rpm?"
+    a: "T = 9,549 × P (kW) ÷ rpm. An 11 kW motor at 1,460 rpm gives about 72 N·m."
+  - q: "Why do slower motors give more torque?"
+    a: "For the same power, torque is inversely proportional to speed, so halving the speed doubles the torque."
 related: [engineering/three-phase-motor-power, engineering/hydraulic-cylinder-force]
 ---
 
@@ -47,6 +51,41 @@ Through a 10:1 gearbox (95% efficient) the output is about 146 rpm and 683 N·m.
 | 8 | 750 rpm | ~730 rpm |
 
 At 60 Hz, multiply speeds by 1.2.
+
+## Torque for standard motor ratings
+
+At 1,460 rpm (4-pole, 50 Hz):
+
+| Power | Torque | Torque at 2,940 rpm (2-pole) |
+|---|---|---|
+| 0.75 kW | 4.9 N·m | 2.4 N·m |
+| 1.5 kW | 9.8 N·m | 4.9 N·m |
+| 3 kW | 19.6 N·m | 9.7 N·m |
+| 5.5 kW | 36.0 N·m | 17.9 N·m |
+| 7.5 kW | 49.1 N·m | 24.4 N·m |
+| 11 kW | 71.9 N·m | 35.7 N·m |
+| 22 kW | 143.9 N·m | 71.5 N·m |
+| 45 kW | 294.3 N·m | 146.2 N·m |
+| 90 kW | 588.7 N·m | 292.3 N·m |
+
+## Gearboxes
+
+A gearbox trades speed for torque. With a ratio i and efficiency η:
+
+- Output speed = input speed ÷ i
+- Output torque = input torque × i × η
+
+An 11 kW motor (72 N·m at 1,460 rpm) through a 20:1 gearbox at 95% efficiency gives about **1,368 N·m** at 73 rpm.
+
+## Imperial form
+
+<p class="formula">HP = Torque (lbf·ft) × rpm ÷ 5,252</p>
+
+At 5,252 rpm, torque in lbf·ft and horsepower are numerically equal — which is why car torque and power curves cross there.
+
+## Starting and breakdown torque
+
+Induction motors typically produce 150–250% of rated torque at start and up to 200–300% at breakdown. Check the motor datasheet when driving high-inertia or heavily loaded machines.
 
 ## Why it matters
 

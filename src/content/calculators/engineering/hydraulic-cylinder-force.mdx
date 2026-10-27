@@ -21,6 +21,10 @@ faq:
     a: Choose "tonne-force" as the force unit. 1 tonne-force ≈ 9.81 kN.
   - q: Should I use the full system pressure?
     a: Use the pressure available at the cylinder. Losses in hoses and valves, plus friction in the seals, reduce the real force by a few percent.
+  - q: "How much force does a 50 mm cylinder produce at 200 bar?"
+    a: "Area = π × 0.05² ÷ 4 = 0.00196 m², so force = 20,000,000 × 0.00196 = 39.3 kN."
+  - q: "Why is pull force lower than push force?"
+    a: "On retraction the rod takes up part of the piston area, so the pressure acts on a smaller annular area."
 related: [engineering/hydrostatic-pressure, engineering/torque-power-speed]
 ---
 
@@ -38,6 +42,36 @@ A 50 mm bore, 28 mm rod cylinder at 160 bar:
 
 - Push = 16,000,000 Pa × 0.001963 m² = **31.4 kN** (about 3.2 tonnes)
 - Pull = 16,000,000 Pa × 0.001348 m² = **21.6 kN**
+
+## Force table for common bores (at 160 bar)
+
+| Bore | Rod | Push force | Pull force |
+|---|---|---|---|
+| 32 mm | 18 mm | 12.9 kN | 8.8 kN |
+| 40 mm | 22 mm | 20.1 kN | 14.0 kN |
+| 50 mm | 28 mm | 31.4 kN | 21.6 kN |
+| 63 mm | 36 mm | 49.9 kN | 33.6 kN |
+| 80 mm | 45 mm | 80.4 kN | 55.0 kN |
+| 100 mm | 56 mm | 125.7 kN | 86.3 kN |
+| 125 mm | 70 mm | 196.3 kN | 134.8 kN |
+
+## Cylinder speed
+
+Speed depends on oil flow and the effective area:
+
+<p class="formula">v = Q ÷ A</p>
+
+With 20 L/min into a 50 mm bore (19.6 cm²), extend speed is 20,000 cm³/min ÷ 19.6 cm² ≈ **1,019 cm/min**, about 0.17 m/s. Retraction is faster because the rod side has a smaller area.
+
+## Regenerative circuits
+
+In a regenerative circuit, oil from the rod end is fed back to the cap end during extension. Extension becomes faster but the push force is reduced to pressure × rod area.
+
+## Safety margins
+
+- Size cylinders for **at least 25% more** force than the load requires, to cover friction and pressure losses.
+- Check **rod buckling** for long strokes under compression.
+- Use pressure relief valves set below the cylinder's rated pressure.
 
 ## Quick sizing tips
 

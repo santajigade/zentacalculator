@@ -23,6 +23,10 @@ faq:
     a: Bernoulli's equation links velocity to the square root of pressure drop. Doubling the flow needs four times the differential pressure.
   - q: Is this accurate enough for custody transfer?
     a: No. This uses a fixed discharge coefficient for quick sizing and checks. Fiscal metering uses the full ISO 5167 method with Reynolds-dependent coefficients and expansibility for gases.
+  - q: "What is a typical orifice discharge coefficient?"
+    a: "About 0.60–0.62 for sharp-edged concentric orifices in turbulent flow."
+  - q: "What beta ratio should I use?"
+    a: "Typically 0.3–0.7. Lower beta gives more DP and better low-flow measurement but higher permanent pressure loss."
 related: [engineering/dp-flow-square-root, engineering/pipe-flow-velocity, engineering/reynolds-number]
 ---
 
@@ -45,6 +49,42 @@ Water (998 kg/m³) in a 100 mm pipe with a 50 mm bore (β = 0.5), C<sub>d</sub> 
 - A<sub>o</sub> = 0.001963 m²
 - 1 − β⁴ = 0.9375
 - Q = 0.61 × 0.001963 × √(2 × 25,000 ÷ (998 × 0.9375)) = 0.00876 m³/s = **31.5 m³/h**
+
+## Beta ratio effects
+
+| β (d/D) | 1 − β⁴ | Velocity of approach factor 1/√(1 − β⁴) |
+|---|---|---|
+| 0.2 | 0.9984 | 1.0008 |
+| 0.3 | 0.9919 | 1.0041 |
+| 0.4 | 0.9744 | 1.0131 |
+| 0.5 | 0.9375 | 1.0328 |
+| 0.6 | 0.8704 | 1.0719 |
+| 0.7 | 0.7599 | 1.1472 |
+| 0.75 | 0.6836 | 1.2095 |
+
+ISO 5167-2 limits β to between 0.10 and 0.75 for standard orifice plates.
+
+## Permanent pressure loss
+
+An orifice plate recovers only part of the differential pressure downstream. The permanent loss is roughly:
+
+<p class="formula">Δω ≈ (1 − β<sup>1.9</sup>) × ΔP</p>
+
+At β = 0.5, about 73% of the measured DP is lost permanently, which costs pumping energy. Venturi tubes recover far more.
+
+## Straight-run requirements
+
+Orifice plates need undisturbed flow. Typical upstream straight lengths are 10–40 pipe diameters depending on the fittings and β ratio, plus about 5–8 diameters downstream. ISO 5167 tables give exact values; flow conditioners can shorten them.
+
+## Tapping arrangements
+
+| Taps | Location |
+|---|---|
+| Flange taps | 25.4 mm (1 in) each side of the plate |
+| Corner taps | At the plate faces |
+| D and D/2 taps | 1 D upstream, 0.5 D downstream |
+
+The discharge coefficient depends on the tapping type, so use the matching correlation (Reader-Harris/Gallagher in ISO 5167).
 
 ## Good practice
 

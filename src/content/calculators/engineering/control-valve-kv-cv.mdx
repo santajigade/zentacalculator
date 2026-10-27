@@ -24,6 +24,10 @@ faq:
     a: A common rule is to select a valve whose rated Kv is about 1.25–1.5 times the calculated value, so it controls at roughly 60–80% open at normal flow.
   - q: Does this work for gas or steam?
     a: No. Gases and steam need compressible-flow equations. This calculator is for non-flashing, non-cavitating liquids.
+  - q: "What is the difference between Kv and Cv?"
+    a: "Kv is flow in m³/h of water at 1 bar pressure drop. Cv is flow in US gpm of water at 1 psi drop. Cv = 1.156 × Kv."
+  - q: "What Kv should I select?"
+    a: "Calculate the Kv needed at maximum flow, then pick a valve whose rated Kv is roughly 1.25–1.5 times larger, so the valve works mostly between 20% and 80% open."
 related: [engineering/orifice-flow, engineering/pipe-flow-velocity]
 ---
 
@@ -46,6 +50,41 @@ The US form is Q (gpm) = C<sub>v</sub> × √(ΔP (psi) ÷ SG). Units are conver
 **Required Kv:** 10 m³/h of water with 1 bar drop → Kv = 10 × √(1 ÷ 1) = **10 m³/h**, Cv = **11.56**.
 
 **Capacity check:** a valve with Kv 10 on a liquid of SG 0.85 with only 0.5 bar available passes 10 × √(0.5 ÷ 0.85) = **7.67 m³/h**.
+
+## Kv and Cv quick table
+
+| Kv (m³/h) | Cv (US gpm) | Flow of water at 1 bar ΔP |
+|---|---|---|
+| 0.1 | 0.12 | 0.1 m³/h |
+| 0.63 | 0.73 | 0.63 m³/h |
+| 1 | 1.16 | 1 m³/h |
+| 2.5 | 2.89 | 2.5 m³/h |
+| 4 | 4.62 | 4 m³/h |
+| 6.3 | 7.28 | 6.3 m³/h |
+| 10 | 11.56 | 10 m³/h |
+| 16 | 18.50 | 16 m³/h |
+| 25 | 28.90 | 25 m³/h |
+| 40 | 46.24 | 40 m³/h |
+| 63 | 72.83 | 63 m³/h |
+| 100 | 115.60 | 100 m³/h |
+
+Valve makers often offer Kv values in a preferred-number series (1, 1.6, 2.5, 4, 6.3, 10…).
+
+## Valve authority
+
+A control valve controls well only if it takes a reasonable share of the system pressure drop:
+
+<p class="formula">Authority = ΔP<sub>valve</sub> ÷ (ΔP<sub>valve</sub> + ΔP<sub>rest of system</sub>)</p>
+
+Aim for an authority of about **0.3–0.5**. Below about 0.25 the valve has little control over flow until it is nearly closed.
+
+## Choked flow and cavitation
+
+At high pressure drops, liquid can flash or cavitate inside the valve, limiting flow and damaging the trim. The simple Kv formula assumes no choking. For high ΔP, check the maximum allowable pressure drop using the valve's liquid pressure recovery factor (F<sub>L</sub>) per IEC 60534.
+
+## Gases and steam
+
+For gases and steam, the Kv formula is different and depends on inlet pressure, temperature and whether flow is critical. Use the manufacturer's sizing tool or IEC 60534-2-1 for gas and steam valves.
 
 ## Sizing tips
 

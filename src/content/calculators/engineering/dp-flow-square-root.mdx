@@ -23,6 +23,10 @@ faq:
     a: Either, but never both. Applying it twice is a common commissioning error that makes readings far too high at low flow.
   - q: What is low-flow cut-off?
     a: Near zero the square-root curve is very steep, so tiny DP noise causes large flow swings. Most systems force flow to zero below about 1–6% DP.
+  - q: "Why is DP flow a square-root relationship?"
+    a: "From Bernoulli's equation, the pressure difference across a restriction is proportional to velocity squared, so flow is proportional to the square root of DP."
+  - q: "What DP corresponds to 50% flow?"
+    a: "25% of the DP range."
 related: [engineering/orifice-flow, engineering/4-20ma-scaling]
 ---
 
@@ -55,6 +59,34 @@ Range 0–250 mbar = 0–100 m³/h. Measured DP = 62.5 mbar.
 | 100% | 100% |
 
 At 10% flow the transmitter sees only 1% of its range, which is why turndown is limited.
+
+## Low-flow cut-off
+
+Because flow is the square root of DP, small DP errors near zero become large flow errors. A 0.1% DP zero error appears as about 3.2% of flow. Most transmitters and DCS blocks apply a **low-flow cut-off**, often 5–10% of flow, below which the reading is forced to zero.
+
+## Rangeability (turndown)
+
+DP flow meters have limited turndown, typically 3:1 to 4:1, because DP falls with the square of flow:
+
+| Flow (% of max) | DP (% of max) |
+|---|---|
+| 100% | 100% |
+| 50% | 25% |
+| 25% | 6.25% |
+| 10% | 1% |
+
+At 10% flow the transmitter is measuring only 1% of its range. For wider turndown, use two transmitters with different ranges, or a different meter type.
+
+## Where to take the square root
+
+The square root can be done in the transmitter (output linear with flow) or in the DCS (transmitter output linear with DP). Do it in **one place only**. Taking it twice is a common commissioning error.
+
+## Primary elements that use this
+
+- Orifice plates — see the [orifice flow calculator](/engineering/orifice-flow/)
+- Venturi tubes and flow nozzles
+- Averaging pitot tubes
+- Wedge and V-cone meters
 
 ## With a 4–20 mA signal
 

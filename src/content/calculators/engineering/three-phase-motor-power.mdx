@@ -23,6 +23,10 @@ faq:
     a: The kW rating is shaft output. The supply must also cover motor losses (efficiency) and reactive current (power factor), so input current is higher.
   - q: What is a typical power factor?
     a: Around 0.80–0.90 at full load for standard induction motors. It drops sharply at light load.
+  - q: "What is the current of a 7.5 kW motor at 415 V?"
+    a: "About 14 A, assuming 0.85 power factor and 88–90% efficiency."
+  - q: "Why is √3 used in three-phase power?"
+    a: "Because line voltage is √3 times phase voltage in a balanced three-phase system."
 related: [engineering/torque-power-speed, engineering/cable-voltage-drop, physics/ohms-law]
 ---
 
@@ -52,6 +56,41 @@ The defaults show an **11 kW motor on 415 V** — the full-load current is calcu
 | 45 kW | ~80 A |
 
 Actual values vary by manufacturer and efficiency class — always check the nameplate.
+
+## Current at different voltages
+
+For a 11 kW motor (pf 0.85, efficiency 90%):
+
+| Line voltage | Full-load current |
+|---|---|
+| 380 V | 21.8 A |
+| 400 V | 20.8 A |
+| 415 V | 20.0 A |
+| 440 V | 18.9 A |
+| 480 V | 17.3 A |
+| 690 V | 12.0 A |
+
+## Single-phase vs three-phase
+
+| | Single-phase | Three-phase |
+|---|---|---|
+| Power formula | P = V × I × pf | P = √3 × V<sub>L</sub> × I<sub>L</sub> × pf |
+| Typical use | Homes, small motors under 2–3 kW | Industrial motors and large loads |
+| Torque | Pulsating | Smooth |
+
+## Starting current
+
+Direct-on-line (DOL) starting draws **6–8 times** the full-load current briefly. Star-delta starters reduce it to about one-third, and soft starters or VFDs reduce it further. Size cables, fuses and generators to cope with starting current.
+
+## Power factor correction
+
+Motors draw reactive power that does no useful work but loads cables and transformers. Adding capacitors raises power factor towards 0.95–0.98, reducing current and, in many tariffs, electricity charges.
+
+## Apparent, real and reactive power
+
+- **Apparent power** S (kVA) = √3 × V × I
+- **Real power** P (kW) = S × pf
+- **Reactive power** Q (kVAr) = √(S² − P²)
 
 ## Practical notes
 

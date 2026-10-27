@@ -30,6 +30,10 @@ faq:
     a: Carbon steel grows about 1.2 mm per metre for every 100 °C rise. A 50 m line heated by 60 °C grows about 36 mm.
   - q: Is a 1 °C change the same as 1 K?
     a: Yes, for temperature differences. A 1 °F difference equals 5/9 K.
+  - q: "How much does a 100 m steel pipe expand for 50 °C?"
+    a: "12 × 10⁻⁶ × 100 × 50 = 0.06 m, or 60 mm."
+  - q: "Why do bridges have expansion joints?"
+    a: "To allow the deck to lengthen and shorten with temperature without building up damaging stress."
 related: [conversion/temperature-converter, engineering/pt100-resistance]
 ---
 
@@ -59,6 +63,38 @@ The same run in HDPE would grow about **600 mm** — plastic pipes need much mor
 | Aluminium | 11.6 mm |
 | PVC | 26 mm |
 | HDPE | 100 mm |
+
+## Coefficients of linear expansion
+
+| Material | α (×10⁻⁶ per K) |
+|---|---|
+| Invar | 1.2 |
+| Glass (borosilicate) | 3.3 |
+| Concrete | 10–12 |
+| Carbon steel | 11–13 |
+| Stainless steel 304/316 | 16–17 |
+| Copper | 17 |
+| Aluminium | 23 |
+| PVC | 50–80 |
+| HDPE | 120–200 |
+
+Plastic pipes expand about **10 times** more than steel for the same temperature change.
+
+## Volume expansion of liquids
+
+Liquids expand in volume: ΔV = β × V × ΔT. Water's β is about 0.00021 per K at 20 °C, rising to about 0.0006 near 80 °C. A 1,000 L closed heating system warmed from 10 °C to 80 °C expands by roughly 25–30 L, which is why an expansion vessel is needed.
+
+## Thermal stress
+
+If expansion is prevented, stress builds up:
+
+<p class="formula">σ = E × α × ΔT</p>
+
+For steel (E = 200 GPa, α = 12 × 10⁻⁶), a 50 K rise in a fully restrained pipe creates 120 MPa of stress — a large share of the yield strength of common steels.
+
+## Bimetal strips
+
+Two metals with different α bonded together bend when heated. Thermostats, circuit breakers and dial thermometers use this effect.
 
 ## Allowing for expansion
 

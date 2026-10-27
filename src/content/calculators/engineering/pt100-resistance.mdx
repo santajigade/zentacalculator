@@ -26,6 +26,10 @@ faq:
     a: This calculator uses the IEC 60751 equation for 0 to 850 °C. Below 0 °C an extra term is needed; support for negative temperatures will be added.
   - q: What do 2-wire, 3-wire and 4-wire mean?
     a: They are ways of connecting the RTD. 3-wire and 4-wire connections cancel the resistance of the cable, which otherwise reads as extra temperature.
+  - q: "What is the resistance of a Pt100 at 0 °C?"
+    a: "Exactly 100.00 Ω. A Pt1000 is 1,000 Ω at 0 °C."
+  - q: "How much does a Pt100 change per degree?"
+    a: "About 0.385 Ω per °C near room temperature."
 related: [engineering/4-20ma-scaling, conversion/temperature-converter]
 ---
 
@@ -62,6 +66,37 @@ Going the other way, a reading of 138.50 Ω means about **99.99 °C**.
 | 200 | 175.86 | 1758.6 |
 | 300 | 212.05 | 2120.5 |
 | 400 | 247.09 | 2470.9 |
+
+## Tolerance classes (IEC 60751)
+
+| Class | Tolerance at temperature t (°C) | At 0 °C | At 100 °C |
+|---|---|---|---|
+| AA | ±(0.1 + 0.0017 abs(t)) | ±0.10 °C | ±0.27 °C |
+| A | ±(0.15 + 0.002 abs(t)) | ±0.15 °C | ±0.35 °C |
+| B | ±(0.3 + 0.005 abs(t)) | ±0.30 °C | ±0.80 °C |
+| C | ±(0.6 + 0.01 abs(t)) | ±0.60 °C | ±1.60 °C |
+
+## 2-, 3- and 4-wire connections
+
+| Connection | Lead-resistance error | Typical use |
+|---|---|---|
+| 2-wire | Full lead resistance added | Short runs, low accuracy |
+| 3-wire | Mostly cancelled if leads are equal | Most industrial installations |
+| 4-wire | Eliminated | Laboratory and high-accuracy work |
+
+With 2-wire, 10 m of 0.5 mm² copper (about 0.36 Ω each way, 0.72 Ω total) adds roughly **1.8 °C** of error, since a Pt100 changes about 0.385 Ω/°C.
+
+## Below 0 °C
+
+For temperatures below 0 °C, IEC 60751 uses the full Callendar–Van Dusen equation with an extra C term:
+
+<p class="formula">R = R₀ × [1 + A·t + B·t² + C·(t − 100)·t³]</p>
+
+where C = −4.183 × 10<sup>−12</sup>. The calculator's formula is exact from 0 to 850 °C and very close down to about −50 °C.
+
+## Self-heating
+
+The measuring current heats the sensor slightly. Transmitters typically use 0.5–1 mA to keep self-heating below a few hundredths of a degree.
 
 ## Field tips
 

@@ -5,13 +5,16 @@ import '../styles/global.css';
 import { SITE } from '../site.config.ts';
 import { CATEGORIES } from '../data/categories.ts';
 import Logo from '../components/Logo.astro';
-import { allCalcs } from '../lib/calcs.ts';
+import { allCalcs, findCalc, urlOf } from '../lib/calcs.ts';
 const total = (await allCalcs()).length;
 
 interface Props { title: string; description: string; schema?: object[]; activeCat?: string; noindex?: boolean; }
 const { title, description, schema = [], activeCat, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname.endsWith('/') ? Astro.url.pathname : Astro.url.pathname + '/', SITE.url).href;
 const fullTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+import { POPULAR } from '../data/popular.ts';
+const popAll = await allCalcs();
+const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);
 ---
 <!doctype html>
 <html lang="en">
@@ -75,6 +78,10 @@ const fullTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
       </div>
       <div class="ftr__cats">
         {CATEGORIES.map((c) => <a href={`/${c.slug}/`}>{c.name}</a>)}
+      </div>
+      <div class="ftr__cats ftr__pop">
+        <b>Popular calculators</b>
+        {popular.map((c) => <a href={urlOf(c!)}>{c!.data.title.replace(/ \(.*\)$/, '')}</a>)}
       </div>
     </div>
     <nav class="wrap ftr__links" aria-label="Site">

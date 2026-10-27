@@ -5,7 +5,8 @@ import Calculator from '../../components/Calculator.tsx';
 import { SITE } from '../../site.config.ts';
 import { catBySlug } from '../../data/categories.ts';
 import { authorById, authorUrl } from '../../data/authors.ts';
-import { allCalcs, findCalc, slugOf, urlOf, embedSnippet, type Calc } from '../../lib/calcs.ts';
+import { POPULAR } from '../../data/popular.ts';
+import { allCalcs, findCalc, slugOf, urlOf, embedSnippet, similarTo, type Calc } from '../../lib/calcs.ts';
 
 export async function getStaticPaths() {
   const all = await allCalcs();
@@ -23,7 +24,10 @@ const related = d.related.map((r) => {
   if (!hit) throw new Error(`${calc.id}: related calculator "${r}" not found`);
   return hit;
 });
-const more = all.filter((c) => c.data.category === d.category && c.id !== calc.id && !related.includes(c)).slice(0, 8);
+// top up hand-picked related links with the most similar calculators (any category)
+for (const c of similarTo(calc, all, 8, (x) => !related.includes(x))) { if (related.length >= 6) break; related.push(c); }
+const more = similarTo(calc, all, 8, (x) => x.data.category === d.category && !related.includes(x));
+const popular = POPULAR.map((id) => findCalc(all, id)).filter((c): c is Calc => !!c && c.id !== calc.id).slice(0, 8);
 const url = urlOf(calc);
 const spec = { title: d.title, variables: d.variables, equations: d.equations, freedom: d.freedom, chart: d.chart, dataset: d.dataset };
 const embedCode = embedSnippet(SITE.url, SITE.name, d.title, url);
@@ -75,6 +79,11 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
             </section>
           )}
 
+          <h2 id="related">Related calculators</h2>
+          <ul class="calc-list related-grid">
+            {related.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}
+          </ul>
+
           <h2 id="embed">Embed this calculator</h2>
           <div class="embed-box">
             <p class="muted">Free to use on your website or blog. Copy this code:</p>
@@ -91,10 +100,8 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
               {d.faq.length > 0 && <li><a href="#faq">FAQ</a></li>}</ul>
           </nav>
         )}
-        {related.length > 0 && (
-          <div class="panel"><h2>Related calculators</h2>
-            <ul>{related.map((c) => <li><a href={urlOf(c)}>{c.data.title}</a></li>)}</ul></div>
-        )}
+        <div class="panel"><h2>Popular calculators</h2>
+          <ul>{popular.map((c) => <li><a href={urlOf(c)}>{c.data.title}</a></li>)}</ul></div>
         {more.length > 0 && (
           <div class="panel"><h2>More in {cat.name}</h2>
             <ul>{more.map((c) => <li><a href={urlOf(c)}>{c.data.title}</a></li>)}</ul></div>

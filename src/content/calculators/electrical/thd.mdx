@@ -1,0 +1,77 @@
+---
+title: THD Calculator (Total Harmonic Distortion)
+description: Calculate total harmonic distortion (THD) of voltage or current from the fundamental and harmonic magnitudes, with IEEE 519 limits.
+category: electrical
+keywords: [thd calculator, total harmonic distortion, harmonic distortion calculation, ieee 519 limits, thd formula, voltage thd, current thd]
+updated: 2026-10-27
+variables:
+  - { id: h1, label: Fundamental (50/60 Hz) magnitude, default: 100, min: 0.0001 }
+  - { id: h3, label: 3rd harmonic, default: 2, min: 0 }
+  - { id: h5, label: 5th harmonic, default: 4, min: 0 }
+  - { id: h7, label: 7th harmonic, default: 3, min: 0 }
+  - { id: h11, label: 11th harmonic, default: 1.5, min: 0 }
+  - { id: h13, label: 13th harmonic, default: 1, min: 0 }
+  - { id: thd, label: Total harmonic distortion, family: percent, unit: '%', min: 0 }
+  - { id: rms, label: True RMS (same units as inputs), min: 0, decimals: 2 }
+equations:
+  - thd = sqrt(h3^2 + h5^2 + h7^2 + h11^2 + h13^2) / h1
+  - rms = sqrt(h1^2 + h3^2 + h5^2 + h7^2 + h11^2 + h13^2)
+faq:
+  - q: What is THD?
+    a: Total harmonic distortion — the RMS of all harmonic components divided by the fundamental, expressed as a percentage.
+  - q: What are the IEEE 519 voltage THD limits?
+    a: 8% THD for systems up to 1 kV, 5% for 1–69 kV, 2.5% for 69–161 kV and 1.5% above 161 kV, at the point of common coupling.
+  - q: Which harmonics do drives produce?
+    a: Six-pulse VFDs and rectifiers mainly produce the 5th, 7th, 11th and 13th harmonics. Single-phase loads such as PCs and LED drivers add the 3rd.
+  - q: Can I enter percentages instead of volts or amps?
+    a: Yes — enter 100 for the fundamental and each harmonic as a percentage of it.
+related: [electrical/power-factor-correction, electrical/voltage-unbalance, physics/decibel, electrical/kva-to-kw]
+links:
+  - { title: "Harmonic Distortion (THD) Calculation in Power Systems", url: "https://www.instrumentationblog.in/harmonic-distortion-thd-calculation-power-systems/" }
+  - { title: "Power Harmonics Explained", url: "https://www.instrumentationblog.in/power-harmonics-explained/" }
+  - { title: "Active Harmonic Filter Working and Sizing", url: "https://www.instrumentationblog.in/active-harmonic-filter-working-sizing/" }
+  - { title: "Neutral Conductor Sizing with Harmonics", url: "https://www.instrumentationblog.in/neutral-conductor-sizing-harmonics/" }
+---
+
+## How to use this calculator
+
+Enter the **fundamental** and **harmonic magnitudes** from a power quality analyser — either in volts, amps or as percentages of the fundamental. You get the THD and the true RMS value. Enter 0 for harmonics you do not have.
+
+## The formula
+
+<p class="formula">THD = √(V₂² + V₃² + V₄² + …) ÷ V₁</p>
+
+<p class="formula">True RMS = √(V₁² + V₂² + V₃² + …) = V₁ × √(1 + THD²)</p>
+
+## Example
+
+Fundamental 100; harmonics 2, 4, 3, 1.5 and 1 (3rd, 5th, 7th, 11th, 13th):
+
+THD = √(4 + 16 + 9 + 2.25 + 1) ÷ 100 = **5.7%**
+
+## IEEE 519-2014 voltage limits
+
+| Bus voltage at PCC | Individual harmonic | THD |
+|---|---|---|
+| ≤ 1 kV | 5.0% | 8.0% |
+| 1 kV – 69 kV | 3.0% | 5.0% |
+| 69 kV – 161 kV | 1.5% | 2.5% |
+| > 161 kV | 1.0% | 1.5% |
+
+Current limits (TDD) depend on the ratio of short-circuit current to load current at the point of common coupling.
+
+## Typical current THD
+
+| Load | Current THD |
+|---|---|
+| 6-pulse VFD, no choke | 80–120% |
+| 6-pulse VFD with 3–5% line reactor | 35–45% |
+| 12-pulse drive | 10–15% |
+| Active front-end drive | under 5% |
+| LED lighting, SMPS | 20–150% |
+
+## Problems caused by harmonics
+
+- Overheating of transformers, cables and neutral conductors (triplen harmonics add in the neutral).
+- Nuisance tripping of breakers and failure of capacitor banks through resonance.
+- Errors in meters that are not true-RMS.

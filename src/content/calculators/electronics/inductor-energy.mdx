@@ -1,0 +1,62 @@
+---
+title: Inductor Energy Calculator
+description: Calculate the energy stored in an inductor's magnetic field from inductance and current with E = ½LI² — for chokes, relays and SMPS design.
+category: electronics
+keywords: [inductor energy calculator, energy stored in inductor, 1/2 li2, magnetic energy, inductor current energy, choke energy]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Inductance, family: inductance, unit: mH, default: 10, min: 0 }
+  - { id: I, label: Current, family: current, unit: A, default: 2, min: 0 }
+  - { id: E, label: Stored energy, family: energy, unit: J, min: 0 }
+  - { id: dt, label: Switch-off time, family: seconds, unit: ms, default: 1, min: 0 }
+  - { id: V, label: Induced voltage at switch-off (L·di/dt), family: voltage, unit: V, min: 0 }
+equations:
+  - E = 0.5 * L * I^2
+  - V = L * I / dt
+faq:
+  - q: How much energy does an inductor store?
+    a: E = ½ × L × I². A 10 mH inductor carrying 2 A stores 20 mJ.
+  - q: Why do relay coils need flyback diodes?
+    a: When the current is interrupted quickly, the coil tries to keep it flowing, producing a voltage spike of L × di/dt that can reach hundreds of volts and damage transistors. A diode gives the current a safe path.
+  - q: What is inductor saturation?
+    a: Above a certain current the core can hold no more magnetic flux, so inductance falls sharply. Always stay below the saturation current in the datasheet.
+  - q: Where is inductor energy used?
+    a: Switch-mode power supplies store energy in inductors each cycle and release it to the output; ignition coils use it to create high-voltage sparks.
+related: [electronics/capacitor-energy, electronics/reactance, electronics/buck-converter, physics/rc-time-constant]
+links:
+  - { title: "Inductor Working Principle", url: "https://www.instrumentationblog.in/inductor-working-principle/" }
+  - { title: "Inductor Saturation Current", url: "https://www.instrumentationblog.in/inductor-saturation-current/" }
+  - { title: "Lenz’s Law and Electromagnetic Induction", url: "https://www.instrumentationblog.in/lenzs-law-electromagnetic-induction/" }
+---
+
+## How to use this calculator
+
+Enter the **inductance** and the **current** to get the stored energy. Add a **switch-off time** to estimate the voltage spike if the current is interrupted that quickly without suppression.
+
+## The formulas
+
+<p class="formula">E = ½ × L × I² &nbsp;·&nbsp; V = L × di/dt</p>
+
+## Energy examples
+
+| Inductor | Current | Energy |
+|---|---|---|
+| 10 µH SMPS inductor | 5 A | 0.125 mJ |
+| 100 µH choke | 3 A | 0.45 mJ |
+| 10 mH filter choke | 2 A | 20 mJ |
+| Relay coil, 1 H | 30 mA | 0.45 mJ |
+| Contactor coil, 5 H | 0.2 A | 100 mJ |
+| Motor winding, 50 mH | 20 A | 10 J |
+
+## Suppressing inductive kick
+
+| Method | Release speed | Notes |
+|---|---|---|
+| Flyback diode | Slow | Simplest for DC coils; delays relay drop-out |
+| Diode + Zener | Fast | Clamps to a set voltage |
+| RC snubber | Medium | Works on AC and DC |
+| Varistor (MOV) | Fast | Common on AC contactor coils |
+
+## Saturation and core choice
+
+Ferrite cores saturate at about 0.3–0.4 T, iron powder and silicon steel at higher flux. Gapped cores store most of the energy in the air gap, which is why SMPS inductors use them.

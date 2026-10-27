@@ -1,0 +1,67 @@
+---
+title: Earthing Resistance Calculator (Earth Rod)
+description: Calculate the earth resistance of a vertical earth rod or pipe electrode from soil resistivity, length and diameter — and how many rods you need.
+category: electrical
+keywords: [earthing resistance calculator, earth rod resistance, earth pit resistance, soil resistivity, earth electrode calculation, grounding resistance, pipe earthing]
+updated: 2026-10-27
+variables:
+  - { id: rho, label: Soil resistivity, suffix: Ω·m, default: 100, min: 0 }
+  - { id: L, label: Rod length (buried), family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: d, label: Rod diameter, family: length, unit: mm, imperialUnit: in, default: 16, min: 0 }
+  - { id: R, label: Resistance of one rod, family: resistance, unit: ohm, min: 0 }
+equations:
+  - R = rho / (2 * pi * L) * (ln(8 * L / d) - 1)
+faq:
+  - q: What is the formula for earth rod resistance?
+    a: R = ρ ÷ (2πL) × (ln(8L ÷ d) − 1), the Dwight formula used in IEEE 142 and IS 3043, where ρ is soil resistivity, L the rod length and d its diameter.
+  - q: What earth resistance is acceptable?
+    a: Common targets are 1 Ω or less for substations, under 5 Ω for industrial and electrical equipment earthing, and up to 10 Ω for lightning protection. Follow your local standard.
+  - q: Does a thicker rod lower resistance?
+    a: Only slightly. Doubling the diameter reduces resistance by about 10–15%. Length and soil resistivity matter far more.
+  - q: How do I reduce earth resistance?
+    a: Drive longer rods, add more rods spaced at least their own length apart, or treat the soil around the electrode with backfill compound.
+related: [electrical/earth-conductor-size, physics/ohms-law, electrical/transformer-short-circuit, electrical/cable-voltage-drop]
+links:
+  - { title: "Earthing Resistance Calculation", url: "https://www.instrumentationblog.in/earthing-resistance-calculation/" }
+  - { title: "TN, TT and IT Earthing Systems", url: "https://www.instrumentationblog.in/tn-tt-it-earthing-systems/" }
+  - { title: "Earthing in Industrial Process Plants", url: "https://www.instrumentationblog.in/earthing-aspects-in-industrial-process-plants/" }
+---
+
+## How to use this calculator
+
+Enter the **soil resistivity** (measured with a Wenner four-pin test, or estimated from the table), and the **length** and **diameter** of the rod or pipe. The calculator gives the resistance of a single electrode.
+
+## The formula (Dwight)
+
+<p class="formula">R = ρ ÷ (2πL) × [ln(8L ÷ d) − 1]</p>
+
+## Soil resistivity
+
+| Soil | Typical resistivity (Ω·m) |
+|---|---|
+| Marshy ground, clay with moisture | 2–50 |
+| Loam and garden soil | 5–100 |
+| Clay, sandy clay | 20–200 |
+| Sand and gravel | 100–1,000 |
+| Dry sand | 500–5,000 |
+| Rock | 1,000–10,000+ |
+
+Resistivity rises sharply when soil dries out or freezes, so measure in the dry season where possible.
+
+## Single rod resistance (16 mm rod)
+
+| Length | 50 Ω·m | 100 Ω·m | 300 Ω·m |
+|---|---|---|---|
+| 1.2 m | 35.8 Ω | 71.6 Ω | 214.7 Ω |
+| 2 m | 23.5 Ω | 47.0 Ω | 141.0 Ω |
+| 3 m | 16.7 Ω | 33.5 Ω | 100.5 Ω |
+| 4.5 m | 11.9 Ω | 23.8 Ω | 71.3 Ω |
+| 6 m | 9.3 Ω | 18.6 Ω | 55.8 Ω |
+
+## Multiple rods
+
+Rods in parallel do not divide resistance perfectly because their resistance areas overlap. Spaced at least one rod length apart, two rods give about 55–60% of one rod's resistance, three about 40%, and four about 33%. Closer spacing gives less improvement.
+
+## Testing
+
+Measure earth resistance with the fall-of-potential (three-pole) method, with the current spike at least 5–10 times the electrode length away. Clamp-on testers work only where there is a parallel return path.

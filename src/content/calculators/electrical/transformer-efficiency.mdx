@@ -1,0 +1,73 @@
+---
+title: Transformer Efficiency Calculator (Iron and Copper Losses)
+description: Calculate transformer efficiency at any load and power factor from no-load (core) and full-load (copper) losses — plus the load for maximum efficiency.
+category: electrical
+keywords: [transformer efficiency calculator, transformer losses, iron loss copper loss, maximum efficiency transformer, no load loss, load loss, all day efficiency]
+updated: 2026-10-27
+variables:
+  - { id: S, label: Transformer rating, suffix: kVA, default: 1000, min: 0 }
+  - { id: x, label: Load (fraction of rated), family: percent, unit: '%', default: 75, min: 0 }
+  - { id: pf, label: Load power factor, default: 0.9, min: 0.01, max: 1 }
+  - { id: Pi, label: No-load (core) loss, family: power, unit: kW, default: 1.4, min: 0 }
+  - { id: Pc, label: Full-load (copper) loss, family: power, unit: kW, default: 9.5, min: 0 }
+  - { id: Po, label: Output power, family: power, unit: kW, min: 0 }
+  - { id: Pl, label: Total losses, family: power, unit: kW, min: 0 }
+  - { id: eff, label: Efficiency, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: xm, label: Load for maximum efficiency, family: percent, unit: '%', min: 0 }
+equations:
+  - Po = x * S * 1000 * pf
+  - Pl = Pi + x^2 * Pc
+  - eff = Po / (Po + Pl)
+  - xm = sqrt(Pi / Pc)
+faq:
+  - q: How do I calculate transformer efficiency?
+    a: Efficiency = output ÷ (output + core loss + x² × full-load copper loss), where x is the load as a fraction of rating.
+  - q: When is a transformer most efficient?
+    a: When copper loss equals core loss, at a load of √(core loss ÷ copper loss). For distribution transformers this is typically 35–55% load.
+  - q: Why does copper loss vary with load squared?
+    a: Copper loss is I²R, and current is proportional to load.
+  - q: What are typical efficiencies?
+    a: Large power and distribution transformers are 98–99.7% efficient at rated load. Small control transformers may be 90–96%.
+related: [electrical/transformer-current, electrical/transformer-turns-ratio, electrical/transformer-short-circuit, electrical/kva-to-kw]
+links:
+  - { title: "Transformer Efficiency Calculation", url: "https://www.instrumentationblog.in/transformer-efficiency-calculation/" }
+  - { title: "Transformer Cooling Methods: ONAN, ONAF", url: "https://www.instrumentationblog.in/transformer-cooling-methods-onan-onaf/" }
+  - { title: "Transformer Maintenance Checklist", url: "https://www.instrumentationblog.in/transformer-maintenance-checklist/" }
+---
+
+## How to use this calculator
+
+Enter the **rating**, the **load** as a percentage, the load **power factor**, and the **no-load** and **full-load losses** from the test certificate or datasheet. You get the output, total losses, efficiency and the load at which efficiency peaks.
+
+## The formulas
+
+<p class="formula">η = x·S·PF ÷ (x·S·PF + P<sub>i</sub> + x²·P<sub>c</sub>)</p>
+
+<p class="formula">Maximum efficiency at x = √(P<sub>i</sub> ÷ P<sub>c</sub>)</p>
+
+## Efficiency vs load (1,000 kVA, 1.4 kW core loss, 9.5 kW copper loss)
+
+| Load | PF 1.0 | PF 0.9 | PF 0.8 |
+|---|---|---|---|
+| 10% | 98.53% | 98.37% | 98.17% |
+| 25% | 99.21% | 99.12% | 99.01% |
+| 38% | 99.28% | 99.20% | 99.10% |
+| 50% | 99.25% | 99.17% | 99.07% |
+| 75% | 99.11% | 99.01% | 98.89% |
+| 100% | 98.92% | 98.80% | 98.66% |
+| 110% | 98.84% | 98.71% | 98.56% |
+
+Maximum efficiency occurs at √(1.4 ÷ 9.5) = **38% load**.
+
+## Core loss vs copper loss
+
+| Loss | Depends on | Present |
+|---|---|---|
+| Core (iron, no-load) | Voltage and frequency | Whenever energised, even with no load |
+| Copper (load) | Current squared | Rises with load |
+
+Because core loss is constant, a lightly loaded transformer runs 24 hours a day with relatively poor efficiency. Low-loss amorphous-core transformers cut core loss by 60–70%.
+
+## All-day (energy) efficiency
+
+For distribution transformers, compare energy rather than power: total kWh delivered ÷ (kWh delivered + core loss × 24 h + Σ copper loss × hours at each load). This is how loss capitalisation and energy-efficiency standards rank transformers.

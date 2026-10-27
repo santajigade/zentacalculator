@@ -1,0 +1,62 @@
+---
+title: Capacitor Energy and Charge Calculator
+description: Calculate the energy stored in a capacitor and its charge from capacitance and voltage — for supercapacitors, DC links and flash circuits.
+category: electronics
+keywords: [capacitor energy calculator, energy stored in capacitor, 1/2 cv2, capacitor charge calculator, q = cv, supercapacitor energy, capacitor joules]
+updated: 2026-10-27
+variables:
+  - { id: C, label: Capacitance, family: capacitance, unit: uF, default: 1000, min: 0 }
+  - { id: V, label: Voltage, family: voltage, unit: V, default: 50, min: 0 }
+  - { id: E, label: Stored energy, family: energy, unit: J, min: 0 }
+  - { id: Q, label: Charge, suffix: C (coulombs), min: 0, decimals: 6 }
+equations:
+  - E = 0.5 * C * V^2
+  - Q = C * V
+faq:
+  - q: How much energy does a capacitor store?
+    a: E = ½ × C × V². A 1,000 µF capacitor at 50 V stores 1.25 J.
+  - q: How much usable energy is there between two voltages?
+    a: E = ½ C (V₁² − V₂²). A supercapacitor discharged from full voltage to half voltage delivers 75% of its stored energy.
+  - q: Why are charged capacitors dangerous?
+    a: Large capacitors in power supplies, VFDs and microwave ovens can hold lethal energy for minutes after switch-off. Always discharge and verify with a meter before working.
+  - q: What is the charge on a capacitor?
+    a: Q = C × V, in coulombs.
+related: [physics/rc-time-constant, electronics/inductor-energy, electronics/reactance, electronics/capacitor-lifetime]
+links:
+  - { title: "Capacitor Working Principle", url: "https://www.instrumentationblog.in/capacitor-working-principle/" }
+  - { title: "Supercapacitor Working Principle", url: "https://www.instrumentationblog.in/supercapacitor-working-principle/" }
+  - { title: "Capacitor Types Explained", url: "https://www.instrumentationblog.in/capacitor-types-explained/" }
+  - { title: "How to Test a Capacitor", url: "https://www.instrumentationblog.in/how-to-test-a-capacitor/" }
+---
+
+## How to use this calculator
+
+Enter the **capacitance** and the **voltage**. The calculator gives the stored energy and the charge. Press × on Voltage to find the voltage needed to store a given energy.
+
+## The formulas
+
+<p class="formula">E = ½ × C × V² &nbsp;·&nbsp; Q = C × V</p>
+
+## Stored energy examples
+
+| Capacitor | Voltage | Energy |
+|---|---|---|
+| 100 µF electrolytic | 25 V | 0.031 J |
+| 1,000 µF electrolytic | 50 V | 1.25 J |
+| 4,700 µF DC bus | 400 V | 376 J |
+| Camera flash, 200 µF | 330 V | 10.9 J |
+| Supercapacitor 10 F | 2.7 V | 36.5 J |
+| Supercapacitor 3,000 F | 2.7 V | 10,935 J (3.04 Wh) |
+
+## Supercapacitors vs batteries
+
+A 3,000 F, 2.7 V supercapacitor stores about 3 Wh — roughly what a few AA batteries hold — but can deliver it in seconds and survive hundreds of thousands of cycles. They suit short backup, regenerative braking and burst power.
+
+## Safety
+
+Energy above about 0.25 J at voltages over 50 V can give a dangerous shock. Discharge large capacitors through a suitable resistor (not a screwdriver), then confirm 0 V with a meter.
+
+## Series and parallel
+
+- Parallel: C = C₁ + C₂ (same voltage rating).
+- Series: 1/C = 1/C₁ + 1/C₂ — higher voltage, lower capacitance; use balancing resistors.

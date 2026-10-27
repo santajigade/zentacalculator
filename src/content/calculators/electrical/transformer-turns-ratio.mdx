@@ -1,0 +1,69 @@
+---
+title: Transformer Turns Ratio Calculator
+description: Calculate transformer secondary voltage, turns ratio and primary or secondary current from the number of turns or voltages.
+category: electrical
+keywords: [transformer turns ratio calculator, secondary voltage calculator, transformer ratio, np ns vp vs, transformer winding turns, step down transformer]
+updated: 2026-10-27
+variables:
+  - { id: Vp, label: Primary voltage, family: voltage, unit: V, default: 230, min: 0 }
+  - { id: Np, label: Primary turns, default: 1000, min: 0 }
+  - { id: Ns, label: Secondary turns, default: 52, min: 0 }
+  - { id: Vs, label: Secondary voltage, family: voltage, unit: V, min: 0 }
+  - { id: Is, label: Secondary current, family: current, unit: A, default: 5, min: 0 }
+  - { id: Ip, label: Primary current, family: current, unit: A, min: 0 }
+  - { id: a, label: Turns ratio (Np ÷ Ns), min: 0, decimals: 3 }
+equations:
+  - a = Np / Ns
+  - Vs = Vp / a
+  - Ip = Is / a
+faq:
+  - q: What is the transformer turns ratio?
+    a: The ratio of primary turns to secondary turns, Np ÷ Ns. For an ideal transformer it equals the voltage ratio Vp ÷ Vs and the inverse of the current ratio.
+  - q: How do I calculate secondary voltage?
+    a: Vs = Vp × Ns ÷ Np. A 230 V transformer with 1,000 primary and 52 secondary turns gives about 12 V.
+  - q: Why does current change the opposite way to voltage?
+    a: Power in equals power out (ignoring losses), so if voltage is stepped down by 20 times, current is stepped up by 20 times.
+  - q: How is the turns ratio tested on site?
+    a: With a transformer turns ratio (TTR) tester. The measured ratio should be within ±0.5% of the nameplate ratio on each tap.
+related: [electrical/transformer-current, electrical/transformer-efficiency, electrical/transformer-short-circuit, physics/ohms-law]
+links:
+  - { title: "Transformer Turns Ratio and Secondary Voltage", url: "https://www.instrumentationblog.in/transformer-turns-ratio-secondary-voltage/" }
+  - { title: "Transformer Routine and Type Tests", url: "https://www.instrumentationblog.in/transformer-routine-and-type-tests/" }
+  - { title: "Isolation Transformer Working and Uses", url: "https://www.instrumentationblog.in/isolation-transformer-working-uses/" }
+---
+
+## How to use this calculator
+
+Enter the **primary voltage**, **primary turns** and **secondary turns**, plus the **secondary load current**. You get the turns ratio, secondary voltage and primary current. Fill any consistent set — for example, both voltages and primary turns to find secondary turns.
+
+## The ideal transformer equations
+
+<p class="formula">V<sub>p</sub> ÷ V<sub>s</sub> = N<sub>p</sub> ÷ N<sub>s</sub> = I<sub>s</sub> ÷ I<sub>p</sub></p>
+
+## Example
+
+230 V primary, 1,000 turns; 52 secondary turns:
+
+- Ratio = 1,000 ÷ 52 = 19.23
+- Secondary voltage = 230 ÷ 19.23 = **11.96 V**
+- With 5 A secondary load, the primary draws 5 ÷ 19.23 = **0.26 A**
+
+## Turns per volt
+
+Small transformers are often designed by turns per volt, which depends on core area and flux density: turns/V ≈ 1 ÷ (4.44 × f × B × A). For a 50 Hz core with 10 cm² area at 1.2 T, that is about 3.75 turns per volt.
+
+## Three-phase ratios
+
+For three-phase transformers, the voltage ratio uses line voltages, and the vector group affects the turns ratio:
+
+| Connection | Line voltage ratio |
+|---|---|
+| Yy or Dd | Np ÷ Ns |
+| Dy (delta primary, star secondary) | Np ÷ (√3 × Ns) |
+| Yd (star primary, delta secondary) | √3 × Np ÷ Ns |
+
+A Dyn11 11 kV/433 V distribution transformer has a phase-winding turns ratio of 11,000 ÷ 250 = 44.
+
+## Real transformers
+
+On load, the secondary voltage drops slightly because of winding resistance and leakage reactance (regulation, typically 2–5%). Transformers are often wound with a few percent extra turns to compensate.

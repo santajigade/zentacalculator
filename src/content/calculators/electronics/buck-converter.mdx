@@ -1,0 +1,79 @@
+---
+title: Buck Converter Calculator (Inductor and Capacitor)
+description: Calculate duty cycle, inductor value, ripple current and output capacitor for a buck (step-down) DC-DC converter.
+category: electronics
+keywords: [buck converter calculator, buck inductor calculation, step down converter design, buck duty cycle, output capacitor ripple, dc dc converter calculator]
+updated: 2026-10-27
+variables:
+  - { id: Vi, label: Input voltage, family: voltage, unit: V, default: 24, min: 0 }
+  - { id: Vo, label: Output voltage, family: voltage, unit: V, default: 5, min: 0 }
+  - { id: Io, label: Output current, family: current, unit: A, default: 2, min: 0 }
+  - { id: f, label: Switching frequency, family: frequency, unit: kHz, default: 500, min: 0 }
+  - { id: r, label: Inductor ripple (of output current), family: percent, unit: '%', default: 30, min: 0.01 }
+  - { id: dV, label: Allowed output ripple, family: voltage, unit: mV, default: 20, min: 0 }
+  - { id: D, label: Duty cycle (ideal), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: dI, label: Ripple current (peak-to-peak), family: current, unit: A, min: 0 }
+  - { id: L, label: Inductance required, family: inductance, unit: uH, min: 0 }
+  - { id: Ipk, label: Peak inductor current, family: current, unit: A, min: 0 }
+  - { id: C, label: Output capacitance (min.), family: capacitance, unit: uF, min: 0 }
+equations:
+  - D = Vo / Vi
+  - dI = r * Io
+  - L = Vo * (Vi - Vo) / (Vi * f * dI)
+  - Ipk = Io + dI / 2
+  - C = dI / (8 * f * dV)
+faq:
+  - q: What is the duty cycle of a buck converter?
+    a: Ideally D = V_out ÷ V_in. Converting 24 V to 5 V needs about 21%; losses push it slightly higher.
+  - q: How do I choose the inductor ripple?
+    a: 20–40% of the output current is a common compromise between inductor size and ripple. 30% is a good starting point.
+  - q: How is the inductance calculated?
+    a: L = V_out × (V_in − V_out) ÷ (V_in × f × ΔI). For 24 V to 5 V at 2 A, 500 kHz and 30% ripple, L ≈ 13 µH.
+  - q: What sets the output ripple voltage?
+    a: Capacitance and the capacitor's ESR. The formula here covers capacitance; with electrolytics, ripple is usually dominated by ESR × ΔI.
+related: [electronics/boost-converter, electronics/inductor-energy, electronics/pwm-duty-cycle, electronics/capacitor-energy]
+links:
+  - { title: "Buck Converter Working Principle", url: "https://www.instrumentationblog.in/buck-converter-working-principle/" }
+  - { title: "Synchronous Rectification in Buck Converters", url: "https://www.instrumentationblog.in/synchronous-rectification-buck-converter/" }
+  - { title: "Capacitor ESR (Equivalent Series Resistance)", url: "https://www.instrumentationblog.in/capacitor-esr-equivalent-series-resistance/" }
+---
+
+## How to use this calculator
+
+Enter the **input** and **output voltage**, **output current**, **switching frequency**, the **inductor ripple** as a percentage of output current, and the allowed **output voltage ripple**. You get the duty cycle, ripple current, inductance, peak inductor current and minimum output capacitance.
+
+## The formulas (continuous conduction)
+
+| Quantity | Formula |
+|---|---|
+| Duty cycle | D = V<sub>o</sub> ÷ V<sub>i</sub> |
+| Inductance | L = V<sub>o</sub>(V<sub>i</sub> − V<sub>o</sub>) ÷ (V<sub>i</sub> f ΔI) |
+| Peak current | I<sub>pk</sub> = I<sub>o</sub> + ΔI ÷ 2 |
+| Output capacitance | C = ΔI ÷ (8 f ΔV) |
+
+## Example
+
+24 V to 5 V at 2 A, 500 kHz, 30% ripple (0.6 A):
+
+- D = **20.8%**
+- L = 5 × 19 ÷ (24 × 500,000 × 0.6) = **13.2 µH** → use 15 µH
+- Peak current = **2.3 A** — choose an inductor rated above this for saturation
+- For 20 mV ripple, C ≥ 0.6 ÷ (8 × 500,000 × 0.02) = **7.5 µF** → use 22 µF ceramic
+
+## Inductance vs frequency (24 V → 5 V, 0.6 A ripple)
+
+| Frequency | Inductance |
+|---|---|
+| 100 kHz | 66.0 µH |
+| 250 kHz | 26.4 µH |
+| 500 kHz | 13.2 µH |
+| 1 MHz | 6.6 µH |
+| 2 MHz | 3.3 µH |
+
+Higher frequency allows smaller inductors and capacitors but increases switching losses.
+
+## Design checks
+
+- Inductor saturation current above I<sub>pk</sub> with margin; RMS rating above I<sub>o</sub>.
+- Input capacitor sized for RMS ripple current ≈ I<sub>o</sub>√(D(1 − D)).
+- Use the controller datasheet's compensation and layout guidance — tight loops around the switch, diode and input capacitor matter most.

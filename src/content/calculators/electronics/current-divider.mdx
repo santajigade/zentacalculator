@@ -1,0 +1,58 @@
+---
+title: Current Divider Calculator
+description: Calculate how a total current splits between two parallel resistors using the current divider rule — with branch currents and equivalent resistance.
+category: electronics
+keywords: [current divider calculator, current divider rule, parallel resistor current, branch current calculator, current division formula]
+updated: 2026-10-27
+variables:
+  - { id: It, label: Total current, family: current, unit: A, default: 1, min: 0 }
+  - { id: R1, label: R1, family: resistance, unit: ohm, default: 100, min: 0 }
+  - { id: R2, label: R2, family: resistance, unit: ohm, default: 300, min: 0 }
+  - { id: I1, label: Current through R1, family: current, unit: A, min: 0 }
+  - { id: I2, label: Current through R2, family: current, unit: A, min: 0 }
+  - { id: Req, label: Equivalent resistance, family: resistance, unit: ohm, min: 0 }
+  - { id: V, label: Voltage across the pair, family: voltage, unit: V, min: 0 }
+equations:
+  - I1 = It * R2 / (R1 + R2)
+  - I2 = It * R1 / (R1 + R2)
+  - Req = R1 * R2 / (R1 + R2)
+  - V = It * Req
+faq:
+  - q: What is the current divider rule?
+    a: For two parallel resistors, I₁ = I_total × R₂ ÷ (R₁ + R₂). Each branch gets a share of the current in proportion to the other branch's resistance.
+  - q: Which resistor carries more current?
+    a: The smaller one. Current takes all paths, but more of it flows through lower resistance.
+  - q: How do I handle more than two branches?
+    a: "Use conductances: I_n = I_total × G_n ÷ ΣG, where G = 1 ÷ R."
+  - q: Where is the current divider used?
+    a: In ammeter shunts, current-sharing resistors and in analysing parallel loads.
+related: [electronics/voltage-divider, physics/resistors-series-parallel, physics/ohms-law, electronics/wheatstone-bridge]
+links:
+  - { title: "Current Divider Rule Explained", url: "https://www.instrumentationblog.in/current-divider-rule-explained/" }
+  - { title: "Kirchhoff’s Current Law (KCL) Explained", url: "https://www.instrumentationblog.in/kirchhoffs-current-law-kcl-explained/" }
+  - { title: "Shunt Resistors in Instrumentation", url: "https://www.instrumentationblog.in/shunt-resistors-in-instrumentation/" }
+---
+
+## How to use this calculator
+
+Enter the **total current** entering the parallel pair and the two **resistances**. You get each branch current, the equivalent resistance and the voltage across the pair.
+
+## The formulas
+
+<p class="formula">I₁ = I<sub>T</sub> × R₂ ÷ (R₁ + R₂) &nbsp;·&nbsp; I₂ = I<sub>T</sub> × R₁ ÷ (R₁ + R₂)</p>
+
+## Example
+
+1 A into 100 Ω and 300 Ω in parallel:
+
+- I₁ = 1 × 300 ÷ 400 = **0.75 A**
+- I₂ = 1 × 100 ÷ 400 = **0.25 A**
+- R<sub>eq</sub> = 75 Ω, V = 75 V
+
+## Ammeter shunts
+
+To extend a meter that reads 1 mA full scale with 100 Ω internal resistance to read 1 A, the shunt must carry 999 mA: R<sub>shunt</sub> = 100 × 0.001 ÷ 0.999 ≈ **0.1001 Ω**.
+
+## 4–20 mA and 250 Ω
+
+A 250 Ω resistor converts a 4–20 mA loop current into 1–5 V for a voltage input — a common trick that relies on Ohm's law rather than division. Keep loop resistance within the transmitter's limits — see the [loop resistance calculator](/engineering/loop-resistance/).

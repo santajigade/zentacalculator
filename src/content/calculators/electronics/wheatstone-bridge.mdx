@@ -1,0 +1,68 @@
+---
+title: Wheatstone Bridge Calculator
+description: Calculate the output voltage of a Wheatstone bridge, or the unknown resistance at balance — for strain gauges, RTDs and sensor circuits.
+category: electronics
+keywords: [wheatstone bridge calculator, bridge circuit calculator, unknown resistance, bridge output voltage, balanced bridge, strain gauge bridge, quarter bridge]
+updated: 2026-10-27
+variables:
+  - { id: Vs, label: Excitation voltage, family: voltage, unit: V, default: 10, min: 0 }
+  - { id: R1, label: R1 (top left), family: resistance, unit: ohm, default: 1000, min: 0 }
+  - { id: R2, label: R2 (bottom left), family: resistance, unit: ohm, default: 1000, min: 0 }
+  - { id: R3, label: R3 (top right), family: resistance, unit: ohm, default: 1000, min: 0 }
+  - { id: Rx, label: "Rx (bottom right, unknown)", family: resistance, unit: ohm, default: 1010, min: 0 }
+  - { id: Vo, label: Bridge output voltage, family: voltage, unit: mV }
+  - { id: Rb, label: Rx for balance, family: resistance, unit: ohm, min: 0 }
+equations:
+  - Vo = Vs * (Rx / (R3 + Rx) - R2 / (R1 + R2))
+  - Rb = R3 * R2 / R1
+faq:
+  - q: What is the balance condition of a Wheatstone bridge?
+    a: The output is zero when R1 ÷ R2 = R3 ÷ Rx, so Rx = R3 × R2 ÷ R1.
+  - q: How does a Wheatstone bridge measure small changes?
+    a: At balance the output is zero, so a small change in one resistor produces a small voltage that can be amplified, without a large fixed offset.
+  - q: What is a quarter, half and full bridge?
+    a: The number of active sensing elements — one, two or four. A full bridge with four strain gauges gives four times the output of a quarter bridge and better temperature compensation.
+  - q: Is the output linear?
+    a: Only approximately for small changes. For large changes, use the exact formula here.
+related: [electronics/voltage-divider, engineering/pt100-resistance, physics/resistors-series-parallel, electronics/op-amp-gain]
+links:
+  - { title: "Wheatstone Bridge: 10 Applications", url: "https://www.instrumentationblog.in/wheatstone-bridge-10-applications/" }
+---
+
+## How to use this calculator
+
+Enter the **excitation voltage** and the four resistances. The calculator gives the bridge output voltage (between the two midpoints) and the value of Rx that would balance the bridge.
+
+## The formulas
+
+<p class="formula">V<sub>out</sub> = V<sub>s</sub> × [R<sub>x</sub> ÷ (R₃ + R<sub>x</sub>) − R₂ ÷ (R₁ + R₂)]</p>
+
+<p class="formula">Balance: R<sub>x</sub> = R₃ × R₂ ÷ R₁</p>
+
+## Example: 1% change in a quarter bridge
+
+All arms 1,000 Ω, Rx = 1,010 Ω, 10 V excitation:
+
+V<sub>out</sub> = 10 × (1,010 ÷ 2,010 − 0.5) = **24.9 mV**
+
+## Output vs resistance change (10 V, 1 kΩ arms)
+
+| ΔR/R | Quarter bridge | Full bridge (4 active arms) |
+|---|---|---|
+| 0.01% | 0.25 mV | 1.0 mV |
+| 0.1% | 2.50 mV | 10.0 mV |
+| 0.5% | 12.47 mV | 50.0 mV |
+| 1% | 24.88 mV | 100.0 mV |
+| 2% | 49.50 mV | 200.0 mV |
+| 5% | 121.95 mV | 500.0 mV |
+
+## Applications
+
+- **Strain gauges and load cells**: tiny resistance changes from strain.
+- **RTD measurement**: three-wire bridge circuits cancel lead resistance — see the [Pt100 calculator](/engineering/pt100-resistance/).
+- **Pressure sensors**: piezoresistive silicon bridges inside most pressure transmitters.
+- **Gas sensors** and hot-wire anemometers.
+
+## Strain gauge output
+
+For a quarter bridge, V<sub>out</sub> ≈ V<sub>s</sub> × GF × ε ÷ 4, where GF ≈ 2 for metal foil gauges. 1,000 µε at 10 V gives about 5 mV.

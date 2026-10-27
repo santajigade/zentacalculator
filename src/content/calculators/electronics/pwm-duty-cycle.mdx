@@ -1,0 +1,69 @@
+---
+title: PWM Duty Cycle Calculator
+description: Calculate PWM duty cycle, period, on-time and average output voltage from frequency and pulse width — for motor speed control, LEDs and microcontrollers.
+category: electronics
+keywords: [pwm duty cycle calculator, duty cycle formula, pwm average voltage, pulse width modulation, on time off time, pwm frequency, arduino pwm]
+updated: 2026-10-27
+variables:
+  - { id: f, label: PWM frequency, family: frequency, unit: kHz, default: 1, min: 0 }
+  - { id: ton, label: On time (pulse width), family: seconds, unit: ms, default: 0.25, min: 0 }
+  - { id: V, label: Supply voltage (amplitude), family: voltage, unit: V, default: 12, min: 0 }
+  - { id: T, label: Period, family: seconds, unit: ms, min: 0 }
+  - { id: D, label: Duty cycle, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: toff, label: Off time, family: seconds, unit: ms, min: 0 }
+  - { id: Vav, label: Average voltage, family: voltage, unit: V, min: 0 }
+  - { id: Vrms, label: RMS voltage, family: voltage, unit: V, min: 0 }
+equations:
+  - T = 1 / f
+  - D = ton / T
+  - toff = T - ton
+  - Vav = D * V
+  - Vrms = sqrt(D) * V
+faq:
+  - q: What is duty cycle?
+    a: The fraction of each period that the signal is on. 0.25 ms on in a 1 ms period is a 25% duty cycle.
+  - q: What is the average voltage of a PWM signal?
+    a: V_avg = duty cycle × amplitude. 25% of 12 V gives 3 V average.
+  - q: What PWM frequency should I use?
+    a: About 20–25 kHz for DC motors to stay above hearing, a few hundred hertz or more for LED dimming to avoid visible flicker, and 50 Hz for hobby servos.
+  - q: How does an 8-bit PWM value map to duty cycle?
+    a: Duty = value ÷ 255. An analogWrite of 64 on an Arduino gives about 25%.
+related: [electronics/555-timer, electronics/buck-converter, physics/wavelength-frequency, electronics/rc-filter]
+links:
+  - { title: "Pulse Width Modulation and Duty Cycle", url: "https://www.instrumentationblog.in/pulse-width-modulation-duty-cycle/" }
+  - { title: "VFD Working Principle Explained", url: "https://www.instrumentationblog.in/vfd-working-principle-explained/" }
+---
+
+## How to use this calculator
+
+Enter the **PWM frequency**, the **on time** and the signal **amplitude**. You get the period, duty cycle, off time, and the average and RMS output voltages. To find the on time for a target duty cycle, enter the duty cycle and press × on On time.
+
+## The formulas
+
+<p class="formula">T = 1 ÷ f &nbsp;·&nbsp; D = t<sub>on</sub> ÷ T &nbsp;·&nbsp; V<sub>avg</sub> = D × V &nbsp;·&nbsp; V<sub>rms</sub> = √D × V</p>
+
+## 8-bit PWM values
+
+| Duty cycle | 8-bit value (0–255) | 10-bit value (0–1023) | Average of 12 V |
+|---|---|---|---|
+| 0% | 0 | 0 | 0.00 V |
+| 10% | 26 | 102 | 1.20 V |
+| 25% | 64 | 256 | 3.00 V |
+| 50% | 128 | 512 | 6.00 V |
+| 75% | 191 | 767 | 9.00 V |
+| 90% | 230 | 921 | 10.80 V |
+| 100% | 255 | 1023 | 12.00 V |
+
+## Typical PWM frequencies
+
+| Application | Frequency |
+|---|---|
+| Hobby servo | 50 Hz (1–2 ms pulse) |
+| LED dimming | 200 Hz – 20 kHz |
+| DC motor drive | 16–25 kHz |
+| Switch-mode power supply | 50 kHz – 2 MHz |
+| VFD output (carrier) | 2–16 kHz |
+
+## Average vs RMS
+
+A resistive heater cares about RMS (its power is V²/R), while a DC motor's speed follows the average voltage. At 25% duty, 12 V gives 3 V average but 6 V RMS — the heater gets 25% of full power.

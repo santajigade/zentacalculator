@@ -1,0 +1,75 @@
+---
+title: Boost Converter Calculator (Inductor and Capacitor)
+description: Calculate duty cycle, input current, inductor value and output capacitor for a boost (step-up) DC-DC converter.
+category: electronics
+keywords: [boost converter calculator, boost inductor calculation, step up converter design, boost duty cycle, boost converter formula, dc dc boost]
+updated: 2026-10-27
+variables:
+  - { id: Vi, label: Input voltage, family: voltage, unit: V, default: 5, min: 0 }
+  - { id: Vo, label: Output voltage, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: Io, label: Output current, family: current, unit: A, default: 0.5, min: 0 }
+  - { id: eta, label: Efficiency, family: percent, unit: '%', default: 90, min: 0.01, max: 1 }
+  - { id: f, label: Switching frequency, family: frequency, unit: kHz, default: 500, min: 0 }
+  - { id: r, label: Inductor ripple (of input current), family: percent, unit: '%', default: 30, min: 0.01 }
+  - { id: dV, label: Allowed output ripple, family: voltage, unit: mV, default: 50, min: 0 }
+  - { id: D, label: Duty cycle, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: Ii, label: Input (average inductor) current, family: current, unit: A, min: 0 }
+  - { id: L, label: Inductance required, family: inductance, unit: uH, min: 0 }
+  - { id: Ipk, label: Peak switch current, family: current, unit: A, min: 0 }
+  - { id: C, label: Output capacitance (min.), family: capacitance, unit: uF, min: 0 }
+equations:
+  - D = 1 - Vi * eta / Vo
+  - Ii = Vo * Io / (Vi * eta)
+  - L = Vi * D / (f * r * Ii)
+  - Ipk = Ii * (1 + r / 2)
+  - C = Io * D / (f * dV)
+faq:
+  - q: What is the duty cycle of a boost converter?
+    a: D = 1 − V_in × η ÷ V_out. Boosting 5 V to 12 V at 90% efficiency needs a duty cycle of about 62.5%.
+  - q: How much input current does a boost converter draw?
+    a: I_in = V_out × I_out ÷ (V_in × η). 12 V at 0.5 A from 5 V at 90% efficiency draws about 1.33 A.
+  - q: How high can a boost converter step up?
+    a: Practically about 5–8 times. Very high duty cycles cause large losses and control problems.
+  - q: Why is the output ripple larger than a buck's?
+    a: The output capacitor alone supplies the load while the switch is on, so the output current is pulsed.
+related: [electronics/buck-converter, electronics/inductor-energy, electronics/pwm-duty-cycle, electronics/capacitor-energy]
+links:
+  - { title: "Boost Converter Working Principle", url: "https://www.instrumentationblog.in/boost-converter-working-principle/" }
+  - { title: "PFC Circuit: Boost Power Factor Correction", url: "https://www.instrumentationblog.in/pfc-circuit-boost-power-factor-correction/" }
+  - { title: "SEPIC Converter Working and Design", url: "https://www.instrumentationblog.in/sepic-converter-working-design/" }
+---
+
+## How to use this calculator
+
+Enter the **input** and **output voltage**, **output current**, expected **efficiency**, **switching frequency**, inductor **ripple** and allowed **output ripple**. You get the duty cycle, input current, inductance, peak switch current and minimum output capacitance.
+
+## The formulas (continuous conduction)
+
+| Quantity | Formula |
+|---|---|
+| Duty cycle | D = 1 − V<sub>i</sub>η ÷ V<sub>o</sub> |
+| Input current | I<sub>i</sub> = V<sub>o</sub>I<sub>o</sub> ÷ (V<sub>i</sub>η) |
+| Inductance | L = V<sub>i</sub> D ÷ (f ΔI) |
+| Output capacitance | C = I<sub>o</sub> D ÷ (f ΔV) |
+
+## Example
+
+5 V to 12 V at 0.5 A, 90% efficiency, 500 kHz, 30% ripple:
+
+- D = 1 − 4.5 ÷ 12 = **62.5%**
+- Input current = 6 ÷ 4.5 = **1.33 A**
+- ΔI = 0.4 A, L = 5 × 0.625 ÷ (500,000 × 0.4) = **15.6 µH** → use 15–22 µH
+- Peak switch current = **1.53 A**
+- For 50 mV ripple, C ≥ 0.5 × 0.625 ÷ (500,000 × 0.05) = **12.5 µF**
+
+## Design checks
+
+- The switch and diode must handle the full output voltage plus spikes.
+- Inductor saturation current must exceed the peak current.
+- A boost converter has no short-circuit protection by itself — current flows straight from input to output through the inductor and diode.
+- At very light loads the converter enters discontinuous mode, and the formulas above no longer apply.
+
+## Related topologies
+
+- **Buck-boost and SEPIC** give an output above or below the input.
+- **PFC boost stages** in power supplies shape input current to follow the mains voltage.

@@ -1,7 +1,7 @@
 ---
 title: Three-Phase Motor Power & Current Calculator
 description: Calculate input power, output power and full-load current of a three-phase motor from voltage, power factor and efficiency.
-category: engineering
+category: electrical
 keywords: [three phase power, motor current, motor kw, full load current, 3 phase calculation, power factor, motor amps]
 updated: 2026-10-27
 featured: true
@@ -27,7 +27,11 @@ faq:
     a: "About 14 A, assuming 0.85 power factor and 88–90% efficiency."
   - q: "Why is √3 used in three-phase power?"
     a: "Because line voltage is √3 times phase voltage in a balanced three-phase system."
-related: [engineering/torque-power-speed, engineering/cable-voltage-drop, physics/ohms-law]
+related: [engineering/torque-power-speed, electrical/cable-voltage-drop, physics/ohms-law]
+links:
+  - { title: "Motor Full Load Current (FLC)", url: "https://www.instrumentationblog.in/motor-full-load-current-flc/" }
+  - { title: "How to Calculate Three-Phase Power", url: "https://www.instrumentationblog.in/how-to-calculate-three-phase-power/" }
+  - { title: "Motor Efficiency Classes (IEC 60034)", url: "https://www.instrumentationblog.in/motor-efficiency-classes-iec-60034/" }
 ---
 
 ## How to use this calculator
@@ -95,5 +99,5 @@ Motors draw reactive power that does no useful work but loads cables and transfo
 ## Practical notes
 
 - **Starting current** of a direct-on-line motor is typically **6–8×** full-load current.
-- **Cable sizing** must account for both current and length — check with the [cable voltage drop calculator](/engineering/cable-voltage-drop/).
+- **Cable sizing** must account for both current and length — check with the [cable voltage drop calculator](/electrical/cable-voltage-drop/).
 - For single-phase, use P = V × I × cos φ instead.

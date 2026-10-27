@@ -1,0 +1,75 @@
+---
+title: PCB Trace Width Calculator (IPC-2221)
+description: Calculate the PCB trace width needed for a current and temperature rise using the IPC-2221 formula — for external and internal layers and copper weights.
+category: electronics
+keywords: [pcb trace width calculator, ipc 2221 calculator, trace current capacity, pcb track width, copper thickness oz, trace temperature rise, pcb current carrying]
+updated: 2026-10-27
+variables:
+  - { id: I, label: Current, family: current, unit: A, default: 3, min: 0 }
+  - { id: dT, label: Allowed temperature rise, suffix: °C, default: 10, min: 0.1 }
+  - { id: oz, label: Copper weight, suffix: oz/ft², default: 1, min: 0.1 }
+  - id: k
+    label: Layer
+    default: 0.048
+    options:
+      - { label: External (outer) layer, value: 0.048 }
+      - { label: Internal layer, value: 0.024 }
+  - { id: A, label: Cross-section area, suffix: mil², min: 0, decimals: 1 }
+  - { id: w, label: Minimum trace width, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: wm, label: Minimum trace width in mils, suffix: mil, min: 0, decimals: 1 }
+equations:
+  - A = (I / (k * dT^0.44))^(1 / 0.725)
+  - wm = A / (1.378 * oz)
+  - w = wm * 0.0000254
+faq:
+  - q: How wide should a PCB trace be for 1 A?
+    a: On an outer layer with 1 oz copper and a 10 °C rise, IPC-2221 gives about 0.3 mm (12 mil). Inner layers need about 2.6 times the width.
+  - q: Why do inner layers need wider traces?
+    a: Inner layers are surrounded by FR-4, which conducts heat poorly, so they cannot shed heat as well as outer layers.
+  - q: What does 1 oz copper mean?
+    a: 1 ounce of copper spread over 1 square foot — a thickness of about 35 µm (1.378 mil).
+  - q: Is IPC-2221 accurate?
+    a: It is conservative for most designs. The newer IPC-2152 standard uses more detailed data that accounts for planes and board thickness.
+related: [electrical/cable-voltage-drop, physics/ohms-law, electronics/heat-sink, electronics/led-resistor]
+links:
+  - { title: "PCB Via Current Capacity (IPC-2152)", url: "https://www.instrumentationblog.in/pcb-via-current-capacity/" }
+  - { title: "Controlled Impedance PCB Traces", url: "https://www.instrumentationblog.in/controlled-impedance-pcb-traces/" }
+---
+
+## How to use this calculator
+
+Enter the **current**, the allowed **temperature rise** above ambient, the **copper weight** and whether the trace is on an **external or internal layer**. You get the required cross-section and minimum width in millimetres and mils.
+
+## The IPC-2221 formula
+
+<p class="formula">I = k × ΔT<sup>0.44</sup> × A<sup>0.725</sup></p>
+
+with A in square mils, k = 0.048 for external layers and 0.024 for internal layers. Width = A ÷ (1.378 × copper oz).
+
+## Trace width for 1 oz copper, 10 °C rise
+
+| Current | External layer | Internal layer |
+|---|---|---|
+| 0.5 A | 0.12 mm (5 mil) | 0.30 mm (12 mil) |
+| 1 A | 0.30 mm (12 mil) | 0.78 mm (31 mil) |
+| 2 A | 0.78 mm (31 mil) | 2.03 mm (80 mil) |
+| 3 A | 1.37 mm (54 mil) | 3.56 mm (140 mil) |
+| 5 A | 2.77 mm (109 mil) | 7.19 mm (283 mil) |
+| 10 A | 7.19 mm (283 mil) | 18.71 mm (737 mil) |
+
+## Copper weights
+
+| Copper | Thickness |
+|---|---|
+| 0.5 oz | 17.5 µm |
+| 1 oz | 35 µm |
+| 2 oz | 70 µm |
+| 3 oz | 105 µm |
+
+Doubling copper weight roughly halves the width needed.
+
+## Other checks
+
+- **Voltage drop**: long, thin traces drop voltage. 1 oz copper has about 0.5 mΩ per square.
+- **Vias**: a standard 0.3 mm via carries roughly 1–2 A; use several vias in parallel for high currents.
+- **Spacing**: high-voltage traces need clearance and creepage per IPC-2221 or IEC 60664.

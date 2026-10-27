@@ -1,0 +1,126 @@
+---
+title: Resistor Color Code Calculator (4-Band)
+description: Find a resistor's value and tolerance from its 4 colour bands — or look up the colours for any resistance. Includes the full colour chart.
+category: electronics
+keywords: [resistor color code calculator, resistor colour code, 4 band resistor, resistor value from colors, resistor color chart, brown black red, resistor bands]
+updated: 2026-10-27
+variables:
+  - id: b1
+    label: Band 1 (first digit)
+    default: 1
+    options:
+      - { label: 'Black (0)', value: 0 }
+      - { label: 'Brown (1)', value: 1 }
+      - { label: 'Red (2)', value: 2 }
+      - { label: 'Orange (3)', value: 3 }
+      - { label: 'Yellow (4)', value: 4 }
+      - { label: 'Green (5)', value: 5 }
+      - { label: 'Blue (6)', value: 6 }
+      - { label: 'Violet (7)', value: 7 }
+      - { label: 'Grey (8)', value: 8 }
+      - { label: 'White (9)', value: 9 }
+  - id: b2
+    label: Band 2 (second digit)
+    default: 0
+    options:
+      - { label: 'Black (0)', value: 0 }
+      - { label: 'Brown (1)', value: 1 }
+      - { label: 'Red (2)', value: 2 }
+      - { label: 'Orange (3)', value: 3 }
+      - { label: 'Yellow (4)', value: 4 }
+      - { label: 'Green (5)', value: 5 }
+      - { label: 'Blue (6)', value: 6 }
+      - { label: 'Violet (7)', value: 7 }
+      - { label: 'Grey (8)', value: 8 }
+      - { label: 'White (9)', value: 9 }
+  - id: m
+    label: Band 3 (multiplier)
+    default: 100
+    options:
+      - { label: 'Silver (× 0.01)', value: 0.01 }
+      - { label: 'Gold (× 0.1)', value: 0.1 }
+      - { label: 'Black (× 1)', value: 1 }
+      - { label: 'Brown (× 10)', value: 10 }
+      - { label: 'Red (× 100)', value: 100 }
+      - { label: 'Orange (× 1k)', value: 1000.0 }
+      - { label: 'Yellow (× 10k)', value: 10000.0 }
+      - { label: 'Green (× 100k)', value: 100000.0 }
+      - { label: 'Blue (× 1M)', value: 1000000.0 }
+      - { label: 'Violet (× 10M)', value: 10000000.0 }
+  - id: tol
+    label: Band 4 (tolerance)
+    default: 0.05
+    options:
+      - { label: 'Brown (±1%)', value: 0.01 }
+      - { label: 'Red (±2%)', value: 0.02 }
+      - { label: 'Green (±0.5%)', value: 0.005 }
+      - { label: 'Blue (±0.25%)', value: 0.0025 }
+      - { label: 'Violet (±0.1%)', value: 0.001 }
+      - { label: 'Grey (±0.05%)', value: 0.0005 }
+      - { label: 'Gold (±5%)', value: 0.05 }
+      - { label: 'Silver (±10%)', value: 0.1 }
+  - { id: R, label: Resistance, family: resistance, unit: ohm, min: 0 }
+  - { id: Rmin, label: Minimum value, family: resistance, unit: ohm, min: 0 }
+  - { id: Rmax, label: Maximum value, family: resistance, unit: ohm, min: 0 }
+equations:
+  - R = (10 * b1 + b2) * m
+  - Rmin = R * (1 - tol)
+  - Rmax = R * (1 + tol)
+faq:
+  - q: How do I read a resistor colour code?
+    a: Hold the resistor with the tolerance band (usually gold or silver) on the right. The first two bands are digits, the third is the multiplier and the fourth is tolerance. Brown–black–red–gold is 10 × 100 = 1 kΩ ±5%.
+  - q: What is a good way to remember the colours?
+    a: Black 0, brown 1, red 2, orange 3, yellow 4, green 5, blue 6, violet 7, grey 8, white 9 — the order of the rainbow sits in the middle.
+  - q: What about 5-band resistors?
+    a: They have three digit bands, then multiplier and tolerance. They are used for 1% and better precision resistors.
+  - q: Which end do I start from?
+    a: The end with the band closest to the edge. Gold and silver are never first bands.
+related: [electronics/led-resistor, physics/resistors-series-parallel, physics/ohms-law, electronics/voltage-divider]
+links:
+  - { title: "Resistor Color Code Guide", url: "https://www.instrumentationblog.in/resistor-color-code-guide/" }
+  - { title: "What Is Resistance?", url: "https://www.instrumentationblog.in/what-is-resistance/" }
+---
+
+## How to use this calculator
+
+Choose the four **colour bands** from left to right. The calculator shows the resistance and its tolerance range. The default — brown, black, red, gold — is 1 kΩ ±5%.
+
+## The colour chart
+
+| Colour | Digit | Multiplier | Tolerance |
+|---|---|---|---|
+| Black | 0 | × 1 | — |
+| Brown | 1 | × 10 | ±1% |
+| Red | 2 | × 100 | ±2% |
+| Orange | 3 | × 1 k | — |
+| Yellow | 4 | × 10 k | — |
+| Green | 5 | × 100 k | ±0.5% |
+| Blue | 6 | × 1 M | ±0.25% |
+| Violet | 7 | × 10 M | ±0.1% |
+| Grey | 8 | — | ±0.05% |
+| White | 9 | — | — |
+| Gold | — | × 0.1 | ±5% |
+| Silver | — | × 0.01 | ±10% |
+
+## Common resistors
+
+| Value | Bands |
+|---|---|
+| 100 Ω | Brown, black, brown |
+| 220 Ω | Red, red, brown |
+| 330 Ω | Orange, orange, brown |
+| 470 Ω | Yellow, violet, brown |
+| 1 kΩ | Brown, black, red |
+| 4.7 kΩ | Yellow, violet, red |
+| 10 kΩ | Brown, black, orange |
+| 47 kΩ | Yellow, violet, orange |
+| 100 kΩ | Brown, black, yellow |
+| 1 MΩ | Brown, black, green |
+
+## E-series values
+
+Resistors come in standard series. E12 (±10%): 1, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2 — repeated for each decade. E24 (±5%) adds values in between, and E96 (±1%) has 96 per decade.
+
+## SMD resistors
+
+Surface-mount resistors use number codes: "103" = 10 × 10³ = 10 kΩ; "4R7" = 4.7 Ω; E96 parts use codes like "01C" = 10 kΩ.

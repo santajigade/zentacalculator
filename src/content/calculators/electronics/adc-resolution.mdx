@@ -1,0 +1,72 @@
+---
+title: ADC Resolution Calculator (LSB and Step Size)
+description: Calculate ADC step size (LSB), number of levels and the digital code for an input voltage from bit depth and reference voltage — including 4–20 mA PLC inputs.
+category: electronics
+keywords: [adc resolution calculator, lsb calculator, adc step size, bits to voltage resolution, analog to digital converter, adc counts, plc analog resolution]
+updated: 2026-10-27
+variables:
+  - { id: n, label: ADC resolution, suffix: bits, default: 12, min: 1, max: 32 }
+  - { id: Vr, label: Full-scale (reference) voltage, family: voltage, unit: V, default: 3.3, min: 0 }
+  - { id: Vin, label: Input voltage, family: voltage, unit: V, default: 1.65, min: 0 }
+  - { id: N, label: Number of levels, min: 0, decimals: 0 }
+  - { id: lsb, label: Step size (1 LSB), family: voltage, unit: mV, min: 0 }
+  - { id: code, label: Digital output code, min: 0, decimals: 0 }
+  - { id: snr, label: Ideal SNR, suffix: dB, decimals: 2 }
+equations:
+  - N = 2^n
+  - lsb = Vr / N
+  - code = min(floor(Vin / lsb), N - 1)
+  - snr = 6.02 * n + 1.76
+faq:
+  - q: What is ADC resolution?
+    a: The smallest voltage change the ADC can detect — one least significant bit (LSB) — equal to full-scale voltage ÷ 2ⁿ. A 12-bit ADC with a 3.3 V reference resolves about 0.806 mV.
+  - q: What is the digital code for a voltage?
+    a: Code = floor(V_in ÷ LSB). 1.65 V on a 12-bit, 3.3 V ADC gives code 2,048.
+  - q: Is more bits always better?
+    a: Only if noise and reference accuracy are good enough to use them. The effective number of bits (ENOB) is often 1–3 bits less than the nominal resolution.
+  - q: What resolution do PLC analog inputs have?
+    a: Commonly 12–16 bits. A 16-bit input on 4–20 mA resolves about 0.25 µA per count when it spans 0–21 mA across 65,536 counts.
+related: [engineering/4-20ma-scaling, electronics/snr, electronics/voltage-divider, electronics/op-amp-gain]
+links:
+  - { title: "Analog-to-Digital Conversion Explained", url: "https://www.instrumentationblog.in/analog-to-digital-conversion-explained/" }
+  - { title: "Analog Signal Resolution in PLCs", url: "https://www.instrumentationblog.in/analog-signal-resolution-in-plc/" }
+  - { title: "PLC Analog Scaling from Raw Counts", url: "https://www.instrumentationblog.in/plc-analog-scaling-raw-count/" }
+  - { title: "ADC Working Principle", url: "https://www.instrumentationblog.in/adc-working-principle-explained/" }
+---
+
+## How to use this calculator
+
+Enter the ADC's **resolution in bits**, the **full-scale reference voltage** and an **input voltage**. You get the number of levels, the step size, the digital code and the theoretical signal-to-noise ratio.
+
+## The formulas
+
+<p class="formula">LSB = V<sub>ref</sub> ÷ 2ⁿ &nbsp;·&nbsp; Code = ⌊V<sub>in</sub> ÷ LSB⌋ &nbsp;·&nbsp; SNR<sub>ideal</sub> = 6.02n + 1.76 dB</p>
+
+## Resolution by bit depth
+
+| Bits | Levels | LSB at 3.3 V | LSB at 5 V | LSB at 10 V |
+|---|---|---|---|---|
+| 8 | 256 | 12.89 mV | 19.53 mV | 39.06 mV |
+| 10 | 1,024 | 3.223 mV | 4.883 mV | 9.766 mV |
+| 12 | 4,096 | 0.8057 mV | 1.221 mV | 2.441 mV |
+| 14 | 16,384 | 0.2014 mV | 0.3052 mV | 0.6104 mV |
+| 16 | 65,536 | 0.05035 mV | 0.07629 mV | 0.1526 mV |
+| 24 | 16,777,216 | 0.0001967 mV | 0.000298 mV | 0.000596 mV |
+
+## 4–20 mA inputs
+
+PLC analog cards often map 4–20 mA to a raw count range, for example:
+
+| Card scaling | Counts per mA |
+|---|---|
+| 0–27,648 for 4–20 mA (Siemens S7) | 1,728 |
+| 0–32,000 for 4–20 mA | 2,000 |
+| 6,242–31,208 for 4–20 mA (Rockwell 16-bit) | 1,560 |
+
+Convert counts to engineering units with the [4–20 mA scaling calculator](/engineering/4-20ma-scaling/).
+
+## Getting the best from an ADC
+
+- Use a stable, low-noise reference — its error appears directly in every reading.
+- Filter the input below half the sample rate to prevent aliasing — see the [RC filter calculator](/electronics/rc-filter/).
+- Average or oversample: averaging 4ⁿ samples adds about n bits of resolution when noise is present.

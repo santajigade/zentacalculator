@@ -185,6 +185,18 @@ export const UNIT_FAMILIES: Record<string, Unit[]> = {
     { id: 'nF', label: 'nF', factor: 1e-9 },
     { id: 'pF', label: 'pF', factor: 1e-12 },
   ],
+  frequency: [
+    { id: 'Hz', label: 'Hz', factor: 1 },
+    { id: 'kHz', label: 'kHz', factor: 1e3 },
+    { id: 'MHz', label: 'MHz', factor: 1e6 },
+    { id: 'GHz', label: 'GHz', factor: 1e9 },
+  ],
+  inductance: [
+    { id: 'H', label: 'H', factor: 1 },
+    { id: 'mH', label: 'mH', factor: 1e-3 },
+    { id: 'uH', label: 'µH', factor: 1e-6 },
+    { id: 'nH', label: 'nH', factor: 1e-9 },
+  ],
   seconds: [
     { id: 's', label: 's', factor: 1 },
     { id: 'ms', label: 'ms', factor: 1e-3 },

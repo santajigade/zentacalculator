@@ -8,6 +8,16 @@ ErrorDocument 404 /404.html
   RewriteCond %{HTTPS} off [OR]
   RewriteCond %{HTTP_HOST} ^www\. [NC]
   RewriteRule ^ https://zentacalculator.com%{REQUEST_URI} [L,R=301]
+  # Moved calculators (Oct 2026)
+  RewriteRule ^(embed/)?engineering/kva-to-kw/?$ /$1electrical/kva-to-kw/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/kw-to-amps/?$ /$1electrical/kw-to-amps/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/amps-to-watts/?$ /$1electrical/amps-to-watts/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/cable-voltage-drop/?$ /$1electrical/cable-voltage-drop/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/transformer-current/?$ /$1electrical/transformer-current/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/transformer-short-circuit/?$ /$1electrical/transformer-short-circuit/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/three-phase-motor-power/?$ /$1electrical/three-phase-motor-power/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/reactance/?$ /$1electronics/reactance/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/resonant-frequency/?$ /$1electronics/resonant-frequency/ [L,R=301]
   # Add trailing slash to folder URLs (/physics/ohms-law -> /physics/ohms-law/)
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^(.*[^/])$ /$1/ [L,R=301]

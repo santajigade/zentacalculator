@@ -1,0 +1,64 @@
+---
+title: Voltage Divider Calculator
+description: Calculate the output voltage of a resistor voltage divider, or the resistor values needed for a target output — with divider current and power.
+category: electronics
+keywords: [voltage divider calculator, resistor divider, voltage divider formula, vout r2/(r1+r2), potential divider, resistor ratio calculator]
+updated: 2026-10-27
+variables:
+  - { id: Vin, label: Input voltage, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: R1, label: R1 (top), family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: R2, label: R2 (bottom), family: resistance, unit: kohm, default: 4.7, min: 0 }
+  - { id: Vout, label: Output voltage, family: voltage, unit: V, min: 0 }
+  - { id: I, label: Divider current, family: current, unit: mA, min: 0 }
+  - { id: P, label: Total power, family: power, unit: mW, min: 0 }
+equations:
+  - Vout = Vin * R2 / (R1 + R2)
+  - I = Vin / (R1 + R2)
+  - P = Vin * I
+faq:
+  - q: What is the voltage divider formula?
+    a: Vout = Vin × R2 ÷ (R1 + R2), where R2 is the resistor between the output and ground.
+  - q: How do I choose resistor values?
+    a: Pick R2, then R1 = R2 × (Vin ÷ Vout − 1). Keep the divider current at least 10 times the load current so the load does not pull the output down.
+  - q: Can I power a circuit from a voltage divider?
+    a: Generally no. The output voltage changes with load current. Use a voltage regulator to power circuits; dividers are for sensing and reference voltages.
+  - q: How do I scale 24 V down for a 3.3 V ADC?
+    a: A 62 kΩ / 10 kΩ divider gives 24 × 10 ÷ 72 = 3.33 V. Add a small capacitor across R2 to filter noise.
+related: [electronics/current-divider, physics/ohms-law, physics/resistors-series-parallel, electronics/adc-resolution]
+links:
+  - { title: "Voltage Divider Rule Explained", url: "https://www.instrumentationblog.in/voltage-divider-rule-explained/" }
+  - { title: "Kirchhoff’s Voltage Law (KVL) Explained", url: "https://www.instrumentationblog.in/kirchhoffs-voltage-law-kvl-explained/" }
+---
+
+## How to use this calculator
+
+Enter the **input voltage** and the two resistors (**R1** on top, **R2** to ground). You get the output voltage, the current through the divider and the power it wastes. To design a divider, enter the target output and one resistor and press × on the other.
+
+## The formula
+
+<p class="formula">V<sub>out</sub> = V<sub>in</sub> × R₂ ÷ (R₁ + R₂)</p>
+
+## Common divider ratios
+
+| R1 | R2 | Ratio | 12 V in | 24 V in |
+|---|---|---|---|---|
+| 10 k | 10 k | 0.500 | 6.00 V | 12.00 V |
+| 10 k | 4.7 k | 0.320 | 3.84 V | 7.67 V |
+| 10 k | 3.3 k | 0.248 | 2.98 V | 5.95 V |
+| 22 k | 10 k | 0.312 | 3.75 V | 7.50 V |
+| 39 k | 10 k | 0.204 | 2.45 V | 4.90 V |
+| 62 k | 10 k | 0.139 | 1.67 V | 3.33 V |
+| 100 k | 10 k | 0.091 | 1.09 V | 2.18 V |
+
+## Loading effect
+
+A load resistance R<sub>L</sub> across R2 acts in parallel with it, reducing the output. Keep R<sub>L</sub> at least ten times R2, or buffer the output with an op-amp [voltage follower](/electronics/op-amp-gain/).
+
+## Choosing resistance values
+
+- **Lower values** (1–10 kΩ): stiffer output, more current wasted.
+- **Higher values** (100 kΩ–1 MΩ): low power for battery circuits, but more sensitive to noise and ADC input current.
+
+## Measuring with a divider
+
+Dividers scale high voltages for ADCs and meters. Use 1% or better resistors with low temperature coefficients for accurate measurement, and make sure each resistor's voltage rating is not exceeded.

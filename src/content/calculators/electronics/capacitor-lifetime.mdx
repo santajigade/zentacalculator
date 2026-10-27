@@ -1,0 +1,62 @@
+---
+title: Electrolytic Capacitor Life Calculator (10 °C Rule)
+description: Estimate the expected life of an aluminium electrolytic capacitor at your operating temperature from its rated hours and temperature, using the 10-degree rule.
+category: electronics
+keywords: [capacitor life calculator, electrolytic capacitor lifetime, capacitor life expectancy, 10 degree rule, arrhenius capacitor, capacitor hours at temperature]
+updated: 2026-10-27
+variables:
+  - { id: L0, label: Rated life, family: seconds, unit: h, default: 2000, min: 0 }
+  - { id: T0, label: Rated temperature, suffix: °C, default: 105 }
+  - { id: T, label: Actual core temperature, suffix: °C, default: 55 }
+  - { id: Lx, label: Expected life, family: seconds, unit: h, min: 0 }
+  - { id: y, label: Expected life in years (24/7), min: 0, decimals: 1 }
+equations:
+  - Lx = L0 * 2^((T0 - T) / 10)
+  - y = Lx / 3600 / 8760
+faq:
+  - q: What is the 10-degree rule for capacitors?
+    a: The life of an aluminium electrolytic capacitor roughly doubles for every 10 °C drop in its core temperature, because electrolyte evaporation follows the Arrhenius law.
+  - q: How long will a 2,000-hour, 105 °C capacitor last at 55 °C?
+    a: 2,000 × 2⁵ = 64,000 hours, or about 7.3 years of continuous use.
+  - q: Should I use ambient or core temperature?
+    a: Core (hotspot) temperature — ambient plus self-heating from ripple current. Many manufacturers also include a ripple current factor.
+  - q: Does voltage affect life?
+    a: Less than temperature for most aluminium electrolytics. Some manufacturers add a factor for operating below rated voltage.
+related: [electronics/heat-sink, electronics/capacitor-energy, chemistry/arrhenius-equation, electronics/buck-converter]
+links:
+  - { title: "Electrolytic Capacitor Lifetime Calculation", url: "https://www.instrumentationblog.in/electrolytic-capacitor-lifetime-calculation/" }
+  - { title: "Electrolytic vs Ceramic vs Tantalum Capacitor Failure Modes", url: "https://www.instrumentationblog.in/electrolytic-vs-ceramic-vs-tantalum-capacitor-failure-modes/" }
+  - { title: "Capacitor ESR Explained", url: "https://www.instrumentationblog.in/capacitor-esr-equivalent-series-resistance/" }
+---
+
+## How to use this calculator
+
+Enter the capacitor's **rated life** and **rated temperature** from the datasheet (for example 2,000 h at 105 °C), and the **actual core temperature** in your circuit. You get the expected life in hours and years of continuous operation.
+
+## The formula
+
+<p class="formula">L = L₀ × 2<sup>(T₀ − T) ÷ 10</sup></p>
+
+## Life at different temperatures
+
+| Core temperature | 1,000 h @ 85 °C | 2,000 h @ 105 °C | 5,000 h @ 105 °C | 10,000 h @ 105 °C |
+|---|---|---|---|---|
+| 85 °C | 1,000 h | 8,000 h | 20,000 h | 40,000 h |
+| 75 °C | 2,000 h | 16,000 h | 40,000 h | 80,000 h |
+| 65 °C | 4,000 h | 32,000 h | 80,000 h | 160,000 h |
+| 55 °C | 8,000 h | 64,000 h | 160,000 h | 320,000 h |
+| 45 °C | 16,000 h | 128,000 h | 320,000 h | 640,000 h |
+| 40 °C | 22,627 h | 181,019 h | 452,548 h | 905,097 h |
+
+One year of continuous use is 8,760 hours. Manufacturers often cap estimates at 15 years because of seal ageing.
+
+## Extending capacitor life
+
+- Keep capacitors away from heat sinks, resistors and transformers.
+- Choose 105 °C, long-life series for power supplies and drives.
+- Stay within the ripple current rating — ripple heats the core.
+- Improve enclosure ventilation; every 10 °C counts double.
+
+## Why it matters
+
+Electrolytic capacitors are the most common wear-out part in power supplies, VFDs and UPSs. Rising ESR and falling capacitance are early warning signs, which is why drive makers recommend replacing DC-bus capacitors on a schedule.

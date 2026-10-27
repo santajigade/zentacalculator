@@ -1,0 +1,79 @@
+---
+title: Induction Motor Slip and Synchronous Speed Calculator
+description: Calculate synchronous speed, slip and rotor frequency of an induction motor from supply frequency, number of poles and rated speed.
+category: electrical
+keywords: [motor slip calculator, synchronous speed calculator, induction motor slip, 120f/p, motor rpm calculation, rotor frequency, number of poles]
+updated: 2026-10-27
+variables:
+  - { id: f, label: Supply frequency, family: frequency, unit: Hz, default: 50, min: 0 }
+  - id: p
+    label: Number of poles
+    default: 4
+    options:
+      - { label: 2 poles, value: 2 }
+      - { label: 4 poles, value: 4 }
+      - { label: 6 poles, value: 6 }
+      - { label: 8 poles, value: 8 }
+      - { label: 10 poles, value: 10 }
+      - { label: 12 poles, value: 12 }
+  - { id: Nr, label: Rotor (rated) speed, suffix: rpm, default: 1460, min: 0 }
+  - { id: Ns, label: Synchronous speed, suffix: rpm, min: 0, decimals: 0 }
+  - { id: s, label: Slip, family: percent, unit: '%' }
+  - { id: fr, label: Rotor frequency, family: frequency, unit: Hz, min: 0 }
+equations:
+  - Ns = 120 * f / p
+  - s = (Ns - Nr) / Ns
+  - fr = s * f
+faq:
+  - q: What is synchronous speed?
+    a: The speed of the rotating magnetic field, Ns = 120 × f ÷ P. A 4-pole motor on 50 Hz has a synchronous speed of 1,500 rpm.
+  - q: What is slip in an induction motor?
+    a: The difference between synchronous speed and rotor speed, as a percentage of synchronous speed. Typical full-load slip is 1–5%.
+  - q: Why can't an induction motor run at synchronous speed?
+    a: At synchronous speed, the rotor would not cut any magnetic flux, so no current would be induced and no torque produced.
+  - q: How do I find the number of poles from the nameplate speed?
+    a: Pick the synchronous speed just above the nameplate speed. A 2,940 rpm motor on 50 Hz is 2-pole (3,000 rpm); a 960 rpm motor is 6-pole (1,000 rpm).
+related: [electrical/three-phase-motor-power, engineering/torque-power-speed, electrical/kw-to-amps, electrical/voltage-unbalance]
+links:
+  - { title: "Induction Motor Slip Explained", url: "https://www.instrumentationblog.in/induction-motor-slip-explained/" }
+  - { title: "How an AC Induction Motor Works", url: "https://www.instrumentationblog.in/how-ac-induction-motor-works/" }
+  - { title: "Motor Nameplate Details Explained", url: "https://www.instrumentationblog.in/motor-nameplate-details-explained/" }
+  - { title: "Synchronous Motor Working Principle", url: "https://www.instrumentationblog.in/synchronous-motor-working-principle/" }
+---
+
+## How to use this calculator
+
+Enter the **supply frequency**, choose the **number of poles** and enter the motor's **rated speed** from the nameplate. You get the synchronous speed, slip and rotor current frequency.
+
+## The formulas
+
+<p class="formula">N<sub>s</sub> = 120 × f ÷ P &nbsp;·&nbsp; s = (N<sub>s</sub> − N<sub>r</sub>) ÷ N<sub>s</sub> &nbsp;·&nbsp; f<sub>r</sub> = s × f</p>
+
+## Synchronous speeds
+
+| Poles | 50 Hz | 60 Hz | Typical full-load speed (50 Hz) |
+|---|---|---|---|
+| 2 | 3,000 rpm | 3,600 rpm | 2,880–2,970 rpm |
+| 4 | 1,500 rpm | 1,800 rpm | 1,420–1,485 rpm |
+| 6 | 1,000 rpm | 1,200 rpm | 940–990 rpm |
+| 8 | 750 rpm | 900 rpm | 710–740 rpm |
+| 10 | 600 rpm | 720 rpm | 570–590 rpm |
+| 12 | 500 rpm | 600 rpm | 480–495 rpm |
+
+## Example
+
+A 4-pole motor on 50 Hz with a nameplate speed of 1,460 rpm:
+
+- N<sub>s</sub> = 120 × 50 ÷ 4 = **1,500 rpm**
+- Slip = (1,500 − 1,460) ÷ 1,500 = **2.67%**
+- Rotor frequency = 0.0267 × 50 = **1.33 Hz**
+
+## What slip tells you
+
+- **Load**: slip rises roughly in proportion to load. A motor running at half its rated slip is lightly loaded — a quick field check of loading.
+- **Size**: large, high-efficiency motors have lower slip (around 0.5–1.5%); small motors may have 4–6%.
+- **Rotor faults**: broken rotor bars show up as current sidebands at (1 ± 2s) × f in motor current signature analysis.
+
+## Speed control with a VFD
+
+Changing frequency changes synchronous speed: at 25 Hz, a 4-pole motor runs near 750 rpm. Slip in rpm stays roughly constant at a given torque.

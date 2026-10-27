@@ -1,0 +1,69 @@
+---
+title: Signal-to-Noise Ratio (SNR) Calculator
+description: Calculate signal-to-noise ratio in dB from signal and noise voltages or powers — with ENOB (effective number of bits) for ADCs.
+category: electronics
+keywords: [snr calculator, signal to noise ratio, snr in db, enob calculator, signal to noise formula, noise floor, 20 log snr]
+updated: 2026-10-27
+variables:
+  - { id: Vs, label: Signal (RMS), family: voltage, unit: mV, default: 1000, min: 0 }
+  - { id: Vn, label: Noise (RMS), family: voltage, unit: mV, default: 1, min: 0.0000001 }
+  - { id: snr, label: SNR, suffix: dB, decimals: 2 }
+  - { id: ratio, label: Power ratio, min: 0, decimals: 0 }
+  - { id: enob, label: Effective number of bits (ENOB), suffix: bits, decimals: 2 }
+equations:
+  - snr = 20 * log10(Vs / Vn)
+  - ratio = (Vs / Vn)^2
+  - enob = (snr - 1.76) / 6.02
+faq:
+  - q: How do I calculate SNR in dB?
+    a: For voltages, SNR = 20 log₁₀(V_signal ÷ V_noise); for powers, SNR = 10 log₁₀(P_signal ÷ P_noise). Both give the same dB value.
+  - q: What is a good SNR?
+    a: It depends on the application. Process instrumentation and audio aim for 60–100 dB; Wi-Fi works from about 20–25 dB; 10 dB is marginal for most signals.
+  - q: What is ENOB?
+    a: The effective number of bits — the resolution of an ideal ADC with the same SNR. ENOB = (SINAD − 1.76) ÷ 6.02.
+  - q: How can I improve SNR?
+    a: Increase the signal level early in the chain, shield and twist cables, filter out-of-band noise, use differential inputs and average multiple readings.
+related: [physics/decibel, electronics/adc-resolution, electronics/rc-filter, electronics/op-amp-gain]
+links:
+  - { title: "Signal-to-Noise Ratio (SNR) Calculator and Guide", url: "https://www.instrumentationblog.in/signal-to-noise-ratio-snr-calculator/" }
+  - { title: "What Is Signal Integrity?", url: "https://www.instrumentationblog.in/what-is-signal-integrity/" }
+  - { title: "Decibels in Electronics: dB and dBm", url: "https://www.instrumentationblog.in/decibel-in-electronics-db-dbm/" }
+---
+
+## How to use this calculator
+
+Enter the **RMS signal** and **RMS noise** voltages (any matching unit). You get the SNR in dB, the power ratio and the equivalent ADC resolution (ENOB).
+
+## The formulas
+
+<p class="formula">SNR = 20 log₁₀(V<sub>s</sub> ÷ V<sub>n</sub>) = 10 log₁₀(P<sub>s</sub> ÷ P<sub>n</sub>)</p>
+
+<p class="formula">ENOB = (SNR − 1.76) ÷ 6.02</p>
+
+## SNR reference
+
+| SNR | Voltage ratio | ENOB |
+|---|---|---|
+| 20 dB | 10 : 1 | 3.0 |
+| 40 dB | 100 : 1 | 6.4 |
+| 50 dB | 316 : 1 | 8.0 |
+| 60 dB | 1,000 : 1 | 9.7 |
+| 74 dB | 5,012 : 1 | 12.0 |
+| 86 dB | 19,953 : 1 | 14.0 |
+| 98 dB | 79,433 : 1 | 16.0 |
+| 110 dB | 316,228 : 1 | 18.0 |
+
+An ideal 12-bit ADC reaches 74 dB and an ideal 16-bit ADC 98 dB.
+
+## Sources of noise
+
+| Noise | Cause | Remedy |
+|---|---|---|
+| Thermal (Johnson) | Random electron motion in resistors | Lower resistance, narrower bandwidth |
+| Mains hum (50/60 Hz) | Magnetic and capacitive pickup | Twisted pairs, shielding, notch or integrating ADC |
+| Switching noise | SMPS, VFDs | Layout, ferrites, filtering |
+| Quantisation | ADC step size | More bits, dithering |
+
+## Thermal noise floor
+
+A resistor's noise voltage is √(4kTRB). A 10 kΩ resistor at 25 °C over 10 kHz bandwidth produces about 1.3 µV RMS.

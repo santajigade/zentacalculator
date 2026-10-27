@@ -1,0 +1,70 @@
+---
+title: Op-Amp Gain Calculator (Inverting and Non-Inverting)
+description: Calculate the voltage gain and output of an inverting or non-inverting op-amp amplifier from Rf and Rin — or the resistor needed for a target gain.
+category: electronics
+keywords: [op amp gain calculator, inverting amplifier calculator, non inverting amplifier gain, opamp gain formula, rf rin, amplifier gain db]
+updated: 2026-10-27
+variables:
+  - id: t
+    label: Configuration
+    default: 1
+    options:
+      - { label: Non-inverting (1 + Rf/Rin), value: 1 }
+      - { label: Inverting (−Rf/Rin), value: 0 }
+  - { id: Rf, label: Feedback resistor (Rf), family: resistance, unit: kohm, default: 100, min: 0 }
+  - { id: Ri, label: Input / ground resistor (Rin), family: resistance, unit: kohm, default: 10, min: 0.000001 }
+  - { id: Vin, label: Input voltage, family: voltage, unit: mV, default: 100 }
+  - { id: G, label: Voltage gain, decimals: 3 }
+  - { id: Vout, label: Output voltage (ideal), family: voltage, unit: V }
+  - { id: GdB, label: Gain in dB, suffix: dB, decimals: 2 }
+equations:
+  - G = t * (1 + Rf / Ri) - (1 - t) * Rf / Ri
+  - Vout = G * Vin
+  - GdB = 20 * log10(abs(G))
+faq:
+  - q: What is the gain of a non-inverting amplifier?
+    a: G = 1 + Rf ÷ Rin, where Rin is the resistor from the inverting input to ground. 100 kΩ and 10 kΩ give a gain of 11.
+  - q: What is the gain of an inverting amplifier?
+    a: G = −Rf ÷ Rin. The minus sign means the output is inverted. 100 kΩ and 10 kΩ give −10.
+  - q: Why is my output lower than calculated?
+    a: The output cannot swing beyond the supply rails (minus a headroom of 0.1–2 V depending on the op-amp), and gain falls at high frequency due to the gain-bandwidth product.
+  - q: What is a voltage follower?
+    a: A non-inverting amplifier with Rf = 0 and no Rin — a gain of exactly 1. It buffers a high-impedance source.
+related: [electronics/rc-filter, electronics/voltage-divider, physics/decibel, electronics/adc-resolution]
+links:
+  - { title: "Operational Amplifier (Op-Amp) Basics", url: "https://www.instrumentationblog.in/operational-amplifier-op-amp-basics/" }
+  - { title: "Voltage Follower (Unity-Gain Buffer) Explained", url: "https://www.instrumentationblog.in/voltage-follower-unity-gain-buffer-explained/" }
+  - { title: "Instrumentation Amplifier vs Op-Amp", url: "https://www.instrumentationblog.in/instrumentation-amplifier-vs-op-amp-key-differences/" }
+---
+
+## How to use this calculator
+
+Choose **non-inverting** or **inverting**, and enter the **feedback resistor**, the **input resistor** and an **input voltage**. You get the gain (as a ratio and in dB) and the ideal output. To pick a resistor for a target gain, enter the gain and press × on Rf or Rin.
+
+## The formulas
+
+| Configuration | Gain |
+|---|---|
+| Non-inverting | G = 1 + R<sub>f</sub> ÷ R<sub>in</sub> |
+| Inverting | G = −R<sub>f</sub> ÷ R<sub>in</sub> |
+| Voltage follower | G = 1 |
+
+Input impedance is very high for the non-inverting amplifier and equal to R<sub>in</sub> for the inverting amplifier.
+
+## Resistor pairs for common gains
+
+| Target gain | Non-inverting Rf / Rin | Inverting Rf / Rin |
+|---|---|---|
+| 2 | 10 k / 10 k | 20 k / 10 k |
+| 5 | 40.2 k / 10 k | 49.9 k / 10 k |
+| 10 | 90.9 k / 10 k | 100 k / 10 k |
+| 11 | 100 k / 10 k | 110 k / 10 k |
+| 101 | 100 k / 1 k | 100 k / 990 Ω |
+
+## Bandwidth
+
+Every op-amp has a gain-bandwidth product (GBW). An op-amp with 1 MHz GBW at a gain of 100 has a bandwidth of only about 10 kHz.
+
+## Instrumentation amplifiers
+
+For bridge sensors and thermocouples, use an instrumentation amplifier, which rejects common-mode voltage and sets gain with a single resistor.

@@ -1,0 +1,66 @@
+---
+title: VFD Braking Resistor Calculator
+description: Calculate the maximum braking resistor value and average power rating for a VFD braking chopper from DC bus voltage, braking power and duty cycle.
+category: electrical
+keywords: [braking resistor calculator, vfd braking resistor sizing, dynamic braking resistor, braking chopper, dc bus voltage, regenerative braking resistor]
+updated: 2026-10-27
+variables:
+  - { id: Vdc, label: Chopper switch-on DC bus voltage, family: voltage, unit: V, default: 760, min: 0, help: 'Typically about 760–800 V for 400 V drives and 380–400 V for 230 V drives — see the drive manual.' }
+  - { id: Pb, label: Peak braking power, family: power, unit: kW, imperialUnit: hp, default: 15, min: 0 }
+  - { id: dc, label: Braking duty cycle, family: percent, unit: '%', default: 10, min: 0, max: 1 }
+  - { id: R, label: Maximum resistance, family: resistance, unit: ohm, min: 0 }
+  - { id: Pr, label: Continuous (average) resistor power, family: power, unit: kW, min: 0 }
+  - { id: Ipk, label: Peak braking current, family: current, unit: A, min: 0 }
+equations:
+  - R = Vdc^2 / Pb
+  - Pr = Pb * dc
+  - Ipk = Vdc / R
+faq:
+  - q: How do I size a braking resistor?
+    a: The resistance must be low enough to absorb the peak braking power — R ≤ V_dc² ÷ P — but not below the drive’s minimum allowed value. The power rating must cover the average braking power.
+  - q: What is the braking power?
+    a: The rate at which energy flows back from the motor and load while decelerating. For a quick estimate, take the motor rating for full-torque braking, or calculate from inertia and deceleration time.
+  - q: What is the duty cycle?
+    a: The fraction of time spent braking. A 10-second stop every 100 seconds is 10%. Cranes and lifts can be 20–50%.
+  - q: What happens if the resistor is too small in ohms?
+    a: The chopper current exceeds its rating and the drive trips or the chopper is damaged. Always respect the drive's minimum resistance.
+related: [engineering/torque-power-speed, physics/ohms-law, electrical/three-phase-motor-power, physics/kinetic-energy]
+links:
+  - { title: "VFD Braking Resistor Sizing", url: "https://www.instrumentationblog.in/vfd-braking-resistor-sizing/" }
+  - { title: "VFD Sizing and Selection Guide", url: "https://www.instrumentationblog.in/vfd-sizing-selection-guide/" }
+  - { title: "VFD Overload Trip Causes", url: "https://www.instrumentationblog.in/vfd-overload-trip-causes/" }
+---
+
+## How to use this calculator
+
+Enter the **DC bus voltage** at which the braking chopper switches on, the **peak braking power** and the **duty cycle**. You get the maximum resistor value, the average power rating and the peak current.
+
+## The formulas
+
+<p class="formula">R<sub>max</sub> = V<sub>DC</sub>² ÷ P<sub>brake</sub> &nbsp;·&nbsp; P<sub>avg</sub> = P<sub>brake</sub> × duty</p>
+
+## Example
+
+A 400 V drive (chopper at 760 V) braking 15 kW for 10% of the time:
+
+- R<sub>max</sub> = 760² ÷ 15,000 = **38.5 Ω**
+- Average power = **1.5 kW**
+
+Choose a resistor between the drive's minimum resistance and 38.5 Ω, rated at least 1.5 kW continuous.
+
+## Typical chopper thresholds
+
+| Drive supply | Chopper threshold |
+|---|---|
+| 230 V | 375–400 V DC |
+| 400–415 V | 750–800 V DC |
+| 480 V | 800–850 V DC |
+| 690 V | 1,100–1,200 V DC |
+
+## Braking power from load inertia
+
+For a flywheel or conveyor: P ≈ J × ω × Δω ÷ t (J in kg·m², ω in rad/s, t in s). Kinetic energy to dissipate is ½Jω².
+
+## Alternatives
+
+For long or frequent braking — cranes, centrifuges, downhill conveyors — a regenerative (active front-end) drive returns energy to the supply instead of wasting it as heat.

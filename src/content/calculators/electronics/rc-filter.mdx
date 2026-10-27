@@ -1,0 +1,73 @@
+---
+title: RC Filter Cutoff Frequency Calculator
+description: Calculate the −3 dB cutoff frequency of an RC low-pass or high-pass filter, or the R or C needed for a target cutoff — with attenuation at any frequency.
+category: electronics
+keywords: [rc filter calculator, cutoff frequency calculator, rc low pass filter, rc high pass filter, 1/2πrc, -3db frequency, corner frequency]
+updated: 2026-10-27
+variables:
+  - { id: R, label: Resistance, family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: C, label: Capacitance, family: capacitance, unit: nF, default: 100, min: 0 }
+  - { id: fc, label: Cutoff frequency (−3 dB), family: frequency, unit: Hz, min: 0 }
+  - { id: tau, label: Time constant (RC), family: seconds, unit: ms, min: 0 }
+  - { id: f, label: Test frequency, family: frequency, unit: Hz, default: 1000, min: 0 }
+  - { id: Glp, label: Low-pass gain at test frequency, suffix: dB, decimals: 2 }
+  - { id: Ghp, label: High-pass gain at test frequency, suffix: dB, decimals: 2 }
+equations:
+  - fc = 1 / (2 * pi * R * C)
+  - tau = R * C
+  - Glp = -10 * log10(1 + (f / fc)^2)
+  - Ghp = -10 * log10(1 + (fc / f)^2)
+faq:
+  - q: What is the cutoff frequency of an RC filter?
+    a: fc = 1 ÷ (2πRC). At this frequency the output is 70.7% of the input (−3 dB). 10 kΩ and 100 nF give 159 Hz.
+  - q: What is the difference between low-pass and high-pass?
+    a: A low-pass filter (R in series, C to ground) passes low frequencies; a high-pass filter (C in series, R to ground) passes high frequencies. Both have the same cutoff formula.
+  - q: How steep is an RC filter?
+    a: First order — 20 dB per decade (6 dB per octave) beyond the cutoff. For steeper roll-off, cascade stages or use an active filter.
+  - q: How do I filter noise on a sensor signal?
+    a: Choose a cutoff well above the signal bandwidth but below the noise frequency — for slow process signals, a few hertz is common.
+related: [physics/rc-time-constant, electronics/reactance, physics/decibel, electronics/op-amp-gain]
+links:
+  - { title: "RC Low-Pass and High-Pass Filters", url: "https://www.instrumentationblog.in/rc-low-pass-high-pass-filter/" }
+  - { title: "Active Filter: Sallen-Key Topology", url: "https://www.instrumentationblog.in/active-filter-sallen-and-key/" }
+  - { title: "RC and RL Time Constant Explained", url: "https://www.instrumentationblog.in/rc-and-rl-time-constant-explained/" }
+---
+
+## How to use this calculator
+
+Enter **R** and **C** to get the cutoff frequency and time constant. Add a **test frequency** to see how much a low-pass or high-pass filter attenuates it. To design a filter, enter the target cutoff and one component, then press × on the other.
+
+## The formulas
+
+<p class="formula">f<sub>c</sub> = 1 ÷ (2πRC)</p>
+
+<p class="formula">Low-pass gain = −10 log₁₀[1 + (f/f<sub>c</sub>)²] dB &nbsp;·&nbsp; High-pass gain = −10 log₁₀[1 + (f<sub>c</sub>/f)²] dB</p>
+
+## Common RC combinations
+
+| R | C | Cutoff |
+|---|---|---|
+| 100 kΩ | 10 µF | 0.16 Hz |
+| 10 kΩ | 10 µF | 1.59 Hz |
+| 10 kΩ | 1 µF | 15.92 Hz |
+| 10 kΩ | 100 nF | 159.15 Hz |
+| 1 kΩ | 100 nF | 1.59 kHz |
+| 1 kΩ | 10 nF | 15.92 kHz |
+| 100 Ω | 1 nF | 1591.55 kHz |
+
+## Low-pass response
+
+| Frequency | Gain | Output (of input) |
+|---|---|---|
+| 0.1 f<sub>c</sub> | −0.04 dB | 99.5% |
+| 0.5 f<sub>c</sub> | −0.97 dB | 89.4% |
+| f<sub>c</sub> | −3.01 dB | 70.7% |
+| 2 f<sub>c</sub> | −6.99 dB | 44.7% |
+| 10 f<sub>c</sub> | −20.0 dB | 9.95% |
+| 100 f<sub>c</sub> | −40.0 dB | 1.0% |
+
+## Practical tips
+
+- The source impedance adds to R; the load impedance appears in parallel with C. Keep the load at least ten times R.
+- For ADC anti-aliasing, set the cutoff below half the sampling rate.
+- Use C0G/NP0 or film capacitors for stable filters; ceramic X7R values change with voltage and temperature.

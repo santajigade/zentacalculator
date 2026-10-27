@@ -1,0 +1,73 @@
+---
+title: Voltage Unbalance Calculator (NEMA Method)
+description: Calculate percentage voltage unbalance from three line voltages, plus the motor derating and extra temperature rise it causes.
+category: electrical
+keywords: [voltage unbalance calculator, phase unbalance, nema voltage unbalance, motor derating unbalance, three phase voltage imbalance, percent unbalance]
+updated: 2026-10-27
+variables:
+  - { id: Va, label: Voltage L1–L2, family: voltage, unit: V, default: 412, min: 0 }
+  - { id: Vb, label: Voltage L2–L3, family: voltage, unit: V, default: 405, min: 0 }
+  - { id: Vc, label: Voltage L3–L1, family: voltage, unit: V, default: 418, min: 0 }
+  - { id: Vav, label: Average voltage, family: voltage, unit: V, min: 0 }
+  - { id: dev, label: Maximum deviation from average, family: voltage, unit: V, min: 0 }
+  - { id: u, label: Voltage unbalance, family: percent, unit: '%', min: 0 }
+  - { id: dt, label: Approximate extra winding temperature rise, family: percent, unit: '%', min: 0 }
+equations:
+  - Vav = (Va + Vb + Vc) / 3
+  - dev = max(max(abs(Va - Vav), abs(Vb - Vav)), abs(Vc - Vav))
+  - u = dev / Vav
+  - dt = 2 * (u * 100)^2 / 100
+faq:
+  - q: How do I calculate voltage unbalance?
+    a: Average the three line voltages, find the largest deviation of any one from the average, and divide by the average. 412, 405 and 418 V give 1.6%.
+  - q: What voltage unbalance is acceptable?
+    a: NEMA MG 1 advises derating motors above 1% unbalance and not operating them above 5%. Many utilities aim to keep unbalance below 2%.
+  - q: Why is unbalance bad for motors?
+    a: It creates negative-sequence current that opposes rotation and heats the rotor. Temperature rise increases by about twice the square of the percentage unbalance.
+  - q: What causes voltage unbalance?
+    a: Unevenly distributed single-phase loads, a blown capacitor fuse, high-resistance connections, open-delta transformers and long feeders.
+related: [electrical/three-phase-motor-power, electrical/induction-motor-slip, electrical/thd, electrical/cable-voltage-drop]
+links:
+  - { title: "Voltage Unbalance Calculation for Motors", url: "https://www.instrumentationblog.in/voltage-unbalance-calculation-motors/" }
+  - { title: "Motor Protection Relay Types", url: "https://www.instrumentationblog.in/motor-protection-relay-types/" }
+  - { title: "Power Quality Issues with VFDs and PLCs", url: "https://www.instrumentationblog.in/power-quality-issues-vfd-plc/" }
+---
+
+## How to use this calculator
+
+Measure the three **line-to-line voltages** with a true-RMS meter and enter them. You get the average, the maximum deviation, the percentage unbalance and the approximate increase in motor winding temperature rise.
+
+## The formula (NEMA MG 1)
+
+<p class="formula">% unbalance = 100 × max. deviation from average ÷ average voltage</p>
+
+Extra temperature rise ≈ 2 × (% unbalance)² percent.
+
+## Example
+
+412, 405 and 418 V:
+
+- Average = 411.7 V
+- Largest deviation = 411.7 − 405 = 6.7 V
+- Unbalance = 6.7 ÷ 411.7 = **1.62%**
+- Temperature rise increases by about **5.2%**
+
+## Motor derating (NEMA MG 1, approximate)
+
+| Voltage unbalance | Derating factor |
+|---|---|
+| 0–1% | 1.00 |
+| 2% | 0.95 |
+| 3% | 0.88 |
+| 4% | 0.82 |
+| 5% | 0.75 |
+
+Do not operate motors above 5% unbalance.
+
+## Current unbalance
+
+A small voltage unbalance causes a much larger current unbalance — typically 6 to 10 times larger. A 2% voltage unbalance can produce 15–20% current unbalance, which may trip motor protection relays set for phase unbalance.
+
+## Other definitions
+
+IEC 61000 uses the ratio of negative-sequence to positive-sequence voltage. For small unbalances it gives results close to the NEMA method above.

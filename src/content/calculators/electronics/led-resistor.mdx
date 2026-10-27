@@ -1,0 +1,74 @@
+---
+title: LED Resistor Calculator
+description: Calculate the series resistor value and wattage for one LED or a string of LEDs from supply voltage, forward voltage and current.
+category: electronics
+keywords: [led resistor calculator, led current limiting resistor, resistor for led, led series resistor, led forward voltage, led resistor value, 5v 12v led resistor]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: Vs, label: Supply voltage, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: Vf, label: LED forward voltage, family: voltage, unit: V, default: 2.0, min: 0 }
+  - { id: n, label: LEDs in series, default: 3, min: 1 }
+  - { id: If, label: LED current, family: current, unit: mA, default: 20, min: 0 }
+  - { id: R, label: Resistor value, family: resistance, unit: ohm, min: 0 }
+  - { id: P, label: Resistor power, family: power, unit: mW, min: 0 }
+equations:
+  - R = (Vs - n * Vf) / If
+  - P = If^2 * R
+faq:
+  - q: How do I calculate an LED resistor?
+    a: R = (supply voltage − LED forward voltage × number of LEDs) ÷ LED current. A red LED (2 V) at 20 mA on 5 V needs (5 − 2) ÷ 0.02 = 150 Ω.
+  - q: What if the calculated value is not a standard resistor?
+    a: Choose the next higher standard value. It slightly reduces current and brightness but is safer for the LED.
+  - q: What resistor wattage do I need?
+    a: At least twice the calculated power. For most single indicator LEDs, a 0.25 W resistor is plenty.
+  - q: Can I put LEDs in parallel with one resistor?
+    a: It is not recommended — small differences in forward voltage make one LED take most of the current. Give each LED or string its own resistor.
+related: [physics/ohms-law, electronics/voltage-divider, physics/resistors-series-parallel, electronics/resistor-color-code]
+links:
+  - { title: "LED Resistor Calculation", url: "https://www.instrumentationblog.in/led-resistor-calculation/" }
+  - { title: "LED Working Principle", url: "https://www.instrumentationblog.in/led-working-principle/" }
+---
+
+## How to use this calculator
+
+Enter the **supply voltage**, the LED's **forward voltage** (from the datasheet or the table below), the **number of LEDs in series** and the **current**. You get the resistor value and the power it will dissipate.
+
+## The formula
+
+<p class="formula">R = (V<sub>s</sub> − n × V<sub>f</sub>) ÷ I<sub>f</sub> &nbsp;·&nbsp; P = I<sub>f</sub>² × R</p>
+
+## Typical forward voltages
+
+| LED colour | Forward voltage |
+|---|---|
+| Infrared | 1.2–1.5 V |
+| Red | 1.8–2.2 V |
+| Orange, yellow | 2.0–2.2 V |
+| Green (standard) | 2.0–2.4 V |
+| Green (bright), blue, white | 2.8–3.4 V |
+| UV | 3.1–4.0 V |
+
+Standard 5 mm indicator LEDs are usually rated 20 mA; many work well at 5–10 mA.
+
+## Resistor values at 20 mA
+
+| Supply | Red (2.0 V) | White/blue (3.2 V) |
+|---|---|---|
+| 3.3 V | 65 Ω | 5 Ω |
+| 5 V | 150 Ω | 90 Ω |
+| 9 V | 350 Ω | 290 Ω |
+| 12 V | 500 Ω | 440 Ω |
+| 24 V | 1100 Ω | 1040 Ω |
+
+## Standard values
+
+The nearest E12 values are 10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68 and 82 (× 1, 10, 100, 1k…). Round up to the next value. See the [resistor colour code calculator](/electronics/resistor-color-code/).
+
+## High-power LEDs
+
+For power LEDs (350 mA and above) a resistor wastes too much energy and does not compensate for temperature. Use a constant-current LED driver instead.
+
+## Indicator LEDs on 24 V DC panels
+
+For a 24 V PLC panel indicator at 10 mA with a 2 V LED: R = 22 ÷ 0.01 = 2.2 kΩ, dissipating 0.22 W — use a 0.5 W resistor.

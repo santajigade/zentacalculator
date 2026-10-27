@@ -1,0 +1,63 @@
+---
+title: Star-Delta (Y-Δ) Transformation Calculator
+description: Convert delta (Δ) resistances or impedances to an equivalent star (Y), and star to delta — for circuit analysis and network simplification.
+category: electrical
+keywords: [star delta transformation calculator, delta to star conversion, y delta transformation, delta to wye, wye to delta, network theorem, resistor network]
+updated: 2026-10-27
+variables:
+  - { id: Rab, label: Delta resistance R_ab, family: resistance, unit: ohm, default: 30, min: 0 }
+  - { id: Rbc, label: Delta resistance R_bc, family: resistance, unit: ohm, default: 60, min: 0 }
+  - { id: Rca, label: Delta resistance R_ca, family: resistance, unit: ohm, default: 90, min: 0 }
+  - { id: Ra, label: Star resistance R_a, family: resistance, unit: ohm, min: 0 }
+  - { id: Rb, label: Star resistance R_b, family: resistance, unit: ohm, min: 0 }
+  - { id: Rc, label: Star resistance R_c, family: resistance, unit: ohm, min: 0 }
+equations:
+  - Ra = Rab * Rca / (Rab + Rbc + Rca)
+  - Rb = Rab * Rbc / (Rab + Rbc + Rca)
+  - Rc = Rbc * Rca / (Rab + Rbc + Rca)
+faq:
+  - q: How do I convert delta to star?
+    a: Each star resistance equals the product of the two delta resistances touching that node, divided by the sum of all three. R_a = R_ab × R_ca ÷ (R_ab + R_bc + R_ca).
+  - q: How do I convert star to delta?
+    a: Each delta resistance equals the sum of the pairwise products of the star resistances divided by the opposite star resistance. Enter the star values here and press × on the delta fields to solve backwards.
+  - q: What about balanced loads?
+    a: For three equal resistances, R_star = R_delta ÷ 3, and R_delta = 3 × R_star.
+  - q: Does this work for AC impedances?
+    a: Yes, with complex impedances. This calculator handles resistances (or magnitudes of identical-angle impedances).
+related: [physics/resistors-series-parallel, physics/ohms-law, electronics/wheatstone-bridge, electrical/three-phase-motor-power]
+links:
+  - { title: "Star-Delta Transformation Formula", url: "https://www.instrumentationblog.in/star-delta-transformation-formula/" }
+  - { title: "DOL vs Star-Delta Starter: Which to Use", url: "https://www.instrumentationblog.in/dol-vs-star-delta-starter-which-to-use/" }
+---
+
+## How to use this calculator
+
+Enter the three **delta resistances** between terminals a–b, b–c and c–a. The calculator gives the equivalent **star resistances** connected from each terminal to a common centre point. To go from star to delta, enter the star values and solve for the delta fields with the × buttons.
+
+## Delta to star
+
+<p class="formula">R<sub>a</sub> = R<sub>ab</sub>R<sub>ca</sub> ÷ ΣR &nbsp;·&nbsp; R<sub>b</sub> = R<sub>ab</sub>R<sub>bc</sub> ÷ ΣR &nbsp;·&nbsp; R<sub>c</sub> = R<sub>bc</sub>R<sub>ca</sub> ÷ ΣR</p>
+
+## Star to delta
+
+<p class="formula">R<sub>ab</sub> = (R<sub>a</sub>R<sub>b</sub> + R<sub>b</sub>R<sub>c</sub> + R<sub>c</sub>R<sub>a</sub>) ÷ R<sub>c</sub></p>
+
+and similarly for R<sub>bc</sub> (÷ R<sub>a</sub>) and R<sub>ca</sub> (÷ R<sub>b</sub>).
+
+## Example
+
+Delta 30, 60 and 90 Ω (sum 180 Ω):
+
+- R<sub>a</sub> = 30 × 90 ÷ 180 = **15 Ω**
+- R<sub>b</sub> = 30 × 60 ÷ 180 = **10 Ω**
+- R<sub>c</sub> = 60 × 90 ÷ 180 = **30 Ω**
+
+## When to use it
+
+- Simplifying bridge networks that cannot be reduced with series and parallel rules alone.
+- Converting delta-connected loads to star for per-phase calculations in three-phase systems.
+- Analysing the [Wheatstone bridge](/electronics/wheatstone-bridge/) when it is unbalanced.
+
+## Star-delta motor starting
+
+A motor started in star sees 1/√3 of line voltage, so starting current and torque fall to one third of their direct-on-line values. After a few seconds, the starter switches to delta for full voltage.

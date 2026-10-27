@@ -1,0 +1,81 @@
+---
+title: 4–20 mA Loop Resistance Calculator (Maximum Loop Load)
+description: Check whether a 4–20 mA loop has enough voltage — maximum loop resistance from supply and transmitter lift-off voltage, with cable and barrier resistance.
+category: engineering
+keywords: [4-20ma loop resistance calculator, loop load calculation, maximum loop resistance, transmitter lift off voltage, loop power supply, 250 ohm resistor, 2 wire transmitter load]
+updated: 2026-10-27
+variables:
+  - { id: Vs, label: Loop supply voltage, family: voltage, unit: V, default: 24, min: 0 }
+  - { id: Vt, label: Transmitter minimum voltage (lift-off), family: voltage, unit: V, default: 10.5, min: 0 }
+  - { id: Im, label: Maximum loop current, family: current, unit: mA, default: 22, min: 0, help: 'Use 22 mA (or 23 mA) so the loop still works at the NAMUR NE 43 fault levels and saturation.' }
+  - { id: Rin, label: Input resistance of receiver (PLC/DCS card), family: resistance, unit: ohm, default: 250, min: 0 }
+  - { id: Rb, label: Barrier or isolator resistance, family: resistance, unit: ohm, default: 0, min: 0 }
+  - { id: len, label: Cable length (one way), family: length, unit: m, imperialUnit: ft, default: 500, min: 0 }
+  - { id: rc, label: Conductor resistance, suffix: Ω/km, default: 12.1, min: 0, help: '1.5 mm² copper ≈ 12.1 Ω/km; 1.0 mm² ≈ 18.1 Ω/km; 0.5 mm² ≈ 36 Ω/km at 20 °C.' }
+  - { id: Rmax, label: Maximum allowed loop resistance, family: resistance, unit: ohm, min: 0 }
+  - { id: Rl, label: Actual loop resistance, family: resistance, unit: ohm, min: 0 }
+  - { id: M, label: Margin (negative = loop will not work), family: resistance, unit: ohm }
+  - { id: Vtx, label: Voltage left at transmitter at max. current, family: voltage, unit: V }
+equations:
+  - Rmax = (Vs - Vt) / Im
+  - Rl = Rin + Rb + 2 * len / 1000 * rc
+  - M = Rmax - Rl
+  - Vtx = Vs - Im * Rl
+faq:
+  - q: How do I calculate maximum loop resistance?
+    a: R_max = (supply voltage − transmitter minimum voltage) ÷ maximum loop current. With 24 V, a 10.5 V transmitter and 22 mA, R_max ≈ 614 Ω.
+  - q: Why use 22 mA instead of 20 mA?
+    a: Transmitters signal faults and over-range above 20 mA (NAMUR NE 43 uses ≥ 21 mA for failure). The loop must still deliver enough voltage at those currents or the alarm signal is lost.
+  - q: What happens if the loop resistance is too high?
+    a: The transmitter runs out of voltage at high currents, so readings clip near the top of the range — often seen as a reading that never reaches 100%.
+  - q: Does HART need a minimum resistance?
+    a: Yes. HART communication needs at least 230–250 Ω of loop resistance between the power supply and the transmitter.
+related: [engineering/4-20ma-scaling, electrical/cable-voltage-drop, physics/ohms-law, electronics/current-divider]
+links:
+  - { title: "Instrument Loop Impedance and 4–20 mA Accuracy", url: "https://www.instrumentationblog.in/instrument-loop-impedance-4-20ma-accuracy/" }
+  - { title: "2-Wire, 3-Wire and 4-Wire Transmitters", url: "https://www.instrumentationblog.in/2-wire-3-wire-4-wire-transmitters-in-industrial-automation/" }
+  - { title: "NAMUR NE 43 Standard Explained", url: "https://www.instrumentationblog.in/namur-ne43-standard-explained/" }
+  - { title: "4 to 20 mA Current Loop Explained", url: "https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/" }
+---
+
+## How to use this calculator
+
+Enter the **loop supply voltage**, the transmitter's **minimum operating (lift-off) voltage** from its datasheet, the **maximum loop current**, the receiver's **input resistance**, any **barrier or isolator** resistance, and the **cable length and conductor resistance**. The calculator shows the maximum resistance the loop can tolerate, the actual resistance and the margin.
+
+## The formulas
+
+<p class="formula">R<sub>max</sub> = (V<sub>supply</sub> − V<sub>transmitter,min</sub>) ÷ I<sub>max</sub></p>
+
+<p class="formula">R<sub>loop</sub> = R<sub>input</sub> + R<sub>barrier</sub> + 2 × length × r<sub>cable</sub></p>
+
+## Example
+
+24 V supply, transmitter needs 10.5 V, 22 mA maximum, 250 Ω PLC input, 500 m of 1.5 mm² cable:
+
+- R<sub>max</sub> = 13.5 ÷ 0.022 = **614 Ω**
+- Cable = 2 × 0.5 × 12.1 = 12.1 Ω; total loop = **262 Ω**
+- Margin = **352 Ω** — the loop works, with room for a barrier
+
+## Typical voltage drops in a loop
+
+| Component | Typical drop at 20 mA |
+|---|---|
+| 250 Ω input resistor | 5 V |
+| Zener barrier | 6–9 V (about 300–450 Ω) |
+| Galvanic isolator (loop-powered input) | 2–4 V |
+| Loop-powered indicator | 1–3 V |
+| 1 km of 1.5 mm² cable (2 cores) | 0.5 V |
+
+## Conductor resistance (copper, 20 °C)
+
+| Cross-section | Resistance per conductor |
+|---|---|
+| 0.5 mm² | 36.0 Ω/km |
+| 0.75 mm² | 24.5 Ω/km |
+| 1.0 mm² | 18.1 Ω/km |
+| 1.5 mm² | 12.1 Ω/km |
+| 2.5 mm² | 7.41 Ω/km |
+
+## Troubleshooting a low-voltage loop
+
+If the reading clips before 100%, measure the voltage at the transmitter terminals while forcing 20–22 mA. If it is below the lift-off voltage, raise the supply, remove a series device, or use a lower-resistance input.

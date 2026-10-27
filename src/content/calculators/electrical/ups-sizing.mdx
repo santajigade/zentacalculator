@@ -1,0 +1,69 @@
+---
+title: UPS Size Calculator (kVA)
+description: Calculate the UPS kVA rating needed for your load from watts, power factor and a growth margin — for homes, offices, servers and control panels.
+category: electrical
+keywords: [ups size calculator, ups kva calculation, ups sizing, how to size a ups, ups capacity calculator, va to watts, online ups sizing]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Total load, family: power, unit: W, default: 4000, min: 0 }
+  - { id: pf, label: UPS output power factor, default: 0.9, min: 0.1, max: 1, help: 'Modern online UPSs are usually rated at 0.9 or 1.0 PF; older units at 0.8.' }
+  - { id: m, label: Growth and safety margin, family: percent, unit: '%', default: 25, min: 0 }
+  - { id: S, label: Minimum UPS rating, suffix: kVA, min: 0, decimals: 2 }
+  - { id: Pw, label: Minimum UPS watt rating, family: power, unit: kW, min: 0 }
+equations:
+  - S = P * (1 + m) / pf / 1000
+  - Pw = P * (1 + m)
+faq:
+  - q: How do I calculate UPS size?
+    a: Add up the load in watts, add a margin of 20–30% for growth, and divide by the UPS power factor. 4 kW × 1.25 ÷ 0.9 ≈ 5.6 kVA, so choose a 6 kVA UPS.
+  - q: Should I size by kVA or kW?
+    a: Both. The load must not exceed either the kVA or the kW rating of the UPS. Check the datasheet for both figures.
+  - q: How much margin should I add?
+    a: 20–30% is common. It allows for future loads and keeps the UPS from running near full load, which improves reliability and battery runtime.
+  - q: Does UPS size decide backup time?
+    a: No. Backup time depends on the battery bank. See the battery backup calculator.
+related: [everyday-life/inverter-battery-backup, electrical/kva-to-kw, electrical/amps-to-watts, everyday-life/electricity-cost]
+links:
+  - { title: "UPS Capacity (kVA) Calculation", url: "https://www.instrumentationblog.in/ups-capacity-kva-calculation/" }
+  - { title: "How to Calculate Battery Backup Time", url: "https://www.instrumentationblog.in/calculate-battery-backup-time/" }
+  - { title: "UPS Topology Comparison: Offline, Line-Interactive, Online", url: "https://www.instrumentationblog.in/ups-topology-comparison/" }
+---
+
+## How to use this calculator
+
+Add up the **load** of everything the UPS will power, in watts. Enter the UPS's **output power factor** and a **margin** for growth. You get the minimum kVA and kW rating; choose the next standard size up.
+
+## The formula
+
+<p class="formula">UPS kVA = Load W × (1 + margin) ÷ PF ÷ 1,000</p>
+
+## Typical loads
+
+| Equipment | Typical power |
+|---|---|
+| Desktop PC with monitor | 150–300 W |
+| Laptop | 45–100 W |
+| Network switch (24-port) | 30–60 W |
+| Wi-Fi router | 10–20 W |
+| 1U server | 250–500 W |
+| Laser printer (printing) | 400–800 W |
+| PLC control panel | 100–500 W |
+| LED lighting per room | 30–60 W |
+
+Use measured or nameplate input power. Avoid connecting laser printers, heaters and motors to small UPSs — their inrush current can overload them.
+
+## Standard UPS ratings
+
+1, 2, 3, 5, 6, 10, 15, 20, 30, 40, 60, 80, 100, 120, 160 and 200 kVA are common sizes.
+
+## Choosing the topology
+
+| Type | Best for |
+|---|---|
+| Offline (standby) | Home PCs, small loads |
+| Line-interactive | Offices, network racks — handles voltage swings |
+| Online double-conversion | Servers, industrial control, medical, sensitive loads |
+
+## Backup time
+
+The UPS rating sets how much load it can carry; the battery sets how long. See the [battery backup calculator](/everyday-life/inverter-battery-backup/) to size the batteries.

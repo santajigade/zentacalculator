@@ -1,0 +1,78 @@
+---
+title: Earth Conductor Size Calculator (Adiabatic Equation)
+description: Calculate the minimum protective earth conductor size from fault current and disconnection time with the adiabatic equation S = I√t / k (IEC 60364-5-54).
+category: electrical
+keywords: [earth conductor size calculation, earthing cable size, adiabatic equation, protective conductor size, i2t/k, earth wire size, cpc size]
+updated: 2026-10-27
+variables:
+  - { id: I, label: Prospective fault current, family: current, unit: kA, default: 10, min: 0 }
+  - { id: t, label: Disconnection time, family: seconds, unit: s, default: 0.4, min: 0 }
+  - id: k
+    label: Conductor and insulation (k factor)
+    default: 143
+    options:
+      - { label: 'Copper, separate, PVC insulated (k 143)', value: 143 }
+      - { label: 'Copper, separate, XLPE/EPR insulated (k 176)', value: 176 }
+      - { label: 'Copper, core of PVC cable (k 115)', value: 115 }
+      - { label: 'Bare copper, no fire risk (k 159)', value: 159 }
+      - { label: 'Aluminium, separate, PVC insulated (k 95)', value: 95 }
+      - { label: 'Aluminium, separate, XLPE insulated (k 116)', value: 116 }
+      - { label: 'Steel, separate, PVC insulated (k 52)', value: 52 }
+  - { id: S, label: Minimum cross-section, family: area, unit: mm2, min: 0 }
+equations:
+  - S = I * sqrt(t) / k * 1e-6
+faq:
+  - q: What is the adiabatic equation?
+    a: S = √(I²t) ÷ k, the minimum conductor cross-section that can carry the fault current for the disconnection time without exceeding its final temperature. It is given in IEC 60364-5-54 and BS 7671.
+  - q: Where does the k factor come from?
+    a: It depends on the conductor material and the insulation’s initial and final temperatures. IEC 60364-5-54 Annex A tabulates the values.
+  - q: What disconnection time should I use?
+    a: The actual operating time of the protective device at the fault current, from its time–current curve. Final circuits often require 0.4 s; distribution circuits 5 s.
+  - q: Can I use the simple table instead?
+    a: Yes, IEC 60364-5-54 also allows sizing by the line conductor size — equal up to 16 mm², 16 mm² up to 35 mm², and half above that.
+related: [electrical/earthing-resistance, electrical/transformer-short-circuit, electrical/cable-voltage-drop, electrical/kw-to-amps]
+links:
+  - { title: "Earth Conductor Size Calculation", url: "https://www.instrumentationblog.in/earth-conductor-size-calculation/" }
+  - { title: "Earth Fault Loop Impedance (Zs) Testing", url: "https://www.instrumentationblog.in/earth-fault-loop-impedance-zs-testing/" }
+  - { title: "Short Circuit Current Calculation", url: "https://www.instrumentationblog.in/short-circuit-current-calculation/" }
+---
+
+## How to use this calculator
+
+Enter the **prospective earth fault current**, the protective device's **disconnection time** at that current, and choose the **conductor and insulation** type. The result is the minimum cross-section; select the next standard size up.
+
+## The adiabatic equation
+
+<p class="formula">S = √(I² × t) ÷ k</p>
+
+- **S** = cross-section in mm²
+- **I** = fault current in A (rms)
+- **t** = disconnection time in seconds
+- **k** = material factor
+
+## Minimum sizes (copper, PVC, k = 143)
+
+| Fault current | 0.1 s | 0.4 s | 1 s | 5 s |
+|---|---|---|---|---|
+| 1 kA | 2.2 mm² | 4.4 mm² | 7.0 mm² | 16 mm² |
+| 2 kA | 4.4 mm² | 8.8 mm² | 14.0 mm² | 31 mm² |
+| 5 kA | 11.1 mm² | 22.1 mm² | 35.0 mm² | 78 mm² |
+| 10 kA | 22.1 mm² | 44.2 mm² | 69.9 mm² | 156 mm² |
+| 20 kA | 44.2 mm² | 88.5 mm² | 139.9 mm² | 313 mm² |
+| 31.5 kA | 69.7 mm² | 139.3 mm² | 220.3 mm² | 493 mm² |
+
+## Standard sizes
+
+1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240 and 300 mm².
+
+## Simplified method (IEC 60364-5-54 Table 54.2)
+
+| Line conductor S | Protective conductor (same material) |
+|---|---|
+| S ≤ 16 mm² | S |
+| 16 < S ≤ 35 mm² | 16 mm² |
+| S > 35 mm² | S ÷ 2 |
+
+## Check the earth fault loop too
+
+A conductor large enough thermally must also have low enough impedance for the protective device to trip within the required time. Verify the earth fault loop impedance Zs on site.

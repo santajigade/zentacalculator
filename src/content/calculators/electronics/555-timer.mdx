@@ -1,0 +1,72 @@
+---
+title: 555 Timer Calculator (Astable Mode)
+description: Calculate the frequency, duty cycle, high time and low time of a 555 timer in astable mode from R1, R2 and C — or choose parts for a target frequency.
+category: electronics
+keywords: [555 timer calculator, 555 astable calculator, ne555 frequency, 555 duty cycle, 555 oscillator, 555 timer formula, square wave generator]
+updated: 2026-10-27
+variables:
+  - { id: R1, label: R1, family: resistance, unit: kohm, default: 1, min: 0 }
+  - { id: R2, label: R2, family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: C, label: Timing capacitor C, family: capacitance, unit: uF, default: 10, min: 0 }
+  - { id: f, label: Frequency, family: frequency, unit: Hz, min: 0 }
+  - { id: th, label: High time, family: seconds, unit: ms, min: 0 }
+  - { id: tl, label: Low time, family: seconds, unit: ms, min: 0 }
+  - { id: D, label: Duty cycle, family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - th = 0.693 * (R1 + R2) * C
+  - tl = 0.693 * R2 * C
+  - f = 1 / (th + tl)
+  - D = th / (th + tl)
+faq:
+  - q: What is the 555 astable frequency formula?
+    a: f = 1.44 ÷ ((R1 + 2R2) × C). With R1 = 1 kΩ, R2 = 10 kΩ and C = 10 µF, the frequency is about 6.86 Hz.
+  - q: Why can't the duty cycle go below 50%?
+    a: The capacitor charges through R1 + R2 but discharges through R2 only, so the high time is always longer. Add a diode across R2 to get duty cycles under 50%.
+  - q: What is the minimum R1?
+    a: About 1 kΩ, to limit the discharge transistor current when it turns on.
+  - q: How accurate is the 555?
+    a: Typically 1–2% plus component tolerances. Use film capacitors rather than electrolytics for stable timing.
+related: [physics/rc-time-constant, electronics/pwm-duty-cycle, electronics/rc-filter, physics/wavelength-frequency]
+links:
+  - { title: "555 Timer IC Explained", url: "https://www.instrumentationblog.in/555-timer-ic-explained/" }
+---
+
+## How to use this calculator
+
+Enter **R1**, **R2** and the timing capacitor **C**. You get the output frequency, the high and low times and the duty cycle. To design for a frequency, enter it with two components and press × on the third.
+
+## The formulas (astable)
+
+<p class="formula">t<sub>H</sub> = 0.693 (R₁ + R₂) C &nbsp;·&nbsp; t<sub>L</sub> = 0.693 R₂ C</p>
+
+<p class="formula">f = 1.44 ÷ ((R₁ + 2R₂) C) &nbsp;·&nbsp; D = (R₁ + R₂) ÷ (R₁ + 2R₂)</p>
+
+## Example frequencies (R1 = 1 kΩ)
+
+| R2 | C | Frequency | Duty cycle |
+|---|---|---|---|
+| 10 kΩ | 100 µF | 0.69 Hz | 52% |
+| 10 kΩ | 10 µF | 6.86 Hz | 52% |
+| 47 kΩ | 1 µF | 15.16 Hz | 51% |
+| 10 kΩ | 100 nF | 685.71 Hz | 52% |
+| 10 kΩ | 10 nF | 6.86 kHz | 52% |
+| 1 kΩ | 10 nF | 48.00 kHz | 67% |
+
+## Monostable mode
+
+In one-shot (monostable) mode, the output pulse lasts t = 1.1 × R × C after a trigger. 100 kΩ and 10 µF give about 1.1 s.
+
+## 555 pin functions
+
+| Pin | Name | Use |
+|---|---|---|
+| 1 | GND | 0 V |
+| 2 | Trigger | Starts timing below ⅓ V<sub>cc</sub> |
+| 3 | Output | Up to about 200 mA |
+| 4 | Reset | Tie to V<sub>cc</sub> if unused |
+| 5 | Control | 10 nF to ground for stability |
+| 6 | Threshold | Ends timing above ⅔ V<sub>cc</sub> |
+| 7 | Discharge | Discharges the timing capacitor |
+| 8 | V<sub>cc</sub> | 4.5–16 V (bipolar NE555) |
+
+The CMOS version (7555, TLC555) runs from 2 V and uses far less current.

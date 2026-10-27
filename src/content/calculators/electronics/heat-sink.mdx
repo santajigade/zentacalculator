@@ -1,0 +1,70 @@
+---
+title: Heat Sink Calculator (Thermal Resistance)
+description: Calculate the maximum heat sink thermal resistance for a transistor, MOSFET or regulator from power dissipation, junction and ambient temperatures.
+category: electronics
+keywords: [heat sink calculator, thermal resistance calculator, heatsink selection, junction temperature calculation, rth sa, mosfet heat sink, regulator heat sink]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Power dissipated, family: power, unit: W, default: 10, min: 0 }
+  - { id: Tj, label: Maximum junction temperature (design), family: temperature, unit: C, imperialUnit: F, default: 125 }
+  - { id: Ta, label: Ambient temperature, family: temperature, unit: C, imperialUnit: F, default: 40 }
+  - { id: Rjc, label: Junction-to-case resistance (Rθjc), suffix: °C/W, default: 1.5, min: 0 }
+  - { id: Rcs, label: Case-to-sink resistance (Rθcs), suffix: °C/W, default: 0.5, min: 0 }
+  - { id: Rsa, label: Maximum heat sink resistance (Rθsa), suffix: °C/W, decimals: 2 }
+  - { id: Rt, label: Total junction-to-ambient allowed, suffix: °C/W, decimals: 2 }
+equations:
+  - Rt = (Tj - Ta) / P
+  - Rsa = Rt - Rjc - Rcs
+faq:
+  - q: How do I choose a heat sink?
+    a: Calculate the total allowed thermal resistance, (Tj − Ta) ÷ P, subtract the device's Rθjc and the interface Rθcs, and choose a heat sink with a lower Rθsa than the result.
+  - q: What if the result is negative?
+    a: Even an infinite heat sink cannot keep the junction cool enough. Reduce power, use a device with lower Rθjc, or add forced air cooling.
+  - q: What junction temperature should I design for?
+    a: Stay 20–30 °C below the datasheet maximum (often 150 or 175 °C) for reliability — 110–125 °C is a common design target.
+  - q: What is a typical case-to-sink resistance?
+    a: 0.1–0.5 °C/W for a TO-220 with thermal paste; 0.5–1.5 °C/W with a silicone or mica insulating pad.
+related: [physics/heat-conduction, electronics/capacitor-lifetime, electrical/three-phase-motor-power, physics/ohms-law]
+links:
+  - { title: "Heat Sink Calculation", url: "https://www.instrumentationblog.in/heat-sink-calculation/" }
+  - { title: "What Is Thermal Conductivity?", url: "https://www.instrumentationblog.in/what-is-thermal-conductivity/" }
+---
+
+## How to use this calculator
+
+Enter the **power** the device dissipates, the design **junction temperature**, the **ambient temperature** inside the enclosure, and the device's **Rθjc** and interface **Rθcs**. The result is the highest heat sink thermal resistance you can use.
+
+## The thermal circuit
+
+<p class="formula">T<sub>j</sub> = T<sub>a</sub> + P × (R<sub>θjc</sub> + R<sub>θcs</sub> + R<sub>θsa</sub>)</p>
+
+<p class="formula">R<sub>θsa</sub> ≤ (T<sub>j</sub> − T<sub>a</sub>) ÷ P − R<sub>θjc</sub> − R<sub>θcs</sub></p>
+
+## Example
+
+10 W in a TO-220 MOSFET (Rθjc 1.5 °C/W), thermal pad 0.5 °C/W, 40 °C ambient, 125 °C target:
+
+- Total allowed = 85 ÷ 10 = 8.5 °C/W
+- R<sub>θsa</sub> ≤ 8.5 − 1.5 − 0.5 = **6.5 °C/W**
+
+## Typical package resistances
+
+| Package | Rθjc | Rθja (no heat sink) |
+|---|---|---|
+| TO-92 | — | 150–200 °C/W |
+| SOT-23 | — | 200–350 °C/W |
+| D-PAK (on PCB copper) | 1–3 °C/W | 40–80 °C/W |
+| TO-220 | 0.5–3 °C/W | 50–65 °C/W |
+| TO-247 | 0.3–1 °C/W | 35–45 °C/W |
+
+## Typical heat sinks
+
+| Heat sink | Rθsa (natural convection) |
+|---|---|
+| Small clip-on TO-220 | 15–25 °C/W |
+| Extruded fin, 50 mm | 4–8 °C/W |
+| Extruded fin, 100 mm | 1.5–3 °C/W |
+| Large finned profile | 0.5–1 °C/W |
+| With fan airflow | 2–4 times lower |
+
+Mount fins vertically for natural convection, and remember the enclosure air temperature — not room temperature — is the ambient.

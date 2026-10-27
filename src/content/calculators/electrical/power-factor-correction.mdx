@@ -1,0 +1,90 @@
+---
+title: Power Factor Correction Calculator (Capacitor kVAr)
+description: Calculate the capacitor bank kVAr and capacitance needed to raise power factor from its present value to a target — with current reduction.
+category: electrical
+keywords: [power factor correction calculator, capacitor bank kvar calculation, kvar required, apfc panel sizing, improve power factor, capacitor size for power factor, kvar formula]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Active load power, family: power, unit: kW, imperialUnit: hp, default: 100, min: 0 }
+  - { id: pf1, label: Present power factor, default: 0.75, min: 0.01, max: 1 }
+  - { id: pf2, label: Target power factor, default: 0.95, min: 0.01, max: 1 }
+  - { id: V, label: Line voltage, family: voltage, unit: V, default: 415, min: 0 }
+  - { id: f, label: Supply frequency, family: frequency, unit: Hz, default: 50, min: 1 }
+  - { id: Q, label: Capacitor bank required, suffix: kVAr, min: 0, decimals: 2 }
+  - { id: C, label: Capacitance per phase (delta), family: capacitance, unit: uF, min: 0 }
+  - { id: S1, label: Apparent power before, suffix: kVA, min: 0, decimals: 1 }
+  - { id: S2, label: Apparent power after, suffix: kVA, min: 0, decimals: 1 }
+  - { id: red, label: Line current reduction, family: percent, unit: '%', min: 0 }
+equations:
+  - Q = P / 1000 * (tan(acos(pf1)) - tan(acos(pf2)))
+  - C = Q * 1000 / 3 / (2 * pi * f * V^2)
+  - S1 = P / 1000 / pf1
+  - S2 = P / 1000 / pf2
+  - red = 1 - pf1 / pf2
+faq:
+  - q: How do I calculate the kVAr needed for power factor correction?
+    a: kVAr = kW × (tan φ₁ − tan φ₂), where φ₁ = acos(present PF) and φ₂ = acos(target PF). For 100 kW from 0.75 to 0.95 you need about 55.3 kVAr.
+  - q: What power factor should I aim for?
+    a: Most utilities penalise below 0.90–0.95. A target of 0.95–0.98 is common. Avoid correcting to unity or leading, which can cause over-voltage and resonance.
+  - q: Why does the current fall after correction?
+    a: The capacitor supplies the reactive current locally, so the supply only carries the active part plus less reactive current. Current falls in proportion to PF₁ ÷ PF₂.
+  - q: Do I need detuned capacitors?
+    a: Where drives and other non-linear loads create harmonics, use detuned (reactor-protected) banks — typically 7% detuning — to avoid harmonic resonance.
+related: [electrical/kva-to-kw, electrical/three-phase-motor-power, electrical/thd, electrical/transformer-current]
+links:
+  - { title: "How to Calculate Capacitor Bank kVAr (Formula)", url: "https://www.instrumentationblog.in/how-to-calculate-capacitor-bank-kvar-formula/" }
+  - { title: "Capacitor Bank Sizing for Power Factor Correction", url: "https://www.instrumentationblog.in/capacitor-bank-sizing-power-factor-correction/" }
+  - { title: "Power Factor Improvement Calculation", url: "https://www.instrumentationblog.in/power-factor-improvement-calculation/" }
+  - { title: "Power Factor, kW, kVA and kVAr Explained", url: "https://www.instrumentationblog.in/power-factor-kw-kva-kvar/" }
+---
+
+## How to use this calculator
+
+Enter the **active load** in kW, the **present** and **target power factor**, and the supply **voltage** and **frequency**. You get the capacitor kVAr required, the capacitance per phase for a delta-connected bank, the kVA before and after, and how much the line current falls.
+
+## The formula
+
+<p class="formula">Q<sub>c</sub> = P × (tan φ₁ − tan φ₂), &nbsp; φ = cos⁻¹(PF)</p>
+
+For a delta-connected three-phase bank, each capacitor sees the line voltage:
+
+<p class="formula">C per phase = Q<sub>c</sub> ÷ (3 × 2πf × V<sub>L</sub>²)</p>
+
+## Example
+
+100 kW at 0.75 PF, corrected to 0.95 at 415 V, 50 Hz:
+
+- tan φ₁ = 0.882, tan φ₂ = 0.329
+- Q<sub>c</sub> = 100 × (0.882 − 0.329) = **55.3 kVAr**
+- kVA falls from 133.3 to 105.3 and line current falls by **21%**
+
+## kVAr multiplier table (kVAr per kW)
+
+| Present PF | to 0.90 | to 0.95 | to 0.98 | to 1.00 |
+|---|---|---|---|---|
+| 0.60 | 0.849 | 1.005 | 1.130 | 1.333 |
+| 0.65 | 0.685 | 0.840 | 0.966 | 1.169 |
+| 0.70 | 0.536 | 0.692 | 0.817 | 1.020 |
+| 0.75 | 0.398 | 0.553 | 0.679 | 0.882 |
+| 0.80 | 0.266 | 0.421 | 0.547 | 0.750 |
+| 0.85 | 0.135 | 0.291 | 0.417 | 0.620 |
+| 0.90 | 0.000 | 0.156 | 0.281 | 0.484 |
+
+Multiply the factor by the load kW to get the kVAr required.
+
+## Why correct power factor?
+
+- **Lower bills**: avoid utility penalties for low PF and reduce kVA maximum demand charges.
+- **Free up capacity**: the same transformer and cables can carry more kW.
+- **Lower losses**: I²R losses in cables and transformers fall with current.
+- **Better voltage**: less reactive current means less voltage drop.
+
+## Fixed vs automatic correction
+
+- **Fixed capacitors** at individual motors suit constant loads. Size them to about 90% of the motor's no-load magnetising kVAr to avoid self-excitation.
+- **APFC panels** (automatic power factor correction) switch capacitor steps as the plant load changes. They are the usual choice for a main LV board.
+
+## Harmonics
+
+Capacitors lower the system's resonant frequency. With VFDs, UPSs and other non-linear loads, check harmonic levels with the [THD calculator](/electrical/thd/) and use detuned reactors where needed.

@@ -20,6 +20,10 @@ faq:
     a: About 1 kg per litre — a 3,600-litre tank holds about 3.6 tonnes, so the base or roof slab must be designed for it.
   - q: How do I size a tank for a household?
     a: Estimate daily use (often 100–150 litres per person) and multiply by the days of storage you want.
+  - q: "How many litres is a 1 m × 1 m × 1 m tank?"
+    a: "1,000 litres."
+  - q: "How do I find the litres in a tank from cm?"
+    a: "Multiply length × width × height in cm and divide by 1,000."
 related: [engineering/horizontal-tank-volume, math/cylinder-volume, conversion/volume-converter]
 ---
 
@@ -34,3 +38,42 @@ A 2 × 1.5 m tank filled to 1.2 m:
 V = 2 × 1.5 × 1.2 = 3.6 m³ = **3,600 litres** (951 US gal), weighing about **3.6 tonnes**.
 
 For round tanks use the [cylinder calculator](/math/cylinder-volume/), and for horizontal cylindrical tanks the [horizontal tank calculator](/engineering/horizontal-tank-volume/).
+
+## Capacity of common tank sizes
+
+| Inside dimensions (L × W × H) | Capacity |
+|---|---|
+| 1 × 1 × 1 m | 1,000 L (264 US gal) |
+| 2 × 1 × 1 m | 2,000 L (528 US gal) |
+| 2 × 1.5 × 1.2 m | 3,600 L (951 US gal) |
+| 2 × 2 × 1.5 m | 6,000 L (1,585 US gal) |
+| 3 × 2 × 1.5 m | 9,000 L (2,378 US gal) |
+| 4 × 3 × 2 m | 24,000 L (6,340 US gal) |
+
+## Usable vs total capacity
+
+The usable volume is less than the full volume because:
+
+- An **overflow** sits below the top edge.
+- An **outlet** sits above the floor to avoid drawing sediment.
+- A **freeboard** of 100–300 mm is often left at the top.
+
+Measure the depth from the outlet to the overflow for the usable volume.
+
+## Water demand
+
+| Use | Typical daily use |
+|---|---|
+| Per person (domestic, India urban guidelines) | 135 L |
+| Per person (many developed countries) | 150–300 L |
+| Garden watering | 5–10 L per m² |
+
+A family of four using 135 L each needs 540 L a day. A 2,000 L tank stores about 3.7 days of supply.
+
+## Weight and structure
+
+Water weighs 1 kg per litre. A 2,000 L tank weighs 2 tonnes when full, plus the tank itself. Rooftop tanks need a structural check.
+
+## Level sensors
+
+For automatic control, the level is directly proportional to volume in a rectangular tank, so a linear level sensor scaled to the tank height gives volume directly.

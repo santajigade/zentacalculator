@@ -19,6 +19,10 @@ faq:
     a: The full quota of overs (e.g. 20 in a T20) counts as overs faced, even if the innings ended early.
   - q: Why is NRR important?
     a: It separates teams level on points in tournament tables.
+  - q: "What does a positive NRR mean?"
+    a: "The team scores faster than its opponents on average across the tournament."
+  - q: "Is a bowled-out innings counted as full overs?"
+    a: "Yes. If a team is all out, its innings counts as the full allocation of overs for NRR."
 related: [sports/cricket-run-rate, sports/required-run-rate]
 ---
 
@@ -35,3 +39,28 @@ Enter the **total runs scored** and **balls faced**, and the **total runs conced
 1,650 runs from 190 overs; 1,580 conceded in 200 overs:
 
 NRR = 8.684 − 7.900 = **+0.784**
+
+## Rules for overs in NRR
+
+- If a team is **bowled out**, its innings counts as the full quota of overs (for example 20 or 50), not the overs actually faced.
+- In rain-affected matches, the revised overs under the DLS method are used.
+- Overs must be converted to balls or decimal overs correctly (10.3 overs = 63 balls).
+
+## Example over a tournament
+
+| Match | Runs for / overs | Runs against / overs |
+|---|---|---|
+| 1 | 180 / 20 | 160 / 20 |
+| 2 | 145 / 18.2 (won chasing) | 142 / 20 |
+| 3 | 130 / 20 (all out) | 131 / 17.4 |
+| **Total** | 455 / 58.333 | 433 / 57.667 |
+
+NRR = 455 ÷ 58.333 − 433 ÷ 57.667 = 7.800 − 7.509 = **+0.291**
+
+## Why NRR changes so much
+
+Winning big chases quickly or bowling teams out cheaply moves NRR sharply. Late in a tournament, teams often aim to win by a specific margin to overtake a rival's NRR.
+
+## NRR vs run rate
+
+Run rate is a single team's scoring speed. NRR compares a team's scoring rate with the rate it concedes across all matches.

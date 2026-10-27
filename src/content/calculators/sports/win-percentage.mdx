@@ -20,6 +20,10 @@ faq:
     a: Usually as half a win and half a loss, as here. Some leagues ignore ties — check your league's rules.
   - q: How many wins do I need for a target percentage?
     a: Press × on Wins and type the target percentage.
+  - q: "How do I calculate win percentage?"
+    a: "Wins ÷ total games × 100. With ties counted as half, (wins + ties ÷ 2) ÷ games."
+  - q: "What is a .500 record?"
+    a: "Winning exactly half your games."
 related: [sports/football-points, math/percentage]
 ---
 
@@ -34,3 +38,30 @@ Enter **wins**, **losses** and **ties**. Win percentage and win–loss ratio are
 ## Example
 
 42 wins, 28 losses, 2 ties: (42 + 1) ÷ 72 = **59.7%** (.597).
+
+## Win percentage benchmarks
+
+| Win % | Typical result (82-game NBA season) |
+|---|---|
+| 70%+ | Title contender (57+ wins) |
+| 60% | Strong playoff team (49 wins) |
+| 50% | Average (41 wins) |
+| 40% | Missing the playoffs (33 wins) |
+
+## How ties are counted
+
+Different leagues treat ties differently:
+
+- **Half a win** (this calculator): common in the NFL and many school sports.
+- **Ignored**: some sports calculate win % from wins and losses only.
+- **Points systems**: football (soccer) uses league points instead — see the [football points calculator](/sports/football-points/).
+
+## Games behind
+
+In standings, “games behind” compares two teams:
+
+<p class="formula">GB = ((leader wins − team wins) + (team losses − leader losses)) ÷ 2</p>
+
+## Pythagorean expectation
+
+In baseball and other sports, expected win % can be estimated from points scored (S) and allowed (A): S² ÷ (S² + A²). Teams winning more than expected may have been lucky in close games.

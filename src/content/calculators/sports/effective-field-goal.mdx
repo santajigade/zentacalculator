@@ -26,6 +26,10 @@ faq:
     a: Points per shooting possession, including free throws — PTS ÷ (2 × (FGA + 0.44 × FTA)).
   - q: What is a good TS%?
     a: Around 57–58% is roughly NBA average in recent seasons; above 62% is excellent.
+  - q: "What is the difference between eFG% and TS%?"
+    a: "eFG% adjusts for three-pointers; TS% also includes free throws."
+  - q: "What is a good true shooting percentage?"
+    a: "Above about 60% is very good in the NBA."
 related: [sports/win-percentage]
 ---
 
@@ -39,3 +43,31 @@ Enter **field goals made and attempted**, **three-pointers made** and **free thr
 
 - Points = **24**
 - FG% = **47.1%**, eFG% = **55.9%**, TS% = **61.1%**
+
+## Why eFG% and TS% matter
+
+Plain field-goal percentage treats a three-pointer like a two. Effective FG% adds 50% extra credit for threes, and true shooting % also includes free throws, giving the best single measure of scoring efficiency.
+
+## Benchmarks (NBA, approximate)
+
+| Rating | FG% | eFG% | TS% |
+|---|---|---|---|
+| Excellent | 50%+ | 57%+ | 62%+ |
+| Above average | 47–50% | 54–57% | 58–62% |
+| League average (recent seasons) | about 47% | about 54% | about 58% |
+| Below average | under 44% | under 50% | under 54% |
+
+Averages shift as teams take more threes.
+
+## The 0.44 factor
+
+TS% uses 0.44 × free-throw attempts to estimate the number of possessions used by free throws, since and-ones and technical fouls do not use a full possession.
+
+## Example
+
+8 FG on 17 attempts, 3 threes, 5 of 6 free throws:
+
+- Points = 2 × 8 + 3 + 5 = **24**
+- FG% = 8 ÷ 17 = 47.1%
+- eFG% = (8 + 1.5) ÷ 17 = **55.9%**
+- TS% = 24 ÷ (2 × (17 + 2.64)) = **61.1%**

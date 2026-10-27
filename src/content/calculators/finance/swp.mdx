@@ -1,0 +1,78 @@
+---
+title: SWP Calculator (Systematic Withdrawal Plan)
+description: Plan monthly withdrawals from a mutual fund corpus — see the balance left, total withdrawn and how long your money will last.
+category: finance
+keywords: [swp calculator, systematic withdrawal plan, swp mutual fund, monthly income from mutual fund, retirement withdrawal, how long will my money last]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Total investment (corpus), family: currency, prefix: '₹', default: 5000000, min: 0, decimals: 0 }
+  - { id: W, label: Monthly withdrawal, family: currency, prefix: '₹', default: 30000, min: 0, decimals: 0 }
+  - { id: r, label: Expected return (per year), family: percent, unit: '%', default: 8, min: 0.0001, max: 1 }
+  - { id: t, label: Time period, family: time, unit: yr, default: 15, min: 0 }
+  - { id: B, label: Balance at the end, family: currency, prefix: '₹', decimals: 0 }
+  - { id: Tw, label: Total withdrawn, family: currency, prefix: '₹', min: 0, decimals: 0 }
+equations:
+  - B = P * (1 + r/12)^(12*t) - W * ((1 + r/12)^(12*t) - 1) / (r/12)
+  - Tw = W * 12 * t
+chart: { x: t, y: B, from: 1, to: 30 }
+faq:
+  - q: What is SWP?
+    a: A Systematic Withdrawal Plan lets you withdraw a fixed amount from a mutual fund every month while the rest stays invested and keeps earning.
+  - q: How long will my money last?
+    a: Set Balance at the end to 0, then press × on Time period. With ₹50 lakh, ₹45,000 a month and an 8% return, the money lasts about 16.9 years. If you withdraw less than the monthly return, it never runs out.
+  - q: What is a safe withdrawal rate?
+    a: If you withdraw less than the monthly return, the corpus never runs out. At 8% that is about 0.64% of the corpus a month — ₹32,000 on ₹50 lakh — though returns vary.
+  - q: How is SWP taxed?
+    a: Each withdrawal is partly your own capital and partly gains. Only the gain portion is taxed as capital gains, which often makes SWP more tax-efficient than FD interest.
+related: [finance/sip, finance/step-up-sip, finance/retirement-corpus, finance/post-office-mis, finance/lumpsum]
+---
+
+## How to use this calculator
+
+Enter your **corpus**, the **monthly withdrawal** you want, the **expected return** and the **period**. The calculator shows the balance left at the end and the total you will have withdrawn.
+
+To see how long the money lasts, type **0** in Balance at the end and press × on Time period. To find a sustainable withdrawal, set the balance you want to leave and press × on Monthly withdrawal.
+
+## The formula
+
+<p class="formula">B = P × (1 + i)<sup>n</sup> − W × [((1 + i)<sup>n</sup> − 1) ÷ i]</p>
+
+- **P** = starting corpus
+- **W** = monthly withdrawal
+- **i** = monthly return = annual return ÷ 12
+- **n** = number of months
+
+The first term is what the corpus would grow to with no withdrawals. The second is the future value of everything you withdrew.
+
+## Worked example
+
+₹50,00,000 corpus, ₹30,000 a month, 8% return, 15 years:
+
+- Total withdrawn = 30,000 × 180 = **₹54,00,000**
+- Balance after 15 years = **₹61,53,461**
+
+Because ₹30,000 is less than the monthly return on ₹50 lakh at 8% (about ₹33,333), the corpus actually grows.
+
+## How long does ₹50 lakh last at 8%?
+
+| Monthly withdrawal | Per year | Money lasts |
+|---|---|---|
+| ₹25,000 | ₹3,00,000 | forever |
+| ₹35,000 | ₹4,20,000 | 38.2 years |
+| ₹45,000 | ₹5,40,000 | 16.9 years |
+| ₹55,000 | ₹6,60,000 | 11.7 years |
+
+## SWP vs FD interest vs annuity
+
+| | SWP | FD interest | Annuity |
+|---|---|---|---|
+| Income | You choose | Depends on rate | Fixed for life |
+| Capital | Stays yours | Stays yours | Given up |
+| Tax | Only on gains | Full interest at slab rate | Full annuity at slab rate |
+| Risk | Market-linked | Low | Low |
+
+## Keep in mind
+
+- Market returns are not steady. A fall in the early years of withdrawal hurts more than a fall later. Keep 1–2 years of withdrawals in a liquid or debt fund.
+- Raise the withdrawal only gradually for inflation.
+- Exit loads may apply to withdrawals made soon after investing.

@@ -1,0 +1,87 @@
+---
+title: Sukanya Samriddhi Yojana Calculator (SSY)
+description: Calculate Sukanya Samriddhi maturity at the current 8.2% rate — 15 years of deposits, maturity at 21 years, fully tax-free.
+category: finance
+keywords: [sukanya samriddhi calculator, ssy calculator, sukanya samriddhi yojana, ssy interest rate, ssy maturity, girl child savings scheme, post office ssy]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Yearly deposit, family: currency, prefix: '₹', default: 150000, min: 0, decimals: 0, help: '₹250 to ₹1,50,000 per financial year.' }
+  - { id: r, label: Interest rate, family: percent, unit: '%', default: 8.2, min: 0.0001, max: 0.3 }
+  - { id: age, label: Daughter's age at opening, family: none, suffix: years, default: 1, min: 0, max: 10 }
+  - { id: F, label: Maturity value, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: inv, label: Total deposited, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: I, label: Interest earned, family: currency, prefix: '₹', decimals: 0 }
+  - { id: mat, label: Daughter's age at maturity, family: none, suffix: years }
+equations:
+  - F = P*((1 + r)^15 - 1)/r*(1 + r)*(1 + r)^6
+  - inv = 15*P
+  - I = F - inv
+  - mat = age + 21
+faq:
+  - q: What is the Sukanya Samriddhi interest rate?
+    a: 8.2% a year, compounded annually, for October–December 2026. The rate is reviewed every quarter.
+  - q: How much will I get if I deposit ₹1.5 lakh a year?
+    a: About ₹71,82,119 at maturity. You deposit ₹22,50,000 over 15 years and earn about ₹49,32,119 of tax-free interest.
+  - q: For how many years do I deposit?
+    a: For 15 years from opening. The account then keeps earning interest until it matures 21 years after opening.
+  - q: Who can open an SSY account?
+    a: A parent or legal guardian, for a girl child below 10 years. One account per girl and up to two per family (three for twins or triplets).
+  - q: Can I withdraw before maturity?
+    a: Up to 50% of the balance after the girl turns 18, for higher education. The account can be closed early for her marriage after 18.
+related: [finance/ppf, finance/sip, finance/savings-goal, finance/nsc, finance/inflation]
+---
+
+## How to use this calculator
+
+Enter the amount you will deposit **each year**, the **interest rate** (currently 8.2%) and your daughter's **age** when you open the account. The calculator shows the maturity value, the total deposited, the interest and her age at maturity.
+
+## The SSY formula
+
+Deposits are made for 15 years. The balance then grows for 6 more years without deposits until maturity at 21 years:
+
+<p class="formula">F = P × [((1 + r)<sup>15</sup> − 1) ÷ r] × (1 + r) × (1 + r)<sup>6</sup></p>
+
+This assumes each year's deposit is made at the start of the financial year (by 5 April) so it earns a full year's interest.
+
+## Worked example
+
+₹1,50,000 a year at 8.2%:
+
+- Deposited = 1,50,000 × 15 = **₹22,50,000**
+- Balance after 15 years = **₹44,75,989**
+- Maturity after 21 years = **₹71,82,119**
+- Tax-free interest = **₹49,32,119**
+
+## Maturity for different deposits (8.2%)
+
+| Yearly deposit | Monthly equivalent | Total deposited | Maturity |
+|---|---|---|---|
+| ₹12,000 | ₹1,000 | ₹1,80,000 | ₹5,74,570 |
+| ₹25,000 | ₹2,083 | ₹3,75,000 | ₹11,97,020 |
+| ₹50,000 | ₹4,167 | ₹7,50,000 | ₹23,94,040 |
+| ₹1,00,000 | ₹8,333 | ₹15,00,000 | ₹47,88,079 |
+| ₹1,50,000 | ₹12,500 | ₹22,50,000 | ₹71,82,119 |
+
+## Key SSY rules
+
+- **Deposit**: minimum ₹250, maximum ₹1,50,000 per financial year.
+- **Deposit period**: 15 years. **Maturity**: 21 years from opening.
+- **Missed deposit**: ₹50 penalty per year to revive the account.
+- **Tax**: EEE — deposits qualify under 80C (old regime), interest and maturity are tax-free.
+- **Where**: any post office or authorised bank.
+
+## SSY vs PPF
+
+| | SSY | PPF |
+|---|---|---|
+| Rate (Oct–Dec 2026) | 8.2% | 7.1% |
+| Who | Girl child below 10 | Any resident individual |
+| Deposits | 15 years | 15 years |
+| Maturity | 21 years | 15 years (extendable) |
+| Tax | EEE | EEE |
+
+SSY pays more than PPF, so it is usually the better choice when saving for a daughter's education or marriage.
+
+## Keep in mind
+
+The rate can change every quarter, so the actual maturity may differ. Deposit early in the financial year to earn the most interest.

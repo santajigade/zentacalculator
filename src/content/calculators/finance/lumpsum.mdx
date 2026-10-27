@@ -1,0 +1,86 @@
+---
+title: Lumpsum Calculator (One-Time Investment)
+description: See how a one-time mutual fund investment grows over time — maturity value, gains and CAGR — or find the lump sum needed for a goal.
+category: finance
+keywords: [lumpsum calculator, lump sum investment calculator, mutual fund lumpsum, one time investment, lumpsum returns, lumpsum vs sip]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Investment amount, family: currency, prefix: '₹', default: 100000, min: 0, decimals: 0 }
+  - { id: r, label: Expected return (per year), family: percent, unit: '%', default: 12, min: -0.99, max: 1 }
+  - { id: t, label: Time period, family: time, unit: yr, default: 10, min: 0 }
+  - { id: F, label: Estimated value, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: G, label: Estimated gain, family: currency, prefix: '₹', decimals: 0 }
+  - { id: X, label: Growth multiple, family: none, suffix: '×', decimals: 2 }
+equations:
+  - F = P * (1 + r)^t
+  - G = F - P
+  - X = F / P
+chart: { x: t, y: F, from: 1, to: 30 }
+faq:
+  - q: How is lumpsum return calculated?
+    a: Future value = P × (1 + r)^t, where P is the amount invested, r the expected annual return and t the number of years.
+  - q: What will ₹1 lakh become in 10 years at 12%?
+    a: About ₹3,10,585 — a gain of about ₹2,10,585, or 3.11 times the money.
+  - q: Lumpsum or SIP — which is better?
+    a: A lump sum earns more when markets rise steadily after you invest. A SIP spreads purchases over time and reduces the risk of investing everything at a market peak.
+  - q: How long will it take to double my money?
+    a: Press × on Time and set Estimated value to twice the investment. At 12% it takes about 6.1 years. The rule of 72 gives a quick estimate — 72 ÷ 12 = 6.
+related: [finance/sip, finance/step-up-sip, finance/cagr, finance/compound-interest, finance/doubling-time]
+---
+
+## How to use this calculator
+
+Enter the **amount** you will invest once, the **expected annual return** and the **time period**. You see the estimated value, the gain and how many times your money has grown.
+
+To find how much to invest today for a future goal, press × on Investment amount and type the target value.
+
+## The formula
+
+<p class="formula">F = P × (1 + r)<sup>t</sup></p>
+
+- **P** = amount invested
+- **r** = expected annual return (12% = 0.12)
+- **t** = years
+
+The return **r** is the compound annual growth rate (CAGR). Mutual fund factsheets show past CAGR over 1, 3, 5 and 10 years.
+
+## Worked example
+
+₹1,00,000 invested for 10 years at 12% a year:
+
+- Value = 1,00,000 × 1.12<sup>10</sup> = **₹3,10,585**
+- Gain = **₹2,10,585**
+- Growth multiple = **3.11×**
+
+## ₹1 lakh at different returns
+
+| Years | 8% | 10% | 12% |
+|---|---|---|---|
+| 5 years | ₹1,46,933 | ₹1,61,051 | ₹1,76,234 |
+| 10 years | ₹2,15,892 | ₹2,59,374 | ₹3,10,585 |
+| 15 years | ₹3,17,217 | ₹4,17,725 | ₹5,47,357 |
+| 20 years | ₹4,66,096 | ₹6,72,750 | ₹9,64,629 |
+| 25 years | ₹6,84,848 | ₹10,83,471 | ₹17,00,006 |
+
+Small differences in return make a large difference over long periods. That is why fund costs (expense ratio) matter.
+
+## Typical return assumptions
+
+| Investment | Long-term return (assumption) |
+|---|---|
+| Large-cap equity fund | 10–12% |
+| Flexi-cap / mid-cap fund | 11–14% |
+| Hybrid fund | 8–10% |
+| Debt fund | 6–8% |
+
+These are rough planning figures, not promises. Past returns do not guarantee future returns.
+
+## Lumpsum vs SIP
+
+- **Lumpsum** suits money you already have, such as a bonus or maturity proceeds, especially for long horizons.
+- **SIP** suits monthly income and reduces timing risk. Compare with the [SIP calculator](/finance/sip/).
+- A middle path is an **STP** — park the lump sum in a liquid fund and transfer it into equity over 6–12 months.
+
+## Keep in mind
+
+Gains are taxed as capital gains when you sell. Equity fund gains held over a year are long-term and taxed at a lower rate above an annual exemption limit.

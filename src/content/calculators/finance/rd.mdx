@@ -1,0 +1,92 @@
+---
+title: RD Calculator (Recurring Deposit)
+description: Calculate recurring deposit maturity and interest for monthly deposits with quarterly compounding — for banks and post office RD.
+category: finance
+keywords: [rd calculator, recurring deposit calculator, post office rd calculator, sbi rd calculator, rd interest, rd maturity, monthly deposit]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: R, label: Monthly deposit, family: currency, prefix: '₹', default: 5000, min: 0, decimals: 0 }
+  - { id: r, label: Interest rate (per year), family: percent, unit: '%', default: 7, min: 0.0001, max: 0.5 }
+  - { id: n, label: Tenure, family: none, suffix: months, default: 60, min: 1 }
+  - { id: M, label: Maturity amount, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: inv, label: Total deposited, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: I, label: Interest earned, family: currency, prefix: '₹', decimals: 0 }
+equations:
+  - M = R * ((1 + r/4)^(n/3) - 1) / (1 - (1 + r/4)^(-1/3))
+  - inv = R * n
+  - I = M - inv
+chart: { x: n, y: M, from: 6, to: 120 }
+faq:
+  - q: How is RD interest calculated?
+    a: Indian banks compound RD interest quarterly. Maturity = R × [(1 + i)ⁿ − 1] ÷ [1 − (1 + i)^(−1/3)], where R is the monthly deposit, i the quarterly rate (annual ÷ 4) and n the number of quarters.
+  - q: What is the maturity of ₹5,000 a month RD for 5 years?
+    a: At 7% it is about ₹3,59,664. You deposit ₹3,00,000 and earn about ₹59,664 in interest.
+  - q: What is the post office RD interest rate?
+    a: 6.7% a year for the 5-year post office RD in the October–December 2026 quarter. Enter 6.7% and 60 months.
+  - q: Is RD interest taxable?
+    a: Yes, at your slab rate, and TDS applies above the yearly threshold, the same as for FDs.
+  - q: What happens if I miss an RD instalment?
+    a: Banks charge a small penalty per missed month, and after several missed instalments the account may be closed early.
+  - q: RD or SIP — which is better?
+    a: RD gives a fixed, guaranteed return. A SIP in an equity fund can earn more over long periods but the return is not guaranteed.
+related: [finance/fd, finance/sip, finance/savings-goal, finance/compound-interest, finance/ppf]
+---
+
+## How to use this calculator
+
+Enter your **monthly deposit**, the **interest rate** and the **tenure in months**. The calculator shows the maturity amount, the total you deposited and the interest earned.
+
+To save for a goal, press × on Monthly deposit and type the maturity amount you need.
+
+## The RD formula
+
+Banks in India compound recurring deposits **quarterly**. The standard formula is:
+
+<p class="formula">M = R × [(1 + i)<sup>n</sup> − 1] ÷ [1 − (1 + i)<sup>−1/3</sup>]</p>
+
+- **R** = monthly deposit
+- **i** = quarterly interest rate = annual rate ÷ 4
+- **n** = number of quarters = months ÷ 3
+
+Each monthly deposit earns compound interest from the month it is paid until maturity, so the first instalment earns the most.
+
+## Worked example
+
+₹5,000 a month for 5 years (60 months) at 7%:
+
+- Quarterly rate = 7% ÷ 4 = 1.75%
+- Number of quarters = 60 ÷ 3 = 20
+- Total deposited = 5,000 × 60 = **₹3,00,000**
+- Maturity = **₹3,59,664**
+- Interest earned = **₹59,664**
+
+## ₹5,000 a month at 7%
+
+| Tenure | Deposited | Maturity | Interest |
+|---|---|---|---|
+| 12 months | ₹60,000 | ₹62,311 | ₹2,311 |
+| 24 months | ₹1,20,000 | ₹1,29,099 | ₹9,099 |
+| 36 months | ₹1,80,000 | ₹2,00,686 | ₹20,686 |
+| 60 months | ₹3,00,000 | ₹3,59,664 | ₹59,664 |
+| 120 months | ₹6,00,000 | ₹8,68,509 | ₹2,68,509 |
+
+## RD vs FD
+
+| | RD | FD |
+|---|---|---|
+| Deposit | Fixed amount every month | One lump sum |
+| Best for | Saving from monthly income | Money you already have |
+| Interest | Lower total (later deposits earn less) | Higher on the same total |
+| Rate | Usually same as FD for the tenure | — |
+
+## Bank RD vs post office RD
+
+- **Bank RD**: tenure from 6 months to 10 years, rates vary by bank, extra for senior citizens.
+- **Post office RD**: fixed 5-year tenure, government-backed, currently 6.7% compounded quarterly.
+
+## Keep in mind
+
+- Interest is taxable at your slab rate.
+- Pay on time. Late instalments attract a penalty.
+- The calculator assumes the rate stays the same for the whole tenure, which it does for a bank RD once opened.

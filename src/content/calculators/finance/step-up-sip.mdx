@@ -1,0 +1,79 @@
+---
+title: Step-Up SIP Calculator (Top-Up SIP)
+description: See how increasing your SIP amount every year boosts your corpus. Compare step-up SIP vs regular SIP with total invested and returns.
+category: finance
+keywords: [step up sip calculator, top up sip calculator, sip with annual increase, incremental sip, step-up sip vs sip, sip step up]
+updated: 2026-10-27
+variables:
+  - { id: M, label: Starting monthly SIP, family: currency, prefix: '₹', default: 10000, min: 0, decimals: 0 }
+  - { id: s, label: Annual step-up, family: percent, unit: '%', default: 10, min: 0.0001, max: 1 }
+  - { id: r, label: Expected return (per year), family: percent, unit: '%', default: 12, min: 0.0001, max: 1 }
+  - { id: Y, label: Investment period, family: none, suffix: years, default: 20, min: 1 }
+  - { id: F, label: Estimated corpus, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: inv, label: Total invested, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: G, label: Estimated returns, family: currency, prefix: '₹', decimals: 0 }
+  - { id: last, label: Monthly SIP in final year, family: currency, prefix: '₹', min: 0, decimals: 0 }
+equations:
+  - F = M * ((1 + r/12)^12 - 1) / (r/12) * (1 + r/12) * (((1 + r/12)^(12*Y) - (1 + s)^Y) / ((1 + r/12)^12 - (1 + s)))
+  - inv = 12 * M * ((1 + s)^Y - 1) / s
+  - G = F - inv
+  - last = M * (1 + s)^(Y - 1)
+chart: { x: Y, y: F, from: 1, to: 30 }
+faq:
+  - q: What is a step-up SIP?
+    a: A SIP where you raise the monthly amount by a fixed percentage every year, usually in line with your salary increase. It is also called a top-up SIP.
+  - q: How much more does a step-up SIP give?
+    a: ₹10,000 a month for 20 years at 12% gives about ₹99,91,479 as a flat SIP. With a 10% yearly step-up it grows to about ₹1,98,88,715.
+  - q: What step-up percentage should I choose?
+    a: Match it to your expected salary growth — 5–10% is common. Even 5% makes a big difference over 15–20 years.
+  - q: How is the step-up SIP corpus calculated?
+    a: Each year's 12 monthly instalments are valued like a normal SIP, then grown to the end of the period. Adding up all years gives a geometric series, which the calculator sums exactly.
+related: [finance/sip, finance/lumpsum, finance/swp, finance/retirement-corpus, finance/inflation]
+---
+
+## How to use this calculator
+
+Enter your **starting monthly SIP**, the **annual step-up** (how much you will raise it each year), the **expected return** and the **period in years**. The calculator shows the final corpus, how much you invested in total, the returns and what your SIP will be in the final year.
+
+## The formula
+
+Each year's 12 instalments are worth, at the end of that year:
+
+<p class="formula">A = M<sub>k</sub> × [((1 + i)<sup>12</sup> − 1) ÷ i] × (1 + i)</p>
+
+where M<sub>k</sub> = M × (1 + s)<sup>k</sup> is the SIP in year k and i = annual return ÷ 12. Growing each year's value to the end and summing gives:
+
+<p class="formula">F = M × A₁ × [(1 + i)<sup>12Y</sup> − (1 + s)<sup>Y</sup>] ÷ [(1 + i)<sup>12</sup> − (1 + s)]</p>
+
+## Worked example
+
+Start at ₹10,000 a month, step up 10% a year, 12% return, 20 years:
+
+- Final-year SIP = 10,000 × 1.1<sup>19</sup> = **₹61,159** a month
+- Total invested = **₹68,73,000**
+- Corpus = **₹1,98,88,715**
+
+A flat ₹10,000 SIP for the same 20 years gives only **₹99,91,479** from ₹24,00,000 invested.
+
+## Effect of the step-up rate
+
+₹10,000 starting SIP, 12% return, 20 years:
+
+| Annual step-up | Total invested | Corpus |
+|---|---|---|
+| 0% | ₹24,02,281 | ₹99,97,340 |
+| 5% | ₹39,67,914 | ₹1,37,37,623 |
+| 10% | ₹68,73,000 | ₹1,98,88,715 |
+| 15% | ₹1,22,93,230 | ₹3,02,55,942 |
+
+## Why step-up works
+
+- **Your income grows**, so a fixed SIP becomes a smaller share of your salary every year.
+- **Inflation erodes a fixed SIP.** ₹10,000 today buys much less in 15 years.
+- **More money goes in while there is still time to compound**, especially in the middle years.
+
+## Keep in mind
+
+- Most fund houses let you set an automatic top-up when you start the SIP, by amount or percentage.
+- Returns are not guaranteed. Use a conservative return such as 10–12% for equity funds.
+- Adjust your goal for inflation with the [inflation calculator](/finance/inflation/).

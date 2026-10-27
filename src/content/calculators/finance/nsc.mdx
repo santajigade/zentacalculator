@@ -1,0 +1,70 @@
+---
+title: NSC Calculator (National Savings Certificate)
+description: Calculate NSC maturity value and interest at the current 7.7% rate for the 5-year post office National Savings Certificate.
+category: finance
+keywords: [nsc calculator, national savings certificate calculator, nsc interest rate, nsc maturity, post office nsc, nsc 7.7, nsc tax benefit]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Investment amount, family: currency, prefix: '₹', default: 100000, min: 0, decimals: 0 }
+  - { id: r, label: Interest rate, family: percent, unit: '%', default: 7.7, min: 0.0001, max: 0.3 }
+  - { id: n, label: Tenure, family: none, suffix: years, default: 5, min: 1 }
+  - { id: F, label: Maturity value, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: I, label: Interest earned, family: currency, prefix: '₹', decimals: 0 }
+equations:
+  - F = P*(1 + r)^n
+  - I = F - P
+faq:
+  - q: What is the current NSC interest rate?
+    a: 7.7% a year, compounded annually and paid at maturity, for October–December 2026. The rate on the day you buy is locked for 5 years.
+  - q: What will ₹1 lakh in NSC become?
+    a: About ₹1,44,903 after 5 years at 7.7%, earning about ₹44,903 in interest.
+  - q: Is NSC interest taxable?
+    a: Yes, at maturity it is taxed at your slab rate. Under the old regime, the yearly accrued interest for the first 4 years counts as reinvested and qualifies for 80C.
+  - q: Can I withdraw NSC early?
+    a: Only on the holder’s death, a court order or forfeiture by a pledgee. Otherwise it is locked for 5 years.
+related: [finance/fd, finance/ppf, finance/post-office-mis, finance/compound-interest, finance/sukanya-samriddhi]
+---
+
+## How to use this calculator
+
+Enter the **amount** you will invest in NSC and the **interest rate** (currently 7.7%). The tenure is fixed at 5 years. The calculator shows the maturity value and the interest earned.
+
+## The NSC formula
+
+<p class="formula">F = P × (1 + r)<sup>5</sup></p>
+
+Interest compounds annually but is paid only at maturity.
+
+## Worked example
+
+₹1,00,000 at 7.7% for 5 years:
+
+| Year | Interest for the year | Balance |
+|---|---|---|
+| 1 | ₹7,700 | ₹1,07,700 |
+| 2 | ₹8,293 | ₹1,15,993 |
+| 3 | ₹8,931 | ₹1,24,924 |
+| 4 | ₹9,619 | ₹1,34,544 |
+| 5 | ₹10,360 | ₹1,44,903 |
+
+Maturity = **₹1,44,903**, interest = **₹44,903**.
+
+## NSC at a glance
+
+- **Minimum**: ₹1,000, in multiples of ₹100. **No maximum.**
+- **Tenure**: 5 years.
+- **Tax**: deposit up to ₹1.5 lakh qualifies under 80C (old regime). Interest is taxable at maturity, but the yearly accrued interest for years 1–4 also qualifies for 80C.
+- **Safety**: backed by the Government of India.
+- **Where**: any post office, online through India Post internet banking.
+
+## NSC vs tax-saving FD vs PPF
+
+| | NSC | Tax-saving FD | PPF |
+|---|---|---|---|
+| Lock-in | 5 years | 5 years | 15 years |
+| Rate | 7.7% | Bank rate | 7.1% |
+| Interest taxable | Yes | Yes | No |
+
+## Keep in mind
+
+NSC suits people in the old regime who want a guaranteed return with a 5-year lock-in. In the new regime, the 80C benefit does not apply.

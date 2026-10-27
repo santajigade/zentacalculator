@@ -1,0 +1,117 @@
+---
+title: GST Calculator (Add or Remove GST)
+description: Add GST to a price or remove GST from an inclusive amount. Shows CGST, SGST and the total at 5%, 18%, 40% and other GST rates.
+category: finance
+keywords: [gst calculator, gst calculation, gst inclusive, gst exclusive, reverse gst, cgst sgst, igst, gst 18 percent, gst 5 percent, gst 2.0]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: A, label: Amount, family: currency, prefix: '₹', default: 10000, min: 0, decimals: 2 }
+  - id: g
+    label: GST rate
+    default: 0.18
+    options:
+      - { label: '5%', value: 0.05 }
+      - { label: '18%', value: 0.18 }
+      - { label: '40%', value: 0.4 }
+      - { label: '3% (gold, silver, jewellery)', value: 0.03 }
+      - { label: '12% (specified items)', value: 0.12 }
+      - { label: '28% (specified items)', value: 0.28 }
+      - { label: '0.25% (rough diamonds)', value: 0.0025 }
+  - id: m
+    label: The amount is
+    default: 1
+    options:
+      - { label: Before GST (add GST), value: 1 }
+      - { label: Including GST (remove GST), value: 0 }
+  - { id: B, label: Price before GST, family: currency, prefix: '₹', min: 0, decimals: 2 }
+  - { id: G, label: GST amount, family: currency, prefix: '₹', min: 0, decimals: 2 }
+  - { id: C, label: CGST (half), family: currency, prefix: '₹', min: 0, decimals: 2 }
+  - { id: S, label: SGST / UTGST (half), family: currency, prefix: '₹', min: 0, decimals: 2 }
+  - { id: T, label: Price including GST, family: currency, prefix: '₹', min: 0, decimals: 2 }
+equations:
+  - B = m * A + (1 - m) * A / (1 + g)
+  - G = B * g
+  - C = G / 2
+  - S = G / 2
+  - T = B + G
+faq:
+  - q: How do I calculate GST on an amount?
+    a: Multiply the price before GST by the rate. ₹10,000 at 18% gives GST of ₹1,800 and a total of ₹11,800.
+  - q: How do I remove GST from an inclusive price?
+    a: Divide the inclusive price by (1 + rate). ₹11,800 ÷ 1.18 = ₹10,000, so the GST in it is ₹1,800. Choose “Including GST” in the calculator to do this.
+  - q: What are the GST rates in India now?
+    a: Since GST 2.0 took effect on 22 September 2025 the main slabs are 5% and 18%, with 40% for luxury and sin goods. Special rates such as 3% for gold and 0.25% for rough diamonds still apply, and some items are exempt.
+  - q: What is the difference between CGST, SGST and IGST?
+    a: Within a state, GST is split equally into CGST (central) and SGST (state). For sales between states the full amount is charged as IGST.
+  - q: Is 18% GST split as 9% CGST and 9% SGST?
+    a: Yes, for an intra-state sale. For an inter-state sale it is 18% IGST.
+related: [finance/sales-tax-vat, finance/discount, finance/profit-margin, finance/income-tax-india]
+---
+
+## How to use this calculator
+
+1. Enter the **amount**.
+2. Pick the **GST rate** that applies to the product or service.
+3. Choose whether the amount is **before GST** (you want to add GST) or **including GST** (you want to find the GST inside it).
+
+You get the price before GST, the GST amount, the CGST and SGST split and the final price.
+
+## GST formulas
+
+**Adding GST**
+
+<p class="formula">GST = Price × Rate &nbsp;·&nbsp; Total = Price × (1 + Rate)</p>
+
+**Removing GST (reverse calculation)**
+
+<p class="formula">Price before GST = Inclusive price ÷ (1 + Rate)</p>
+
+A common mistake is to take 18% of the inclusive price. On ₹11,800 that gives ₹2,124, which is wrong. The GST inside ₹11,800 is only ₹1,800.
+
+## Worked examples
+
+**Adding 18% GST to ₹10,000**
+
+- GST = 10,000 × 0.18 = **₹1,800**
+- CGST = ₹900, SGST = ₹900
+- Total = **₹11,800**
+
+**Removing 5% GST from ₹2,100**
+
+- Price before GST = 2,100 ÷ 1.05 = **₹2,000**
+- GST = **₹100** (₹50 CGST + ₹50 SGST)
+
+## GST on ₹10,000 at each rate
+
+| Rate | GST | Total price |
+|---|---|---|
+| 5% | ₹500 | ₹10,500 |
+| 18% | ₹1,800 | ₹11,800 |
+| 40% | ₹4,000 | ₹14,000 |
+| 3% | ₹300 | ₹10,300 |
+
+## Current GST slabs in India
+
+GST 2.0, effective **22 September 2025**, simplified the structure:
+
+- **0% (exempt)**: many essentials, education and healthcare services, individual life and health insurance.
+- **5%**: everyday essentials and many key inputs.
+- **18%**: the standard rate for most goods and services.
+- **40%**: luxury and sin goods.
+- **Special rates**: 3% on gold, silver and jewellery, 0.25% on rough diamonds and a few others.
+
+Rates for a specific item depend on its HSN or SAC code. Check the CBIC rate notifications or your accountant for the exact rate.
+
+## CGST, SGST and IGST
+
+- **Intra-state sale** (seller and buyer in the same state): GST is split equally, half CGST and half SGST (or UTGST in a union territory).
+- **Inter-state sale** or import: the full rate is charged as **IGST**.
+
+The total tax is the same either way. Only the split and who receives the tax change.
+
+## Keep in mind
+
+- Registered businesses can usually claim input tax credit for GST paid on purchases.
+- Round the final invoice as your billing software requires.
+- This calculator is for estimates. Use official notifications for filing and compliance.

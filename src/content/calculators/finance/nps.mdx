@@ -1,0 +1,94 @@
+---
+title: NPS Calculator (National Pension System)
+description: Estimate your NPS corpus at 60, the lump sum you can withdraw and the monthly pension from the annuity — using current exit rules.
+category: finance
+keywords: [nps calculator, national pension system calculator, nps pension calculator, nps returns, nps annuity, nps lump sum, nps tier 1, nps 80% withdrawal]
+updated: 2026-10-27
+variables:
+  - { id: M, label: Monthly contribution, family: currency, prefix: '₹', default: 5000, min: 0, decimals: 0 }
+  - { id: A, label: Your age, family: none, suffix: years, default: 30, min: 18, max: 59 }
+  - { id: r, label: Expected return (per year), family: percent, unit: '%', default: 10, min: 0.0001, max: 0.5 }
+  - { id: a, label: Share used to buy annuity, family: percent, unit: '%', default: 20, min: 0, max: 1, help: 'At least 20% for most non-government subscribers with a corpus above ₹12 lakh.' }
+  - { id: ar, label: Annuity rate (per year), family: percent, unit: '%', default: 6, min: 0, max: 0.2 }
+  - { id: F, label: Corpus at 60, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: L, label: Lump sum you can withdraw, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: P, label: Monthly pension, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: inv, label: Total contributed, family: currency, prefix: '₹', min: 0, decimals: 0 }
+equations:
+  - F = M*((1 + r/12)^(12*(60 - A)) - 1)/(r/12)*(1 + r/12)
+  - L = (1 - a)*F
+  - P = a*F*ar/12
+  - inv = M*12*(60 - A)
+chart: { x: A, y: F, from: 20, to: 55 }
+faq:
+  - q: How much pension will I get from NPS?
+    a: It depends on the corpus and the share you put into an annuity. ₹5,000 a month from age 30 at 10% builds about ₹1,13,96,627. Using 20% for an annuity at 6% gives about ₹11,397 a month; using 40% doubles it.
+  - q: How much of my NPS can I withdraw at 60?
+    a: Since the December 2025 rule change, non-government subscribers can take up to 80% as a lump sum when the corpus is above ₹12 lakh, and must use at least 20% for an annuity. Smaller corpuses have more flexible options.
+  - q: Is the NPS lump sum tax-free?
+    a: Up to 60% of the corpus is tax-free on exit. If you withdraw more than 60%, the excess may be taxable. The annuity income is taxed at your slab rate.
+  - q: What return does NPS give?
+    a: It depends on your equity share. Equity schemes have historically returned around 10–12% a year over long periods, government bond schemes around 8–9%. Returns are not guaranteed.
+  - q: What tax benefits does NPS give?
+    a: Your own contribution qualifies under 80C and an extra ₹50,000 under 80CCD(1B) in the old regime. Employer contributions up to 14% of basic are deductible in the new regime too.
+related: [finance/epf, finance/ppf, finance/sip, finance/retirement-corpus, finance/swp]
+---
+
+## How to use this calculator
+
+Enter your **monthly contribution**, your **age**, the **expected return**, the **share of the corpus you will use to buy an annuity** and the **annuity rate**. The calculator shows your corpus at 60, the lump sum you can take and the monthly pension.
+
+## The formula
+
+The corpus grows like a monthly SIP:
+
+<p class="formula">Corpus = M × [((1 + i)<sup>n</sup> − 1) ÷ i] × (1 + i)</p>
+
+with i = annual return ÷ 12 and n = months until 60. Then:
+
+- **Lump sum** = (1 − annuity share) × corpus
+- **Monthly pension** = annuity share × corpus × annuity rate ÷ 12
+
+## Worked example
+
+₹5,000 a month from age 30 to 60 at 10%:
+
+- Total contributed = **₹18,00,000**
+- Corpus at 60 = **₹1,13,96,627**
+- Lump sum (80%) = **₹91,17,301**
+- Pension from 20% annuity at 6% = **₹11,397 a month**
+
+## Corpus by starting age
+
+₹5,000 a month at 10%:
+
+| Start age | Years | Corpus at 60 | Pension (40% annuity) |
+|---|---|---|---|
+| 25 | 35 | ₹1,91,41,384 | ₹38,283 |
+| 30 | 30 | ₹1,13,96,627 | ₹22,793 |
+| 35 | 25 | ₹66,89,452 | ₹13,379 |
+| 40 | 20 | ₹38,28,485 | ₹7,657 |
+| 45 | 15 | ₹20,89,621 | ₹4,179 |
+
+## NPS exit rules at 60 (non-government subscribers)
+
+| Corpus | What you can do |
+|---|---|
+| Up to ₹8 lakh | Withdraw everything, no annuity needed |
+| ₹8–12 lakh | Up to ₹6 lakh lump sum; rest as annuity or systematic withdrawal |
+| Above ₹12 lakh | Up to 80% lump sum; at least 20% in an annuity |
+
+You can also defer withdrawal and stay invested up to age 85. Government employees follow different rules (40% minimum annuity).
+
+## Choosing your asset mix
+
+- **Active choice**: pick your own split across equity (up to 75%), corporate bonds and government securities.
+- **Auto choice**: equity is reduced automatically as you get older.
+
+Younger investors can usually afford more equity for higher long-term growth.
+
+## Keep in mind
+
+- Annuity rates change with interest rates. Check current quotes from annuity providers before you retire.
+- Pension from an annuity does not rise with inflation unless you choose a rising annuity.
+- Returns are market-linked and not guaranteed.

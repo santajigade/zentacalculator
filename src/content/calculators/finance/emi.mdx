@@ -1,0 +1,98 @@
+---
+title: EMI Calculator (Home, Car and Personal Loan)
+description: Calculate your loan EMI, total interest and total payment for home, car, personal or education loans — in rupees, with a chart.
+category: finance
+keywords: [emi calculator, home loan emi calculator, car loan emi, personal loan emi, loan emi, emi formula, sbi home loan emi, monthly installment]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Loan amount, family: currency, prefix: '₹', default: 3000000, min: 0, decimals: 0 }
+  - { id: r, label: Interest rate (per year), family: percent, unit: '%', default: 8.5, min: 0.0001, max: 1 }
+  - { id: t, label: Loan tenure, family: time, unit: yr, default: 20, min: 0.0833 }
+  - { id: E, label: Monthly EMI, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: I, label: Total interest payable, family: currency, prefix: '₹', decimals: 0 }
+  - { id: T, label: Total payment (principal + interest), family: currency, prefix: '₹', min: 0, decimals: 0 }
+equations:
+  - E = P * (r/12) * (1 + r/12)^(12*t) / ((1 + r/12)^(12*t) - 1)
+  - T = E * 12 * t
+  - I = T - P
+chart: { x: t, y: E, from: 1, to: 30 }
+faq:
+  - q: What is the formula for EMI?
+    a: EMI = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1), where P is the loan amount, r the monthly interest rate (annual rate ÷ 12 ÷ 100) and n the number of monthly instalments.
+  - q: What is the EMI on a ₹30 lakh home loan for 20 years?
+    a: At 8.5% a year the EMI is about ₹26,035 per month. Over 20 years you pay about ₹32,48,327 in interest.
+  - q: Does a longer tenure reduce EMI?
+    a: Yes, but it increases the total interest. Going from 20 to 30 years on ₹30 lakh at 8.5% cuts the EMI by about ₹2,967 but adds about ₹20,55,938 of interest.
+  - q: How much loan can I get for a given EMI?
+    a: Press × on Loan amount, then type the EMI you can afford along with the rate and tenure. The calculator works out the loan amount.
+  - q: Does prepayment reduce EMI or tenure?
+    a: Banks usually keep the EMI the same and shorten the tenure, which saves the most interest. You can ask them to reduce the EMI instead.
+  - q: Are processing fees included?
+    a: No. Processing fees, insurance and GST on fees are extra. Add them to compare the real cost of different offers.
+related: [finance/loan-payment, finance/mortgage, finance/simple-interest, finance/compound-interest, finance/sip]
+---
+
+## How to use this calculator
+
+Enter the **loan amount**, the **interest rate** your bank quotes and the **tenure** in years. The calculator shows your monthly EMI, the total interest and the total amount you will repay. Change any value and the results update instantly.
+
+It works in every direction. To find the loan you can afford, press × on Loan amount and type the EMI you are comfortable with. To check what rate a lender is really charging, enter the loan, EMI and tenure and press × on the rate.
+
+## The EMI formula
+
+<p class="formula">EMI = P × r × (1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1)</p>
+
+- **P** = loan amount (principal)
+- **r** = monthly interest rate = annual rate ÷ 12 ÷ 100
+- **n** = number of monthly instalments = years × 12
+
+Each EMI has two parts: interest on the outstanding balance and a repayment of principal. In the early years most of the EMI goes to interest. As the balance falls, more of each EMI repays the loan.
+
+## Worked example
+
+A home loan of **₹30,00,000** at **8.5%** for **20 years**:
+
+- Monthly rate r = 8.5 ÷ 12 ÷ 100 = 0.007083
+- Number of EMIs n = 20 × 12 = 240
+- EMI = **₹26,035**
+- Total payment = ₹26,035 × 240 = **₹62,48,327**
+- Total interest = **₹32,48,327**
+
+The interest is more than the loan itself, which is normal for a 20-year home loan.
+
+## EMI for common loans
+
+| Loan type | Amount | Rate | Tenure | EMI | Total interest |
+|---|---|---|---|---|---|
+| Home loan | ₹30,00,000 | 8.5% | 20 years | ₹26,035 | ₹32,48,327 |
+| Car loan | ₹8,00,000 | 9.5% | 5 years | ₹16,801 | ₹2,08,089 |
+| Personal loan | ₹5,00,000 | 12% | 3 years | ₹16,607 | ₹97,858 |
+| Education loan | ₹10,00,000 | 10% | 7 years | ₹16,601 | ₹3,94,499 |
+
+## How tenure changes your EMI
+
+₹30 lakh at 8.5%:
+
+| Tenure | EMI | Total interest | Total payment |
+|---|---|---|---|
+| 10 years | ₹37,196 | ₹14,63,485 | ₹44,63,485 |
+| 15 years | ₹29,542 | ₹23,17,594 | ₹53,17,594 |
+| 20 years | ₹26,035 | ₹32,48,327 | ₹62,48,327 |
+| 25 years | ₹24,157 | ₹42,47,044 | ₹72,47,044 |
+| 30 years | ₹23,067 | ₹53,04,266 | ₹83,04,266 |
+
+A longer tenure lowers the EMI but the total interest climbs steeply. Choose the shortest tenure whose EMI fits comfortably in your budget.
+
+## How to reduce your loan cost
+
+- **Prepay early.** A prepayment in the first few years saves far more interest than the same amount later. Floating-rate home loans for individuals have no prepayment penalty in India.
+- **Increase the EMI with your salary.** Raising the EMI by 5–10% each year can cut a 20-year loan by several years.
+- **Compare the rate, not just the EMI.** A small difference of 0.5% on ₹30 lakh over 20 years is worth roughly ₹2,29,700.
+- **Check the reset clause.** Floating rates move with the repo rate, so your EMI or tenure can change.
+
+## Keep in mind
+
+- Most lenders want total EMIs below about 40–50% of your take-home pay.
+- Interest on a home loan may be deductible under the old tax regime. Check current rules with a tax adviser.
+- This is an estimate. Your bank's schedule may differ slightly because of rounding and the date the loan starts.

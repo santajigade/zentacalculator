@@ -1,0 +1,75 @@
+---
+title: Post Office Monthly Income Scheme Calculator (POMIS)
+description: Calculate monthly income from the Post Office MIS at the current 7.4% rate, plus total interest over 5 years.
+category: finance
+keywords: [post office mis calculator, pomis calculator, monthly income scheme, post office monthly income, mis interest rate, mis 7.4, post office scheme]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Deposit amount, family: currency, prefix: '₹', default: 900000, min: 0, max: 1500000, decimals: 0, help: 'Up to ₹9 lakh in a single account or ₹15 lakh in a joint account.' }
+  - { id: r, label: Interest rate, family: percent, unit: '%', default: 7.4, min: 0.0001, max: 0.3 }
+  - { id: Mi, label: Monthly income, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: Yi, label: Yearly income, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: Ti, label: Total interest in 5 years, family: currency, prefix: '₹', min: 0, decimals: 0 }
+equations:
+  - Mi = P*r/12
+  - Yi = P*r
+  - Ti = P*r*5
+faq:
+  - q: What is the Post Office MIS interest rate?
+    a: 7.4% a year, paid monthly, for October–December 2026. The rate is fixed for the full 5 years once you invest.
+  - q: How much monthly income do I get on ₹9 lakh?
+    a: ₹9,00,000 × 7.4% ÷ 12 = ₹5,550 a month, or ₹66,600 a year.
+  - q: What is the maximum investment in POMIS?
+    a: ₹9 lakh in a single account and ₹15 lakh in a joint account (up to 3 adults).
+  - q: Is MIS interest taxable?
+    a: Yes, at your slab rate. There is no TDS, so include it in your tax return.
+  - q: Can I close MIS early?
+    a: After 1 year. Closing between 1 and 3 years costs 2% of the deposit; between 3 and 5 years, 1%.
+related: [finance/fd, finance/swp, finance/nsc, finance/rd, finance/simple-interest]
+---
+
+## How to use this calculator
+
+Enter the **deposit amount** and the **interest rate** (currently 7.4%). The calculator shows the monthly income, the yearly income and the total interest over the 5-year term. You get your deposit back at maturity.
+
+To find the deposit needed for a target monthly income, press × on Deposit amount and type the monthly income you want.
+
+## The formula
+
+<p class="formula">Monthly income = Deposit × Rate ÷ 12</p>
+
+POMIS pays **simple interest** every month. It does not compound unless you reinvest the payouts yourself, for example into a post office RD.
+
+## Monthly income at 7.4%
+
+| Deposit | Monthly income | Yearly income | 5-year interest |
+|---|---|---|---|
+| ₹1,00,000 | ₹617 | ₹7,400 | ₹37,000 |
+| ₹3,00,000 | ₹1,850 | ₹22,200 | ₹1,11,000 |
+| ₹5,00,000 | ₹3,083 | ₹37,000 | ₹1,85,000 |
+| ₹9,00,000 | ₹5,550 | ₹66,600 | ₹3,33,000 |
+| ₹15,00,000 | ₹9,250 | ₹1,11,000 | ₹5,55,000 |
+
+## Key POMIS rules
+
+- **Minimum**: ₹1,000. **Maximum**: ₹9 lakh single, ₹15 lakh joint.
+- **Tenure**: 5 years.
+- **Payout**: monthly, to your post office savings account.
+- **Premature closure**: allowed after 1 year with a 1–2% penalty.
+- **Tax**: interest taxable at slab rate, no 80C benefit.
+
+## POMIS vs SCSS vs FD for regular income
+
+| | POMIS | SCSS | Bank FD (non-cumulative) |
+|---|---|---|---|
+| Rate (Oct–Dec 2026) | 7.4% | 8.2% | Varies |
+| Who | Any resident adult | Age 60+ (55+ for some retirees) | Anyone |
+| Payout | Monthly | Quarterly | Monthly / quarterly |
+| Limit | ₹9 / ₹15 lakh | ₹30 lakh | No limit |
+
+Senior citizens usually earn more in SCSS. POMIS suits younger people who want a guaranteed monthly income.
+
+## Keep in mind
+
+- The monthly payout does not rise with inflation.
+- Reinvesting the payouts into an [RD](/finance/rd/) turns POMIS into a compounding investment.

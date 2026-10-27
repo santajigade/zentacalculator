@@ -1,0 +1,88 @@
+---
+title: EPF Calculator (Provident Fund Maturity)
+description: Estimate your EPF balance at retirement from basic salary, age, yearly salary increase and the current 8.25% EPF interest rate.
+category: finance
+keywords: [epf calculator, pf calculator, provident fund calculator, epf interest rate, epf maturity, epfo, pf balance at retirement, employee provident fund]
+updated: 2026-10-27
+variables:
+  - { id: B, label: Monthly basic + DA, family: currency, prefix: '₹', default: 30000, min: 0, decimals: 0 }
+  - { id: A, label: Your age, family: none, suffix: years, default: 30, min: 15, max: 57 }
+  - { id: bal, label: Current EPF balance, family: currency, prefix: '₹', default: 200000, min: 0, decimals: 0 }
+  - { id: g, label: Yearly salary increase, family: percent, unit: '%', default: 5, min: 0.0001, max: 0.5 }
+  - { id: r, label: EPF interest rate, family: percent, unit: '%', default: 8.25, min: 0.0001, max: 0.3 }
+  - { id: C, label: Monthly contribution to EPF (you + employer), family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: F, label: EPF balance at 58, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: inv, label: Total contributions, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: I, label: Total interest earned, family: currency, prefix: '₹', decimals: 0 }
+equations:
+  - C = 0.24*B - min(1250, 0.0833*B)
+  - F = bal*(1 + r)^(58 - A) + C*(12 + 5.5*r)*((1 + r)^(58 - A) - (1 + g)^(58 - A))/(r - g)
+  - inv = C*12*((1 + g)^(58 - A) - 1)/g
+  - I = F - bal - inv
+faq:
+  - q: What is the EPF interest rate?
+    a: 8.25% a year for 2025-26, the same as the previous year. EPFO declares the rate every year after the financial year ends.
+  - q: How much goes into my EPF every month?
+    a: You contribute 12% of basic + DA. Your employer also contributes 12%, but 8.33% (up to ₹1,250 a month) goes to the pension scheme (EPS) and only the rest goes to EPF.
+  - q: How is EPF interest calculated?
+    a: Interest is worked out monthly on the running balance at the annual rate ÷ 12, and credited to your account once a year. It then compounds yearly.
+  - q: Is EPF interest tax-free?
+    a: Mostly. Interest on your own contributions above ₹2.5 lakh a year (₹5 lakh if the employer does not contribute) is taxable. Withdrawals after 5 years of continuous service are tax-free.
+  - q: When can I withdraw my EPF?
+    a: In full at retirement (58), or after 2 months of unemployment. Partial withdrawals are allowed for a house, education, marriage and medical needs.
+related: [finance/ppf, finance/gratuity, finance/nps, finance/retirement-corpus, finance/income-tax-india]
+---
+
+## How to use this calculator
+
+Enter your **monthly basic salary plus DA**, your **age**, your **current EPF balance** (from the EPFO passbook), the **yearly salary increase** you expect and the **interest rate**. The calculator estimates your EPF balance at age 58, the total contributions and the interest earned.
+
+## How EPF contributions work
+
+| Contribution | Share of basic + DA | Goes to |
+|---|---|---|
+| Employee | 12% | EPF |
+| Employer | 3.67% (or 12% minus ₹1,250 above ₹15,000 basic) | EPF |
+| Employer | 8.33%, capped at ₹1,250 a month | EPS (pension) |
+
+So on a basic of ₹30,000 the monthly EPF credit is 3,600 + 2,350 = **₹5,950**.
+
+## The formula
+
+Within a year, interest is simple — each month's deposit earns interest for the months left in the year. That makes a year's deposits worth about C × (12 + 5.5 × r) at year end. The balance then compounds yearly, and contributions grow with your salary at rate g:
+
+<p class="formula">F = Bal × (1 + r)<sup>Y</sup> + C × (12 + 5.5r) × [(1 + r)<sup>Y</sup> − (1 + g)<sup>Y</sup>] ÷ (r − g)</p>
+
+where Y = 58 − your age.
+
+## Worked example
+
+Age 30, basic + DA ₹30,000, balance ₹2,00,000, 5% yearly raise, 8.25% interest:
+
+- Monthly EPF contribution = **₹5,950**
+- Total contributions to 58 = **₹41,69,944**
+- EPF at 58 = **₹1,38,88,244**
+- Interest earned = **₹95,18,299**
+
+## EPF at 58 by starting age
+
+Basic ₹30,000, no current balance, 5% raises, 8.25%:
+
+| Age now | Years | EPF at 58 |
+|---|---|---|
+| 25 | 33 | ₹1,97,85,577 |
+| 30 | 28 | ₹1,20,47,424 |
+| 35 | 23 | ₹71,15,021 |
+| 40 | 18 | ₹40,11,007 |
+| 45 | 13 | ₹20,90,667 |
+| 50 | 8 | ₹9,30,307 |
+
+## Boost your EPF with VPF
+
+You can contribute more than 12% through the **Voluntary Provident Fund (VPF)**. It earns the same 8.25% rate and is just as safe. Remember that interest on employee contributions above ₹2.5 lakh a year is taxable.
+
+## Keep in mind
+
+- This is an estimate. The interest rate is set every year and your salary may grow faster or slower.
+- EPS gives a separate monthly pension and is not included here.
+- Do not withdraw EPF when you change jobs — transfer it with your UAN so it keeps compounding.

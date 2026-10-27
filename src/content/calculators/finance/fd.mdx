@@ -1,0 +1,100 @@
+---
+title: FD Calculator (Fixed Deposit)
+description: Calculate fixed deposit maturity amount and interest with quarterly, monthly or yearly compounding — for SBI, HDFC, post office and other bank FDs.
+category: finance
+keywords: [fd calculator, fixed deposit calculator, fd interest calculator, fd maturity, sbi fd calculator, post office fd, quarterly compounding, term deposit]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Deposit amount, family: currency, prefix: '₹', default: 100000, min: 0, decimals: 0 }
+  - { id: r, label: Interest rate (per year), family: percent, unit: '%', default: 7, min: 0, max: 0.5 }
+  - { id: t, label: Tenure, family: time, unit: yr, default: 5, min: 0 }
+  - id: k
+    label: Compounding
+    default: 4
+    options:
+      - { label: Quarterly (most banks), value: 4 }
+      - { label: Monthly, value: 12 }
+      - { label: Half-yearly, value: 2 }
+      - { label: Yearly, value: 1 }
+  - { id: A, label: Maturity amount, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: I, label: Interest earned, family: currency, prefix: '₹', decimals: 0 }
+  - { id: y, label: Effective annual yield, family: percent, unit: '%' }
+equations:
+  - A = P * (1 + r/k)^(k*t)
+  - I = A - P
+  - y = (1 + r/k)^k - 1
+chart: { x: t, y: A, from: 0, to: 10 }
+faq:
+  - q: How is FD interest calculated?
+    a: Most Indian banks compound FD interest quarterly. Maturity = P × (1 + r/4)^(4t), where P is the deposit, r the annual rate and t the tenure in years.
+  - q: How much will ₹1 lakh become in an FD in 5 years?
+    a: At 7% compounded quarterly it becomes about ₹1,41,478, earning about ₹41,478 in interest.
+  - q: Is FD interest taxable?
+    a: Yes. FD interest is added to your income and taxed at your slab rate. Banks deduct TDS when interest crosses the yearly threshold, unless you submit Form 15G or 15H if eligible.
+  - q: What is the effective yield of an FD?
+    a: It is the true annual return after compounding. A 7% FD compounded quarterly yields about 7.19% a year.
+  - q: Which is better, cumulative or non-cumulative FD?
+    a: A cumulative FD reinvests the interest and gives the most at maturity. A non-cumulative FD pays interest out monthly or quarterly, which suits people who need regular income.
+related: [finance/rd, finance/compound-interest, finance/nsc, finance/post-office-mis, finance/simple-interest]
+---
+
+## How to use this calculator
+
+Enter the **deposit amount**, the **interest rate** offered by your bank and the **tenure**. Pick the **compounding** frequency — quarterly is standard for most Indian bank FDs. You see the maturity amount, the interest earned and the effective annual yield.
+
+For tenures under a year, change the unit to months or days.
+
+## The FD formula
+
+<p class="formula">A = P × (1 + r ÷ k)<sup>k × t</sup></p>
+
+- **P** = deposit amount
+- **r** = annual interest rate (7% = 0.07)
+- **k** = compounding periods per year (4 for quarterly)
+- **t** = tenure in years
+
+This is the formula for a **cumulative** FD, where interest is added back to the deposit and earns interest itself.
+
+## Worked example
+
+₹1,00,000 at 7% for 5 years, compounded quarterly:
+
+- Quarterly rate = 7% ÷ 4 = 1.75%
+- Number of quarters = 5 × 4 = 20
+- Maturity = 1,00,000 × 1.0175<sup>20</sup> = **₹1,41,478**
+- Interest = **₹41,478**
+
+## ₹1 lakh FD at 7% (quarterly)
+
+| Tenure | Maturity | Interest |
+|---|---|---|
+| 1 year | ₹1,07,186 | ₹7,186 |
+| 2 years | ₹1,14,888 | ₹14,888 |
+| 3 years | ₹1,23,144 | ₹23,144 |
+| 5 years | ₹1,41,478 | ₹41,478 |
+| 10 years | ₹2,00,160 | ₹1,00,160 |
+
+## Cumulative vs non-cumulative FD
+
+| | Cumulative | Non-cumulative |
+|---|---|---|
+| Interest | Reinvested, paid at maturity | Paid out monthly, quarterly or yearly |
+| Best for | Growing savings | Regular income, retirees |
+| Return | Higher (compounding) | Lower (no compounding) |
+
+## Tax and TDS on FDs
+
+- FD interest is **fully taxable** at your income tax slab rate.
+- Banks deduct **TDS** when interest from one bank crosses the yearly threshold. Submit Form 15G (or 15H for senior citizens) if your income is below the taxable limit.
+- A **tax-saving FD** has a 5-year lock-in and qualifies for deduction under the old regime only.
+
+## Tips to earn more
+
+- **Senior citizens** usually get 0.25–0.75% extra.
+- **Ladder your FDs** across different tenures so some money matures every year and you can reinvest at better rates.
+- Compare the **effective yield**, not just the headline rate, when banks use different compounding.
+
+## Keep in mind
+
+Premature withdrawal usually attracts a penalty of 0.5–1% on the rate. Deposits are insured by DICGC up to ₹5 lakh per depositor per bank.

@@ -1,0 +1,87 @@
+---
+title: HRA Exemption Calculator
+description: Work out how much of your house rent allowance is tax-exempt under Section 10(13A) — metro and non-metro — and how much is taxable.
+category: finance
+keywords: [hra calculator, hra exemption calculator, house rent allowance, section 10(13a), hra tax exemption, hra metro, rent receipts, old regime hra]
+updated: 2026-10-27
+variables:
+  - { id: B, label: Basic salary + DA (per year), family: currency, prefix: '₹', default: 600000, min: 0, decimals: 0 }
+  - { id: H, label: HRA received (per year), family: currency, prefix: '₹', default: 240000, min: 0, decimals: 0 }
+  - { id: R, label: Rent paid (per year), family: currency, prefix: '₹', default: 240000, min: 0, decimals: 0 }
+  - id: m
+    label: City
+    default: 0.5
+    options:
+      - { label: 'Metro (Delhi, Mumbai, Kolkata, Chennai) — 50%', value: 0.5 }
+      - { label: Other city — 40%, value: 0.4 }
+  - { id: E, label: HRA exempt from tax, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: Tx, label: Taxable HRA, family: currency, prefix: '₹', decimals: 0 }
+equations:
+  - E = max(0, min(H, R - 0.1*B, m*B))
+  - Tx = H - E
+faq:
+  - q: How is HRA exemption calculated?
+    a: The exemption is the lowest of three amounts — actual HRA received, rent paid minus 10% of basic + DA, and 50% of basic + DA in a metro (40% elsewhere).
+  - q: Can I claim HRA in the new tax regime?
+    a: No. HRA exemption is available only under the old regime.
+  - q: Which cities count as metro for HRA?
+    a: Only Delhi, Mumbai, Kolkata and Chennai. Bengaluru, Hyderabad, Pune and others use the 40% limit.
+  - q: Do I need my landlord’s PAN?
+    a: Yes, if the rent you pay is more than ₹1 lakh a year. Keep rent receipts or a rent agreement as proof.
+  - q: Can I claim HRA if I pay rent to my parents?
+    a: Yes, if you genuinely pay rent and they own the house. They must show it as rental income.
+related: [finance/income-tax-india, finance/salary-increase, finance/gratuity, finance/emi]
+---
+
+## How to use this calculator
+
+Enter your yearly **basic salary plus dearness allowance**, the **HRA** your employer pays, the **rent** you pay and choose your **city**. The calculator shows the tax-exempt part of your HRA and the part added to your taxable income.
+
+If your salary or rent changed during the year, calculate each period separately and add the results.
+
+## The HRA rule
+
+The exempt amount is the **lowest** of:
+
+1. Actual HRA received
+2. Rent paid − 10% of (basic + DA)
+3. 50% of (basic + DA) in a metro, or 40% in other cities
+
+<p class="formula">Exempt HRA = min(HRA, Rent − 0.1 × Basic, 0.5 or 0.4 × Basic)</p>
+
+## Worked example
+
+Basic + DA ₹6,00,000, HRA ₹2,40,000, rent ₹20,000 a month (₹2,40,000), living in Mumbai:
+
+1. Actual HRA = ₹2,40,000
+2. Rent − 10% of basic = 2,40,000 − 60,000 = **₹1,80,000**
+3. 50% of basic = ₹3,00,000
+
+The lowest is **₹1,80,000**, so that much is exempt and ₹60,000 is taxable.
+
+## How rent changes the exemption
+
+Same salary (basic ₹6,00,000, HRA ₹2,40,000), metro:
+
+| Monthly rent | Exempt HRA | Taxable HRA |
+|---|---|---|
+| ₹5,000 | ₹0 | ₹2,40,000 |
+| ₹10,000 | ₹60,000 | ₹1,80,000 |
+| ₹15,000 | ₹1,20,000 | ₹1,20,000 |
+| ₹20,000 | ₹1,80,000 | ₹60,000 |
+| ₹25,000 | ₹2,40,000 | ₹0 |
+| ₹30,000 | ₹2,40,000 | ₹0 |
+
+Below ₹5,000 a month (10% of basic) there is no exemption at all. Above ₹25,000 the exemption is capped by the HRA itself.
+
+## Documents you need
+
+- Rent receipts or a rent agreement.
+- Landlord’s PAN if rent is above ₹1,00,000 a year.
+- Submit proofs to your employer during the year so TDS is reduced.
+
+## Keep in mind
+
+- HRA exemption applies only in the **old regime**. Use the [income tax calculator](/finance/income-tax-india/) to see if the old regime still saves you tax.
+- If you do not receive HRA but pay rent, you may be able to claim a smaller deduction under section 80GG in the old regime.
+- You cannot claim HRA for a house you own and live in.

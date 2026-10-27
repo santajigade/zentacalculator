@@ -1,0 +1,95 @@
+---
+title: PPF Calculator (Public Provident Fund)
+description: Calculate PPF maturity value and interest for yearly deposits at the current 7.1% rate — including 5-year extensions after 15 years.
+category: finance
+keywords: [ppf calculator, public provident fund calculator, ppf interest rate, ppf maturity, ppf 15 years, ppf extension, post office ppf, sbi ppf]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Yearly deposit, family: currency, prefix: '₹', default: 150000, min: 0, decimals: 0, help: 'Between ₹500 and ₹1,50,000 per financial year.' }
+  - { id: r, label: Interest rate, family: percent, unit: '%', default: 7.1, min: 0.0001, max: 0.5 }
+  - { id: n, label: Duration, family: time, unit: yr, default: 15, min: 1, help: '15 years, extendable in blocks of 5 years.' }
+  - { id: F, label: Maturity value, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: inv, label: Total deposited, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: I, label: Total interest earned, family: currency, prefix: '₹', decimals: 0 }
+equations:
+  - F = P * ((1 + r)^n - 1) / r * (1 + r)
+  - inv = P * n
+  - I = F - inv
+chart: { x: n, y: F, from: 15, to: 40 }
+faq:
+  - q: What is the current PPF interest rate?
+    a: 7.1% a year, compounded annually, for the October–December 2026 quarter. The government reviews small savings rates every quarter.
+  - q: What will ₹1.5 lakh a year in PPF become in 15 years?
+    a: At 7.1% it grows to about ₹40,68,209. You deposit ₹22,50,000 and earn about ₹18,18,209 in interest, all tax-free.
+  - q: What is the PPF lock-in period?
+    a: 15 full financial years from the end of the year you open it. Partial withdrawals are allowed from the 7th year and loans from the 3rd to 6th year.
+  - q: Is PPF interest taxable?
+    a: No. PPF has EEE status — deposits qualify for deduction under the old regime (up to ₹1.5 lakh), and interest and maturity are tax-free.
+  - q: When should I deposit to earn the most interest?
+    a: Before the 5th of the month. Interest is calculated on the lowest balance between the 5th and the end of each month, so a deposit by 5 April earns interest for the full year.
+  - q: Can I extend PPF after 15 years?
+    a: Yes, in blocks of 5 years, with or without further deposits. Set Duration to 20, 25 or 30 years to see the effect.
+related: [finance/sukanya-samriddhi, finance/epf, finance/nsc, finance/sip, finance/compound-interest]
+---
+
+## How to use this calculator
+
+Enter the amount you will deposit **each financial year**, the **interest rate** (currently 7.1%) and the **duration** (15 years, or 20, 25 or 30 with extensions). The calculator shows the maturity value, the total you deposited and the interest earned.
+
+To find the yearly deposit needed for a goal, press × on Yearly deposit and type the maturity value you want.
+
+## The PPF formula
+
+<p class="formula">F = P × [((1 + r)<sup>n</sup> − 1) ÷ r] × (1 + r)</p>
+
+- **P** = yearly deposit
+- **r** = annual interest rate (7.1% = 0.071)
+- **n** = number of years
+
+The formula assumes you deposit at the **start** of each financial year (by 5 April), so every deposit earns a full year of interest. Interest is compounded once a year, on 31 March.
+
+## Worked example
+
+₹1,50,000 every year for 15 years at 7.1%:
+
+- Total deposited = 1,50,000 × 15 = **₹22,50,000**
+- Maturity value = **₹40,68,209**
+- Interest earned = **₹18,18,209** (tax-free)
+
+## Maturity for different deposits (15 years, 7.1%)
+
+| Yearly deposit | Total deposited | Maturity value | Interest |
+|---|---|---|---|
+| ₹12,000 | ₹1,80,000 | ₹3,25,457 | ₹1,45,457 |
+| ₹50,000 | ₹7,50,000 | ₹13,56,070 | ₹6,06,070 |
+| ₹1,00,000 | ₹15,00,000 | ₹27,12,139 | ₹12,12,139 |
+| ₹1,50,000 | ₹22,50,000 | ₹40,68,209 | ₹18,18,209 |
+
+## The power of extending
+
+Depositing ₹1.5 lakh a year at 7.1%:
+
+| Duration | Total deposited | Maturity value |
+|---|---|---|
+| 15 years | ₹22,50,000 | ₹40,68,209 |
+| 20 years | ₹30,00,000 | ₹66,58,288 |
+| 25 years | ₹37,50,000 | ₹1,03,08,015 |
+| 30 years | ₹45,00,000 | ₹1,54,50,911 |
+
+The last 15 years of a 30-year PPF earn far more than the first 15. If you do not need the money at maturity, extending is one of the best risk-free, tax-free options.
+
+## PPF rules at a glance
+
+- **Minimum deposit**: ₹500 a year. **Maximum**: ₹1,50,000 a year.
+- **Tenure**: 15 years, extendable in blocks of 5 years.
+- **Loan**: from the 3rd to the 6th year, up to 25% of the balance.
+- **Partial withdrawal**: from the 7th year, once a year.
+- **Tax**: EEE — deduction under the old regime, tax-free interest and maturity.
+- **Who can open**: resident Indian individuals, one account per person. NRIs cannot open a new account.
+
+## Keep in mind
+
+- The rate can change every quarter. The calculator uses one rate for the whole period, so treat the result as an estimate.
+- Monthly deposits made after the 5th earn less than this calculator shows.
+- Compare with the [SIP calculator](/finance/sip/) for market-linked growth and the [Sukanya Samriddhi calculator](/finance/sukanya-samriddhi/) if you are saving for a daughter.

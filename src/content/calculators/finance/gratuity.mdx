@@ -1,0 +1,91 @@
+---
+title: Gratuity Calculator
+description: Calculate gratuity from last drawn basic + DA and years of service using the 15/26 formula — with the ₹20 lakh tax-exempt limit.
+category: finance
+keywords: [gratuity calculator, gratuity formula, 15/26 formula, gratuity calculation india, gratuity tax exemption, payment of gratuity act, gratuity eligibility, gratuity 5 years]
+updated: 2026-10-27
+variables:
+  - { id: S, label: Last drawn monthly basic + DA, family: currency, prefix: '₹', default: 50000, min: 0, decimals: 0 }
+  - { id: y, label: Years of service, family: none, suffix: years, default: 10.67, min: 0, help: 'Use decimals for months, for example 10 years 8 months = 10.67.' }
+  - id: cov
+    label: Employer
+    default: 1
+    options:
+      - { label: 'Covered by gratuity law (15/26)', value: 1 }
+      - { label: 'Not covered (15/30)', value: 0 }
+  - { id: Gr, label: Gratuity amount, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: Ex, label: Tax-exempt (up to ₹20 lakh), family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: Tx, label: Taxable gratuity, family: currency, prefix: '₹', min: 0, decimals: 0 }
+equations:
+  - Gr = cov * 15/26 * S * round(y) + (1 - cov) * 15/30 * S * floor(y)
+  - Ex = min(Gr, 2000000)
+  - Tx = Gr - Ex
+faq:
+  - q: What is the gratuity formula?
+    a: For employers covered by the law, gratuity = 15 × last drawn basic + DA × years of service ÷ 26. The 15 stands for 15 days’ wages per year and 26 for working days in a month.
+  - q: How much gratuity for 10 years with ₹50,000 basic?
+    a: 15 × 50,000 × 10 ÷ 26 = ₹2,88,462. With 10 years 8 months, service rounds up to 11 years and gratuity is about ₹3,17,308.
+  - q: How are years of service rounded?
+    a: Under the gratuity law, a final part-year of more than 6 months counts as a full year. 7 years 8 months becomes 8 years; 7 years 5 months stays 7.
+  - q: Who is eligible for gratuity?
+    a: Permanent employees after 5 years of continuous service. Under the new labour codes, fixed-term employees become eligible after 1 year. There is no minimum on death or disability.
+  - q: Is gratuity taxable?
+    a: For private employees gratuity is tax-free up to ₹20 lakh over your whole career. Government employees get up to ₹25 lakh. Anything above is taxed at your slab rate.
+related: [finance/epf, finance/income-tax-india, finance/retirement-corpus, finance/hra-exemption]
+---
+
+## How to use this calculator
+
+Enter your **last drawn monthly basic salary plus dearness allowance** and your **years of service**. Choose whether your employer is covered by the gratuity law — almost all organisations with 10 or more employees are. You see the gratuity amount, the tax-exempt part and any taxable part.
+
+## The gratuity formula
+
+**Employers covered by the law**
+
+<p class="formula">Gratuity = 15 × last drawn (basic + DA) × years of service ÷ 26</p>
+
+Years of service are rounded: more than 6 months in the final year counts as a full year.
+
+**Employers not covered**
+
+<p class="formula">Gratuity = 15 × average (basic + DA) × completed years ÷ 30</p>
+
+Only completed years count, and the average salary of the last 10 months is used.
+
+## Worked example
+
+Basic + DA of **₹50,000** a month, **10 years 8 months** of service, covered employer:
+
+- Years counted = **11** (8 months is more than 6)
+- Gratuity = 15 × 50,000 × 11 ÷ 26 = **₹3,17,308**
+- Fully tax-free, as it is below ₹20 lakh.
+
+## Gratuity by salary and service
+
+| Basic + DA | 5 years | 10 years | 20 years | 30 years |
+|---|---|---|---|---|
+| ₹25,000 | ₹72,115 | ₹1,44,231 | ₹2,88,462 | ₹4,32,692 |
+| ₹50,000 | ₹1,44,231 | ₹2,88,462 | ₹5,76,923 | ₹8,65,385 |
+| ₹1,00,000 | ₹2,88,462 | ₹5,76,923 | ₹11,53,846 | ₹17,30,769 |
+| ₹1,50,000 | ₹4,32,692 | ₹8,65,385 | ₹17,30,769 | ₹25,96,154 |
+
+## Eligibility
+
+- **Permanent employees**: 5 years of continuous service.
+- **Fixed-term employees**: 1 year, under the Code on Social Security.
+- **Death or disability**: no minimum service. Gratuity goes to the nominee.
+- Gratuity is paid on retirement, resignation, termination (except for misconduct) or death.
+
+## Wages under the new labour codes
+
+The labour codes require basic pay plus DA to be at least **50% of total pay**. If your employer restructures your salary to meet this, your basic rises and so does your gratuity.
+
+## Tax on gratuity
+
+- **Private-sector employees**: exempt up to ₹20,00,000 across your career.
+- **Government employees**: exempt up to ₹25,00,000.
+- Any amount above the limit is added to income and taxed at slab rates.
+
+## Keep in mind
+
+Employers must pay gratuity within 30 days of it becoming due, or pay interest on the delay. Check your appointment letter for any gratuity scheme more generous than the law.

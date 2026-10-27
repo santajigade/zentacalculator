@@ -20,6 +20,10 @@ faq:
     a: Divide by (1 + tax rate), not multiply by (1 − rate). 118 including 18% tax is 118 ÷ 1.18 = 100. Press × on the net price and type the gross price.
   - q: What tax rate should I use?
     a: It depends on your country and the product — for example many goods are taxed at 20% VAT in the UK, 18% GST is common in India, and US sales tax varies by state and city.
+  - q: Is tax charged before or after a discount?
+    a: Usually after. Tax is calculated on the price you actually pay, so apply the discount first.
+  - q: How do I find the tax rate from two prices?
+    a: Rate = (gross − net) ÷ net. Enter both prices in the calculator and the rate is worked out.
 related: [finance/discount, finance/profit-margin, math/percentage]
 ---
 
@@ -40,6 +44,34 @@ Enter a **net price** and **tax rate** to add tax. To **remove** tax from a pric
 ## A common mistake
 
 To remove 20% VAT from 120, many people take 20% off: 120 × 0.8 = 96. That is wrong — the tax was 20% of the **net** price, not of the gross. The correct net is 100.
+
+## Tax on common prices
+
+| Net price | 5% | 10% | 18% | 20% |
+|---|---|---|---|---|
+| 10 | 10.50 | 11.00 | 11.80 | 12.00 |
+| 50 | 52.50 | 55.00 | 59.00 | 60.00 |
+| 100 | 105.00 | 110.00 | 118.00 | 120.00 |
+| 250 | 262.50 | 275.00 | 295.00 | 300.00 |
+| 1,000 | 1,050.00 | 1,100.00 | 1,180.00 | 1,200.00 |
+
+## Sales tax vs VAT vs GST
+
+| | Sales tax (e.g. USA) | VAT (e.g. UK, EU) | GST (e.g. India, Australia) |
+|---|---|---|---|
+| Charged | Only at the final sale | At every stage of the supply chain | At every stage |
+| Shown in prices | Usually added at the till | Usually included in shelf prices | Included in retail prices |
+| Credit for business purchases | No | Yes (input VAT) | Yes (input tax credit) |
+
+For India-specific GST rates and the CGST/SGST split, use the [GST calculator](/finance/gst/).
+
+## Combined state and local rates
+
+In the United States, the rate you pay is the state rate plus any county and city rates. Add them together and enter the total — for example, a 6% state rate plus 2.25% local is 8.25%.
+
+## Invoices and rounding
+
+Businesses often round tax per line item, while shops may round on the total. The difference is usually a few cents but can matter for accounting. Follow the rule your tax authority or accounting software uses.
 
 ## Typical standard rates (check current local rules)
 

@@ -19,6 +19,10 @@ faq:
     a: CAGR = (ending ÷ starting)^(1 ÷ years) − 1. From 10,000 to 18,000 in 5 years gives 12.47%.
   - q: Is CAGR the same as average annual return?
     a: No. A simple average of yearly returns overstates growth when returns vary. CAGR reflects what actually happened to the money.
+  - q: What is a good CAGR?
+    a: It depends on the asset. Over long periods, 6–8% is typical for bonds and deposits, and 10–12% for diversified equity funds. Compare against a relevant benchmark rather than a fixed number.
+  - q: Can CAGR be negative?
+    a: Yes. If the ending value is below the starting value the CAGR is negative, showing the average yearly decline.
 related: [finance/compound-interest, math/percentage-change]
 ---
 
@@ -43,6 +47,41 @@ The total growth was 80%, but the yearly compound rate is 12.47% — not 80 ÷ 5
 ## Why CAGR beats simple averages
 
 Suppose an investment rises 50% one year and falls 50% the next. The simple average return is 0%, yet 100 → 150 → 75 is a real loss. CAGR correctly shows −13.4% per year.
+
+## CAGR examples
+
+| Start → End | Period | CAGR |
+|---|---|---|
+| 10,000 → 20,000 | 5 years | 14.87% |
+| 10,000 → 20,000 | 10 years | 7.18% |
+| 50,000 → 150,000 | 8 years | 14.72% |
+| 100 → 80 | 3 years | -7.17% |
+| 1,000 → 5,000 | 15 years | 11.33% |
+
+A negative CAGR means the value shrank on average each year.
+
+## Where CAGR is used
+
+- **Investments**: comparing mutual funds, stocks or property bought at different times.
+- **Business growth**: revenue, users or profit growth over several years in annual reports.
+- **Economics**: GDP and population growth rates.
+- **Planning**: projecting a value forward at a steady growth rate — press × on Ending value and enter a CAGR.
+
+## CAGR vs absolute return vs XIRR
+
+| Measure | What it tells you | Best for |
+|---|---|---|
+| Absolute return | Total % gain, ignoring time | Holdings under a year |
+| CAGR | Steady yearly rate from start to end | One lump sum, held for years |
+| XIRR | Yearly rate with many cash flows | SIPs, top-ups, withdrawals |
+
+If you invested through a SIP, CAGR on the total invested understates or overstates the true return. Use XIRR instead.
+
+## Common mistakes
+
+- **Using months as years.** Enter 18 months as 1.5 years, or switch the unit to months.
+- **Dividing the total return by years.** A 100% gain over 10 years is a 7.18% CAGR, not 10% a year.
+- **Ignoring dividends.** For stocks, include reinvested dividends in the ending value to get total-return CAGR.
 
 ## Limits of CAGR
 

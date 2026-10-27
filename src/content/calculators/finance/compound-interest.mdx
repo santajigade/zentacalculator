@@ -33,6 +33,10 @@ faq:
     a: Enter the same principal and set Maturity amount to double it. The calculator solves for time. The rule of 72 gives a quick estimate — 72 ÷ rate. At 8% that is about 9 years.
   - q: Can I find the interest rate I need?
     a: Yes. Enter principal, target maturity amount and time. The rate is solved numerically.
+  - q: What is the difference between APR and APY?
+    a: APR is the nominal yearly rate. APY (or EAR) includes compounding, so it shows what you actually earn in a year. A 7.5% APR compounded monthly is about a 7.76% APY.
+  - q: Does compound interest work against me on loans?
+    a: Yes. Credit cards and many loans compound interest, so unpaid interest itself starts earning interest. Paying more than the minimum stops this.
 related: []
 ---
 
@@ -82,6 +86,40 @@ More frequent compounding earns slightly more because interest starts earning in
 ## Rule of 72
 
 To estimate how long money takes to double, divide 72 by the interest rate. At 8%, 72 ÷ 8 ≈ 9 years. The calculator gives the exact answer: clear the Time field and set the maturity amount to twice the principal.
+
+## Compound vs simple interest
+
+10,000 at 7.5% a year, compounded yearly versus simple interest:
+
+| Years | Compound | Simple | Extra from compounding |
+|---|---|---|---|
+| 1 | 10,750.00 | 10,750.00 | 0.00 |
+| 5 | 14,356.29 | 13,750.00 | 606.29 |
+| 10 | 20,610.32 | 17,500.00 | 3,110.32 |
+| 20 | 42,478.51 | 25,000.00 | 17,478.51 |
+| 30 | 87,549.55 | 32,500.00 | 55,049.55 |
+
+For the first few years the difference is small. Over decades, interest on interest becomes the larger part of the total.
+
+## Adding regular deposits
+
+This calculator handles a single deposit. If you also add money every month, use the [SIP calculator](/finance/sip/) for the monthly part and add the two results together. For a goal-based plan, try the [savings goal calculator](/finance/savings-goal/).
+
+## Continuous compounding
+
+As compounding becomes more frequent, the result approaches a limit called continuous compounding:
+
+<p class="formula">A = P × e<sup>r × t</sup></p>
+
+10,000 at 7.5% for 5 years gives 14,549.91, only slightly more than daily compounding. In practice, monthly or daily compounding is close enough.
+
+## Effective annual rate (EAR)
+
+Banks may quote the same nominal rate with different compounding. Compare them with the effective annual rate:
+
+<p class="formula">EAR = (1 + r ÷ n)<sup>n</sup> − 1</p>
+
+7.5% compounded monthly is an EAR of 7.763%. Quarterly gives 7.714%.
 
 ## Things to keep in mind
 

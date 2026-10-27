@@ -13,7 +13,7 @@ const catCount = (slug: string) => _all.filter((c) => c.data.category === slug).
 interface Props { title: string; description: string; schema?: object[]; activeCat?: string; noindex?: boolean; }
 const { title, description, schema = [], activeCat, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname.endsWith('/') ? Astro.url.pathname : Astro.url.pathname + '/', SITE.url).href;
-const fullTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+const fullTitle = title === SITE.name ? title : (title.length + SITE.name.length + 3 <= 65 ? `${title} | ${SITE.name}` : title);
 import { POPULAR } from '../data/popular.ts';
 const popAll = await allCalcs();
 const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);

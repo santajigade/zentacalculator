@@ -2,7 +2,7 @@
 title: 4–20 mA Scaling Calculator
 description: Convert a 4–20 mA loop current to a process value (and back) for any measuring range — with live scaling chart.
 category: engineering
-intro: "The 4–20 mA current loop is the standard analog signal in process instrumentation: 4 mA means 0% of the range and 20 mA means 100%. Converting between current and process value is daily work for instrument engineers — see the [4 to 20 mA current loop explained](https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/) and [PLC analog scaling from raw counts](https://www.instrumentationblog.in/plc-analog-scaling-raw-count/)."
+intro: "The 4–20 mA current loop is the standard analog signal in process instrumentation: 4 mA means 0% of the range and 20 mA means 100%. Converting between current and process value is daily work for instrument engineers — see the [4 to 20 mA current loop explained](https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/) and [PLC analog scaling from raw counts](https://www.instrumentationblog.in/plc-analog-scaling-raw-count/). This free 4–20 mA scaling calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [4-20 mA, 4 20 ma calculator, current loop, scaling, transmitter, mA to pressure, mA to temperature, percent span, plc scaling]
 updated: 2026-10-27
 featured: true
@@ -32,7 +32,7 @@ faq:
 related: [engineering/hydrostatic-pressure, engineering/pt100-resistance, physics/ohms-law]
 ---
 
-## How to use this calculator
+## How to use the 4–20 mA scaling calculator
 
 1. Enter the transmitter's **range** — the value at 4 mA (low) and at 20 mA (high), in any engineering unit such as bar, °C, m or m³/h.
 2. Enter the **loop current** to get the process value and percent of span.
@@ -41,7 +41,7 @@ To check a loop the other way round, press × on Loop current and type the proce
 
 For more background, read [4 to 20 mA Signal Conversion Calculator](https://www.instrumentationblog.in/4-to-20-ma-signal-conversion-calculator/).
 
-## The formula
+## 4–20 mA scaling formula
 
 <p class="formula">% span = (I − 4 mA) ÷ 16 mA<br/>value = low + % span × (high − low)</p>
 

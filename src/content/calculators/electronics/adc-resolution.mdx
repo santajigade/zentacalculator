@@ -2,7 +2,7 @@
 title: ADC Resolution Calculator (LSB and Step Size)
 description: Calculate ADC step size (LSB), number of levels and the digital code for an input voltage from bit depth and reference voltage — including 4–20 mA PLC inputs.
 category: electronics
-intro: "An analog-to-digital converter turns a voltage or current into a number, and its bit depth sets the smallest change it can see. Read [analog-to-digital conversion explained](https://www.instrumentationblog.in/analog-to-digital-conversion-explained/) and how this affects [analog signal resolution in PLCs](https://www.instrumentationblog.in/analog-signal-resolution-in-plc/)."
+intro: "An analog-to-digital converter turns a voltage or current into a number, and its bit depth sets the smallest change it can see. Read [analog-to-digital conversion explained](https://www.instrumentationblog.in/analog-to-digital-conversion-explained/) and how this affects [analog signal resolution in PLCs](https://www.instrumentationblog.in/analog-signal-resolution-in-plc/). This free ADC resolution calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [adc resolution calculator, lsb calculator, adc step size, bits to voltage resolution, analog to digital converter, adc counts, plc analog resolution]
 updated: 2026-10-27
 variables:
@@ -30,13 +30,13 @@ faq:
 related: [engineering/4-20ma-scaling, electronics/snr, electronics/voltage-divider, electronics/op-amp-gain]
 ---
 
-## How to use this calculator
+## How to use the ADC resolution calculator
 
 Enter the ADC's **resolution in bits**, the **full-scale reference voltage** and an **input voltage**. You get the number of levels, the step size, the digital code and the theoretical signal-to-noise ratio.
 
 For more background, read [PLC Analog Scaling from Raw Counts](https://www.instrumentationblog.in/plc-analog-scaling-raw-count/) and [ADC Working Principle](https://www.instrumentationblog.in/adc-working-principle-explained/).
 
-## The formulas
+## ADC resolution formulas
 
 <p class="formula">LSB = V<sub>ref</sub> ÷ 2ⁿ &nbsp;·&nbsp; Code = ⌊V<sub>in</sub> ÷ LSB⌋ &nbsp;·&nbsp; SNR<sub>ideal</sub> = 6.02n + 1.76 dB</p>
 

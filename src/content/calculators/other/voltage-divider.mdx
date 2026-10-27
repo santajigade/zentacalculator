@@ -20,6 +20,10 @@ faq:
     a: Not for real loads — the output drops when current is drawn. Use a regulator instead. Dividers are for signals and reference voltages.
   - q: How do I scale 12 V to a 3.3 V microcontroller input?
     a: Press × on R2, set Vout to 3.3 V and choose R1; the calculator gives R2. Leave some margin below the input's maximum.
+  - q: "How do I get 3.3 V from 5 V with resistors?"
+    a: "R2 ÷ (R1 + R2) = 0.66, for example R1 = 10 kΩ and R2 = 20 kΩ (gives 3.33 V) — only for high-impedance inputs."
+  - q: "Can I power a device with a voltage divider?"
+    a: "No. Use a regulator. Dividers are for signals and reference voltages, not for supplying current."
 related: [physics/ohms-law, other/led-resistor, physics/resistors-series-parallel]
 ---
 
@@ -34,3 +38,32 @@ Enter the **input voltage** and **R1** and **R2**. The output voltage and divide
 ## Example
 
 12 V with R1 = 10 kΩ and R2 = 4.7 kΩ: V<sub>out</sub> = 12 × 4.7 ÷ 14.7 = **3.84 V**, current **0.82 mA**.
+
+## Common divider ratios
+
+| R1 | R2 | Vout ÷ Vin | 12 V in → | 5 V in → |
+|---|---|---|---|---|
+| 10 kΩ | 10 kΩ | 0.500 | 6.00 V | 2.50 V |
+| 10 kΩ | 4.7 kΩ | 0.320 | 3.84 V | 1.60 V |
+| 20 kΩ | 10 kΩ | 0.333 | 4.00 V | 1.67 V |
+| 30 kΩ | 10 kΩ | 0.250 | 3.00 V | 1.25 V |
+| 47 kΩ | 10 kΩ | 0.175 | 2.11 V | 0.88 V |
+| 100 kΩ | 10 kΩ | 0.091 | 1.09 V | 0.45 V |
+
+## Choosing resistor values
+
+- **Too low**: wastes current and can drain batteries. 1 kΩ + 1 kΩ on 12 V draws 6 mA.
+- **Too high**: the divider becomes sensitive to the load and to ADC input currents.
+- For microcontroller ADC inputs, a total of 10–100 kΩ is a common compromise; add a small capacitor (e.g. 100 nF) on the output to stabilise readings.
+
+## Loading effect
+
+Any load connected to Vout appears in parallel with R2, lowering the output. If the load is 10 kΩ and R2 is 10 kΩ, the effective R2 becomes 5 kΩ. Keep the load at least 10 times larger than R2, or buffer the output with an op-amp.
+
+## Not for power supplies
+
+A voltage divider is not a substitute for a regulator. It cannot supply steady voltage to a varying load — use a linear regulator or a buck converter for that.
+
+## Measuring battery voltage
+
+To read a 12 V battery with a 3.3 V ADC, keep the ratio below 3.3 ÷ 14.4 = 0.229 to allow for charging voltage. R1 = 39 kΩ and R2 = 10 kΩ gives 0.204, so 14.4 V reads as 2.94 V with a safe margin.

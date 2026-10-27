@@ -25,12 +25,45 @@ faq:
     a: Drive makers use decimal TB, while some operating systems display binary units. 1 TB = 931 GiB.
   - q: How many MB are in a GB?
     a: 1,000 MB in decimal units, or 1,024 MiB in a GiB.
+  - q: "How many GB is 1 TB?"
+    a: "1,000 GB in decimal units, or 1,024 GiB in binary units."
+  - q: "Why does my 1 TB drive show 931 GB?"
+    a: "The drive uses decimal units (10¹² bytes), while Windows shows binary gibibytes labelled as GB."
 related: [other/download-time, other/video-file-size]
 ---
 
 ## How to use this converter
 
 Type a value in **any** field — decimal (KB, MB, GB, TB) or binary (KiB, MiB, GiB). Every field updates.
+
+## Why your drive shows less space
+
+A drive sold as **1 TB** holds 1,000,000,000,000 bytes. Windows reports sizes in binary units but labels them “GB/TB”, so it shows about **931 GB**. Nothing is missing — it is a units difference.
+
+| Advertised | Bytes | Shown by Windows |
+|---|---|---|
+| 128 GB | 128,000,000,000 | 119 GB |
+| 256 GB | 256,000,000,000 | 238 GB |
+| 512 GB | 512,000,000,000 | 477 GB |
+| 1 TB | 1,000,000,000,000 | 931 GB |
+| 2 TB | 2,000,000,000,000 | 1,863 GB |
+| 4 TB | 4,000,000,000,000 | 3,725 GB |
+
+macOS and many Linux tools use decimal units, so they match the advertised size.
+
+## Bits vs bytes
+
+Internet speeds are in **bits** per second (Mbps); file sizes are in **bytes**. 1 byte = 8 bits, so a 100 Mbps connection downloads at most 12.5 MB/s. See the [download time calculator](/other/download-time/).
+
+## How much fits?
+
+| Content | Approximate size |
+|---|---|
+| Photo (12 MP JPEG) | 3–5 MB |
+| Song (MP3, 4 min) | 4–8 MB |
+| HD movie (2 h, streaming quality) | 3–6 GB |
+| 4K movie (2 h) | 15–25 GB |
+| Smartphone OS update | 1–6 GB |
 
 ## Decimal vs binary
 

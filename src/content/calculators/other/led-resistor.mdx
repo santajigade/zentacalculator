@@ -29,6 +29,10 @@ faq:
     a: Pick the next higher standard value (E12 series), which slightly reduces current and is safer.
   - q: What wattage resistor do I need?
     a: Choose a rating at least double the calculated power — a ¼ W resistor is fine for most single indicator LEDs.
+  - q: "What resistor do I need for an LED on 5 V?"
+    a: "For a red LED (2 V) at 20 mA, (5 − 2) ÷ 0.02 = 150 Ω."
+  - q: "Can I connect an LED without a resistor?"
+    a: "Not directly to a voltage source — the current would rise until the LED fails. Use a resistor or a constant-current driver."
 related: [physics/ohms-law, other/voltage-divider]
 ---
 
@@ -45,3 +49,41 @@ Enter the **supply voltage**, choose the **LED colour** and set the **current**.
 Red LED (2.0 V) on 5 V at 20 mA: R = 3 ÷ 0.02 = **150 Ω**, dissipating **60 mW**.
 
 Check your LED's datasheet for exact forward voltage and maximum current; many modern indicator LEDs are bright enough at 5–10 mA.
+
+## Typical LED forward voltages
+
+| LED colour | Forward voltage |
+|---|---|
+| Infrared | 1.2–1.5 V |
+| Red | 1.8–2.2 V |
+| Orange / yellow | 2.0–2.2 V |
+| Green (standard) | 1.9–2.4 V |
+| Green (true / high-brightness) | 2.8–3.4 V |
+| Blue | 2.8–3.4 V |
+| White | 2.8–3.4 V |
+
+Check the datasheet for your exact LED.
+
+## Resistors for a 20 mA red LED (2.0 V)
+
+| Supply | Calculated | Nearest standard (E12, round up) | Power |
+|---|---|---|---|
+| 3.3 V | 65 Ω | 68 Ω | 26 mW |
+| 5 V | 150 Ω | 150 Ω | 60 mW |
+| 9 V | 350 Ω | 390 Ω | 140 mW |
+| 12 V | 500 Ω | 560 Ω | 200 mW |
+| 24 V | 1100 Ω | 1200 Ω | 440 mW |
+
+Always round **up** to the next standard value so the current stays below the limit.
+
+## LEDs in series
+
+Several LEDs can share one resistor in series: R = (Vs − n × Vf) ÷ I. Three 2.0 V red LEDs on 12 V at 20 mA need (12 − 6) ÷ 0.02 = **300 Ω**.
+
+## LEDs in parallel
+
+Do not share one resistor between LEDs in parallel. Small differences in forward voltage make one LED hog the current. Give each LED its own resistor.
+
+## Modern LEDs need less current
+
+Many modern indicator LEDs are bright at 2–10 mA. Using a lower current saves power and extends LED life.

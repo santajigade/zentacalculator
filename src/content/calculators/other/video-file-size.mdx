@@ -17,6 +17,10 @@ faq:
     a: Common streaming targets are about 5–8 Mbps for 1080p and 15–25 Mbps for 4K (H.264); HEVC needs roughly half.
   - q: How long can I record on a 128 GB card?
     a: Press × on Duration and type 128 GB as the file size.
+  - q: "How big is 1 hour of 1080p video?"
+    a: "At 20 Mbps, about 9 GB. Streaming-quality 1080p at 5 Mbps is about 2.25 GB."
+  - q: "How many minutes of 4K fit on a 64 GB card?"
+    a: "At 100 Mbps, about 85 minutes."
 related: [other/download-time, other/data-storage-converter]
 ---
 
@@ -31,3 +35,43 @@ Enter the **bitrate** in Mbps and the **duration**. The file size is calculated.
 ## Example
 
 60 minutes at 20 Mbps: 20 × 3,600 ÷ 8 = 9,000 MB = **9 GB**.
+
+## Typical bitrates
+
+| Video | Typical bitrate |
+|---|---|
+| 720p streaming | 2–5 Mbps |
+| 1080p streaming | 5–8 Mbps |
+| 1080p camera recording (H.264) | 15–30 Mbps |
+| 4K streaming | 15–25 Mbps |
+| 4K camera recording (H.264/H.265) | 50–150 Mbps |
+| ProRes 422 HQ, 4K | about 700 Mbps |
+
+## File size per hour
+
+| Bitrate | Per minute | Per hour |
+|---|---|---|
+| 5 Mbps | 38 MB | 2.2 GB |
+| 10 Mbps | 75 MB | 4.5 GB |
+| 20 Mbps | 150 MB | 9.0 GB |
+| 50 Mbps | 375 MB | 22.5 GB |
+| 100 Mbps | 750 MB | 45.0 GB |
+| 150 Mbps | 1125 MB | 67.5 GB |
+
+## Codecs
+
+Newer codecs give similar quality at lower bitrates:
+
+| Codec | Size vs H.264 at similar quality |
+|---|---|
+| H.264 (AVC) | Baseline |
+| H.265 (HEVC) | about 40–50% smaller |
+| AV1 | about 50% smaller |
+
+## Recording time on a card
+
+Card capacity (GB) × 8,000 ÷ bitrate (Mbps) ÷ 60 = minutes. A 128 GB card at 100 Mbps holds about **170 minutes**.
+
+## Audio
+
+Audio is usually small next to video: 128–320 kbps for stereo, adding about 1–2.4 MB per minute.

@@ -71,6 +71,8 @@ const FUNCS: Record<string, (...a: number[]) => number> = {
   erf, normcdf: (z) => 0.5 * (1 + erf(z / Math.SQRT2)),
   yearsBetween, monthsBetween, workdays,
   weekday: (d) => (((Math.floor(d) + 4) % 7) + 7) % 7, // 0 = Sunday (days since 1970-01-01)
+  gcd: (a, b) => { a = Math.abs(Math.round(a)); b = Math.abs(Math.round(b)); while (b) [a, b] = [b, a % b]; return a; },
+  lcm: (a, b) => { a = Math.abs(Math.round(a)); b = Math.abs(Math.round(b)); if (!a || !b) return 0; let x = a, y = b; while (y) [x, y] = [y, x % y]; return a / x * b; },
   step: (x) => (x > 1e-9 ? 1 : 0), // 1 when x > 0, else 0 (for thresholds such as tax rebates)
   sign: Math.sign, hypot: Math.hypot, deg: (r) => (r * 180) / Math.PI, rad: (d) => (d * Math.PI) / 180,
 };

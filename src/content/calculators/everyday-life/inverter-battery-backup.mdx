@@ -1,0 +1,88 @@
+---
+title: Inverter Battery Backup Calculator
+description: Find how many hours your inverter battery will run your load — or the battery Ah you need for a target backup time.
+category: everyday-life
+keywords: [inverter battery backup calculator, battery backup time, inverter backup, battery ah calculator, ups backup time, how long will inverter battery last, 150ah battery backup]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: ah, label: Battery capacity, suffix: Ah, default: 150, min: 0 }
+  - { id: v, label: Battery voltage, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: n, label: Number of batteries, default: 1, min: 1 }
+  - { id: load, label: Connected load, family: power, unit: W, default: 300, min: 0.001 }
+  - { id: eff, label: Inverter efficiency, family: percent, unit: '%', default: 85, min: 0.01, max: 1 }
+  - { id: dod, label: Usable depth of discharge, family: percent, unit: '%', default: 80, min: 0.01, max: 1, help: About 50–80% for lead-acid; 80–100% for lithium. }
+  - { id: t, label: Backup time, family: time, unit: h, min: 0 }
+  - { id: wh, label: Usable energy, suffix: Wh, min: 0, decimals: 0 }
+equations:
+  - wh = ah * v * n * eff * dod
+  - t = wh / load / 8766
+faq:
+  - q: How long will a 150Ah battery run a 300 W load?
+    a: "About 4.1 hours with a 12 V battery, 85% inverter efficiency and 80% usable capacity."
+  - q: How do I calculate inverter battery backup?
+    a: Backup hours = battery Ah × voltage × number of batteries × inverter efficiency × usable depth of discharge ÷ load in watts.
+  - q: What size battery do I need for 4 hours of backup?
+    a: Press × on Battery capacity, enter your load and set the backup time to 4 hours. For 300 W on 12 V, about 147 Ah.
+  - q: Why is real backup shorter than calculated?
+    a: Lead-acid batteries deliver less capacity at high currents, age over time and lose capacity in heat. Older batteries may give 50–70% of their rated backup.
+related: [ecology/battery-storage, engineering/amps-to-watts, everyday-life/electricity-cost, other/battery-life]
+---
+
+## How to use this calculator
+
+1. Enter the **battery capacity in Ah** and **voltage** (most home inverter batteries are 12 V).
+2. Enter the **number of batteries** (a 24 V inverter uses two 12 V batteries in series).
+3. Enter the **connected load** in watts — add up the fans, lights and other devices you will run.
+4. Adjust efficiency and usable depth of discharge if you know them.
+
+The calculator shows the backup time and usable energy. To size a battery for a target time, press × on Battery capacity and enter the hours you want.
+
+## The formula
+
+<p class="formula">Backup (h) = Ah × V × n × η × DoD ÷ Load (W)</p>
+
+## Backup time chart (12 V battery, 85% efficiency, 80% DoD)
+
+| Load | 100 Ah | 150 Ah | 200 Ah | 2 × 150 Ah (24 V) |
+|---|---|---|---|---|
+| 100 W | 8.2 h | 12.2 h | 16.3 h | 24.5 h |
+| 200 W | 4.1 h | 6.1 h | 8.2 h | 12.2 h |
+| 300 W | 2.7 h | 4.1 h | 5.4 h | 8.2 h |
+| 400 W | 2.0 h | 3.1 h | 4.1 h | 6.1 h |
+| 500 W | 1.6 h | 2.4 h | 3.3 h | 4.9 h |
+| 750 W | 1.1 h | 1.6 h | 2.2 h | 3.3 h |
+| 1000 W | 0.8 h | 1.2 h | 1.6 h | 2.4 h |
+
+## Typical home loads
+
+| Appliance | Power (approx.) |
+|---|---|
+| LED bulb | 9–12 W |
+| Ceiling fan (regular) | 60–75 W |
+| Ceiling fan (BLDC) | 28–35 W |
+| Wi-Fi router | 10–15 W |
+| LED TV (43–55 in) | 60–120 W |
+| Laptop | 45–65 W |
+| Refrigerator (average running) | 100–200 W |
+| Desktop computer | 150–300 W |
+
+A home with 4 fans, 6 LED lights, a router and a TV draws about 300–400 W.
+
+## Choosing the inverter (VA) rating
+
+Inverters are rated in VA. Divide your peak load in watts by about 0.7–0.8: a 600 W peak load needs at least an 800–900 VA inverter. Do not confuse inverter VA (how much power at once) with battery Ah (how long it lasts).
+
+## Battery types
+
+| Battery | Typical life | Usable DoD | Maintenance |
+|---|---|---|---|
+| Flat plate (lead-acid) | 2–4 years | 50% | Water top-up |
+| Tall tubular (lead-acid) | 5–8 years | 70–80% | Water top-up |
+| Lithium (LFP) | 8–12+ years | 80–100% | None |
+
+## Getting more backup
+
+- Switch to BLDC fans and LED lights — they can halve the load.
+- Keep batteries topped up with distilled water and in a ventilated, shaded spot.
+- Replace batteries as a set; mixing old and new reduces backup.

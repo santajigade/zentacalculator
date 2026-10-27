@@ -1,0 +1,90 @@
+---
+title: kW to Amps Calculator (Single-Phase, Three-Phase and DC)
+description: Convert kilowatts to amps for single-phase, three-phase and DC circuits using voltage and power factor — with charts for 230 V and 415 V.
+category: engineering
+keywords: [kw to amps, kilowatts to amps, kw to amps three phase, kw to amps single phase, power to current, amps calculator, current calculation]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Power, family: power, unit: kW, imperialUnit: hp, default: 10, min: 0 }
+  - id: ph
+    label: System
+    default: 1.7320508
+    options:
+      - { label: Three-phase (line-to-line voltage), value: 1.7320508 }
+      - { label: Single-phase AC, value: 1 }
+      - { label: DC (use power factor 1), value: 1.000001 }
+  - { id: V, label: Voltage, family: voltage, unit: V, default: 415, min: 0 }
+  - { id: pf, label: Power factor, default: 0.85, min: 0.01, max: 1, help: Use 1 for DC and resistive loads. }
+  - { id: I, label: Current, family: current, unit: A, min: 0 }
+equations:
+  - P = ph * V * I * pf
+faq:
+  - q: How many amps is 1 kW?
+    a: At 230 V single-phase and unity power factor, about 4.35 A. At 415 V three-phase with 0.85 PF, about 1.64 A.
+  - q: What is the formula for kW to amps in three-phase?
+    a: I = P ÷ (√3 × V × PF), with P in watts and V the line-to-line voltage.
+  - q: How many amps does a 10 kW three-phase load draw at 415 V?
+    a: About 16.4 A at 0.85 power factor.
+  - q: Do I use phase or line voltage for three-phase?
+    a: Use the line-to-line voltage (for example 400 V or 415 V) with the √3 formula.
+related: [engineering/amps-to-watts, engineering/kva-to-kw, engineering/three-phase-motor-power, engineering/cable-voltage-drop]
+---
+
+## How to use this calculator
+
+1. Enter the **power** in kW (or switch to W or hp).
+2. Choose **three-phase**, **single-phase** or **DC**.
+3. Enter the **voltage** and **power factor** (use 1 for DC or purely resistive loads).
+
+The calculator gives the current. It works in reverse too — enter amps and press × on Power to find kW.
+
+## The formulas
+
+| System | Current |
+|---|---|
+| DC | I = P ÷ V |
+| Single-phase AC | I = P ÷ (V × PF) |
+| Three-phase AC | I = P ÷ (√3 × V<sub>L</sub> × PF) |
+
+P is in watts. For a motor, use the **electrical input** power (rated output ÷ efficiency).
+
+## kW to amps chart
+
+| kW | 230 V 1-ph (PF 1) | 230 V 1-ph (PF 0.85) | 415 V 3-ph (PF 0.85) | 400 V 3-ph (PF 0.85) |
+|---|---|---|---|---|
+| 0.5 | 2.2 A | 2.6 A | 0.8 A | 0.8 A |
+| 1 | 4.3 A | 5.1 A | 1.6 A | 1.7 A |
+| 1.5 | 6.5 A | 7.7 A | 2.5 A | 2.5 A |
+| 2 | 8.7 A | 10.2 A | 3.3 A | 3.4 A |
+| 3 | 13.0 A | 15.3 A | 4.9 A | 5.1 A |
+| 5 | 21.7 A | 25.6 A | 8.2 A | 8.5 A |
+| 7.5 | 32.6 A | 38.4 A | 12.3 A | 12.7 A |
+| 10 | 43.5 A | 51.2 A | 16.4 A | 17.0 A |
+| 15 | 65.2 A | 76.7 A | 24.6 A | 25.5 A |
+| 22 | 95.7 A | 112.5 A | 36.0 A | 37.4 A |
+| 37 | 160.9 A | 189.3 A | 60.6 A | 62.8 A |
+| 55 | 239.1 A | 281.3 A | 90.0 A | 93.4 A |
+| 75 | 326.1 A | 383.6 A | 122.8 A | 127.4 A |
+| 100 | 434.8 A | 511.5 A | 163.7 A | 169.8 A |
+
+## Choosing a breaker and cable
+
+The calculated current is the **running** current. When selecting protection and cable:
+
+- Choose a breaker rated above the running current (often the next standard size, such as 16 A, 20 A, 25 A, 32 A).
+- Check the cable's current-carrying capacity for its installation method.
+- Allow for motor starting current and check the [voltage drop](/engineering/cable-voltage-drop/).
+- Follow local wiring regulations.
+
+## Single-phase vs three-phase
+
+For the same power, a three-phase circuit carries much less current per conductor than a single-phase one, which is why large motors and buildings use three-phase supplies. 10 kW is 43.5 A at 230 V single-phase but only 16.4 A per line at 415 V three-phase (PF 0.85).
+
+## Common voltages
+
+| Region | Single-phase | Three-phase |
+|---|---|---|
+| India, UK, Europe, Australia | 230–240 V | 400–415 V |
+| USA, Canada (residential) | 120 / 240 V | 208 V or 480 V |
+| Japan | 100 V | 200 V |

@@ -1,0 +1,95 @@
+---
+title: kW to HP Converter (Kilowatts to Horsepower)
+description: Convert kilowatts to horsepower and hp to kW for motors, engines, pumps and generators — mechanical hp and metric PS.
+category: conversion
+keywords: [kw to hp, kilowatts to horsepower, hp to kw, horsepower to kw, motor hp to kw, ps to kw]
+updated: 2026-10-27
+
+variables:
+  - { id: u0, label: "Kilowatts", family: power, unit: kW, default: 1, min: 0 }
+  - { id: u1, label: "Horsepower (mechanical)", family: power, unit: hp, min: 0 }
+  - { id: u2, label: "Metric horsepower (PS)", family: power, unit: PS, min: 0 }
+  - { id: u3, label: "Watts", family: power, unit: W, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+faq:
+  - q: "How many hp is 1 kW?"
+    a: "1.341 hp (mechanical) or 1.36 PS."
+  - q: "How many kW is a 5 hp motor?"
+    a: "3.73 kW."
+  - q: "Is PS the same as hp?"
+    a: "Nearly: 1 PS = 0.986 hp."
+related: [conversion/power-converter, engineering/three-phase-motor-power, engineering/torque-power-speed, engineering/pump-power]
+---
+
+## How to use this converter
+
+Type a value in **Kilowatts** and the other units update instantly. Every field is live, so you can just as easily start from horsepower (mechanical) or any other unit and convert back.
+
+## The formula
+
+<p class="formula">hp = kW ÷ 0.7457 ≈ kW × 1.341</p>
+
+1 kW = 1.34102 hp, and 1 hp = 0.7457 kW.
+
+## kW to hp chart
+
+| kW | hp | kW | hp |
+|---|---|---|---|
+| 0.37 | 0.496178 | 11 | 14.7512 |
+| 0.55 | 0.737562 | 15 | 20.1153 |
+| 0.75 | 1.00577 | 18.5 | 24.8089 |
+| 1 | 1.34102 | 22 | 29.5025 |
+| 1.1 | 1.47512 | 30 | 40.2307 |
+| 1.5 | 2.01153 | 37 | 49.6178 |
+| 2.2 | 2.95025 | 45 | 60.346 |
+| 3 | 4.02307 | 55 | 73.7562 |
+| 3.7 | 4.96178 | 75 | 100.577 |
+| 4 | 5.36409 | 90 | 120.692 |
+| 5.5 | 7.37562 | 110 | 147.512 |
+| 7.5 | 10.0577 | | |
+
+## hp to kW chart
+
+| hp | kW | hp | kW |
+|---|---|---|---|
+| 0.5 | 0.37285 | 10 | 7.457 |
+| 1 | 0.7457 | 15 | 11.1855 |
+| 1.5 | 1.11855 | 20 | 14.914 |
+| 2 | 1.4914 | 25 | 18.6425 |
+| 3 | 2.2371 | 50 | 37.285 |
+| 5 | 3.7285 | 100 | 74.57 |
+| 7.5 | 5.59275 | 150 | 111.855 |
+
+## Definitions
+
+- **Mechanical horsepower (hp)**: 745.7 W. Used in the US and on many motor nameplates.
+- **Metric horsepower (PS, CV)**: 735.5 W. Common in European and Asian car specifications.
+- **Kilowatt**: 1,000 W, the SI unit used on IEC motor ratings.
+
+## Standard motor sizes
+
+IEC motor ratings and their usual hp labels:
+
+| kW | hp label |
+|---|---|
+| 0.75 | 1 hp |
+| 1.5 | 2 hp |
+| 2.2 | 3 hp |
+| 3.7 | 5 hp |
+| 5.5 | 7.5 hp |
+| 7.5 | 10 hp |
+| 11 | 15 hp |
+| 15 | 20 hp |
+
+Labels are rounded; 7.5 kW is exactly 10.06 hp.
+
+## Electrical input vs output
+
+A motor's kW or hp rating is its **shaft output**. Electrical input is higher because of losses: a 7.5 kW motor at 90% efficiency draws about 8.3 kW. See the [three-phase motor power calculator](/engineering/three-phase-motor-power/).
+
+## Car engines
+
+Car brochures may use kW, hp or PS. 100 kW = 134 hp = 136 PS.

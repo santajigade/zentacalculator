@@ -1,0 +1,85 @@
+---
+title: MPH to KM/H Converter
+description: Convert miles per hour to kilometres per hour (and km/h to mph) instantly, with speed-limit and driving charts.
+category: conversion
+keywords: [mph to kmh, mph to km/h, miles per hour to km per hour, kmh to mph, speed conversion]
+updated: 2026-10-27
+
+variables:
+  - { id: u0, label: "Miles per hour", family: velocity, unit: mph, default: 60, min: 0 }
+  - { id: u1, label: "Kilometres per hour", family: velocity, unit: kmh, min: 0 }
+  - { id: u2, label: "Metres per second", family: velocity, unit: ms, min: 0 }
+  - { id: u3, label: "Knots", family: velocity, unit: kn, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+faq:
+  - q: "What is 60 mph in km/h?"
+    a: "96.56 km/h."
+  - q: "What is 100 km/h in mph?"
+    a: "62.14 mph."
+  - q: "What is 70 mph in km/h?"
+    a: "112.65 km/h."
+related: [conversion/speed-converter, conversion/miles-to-km, physics/speed-distance-time, everyday-life/fuel-cost]
+---
+
+## How to use this converter
+
+Type a value in **Miles per hour** and the other units update instantly. Every field is live, so you can just as easily start from kilometres per hour or any other unit and convert back.
+
+## The formula
+
+<p class="formula">km/h = mph × 1.609344</p>
+
+1 mph = 1.60934 km/h, and 1 km/h = 0.621371 mph.
+
+## mph to km/h chart
+
+| mph | km/h | mph | km/h |
+|---|---|---|---|
+| 5 | 8.04672 | 55 | 88.5139 |
+| 10 | 16.0934 | 60 | 96.5606 |
+| 15 | 24.1402 | 65 | 104.607 |
+| 20 | 32.1869 | 70 | 112.654 |
+| 25 | 40.2336 | 75 | 120.701 |
+| 30 | 48.2803 | 80 | 128.748 |
+| 35 | 56.327 | 90 | 144.841 |
+| 40 | 64.3738 | 100 | 160.934 |
+| 45 | 72.4205 | 120 | 193.121 |
+| 50 | 80.4672 | 150 | 241.402 |
+
+## km/h to mph chart
+
+| km/h | mph | km/h | mph |
+|---|---|---|---|
+| 10 | 6.21371 | 80 | 49.7097 |
+| 20 | 12.4274 | 90 | 55.9234 |
+| 30 | 18.6411 | 100 | 62.1371 |
+| 40 | 24.8548 | 110 | 68.3508 |
+| 50 | 31.0686 | 120 | 74.5645 |
+| 60 | 37.2823 | 130 | 80.7783 |
+
+## Definitions
+
+- **Miles per hour (mph)**: used for road speeds in the US and UK.
+- **Kilometres per hour (km/h)**: used in most other countries.
+- **Knot**: one nautical mile per hour (1.852 km/h), used at sea and in aviation.
+
+## Speed limits
+
+| Typical limit | mph | km/h |
+|---|---|---|
+| School zone (US) | 20–25 | 32–40 |
+| UK town | 30 | 48 |
+| UK single carriageway | 60 | 97 |
+| US interstate (many states) | 65–75 | 105–121 |
+| UK motorway | 70 | 113 |
+
+## Stopping distance grows fast
+
+Doubling speed roughly quadruples braking distance. At 60 mph (97 km/h), total stopping distance is about 73 m in good conditions. See the [SUVAT calculator](/physics/suvat-equations/).
+
+## Quick estimate
+
+Multiply mph by 1.6: 50 mph × 1.6 = 80 km/h (exact 80.5).

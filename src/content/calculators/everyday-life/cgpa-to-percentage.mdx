@@ -1,0 +1,84 @@
+---
+title: CGPA to Percentage Calculator
+description: Convert CGPA to percentage using CBSE, AICTE, Mumbai University and other common formulas — or convert percentage back to CGPA.
+category: everyday-life
+keywords: [cgpa to percentage, cgpa to percentage calculator, cbse cgpa to percentage, cgpa into percentage, sgpa to percentage, aicte cgpa conversion, percentage to cgpa]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: g, label: CGPA (out of 10), default: 8.2, min: 0, max: 10 }
+  - id: m
+    label: Conversion formula
+    default: 1
+    options:
+      - { label: CBSE (CGPA × 9.5), value: 1 }
+      - { label: AICTE ((CGPA − 0.75) × 10), value: 2 }
+      - { label: Mumbai University (7.1 × CGPA + 11), value: 3 }
+      - { label: Simple (CGPA × 10), value: 4 }
+  - { id: p, label: Percentage, family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - p = (max(0, 1 - abs(m - 1)) * 9.5 * g + max(0, 1 - abs(m - 2)) * (g - 0.75) * 10 + max(0, 1 - abs(m - 3)) * (7.1 * g + 11) + max(0, 1 - abs(m - 4)) * 10 * g) / 100
+faq:
+  - q: How do I convert CGPA to percentage in CBSE?
+    a: Multiply the CGPA by 9.5. A CGPA of 8.2 is 77.9%.
+  - q: What is the AICTE formula for CGPA to percentage?
+    a: Percentage = (CGPA − 0.75) × 10. A CGPA of 8.2 is 74.5%.
+  - q: How do I convert percentage to CGPA?
+    a: Press × on CGPA and type your percentage. For CBSE, divide the percentage by 9.5.
+  - q: Which formula should I use?
+    a: Use the formula printed on your marksheet or published by your board or university. Employers and universities abroad often ask for the official conversion.
+related: [other/grade-percentage, everyday-life/grade-needed, math/percentage, math/average]
+---
+
+## How to use this calculator
+
+1. Enter your **CGPA** on a 10-point scale.
+2. Choose the **conversion formula** your board or university uses.
+
+The percentage appears instantly. To go from percentage to CGPA, press × on CGPA and type the percentage.
+
+## Conversion formulas
+
+| Board / university | Formula |
+|---|---|
+| CBSE (Class 10, older CCE scheme) | % = CGPA × 9.5 |
+| AICTE recommended (engineering) | % = (CGPA − 0.75) × 10 |
+| University of Mumbai (10-point scale) | % = 7.1 × CGPA + 11 |
+| Several universities (simple) | % = CGPA × 10 |
+
+Universities set their own rules, and some publish a different formula or a conversion table. Always check your marksheet or university notice.
+
+## CGPA to percentage chart
+
+| CGPA | CBSE (×9.5) | AICTE | Mumbai | ×10 |
+|---|---|---|---|---|
+| 5 | 47.5% | 42.5% | 46.5% | 50% |
+| 5.5 | 52.2% | 47.5% | 50.0% | 55% |
+| 6 | 57.0% | 52.5% | 53.6% | 60% |
+| 6.5 | 61.8% | 57.5% | 57.1% | 65% |
+| 7 | 66.5% | 62.5% | 60.7% | 70% |
+| 7.5 | 71.2% | 67.5% | 64.2% | 75% |
+| 8 | 76.0% | 72.5% | 67.8% | 80% |
+| 8.5 | 80.8% | 77.5% | 71.3% | 85% |
+| 9 | 85.5% | 82.5% | 74.9% | 90% |
+| 9.5 | 90.2% | 87.5% | 78.5% | 95% |
+| 10 | 95.0% | 92.5% | 82.0% | 100% |
+
+Values above 100% are not possible; the Mumbai formula reaches 100% at a CGPA of about 12.5, so a 10 CGPA gives 82%.
+
+## SGPA vs CGPA
+
+- **SGPA** (semester grade point average) covers a single semester.
+- **CGPA** (cumulative) is the credit-weighted average of all SGPAs so far:
+
+<p class="formula">CGPA = Σ(SGPA × semester credits) ÷ Σ(credits)</p>
+
+If credits are equal each semester, CGPA is simply the average of the SGPAs.
+
+## Why CBSE used 9.5
+
+CBSE derived 9.5 from the average percentage of students scoring in the top grade band across subjects. It applied to the CCE grading scheme; check current CBSE marksheets for how results are reported now.
+
+## Applying abroad
+
+Universities abroad may ask for a WES or similar credential evaluation, which converts grades using its own method. Keep your official transcripts and the university's conversion certificate.

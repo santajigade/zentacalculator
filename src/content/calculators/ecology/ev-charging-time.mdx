@@ -1,0 +1,70 @@
+---
+title: EV Charging Time Calculator
+description: Work out how long it takes to charge an electric car from your current level to a target — at home, on a wallbox or at a fast charger.
+category: ecology
+keywords: [ev charging time calculator, electric car charging time, how long to charge ev, ev charger kw, fast charging time, 7.4 kw charger time]
+updated: 2026-10-27
+variables:
+  - { id: B, label: Battery capacity (usable), suffix: kWh, default: 60, min: 0 }
+  - { id: st, label: Current charge level, family: percent, unit: '%', default: 20, min: 0, max: 1 }
+  - { id: tg, label: Target charge level, family: percent, unit: '%', default: 80, min: 0, max: 1 }
+  - { id: kw, label: Charger power, suffix: kW, default: 7.4, min: 0.1 }
+  - { id: eff, label: Charging efficiency, family: percent, unit: '%', default: 90, min: 0.1, max: 1 }
+  - { id: en, label: Energy drawn from the grid, suffix: kWh, min: 0, decimals: 1 }
+  - { id: t, label: Charging time, family: time, unit: h, min: 0 }
+  - { id: pr, label: Electricity price, family: currency, default: 0.15, min: 0, decimals: 3 }
+  - { id: cost, label: Cost of this charge, family: currency, min: 0, decimals: 2 }
+equations:
+  - en = B * (tg - st) / eff
+  - t = en / kw / 8766
+  - cost = en * pr
+faq:
+  - q: How long does it take to charge an EV at home?
+    a: "On a 7.4 kW wallbox, a 60 kWh battery from 20% to 80% takes about 5.4 hours. On a 2.3 kW domestic socket it takes about 17 hours."
+  - q: Why do fast chargers slow down above 80%?
+    a: To protect the battery, the car reduces charging power as it fills. The last 20% can take as long as the first 60%.
+  - q: What charger power can my car accept?
+    a: Check the car’s maximum AC charging rate (often 7–11 kW, some 22 kW) and maximum DC rate. The car charges at the lower of the charger’s and the car’s limit.
+related: [ecology/ev-vs-petrol, ecology/battery-storage, ecology/solar-output, everyday-life/fuel-cost]
+---
+
+## How to use this calculator
+
+Enter the **usable battery capacity**, the **current** and **target** charge levels, and the **charger power**. You get the energy drawn, the charging time and the cost.
+
+## The formula
+
+<p class="formula">Time = Battery kWh × (target % − start %) ÷ (charger kW × efficiency)</p>
+
+The efficiency covers losses in the charger, cables and battery — typically 85–95%.
+
+## Charging time chart (60 kWh battery, 20% → 80%)
+
+| Charger | Power | Time |
+|---|---|---|
+| Domestic socket (India 15 A) | 3.3 kW | 12 h 07 min |
+| Domestic socket (UK 10 A) | 2.3 kW | 17 h 23 min |
+| Wallbox, single-phase | 7.4 kW | 5 h 24 min |
+| Wallbox, three-phase | 11 kW | 3 h 38 min |
+| AC public charger | 22 kW | 1 h 49 min |
+| DC fast charger | 50 kW | 0 h 48 min |
+| DC rapid charger | 150 kW | 0 h 16 min |
+
+DC times are optimistic: fast chargers deliver full power only in the middle of the charge range, and many cars accept less than the charger's maximum.
+
+## Charger levels
+
+| Type | Power | Typical use |
+|---|---|---|
+| Portable / domestic socket | 2–3.3 kW | Overnight top-ups |
+| AC wallbox | 7–22 kW | Home and workplace |
+| DC fast | 25–60 kW | Highway stops |
+| DC ultra-fast | 100–350 kW | Long trips (car permitting) |
+
+## Charge to 80% for daily use
+
+Many manufacturers recommend charging to about 80% for daily driving and to 100% only before long trips. This reduces battery wear and avoids the slow final stage of charging.
+
+## Cost per km
+
+Divide the cost of a charge by the range added. If 40 kWh costs 6.00 and adds 250 km, that is 2.4 per 100 km. Compare with fuel using the [EV vs petrol calculator](/ecology/ev-vs-petrol/).

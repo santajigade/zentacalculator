@@ -1,0 +1,85 @@
+---
+title: Miles to KM Converter
+description: Convert miles to kilometres and km to miles instantly, with charts for running distances, speed limits and road trips.
+category: conversion
+keywords: [miles to km, mile to km, miles to kilometers, convert miles to km, mi to km]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: u0, label: "Miles", family: length, unit: mi, default: 10, min: 0 }
+  - { id: u1, label: "Kilometres", family: length, unit: km, min: 0 }
+  - { id: u2, label: "Metres", family: length, unit: m, min: 0 }
+  - { id: u3, label: "Feet", family: length, unit: ft, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+faq:
+  - q: "How many km is 1 mile?"
+    a: "1.609 km."
+  - q: "How many km is 26.2 miles?"
+    a: "42.195 km — the marathon distance."
+  - q: "How many miles is 100 km?"
+    a: "62.14 miles."
+related: [conversion/km-to-miles, conversion/mph-to-kmh, sports/pace-calculator, conversion/length-converter]
+---
+
+## How to use this converter
+
+Type a value in **Miles** and the other units update instantly. Every field is live, so you can just as easily start from kilometres or any other unit and convert back.
+
+## The formula
+
+<p class="formula">km = miles × 1.609344</p>
+
+1 mi = 1.60934 km, and 1 km = 0.621371 mi.
+
+## mi to km chart
+
+| mi | km | mi | km |
+|---|---|---|---|
+| 0.25 | 0.402336 | 15 | 24.1402 |
+| 0.5 | 0.804672 | 20 | 32.1869 |
+| 1 | 1.60934 | 25 | 40.2336 |
+| 2 | 3.21869 | 26.2 | 42.1648 |
+| 3 | 4.82803 | 30 | 48.2803 |
+| 3.1 | 4.98897 | 50 | 80.4672 |
+| 5 | 8.04672 | 60 | 96.5606 |
+| 6.2 | 9.97793 | 100 | 160.934 |
+| 10 | 16.0934 | 200 | 321.869 |
+| 13.1 | 21.0824 | 500 | 804.672 |
+
+## km to mi chart
+
+| km | mi | km | mi |
+|---|---|---|---|
+| 1 | 0.621371 | 25 | 15.5343 |
+| 2 | 1.24274 | 42.2 | 26.2219 |
+| 5 | 3.10686 | 50 | 31.0686 |
+| 8 | 4.97097 | 80 | 49.7097 |
+| 10 | 6.21371 | 100 | 62.1371 |
+| 16 | 9.94194 | 160 | 99.4194 |
+| 21.1 | 13.1109 | 1,000 | 621.371 |
+
+## Definitions
+
+- **Mile (statute)**: exactly 1,609.344 m, or 5,280 ft.
+- **Kilometre**: 1,000 m, about 0.6214 miles.
+- **Nautical mile**: 1,852 m — used at sea and in aviation, not on roads.
+
+## Running distances
+
+| Race | Miles | Kilometres |
+|---|---|---|
+| 5K | 3.11 | 5 |
+| 10K | 6.21 | 10 |
+| Half marathon | 13.11 | 21.0975 |
+| Marathon | 26.22 | 42.195 |
+
+## The Fibonacci trick
+
+Consecutive Fibonacci numbers (3, 5, 8, 13, 21, 34…) are close to the miles-to-km ratio: 5 miles ≈ 8 km, 8 miles ≈ 13 km, 13 miles ≈ 21 km.
+
+## Driving
+
+Distances on UK and US road signs are in miles; most other countries use km. A 300-mile road trip is about 483 km.

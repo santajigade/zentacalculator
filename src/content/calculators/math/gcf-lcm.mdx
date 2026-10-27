@@ -1,0 +1,78 @@
+---
+title: GCF and LCM Calculator (HCF and LCM)
+description: Find the greatest common factor (GCF/HCF) and least common multiple (LCM) of two numbers, with the Euclidean method explained.
+category: math
+keywords: [gcf calculator, lcm calculator, hcf and lcm, greatest common factor, highest common factor, least common multiple, gcd, euclidean algorithm]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: a, label: First number, default: 84, min: 0, decimals: 0 }
+  - { id: b, label: Second number, default: 36, min: 0, decimals: 0 }
+  - { id: g, label: GCF / HCF, min: 0, decimals: 0 }
+  - { id: l, label: LCM, min: 0, decimals: 0 }
+  - { id: pr, label: Product (a × b = GCF × LCM), min: 0, decimals: 0 }
+equations:
+  - g = gcd(a, b)
+  - l = lcm(a, b)
+  - pr = a * b
+freedom: 2
+faq:
+  - q: What is the GCF of 84 and 36?
+    a: 12. The LCM is 252.
+  - q: What is the difference between HCF and GCF?
+    a: Nothing — highest common factor (HCF), greatest common factor (GCF) and greatest common divisor (GCD) all mean the same thing.
+  - q: How are GCF and LCM related?
+    a: For two positive whole numbers, GCF × LCM = a × b. So LCM = a × b ÷ GCF.
+  - q: How do I find the GCF of three numbers?
+    a: Find the GCF of the first two, then the GCF of that result and the third number. The LCM works the same way.
+related: [math/fraction-to-decimal, math/ratio, statistics/combinations, math/exponent]
+---
+
+## How to use this calculator
+
+Enter two **whole numbers**. The calculator shows their greatest common factor (GCF, also called HCF or GCD) and least common multiple (LCM).
+
+## The Euclidean algorithm
+
+The fastest way to find the GCF is to repeatedly replace the larger number with the remainder of dividing it by the smaller one:
+
+| Step | Division | Remainder |
+|---|---|---|
+| 1 | 84 ÷ 36 = 2 | 12 |
+| 2 | 36 ÷ 12 = 3 | 0 |
+
+When the remainder reaches 0, the last non-zero remainder — **12** — is the GCF.
+
+Then LCM = 84 × 36 ÷ 12 = **252**.
+
+## Prime factorisation method
+
+Write each number as a product of primes:
+
+- 84 = 2² × 3 × 7
+- 36 = 2² × 3²
+
+- **GCF**: lowest power of each common prime — 2² × 3 = 12
+- **LCM**: highest power of every prime — 2² × 3² × 7 = 252
+
+## GCF and LCM table
+
+| Numbers | GCF | LCM |
+|---|---|---|
+| 12, 18 | 6 | 36 |
+| 15, 25 | 5 | 75 |
+| 24, 36 | 12 | 72 |
+| 8, 12 | 4 | 24 |
+| 14, 21 | 7 | 42 |
+| 45, 60 | 15 | 180 |
+| 17, 23 | 1 | 391 |
+| 100, 75 | 25 | 300 |
+
+Numbers with a GCF of 1, such as 17 and 23, are **coprime**.
+
+## Where they are used
+
+- **Simplifying fractions**: divide top and bottom by the GCF. 36/84 = 3/7.
+- **Adding fractions**: use the LCM of the denominators as the common denominator. 1/12 + 1/18 uses 36.
+- **Scheduling**: two buses every 12 and 18 minutes leave together every 36 minutes (the LCM).
+- **Tiling**: the largest square tile that fits a 84 × 36 cm area exactly is 12 cm (the GCF).

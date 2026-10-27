@@ -203,6 +203,17 @@ export const UNIT_FAMILIES: Record<string, Unit[]> = {
     { id: 'GiB', label: 'GiB', factor: 1024 ** 3 },
     { id: 'TiB', label: 'TiB', factor: 1024 ** 4 },
   ],
+  land: [ // land-area units used in South Asia (local units vary by state; these are the common definitions)
+    { id: 'm2', label: 'm²', factor: 1 },
+    { id: 'ft2', label: 'sq ft', factor: 0.09290304 },
+    { id: 'yd2', label: 'sq yd (gaj)', factor: 0.83612736 },
+    { id: 'acre', label: 'acre', factor: 4046.8564224 },
+    { id: 'ha', label: 'hectare', factor: 1e4 },
+    { id: 'cent', label: 'cent', factor: 40.468564224 },
+    { id: 'guntha', label: 'guntha', factor: 101.17141056 },
+    { id: 'kanal', label: 'kanal', factor: 505.857053 },
+    { id: 'marla', label: 'marla', factor: 25.2928526 },
+  ],
   currency: [{ id: '', label: '', factor: 1 }],
   date: [{ id: 'date', label: '', factor: 1 }],   // value = days since 1970-01-01 (UTC)
   clock: [{ id: 'clock', label: '', factor: 1 }], // value = hours after midnight

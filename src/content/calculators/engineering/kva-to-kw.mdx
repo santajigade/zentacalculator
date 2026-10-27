@@ -1,0 +1,79 @@
+---
+title: kVA to kW Converter (and kW to kVA)
+description: Convert kVA to kW and kW to kVA using power factor — for generators, UPS, transformers and DG set sizing.
+category: engineering
+keywords: [kva to kw, kw to kva, kva to kw conversion, power factor, generator kva, ups kva, apparent power, real power, kvar]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: S, label: Apparent power (kVA), suffix: kVA, default: 100, min: 0 }
+  - { id: pf, label: Power factor (cos φ), default: 0.8, min: 0.01, max: 1 }
+  - { id: P, label: Real power (kW), suffix: kW, min: 0 }
+  - { id: Q, label: Reactive power (kVAr), suffix: kVAr, min: 0 }
+equations:
+  - P = S * pf
+  - Q = sqrt(S^2 - P^2)
+faq:
+  - q: How do I convert kVA to kW?
+    a: Multiply kVA by the power factor. 100 kVA at 0.8 power factor is 80 kW.
+  - q: How do I convert kW to kVA?
+    a: Divide kW by the power factor. 80 kW at 0.8 power factor is 100 kVA.
+  - q: Why are generators rated in kVA?
+    a: Because their limit is set by current (heating of windings), which depends on kVA, not just kW. Most diesel generator sets are rated at 0.8 power factor.
+  - q: What is a good power factor?
+    a: 0.95 or higher is considered good for industrial loads. Many utilities charge penalties below about 0.9.
+related: [engineering/kw-to-amps, engineering/three-phase-motor-power, engineering/amps-to-watts, conversion/kw-to-hp]
+---
+
+## How to use this calculator
+
+Enter the **apparent power in kVA** and the **power factor**. The calculator gives real power (kW) and reactive power (kVAr). To go from kW to kVA, press × on kVA and type the kW.
+
+## The formulas
+
+<p class="formula">kW = kVA × PF &nbsp;·&nbsp; kVA = kW ÷ PF &nbsp;·&nbsp; kVAr = √(kVA² − kW²)</p>
+
+These come from the **power triangle**: real power (kW) and reactive power (kVAr) are at right angles, and apparent power (kVA) is the hypotenuse.
+
+## kVA to kW chart
+
+| kVA | PF 0.8 | PF 0.85 | PF 0.9 | PF 0.95 |
+|---|---|---|---|---|
+| 1 | 0.8 kW | 0.85 kW | 0.9 kW | 0.95 kW |
+| 5 | 4 kW | 4.25 kW | 4.5 kW | 4.75 kW |
+| 10 | 8 kW | 8.5 kW | 9 kW | 9.5 kW |
+| 15 | 12 kW | 12.75 kW | 13.5 kW | 14.25 kW |
+| 25 | 20 kW | 21.25 kW | 22.5 kW | 23.75 kW |
+| 62.5 | 50 kW | 53.125 kW | 56.25 kW | 59.375 kW |
+| 100 | 80 kW | 85 kW | 90 kW | 95 kW |
+| 125 | 100 kW | 106.25 kW | 112.5 kW | 118.75 kW |
+| 250 | 200 kW | 212.5 kW | 225 kW | 237.5 kW |
+| 500 | 400 kW | 425 kW | 450 kW | 475 kW |
+| 1000 | 800 kW | 850 kW | 900 kW | 950 kW |
+
+## Generator (DG set) sizing
+
+1. Add up the kW of all loads that may run together.
+2. Divide by the generator's rated power factor (usually 0.8) to get kVA.
+3. Allow for motor starting currents — direct-on-line motors draw 6–8 times their running current briefly.
+4. Add a margin of 20–25% so the generator does not run continuously near full load.
+
+**Example**: 60 kW of loads ÷ 0.8 = 75 kVA; with a 25% margin, choose about **100 kVA**.
+
+## UPS sizing
+
+UPS units list both VA and W. A 1,000 VA UPS rated at 0.6 PF supports only 600 W; modern units often have 0.9–1.0 PF. Size by **watts** for the connected load.
+
+## Power factor of common loads
+
+| Load | Typical PF |
+|---|---|
+| Resistive heaters, incandescent lamps | 1.0 |
+| Induction motor, full load | 0.80–0.90 |
+| Induction motor, light load | 0.3–0.6 |
+| LED drivers and SMPS (with PFC) | 0.9–0.99 |
+| Older fluorescent lighting | 0.5–0.9 |
+
+## Improving power factor
+
+Capacitor banks supply reactive power locally so less has to come from the grid. Raising PF from 0.75 to 0.95 on a 100 kW load cuts apparent power from 133 kVA to 105 kVA, reducing current, cable losses and transformer loading. The capacitor bank needed is the difference in kVAr: 55 kVAr.

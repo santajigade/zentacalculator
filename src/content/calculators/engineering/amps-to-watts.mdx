@@ -1,0 +1,77 @@
+---
+title: Amps to Watts Calculator (and Watts to Amps)
+description: Convert amps to watts for DC, single-phase and three-phase circuits — with charts for 12 V, 120 V and 230 V.
+category: engineering
+keywords: [amps to watts, watts to amps, amps to kw, how many watts is an amp, 12v amps to watts, 230v amps to watts, ampere to watt]
+updated: 2026-10-27
+variables:
+  - { id: I, label: Current, family: current, unit: A, default: 10, min: 0 }
+  - { id: V, label: Voltage, family: voltage, unit: V, default: 230, min: 0 }
+  - id: ph
+    label: System
+    default: 1
+    options:
+      - { label: DC or single-phase AC, value: 1 }
+      - { label: Three-phase AC (line voltage), value: 1.7320508 }
+  - { id: pf, label: Power factor, default: 1, min: 0.01, max: 1 }
+  - { id: P, label: Power, family: power, unit: W, imperialUnit: W, min: 0 }
+equations:
+  - P = ph * V * I * pf
+faq:
+  - q: How many watts is 1 amp?
+    a: It depends on voltage. At 230 V it is 230 W; at 120 V it is 120 W; at 12 V it is 12 W (for DC or unity power factor).
+  - q: How many watts can a 16 A socket supply?
+    a: About 3,680 W at 230 V. Many appliances are limited to a little less for continuous use.
+  - q: How many amps is 2,000 watts?
+    a: About 8.7 A at 230 V or 16.7 A at 120 V.
+related: [engineering/kw-to-amps, physics/ohms-law, engineering/kva-to-kw, everyday-life/electricity-cost]
+---
+
+## How to use this calculator
+
+Enter the **current** and **voltage**, choose the system and enter the power factor (1 for DC, heaters and kettles). The calculator gives the power in watts. To go from watts to amps, press × on Current and type the watts.
+
+## The formulas
+
+| System | Power |
+|---|---|
+| DC | P = V × I |
+| Single-phase AC | P = V × I × PF |
+| Three-phase AC | P = √3 × V<sub>L</sub> × I × PF |
+
+## Amps to watts chart (PF 1)
+
+| Amps | 12 V | 24 V | 120 V | 230 V |
+|---|---|---|---|---|
+| 0.5 A | 6 W | 12 W | 60 W | 115.0 W |
+| 1 A | 12 W | 24 W | 120 W | 230 W |
+| 2 A | 24 W | 48 W | 240 W | 460 W |
+| 5 A | 60 W | 120 W | 600 W | 1,150 W |
+| 6 A | 72 W | 144 W | 720 W | 1,380 W |
+| 10 A | 120 W | 240 W | 1200 W | 2,300 W |
+| 13 A | 156 W | 312 W | 1560 W | 2,990 W |
+| 15 A | 180 W | 360 W | 1800 W | 3,450 W |
+| 16 A | 192 W | 384 W | 1920 W | 3,680 W |
+| 20 A | 240 W | 480 W | 2400 W | 4,600 W |
+| 25 A | 300 W | 600 W | 3000 W | 5,750 W |
+| 32 A | 384 W | 768 W | 3840 W | 7,360 W |
+
+## Socket and circuit limits
+
+| Socket / circuit | Max power (approx.) |
+|---|---|
+| UK 13 A plug (230 V) | 3,000 W |
+| India 6 A socket (230 V) | 1,380 W |
+| India 16 A socket (230 V) | 3,680 W |
+| US 15 A outlet (120 V) | 1,800 W (1,440 W continuous) |
+| US 20 A circuit (120 V) | 2,400 W (1,920 W continuous) |
+
+High-power appliances such as kettles, heaters, geysers and air conditioners should use suitably rated sockets.
+
+## Battery systems
+
+For 12 V and 24 V systems (cars, solar, boats), current is high for modest power: a 1,200 W inverter at 12 V draws about 100 A from the battery, plus losses. Use thick cables and fuses close to the battery.
+
+## Watts, VA and power factor
+
+For AC loads with a power factor below 1 (motors, some electronics), the real power in watts is lower than volts × amps. That product is the apparent power in VA — see the [kVA to kW converter](/engineering/kva-to-kw/).

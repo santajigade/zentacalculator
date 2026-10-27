@@ -1,0 +1,53 @@
+---
+title: Z-Score Calculator
+description: Calculate the z-score of a value from the mean and standard deviation — plus its percentile under a normal distribution.
+category: statistics
+keywords: [z score calculator, standard score, z table, percentile, normal distribution, standardize]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: x, label: Value (x), default: 85 }
+  - { id: mu, label: Mean (μ), default: 70 }
+  - { id: s, label: Standard deviation (σ), default: 10, min: 0.0000001 }
+  - { id: z, label: Z-score }
+  - { id: p, label: Percentile (area to the left), family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - z = (x - mu) / s
+  - p = normcdf(z)
+chart: { x: x, y: p, from: 40, to: 100 }
+faq:
+  - q: What is a z-score?
+    a: How many standard deviations a value is above or below the mean. z = 0 is exactly average; z = 2 is two SDs above.
+  - q: How do I find a percentile from a z-score?
+    a: Use the normal distribution — the calculator gives the share of values below x, assuming the data is normally distributed.
+  - q: What z-score is unusual?
+    a: Values beyond about ±2 occur roughly 5% of the time; beyond ±3, about 0.3% of the time.
+related: [statistics/normal-distribution, statistics/standard-deviation, statistics/empirical-rule]
+---
+
+## How to use this calculator
+
+Enter the **value**, the **mean** and the **standard deviation**. The z-score and percentile appear instantly. To find the value at a given percentile, press × on Value and type the percentile.
+
+## Formula
+
+<p class="formula">z = (x − μ) ÷ σ</p>
+
+## Worked example
+
+An exam score of 85 when the class mean is 70 and SD is 10:
+
+- z = (85 − 70) ÷ 10 = **1.5**
+- Percentile = **93.3%** — better than about 93% of the class
+
+## Common z-scores
+
+| z | Percentile |
+|---|---|
+| −2 | 2.3% |
+| −1 | 15.9% |
+| 0 | 50% |
+| 1 | 84.1% |
+| 1.645 | 95% |
+| 1.96 | 97.5% |
+| 2 | 97.7% |

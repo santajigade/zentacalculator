@@ -1,0 +1,43 @@
+---
+title: Recipe Scaler (Servings Converter)
+description: Scale any recipe ingredient up or down for a different number of servings.
+category: food
+keywords: [recipe scaler, recipe converter, servings calculator, double a recipe, halve a recipe, adjust recipe]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: s0, label: Original servings, default: 4, min: 0.01 }
+  - { id: s1, label: New servings, default: 10, min: 0 }
+  - { id: q0, label: Ingredient amount in the original recipe, default: 250, min: 0 }
+  - { id: k, label: Scaling factor, min: 0, decimals: 3 }
+  - { id: q1, label: New ingredient amount (same unit), min: 0 }
+equations:
+  - k = s1 / s0
+  - q1 = q0 * k
+faq:
+  - q: How do I scale a recipe?
+    a: Divide the new number of servings by the original to get a scaling factor, then multiply every ingredient by it.
+  - q: Do baking times change when I scale a recipe?
+    a: Often. A larger cake in a deeper pan bakes longer; smaller portions bake faster. Check doneness early.
+  - q: Should spices and salt be scaled exactly?
+    a: When scaling up a lot, start with about 75% of the scaled amount of strong spices and salt, then adjust to taste.
+related: [food/cooking-converter, food/grams-to-cups, food/cake-pan]
+---
+
+## How to use this calculator
+
+Enter the **original** and **new** number of servings, then type each **ingredient amount** in turn. The scaling factor and new amount are calculated — the unit stays the same as you entered it.
+
+## Formula
+
+<p class="formula">new amount = original amount × (new servings ÷ original servings)</p>
+
+## Example
+
+A recipe for 4 uses 250 g of pasta. For 10 people: factor 2.5 → **625 g**.
+
+## Tips
+
+- Eggs: round to whole eggs, or beat an egg and use part of it.
+- Pans: a scaled recipe may need a bigger pan — see the [cake pan converter](/food/cake-pan/).
+- Liquids reduce more slowly in larger pots, so simmer a little longer.

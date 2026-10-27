@@ -1,0 +1,52 @@
+---
+title: Cycling Gear & Speed Calculator
+description: Calculate bike speed from cadence, chainring, cog and wheel size — plus gear ratio and development.
+category: sports
+keywords: [bike gear calculator, cycling speed cadence, gear ratio, chainring cog, gear inches, development]
+updated: 2026-10-27
+variables:
+  - { id: cad, label: Cadence, suffix: rpm, default: 90, min: 0 }
+  - { id: cr, label: Chainring teeth, default: 50, min: 1 }
+  - { id: cg, label: Cog (sprocket) teeth, default: 15, min: 1 }
+  - id: wc
+    label: Wheel / tyre size (circumference)
+    default: 2.105
+    options:
+      - { label: 700×25c road (2.105 m), value: 2.105 }
+      - { label: 700×28c road (2.136 m), value: 2.136 }
+      - { label: 700×32c gravel (2.155 m), value: 2.155 }
+      - { label: 29×2.2 MTB (2.326 m), value: 2.326 }
+      - { label: 27.5×2.2 MTB (2.169 m), value: 2.169 }
+      - { label: 26×2.1 MTB (2.068 m), value: 2.068 }
+  - { id: gr, label: Gear ratio, min: 0, decimals: 2 }
+  - { id: dev, label: Development (distance per pedal turn), family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: v, label: Speed, family: velocity, unit: kmh, imperialUnit: mph, min: 0 }
+equations:
+  - gr = cr / cg
+  - dev = gr * wc
+  - v = dev * cad / 60
+faq:
+  - q: How is cycling speed calculated from cadence?
+    a: Speed = cadence × (chainring ÷ cog) × wheel circumference.
+  - q: What is a good cadence?
+    a: Many riders spin at 80–95 rpm on flat roads; climbing is often slower.
+  - q: What is gear development?
+    a: The distance the bike travels for one full turn of the pedals.
+related: [sports/pace-speed-converter, conversion/speed-converter]
+---
+
+## How to use this calculator
+
+Enter your **cadence**, **chainring** and **cog** teeth and choose your **wheel size**. The gear ratio, development and speed are calculated.
+
+## Formula
+
+<p class="formula">speed = cadence × (chainring ÷ cog) × wheel circumference</p>
+
+## Example
+
+50 × 15 gear, 700×25c wheel, 90 rpm:
+
+- Ratio = **3.33**
+- Development = **7.02 m**
+- Speed = **37.9 km/h**

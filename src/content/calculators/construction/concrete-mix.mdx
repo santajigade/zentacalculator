@@ -1,0 +1,49 @@
+---
+title: Concrete Mix Calculator (Cement, Sand, Aggregate)
+description: Calculate cement bags, sand and coarse aggregate for nominal concrete mixes like M15, M20 and M25.
+category: construction
+keywords: [concrete mix calculator, m20 mix ratio, cement sand aggregate, concrete material calculation, 1:1.5:3]
+updated: 2026-10-27
+variables:
+  - { id: V, label: Wet concrete volume, family: volume, unit: m3, imperialUnit: ft3, default: 1, min: 0 }
+  - id: mix
+    label: 'Mix (cement : sand : aggregate)'
+    default: 5.5
+    options:
+      - { label: 'M10 — 1 : 3 : 6 (total 10 parts)', value: 10 }
+      - { label: 'M15 — 1 : 2 : 4 (total 7 parts)', value: 7 }
+      - { label: 'M20 — 1 : 1.5 : 3 (total 5.5 parts)', value: 5.5 }
+      - { label: 'M25 — 1 : 1 : 2 (total 4 parts)', value: 4 }
+  - { id: Vd, label: Dry volume (×1.54), family: volume, unit: m3, imperialUnit: ft3, min: 0 }
+  - { id: bags, label: Cement bags (50 kg), min: 0, decimals: 1 }
+  - { id: sand, label: Sand, family: volume, unit: m3, imperialUnit: ft3, min: 0 }
+  - { id: agg, label: Coarse aggregate, family: volume, unit: m3, imperialUnit: ft3, min: 0 }
+equations:
+  - Vd = V * 1.54
+  - bags = Vd / mix * 1440 / 50
+  - sand = Vd / mix * (mix - 1) / 3
+  - agg = Vd / mix * (mix - 1) * 2 / 3
+faq:
+  - q: What is the M20 mix ratio?
+    a: "For nominal mixes, M20 is 1 : 1.5 : 3 (cement : sand : aggregate). Design mixes for important structures are proportioned by a lab."
+  - q: Why multiply by 1.54?
+    a: To allow for voids and shrinkage — dry ingredients occupy about 54% more volume than the finished concrete.
+  - q: How much water is needed?
+    a: Typically a water–cement ratio of about 0.45–0.55 by weight for these mixes. Too much water weakens concrete.
+related: [construction/concrete-slab, construction/mortar-mix, construction/rebar-weight]
+---
+
+## How to use this calculator
+
+Enter the **wet volume** and choose the **mix**. The dry volume, cement bags, sand and coarse aggregate are calculated.
+
+This calculator assumes the sand-to-aggregate ratio is 1 : 2, as in all the listed nominal mixes.
+
+## Example — 1 m³ of M20 (1 : 1.5 : 3)
+
+- Dry volume = 1.54 m³
+- Cement = 1.54 ÷ 5.5 = 0.28 m³ = **8.1 bags**
+- Sand = 0.28 × 1.5 = **0.42 m³**
+- Aggregate = 0.28 × 3 = **0.84 m³**
+
+Nominal mixes follow common Indian practice (IS 456). For structural work, always follow your structural engineer's design.

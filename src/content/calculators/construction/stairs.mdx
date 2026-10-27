@@ -1,0 +1,47 @@
+---
+title: Stair Calculator (Risers & Treads)
+description: Calculate the number of steps, riser height, total run and stair angle from the floor-to-floor height.
+category: construction
+keywords: [stair calculator, stair rise and run, number of steps, riser height, tread depth, staircase design]
+updated: 2026-10-27
+variables:
+  - { id: H, label: Total rise (floor to floor), family: length, unit: m, imperialUnit: ft, default: 2.7, min: 0 }
+  - { id: tr, label: Target max riser height, family: length, unit: mm, imperialUnit: in, default: 180, min: 0.01 }
+  - { id: td, label: Tread depth (going), family: length, unit: mm, imperialUnit: in, default: 270, min: 0 }
+  - { id: n, label: Number of risers, min: 0, decimals: 0 }
+  - { id: rh, label: Actual riser height, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: run, label: Total run (horizontal length), family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: ang, label: Stair angle, family: angle, unit: deg }
+equations:
+  - n = ceil(H / tr)
+  - rh = H / n
+  - run = (n - 1) * td
+  - ang = atan(rh / td)
+faq:
+  - q: What is a comfortable riser height?
+    a: About 150–180 mm (6–7 in), with treads around 250–300 mm. Many codes cap risers at about 190–200 mm for homes.
+  - q: Why is the number of treads one less than risers?
+    a: The top step is the upper floor itself, so there is one fewer tread than risers.
+  - q: What is the 2R + G rule?
+    a: Twice the riser plus the going should be about 550–700 mm (often around 630 mm) for a comfortable stride.
+related: [construction/roof-pitch, math/right-triangle-trig]
+---
+
+## How to use this calculator
+
+Enter the **total rise**, your **maximum riser height** and the **tread depth**. The number of risers, actual riser height, total run and angle are calculated.
+
+## Formulas
+
+<p class="formula">risers = ⌈rise ÷ max riser⌉   riser = rise ÷ risers   run = (risers − 1) × tread</p>
+
+## Example
+
+Floor-to-floor 2.7 m, max riser 180 mm, tread 270 mm:
+
+- Risers = **15**, each **180 mm**
+- Total run = 14 × 270 = **3.78 m**
+- Angle = **33.7°**
+- Check: 2R + G = 630 mm ✓
+
+Always check your local building code for limits on riser, going, headroom and handrails.

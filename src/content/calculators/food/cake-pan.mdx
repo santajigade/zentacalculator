@@ -1,0 +1,49 @@
+---
+title: Cake Pan Size Converter
+description: Scale a recipe for a different round or square cake tin by comparing pan areas.
+category: food
+keywords: [cake pan converter, baking tin size, round to square pan, scale cake recipe, pan size calculator]
+updated: 2026-10-27
+variables:
+  - id: s1
+    label: Original pan shape
+    default: 0.785398
+    options:
+      - { label: Round, value: 0.785398 }
+      - { label: Square, value: 1 }
+  - { id: d1, label: Original pan size (diameter or side), family: length, unit: cm, imperialUnit: in, default: 20, min: 0 }
+  - id: s2
+    label: New pan shape
+    default: 0.785398
+    options:
+      - { label: Round, value: 0.785398 }
+      - { label: Square, value: 1 }
+  - { id: d2, label: New pan size (diameter or side), family: length, unit: cm, imperialUnit: in, default: 25, min: 0 }
+  - { id: k, label: Multiply ingredients by, min: 0, decimals: 2 }
+equations:
+  - k = s2 * d2^2 / (s1 * d1^2)
+faq:
+  - q: How do I convert a recipe to a bigger cake tin?
+    a: Compare the pan areas. A 25 cm round tin is about 1.56 times the area of a 20 cm one, so multiply ingredients by 1.56.
+  - q: Can I swap a round pan for a square one?
+    a: Yes. A 20 cm square pan holds about 27% more than a 20 cm round pan.
+  - q: Do baking times change?
+    a: Usually — check a few minutes early and use a skewer test.
+related: [food/recipe-scaler, math/circle]
+---
+
+## How to use this calculator
+
+Choose the **shape** and **size** of the original and new tins. The factor to multiply all ingredients by is calculated (assuming the same depth).
+
+## Example
+
+20 cm round → 25 cm round: factor = 25² ÷ 20² = **1.56**
+
+## Equivalent tins (similar area)
+
+| Round | Square |
+|---|---|
+| 20 cm (8 in) | 18 cm (7 in) |
+| 23 cm (9 in) | 20 cm (8 in) |
+| 25 cm (10 in) | 23 cm (9 in) |

@@ -1,0 +1,74 @@
+---
+title: Speed Converter (km/h, mph, m/s, knots)
+description: Convert speeds between km/h, mph, m/s, ft/s and knots instantly — type in any field.
+category: conversion
+keywords: [speed converter, km/h to mph, mph to km/h, m/s to km/h, knots to mph, velocity converter]
+updated: 2026-10-27
+variables:
+  - { id: u0, label: Kilometres per hour (km/h), family: velocity, unit: kmh, default: 100, min: 0 }
+  - { id: u1, label: Miles per hour (mph), family: velocity, unit: mph, min: 0 }
+  - { id: u2, label: Metres per second (m/s), family: velocity, unit: ms, min: 0 }
+  - { id: u3, label: Knots, family: velocity, unit: kn, min: 0 }
+  - { id: u4, label: Feet per second (ft/s), family: velocity, unit: fts, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+  - u3 = u4
+faq:
+  - q: How do I convert km/h to mph?
+    a: "Multiply by 0.621371. 80 km/h ≈ 49.7 mph."
+  - q: How do I convert m/s to km/h?
+    a: "Multiply by 3.6. 10 m/s = 36 km/h."
+  - q: What is a knot?
+    a: "One nautical mile (1,852 m) per hour, about 1.15 mph."
+related: [conversion/km-to-miles, engineering/pipe-flow-velocity]
+---
+
+## How to use this converter
+
+Type a speed in **any** unit and the others update instantly.
+
+## Formula
+
+<p class="formula">mph = km/h × 0.621371   m/s = km/h ÷ 3.6   1 knot = 1.852 km/h</p>
+
+**Example:** 100 km/h = **62.1 mph** = **27.8 m/s** = **54.0 knots**.
+
+## Conversion table
+
+| km/h | mph |
+|---|---|
+| 30 km/h | 18.6411 mph |
+| 50 km/h | 31.0686 mph |
+| 60 km/h | 37.2823 mph |
+| 80 km/h | 49.7097 mph |
+| 100 km/h | 62.1371 mph |
+| 120 km/h | 74.5645 mph |
+| 130 km/h | 80.7783 mph |
+
+| mph | km/h |
+|---|---|
+| 20 mph | 32.1869 km/h |
+| 30 mph | 48.2803 km/h |
+| 40 mph | 64.3738 km/h |
+| 55 mph | 88.5139 km/h |
+| 65 mph | 104.607 km/h |
+| 70 mph | 112.654 km/h |
+| 80 mph | 128.748 km/h |
+
+## Quick conversions
+
+- **km/h → m/s:** divide by 3.6 (36 km/h = 10 m/s)
+- **km/h → mph:** multiply by 0.6 for an estimate (100 km/h ≈ 60 mph)
+- **Knots** are used at sea and in aviation; 1 knot = 1 nautical mile per hour.
+
+## Reference speeds
+
+| | km/h |
+|---|---|
+| Walking | 5 |
+| Cycling | 15–25 |
+| Sprinting (elite) | ~37 |
+| Commercial jet cruise | ~900 |
+| Speed of sound (sea level, 20 °C) | ~1,235 |

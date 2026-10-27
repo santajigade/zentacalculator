@@ -1,0 +1,42 @@
+---
+title: Fence Calculator (Posts & Panels)
+description: Calculate the number of fence posts, panels or rails and the concrete needed for any fence length.
+category: construction
+keywords: [fence calculator, fence posts, fence panels, how many posts, fencing materials, post spacing]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Fence length, family: length, unit: m, imperialUnit: ft, default: 30, min: 0 }
+  - { id: sp, label: Post spacing (panel width), family: length, unit: m, imperialUnit: ft, default: 1.83, min: 0.01 }
+  - { id: rails, label: Rails per section, default: 3, min: 0 }
+  - { id: pn, label: Panels / sections, min: 0, decimals: 0 }
+  - { id: po, label: Posts needed, min: 0, decimals: 0 }
+  - { id: rl, label: Rails needed, min: 0, decimals: 0 }
+equations:
+  - pn = ceil(L / sp)
+  - po = pn + 1
+  - rl = pn * rails
+faq:
+  - q: How many fence posts do I need?
+    a: Divide the fence length by the post spacing, round up, and add one for the end post.
+  - q: What spacing should posts have?
+    a: Standard panels are about 1.83 m (6 ft) wide; post-and-rail fences often use 2–2.4 m (8 ft).
+  - q: How deep should posts go?
+    a: A common rule is about a quarter to a third of the post's above-ground height, typically 600 mm for a 1.8 m fence.
+related: [construction/concrete-column, construction/board-feet]
+---
+
+## How to use this calculator
+
+Enter the **fence length**, **post spacing** and **rails per section**. The number of panels, posts and rails is calculated. Add extra posts for corners and gates.
+
+## Example
+
+30 m of fence with 1.83 m panels and 3 rails per section:
+
+- Panels = **17**
+- Posts = **18**
+- Rails = **51**
+
+## Concrete for posts
+
+A post hole of 300 mm diameter and 600 mm deep takes about 0.04 m³ of concrete. Use the [column calculator](/construction/concrete-column/) for exact amounts.

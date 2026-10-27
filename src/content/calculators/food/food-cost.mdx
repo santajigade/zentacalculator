@@ -1,0 +1,38 @@
+---
+title: Food Cost & Menu Price Calculator
+description: Calculate cost per serving and the menu price needed to hit a target food cost percentage.
+category: food
+keywords: [food cost calculator, menu pricing, food cost percentage, cost per serving, restaurant pricing, plate cost]
+updated: 2026-10-27
+variables:
+  - { id: tc, label: Total ingredient cost of the recipe, family: currency, default: 36, min: 0, decimals: 2 }
+  - { id: n, label: Servings the recipe makes, default: 12, min: 1 }
+  - { id: fc, label: Target food cost, family: percent, unit: '%', default: 30, min: 0.01, max: 1 }
+  - { id: cps, label: Cost per serving, family: currency, min: 0, decimals: 2 }
+  - { id: price, label: Menu price, family: currency, min: 0, decimals: 2 }
+  - { id: gp, label: Gross profit per serving, family: currency, decimals: 2 }
+equations:
+  - cps = tc / n
+  - price = cps / fc
+  - gp = price - cps
+faq:
+  - q: What is food cost percentage?
+    a: Ingredient cost divided by selling price. Many restaurants aim for about 25–35%.
+  - q: How do I price a dish?
+    a: Menu price = cost per serving ÷ target food cost %. A 3.00 plate cost at 30% gives a price of 10.00.
+  - q: What else affects the price?
+    a: Labour, rent, overheads and the local market. Food cost is only part of the picture.
+related: [finance/profit-margin, food/recipe-scaler]
+---
+
+## How to use this calculator
+
+Enter the **total ingredient cost**, how many **servings** it makes and your **target food cost %**. The cost per serving, menu price and gross profit are calculated.
+
+## Example
+
+Ingredients cost 36 for 12 servings, target 30%:
+
+- Cost per serving = **3.00**
+- Menu price = 3.00 ÷ 0.30 = **10.00**
+- Gross profit = **7.00** per plate

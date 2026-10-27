@@ -1,0 +1,41 @@
+---
+title: Water Heater (Geyser) Heating Time Calculator
+description: Calculate how long an electric water heater takes to heat a tank of water — and the energy used.
+category: other
+keywords: [water heater heating time, geyser calculator, how long to heat water, tank heating time, immersion heater]
+updated: 2026-10-27
+variables:
+  - { id: V, label: Tank volume, family: volume, unit: L, imperialUnit: galUS, default: 25, min: 0 }
+  - { id: t1, label: Cold water temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
+  - { id: t2, label: Target temperature, family: temperature, unit: C, imperialUnit: F, default: 55 }
+  - { id: P, label: Heater power, family: power, unit: kW, default: 2, min: 0.000001 }
+  - { id: ef, label: Efficiency, family: percent, unit: '%', default: 90, min: 0.01, max: 1 }
+  - { id: kwh, label: Energy used, suffix: kWh, min: 0, decimals: 2 }
+  - { id: t, label: Heating time, family: seconds, unit: min, min: 0 }
+equations:
+  - kwh = V * 1000 * 4.186 * (t2 - t1) / 3600 / ef
+  - t = kwh * 3600000 / P
+faq:
+  - q: How long does a geyser take to heat water?
+    a: A 25-litre, 2 kW heater raising water by 35 °C takes about 34 minutes at 90% efficiency.
+  - q: How much electricity does it use?
+    a: About 1.16 kWh per 1,000 litres per °C, divided by efficiency. The example above uses about 1.1 kWh.
+  - q: What temperature should I set?
+    a: Around 50–60 °C balances comfort, energy use and protection against bacteria such as Legionella.
+related: [chemistry/specific-heat, everyday-life/electricity-cost, ecology/shower-water]
+---
+
+## How to use this calculator
+
+Enter the **tank volume**, **cold** and **target temperatures**, the heater's **power** and **efficiency**. Energy used and heating time are calculated.
+
+## Formula
+
+<p class="formula">time = m c ΔT ÷ (P × efficiency)</p>
+
+## Example
+
+25 L from 20 °C to 55 °C with a 2 kW heater at 90%:
+
+- Energy = 25 × 4.186 × 35 ÷ 3,600 ÷ 0.9 = **1.13 kWh**
+- Time = **34 minutes**

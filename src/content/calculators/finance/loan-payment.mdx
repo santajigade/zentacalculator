@@ -1,0 +1,77 @@
+---
+title: Loan Payment (EMI) Calculator
+description: Work out the monthly payment (EMI), total interest and total cost of any loan — home, car or personal.
+category: finance
+keywords: [emi, loan payment, monthly payment, mortgage, car loan, personal loan, amortization, home loan]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Loan amount, family: currency, default: 200000, min: 0, decimals: 2 }
+  - { id: r, label: Annual interest rate, family: percent, unit: '%', default: 9, min: 0.0001, max: 1 }
+  - { id: t, label: Loan term, family: time, unit: yr, default: 5, min: 0.0833 }
+  - { id: M, label: Monthly payment (EMI), family: currency, min: 0, decimals: 2 }
+  - { id: T, label: Total of all payments, family: currency, min: 0, decimals: 2 }
+  - { id: I, label: Total interest, family: currency, decimals: 2 }
+equations:
+  - M = P * (r/12) * (1 + r/12)^(12*t) / ((1 + r/12)^(12*t) - 1)
+  - T = M * 12 * t
+  - I = T - P
+chart: { x: t, y: M, from: 1, to: 30 }
+faq:
+  - q: How is EMI calculated?
+    a: EMI = P × i × (1 + i)ⁿ ÷ ((1 + i)ⁿ − 1), where P is the loan amount, i the monthly rate (annual rate ÷ 12) and n the number of months.
+  - q: How can I reduce my total interest?
+    a: Choose a shorter term, negotiate a lower rate, or make prepayments. The chart shows how the monthly payment changes with term.
+  - q: How much can I borrow for a given monthly payment?
+    a: Press × on Loan amount, then type the monthly payment you can afford, the rate and the term.
+  - q: Does this include fees and insurance?
+    a: No. Processing fees, insurance and taxes are extra. Add them separately to compare real costs.
+related: [finance/simple-interest, finance/compound-interest]
+---
+
+## How to use this calculator
+
+Enter the **loan amount**, **interest rate** and **term** to see your monthly payment (EMI), the total you will repay and the total interest. You can also work backwards:
+
+- *How much can I borrow?* → press × on Loan amount and type the monthly payment you can afford.
+- *How long will it take?* → press × on Loan term and type your monthly payment.
+- *What rate am I being charged?* → press × on the rate and type the amount, term and payment from your offer.
+
+Switch the term to months if your lender quotes it that way.
+
+## The formula
+
+<p class="formula">EMI = P × i × (1 + i)<sup>n</sup> ÷ ((1 + i)<sup>n</sup> − 1)</p>
+
+- **P** — loan amount
+- **i** — monthly interest rate = annual rate ÷ 12
+- **n** — number of monthly payments = years × 12
+
+## Worked example
+
+A loan of 200,000 at 9% for 5 years:
+
+- i = 0.09 ÷ 12 = 0.0075
+- n = 60
+- EMI = **4,151.67** per month
+- Total paid = 4,151.67 × 60 = **249,100.26**
+- Total interest = **49,100.26**
+
+## How the term changes the cost
+
+For 200,000 at 9%:
+
+| Term | Monthly payment | Total interest |
+|---|---|---|
+| 3 years | 6,359.95 | 28,958.08 |
+| 5 years | 4,151.67 | 49,100.26 |
+| 10 years | 2,533.52 | 104,021.86 |
+| 20 years | 1,799.45 | 231,868.46 |
+
+A longer term lowers each payment but you pay much more interest overall.
+
+## Tips before you borrow
+
+- Compare offers by **total cost**, not just the monthly payment.
+- Check for prepayment penalties if you plan to pay early.
+- Keep total loan payments within a comfortable share of your income.

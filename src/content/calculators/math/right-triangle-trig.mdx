@@ -1,0 +1,54 @@
+---
+title: Right Triangle Calculator (Trigonometry)
+description: Solve a right triangle from an angle and one side — find all sides and angles with sin, cos and tan.
+category: math
+keywords: [right triangle calculator, trigonometry, sin cos tan, soh cah toa, angle, hypotenuse, opposite, adjacent]
+updated: 2026-10-27
+variables:
+  - { id: A, label: Angle A, family: angle, unit: deg, default: 30, min: 0, max: 1.5708 }
+  - { id: B, label: Angle B, family: angle, unit: deg, min: 0, max: 1.5708 }
+  - { id: c, label: Hypotenuse (c), family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
+  - { id: a, label: Side opposite A (a), family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: b, label: Side adjacent to A (b), family: length, unit: m, imperialUnit: ft, min: 0 }
+equations:
+  - a = c * sin(A)
+  - b = c * cos(A)
+  - B = pi / 2 - A
+chart: { x: A, y: a, from: 0, to: 90 }
+faq:
+  - q: What does SOH CAH TOA mean?
+    a: A memory aid — Sine = Opposite/Hypotenuse, Cosine = Adjacent/Hypotenuse, Tangent = Opposite/Adjacent.
+  - q: How do I find an angle from two sides?
+    a: Press × on Angle A, then type two sides. The angle is found with the inverse trig functions.
+  - q: Do the angles always add up to 90°?
+    a: The two acute angles do. With the right angle, all three add up to 180°.
+related: [math/pythagorean-theorem, math/slope, math/triangle-area]
+---
+
+## How to use this calculator
+
+Enter **one angle** and **one side**, or **two sides**. All remaining sides and angles are calculated. Angles can be entered in degrees or radians.
+
+## Formulas (SOH CAH TOA)
+
+<p class="formula">sin A = a ÷ c   cos A = b ÷ c   tan A = a ÷ b<br/>A + B = 90°</p>
+
+## Worked example
+
+A hypotenuse of 10 m at angle A = 30°:
+
+- a = 10 × sin 30° = **5 m**
+- b = 10 × cos 30° = **8.66 m**
+- B = 90° − 30° = **60°**
+
+**Ladder check:** a 6 m ladder at 75° (the recommended safe angle) reaches 6 × sin 75° = **5.80 m** high with its foot 6 × cos 75° = **1.55 m** from the wall.
+
+## Special angles
+
+| Angle | sin | cos | tan |
+|---|---|---|---|
+| 0° | 0 | 1 | 0 |
+| 30° | 0.5 | 0.866 | 0.577 |
+| 45° | 0.707 | 0.707 | 1 |
+| 60° | 0.866 | 0.5 | 1.732 |
+| 90° | 1 | 0 | undefined |

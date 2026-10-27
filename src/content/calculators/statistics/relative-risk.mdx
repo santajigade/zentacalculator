@@ -1,0 +1,49 @@
+---
+title: Relative Risk & Odds Ratio Calculator
+description: Calculate relative risk, odds ratio and absolute risk difference from a 2×2 table of exposed and unexposed groups.
+category: statistics
+keywords: [relative risk, odds ratio, risk ratio, 2x2 table, epidemiology, absolute risk reduction, nnt]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Exposed — with outcome (a), default: 30, min: 0 }
+  - { id: b, label: Exposed — without outcome (b), default: 70, min: 0 }
+  - { id: c, label: Unexposed — with outcome (c), default: 10, min: 0 }
+  - { id: d, label: Unexposed — without outcome (d), default: 90, min: 0 }
+  - { id: rr, label: Relative risk (RR), min: 0, decimals: 3 }
+  - { id: orr, label: Odds ratio (OR), min: 0, decimals: 3 }
+  - { id: ard, label: Absolute risk difference, family: percent, unit: '%' }
+equations:
+  - rr = (a / (a + b)) / (c / (c + d))
+  - orr = (a * d) / (b * c)
+  - ard = a / (a + b) - c / (c + d)
+faq:
+  - q: What is relative risk?
+    a: The risk of the outcome in the exposed group divided by the risk in the unexposed group. RR = 3 means three times the risk.
+  - q: What is the difference between RR and OR?
+    a: RR compares probabilities; OR compares odds. They are similar when the outcome is rare, but OR exaggerates the effect when the outcome is common.
+  - q: What is the number needed to treat (NNT)?
+    a: 1 ÷ absolute risk difference. If a treatment reduces risk by 20 percentage points, NNT = 5.
+related: [statistics/odds-probability, statistics/probability]
+---
+
+## How to use this calculator
+
+Fill in the 2×2 table: how many people in the **exposed** and **unexposed** groups had or did not have the outcome.
+
+| | Outcome | No outcome |
+|---|---|---|
+| Exposed | a | b |
+| Unexposed | c | d |
+
+## Formulas
+
+<p class="formula">RR = [a/(a+b)] ÷ [c/(c+d)]   OR = ad ÷ bc</p>
+
+## Worked example
+
+30 of 100 exposed and 10 of 100 unexposed people developed the outcome:
+
+- Risk exposed = 30%, risk unexposed = 10%
+- RR = **3.00**
+- OR = 30 × 90 ÷ (70 × 10) = **3.86**
+- Absolute risk difference = **20 percentage points** (NNH = 5)

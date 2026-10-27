@@ -1,0 +1,49 @@
+---
+title: One-Rep Max (1RM) Calculator
+description: Estimate your one-rep max from the weight and reps you can lift, with training percentages.
+category: sports
+keywords: [one rep max, 1rm calculator, max lift, epley formula, bench press max, squat max, strength training]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: w, label: Weight lifted, family: mass, unit: kg, imperialUnit: lb, default: 80, min: 0 }
+  - { id: r, label: Reps completed, default: 6, min: 1, max: 15 }
+  - { id: rm, label: Estimated 1RM, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+  - { id: w80, label: 80% of 1RM (about 8 reps), family: mass, unit: kg, imperialUnit: lb, min: 0 }
+  - { id: w70, label: 70% of 1RM (about 12 reps), family: mass, unit: kg, imperialUnit: lb, min: 0 }
+equations:
+  - rm = w * (1 + r / 30)
+  - w80 = rm * 0.8
+  - w70 = rm * 0.7
+faq:
+  - q: How is one-rep max estimated?
+    a: This uses the Epley formula, 1RM = weight × (1 + reps ÷ 30). It is most accurate for sets of 2–10 reps.
+  - q: Is it safe to test a true 1RM?
+    a: Maximal lifts carry injury risk. Estimating from a submaximal set is safer, especially for beginners. Always use a spotter.
+  - q: What percentage for strength vs hypertrophy?
+    a: Roughly 80–90% of 1RM for strength (3–6 reps) and 65–80% for muscle growth (6–12 reps).
+related: [health/calories-burned, sports/jump-height]
+---
+
+## How to use this calculator
+
+Enter the **weight** and the number of **reps** you completed with good form. Your estimated 1RM and common training weights are calculated.
+
+## Formula (Epley)
+
+<p class="formula">1RM = weight × (1 + reps ÷ 30)</p>
+
+## Example
+
+80 kg for 6 reps: 1RM = 80 × 1.2 = **96 kg**
+
+## Training percentages
+
+| % of 1RM | Typical reps |
+|---|---|
+| 95% | 2 |
+| 90% | 3–4 |
+| 85% | 5–6 |
+| 80% | 7–8 |
+| 75% | 9–10 |
+| 70% | 11–12 |

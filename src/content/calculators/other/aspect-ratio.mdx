@@ -1,0 +1,35 @@
+---
+title: Aspect Ratio Calculator
+description: Resize images and video while keeping the aspect ratio — find the missing width or height.
+category: other
+keywords: [aspect ratio calculator, resize image, 16:9 calculator, width height ratio, video dimensions, resolution scaling]
+updated: 2026-10-27
+variables:
+  - { id: rw, label: Ratio width, default: 16, min: 0.0001 }
+  - { id: rh, label: Ratio height, default: 9, min: 0.0001 }
+  - { id: w, label: New width, suffix: px, default: 1280, min: 0 }
+  - { id: h, label: New height, suffix: px, min: 0, decimals: 0 }
+equations:
+  - w / h = rw / rh
+faq:
+  - q: How do I keep the aspect ratio when resizing?
+    a: New height = new width × (ratio height ÷ ratio width). For 16:9 at 1,280 px wide, height = 720 px.
+  - q: What are common aspect ratios?
+    a: 16:9 for video and monitors, 4:3 for older screens and many photos, 3:2 for DSLR photos, 1:1 for square posts and 9:16 for vertical video.
+  - q: Can I enter the original pixel size as the ratio?
+    a: Yes — enter, for example, 1920 and 1080 as the ratio values.
+related: [other/screen-ppi, other/print-size-dpi]
+---
+
+## How to use this calculator
+
+Enter the **ratio** (or the original width and height in pixels) and either the **new width** or the **new height**. The missing dimension is calculated.
+
+## Common sizes
+
+| Ratio | Sizes |
+|---|---|
+| 16:9 | 1280×720, 1920×1080, 3840×2160 |
+| 4:3 | 1024×768, 1600×1200 |
+| 3:2 | 1080×720, 6000×4000 |
+| 9:16 | 1080×1920 (stories, reels) |

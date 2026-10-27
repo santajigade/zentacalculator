@@ -1,0 +1,55 @@
+---
+title: Brick Calculator
+description: Estimate the number of bricks for a wall from its size, brick dimensions and mortar joint — with waste.
+category: construction
+keywords: [brick calculator, how many bricks, bricks per square metre, brick wall, mortar joint, bricklaying]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: L, label: Wall length, family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
+  - { id: H, label: Wall height, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
+  - { id: open, label: "Openings (doors, windows)", family: area, unit: m2, imperialUnit: ft2, default: 2, min: 0 }
+  - { id: bl, label: Brick length, family: length, unit: mm, imperialUnit: in, default: 215, min: 0 }
+  - { id: bh, label: Brick height, family: length, unit: mm, imperialUnit: in, default: 65, min: 0 }
+  - { id: j, label: Mortar joint, family: length, unit: mm, imperialUnit: in, default: 10, min: 0 }
+  - { id: wst, label: Waste, family: percent, unit: '%', default: 5, min: 0, max: 1 }
+  - { id: A, label: Net wall area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+  - { id: per, label: Bricks per m², min: 0, decimals: 1 }
+  - { id: n, label: Bricks needed, min: 0, decimals: 0 }
+equations:
+  - A = L * H - open
+  - per = 1 / ((bl + j) * (bh + j))
+  - n = ceil(A * per * (1 + wst))
+faq:
+  - q: How many bricks are in a square metre?
+    a: About 60 standard UK bricks (215 × 65 mm with 10 mm joints) per m² of single-skin wall.
+  - q: Is this for a single or double wall?
+    a: Single skin (half-brick thick). Double the result for a one-brick-thick wall.
+  - q: How much waste should I allow?
+    a: 5% is common; use 10% for complex walls with many cuts.
+related: [construction/mortar-mix, construction/paint-calculator]
+---
+
+## How to use this calculator
+
+Enter the wall's **length**, **height** and the total area of **openings**. Brick size and joint default to the UK standard (215 × 65 mm, 10 mm joint) — change them for your bricks.
+
+## Formula
+
+<p class="formula">Bricks per m² = 1 ÷ ((brick length + joint) × (brick height + joint))</p>
+
+## Example
+
+A 10 m × 2 m wall with 2 m² of openings:
+
+- Net area = 18 m²
+- Bricks per m² = 1 ÷ (0.225 × 0.075) = **59.3**
+- With 5% waste: **1120 bricks**
+
+## Common brick sizes
+
+| Region | Size (mm) |
+|---|---|
+| UK standard | 215 × 102.5 × 65 |
+| India (modular) | 190 × 90 × 90 |
+| US modular | 194 × 92 × 57 (7⅝ × 3⅝ × 2¼ in) |

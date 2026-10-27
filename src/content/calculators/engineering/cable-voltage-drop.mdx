@@ -1,0 +1,75 @@
+---
+title: Cable Voltage Drop Calculator
+description: Calculate voltage drop in copper or aluminium cable for single-phase and three-phase circuits — and the minimum cable size.
+category: engineering
+keywords: [voltage drop, cable size, cable voltage drop, wire size, mm2, copper cable, aluminium cable, three phase]
+updated: 2026-10-27
+featured: true
+variables:
+  - id: k
+    label: Circuit type
+    default: 2
+    options:
+      - { label: Single-phase / DC (2 conductors), value: 2 }
+      - { label: Three-phase (balanced), value: 1.7320508 }
+  - id: rc
+    label: Conductor
+    default: 1.72e-8
+    options:
+      - { label: Copper, value: 1.72e-8 }
+      - { label: Aluminium, value: 2.82e-8 }
+  - { id: V, label: Supply voltage, family: voltage, unit: V, default: 230, min: 0 }
+  - { id: I, label: Load current, family: current, unit: A, default: 16, min: 0 }
+  - { id: L, label: Cable length (one way), family: length, unit: m, imperialUnit: ft, default: 30, min: 0 }
+  - { id: A, label: Conductor cross-section, family: area, unit: mm2, default: 2.5, min: 0 }
+  - { id: Vd, label: Voltage drop, family: voltage, unit: V, min: 0 }
+  - id: pct
+    label: Voltage drop (% of supply)
+    family: percent
+    unit: '%'
+    min: 0
+    bands:
+      - { max: 0.03, label: Within 3% (typical lighting limit), color: '#16a34a' }
+      - { max: 0.05, label: Within 5% (typical power limit), color: '#eab308' }
+      - { max: 1e9, label: Too high — use a larger cable, color: '#dc2626' }
+equations:
+  - Vd = k * L * I * rc / A
+  - pct = Vd / V
+chart: { x: L, y: pct, from: 0, to: 100 }
+faq:
+  - q: What is an acceptable voltage drop?
+    a: Many wiring codes recommend about 3% for lighting and 5% for other circuits from the origin of the installation. Check your local regulations.
+  - q: How do I find the minimum cable size?
+    a: Press × on Conductor cross-section, then type the maximum voltage drop % you allow. Pick the next standard size up.
+  - q: Does this account for cable temperature and reactance?
+    a: It uses resistivity at about 20 °C and ignores reactance, which is fine for small and medium cables. For large cables or high temperatures, use the manufacturer's mV/A/m tables.
+related: [engineering/three-phase-motor-power, physics/ohms-law]
+---
+
+## How to use this calculator
+
+Choose the **circuit type** and **conductor material**, then enter the **supply voltage**, **current**, **one-way cable length** and **cross-section**. The voltage drop appears in volts and as a percentage, with a colour guide. To size a cable, press × on the cross-section and type your allowed drop %.
+
+## The formula
+
+<p class="formula">Single-phase: V<sub>d</sub> = 2 × L × I × ρ ÷ A<br/>Three-phase: V<sub>d</sub> = √3 × L × I × ρ ÷ A</p>
+
+- **ρ** — resistivity: copper 1.72 × 10⁻⁸ Ω·m, aluminium 2.82 × 10⁻⁸ Ω·m
+- **L** — one-way length
+- **A** — conductor cross-section
+
+## Worked examples
+
+**Single-phase:** 16 A at 230 V over 30 m of 2.5 mm² copper:
+V<sub>d</sub> = 2 × 30 × 16 × 1.72 × 10⁻⁸ ÷ 2.5 × 10⁻⁶ = **6.6 V (2.9%)**
+
+**Three-phase:** 32 A at 415 V over 50 m of 6 mm² copper:
+V<sub>d</sub> = 1.732 × 50 × 32 × 1.72 × 10⁻⁸ ÷ 6 × 10⁻⁶ = **7.9 V (1.9%)**
+
+## Standard cable sizes (mm²)
+
+1.5 · 2.5 · 4 · 6 · 10 · 16 · 25 · 35 · 50 · 70 · 95 · 120 · 150 · 185 · 240
+
+## Remember
+
+Voltage drop is only one check. The cable must also carry the current safely (current rating with installation derating) and allow protective devices to disconnect a fault in time.

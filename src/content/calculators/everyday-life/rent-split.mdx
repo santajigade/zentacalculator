@@ -1,0 +1,46 @@
+---
+title: Rent Split Calculator (By Room Size)
+description: Split rent fairly between roommates based on bedroom size, with shared space divided equally.
+category: everyday-life
+keywords: [rent split calculator, roommate rent, split rent by room size, fair rent, shared apartment]
+updated: 2026-10-27
+variables:
+  - { id: R, label: Total monthly rent, family: currency, default: 2400, min: 0, decimals: 2 }
+  - { id: sh, label: Share of rent for common areas, family: percent, unit: '%', default: 40, min: 0, max: 1 }
+  - { id: a1, label: Room 1 size, family: area, unit: m2, imperialUnit: ft2, default: 14, min: 0 }
+  - { id: a2, label: Room 2 size, family: area, unit: m2, imperialUnit: ft2, default: 11, min: 0 }
+  - { id: a3, label: Room 3 size, family: area, unit: m2, imperialUnit: ft2, default: 9, min: 0 }
+  - { id: p1, label: Room 1 pays, family: currency, decimals: 2 }
+  - { id: p2, label: Room 2 pays, family: currency, decimals: 2 }
+  - { id: p3, label: Room 3 pays, family: currency, decimals: 2 }
+equations:
+  - p1 = R * sh / 3 + R * (1 - sh) * a1 / (a1 + a2 + a3)
+  - p2 = R * sh / 3 + R * (1 - sh) * a2 / (a1 + a2 + a3)
+  - p3 = R * sh / 3 + R * (1 - sh) * a3 / (a1 + a2 + a3)
+faq:
+  - q: What is a fair way to split rent?
+    a: A common approach divides part of the rent equally (for shared spaces) and the rest by bedroom size.
+  - q: What percentage should be for shared space?
+    a: Often 30–50%, depending on how much of the home is shared living area.
+  - q: What about a private bathroom or balcony?
+    a: Add its area to that room, or agree an extra amount on top.
+related: [everyday-life/tip-calculator, math/rectangle]
+---
+
+## How to use this calculator
+
+Enter the **total rent**, the share that covers **common areas** (split equally) and the size of each **bedroom**. Each person's share is calculated.
+
+## Formula
+
+<p class="formula">Share = rent × common% ÷ 3 + rent × (1 − common%) × room area ÷ total room area</p>
+
+## Example
+
+Rent 2,400, 40% for common areas, rooms of 14, 11 and 9 m²:
+
+- Room 1: 320 + 1,440 × 14/34 = **912.94**
+- Room 2: 320 + 1,440 × 11/34 = **785.88**
+- Room 3: 320 + 1,440 × 9/34 = **701.18**
+
+For two roommates, set one room size to 0 and adjust — or agree on the split you all find fair.

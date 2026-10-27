@@ -1,0 +1,39 @@
+---
+title: Square Footage & Cost Calculator
+description: Calculate the area of a room or space in ft² and m² and the total cost at a price per unit area.
+category: construction
+keywords: [square footage calculator, sq ft calculator, area cost, price per square foot, room area, carpet cost]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Length, family: length, unit: ft, default: 12, min: 0 }
+  - { id: W, label: Width, family: length, unit: ft, default: 15, min: 0 }
+  - { id: A, label: Area, family: area, unit: ft2, min: 0 }
+  - { id: pr, label: Price per square foot, family: currency, default: 3.5, min: 0, decimals: 2 }
+  - { id: cost, label: Total cost, family: currency, min: 0, decimals: 2 }
+equations:
+  - A = L * W
+  - cost = A / 0.09290304 * pr
+faq:
+  - q: How do I calculate square footage?
+    a: Multiply length by width in feet. A 12 × 15 ft room is 180 ft².
+  - q: How do I handle irregular rooms?
+    a: Split the space into rectangles, calculate each one, and add them up.
+  - q: How do I convert square feet to square metres?
+    a: Multiply by 0.0929. Switch the Area unit to m² to see it directly.
+related: [conversion/sq-ft-to-sq-m, construction/flooring, construction/tile-calculator]
+---
+
+## How to use this calculator
+
+Enter the **length** and **width** (in feet, metres or any unit) and the **price per square foot**. The area and total cost are calculated.
+
+## Example
+
+A 12 × 15 ft room at 3.50 per ft²:
+
+- Area = **180 ft²** (16.7 m²)
+- Cost = **630.00**
+
+## Tip
+
+Add 5–15% to material quantities for cutting waste, depending on the material and layout.

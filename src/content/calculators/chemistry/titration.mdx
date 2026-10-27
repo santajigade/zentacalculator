@@ -1,0 +1,47 @@
+---
+title: Titration Calculator
+description: Calculate the unknown concentration of an acid or base from titration volumes and the mole ratio.
+category: chemistry
+keywords: [titration calculator, acid base titration, unknown concentration, equivalence point, mavb, neutralisation]
+updated: 2026-10-27
+variables:
+  - { id: Ct, label: Titrant concentration, suffix: mol/L, default: 0.1, min: 0 }
+  - { id: Vt, label: Titrant volume used, family: volume, unit: mL, default: 23.4, min: 0 }
+  - { id: r, label: Mole ratio (analyte per titrant), default: 1, min: 0, help: From the balanced equation. NaOH + HCl → 1; NaOH with H₂SO₄ → 0.5 }
+  - { id: Va, label: Analyte volume, family: volume, unit: mL, default: 25, min: 0 }
+  - { id: Ca, label: Analyte concentration, suffix: mol/L, min: 0 }
+equations:
+  - Ca * Va = r * Ct * Vt
+faq:
+  - q: How do I calculate concentration from a titration?
+    a: Moles of titrant = concentration × volume. Use the mole ratio from the balanced equation to get moles of analyte, then divide by the analyte volume.
+  - q: What is the mole ratio for sulfuric acid with NaOH?
+    a: H₂SO₄ + 2NaOH → products, so 1 mol acid reacts with 2 mol NaOH. The ratio of analyte (acid) per titrant (NaOH) is 0.5.
+  - q: How many titrations should I do?
+    a: Repeat until you get at least two concordant results (within about 0.1 mL) and average them.
+related: [chemistry/molarity, chemistry/ph]
+---
+
+## How to use this calculator
+
+Enter the **titrant concentration** and **volume used**, the **mole ratio** from the balanced equation and the **analyte volume**. The analyte's concentration is calculated.
+
+## Formula
+
+<p class="formula">C<sub>a</sub> V<sub>a</sub> = r × C<sub>t</sub> V<sub>t</sub></p>
+
+## Worked example
+
+23.4 mL of 0.1 M NaOH neutralises 25.0 mL of HCl (ratio 1):
+
+C<sub>HCl</sub> = 0.1 × 23.4 ÷ 25.0 = **0.0936 mol/L**
+
+For 25.0 mL of H₂SO₄ instead (ratio 0.5): **0.0468 mol/L**.
+
+## Choosing an indicator
+
+| Titration | Indicator |
+|---|---|
+| Strong acid – strong base | Phenolphthalein or methyl orange |
+| Weak acid – strong base | Phenolphthalein |
+| Strong acid – weak base | Methyl orange |

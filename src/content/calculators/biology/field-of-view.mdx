@@ -1,0 +1,45 @@
+---
+title: Microscope Field of View Calculator
+description: Calculate the diameter of a microscope's field of view from the eyepiece field number and objective magnification.
+category: biology
+keywords: [field of view, microscope fov, field number, field diameter, objective magnification]
+updated: 2026-10-27
+variables:
+  - { id: fn, label: Eyepiece field number, suffix: mm, default: 20, min: 0 }
+  - { id: obj, label: Objective magnification, default: 40, min: 0.01 }
+  - { id: ep, label: Eyepiece magnification, default: 10, min: 0.01 }
+  - { id: fov, label: Field of view diameter, family: length, unit: um, min: 0 }
+  - { id: tot, label: Total magnification, min: 0 }
+equations:
+  - fov = fn / obj / 1000
+  - tot = obj * ep
+faq:
+  - q: What is the field number?
+    a: The diameter of the eyepiece's field stop in mm, usually printed on the eyepiece (for example "10×/20").
+  - q: Why does field of view shrink with higher magnification?
+    a: The objective magnifies a smaller region, so FOV = field number ÷ objective magnification.
+  - q: How do I estimate cell size from FOV?
+    a: If 5 cells fit across a 500 µm field, each is about 100 µm long.
+related: [biology/magnification, biology/hemocytometer]
+---
+
+## How to use this calculator
+
+Enter the eyepiece's **field number** and the **objective magnification**. The field of view diameter is calculated, plus the total magnification.
+
+## Formula
+
+<p class="formula">FOV = field number ÷ objective magnification</p>
+
+## Example
+
+Field number 20 mm with a 40× objective: FOV = 20 ÷ 40 = 0.5 mm = **500 µm**.
+
+## Typical fields of view (FN 20)
+
+| Objective | FOV |
+|---|---|
+| 4× | 5 mm |
+| 10× | 2 mm |
+| 40× | 0.5 mm |
+| 100× | 0.2 mm |

@@ -1,0 +1,43 @@
+---
+title: Cat Age Calculator (Cat Years to Human Years)
+description: Convert your cat's age into human years using the widely used veterinary guideline.
+category: other
+keywords: [cat age calculator, cat years to human years, how old is my cat, cat age in human years, kitten age]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Cat's age, suffix: years, default: 8, min: 0, max: 30 }
+  - { id: h, label: Human-equivalent age, suffix: years, min: 0, decimals: 0 }
+equations:
+  - h = 15 * min(a, 1) + 9 * max(0, min(a, 2) - 1) + 4 * max(0, a - 2)
+faq:
+  - q: How do you convert cat years to human years?
+    a: A common guideline is 15 human years for the first year, 9 more for the second, then about 4 human years for each cat year after that.
+  - q: When is a cat considered senior?
+    a: Many vets consider cats senior from about 11 years (around 60 in human terms) and geriatric from about 15.
+  - q: Do indoor cats live longer?
+    a: On average, yes — indoor cats often live 12–18 years or more.
+related: [other/dog-age, everyday-life/age-calculator]
+---
+
+## How to use this calculator
+
+Enter your cat's **age in years**. The human-equivalent age is calculated.
+
+## The guideline
+
+- First year = 15 human years
+- Second year = +9 (24 at age 2)
+- Each year after = +4
+
+## Examples
+
+| Cat age | Human age |
+|---|---|
+| 1 | 15 |
+| 2 | 24 |
+| 5 | 36 |
+| 8 | 48 |
+| 12 | 64 |
+| 16 | 80 |
+
+Based on guidelines from the American Animal Hospital Association and International Cat Care.

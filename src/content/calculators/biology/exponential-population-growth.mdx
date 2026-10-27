@@ -1,0 +1,40 @@
+---
+title: Exponential Population Growth Calculator
+description: Calculate future population with continuous exponential growth from an initial size, growth rate and time.
+category: biology
+keywords: [exponential growth, population growth calculator, n = n0 e^rt, growth rate, population projection]
+updated: 2026-10-27
+variables:
+  - { id: N0, label: Initial population, default: 500, min: 0 }
+  - { id: r, label: Growth rate per year, family: percent, unit: '%', default: 5 }
+  - { id: t, label: Time, family: time, unit: yr, default: 10, min: 0 }
+  - { id: N, label: Final population, min: 0, decimals: 0 }
+  - { id: td, label: Doubling time, family: time, unit: yr, min: 0 }
+equations:
+  - N = N0 * exp(r * t)
+  - td = ln(2) / r
+chart: { x: t, y: N, from: 0, to: 50 }
+faq:
+  - q: What is exponential growth?
+    a: Growth where the increase is proportional to the current size, so the population doubles at regular intervals.
+  - q: Is it realistic?
+    a: Only while resources are plentiful. Real populations slow down as they approach the carrying capacity — see the logistic growth calculator.
+  - q: What is the rule of 70?
+    a: Doubling time ≈ 70 ÷ growth rate (%). At 5% per year, a population doubles in about 14 years.
+related: [biology/logistic-growth, biology/bacterial-growth, finance/doubling-time]
+---
+
+## How to use this calculator
+
+Enter the **initial population**, **growth rate** and **time**. The final population and doubling time are calculated.
+
+## Formula
+
+<p class="formula">N = N₀ × e<sup>rt</sup></p>
+
+## Example
+
+500 animals growing at 5% per year for 10 years:
+
+- N = 500 × e<sup>0.5</sup> = **824**
+- Doubling time = ln 2 ÷ 0.05 = **13.9 years**

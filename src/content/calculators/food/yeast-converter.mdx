@@ -1,0 +1,36 @@
+---
+title: Yeast Converter (Instant, Active Dry, Fresh)
+description: Convert between instant yeast, active dry yeast and fresh (cake) yeast amounts.
+category: food
+keywords: [yeast converter, instant yeast to active dry, fresh yeast conversion, cake yeast, dry yeast grams]
+updated: 2026-10-27
+variables:
+  - { id: inst, label: Instant yeast, family: mass, unit: g, default: 7, min: 0 }
+  - { id: act, label: Active dry yeast, family: mass, unit: g, min: 0 }
+  - { id: fresh, label: Fresh (cake) yeast, family: mass, unit: g, min: 0 }
+equations:
+  - act = inst * 1.25
+  - fresh = inst * 3
+faq:
+  - q: How do I convert instant yeast to active dry?
+    a: Use about 25% more active dry yeast — 7 g instant ≈ 9 g active dry.
+  - q: How much fresh yeast replaces dry yeast?
+    a: About 3 times the weight of instant yeast (or 2.5 times active dry).
+  - q: How much is one sachet?
+    a: A standard sachet is 7 g (¼ oz, about 2¼ teaspoons).
+related: [food/bakers-percentage, food/recipe-scaler]
+---
+
+## How to use this converter
+
+Type an amount for **any** yeast type and the equivalent amounts of the others are calculated.
+
+## Conversion ratios
+
+<p class="formula">active dry ≈ 1.25 × instant   fresh ≈ 3 × instant</p>
+
+## Example
+
+One 7 g sachet of instant yeast ≈ **8.75 g** active dry ≈ **21 g** fresh yeast.
+
+Active dry yeast is traditionally dissolved in warm water first; instant yeast can be mixed straight into the flour.

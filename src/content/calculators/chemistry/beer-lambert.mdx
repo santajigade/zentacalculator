@@ -1,0 +1,48 @@
+---
+title: Beer–Lambert Law Calculator (Absorbance)
+description: Calculate absorbance, concentration or molar absorptivity using A = εlc, plus transmittance.
+category: chemistry
+keywords: [beer lambert law, absorbance calculator, spectrophotometry, molar absorptivity, transmittance, a = elc]
+updated: 2026-10-27
+variables:
+  - { id: eps, label: Molar absorptivity ε, suffix: L/(mol·cm), default: 6220, min: 0 }
+  - { id: l, label: Path length, suffix: cm, default: 1, min: 0 }
+  - { id: c, label: Concentration, suffix: mol/L, default: 0.0001, min: 0 }
+  - { id: A, label: Absorbance, min: 0, decimals: 4 }
+  - { id: T, label: Transmittance, family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - A = eps * l * c
+  - T = 10^(-A)
+faq:
+  - q: What is the Beer–Lambert law?
+    a: Absorbance is proportional to concentration and path length — A = ε × l × c.
+  - q: How do I find concentration from absorbance?
+    a: Divide absorbance by (ε × l). Press × on Concentration and type the measured absorbance.
+  - q: What absorbance range is reliable?
+    a: Usually about 0.1–1.0. Above roughly 1.5–2, very little light gets through and readings become inaccurate.
+related: [chemistry/molarity, chemistry/dilution]
+---
+
+## How to use this calculator
+
+Enter the **molar absorptivity**, **path length** and **concentration** to get absorbance and transmittance — or enter a measured absorbance to find the concentration.
+
+## Formulas
+
+<p class="formula">A = ε l c   T = 10<sup>−A</sup></p>
+
+## Worked example — NADH at 340 nm
+
+ε = 6,220 L/(mol·cm), 1 cm cuvette, c = 1 × 10⁻⁴ mol/L:
+
+- A = 6,220 × 1 × 0.0001 = **0.622**
+- T = 10⁻⁰·⁶²² = **23.9%**
+
+## Absorbance vs transmittance
+
+| Absorbance | Light transmitted |
+|---|---|
+| 0 | 100% |
+| 0.3 | 50% |
+| 1 | 10% |
+| 2 | 1% |

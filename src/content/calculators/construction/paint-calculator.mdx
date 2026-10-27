@@ -1,0 +1,46 @@
+---
+title: Paint Calculator (Walls & Rooms)
+description: Calculate how much paint you need for a room from wall size, doors, windows, number of coats and coverage.
+category: construction
+keywords: [paint calculator, how much paint, litres of paint, gallons of paint, wall paint, room painting]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Room perimeter (total wall length), family: length, unit: m, imperialUnit: ft, default: 16, min: 0 }
+  - { id: H, label: Wall height, family: length, unit: m, imperialUnit: ft, default: 2.7, min: 0 }
+  - { id: dw, label: Doors and windows area, family: area, unit: m2, imperialUnit: ft2, default: 5, min: 0 }
+  - { id: c, label: Number of coats, default: 2, min: 1 }
+  - { id: cov, label: Paint coverage, suffix: m² per litre, default: 10, min: 0.1 }
+  - { id: A, label: Paintable area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+  - { id: Lp, label: Paint needed, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+equations:
+  - A = P * H - dw
+  - Lp = A * c / cov / 1000
+faq:
+  - q: How much does one litre of paint cover?
+    a: Typically 8–12 m² per coat on smooth, primed walls. Check the tin — rough or porous surfaces need more.
+  - q: How many coats do I need?
+    a: Usually two. A new or very different colour may need a primer plus two coats.
+  - q: How do I measure the perimeter?
+    a: Add the lengths of all walls. A 5 m × 3 m room has a perimeter of 16 m.
+related: [construction/wallpaper, construction/drywall, math/rectangle]
+---
+
+## How to use this calculator
+
+Enter the **total wall length** (perimeter), **wall height**, area of **doors and windows**, the number of **coats** and the paint's **coverage**. The litres (or US gallons) needed are calculated.
+
+## Formula
+
+<p class="formula">Paint = (perimeter × height − openings) × coats ÷ coverage</p>
+
+## Example
+
+A 5 × 3 m room with 2.7 m walls (perimeter 16 m), 5 m² of doors and windows, 2 coats at 10 m²/L:
+
+- Paintable area = 16 × 2.7 − 5 = **38.2 m²**
+- Paint = 38.2 × 2 ÷ 10 = **7.64 L**
+
+## Ceiling
+
+For the ceiling, add length × width (15 m² here) as a separate calculation — ceiling paint often has different coverage.

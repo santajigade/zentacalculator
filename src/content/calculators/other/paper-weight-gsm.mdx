@@ -1,0 +1,45 @@
+---
+title: Paper Weight Calculator (GSM)
+description: Calculate the weight of paper sheets or a ream from GSM and paper size.
+category: other
+keywords: [gsm calculator, paper weight, ream weight, a4 paper weight, paper gsm to kg, printing paper]
+updated: 2026-10-27
+variables:
+  - id: area
+    label: Paper size
+    default: 0.06237
+    options:
+      - { label: A4 (210 × 297 mm), value: 0.06237 }
+      - { label: A3 (297 × 420 mm), value: 0.12474 }
+      - { label: A5 (148 × 210 mm), value: 0.03108 }
+      - { label: US Letter (8.5 × 11 in), value: 0.060322 }
+      - { label: US Legal (8.5 × 14 in), value: 0.076774 }
+      - { label: A0 (1 m²), value: 0.999949 }
+  - { id: gsm, label: Paper weight, suffix: g/m² (GSM), default: 80, min: 0 }
+  - { id: n, label: Number of sheets, default: 500, min: 0 }
+  - { id: w1, label: Weight per sheet, family: mass, unit: g, min: 0 }
+  - { id: wt, label: Total weight, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+equations:
+  - w1 = gsm * area / 1000
+  - wt = w1 * n
+faq:
+  - q: What does GSM mean?
+    a: Grams per square metre — the weight of one square metre of the paper.
+  - q: How much does a ream of A4 80 GSM weigh?
+    a: About 2.5 kg (500 sheets × 4.99 g).
+  - q: What GSM is typical?
+    a: 70–90 GSM for office paper, 120–170 for brochures and flyers, 250–350 for business cards.
+related: [other/print-size-dpi]
+---
+
+## How to use this calculator
+
+Choose the **paper size**, enter the **GSM** and the **number of sheets**. The weight per sheet and total weight are calculated — useful for postage and shipping.
+
+## Formula
+
+<p class="formula">weight = GSM × sheet area × sheets</p>
+
+## Example
+
+A ream of A4 at 80 GSM: 80 × 0.06237 = 4.99 g per sheet → **2.49 kg** per 500 sheets.

@@ -1,0 +1,46 @@
+---
+title: Rainwater Harvesting Calculator
+description: Calculate how much rainwater you can collect from a roof based on area, rainfall and runoff coefficient.
+category: ecology
+keywords: [rainwater harvesting calculator, roof rainwater, rainwater collection, tank size, runoff coefficient]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: A, label: Roof (catchment) area, family: area, unit: m2, imperialUnit: ft2, default: 100, min: 0 }
+  - { id: R, label: Annual rainfall, family: length, unit: mm, imperialUnit: in, default: 800, min: 0 }
+  - id: k
+    label: Roof type (runoff coefficient)
+    default: 0.85
+    options:
+      - { label: Metal sheet (0.9), value: 0.9 }
+      - { label: Tiles / concrete (0.85), value: 0.85 }
+      - { label: Asphalt shingles (0.8), value: 0.8 }
+      - { label: Gravel / green roof (0.5), value: 0.5 }
+  - { id: V, label: Water collected per year, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: day, label: Average per day, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+equations:
+  - V = A * R * k
+  - day = V / 365
+faq:
+  - q: How much rainwater can I collect?
+    a: About 1 litre per m² of roof for every mm of rain, multiplied by a runoff coefficient. 100 m² with 800 mm of rain gives about 68,000 litres a year.
+  - q: What is a runoff coefficient?
+    a: The share of rain that actually reaches the gutters after splash, evaporation and absorption.
+  - q: How big should my tank be?
+    a: It depends on rainfall pattern and use. In monsoon climates, size the tank for the dry months you need to cover.
+related: [ecology/garden-irrigation, construction/rectangular-tank]
+---
+
+## How to use this calculator
+
+Enter the **roof area**, **annual rainfall** and choose the **roof type**. Yearly and average daily collection are calculated.
+
+## Formula
+
+<p class="formula">Volume = area × rainfall × runoff coefficient</p>
+
+## Example
+
+100 m² concrete roof, 800 mm annual rain: 100 × 0.8 × 0.85 = 68 m³ = **68,000 litres** a year (about 186 L per day on average).
+
+Discard the "first flush" of each rain to keep debris out of the tank, and check local rules on using rainwater.

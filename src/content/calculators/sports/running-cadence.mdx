@@ -1,0 +1,35 @@
+---
+title: Running Cadence & Stride Length Calculator
+description: Calculate running speed from cadence and stride length — or the stride length from your pace and cadence.
+category: sports
+keywords: [running cadence, stride length, steps per minute, running form, 180 cadence, step length]
+updated: 2026-10-27
+variables:
+  - { id: cad, label: Cadence, suffix: steps/min, default: 170, min: 0 }
+  - { id: sl, label: Step length, family: length, unit: m, imperialUnit: ft, default: 1.1, min: 0 }
+  - { id: v, label: Speed, family: velocity, unit: kmh, imperialUnit: mph, min: 0 }
+  - { id: pk, label: Pace, suffix: min/km, min: 0, decimals: 2 }
+equations:
+  - v = cad * sl / 60
+  - pk = 1000 / v / 60
+faq:
+  - q: What is a good running cadence?
+    a: Many recreational runners run at 160–175 steps per minute; elite runners often exceed 180 at race pace. The ideal depends on height and speed.
+  - q: Should I increase my cadence?
+    a: A small increase (5–10%) can reduce overstriding and impact for some runners. Change gradually.
+  - q: Is step length the same as stride length?
+    a: Not exactly — a stride is two steps (left and right). Here, step length is per step.
+related: [sports/pace-calculator, health/steps-to-distance]
+---
+
+## How to use this calculator
+
+Enter your **cadence** and **step length** to get speed and pace. Or press × on step length and enter your pace to work out your step length.
+
+## Formula
+
+<p class="formula">speed = cadence × step length</p>
+
+## Example
+
+170 steps/min with 1.1 m steps → speed 187 m/min = **11.2 km/h**, pace **5.35 min/km** (about 5:21).

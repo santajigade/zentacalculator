@@ -1,0 +1,91 @@
+---
+title: Pressure Converter
+description: Convert bar, psi, kPa, MPa, atm, mbar, mmHg, inH₂O and mH₂O — for instruments, tyres, hydraulics and weather.
+category: conversion
+keywords: [pressure converter, bar to psi, psi to bar, kpa to psi, mbar, inh2o, pressure unit conversion, mmhg]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: u0, label: Bar, family: pressure, unit: bar, default: 1, min: 0 }
+  - { id: u1, label: PSI (lbf/in²), family: pressure, unit: psi, min: 0 }
+  - { id: u2, label: Kilopascals (kPa), family: pressure, unit: kPa, min: 0 }
+  - { id: u3, label: Megapascals (MPa), family: pressure, unit: MPa, min: 0 }
+  - { id: u4, label: Millibar (mbar), family: pressure, unit: mbar, min: 0 }
+  - { id: u5, label: Atmospheres (atm), family: pressure, unit: atm, min: 0 }
+  - { id: u6, label: mmHg (Torr), family: pressure, unit: mmHg, min: 0 }
+  - { id: u7, label: Inches of water (inH₂O), family: pressure, unit: inH2O, min: 0 }
+  - { id: u8, label: Metres of water (mH₂O), family: pressure, unit: mH2O, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+  - u3 = u4
+  - u4 = u5
+  - u5 = u6
+  - u6 = u7
+  - u7 = u8
+faq:
+  - q: How many psi is 1 bar?
+    a: "14.5038 psi."
+  - q: How many bar is 100 psi?
+    a: "6.895 bar."
+  - q: Is mbar the same as hPa?
+    a: "Yes. 1 mbar = 1 hPa = 100 Pa."
+related: [conversion/psi-to-bar, engineering/hydrostatic-pressure, engineering/4-20ma-scaling]
+---
+
+## How to use this converter
+
+Type a pressure in **any** unit and every other field updates instantly — ideal for checking transmitter ranges, gauge readings and datasheets.
+
+## Formula
+
+<p class="formula">1 bar = 100 kPa = 14.5038 psi   1 atm = 1.01325 bar   1 mH₂O = 98.0665 mbar</p>
+
+**Example:** a 0–10 bar pressure transmitter covers **0–145 psi** or **0–1 MPa**. A tyre at 32 psi is **2.21 bar**.
+
+## Conversion table
+
+| bar | psi |
+|---|---|
+| 0.1 bar | 1.45038 psi |
+| 0.5 bar | 7.25189 psi |
+| 1 bar | 14.5038 psi |
+| 2 bar | 29.0075 psi |
+| 5 bar | 72.5189 psi |
+| 10 bar | 145.038 psi |
+| 16 bar | 232.06 psi |
+| 25 bar | 362.594 psi |
+| 40 bar | 580.151 psi |
+| 100 bar | 1,450.38 psi |
+| 400 bar | 5,801.51 psi |
+
+| psi | bar |
+|---|---|
+| 1 psi | 0.0689476 bar |
+| 10 psi | 0.689476 bar |
+| 15 psi | 1.03421 bar |
+| 30 psi | 2.06843 bar |
+| 32 psi | 2.20632 bar |
+| 50 psi | 3.44738 bar |
+| 100 psi | 6.89476 bar |
+| 150 psi | 10.3421 bar |
+| 300 psi | 20.6843 bar |
+| 1,000 psi | 68.9476 bar |
+| 3,000 psi | 206.843 bar |
+
+## Gauge vs absolute pressure
+
+Most gauges read **gauge pressure** (barg, psig) — relative to the surrounding atmosphere. **Absolute pressure** (bara, psia) includes the atmosphere: bara ≈ barg + 1.013. Always check which a datasheet means.
+
+## Units by industry
+
+| Industry | Common units |
+|---|---|
+| Process instrumentation | bar, mbar, kPa, psi, inH₂O |
+| Hydraulics | bar, MPa, psi |
+| Medicine (blood pressure) | mmHg |
+| Weather | hPa (= mbar) |
+| HVAC and draft | Pa, inH₂O |
+
+The inH₂O value here uses water at 4 °C (the conventional reference); some industries use 60 °F or 68 °F, which differ by about 0.2%.

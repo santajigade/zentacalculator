@@ -1,0 +1,54 @@
+---
+title: Dog Food Calorie Calculator
+description: Estimate your dog's daily calorie needs from body weight and life stage — plus cups of food per day.
+category: other
+keywords: [dog food calculator, dog calories per day, how much to feed my dog, rer mer, dog feeding chart]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Dog's weight, family: mass, unit: kg, imperialUnit: lb, default: 20, min: 0.1 }
+  - id: f
+    label: Life stage / activity
+    default: 1.6
+    options:
+      - { label: Neutered adult (1.6 × RER), value: 1.6 }
+      - { label: Intact adult (1.8 × RER), value: 1.8 }
+      - { label: Weight loss (1.0 × RER), value: 1.0 }
+      - { label: Inactive / senior (1.2 × RER), value: 1.2 }
+      - { label: "Active / working (2–5 × RER, using 3)", value: 3 }
+      - { label: Puppy under 4 months (3 × RER), value: 3.0001 }
+      - { label: Puppy 4 months to adult (2 × RER), value: 2 }
+  - { id: kc, label: Food energy, suffix: kcal per cup, default: 350, min: 1 }
+  - { id: rer, label: Resting energy requirement (RER), suffix: kcal/day, min: 0, decimals: 0 }
+  - { id: mer, label: Daily calories, suffix: kcal/day, min: 0, decimals: 0 }
+  - { id: cups, label: Cups of food per day, min: 0, decimals: 2 }
+equations:
+  - rer = 70 * m^0.75
+  - mer = rer * f
+  - cups = mer / kc
+faq:
+  - q: How many calories does my dog need?
+    a: Start with the resting energy requirement, RER = 70 × weight(kg)^0.75, then multiply by a factor for life stage and activity.
+  - q: Where do I find kcal per cup?
+    a: On the food bag or the manufacturer's website. It varies widely between brands.
+  - q: Should I include treats?
+    a: Treats should be no more than about 10% of daily calories — reduce meals to compensate.
+related: [other/dog-age, health/bmr]
+---
+
+## How to use this calculator
+
+Enter your dog's **weight**, choose the **life stage**, and enter the food's **kcal per cup**. RER, daily calories and cups per day are calculated.
+
+## Formulas
+
+<p class="formula">RER = 70 × kg<sup>0.75</sup>   MER = RER × factor</p>
+
+## Example
+
+A 20 kg neutered adult dog, food with 350 kcal per cup:
+
+- RER = 70 × 20<sup>0.75</sup> = **662 kcal**
+- Daily = 662 × 1.6 = **1,059 kcal**
+- About **3.0 cups** per day
+
+These are starting points — adjust based on body condition, and ask your vet for advice.

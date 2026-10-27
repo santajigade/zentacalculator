@@ -1,0 +1,63 @@
+---
+title: Mortgage Calculator
+description: Calculate your monthly mortgage payment from home price, down payment, interest rate and term — plus total interest.
+category: finance
+keywords: [mortgage calculator, home loan, monthly mortgage payment, down payment, house loan, interest rate, 30 year mortgage]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: H, label: Home price, family: currency, default: 400000, min: 0, decimals: 2 }
+  - { id: dp, label: Down payment, family: percent, unit: '%', default: 20, min: 0, max: 1 }
+  - { id: P, label: Loan amount, family: currency, min: 0, decimals: 2 }
+  - { id: r, label: Interest rate (annual), family: percent, unit: '%', default: 6.5, min: 0.0001, max: 1 }
+  - { id: t, label: Loan term, family: time, unit: yr, default: 30, min: 1 }
+  - { id: M, label: Monthly payment (principal + interest), family: currency, min: 0, decimals: 2 }
+  - { id: I, label: Total interest, family: currency, decimals: 2 }
+equations:
+  - P = H * (1 - dp)
+  - M = P * (r/12) * (1 + r/12)^(12*t) / ((1 + r/12)^(12*t) - 1)
+  - I = M * 12 * t - P
+chart: { x: r, y: M, from: 2, to: 12 }
+faq:
+  - q: How is a mortgage payment calculated?
+    a: With the standard amortization formula M = P × i × (1 + i)ⁿ ÷ ((1 + i)ⁿ − 1), where P is the loan amount, i the monthly rate and n the number of months.
+  - q: Does this include property tax and insurance?
+    a: No. This is principal and interest only. Add property tax, home insurance and any mortgage insurance to get your full monthly cost.
+  - q: How much house can I afford?
+    a: Press × on Home price, then type the monthly payment you can afford. Many lenders like total housing costs to stay under about 28–36% of gross income.
+related: [finance/loan-payment, finance/inflation, finance/savings-goal]
+---
+
+## How to use this calculator
+
+Enter the **home price**, **down payment %**, **interest rate** and **term**. You get the loan amount, monthly payment and total interest. Work backwards to find the price you can afford or the down payment needed.
+
+## The formula
+
+<p class="formula">M = P × i × (1 + i)<sup>n</sup> ÷ ((1 + i)<sup>n</sup> − 1)</p>
+
+## Worked example
+
+A 400,000 home with 20% down, 6.5% for 30 years:
+
+- Loan = 400,000 × 0.8 = **320,000**
+- Monthly payment = **2,022.62**
+- Total interest over 30 years = **408,142**
+
+## 15 vs 20 vs 30 years
+
+For 320,000 at 6.5%:
+
+| Term | Monthly payment | Total interest |
+|---|---|---|
+| 15 years | 2,787.54 | 181,758 |
+| 20 years | 2,385.83 | 252,600 |
+| 30 years | 2,022.62 | 408,142 |
+
+A 15-year loan costs about 765 more each month but saves over 226,000 in interest.
+
+## Ways to pay less
+
+- **Bigger down payment** — reduces the loan and often the rate.
+- **Extra payments** — even one extra payment a year can cut years off a 30-year loan.
+- **Shop for the rate** — 0.5% less on 320,000 over 30 years saves about 37,500.

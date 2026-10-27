@@ -1,0 +1,70 @@
+---
+title: Average Calculator (Mean, Median, Range)
+description: Paste a list of numbers to get the mean, median, minimum, maximum, range, sum and count instantly.
+category: math
+keywords: [average, mean, median, range, arithmetic mean, average of numbers, sum, how to find average]
+updated: 2026-10-27
+featured: true
+dataset:
+  label: Your numbers
+  default: '12, 15, 9, 21, 15, 18, 10'
+  placeholder: e.g. 12, 15, 9, 21
+variables:
+  - { id: mean, label: Mean (average) }
+  - { id: median, label: Median }
+  - { id: mn, label: Minimum }
+  - { id: mx, label: Maximum }
+  - { id: rng, label: Range }
+  - { id: sm, label: Sum }
+  - { id: n, label: Count }
+equations:
+  - mean = data_mean
+  - median = data_median
+  - mn = data_min
+  - mx = data_max
+  - rng = data_range
+  - sm = data_sum
+  - n = data_n
+faq:
+  - q: How do I calculate the average?
+    a: Add all the numbers and divide by how many there are. For 12, 15, 9, 21, 15, 18 and 10 the sum is 100 and there are 7 numbers, so the mean is 14.29.
+  - q: What is the difference between mean and median?
+    a: The mean is the sum divided by the count. The median is the middle value when the numbers are sorted. The median is less affected by unusually large or small values.
+  - q: How is the median found with an even number of values?
+    a: Take the average of the two middle values. For 3, 5, 8, 10 the median is (5 + 8) ÷ 2 = 6.5.
+related: [math/percentage, math/percent-error]
+---
+
+## How to use this calculator
+
+Type or paste your numbers into the box — separated by commas, spaces or new lines. You can paste a column straight from a spreadsheet. All results update as you type.
+
+## Formulas
+
+<p class="formula">mean = (x₁ + x₂ + … + xₙ) ÷ n<br/>range = maximum − minimum</p>
+
+The **median** is the middle value of the sorted list (or the average of the two middle values when n is even).
+
+## Worked example
+
+Numbers: 12, 15, 9, 21, 15, 18, 10
+
+- Sum = 100, count = 7
+- Mean = 100 ÷ 7 = **14.29**
+- Sorted: 9, 10, 12, **15**, 15, 18, 21 → median = **15**
+- Range = 21 − 9 = **12**
+- Mode (most frequent value) = 15
+
+## Mean or median?
+
+| Situation | Better measure |
+|---|---|
+| Values evenly spread | Mean |
+| A few very large or small values (salaries, house prices) | Median |
+| Most common choice (shoe size, rating) | Mode |
+
+Example: incomes of 30, 32, 35, 38 and 400 (thousand) have a mean of 107 but a median of 35. The median describes the typical person far better.
+
+## Weighted averages
+
+If some values count more than others (such as exam scores worth different credits), multiply each value by its weight, add them up, and divide by the total weight.

@@ -1,0 +1,53 @@
+---
+title: Torque, Power & Speed Calculator
+description: Convert between shaft power, torque and rotational speed (rpm) for motors, gearboxes and engines.
+category: engineering
+keywords: [torque calculator, power to torque, kw to nm, rpm, shaft torque, motor torque, hp to torque]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Power, family: power, unit: kW, imperialUnit: hp, default: 11, min: 0 }
+  - { id: n, label: Speed, suffix: rpm, default: 1460, min: 0 }
+  - { id: T, label: Torque, family: torque, unit: Nm, imperialUnit: lbft, min: 0 }
+equations:
+  - P = 2 * pi * n * T / 60
+chart: { x: n, y: T, from: 100, to: 3000 }
+faq:
+  - q: What is the formula linking torque, power and speed?
+    a: P = 2π × n × T ÷ 60, with P in watts, n in rpm and T in N·m. A handy form is T (N·m) = 9549 × P (kW) ÷ n (rpm).
+  - q: How does a gearbox change torque?
+    a: Ignoring losses, power stays the same. Reducing speed by a ratio of 10:1 increases torque by about 10 times.
+  - q: What is the hp version?
+    a: T (lbf·ft) = 5252 × P (hp) ÷ n (rpm). Switch the units in the calculator to use it.
+related: [engineering/three-phase-motor-power, engineering/hydraulic-cylinder-force]
+---
+
+## How to use this calculator
+
+Enter any **two** of power, speed and torque to get the third. Switch units freely — kW or hp, N·m or lbf·ft.
+
+## The formula
+
+<p class="formula">P = 2π n T ÷ 60   →   T = 9549 × P(kW) ÷ n(rpm)</p>
+
+## Worked example
+
+An 11 kW, 4-pole motor running at 1,460 rpm:
+
+T = 9549 × 11 ÷ 1460 = **71.9 N·m**
+
+Through a 10:1 gearbox (95% efficient) the output is about 146 rpm and 683 N·m.
+
+## Typical motor speeds at 50 Hz
+
+| Poles | Synchronous | Typical full-load |
+|---|---|---|
+| 2 | 3,000 rpm | ~2,900 rpm |
+| 4 | 1,500 rpm | ~1,460 rpm |
+| 6 | 1,000 rpm | ~970 rpm |
+| 8 | 750 rpm | ~730 rpm |
+
+At 60 Hz, multiply speeds by 1.2.
+
+## Why it matters
+
+Low-speed applications such as conveyors, mixers and winches need high torque. Selecting the motor on kW alone can leave it unable to start the load — always check torque at the driven speed.

@@ -1,0 +1,44 @@
+---
+title: Odds to Probability Converter
+description: Convert betting or statistical odds to probability and back — fractional odds, decimal odds and percentage chance.
+category: statistics
+keywords: [odds to probability, probability to odds, odds converter, implied probability, decimal odds, odds ratio]
+updated: 2026-10-27
+variables:
+  - { id: w, label: "Odds in favour — \"for\" part (e.g. 1 in 1:4)", default: 1, min: 0 }
+  - { id: l, label: "Odds — \"against\" part (e.g. 4 in 1:4)", default: 4, min: 0 }
+  - { id: p, label: Probability, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: dec, label: Decimal odds (bookmaker style), min: 1 }
+equations:
+  - p = w / (w + l)
+  - dec = 1 / p
+faq:
+  - q: How do I convert odds to probability?
+    a: For odds of a to b in favour, probability = a ÷ (a + b). Odds of 1:4 mean a 20% chance.
+  - q: What are decimal odds?
+    a: The total return per unit staked, including the stake. Decimal odds of 5.0 imply a 20% chance.
+  - q: Are bookmaker odds true probabilities?
+    a: No. Bookmakers build in a margin, so the implied probabilities of all outcomes add up to more than 100%.
+related: [statistics/probability, statistics/relative-risk]
+---
+
+## How to use this calculator
+
+Enter the odds as two numbers — **for** and **against** (1:4 means 1 for, 4 against). The probability and decimal odds are calculated. Or type a probability to get the odds.
+
+## Formulas
+
+<p class="formula">p = a ÷ (a + b)   decimal odds = 1 ÷ p</p>
+
+## Examples
+
+| Odds (for:against) | Probability | Decimal |
+|---|---|---|
+| 1:1 | 50% | 2.00 |
+| 1:4 | 20% | 5.00 |
+| 3:1 | 75% | 1.33 |
+| 1:99 | 1% | 100 |
+
+## Odds against
+
+Fractional betting odds such as "4/1" usually mean 4 **against** 1 for — a 20% implied chance.

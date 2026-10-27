@@ -1,0 +1,32 @@
+---
+title: Aquarium Volume Calculator
+description: Calculate fish tank volume in litres and gallons from its dimensions — plus the approximate weight when filled.
+category: other
+keywords: [aquarium volume calculator, fish tank litres, tank gallons, aquarium size, fish tank weight]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Length, family: length, unit: cm, imperialUnit: in, default: 100, min: 0 }
+  - { id: W, label: Width (front to back), family: length, unit: cm, imperialUnit: in, default: 40, min: 0 }
+  - { id: H, label: Water height, family: length, unit: cm, imperialUnit: in, default: 45, min: 0 }
+  - { id: V, label: Water volume, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: wt, label: Weight of water, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+equations:
+  - V = L * W * H
+  - wt = V * 1000
+faq:
+  - q: How do I calculate aquarium volume?
+    a: Multiply length × width × water height in cm and divide by 1,000 to get litres.
+  - q: How heavy is a full aquarium?
+    a: Water alone weighs about 1 kg per litre; add the glass, gravel and decorations — roughly another 20–30%.
+  - q: How many fish can I keep?
+    a: Old "1 inch per gallon" rules are unreliable. Consider adult fish size, behaviour and filtration, and ask a specialist.
+related: [construction/rectangular-tank, ecology/pond-liner]
+---
+
+## How to use this calculator
+
+Enter the tank's **length**, **width** and **water height**. The volume and weight of the water are calculated.
+
+## Example
+
+A 100 × 40 cm tank filled to 45 cm: 100 × 40 × 45 = 180,000 cm³ = **180 litres** (47.6 US gal), weighing about **180 kg** of water.

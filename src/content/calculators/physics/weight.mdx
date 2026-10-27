@@ -1,0 +1,54 @@
+---
+title: Weight Calculator (Mass to Weight on Planets)
+description: Convert mass to weight (force) on Earth, the Moon, Mars and other planets using W = m × g.
+category: physics
+keywords: [weight calculator, mass vs weight, weight on moon, weight on mars, w = mg, gravity]
+updated: 2026-10-27
+variables:
+  - id: gg
+    label: Location
+    default: 9.80665
+    options:
+      - { label: Earth (9.81 m/s²), value: 9.80665 }
+      - { label: Moon (1.62 m/s²), value: 1.62 }
+      - { label: Mars (3.71 m/s²), value: 3.71 }
+      - { label: Venus (8.87 m/s²), value: 8.87 }
+      - { label: Jupiter (24.79 m/s²), value: 24.79 }
+      - { label: Saturn (10.44 m/s²), value: 10.44 }
+      - { label: Mercury (3.7 m/s²), value: 3.7 }
+  - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 0 }
+  - { id: W, label: Weight (force), family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: eq, label: Equivalent Earth scale reading, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+equations:
+  - W = m * gg
+  - eq = W / g0
+faq:
+  - q: What is the difference between mass and weight?
+    a: Mass is the amount of matter (kg) and is the same everywhere. Weight is the force of gravity on that mass (newtons), and changes from planet to planet.
+  - q: How much would I weigh on the Moon?
+    a: About one-sixth of your Earth weight. A 70 kg person would read about 11.6 kg on an Earth-calibrated scale.
+  - q: Why do scales show kilograms?
+    a: Bathroom scales measure force but are calibrated for Earth's gravity, so they display mass directly.
+related: [physics/force, physics/free-fall]
+---
+
+## How to use this calculator
+
+Choose a **location**, then enter a **mass**. You get the weight in newtons (or lbf) and what an Earth-calibrated bathroom scale would show there.
+
+## The formula
+
+<p class="formula">W = m × g</p>
+
+## Worked example (70 kg person)
+
+| Location | Weight (N) | Scale reading |
+|---|---|---|
+| Earth | 686 | 70 kg |
+| Moon | 113 | 11.6 kg |
+| Mars | 260 | 26.5 kg |
+| Jupiter | 1735 | 177.0 kg |
+
+## Gravity on Earth varies slightly
+
+Standard gravity is 9.80665 m/s², but the real value ranges from about 9.78 at the equator to 9.83 at the poles — a difference of about 0.5% in your weight.

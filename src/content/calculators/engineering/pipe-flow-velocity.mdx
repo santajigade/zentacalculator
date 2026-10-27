@@ -1,0 +1,58 @@
+---
+title: Pipe Flow Velocity Calculator
+description: Calculate fluid velocity in a pipe from flow rate and inner diameter — or the flow rate and pipe size for a target velocity.
+category: engineering
+keywords: [flow velocity, pipe velocity, flow rate, pipe diameter, q = va, m3/h to m/s, gpm, pipe sizing]
+updated: 2026-10-27
+variables:
+  - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
+  - { id: D, label: Pipe inner diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: A, label: Cross-section area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+  - { id: v, label: Velocity, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+equations:
+  - A = pi * D^2 / 4
+  - Q = v * A
+chart: { x: Q, y: v, from: 0, to: 150 }
+faq:
+  - q: How do I calculate velocity from flow rate?
+    a: Divide the flow rate by the pipe's internal cross-section area — v = Q ÷ (π D² ÷ 4). Use consistent units; the calculator converts them for you.
+  - q: What is a typical water velocity in pipes?
+    a: Around 1–3 m/s for pumped water lines and about 0.6–1.5 m/s for pump suction lines. Higher velocities raise friction losses, noise and erosion.
+  - q: Should I use nominal or inner diameter?
+    a: Always use the actual inner diameter. A DN100 Schedule 40 steel pipe has an inner diameter of about 102.3 mm.
+related: [engineering/reynolds-number, engineering/hydrostatic-pressure]
+---
+
+## How to use this calculator
+
+Enter the **flow rate** and the pipe's **inner diameter** to get the velocity. You can also solve for the flow rate at a given velocity, or the diameter needed to keep velocity within limits — press × on the field you want calculated.
+
+Units mix freely: flow in m³/h, L/min or US gpm; diameter in mm or inches; velocity in m/s or ft/s.
+
+## The formula
+
+<p class="formula">A = π D² ÷ 4   v = Q ÷ A</p>
+
+## Worked example
+
+50 m³/h of water in a pipe with 100 mm inner diameter:
+
+- Q = 50 ÷ 3600 = 0.01389 m³/s
+- A = π × 0.1² ÷ 4 = 0.007854 m²
+- v = 0.01389 ÷ 0.007854 = **1.77 m/s**
+
+## Recommended velocities (typical guidance)
+
+| Service | Velocity |
+|---|---|
+| Water, pump suction | 0.6 – 1.5 m/s |
+| Water, pump discharge | 1.5 – 3 m/s |
+| Water, gravity drains | 0.6 – 1.2 m/s |
+| Viscous oils | 0.5 – 1.5 m/s |
+| Compressed air | 6 – 10 m/s |
+
+Always check the design standards for your industry.
+
+## Why velocity matters for flow meters
+
+Most flow meters have a velocity range. Electromagnetic meters typically need about 0.3–10 m/s, and many work best above 1 m/s. If the velocity is too low, a smaller meter (with reducers) often improves accuracy. Check the [Reynolds number](/engineering/reynolds-number/) too, since many meters need fully turbulent flow.

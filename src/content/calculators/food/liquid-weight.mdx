@@ -1,0 +1,44 @@
+---
+title: Liquid Volume to Weight Converter
+description: Convert millilitres or cups of water, milk, oil, honey and other liquids to grams — and back.
+category: food
+keywords: [ml to grams, cups to grams liquid, oil ml to grams, honey weight, milk grams, liquid density]
+updated: 2026-10-27
+variables:
+  - id: rho
+    label: Liquid (density)
+    default: 1
+    options:
+      - { label: Water (1.00 g/ml), value: 1 }
+      - { label: Milk (1.03 g/ml), value: 1.03 }
+      - { label: Vegetable oil (0.92 g/ml), value: 0.92 }
+      - { label: Honey (1.42 g/ml), value: 1.42 }
+      - { label: Maple syrup (1.32 g/ml), value: 1.32 }
+      - { label: "Cream, heavy (0.99 g/ml)", value: 0.99 }
+  - { id: v, label: Volume, family: volume, unit: mL, default: 250, min: 0 }
+  - { id: m, label: Weight, family: mass, unit: g, min: 0 }
+equations:
+  - m = v * rho * 1000
+faq:
+  - q: Is 1 ml of water 1 gram?
+    a: Yes, very nearly at room temperature.
+  - q: Why does honey weigh more than water?
+    a: It is much denser — about 1.4 g per ml — because of its high sugar content.
+  - q: How many grams is a cup of oil?
+    a: About 218 g for a US cup (236.6 ml × 0.92 g/ml).
+related: [food/grams-to-cups, food/cooking-converter, physics/density]
+---
+
+## How to use this converter
+
+Choose the **liquid**, then enter the **volume** (ml, cups, tbsp…) or the **weight**. The other is calculated.
+
+## Formula
+
+<p class="formula">weight = volume × density</p>
+
+## Examples
+
+- 250 ml of water = **250 g**
+- 250 ml of oil = **230 g**
+- 250 ml of honey = **355 g**

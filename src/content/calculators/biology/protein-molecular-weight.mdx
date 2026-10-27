@@ -1,0 +1,37 @@
+---
+title: Protein Molecular Weight Estimator
+description: Estimate a protein's molecular weight in kDa from its number of amino acids.
+category: biology
+keywords: [protein molecular weight, kda calculator, amino acids to kda, protein size, average amino acid mass]
+updated: 2026-10-27
+variables:
+  - { id: aa, label: Number of amino acids, default: 350, min: 0 }
+  - { id: avg, label: Average residue mass, suffix: Da, default: 110, min: 0 }
+  - { id: kda, label: Estimated molecular weight, suffix: kDa, min: 0, decimals: 1 }
+equations:
+  - kda = aa * avg / 1000
+faq:
+  - q: Why use 110 Da per amino acid?
+    a: It is the average mass of an amino acid residue in proteins, a widely used estimate.
+  - q: How accurate is this?
+    a: Usually within about 10%. Exact values need the actual sequence; glycosylation and other modifications add more mass.
+  - q: How many amino acids is a 50 kDa protein?
+    a: About 455 amino acids.
+related: [biology/protein-concentration-a280, biology/dna-copy-number]
+---
+
+## How to use this calculator
+
+Enter the **number of amino acids**. The estimated molecular weight is shown in kDa. Or enter the kDa (for example from a gel) to estimate the length.
+
+## Formula
+
+<p class="formula">MW (kDa) ≈ amino acids × 110 ÷ 1000</p>
+
+## Example
+
+A 350-residue protein: 350 × 110 = 38,500 Da = **38.5 kDa**.
+
+## Gene length
+
+Each amino acid is coded by 3 nucleotides, so a 350-residue protein needs a coding sequence of 1,053 bp (including the stop codon).

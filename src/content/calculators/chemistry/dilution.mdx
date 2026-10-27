@@ -1,0 +1,48 @@
+---
+title: Dilution Calculator (C₁V₁ = C₂V₂)
+description: Calculate how much stock solution and solvent you need to make a diluted solution — or the final concentration.
+category: chemistry
+keywords: [dilution calculator, c1v1 = c2v2, stock solution, dilute, serial dilution, concentration]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: C1, label: Stock concentration (C₁), default: 10, min: 0 }
+  - { id: V1, label: Stock volume needed (V₁), family: volume, unit: mL, min: 0 }
+  - { id: C2, label: Final concentration (C₂), default: 0.5, min: 0 }
+  - { id: V2, label: Final volume (V₂), family: volume, unit: mL, default: 200, min: 0 }
+  - { id: Vd, label: Solvent to add, family: volume, unit: mL, min: 0 }
+equations:
+  - C1 * V1 = C2 * V2
+  - Vd = V2 - V1
+faq:
+  - q: What is the dilution formula?
+    a: C₁V₁ = C₂V₂ — the amount of solute stays the same, only the volume changes.
+  - q: Which concentration units can I use?
+    a: Any, as long as C₁ and C₂ use the same unit — mol/L, %, mg/mL or ppm all work.
+  - q: What is a dilution factor?
+    a: C₁ ÷ C₂. Diluting 10 M to 0.5 M is a 20-fold dilution.
+related: [chemistry/molarity, chemistry/ppm]
+---
+
+## How to use this calculator
+
+Enter the **stock concentration**, the **final concentration** and **final volume**. You get the volume of stock to use and how much solvent to add. Any concentration unit works as long as both are the same.
+
+## Formula
+
+<p class="formula">C₁ V₁ = C₂ V₂</p>
+
+## Worked example
+
+Make 200 mL of 0.5 M solution from a 10 M stock:
+
+- V₁ = 0.5 × 200 ÷ 10 = **10 mL** of stock
+- Add **190 mL** of water
+
+## Safety tip
+
+When diluting strong acids, always add **acid to water**, slowly and with stirring — never water to acid.
+
+## Serial dilutions
+
+For very large dilutions, dilute in steps (for example 1:10 four times for 1:10,000). Each step is more accurate than one huge dilution.

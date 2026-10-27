@@ -1,0 +1,40 @@
+---
+title: Cricket Run Rate Calculator
+description: Calculate a cricket team's run rate (runs per over) from runs scored and overs or balls faced.
+category: sports
+keywords: [run rate calculator, cricket run rate, runs per over, crr, current run rate, t20 run rate]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: runs, label: Runs scored, default: 168, min: 0 }
+  - { id: balls, label: Balls faced, default: 120, min: 1 }
+  - { id: ov, label: Overs (decimal), min: 0, decimals: 3 }
+  - { id: rr, label: Run rate (runs per over), min: 0, decimals: 2 }
+equations:
+  - ov = balls / 6
+  - rr = runs / ov
+faq:
+  - q: How is run rate calculated?
+    a: Run rate = runs ÷ overs. Overs must be decimal — 15.3 overs (15 overs and 3 balls) is 15.5 overs, so enter the balls (93) to avoid errors.
+  - q: What is a good T20 run rate?
+    a: A rate of 8–9 runs per over is competitive in many T20 matches today; above 10 is very strong.
+  - q: How do I convert overs to balls?
+    a: Balls = completed overs × 6 + extra balls. 15.3 overs = 93 balls.
+related: [sports/required-run-rate, sports/net-run-rate, sports/cricket-batting]
+---
+
+## How to use this calculator
+
+Enter the **runs scored** and **balls faced** (or overs × 6). The overs and run rate are calculated.
+
+## Formula
+
+<p class="formula">Run rate = runs ÷ (balls ÷ 6)</p>
+
+## Example
+
+168 runs in 20 overs (120 balls) → run rate **8.40**.
+
+## Overs notation
+
+In cricket, "15.3 overs" means 15 overs and 3 balls — not 15.3 as a decimal. It equals 93 balls or 15.5 decimal overs.

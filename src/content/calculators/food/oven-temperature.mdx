@@ -1,0 +1,41 @@
+---
+title: Oven Temperature Converter (°C, °F, Gas Mark)
+description: Convert oven temperatures between Celsius, Fahrenheit, gas mark and fan-oven settings.
+category: food
+keywords: [oven temperature converter, celsius to fahrenheit oven, gas mark, fan oven, 180c in f, baking temperature]
+updated: 2026-10-27
+variables:
+  - { id: c, label: Conventional oven, family: temperature, unit: C, default: 180 }
+  - { id: f, label: Fahrenheit, family: temperature, unit: F }
+  - { id: fan, label: Fan / convection oven, family: temperature, unit: C }
+  - { id: gm, label: Gas mark (approx.), decimals: 1 }
+equations:
+  - c = f
+  - fan = c - 20
+  - gm = ((c - 273.15) * 9 / 5 + 32 - 250) / 25
+faq:
+  - q: What is 180 °C in Fahrenheit?
+    a: 356 °F — recipes usually round it to 350 °F (gas mark 4).
+  - q: How do I adjust for a fan oven?
+    a: Reduce the temperature by about 20 °C (25 °F) and check food a little earlier.
+  - q: What gas mark is 200 °C?
+    a: About gas mark 6.
+related: [conversion/temperature-converter, food/turkey-cooking-time]
+---
+
+## How to use this converter
+
+Enter a temperature in **°C** or **°F**. The fan-oven equivalent and approximate gas mark are calculated.
+
+## Oven temperature chart
+
+| Description | °C | °F | Gas | Fan °C |
+|---|---|---|---|---|
+| Very low | 120 | 250 | ½ | 100 |
+| Low | 150 | 300 | 2 | 130 |
+| Moderate | 180 | 350 | 4 | 160 |
+| Moderately hot | 200 | 400 | 6 | 180 |
+| Hot | 220 | 425 | 7 | 200 |
+| Very hot | 240 | 475 | 9 | 220 |
+
+Ovens vary — an oven thermometer shows the real temperature.

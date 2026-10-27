@@ -1,0 +1,48 @@
+---
+title: Standard Error of the Mean Calculator
+description: Calculate the standard error of the mean (SEM) from your data — or from standard deviation and sample size.
+category: statistics
+keywords: [standard error, sem, standard error of the mean, sample size, precision of mean]
+updated: 2026-10-27
+dataset:
+  label: Your data
+  default: '12, 15, 11, 14, 13, 16, 12, 14, 15, 13'
+variables:
+  - { id: se, label: Standard error of the mean }
+  - { id: sd, label: Standard deviation (sample) }
+  - { id: n, label: Sample size }
+  - { id: mean, label: Mean }
+equations:
+  - se = data_sd / sqrt(data_n)
+  - sd = data_sd
+  - n = data_n
+  - mean = data_mean
+faq:
+  - q: What is the standard error?
+    a: The standard deviation of the sample mean — how much the mean would vary if you repeated the sampling.
+  - q: How is it different from standard deviation?
+    a: SD describes spread in the data; SE describes uncertainty in the mean. SE = SD ÷ √n, so it shrinks as the sample grows.
+  - q: How is SE used?
+    a: To build confidence intervals — roughly, mean ± 2 SE gives a 95% interval.
+related: [statistics/standard-deviation, statistics/confidence-interval]
+---
+
+## How to use this calculator
+
+Paste your sample data. The standard error, standard deviation, sample size and mean are calculated.
+
+## Formula
+
+<p class="formula">SE = s ÷ √n</p>
+
+## Worked example
+
+Data: 12, 15, 11, 14, 13, 16, 12, 14, 15, 13
+
+- Mean = **13.5**, s = **1.581**
+- SE = 1.581 ÷ √10 = **0.500**
+- Approximate 95% interval: 13.5 ± 1.00
+
+## Sample size effect
+
+To halve the standard error you need **four times** as many observations.

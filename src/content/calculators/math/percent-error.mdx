@@ -1,0 +1,47 @@
+---
+title: Percent Error Calculator
+description: Calculate the percent error between a measured (experimental) value and the true (accepted) value.
+category: math
+keywords: [percent error, percentage error, experimental error, accuracy, measured vs actual, relative error]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Measured (experimental) value, default: 9.6 }
+  - { id: t, label: True (accepted) value, default: 9.81 }
+  - { id: diff, label: Absolute error (measured − true) }
+  - { id: pe, label: Percent error, family: percent, unit: '%', min: 0 }
+equations:
+  - diff = m - t
+  - pe = abs(diff) / abs(t)
+faq:
+  - q: What is the percent error formula?
+    a: Percent error = |measured − true| ÷ |true| × 100. Measuring g as 9.6 m/s² when it is 9.81 gives 2.14% error.
+  - q: Can percent error be negative?
+    a: The standard form uses the absolute value, so it is always positive. The signed difference (shown as absolute error here) tells you whether the measurement was high or low.
+  - q: What is a good percent error?
+    a: It depends on the field. School experiments often aim for under 5%; industrial instruments are often specified at 0.1–1% of reading or span.
+related: [math/percentage-change, math/average]
+---
+
+## How to use this calculator
+
+Enter the **measured** value and the **true** (accepted or reference) value. The absolute difference and percent error appear instantly. You can also work backwards to find the measurement range allowed by a given error.
+
+## The formula
+
+<p class="formula">% error = |measured − true| ÷ |true| × 100</p>
+
+## Worked example
+
+A student measures gravity as 9.6 m/s². The accepted value is 9.81 m/s².
+
+- Difference = 9.6 − 9.81 = −0.21 (the measurement was low)
+- Percent error = 0.21 ÷ 9.81 = **2.14%**
+
+## Percent error vs percent change
+
+- **Percent error** compares a measurement with a known correct value.
+- **Percent change** compares a new value with an old one — use the [percentage change calculator](/math/percentage-change/).
+
+## Accuracy specs in instrumentation
+
+Instrument accuracy is often given as a percentage of **reading** or of **span**. A 0–10 bar transmitter with ±0.5% of span accuracy can be off by ±0.05 bar anywhere in its range — which is ±1% at a 5 bar reading and ±5% at 1 bar.

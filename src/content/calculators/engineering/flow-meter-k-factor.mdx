@@ -1,0 +1,49 @@
+---
+title: Flow Meter K-Factor Calculator
+description: Convert pulse frequency to flow rate (and back) for turbine, positive displacement and other pulse-output flow meters.
+category: engineering
+keywords: [k factor, pulse output, flow meter, turbine meter, pulses per litre, frequency to flow, hz to flow]
+updated: 2026-10-27
+variables:
+  - { id: K, label: K-factor, suffix: pulses/L, default: 450, min: 0 }
+  - { id: Q, label: Flow rate, family: flow, unit: Lmin, imperialUnit: gpm, default: 6, min: 0 }
+  - { id: f, label: Pulse frequency, suffix: Hz, min: 0 }
+equations:
+  - f = K * Q * 1000
+chart: { x: Q, y: f, from: 0, to: 20 }
+faq:
+  - q: What is a K-factor?
+    a: The number of pulses a meter sends for each unit of volume, such as 450 pulses per litre. It comes from the meter's calibration certificate.
+  - q: How do I convert pulses per gallon to pulses per litre?
+    a: Divide pulses per US gallon by 3.785. A K-factor of 1,700 pulses/gal is about 449 pulses/L.
+  - q: How do I count total volume?
+    a: Divide the total pulse count by the K-factor. 9,000 pulses at 450 pulses/L is 20 litres.
+related: [engineering/pipe-flow-velocity, engineering/4-20ma-scaling]
+---
+
+## How to use this calculator
+
+Enter the meter's **K-factor** (pulses per litre) and either the **flow rate** or the measured **pulse frequency**. The other is calculated. Use it to set up a PLC counter, check a meter on the bench, or choose a frequency input range.
+
+## The formula
+
+<p class="formula">f (Hz) = K (pulses/L) × Q (L/s)   Q = f ÷ K</p>
+
+## Worked example
+
+A small turbine meter with K = 450 pulses/L at 6 L/min:
+
+- Q = 6 ÷ 60 = 0.1 L/s
+- f = 450 × 0.1 = **45 Hz**
+
+At the maximum flow of 20 L/min the output reaches 150 Hz — check the PLC input can count that fast.
+
+## Totalising
+
+Volume = pulse count ÷ K-factor. 9,000 pulses ÷ 450 = **20 litres**.
+
+## Tips
+
+- Use the K-factor from the **calibration certificate**, not the nominal catalogue value.
+- K-factors drift slightly with viscosity and at very low flow. Many meters list a linear range where the K-factor holds within ±0.5%.
+- For long cable runs, use shielded cable and check the pulse output type (NPN, PNP, Namur or reed).

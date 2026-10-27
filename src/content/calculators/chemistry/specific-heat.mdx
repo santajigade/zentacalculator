@@ -1,0 +1,53 @@
+---
+title: Specific Heat Calculator (q = mcΔT)
+description: Calculate heat energy needed to change a substance's temperature — or the temperature change from added heat.
+category: chemistry
+keywords: [specific heat capacity, q = mc delta t, heat energy, calorimetry, joules, temperature change]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Mass, family: mass, unit: g, default: 500, min: 0 }
+  - id: c
+    label: Substance (specific heat)
+    default: 4.186
+    options:
+      - { label: Water (4.186 J/g·K), value: 4.186 }
+      - { label: Ice (2.09 J/g·K), value: 2.09 }
+      - { label: Aluminium (0.897 J/g·K), value: 0.897 }
+      - { label: Copper (0.385 J/g·K), value: 0.385 }
+      - { label: Iron / steel (0.45 J/g·K), value: 0.45 }
+      - { label: Glass (0.84 J/g·K), value: 0.84 }
+      - { label: Olive oil (1.97 J/g·K), value: 1.97 }
+      - { label: Air (1.005 J/g·K), value: 1.005 }
+  - { id: dT, label: Temperature change, family: tempdiff, unit: K, imperialUnit: F, default: 80 }
+  - { id: q, label: Heat energy, family: energy, unit: kJ }
+equations:
+  - q = m * 1000 * c * dT
+faq:
+  - q: What is specific heat capacity?
+    a: The energy needed to raise 1 gram of a substance by 1 °C (or 1 K). Water's is unusually high at 4.186 J/g·K.
+  - q: How much energy to boil water for tea?
+    a: Heating 500 g of water from 20 °C to 100 °C needs about 167 kJ — about 0.046 kWh.
+  - q: Does this include melting or boiling?
+    a: No. Phase changes need extra latent heat (334 J/g to melt ice, 2,257 J/g to boil water).
+related: [engineering/heat-duty, conversion/energy-converter]
+---
+
+## How to use this calculator
+
+Choose the **substance**, then enter the **mass** and **temperature change**. The heat energy needed is calculated. Or enter the energy to find the temperature rise.
+
+## Formula
+
+<p class="formula">q = m × c × ΔT</p>
+
+## Worked example
+
+Heating 500 g of water from 20 °C to 100 °C (ΔT = 80 K):
+
+q = 500 × 4.186 × 80 = **167.4 kJ** (0.047 kWh)
+
+A 2 kW kettle would take about 84 s (plus losses).
+
+## Why water's high specific heat matters
+
+Water absorbs a lot of heat with only a small temperature rise — which is why it is used in cooling systems, central heating and why coastal climates are milder.

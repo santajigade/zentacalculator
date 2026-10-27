@@ -1,0 +1,33 @@
+---
+title: Ten-Pin Bowling Average & Handicap Calculator
+description: Calculate your bowling average and league handicap from total pins, games played and the league basis.
+category: sports
+keywords: [bowling handicap calculator, bowling average, ten pin bowling, league handicap, handicap basis]
+updated: 2026-10-27
+variables:
+  - { id: pins, label: Total pins (scratch), default: 2610, min: 0 }
+  - { id: g, label: Games played, default: 15, min: 1 }
+  - { id: basis, label: Handicap basis, default: 220, min: 0 }
+  - { id: pct, label: Handicap percentage, family: percent, unit: '%', default: 90, min: 0, max: 1 }
+  - { id: avg, label: Average, min: 0, decimals: 0 }
+  - { id: hc, label: Handicap per game, min: 0, decimals: 0 }
+equations:
+  - avg = floor(pins / g)
+  - hc = max(0, floor((basis - avg) * pct))
+faq:
+  - q: How is a bowling handicap calculated?
+    a: Handicap = (basis − average) × percentage, rounded down. For example (220 − 174) × 90% = 41.
+  - q: Why are fractions dropped?
+    a: Most leagues truncate both the average and the handicap to whole pins.
+  - q: What basis and percentage are common?
+    a: 200–230 basis with 80–100% are common; check your league rules.
+related: [sports/win-percentage, math/average]
+---
+
+## How to use this calculator
+
+Enter your **total pins**, **games played**, the league's **basis** and **percentage**. Your average and handicap are calculated.
+
+## Example
+
+2,610 pins in 15 games → average **174**. With a 220 basis at 90%: (220 − 174) × 0.9 = 41.4 → handicap **41**.

@@ -1,0 +1,51 @@
+---
+title: Car Carbon Footprint Calculator
+description: Estimate CO₂ emissions from driving based on distance, fuel consumption and fuel type.
+category: ecology
+keywords: [car carbon footprint, co2 emissions car, driving emissions, petrol co2 per litre, diesel emissions, g co2 per km]
+updated: 2026-10-27
+featured: true
+variables:
+  - id: ef
+    label: Fuel
+    default: 2.31
+    options:
+      - { label: Petrol / gasoline (2.31 kg CO₂ per litre), value: 2.31 }
+      - { label: Diesel (2.68 kg CO₂ per litre), value: 2.68 }
+      - { label: LPG (1.51 kg CO₂ per litre), value: 1.51 }
+  - { id: d, label: Distance per year, family: length, unit: km, imperialUnit: mi, default: 12000, min: 0 }
+  - { id: c, label: Fuel consumption, suffix: L/100 km, default: 7, min: 0 }
+  - { id: fuel, label: Fuel used, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: co2, label: CO₂ emitted, family: mass, unit: t, imperialUnit: lb, min: 0 }
+  - { id: gkm, label: CO₂ per km, suffix: g/km, min: 0, decimals: 0 }
+equations:
+  - fuel = d / 1000 * c / 100 / 1000
+  - co2 = fuel * 1000 * ef
+  - gkm = c * ef * 10
+faq:
+  - q: How much CO₂ does a litre of petrol produce?
+    a: Burning one litre of petrol releases about 2.3 kg of CO₂; diesel about 2.7 kg. This calculator covers tailpipe emissions only.
+  - q: What is a typical car's footprint?
+    a: A car using 7 L/100 km for 12,000 km a year emits about 1.9 tonnes of CO₂.
+  - q: How can I reduce it?
+    a: Drive less, combine trips, keep tyres inflated, drive smoothly, and choose a more efficient or electric vehicle.
+related: [ecology/ev-vs-petrol, ecology/tree-offset, everyday-life/fuel-cost]
+---
+
+## How to use this calculator
+
+Choose the **fuel**, then enter your **yearly distance** and **fuel consumption**. Fuel used, total CO₂ and grams of CO₂ per km are calculated.
+
+## Formulas
+
+<p class="formula">Fuel = distance × consumption ÷ 100<br/>CO₂ = fuel × emission factor</p>
+
+## Example
+
+12,000 km a year at 7 L/100 km (petrol):
+
+- Fuel = **840 L**
+- CO₂ = 840 × 2.31 = **1.94 t**
+- About **162 g CO₂/km**
+
+Factors are for fuel combustion only; the full life cycle (fuel production, car manufacture) adds more.

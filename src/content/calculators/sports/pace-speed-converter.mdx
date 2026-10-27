@@ -1,0 +1,38 @@
+---
+title: Pace to Speed Converter (Treadmill)
+description: Convert running pace (min/km or min/mile) to speed in km/h or mph — and back. Ideal for treadmills.
+category: sports
+keywords: [pace to speed, min per km to km/h, treadmill speed, mph to pace, pace converter]
+updated: 2026-10-27
+variables:
+  - { id: pk, label: Pace per km, suffix: min/km, default: 6, min: 0.01 }
+  - { id: pm, label: Pace per mile, suffix: min/mile, min: 0.01 }
+  - { id: kmh, label: Speed, suffix: km/h, min: 0 }
+  - { id: mph, label: Speed, suffix: mph, min: 0 }
+equations:
+  - kmh = 60 / pk
+  - pm = pk * 1.609344
+  - mph = 60 / pm
+faq:
+  - q: How do I convert pace to km/h?
+    a: Divide 60 by your pace in minutes per km. A 6:00 min/km pace is 10 km/h.
+  - q: What treadmill speed is a 5:00 pace?
+    a: 12 km/h, or 7.46 mph.
+  - q: Should I set an incline on the treadmill?
+    a: Many runners use a 1% incline to better match the effort of running outdoors.
+related: [sports/pace-calculator, conversion/speed-converter]
+---
+
+## How to use this converter
+
+Type into **any** field — pace per km, pace per mile, km/h or mph. Pace is in decimal minutes (6.5 = 6:30).
+
+## Quick table
+
+| min/km | km/h | min/mile | mph |
+|---|---|---|---|
+| 4:00 | 15.0 | 6:26 | 9.3 |
+| 5:00 | 12.0 | 8:03 | 7.5 |
+| 6:00 | 10.0 | 9:39 | 6.2 |
+| 7:00 | 8.6 | 11:16 | 5.3 |
+| 8:00 | 7.5 | 12:52 | 4.7 |

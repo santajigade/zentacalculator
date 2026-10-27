@@ -1,0 +1,48 @@
+---
+title: Ideal Gas Law Calculator (PV = nRT)
+description: Solve the ideal gas law for pressure, volume, amount of gas (moles) or temperature.
+category: physics
+keywords: [ideal gas law, pv = nrt, gas law calculator, moles of gas, gas constant, stp]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Pressure (absolute), family: pressure, unit: kPa, imperialUnit: psi, default: 101.325, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: L, imperialUnit: ft3, min: 0 }
+  - { id: n, label: Amount of gas, suffix: mol, default: 1, min: 0 }
+  - { id: T, label: Temperature, family: temperature, unit: C, imperialUnit: F, default: 0, min: 0 }
+equations:
+  - P * V = n * 8.314462618 * T
+chart: { x: T, y: V, from: -50, to: 200 }
+faq:
+  - q: What is the ideal gas law?
+    a: PV = nRT, linking pressure, volume, amount of gas and absolute temperature. R = 8.314 J/(mol·K).
+  - q: What volume does one mole of gas occupy?
+    a: About 22.41 L at 0 °C and 1 atm, and about 24.47 L at 25 °C and 1 atm.
+  - q: Why must pressure and temperature be absolute?
+    a: The law is based on absolute zero and zero pressure. The calculator converts °C and °F to kelvin automatically; enter absolute pressure (gauge + atmospheric).
+related: [chemistry/moles, physics/density, conversion/pressure-converter]
+---
+
+## How to use this calculator
+
+Enter **any three** of pressure, volume, moles and temperature to find the fourth. Pressure must be **absolute** (not gauge); temperature can be in °C, °F or K.
+
+## The formula
+
+<p class="formula">P V = n R T   (R = 8.314 J/mol·K)</p>
+
+## Worked example
+
+1 mol of gas at 0 °C (273.15 K) and 101.325 kPa:
+
+V = nRT ÷ P = 1 × 8.314 × 273.15 ÷ 101,325 = **22.41 L**
+
+At 25 °C it expands to 24.47 L.
+
+## Combined gas law
+
+For a fixed amount of gas, P₁V₁/T₁ = P₂V₂/T₂. A tyre at 220 kPa absolute and 20 °C warms to 50 °C: P₂ = 220 × 323.15 ÷ 293.15 ≈ **243 kPa**.
+
+## When it is less accurate
+
+Real gases deviate at very high pressures and low temperatures, close to condensing. For air and most gases at everyday conditions, the error is well under 1%.

@@ -1,0 +1,46 @@
+---
+title: Days Between Dates Calculator
+description: Count the days, weeks, months and working days between two dates.
+category: everyday-life
+keywords: [days between dates, date difference, how many days until, working days, business days, date calculator]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: d1, label: Start date, family: date, default: 0 }
+  - { id: d2, label: End date, family: date, default: 100 }
+  - { id: dd, label: Days between, decimals: 0 }
+  - { id: wk, label: Weeks, decimals: 2 }
+  - { id: mo, label: Completed months, decimals: 0 }
+  - { id: wd, label: Working days (Mon–Fri), decimals: 0 }
+equations:
+  - dd = d2 - d1
+  - wk = dd / 7
+  - mo = monthsBetween(d1, d2)
+  - wd = workdays(d1, d2)
+faq:
+  - q: Does the count include the end date?
+    a: No. The number of days is end minus start — like counting nights in a hotel. Add 1 if you want to include both days.
+  - q: Are public holidays excluded from working days?
+    a: No. Working days counts Monday to Friday only. Subtract holidays in your country yourself.
+  - q: Can the start date be after the end date?
+    a: Yes — the result will be negative.
+related: [everyday-life/date-plus-days, everyday-life/days-until, everyday-life/age-calculator]
+---
+
+## How to use this calculator
+
+Choose a **start date** and an **end date**. You get the number of days, weeks, completed months and working days (Monday to Friday) between them.
+
+## How days are counted
+
+The result is end date − start date, so 1 Jan to 2 Jan is 1 day. To include both the first and last day (for example for a holiday booking that counts days, not nights), add 1.
+
+## Working days
+
+Working days count Monday to Friday from the start date up to (but not including) the end date. Public holidays vary by country and are not removed automatically.
+
+## Uses
+
+- Notice periods and contract lengths
+- Project timelines and deadlines
+- Interest periods for invoices

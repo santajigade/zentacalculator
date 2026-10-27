@@ -1,0 +1,42 @@
+---
+title: Concrete Column & Footing Calculator (Round)
+description: Calculate concrete volume for round columns, piers, post holes and sonotubes.
+category: construction
+keywords: [concrete column calculator, round column, pier, post hole concrete, sonotube, cylinder concrete]
+updated: 2026-10-27
+variables:
+  - { id: d, label: Diameter, family: length, unit: mm, imperialUnit: in, default: 300, min: 0 }
+  - { id: h, label: Height / depth, family: length, unit: m, imperialUnit: ft, default: 1.2, min: 0 }
+  - { id: n, label: Number of columns, default: 6, min: 1 }
+  - { id: V, label: Total concrete volume, family: volume, unit: m3, imperialUnit: ft3, min: 0 }
+  - { id: bags, label: 40 kg pre-mix bags, min: 0, decimals: 0 }
+equations:
+  - V = pi * (d / 2)^2 * h * n
+  - bags = ceil(V * 1.05 / 0.018)
+faq:
+  - q: How much concrete for a post hole?
+    a: Volume = π × radius² × depth. A 300 mm hole 1.2 m deep needs about 0.085 m³ — roughly 5 bags of 40 kg pre-mix.
+  - q: Do I subtract the post?
+    a: For accuracy, yes — subtract the post's volume below ground. For wooden posts it is usually small.
+  - q: Does the bag count include waste?
+    a: Yes, 5% extra is added.
+related: [construction/concrete-slab, math/cylinder-volume]
+---
+
+## How to use this calculator
+
+Enter the column **diameter**, **height** (or hole depth) and the **number** of columns. The total volume and 40 kg bags (with 5% extra) are calculated.
+
+## Formula
+
+<p class="formula">V = π × (d ÷ 2)² × h × n</p>
+
+## Example
+
+Six piers, 300 mm diameter and 1.2 m deep:
+
+V = π × 0.15² × 1.2 × 6 = **0.509 m³** → about **30** bags
+
+## Square columns
+
+For square or rectangular columns, use width × depth × height instead.

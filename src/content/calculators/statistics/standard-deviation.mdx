@@ -1,0 +1,58 @@
+---
+title: Standard Deviation Calculator
+description: Paste your data to get sample and population standard deviation, variance, mean and count — with steps.
+category: statistics
+keywords: [standard deviation calculator, sample standard deviation, population standard deviation, variance, sd, stdev]
+updated: 2026-10-27
+featured: true
+dataset:
+  label: Your data
+  default: '4, 8, 6, 5, 3, 7, 9, 5'
+variables:
+  - { id: sd, label: Sample standard deviation (s) }
+  - { id: sdp, label: Population standard deviation (σ) }
+  - { id: v, label: Sample variance (s²) }
+  - { id: vp, label: Population variance (σ²) }
+  - { id: mean, label: Mean }
+  - { id: n, label: Count (n) }
+equations:
+  - sd = data_sd
+  - sdp = data_sdp
+  - v = data_var
+  - vp = data_varp
+  - mean = data_mean
+  - n = data_n
+faq:
+  - q: Should I use sample or population standard deviation?
+    a: Use the sample formula (divide by n − 1) when your data is a sample from a larger group — the usual case. Use the population formula (divide by n) only when you have every member of the group.
+  - q: What does standard deviation tell me?
+    a: How spread out the values are around the mean. A small value means the data is tightly clustered.
+  - q: How is variance related?
+    a: Variance is the square of the standard deviation.
+related: [statistics/mean-median-mode, statistics/z-score, statistics/standard-error]
+---
+
+## How to use this calculator
+
+Paste or type your numbers, separated by commas, spaces or new lines — you can paste a column from Excel. All results update instantly.
+
+## Formulas
+
+<p class="formula">s = √( Σ(x − x̄)² ÷ (n − 1) )   σ = √( Σ(x − μ)² ÷ n )</p>
+
+## Worked example
+
+Data: 4, 8, 6, 5, 3, 7, 9, 5 (n = 8)
+
+- Mean = 47 ÷ 8 = **5.875**
+- Sum of squared deviations = 28.875
+- Sample variance = 4.1250 → **s = 2.0310**
+- Population variance = 3.6094 → **σ = 1.8998**
+
+## Interpreting standard deviation
+
+For roughly bell-shaped data, about 68% of values fall within 1 SD of the mean and 95% within 2 SD. See the [empirical rule calculator](/statistics/empirical-rule/).
+
+## In Excel
+
+Sample: `=STDEV.S(range)` · Population: `=STDEV.P(range)`

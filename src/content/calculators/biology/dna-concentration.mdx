@@ -1,0 +1,51 @@
+---
+title: DNA / RNA Concentration Calculator (A260)
+description: Calculate nucleic acid concentration from A260 absorbance for dsDNA, ssDNA and RNA, including dilution and purity ratio.
+category: biology
+keywords: [dna concentration, a260, rna concentration, nanodrop, 260/280 ratio, nucleic acid quantification]
+updated: 2026-10-27
+featured: true
+variables:
+  - id: f
+    label: Nucleic acid type
+    default: 50
+    options:
+      - { label: Double-stranded DNA (50 µg/mL per A260), value: 50 }
+      - { label: RNA (40 µg/mL per A260), value: 40 }
+      - { label: Single-stranded DNA (33 µg/mL per A260), value: 33 }
+  - { id: a260, label: A260 reading, default: 0.45, min: 0 }
+  - { id: a280, label: A280 reading, default: 0.24, min: 0 }
+  - { id: dil, label: Dilution factor, default: 10, min: 1 }
+  - { id: c, label: Concentration, suffix: µg/mL (= ng/µL), min: 0 }
+  - { id: ratio, label: A260/A280 purity ratio, min: 0, decimals: 2 }
+equations:
+  - c = a260 * f * dil
+  - ratio = a260 / a280
+faq:
+  - q: How do I calculate DNA concentration from A260?
+    a: Concentration (µg/mL) = A260 × 50 × dilution factor for double-stranded DNA. Use 40 for RNA and 33 for single-stranded DNA.
+  - q: What is a good 260/280 ratio?
+    a: About 1.8 for pure DNA and about 2.0 for pure RNA. Lower values suggest protein or phenol contamination.
+  - q: Are µg/mL and ng/µL the same?
+    a: Yes, they are equal.
+related: [biology/dna-copy-number, biology/protein-concentration-a280, chemistry/beer-lambert]
+---
+
+## How to use this calculator
+
+Choose the **nucleic acid type**, enter the **A260** and **A280** readings and the **dilution factor**. The concentration and purity ratio are calculated.
+
+## Formula
+
+<p class="formula">c (µg/mL) = A260 × conversion factor × dilution</p>
+
+## Example
+
+dsDNA diluted 1:10 with A260 = 0.45 and A280 = 0.24:
+
+- Concentration = 0.45 × 50 × 10 = **225 µg/mL**
+- A260/A280 = **1.88** → acceptable purity
+
+## Reliable readings
+
+Spectrophotometers are most accurate for A260 between about 0.1 and 1.0. Dilute concentrated samples and multiply back with the dilution factor.

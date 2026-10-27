@@ -1,0 +1,51 @@
+---
+title: Arc Length & Sector Area Calculator
+description: Calculate arc length, sector area and chord length of a circle from radius and central angle.
+category: math
+keywords: [arc length, sector area, chord length, central angle, radians, circle segment, pie slice]
+updated: 2026-10-27
+variables:
+  - { id: r, label: Radius, family: length, unit: cm, imperialUnit: in, default: 10, min: 0 }
+  - { id: th, label: Central angle, family: angle, unit: deg, default: 60, min: 0, max: 6.2832 }
+  - { id: L, label: Arc length, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: A, label: Sector area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+  - { id: ch, label: Chord length, family: length, unit: cm, imperialUnit: in, min: 0 }
+equations:
+  - L = r * th
+  - A = r^2 * th / 2
+  - ch = 2 * r * sin(th / 2)
+chart: { x: th, y: L, from: 0, to: 360 }
+faq:
+  - q: What is the arc length formula?
+    a: Arc length = r × θ, with θ in radians. In degrees, arc length = 2πr × (θ ÷ 360).
+  - q: How do I find the area of a sector?
+    a: Sector area = ½ × r² × θ (radians), which is the circle's area times θ ÷ 360°.
+  - q: What is the difference between arc length and chord length?
+    a: The arc follows the curve; the chord is the straight line between the arc's ends. The chord is always shorter.
+related: [math/circle, math/right-triangle-trig]
+---
+
+## How to use this calculator
+
+Enter the **radius** and **central angle** to get the arc length, sector area and chord. Or enter the arc length and radius to find the angle. Angles can be in degrees or radians.
+
+## Formulas (θ in radians)
+
+<p class="formula">L = r θ   A = ½ r² θ   chord = 2r sin(θ ÷ 2)</p>
+
+To convert: radians = degrees × π ÷ 180.
+
+## Worked example
+
+Radius 10 cm, angle 60°:
+
+- θ = 60 × π ÷ 180 = 1.0472 rad
+- Arc length = 10 × 1.0472 = **10.47 cm**
+- Sector area = ½ × 100 × 1.0472 = **52.36 cm²**
+- Chord = 2 × 10 × sin 30° = **10 cm**
+
+## Practical uses
+
+- **Bending pipe or bar:** the arc length is the material needed for a curved section.
+- **Pie charts:** each slice is a sector — its angle is the share × 360°.
+- **Curved paths and tracks:** arc length gives the distance travelled around a bend.

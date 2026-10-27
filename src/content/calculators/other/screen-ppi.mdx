@@ -1,0 +1,42 @@
+---
+title: Screen PPI Calculator (Pixel Density)
+description: Calculate pixels per inch (PPI) and dot pitch of a screen from its resolution and diagonal size.
+category: other
+keywords: [ppi calculator, pixel density, pixels per inch, screen resolution, dot pitch, retina display]
+updated: 2026-10-27
+variables:
+  - { id: w, label: Horizontal resolution, suffix: px, default: 2560, min: 1 }
+  - { id: h, label: Vertical resolution, suffix: px, default: 1440, min: 1 }
+  - { id: d, label: Diagonal, family: length, unit: in, default: 27, min: 0 }
+  - { id: ppi, label: Pixel density, suffix: PPI, min: 0, decimals: 1 }
+  - { id: pitch, label: Dot pitch, family: length, unit: mm, min: 0 }
+equations:
+  - ppi = sqrt(w^2 + h^2) / (d / 0.0254)
+  - pitch = 0.0254 / ppi
+faq:
+  - q: How is PPI calculated?
+    a: PPI = √(width² + height²) ÷ diagonal in inches.
+  - q: What PPI looks sharp?
+    a: For a desktop monitor viewed at arm's length, about 110 PPI and above looks sharp; phones held closer often exceed 400 PPI.
+  - q: What is dot pitch?
+    a: The distance between pixels — the reciprocal of PPI.
+related: [everyday-life/tv-size, other/aspect-ratio]
+---
+
+## How to use this calculator
+
+Enter the screen's **resolution** and **diagonal**. Pixel density and dot pitch are calculated.
+
+## Formula
+
+<p class="formula">PPI = √(w² + h²) ÷ diagonal</p>
+
+## Common screens
+
+| Screen | PPI |
+|---|---|
+| 24″ 1080p | 91.8 |
+| 27″ 1440p | 108.8 |
+| 27″ 4K | 163.2 |
+| 32″ 4K | 137.7 |
+| 6.1″ 2532 × 1170 phone | 457.5 |

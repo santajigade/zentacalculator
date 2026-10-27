@@ -1,0 +1,31 @@
+---
+title: Trees to Offset CO₂ Calculator
+description: Estimate how many trees it would take to absorb a given amount of CO₂ per year.
+category: ecology
+keywords: [trees to offset co2, carbon offset trees, how many trees, tree co2 absorption, carbon sequestration]
+updated: 2026-10-27
+variables:
+  - { id: co2, label: CO₂ to offset per year, family: mass, unit: t, imperialUnit: lb, default: 2, min: 0 }
+  - { id: per, label: CO₂ absorbed per tree per year, family: mass, unit: kg, imperialUnit: lb, default: 21, min: 0.0001 }
+  - { id: n, label: Trees needed, min: 0, decimals: 0 }
+equations:
+  - n = ceil(co2 / per)
+faq:
+  - q: How much CO₂ does a tree absorb?
+    a: A commonly quoted average is about 21 kg per year for a mature tree, but it varies hugely with species, age, climate and soil.
+  - q: Do newly planted trees absorb that much?
+    a: No. Young trees absorb much less; it can take decades to reach mature rates.
+  - q: Is planting trees enough?
+    a: Trees help, but reducing emissions at the source is far more effective. Offsets work best as a complement.
+related: [ecology/car-carbon-footprint, ecology/flight-emissions]
+---
+
+## How to use this calculator
+
+Enter the **CO₂ you want to offset each year** and the **CO₂ absorbed per tree**. The number of mature trees needed is calculated.
+
+## Example
+
+2 tonnes of CO₂ per year at 21 kg per tree → **96 trees**.
+
+The 21 kg figure is a rough average for a mature tree; fast-growing tropical trees can absorb more, and young trees much less.

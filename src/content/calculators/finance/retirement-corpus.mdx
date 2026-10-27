@@ -1,0 +1,60 @@
+---
+title: Retirement Corpus Calculator
+description: Estimate how much money you need at retirement based on today's expenses, inflation and a safe withdrawal rate.
+category: finance
+keywords: [retirement calculator, retirement corpus, how much to retire, 4% rule, safe withdrawal rate, retirement planning, fire]
+updated: 2026-10-27
+variables:
+  - { id: E, label: Annual expenses today, family: currency, default: 600000, min: 0, decimals: 2 }
+  - { id: inf, label: Expected inflation, family: percent, unit: '%', default: 6, min: 0, max: 0.5 }
+  - { id: t, label: Years until retirement, family: time, unit: yr, default: 25, min: 0 }
+  - { id: Er, label: Annual expenses at retirement, family: currency, min: 0, decimals: 2 }
+  - { id: w, label: Safe withdrawal rate, family: percent, unit: '%', default: 4, min: 0.001, max: 0.2 }
+  - { id: K, label: Corpus needed at retirement, family: currency, min: 0, decimals: 2 }
+equations:
+  - Er = E * (1 + inf)^t
+  - K = Er / w
+chart: { x: t, y: K, from: 5, to: 40 }
+faq:
+  - q: What is the 4% rule?
+    a: A guideline from US studies of historical returns — withdrawing 4% of your savings in the first year, then adjusting for inflation, has historically lasted about 30 years. It equals saving 25 times your annual expenses.
+  - q: Should I use 4% or a lower rate?
+    a: Many planners suggest 3–3.5% for early retirement, longer lifespans or countries with higher inflation. A lower rate means a larger corpus but more safety.
+  - q: How do I build this corpus?
+    a: Use the SIP calculator — press × on Monthly investment and type the corpus as your target future value.
+related: [finance/inflation, finance/sip, finance/savings-goal]
+---
+
+## How to use this calculator
+
+Enter your **current annual expenses**, expected **inflation**, **years until retirement** and a **withdrawal rate**. The calculator projects your expenses at retirement and the corpus needed to fund them.
+
+## Formulas
+
+<p class="formula">Expenses at retirement = E × (1 + inflation)<sup>t</sup><br/>Corpus = Expenses at retirement ÷ withdrawal rate</p>
+
+## Worked example
+
+Annual expenses of 600,000 today, 6% inflation, retiring in 25 years, 4% withdrawal rate:
+
+- Expenses at retirement = 600,000 × 1.06²⁵ = **2,575,122 per year**
+- Corpus needed = 2,575,122 ÷ 0.04 = **64,378,061**
+
+That large figure shows how strongly inflation compounds over decades.
+
+## Withdrawal rate and corpus multiple
+
+| Withdrawal rate | Corpus = expenses × |
+|---|---|
+| 5% | 20 |
+| 4% | 25 |
+| 3.5% | 28.6 |
+| 3% | 33.3 |
+
+## Important assumptions
+
+- Investments keep growing during retirement, roughly matching inflation plus the withdrawal rate.
+- Healthcare costs often rise faster than general inflation.
+- Pensions or rental income reduce the corpus needed — subtract them from expenses.
+
+This is a planning estimate, not financial advice. Consider speaking to a qualified financial planner.

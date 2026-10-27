@@ -1,0 +1,49 @@
+---
+title: Exponent Calculator (Powers & Roots)
+description: Calculate x to the power n, find the nth root, or solve for the exponent — type in any two fields.
+category: math
+keywords: [exponent, power, x to the power of n, nth root, square root, cube root, solve exponent]
+updated: 2026-10-27
+variables:
+  - { id: x, label: Base (x), default: 2 }
+  - { id: n, label: Exponent (n), default: 10 }
+  - { id: y, label: Result (xⁿ) }
+equations:
+  - y = x^n
+chart: { x: n, y: y, from: 0, to: 12 }
+faq:
+  - q: What does an exponent mean?
+    a: It tells you how many times to multiply the base by itself. 2¹⁰ = 2 × 2 × … × 2 (ten times) = 1,024.
+  - q: How do I find a root with this calculator?
+    a: Press × on Base, then enter the exponent and the result. For a cube root of 125, enter n = 3 and result = 125 to get 5.
+  - q: What is a negative exponent?
+    a: A reciprocal — x⁻ⁿ = 1 ÷ xⁿ. So 2⁻³ = 1/8 = 0.125.
+related: [math/logarithm, math/percentage-change]
+---
+
+## How to use this calculator
+
+Fill in any **two** of base, exponent and result:
+
+- **Power:** base and exponent → result (2¹⁰ = 1,024)
+- **Root:** exponent and result → base (∛125 = 5)
+- **Exponent:** base and result → exponent (3ⁿ = 81 → n = 4)
+
+## Rules of exponents
+
+| Rule | Example |
+|---|---|
+| xᵃ × xᵇ = xᵃ⁺ᵇ | 2³ × 2⁴ = 2⁷ = 128 |
+| xᵃ ÷ xᵇ = xᵃ⁻ᵇ | 5⁶ ÷ 5⁴ = 5² = 25 |
+| (xᵃ)ᵇ = xᵃᵇ | (3²)³ = 3⁶ = 729 |
+| x⁰ = 1 | 7⁰ = 1 |
+| x⁻ⁿ = 1/xⁿ | 10⁻² = 0.01 |
+| x^(1/n) = ⁿ√x | 16^(1/2) = 4 |
+
+## Powers of 2
+
+2⁸ = 256, 2¹⁰ = 1,024, 2¹⁶ = 65,536 and 2²⁰ = 1,048,576. These appear constantly in computing — a kilobyte in binary terms is 2¹⁰ bytes.
+
+## Growth
+
+Anything that grows by a fixed percentage follows an exponent. Money growing 8% a year for 10 years is multiplied by 1.08¹⁰ = 2.16.

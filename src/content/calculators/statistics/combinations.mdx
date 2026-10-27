@@ -1,0 +1,42 @@
+---
+title: Combination Calculator (nCr)
+description: Calculate the number of combinations — ways to choose r items from n when order doesn't matter. Lottery odds included.
+category: statistics
+keywords: [combination calculator, ncr, n choose r, binomial coefficient, lottery odds, combinatorics]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: n, label: Total items (n), default: 49, min: 0 }
+  - { id: r, label: Items chosen (r), default: 6, min: 0 }
+  - { id: Cn, label: Combinations (nCr), min: 0 }
+  - { id: odds, label: Chance of picking one specific combination, family: percent, unit: '%', min: 0 }
+equations:
+  - Cn = nCr(n, r)
+  - odds = 1 / Cn
+faq:
+  - q: What is a combination?
+    a: A selection where order doesn't matter, such as choosing 3 toppings from 10.
+  - q: What is the formula?
+    a: nCr = n! ÷ (r! (n − r)!).
+  - q: What are the odds of winning a 6/49 lottery?
+    a: 1 in 13,983,816 for the jackpot.
+related: [statistics/permutations, statistics/binomial-probability, statistics/probability]
+---
+
+## How to use this calculator
+
+Enter the **total items** and how many are **chosen**. You get the number of possible combinations and the chance of picking one specific combination.
+
+## Formula
+
+<p class="formula">nCr = n! ÷ ( r! × (n − r)! )</p>
+
+## Worked examples
+
+- **6/49 lottery:** 49C6 = **13,983,816**
+- **Pizza:** choose 3 toppings from 10 → **120** combinations
+- **Teams:** pick 5 players from 12 → **792** teams
+
+## Pascal's triangle
+
+nCr values form Pascal's triangle — each number is the sum of the two above it. They are also the coefficients in (a + b)ⁿ.

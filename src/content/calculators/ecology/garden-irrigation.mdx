@@ -1,0 +1,36 @@
+---
+title: Garden Watering Calculator
+description: Calculate how much water a lawn or garden needs per week and how long to run a sprinkler or hose.
+category: ecology
+keywords: [garden watering calculator, lawn water needs, irrigation calculator, how long to water, sprinkler time]
+updated: 2026-10-27
+variables:
+  - { id: A, label: Garden or lawn area, family: area, unit: m2, imperialUnit: ft2, default: 50, min: 0 }
+  - { id: mm, label: Water needed per week, family: length, unit: mm, imperialUnit: in, default: 25, min: 0 }
+  - { id: rain, label: Rainfall this week, family: length, unit: mm, imperialUnit: in, default: 5, min: 0 }
+  - { id: f, label: Hose or sprinkler flow, family: flow, unit: Lmin, imperialUnit: gpm, default: 12, min: 0.000001 }
+  - { id: V, label: Water to apply, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: t, label: Watering time, suffix: minutes, min: 0, decimals: 0 }
+equations:
+  - V = A * max(0, mm - rain)
+  - t = V / f / 60
+faq:
+  - q: How much water does a lawn need?
+    a: About 25 mm (1 inch) per week in warm weather, including rainfall.
+  - q: When is the best time to water?
+    a: Early morning, when evaporation is lowest and leaves dry during the day.
+  - q: How do I measure sprinkler output?
+    a: Place a few straight-sided cans on the lawn and time how long it takes to collect 25 mm.
+related: [ecology/rainwater-harvesting, ecology/shower-water]
+---
+
+## How to use this calculator
+
+Enter the **area**, the **water needed per week**, this week's **rainfall** and your hose or sprinkler **flow rate**. The water to apply and the watering time are calculated.
+
+## Example
+
+50 m² lawn needing 25 mm, 5 mm of rain, 12 L/min hose:
+
+- Water = 50 × 20 = **1,000 L**
+- Time = **83 minutes** per week (for example, two sessions of about 40 minutes)

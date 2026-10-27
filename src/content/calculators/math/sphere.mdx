@@ -1,0 +1,48 @@
+---
+title: Sphere Calculator (Volume & Surface Area)
+description: Calculate sphere volume and surface area from radius or diameter — or the radius from volume.
+category: math
+keywords: [sphere volume, surface area of sphere, 4/3 pi r cubed, ball volume, radius, diameter]
+updated: 2026-10-27
+variables:
+  - { id: r, label: Radius, family: length, unit: cm, imperialUnit: in, default: 6, min: 0 }
+  - { id: d, label: Diameter, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: cm3, imperialUnit: in3, min: 0 }
+  - { id: S, label: Surface area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+equations:
+  - d = 2 * r
+  - V = 4 / 3 * pi * r^3
+  - S = 4 * pi * r^2
+chart: { x: r, y: V, from: 0, to: 20 }
+faq:
+  - q: What is the formula for the volume of a sphere?
+    a: V = 4/3 × π × r³. A sphere with a 6 cm radius has a volume of about 904.8 cm³.
+  - q: What is the surface area of a sphere?
+    a: S = 4πr². With a 6 cm radius that is about 452.4 cm².
+  - q: How do I find the radius from the volume?
+    a: Type the volume — the radius is found with r = ∛(3V ÷ 4π).
+related: [math/circle, math/cylinder-volume, math/cone]
+---
+
+## How to use this calculator
+
+Type **any one** of radius, diameter, volume or surface area — the others are calculated. Choose litres or gallons as the volume unit for tanks.
+
+## Formulas
+
+<p class="formula">V = ⁴⁄₃ π r³   S = 4π r²</p>
+
+## Worked example
+
+A ball with a 6 cm radius:
+
+- Volume = 4/3 × π × 6³ = **904.8 cm³** (0.905 litres)
+- Surface area = 4 × π × 6² = **452.4 cm²**
+
+## Volume grows fast
+
+Volume depends on the **cube** of the radius. Doubling the radius makes the sphere **8 times** heavier and larger in volume, while surface area grows only 4 times. This is why large spherical tanks store far more per square metre of steel.
+
+## Hemisphere
+
+A hemisphere (half a sphere) has volume ⅔πr³ — half the result above. Its curved surface is 2πr², plus a flat base of πr².

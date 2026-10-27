@@ -1,0 +1,47 @@
+---
+title: Geometric Mean Calculator
+description: Calculate the geometric mean of positive numbers — the correct average for growth rates, ratios and returns.
+category: statistics
+keywords: [geometric mean calculator, average growth rate, average return, compound average, multiplicative mean]
+updated: 2026-10-27
+dataset:
+  label: Your positive numbers
+  default: '1.05, 1.10, 0.95, 1.20'
+variables:
+  - { id: gm, label: Geometric mean }
+  - { id: am, label: Arithmetic mean (for comparison) }
+  - { id: n, label: Count }
+equations:
+  - gm = data_gmean
+  - am = data_mean
+  - n = data_n
+faq:
+  - q: What is the geometric mean?
+    a: The nth root of the product of n numbers. It is the right average for quantities that multiply together, such as growth factors.
+  - q: Why can't I use the normal average for returns?
+    a: Returns compound. +50% then −50% averages 0% arithmetically, but you actually lose 25%. The geometric mean shows the true rate.
+  - q: Can I use zero or negative numbers?
+    a: No. Convert percentage returns to growth factors first (+5% → 1.05, −5% → 0.95).
+related: [finance/cagr, math/average]
+---
+
+## How to use this calculator
+
+Enter positive numbers. For percentage changes, enter **growth factors**: +5% → 1.05, −5% → 0.95.
+
+## Formula
+
+<p class="formula">GM = (x₁ × x₂ × … × xₙ)<sup>1/n</sup></p>
+
+## Worked example — four years of returns
+
+Returns of +5%, +10%, −5%, +20% → factors 1.05, 1.10, 0.95, 1.20
+
+- Geometric mean = **1.0712** → average growth **7.12% per year**
+- Arithmetic mean = 1.0750 → overstates growth at 7.50%
+
+## When to use it
+
+- Investment returns and CAGR
+- Population or sales growth rates
+- Averaging ratios and indexes

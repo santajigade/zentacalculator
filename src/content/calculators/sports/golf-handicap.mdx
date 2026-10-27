@@ -1,0 +1,39 @@
+---
+title: Golf Score Differential Calculator (Handicap)
+description: Calculate a golf score differential from your adjusted score, course rating and slope rating — the basis of the World Handicap System.
+category: sports
+keywords: [golf handicap calculator, score differential, slope rating, course rating, world handicap system, whs]
+updated: 2026-10-27
+variables:
+  - { id: s, label: Adjusted gross score, default: 92, min: 0 }
+  - { id: cr, label: Course rating, default: 71.2, min: 0 }
+  - { id: sl, label: Slope rating, default: 128, min: 55, max: 155 }
+  - { id: pcc, label: Playing conditions adjustment (PCC), default: 0 }
+  - { id: sd, label: Score differential, decimals: 1 }
+equations:
+  - sd = 113 / sl * (s - cr - pcc)
+faq:
+  - q: What is a score differential?
+    a: A measure of how well you played relative to the course's difficulty, adjusted to a standard slope of 113.
+  - q: How is the Handicap Index calculated?
+    a: Under the World Handicap System, it is the average of the best 8 of your most recent 20 score differentials.
+  - q: Where do I find course and slope rating?
+    a: On the scorecard or the club's website, for the tees you played.
+related: [sports/win-percentage]
+---
+
+## How to use this calculator
+
+Enter your **adjusted gross score**, the **course rating** and **slope rating** for your tees, and any **PCC** adjustment (usually 0). The score differential is calculated.
+
+## Formula
+
+<p class="formula">Score differential = (113 ÷ slope) × (score − course rating − PCC)</p>
+
+## Example
+
+Score 92 on a course rated 71.2 with slope 128:
+
+Differential = 113 ÷ 128 × 20.8 = **18.4**
+
+Average your best 8 differentials from the last 20 rounds for your Handicap Index.

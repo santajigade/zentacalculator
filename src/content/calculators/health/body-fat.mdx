@@ -1,0 +1,61 @@
+---
+title: Body Fat Calculator (US Navy Method)
+description: Estimate your body fat percentage from waist, neck, hip and height measurements using the US Navy formula.
+category: health
+keywords: [body fat calculator, body fat percentage, us navy method, waist neck measurement, body composition]
+updated: 2026-10-27
+featured: true
+variables:
+  - id: sx
+    label: Sex
+    default: 0
+    options:
+      - { label: Male, value: 0 }
+      - { label: Female, value: 1 }
+  - { id: H, label: Height, family: length, unit: cm, imperialUnit: in, default: 178, min: 1, max: 2.5 }
+  - { id: N, label: Neck circumference, family: length, unit: cm, imperialUnit: in, default: 38, min: 0.1 }
+  - { id: W, label: Waist circumference (at navel), family: length, unit: cm, imperialUnit: in, default: 85, min: 0.3 }
+  - { id: Hp, label: Hip circumference (women only), family: length, unit: cm, imperialUnit: in, default: 95, min: 0.3 }
+  - { id: bf, label: Body fat, family: percent, unit: '%' }
+equations:
+  - bf = ((1 - sx) * (495 / (1.0324 - 0.19077 * log10(100 * (W - N)) + 0.15456 * log10(100 * H)) - 450) + sx * (495 / (1.29579 - 0.35004 * log10(100 * (W + Hp - N)) + 0.221 * log10(100 * H)) - 450)) / 100
+faq:
+  - q: How accurate is the US Navy method?
+    a: It usually lands within about 3–4 percentage points of lab methods such as DEXA for most people. Accuracy depends heavily on measuring carefully.
+  - q: Where exactly should I measure?
+    a: Neck just below the larynx; waist at the navel for men and at the narrowest point for women; hips at the widest point. Keep the tape level and snug, not tight.
+  - q: What is a healthy body fat percentage?
+    a: Roughly 10–20% for men and 18–28% for women, depending on age and the source. Very low levels can be unhealthy too.
+related: [health/bmi, health/lean-body-mass, health/waist-to-height]
+---
+
+## How to use this calculator
+
+Choose your **sex**, then enter your **height**, **neck** and **waist** measurements. Women also enter their **hip** measurement (men can ignore it). Measure in cm or inches.
+
+## The formulas (measurements in cm)
+
+<p class="formula">Men: %BF = 495 ÷ (1.0324 − 0.19077·log₁₀(waist − neck) + 0.15456·log₁₀(height)) − 450<br/>Women: %BF = 495 ÷ (1.29579 − 0.35004·log₁₀(waist + hip − neck) + 0.22100·log₁₀(height)) − 450</p>
+
+## Worked examples
+
+- **Man:** height 178 cm, neck 38 cm, waist 85 cm → about **16.4%**
+- **Woman:** height 165 cm, neck 33 cm, waist 75 cm, hips 100 cm → about **29.4%**
+
+## General body fat ranges
+
+| Category | Men | Women |
+|---|---|---|
+| Essential fat | 2–5% | 10–13% |
+| Athletes | 6–13% | 14–20% |
+| Fitness | 14–17% | 21–24% |
+| Average | 18–24% | 25–31% |
+| High | 25%+ | 32%+ |
+
+Source: American Council on Exercise guidelines.
+
+## Tips for consistent results
+
+Measure in the morning before eating, take each measurement three times and use the average. Track the trend over weeks rather than any single reading.
+
+This is an estimate, not a medical assessment.

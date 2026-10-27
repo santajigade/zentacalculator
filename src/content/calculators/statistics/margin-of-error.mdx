@@ -1,0 +1,52 @@
+---
+title: Margin of Error Calculator
+description: Calculate the margin of error for a survey or poll from sample size, proportion and confidence level.
+category: statistics
+keywords: [margin of error calculator, poll margin of error, survey accuracy, plus or minus, confidence level]
+updated: 2026-10-27
+variables:
+  - id: zc
+    label: Confidence level
+    default: 1.959964
+    options:
+      - { label: 90%, value: 1.644854 }
+      - { label: 95%, value: 1.959964 }
+      - { label: 99%, value: 2.575829 }
+  - { id: n, label: Sample size, default: 1000, min: 1 }
+  - { id: p, label: Observed proportion, family: percent, unit: '%', default: 50, min: 0, max: 1 }
+  - { id: E, label: Margin of error (±), family: percent, unit: '%', min: 0 }
+equations:
+  - E = zc * sqrt(p * (1 - p) / n)
+chart: { x: n, y: E, from: 100, to: 3000 }
+faq:
+  - q: What does "±3%" mean in a poll?
+    a: If 52% support a policy with a ±3% margin at 95% confidence, the true value is likely between 49% and 55%.
+  - q: How does sample size affect it?
+    a: The margin shrinks with the square root of n. Quadrupling the sample halves the margin of error.
+  - q: Does it cover all poll errors?
+    a: No — only random sampling error. Biased samples, poor question wording and non-response can add more.
+related: [statistics/sample-size, statistics/confidence-interval]
+---
+
+## How to use this calculator
+
+Choose the **confidence level** and enter the **sample size** and **observed proportion**. The margin of error appears as ± percentage points.
+
+## Formula
+
+<p class="formula">E = z × √( p(1 − p) ÷ n )</p>
+
+## Worked example
+
+A poll of 1,000 people finds 50% support, at 95% confidence:
+
+E = 1.96 × √(0.25 ÷ 1000) = **±3.1%**
+
+## Margin by sample size (p = 50%, 95%)
+
+| Sample size | Margin of error |
+|---|---|
+| 100 | ±9.8% |
+| 400 | ±4.9% |
+| 1,000 | ±3.1% |
+| 2,500 | ±2.0% |

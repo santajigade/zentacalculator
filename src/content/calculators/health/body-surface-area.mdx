@@ -1,0 +1,49 @@
+---
+title: Body Surface Area Calculator (BSA)
+description: Calculate body surface area (BSA) from height and weight using the Mosteller formula.
+category: health
+keywords: [body surface area, bsa calculator, mosteller formula, bsa m2, dosing, medical calculator]
+updated: 2026-10-27
+variables:
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 175, min: 0.3, max: 2.5 }
+  - { id: m, label: Weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 0 }
+  - { id: bsa, label: Body surface area, family: area, unit: m2, min: 0 }
+equations:
+  - bsa = sqrt(100 * h * m / 3600)
+faq:
+  - q: What is body surface area used for?
+    a: Doctors use BSA to calculate doses of some medicines (such as chemotherapy), to index cardiac output and kidney function, and to assess burns.
+  - q: What is a normal BSA?
+    a: About 1.9 m² for adult men and 1.6 m² for adult women on average.
+  - q: Which formula is used here?
+    a: The Mosteller formula (1987), BSA = √(height cm × weight kg ÷ 3600). It is simple and widely used in clinical practice.
+related: [health/bmi, health/creatinine-clearance]
+---
+
+## How to use this calculator
+
+Enter **height** and **weight** in any units. Body surface area is shown in m² (or switch units).
+
+## The formula (Mosteller)
+
+<p class="formula">BSA (m²) = √(height (cm) × weight (kg) ÷ 3600)</p>
+
+## Worked example
+
+Height 175 cm, weight 70 kg:
+
+BSA = √(175 × 70 ÷ 3600) = √3.403 = **1.84 m²**
+
+## Other formulas
+
+| Formula | Result for 175 cm, 70 kg |
+|---|---|
+| Mosteller | 1.84 m² |
+| Du Bois | 1.85 m² |
+| Haycock | 1.85 m² |
+
+The formulas agree closely for average-sized adults.
+
+## Important
+
+This tool is for information and education. Medicine dosing must always be done by qualified healthcare professionals using approved protocols.

@@ -1,0 +1,43 @@
+---
+title: Solar Panel Output Calculator
+description: Estimate daily, monthly and yearly energy from a solar PV system based on size, sun hours and system losses.
+category: ecology
+keywords: [solar panel output, solar kwh per day, solar energy calculator, peak sun hours, pv generation]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: kw, label: System size, suffix: kWp, default: 3, min: 0 }
+  - { id: psh, label: Peak sun hours per day, suffix: hours, default: 5, min: 0, max: 12 }
+  - { id: pr, label: Performance ratio (after losses), family: percent, unit: '%', default: 75, min: 0, max: 1 }
+  - { id: d, label: Energy per day, suffix: kWh, min: 0, decimals: 1 }
+  - { id: m, label: Energy per month, suffix: kWh, min: 0, decimals: 0 }
+  - { id: y, label: Energy per year, suffix: kWh, min: 0, decimals: 0 }
+equations:
+  - d = kw * psh * pr
+  - m = d * 30
+  - y = d * 365
+faq:
+  - q: How much energy does a 1 kW solar system produce?
+    a: About 3–5 kWh per day in many places — roughly 1,100–1,800 kWh per year depending on location.
+  - q: What are peak sun hours?
+    a: The equivalent hours of full 1,000 W/m² sunshine per day. Northern Europe has about 2–3; India, Australia and the US Southwest often 5–6.
+  - q: What reduces output?
+    a: Heat, dust, shading, wiring and inverter losses. A performance ratio of 75–85% is typical.
+related: [ecology/solar-system-size, ecology/battery-storage, ecology/electricity-co2]
+---
+
+## How to use this calculator
+
+Enter the **system size** in kWp, your location's **peak sun hours** and a **performance ratio**. Daily, monthly and yearly energy are estimated.
+
+## Formula
+
+<p class="formula">kWh/day = kWp × peak sun hours × performance ratio</p>
+
+## Example
+
+A 3 kWp system with 5 peak sun hours at 75%:
+
+- **11.3 kWh/day**
+- **338 kWh/month**
+- **4,106 kWh/year**

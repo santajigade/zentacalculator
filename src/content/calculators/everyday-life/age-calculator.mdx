@@ -1,0 +1,46 @@
+---
+title: Age Calculator
+description: Calculate exact age in years, months and days from a date of birth — or age on any date.
+category: everyday-life
+keywords: [age calculator, how old am i, date of birth, age in days, age in months, birthday calculator]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: dob, label: Date of birth, family: date, default: -12784 }
+  - { id: on, label: Age on this date, family: date, default: 0 }
+  - { id: y, label: Age in completed years, decimals: 0 }
+  - { id: mo, label: Age in completed months, decimals: 0 }
+  - { id: wk, label: Age in weeks, decimals: 1 }
+  - { id: dd, label: Age in days, decimals: 0 }
+equations:
+  - y = yearsBetween(dob, on)
+  - mo = monthsBetween(dob, on)
+  - dd = on - dob
+  - wk = dd / 7
+faq:
+  - q: How is age calculated?
+    a: Age is the number of full years since the date of birth. The calculator compares the actual calendar dates, so leap years are handled correctly.
+  - q: Can I find my age on a future date?
+    a: Yes. Change "Age on this date" to any past or future date.
+  - q: How are people born on 29 February handled?
+    a: Their age increases on 1 March in non-leap years in this calculator; legal rules vary by country.
+related: [everyday-life/days-between-dates, everyday-life/days-until, other/dog-age]
+---
+
+## How to use this calculator
+
+Pick the **date of birth**. "Age on this date" starts at today — change it to find your age on any other date. You get completed years and months, plus total weeks and days.
+
+## How it works
+
+The calculator counts full calendar months between the two dates and divides by 12 for years. A birthday has to be reached before the year counts — just as people normally count age.
+
+## Example
+
+Born 15 March 1990, on 14 March 2026 → **35 years** (the 36th birthday is the next day).
+
+## Fun facts
+
+- You turn 10,000 days old at about 27 years and 5 months.
+- One billion seconds is about 31 years and 8 months.
+- The number of days is the most precise measure — try it for anniversaries too.

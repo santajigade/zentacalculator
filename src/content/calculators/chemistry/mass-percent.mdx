@@ -1,0 +1,46 @@
+---
+title: Mass Percent (w/w) Concentration Calculator
+description: Calculate mass percent concentration of a solution from solute and solvent mass — or the solute needed for a target percent.
+category: chemistry
+keywords: [mass percent, weight percent, w/w, percent concentration, solution concentration, percent by mass]
+updated: 2026-10-27
+variables:
+  - { id: ms, label: Mass of solute, family: mass, unit: g, default: 25, min: 0 }
+  - { id: mw, label: Mass of solvent, family: mass, unit: g, default: 475, min: 0 }
+  - { id: mt, label: Total solution mass, family: mass, unit: g, min: 0 }
+  - { id: w, label: Mass percent, family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - mt = ms + mw
+  - w = ms / mt
+faq:
+  - q: What is mass percent?
+    a: The mass of solute divided by the total mass of the solution, × 100. A 5% w/w salt solution has 5 g salt per 100 g of solution.
+  - q: How is w/w different from w/v?
+    a: w/v uses grams per 100 mL of solution instead of per 100 g. For dilute water solutions they are close; for dense solutions they differ.
+  - q: How do I make 500 g of a 5% solution?
+    a: Use 25 g of solute and 475 g of solvent. Press × on solute mass, set the percent and total mass.
+related: [chemistry/ppm, chemistry/dilution, chemistry/molarity]
+---
+
+## How to use this calculator
+
+Enter the **solute** and **solvent** masses to get the mass percent. To make a solution of a given strength, enter the percent and total mass — the masses of solute and solvent are calculated.
+
+## Formula
+
+<p class="formula">mass % = m<sub>solute</sub> ÷ (m<sub>solute</sub> + m<sub>solvent</sub>) × 100</p>
+
+## Worked example
+
+25 g of salt dissolved in 475 g of water:
+
+mass % = 25 ÷ 500 = **5%**
+
+## Common uses
+
+- Food labels and recipes (sugar or salt content)
+- Cleaning products and disinfectants
+- Fertiliser and pesticide mixing
+- Lab reagents where weighing is more accurate than measuring volume
+
+For very small concentrations, use [ppm](/chemistry/ppm/) instead.

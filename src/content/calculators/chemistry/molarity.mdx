@@ -1,0 +1,49 @@
+---
+title: Molarity Calculator
+description: Calculate molarity (mol/L), the mass of solute needed, or the solution volume for any substance.
+category: chemistry
+keywords: [molarity calculator, molar concentration, mol/l, how to make a solution, grams needed, solution preparation]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: m, label: Mass of solute, family: mass, unit: g, default: 5.844, min: 0 }
+  - { id: M, label: Molar mass of solute, suffix: g/mol, default: 58.44, min: 0 }
+  - { id: V, label: Solution volume, family: volume, unit: mL, default: 100, min: 0 }
+  - { id: n, label: Amount of solute, suffix: mol, min: 0 }
+  - { id: c, label: Molarity, suffix: mol/L, min: 0 }
+equations:
+  - n = m * 1000 / M
+  - c = n / (1000 * V)
+faq:
+  - q: What is molarity?
+    a: Moles of solute per litre of solution, written M or mol/L.
+  - q: How do I make 1 L of 0.1 M NaCl?
+    a: Weigh 0.1 mol × 58.44 g/mol = 5.844 g of NaCl, dissolve it, then add water up to a final volume of 1 L.
+  - q: Is the volume of solvent or of solution?
+    a: Of the final solution. Dissolve the solute first, then top up to the mark in a volumetric flask.
+related: [chemistry/dilution, chemistry/moles, chemistry/molality]
+---
+
+## How to use this calculator
+
+Enter the **mass of solute**, its **molar mass** and the **solution volume** to get molarity. To prepare a solution, press × on Mass and type the molarity you want — the mass to weigh out is calculated.
+
+## Formula
+
+<p class="formula">c = n ÷ V = m ÷ (M × V)</p>
+
+## Worked example
+
+5.844 g of NaCl (58.44 g/mol) in 100 mL of solution:
+
+- n = 5.844 ÷ 58.44 = 0.1 mol
+- c = 0.1 ÷ 0.100 L = **1.0 mol/L**
+
+## Preparing a solution
+
+1. Calculate the mass needed.
+2. Weigh it accurately and dissolve in less water than the final volume.
+3. Transfer to a volumetric flask and fill to the mark.
+4. Mix thoroughly.
+
+To make a weaker solution from a stock, use the [dilution calculator](/chemistry/dilution/).

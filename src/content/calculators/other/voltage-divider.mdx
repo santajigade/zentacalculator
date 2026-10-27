@@ -1,0 +1,36 @@
+---
+title: Voltage Divider Calculator
+description: Calculate the output voltage of a resistor voltage divider — or the resistor needed for a target output.
+category: other
+keywords: [voltage divider calculator, resistor divider, vout = vin r2/(r1+r2), voltage divider formula, sensor scaling]
+updated: 2026-10-27
+variables:
+  - { id: Vin, label: Input voltage, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: R1, label: R1 (top resistor), family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: R2, label: R2 (bottom resistor), family: resistance, unit: kohm, default: 4.7, min: 0 }
+  - { id: Vout, label: Output voltage, family: voltage, unit: V, min: 0 }
+  - { id: I, label: Divider current, family: current, unit: mA, min: 0 }
+equations:
+  - Vout = Vin * R2 / (R1 + R2)
+  - I = Vin / (R1 + R2)
+faq:
+  - q: What is the voltage divider formula?
+    a: Vout = Vin × R2 ÷ (R1 + R2), where R2 is the resistor between the output and ground.
+  - q: Can I use a divider as a power supply?
+    a: Not for real loads — the output drops when current is drawn. Use a regulator instead. Dividers are for signals and reference voltages.
+  - q: How do I scale 12 V to a 3.3 V microcontroller input?
+    a: Press × on R2, set Vout to 3.3 V and choose R1; the calculator gives R2. Leave some margin below the input's maximum.
+related: [physics/ohms-law, other/led-resistor, physics/resistors-series-parallel]
+---
+
+## How to use this calculator
+
+Enter the **input voltage** and **R1** and **R2**. The output voltage and divider current are calculated. To design a divider, press × on a resistor and enter the target output.
+
+## Formula
+
+<p class="formula">V<sub>out</sub> = V<sub>in</sub> × R₂ ÷ (R₁ + R₂)</p>
+
+## Example
+
+12 V with R1 = 10 kΩ and R2 = 4.7 kΩ: V<sub>out</sub> = 12 × 4.7 ÷ 14.7 = **3.84 V**, current **0.82 mA**.

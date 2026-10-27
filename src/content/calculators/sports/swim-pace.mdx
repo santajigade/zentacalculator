@@ -1,0 +1,33 @@
+---
+title: Swim Pace Calculator (per 100 m)
+description: Calculate swimming pace per 100 m or 100 yd, total time or distance.
+category: sports
+keywords: [swim pace, pace per 100m, swimming calculator, swim time, triathlon swim, css]
+updated: 2026-10-27
+variables:
+  - { id: d, label: Distance, family: length, unit: m, imperialUnit: yd, default: 1500, min: 0 }
+  - { id: t, label: Total time, family: seconds, unit: min, default: 30, min: 0 }
+  - { id: p, label: Pace per 100 m, family: seconds, unit: s, min: 0 }
+equations:
+  - p = t / (d / 100)
+faq:
+  - q: How do I calculate swim pace?
+    a: Divide total time by the distance in hundreds. 30 minutes for 1,500 m is 2:00 per 100 m.
+  - q: What is a good swim pace?
+    a: Many adult fitness swimmers swim 2:00–2:30 per 100 m; competitive age-group triathletes are often under 1:45.
+  - q: What is CSS?
+    a: Critical Swim Speed — a threshold pace estimated from 400 m and 200 m time trials, used to set training intensity.
+related: [sports/pace-calculator, sports/race-time-predictor]
+---
+
+## How to use this calculator
+
+Enter the **distance** and **total time**. The pace per 100 m (or 100 yd if you switch units) is shown in seconds. Or enter a pace to predict your time.
+
+## Example
+
+1,500 m in 30 minutes → **120 s per 100 m** (2:00/100 m).
+
+## Pool lengths
+
+25 m and 50 m pools are common; US pools are often 25 yd. 100 yd ≈ 91.4 m.

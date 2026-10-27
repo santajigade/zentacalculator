@@ -1,0 +1,50 @@
+---
+title: Reading Time Calculator
+description: Estimate how long it takes to read (or speak) a text from its word count and reading speed.
+category: everyday-life
+keywords: [reading time calculator, words per minute, how long to read, speech time, word count to minutes]
+updated: 2026-10-27
+variables:
+  - { id: w, label: Number of words, default: 1500, min: 0 }
+  - id: wpm
+    label: Speed
+    default: 238
+    options:
+      - { label: "Silent reading, average adult (238 wpm)", value: 238 }
+      - { label: Slow / careful reading (150 wpm), value: 150 }
+      - { label: Fast reading (350 wpm), value: 350 }
+      - { label: Speaking / presentation (130 wpm), value: 130 }
+      - { label: Reading aloud (183 wpm), value: 183 }
+  - { id: t, label: Time, suffix: minutes, min: 0, decimals: 1 }
+equations:
+  - t = w / wpm
+faq:
+  - q: What is the average reading speed?
+    a: A 2019 review of studies found adults read non-fiction silently at about 238 words per minute on average.
+  - q: How long is a 1,000-word speech?
+    a: About 7–8 minutes at a natural speaking pace of 130 words per minute.
+  - q: How many words is a page?
+    a: Roughly 250–300 words for a typical double-spaced or book page, 500 for single-spaced.
+related: [everyday-life/typing-speed]
+---
+
+## How to use this calculator
+
+Enter the **word count** and choose a **speed**. The reading or speaking time is shown in minutes. To find how many words fit in a time slot, press × on the word count and enter the minutes.
+
+## Formula
+
+<p class="formula">Time (minutes) = words ÷ words per minute</p>
+
+## Example
+
+A 1,500-word blog post at 238 wpm takes about **6.3 minutes** to read. As a presentation at 130 wpm it would take about **11.5 minutes**.
+
+## Speech planning
+
+| Talk length | Approx. words (130 wpm) |
+|---|---|
+| 3 minutes | 390 |
+| 5 minutes | 650 |
+| 10 minutes | 1,300 |
+| 20 minutes | 2,600 |

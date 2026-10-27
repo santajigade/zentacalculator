@@ -1,0 +1,37 @@
+---
+title: GC Content Calculator
+description: Calculate the GC content (percentage of guanine and cytosine) of a DNA or RNA sequence from base counts.
+category: biology
+keywords: [gc content, gc percentage, dna composition, guanine cytosine, sequence analysis]
+updated: 2026-10-27
+variables:
+  - { id: g, label: G count, default: 120, min: 0 }
+  - { id: c, label: C count, default: 110, min: 0 }
+  - { id: a, label: A count, default: 140, min: 0 }
+  - { id: t, label: T (or U) count, default: 130, min: 0 }
+  - { id: n, label: Total length, suffix: bases, min: 0, decimals: 0 }
+  - { id: gc, label: GC content, family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - n = g + c + a + t
+  - gc = (g + c) / n
+faq:
+  - q: What is GC content?
+    a: The percentage of bases in a sequence that are guanine (G) or cytosine (C).
+  - q: Why does GC content matter?
+    a: G–C pairs have three hydrogen bonds versus two for A–T, so GC-rich DNA is more stable and melts at a higher temperature.
+  - q: What is a typical GC content?
+    a: About 40–42% for the human genome; bacteria range from under 25% to over 70%.
+related: [biology/primer-tm, biology/dna-copy-number]
+---
+
+## How to use this calculator
+
+Enter the counts of **G, C, A and T** (use T for U in RNA). The total length and GC content are calculated.
+
+## Formula
+
+<p class="formula">GC% = (G + C) ÷ (A + T + G + C) × 100</p>
+
+## Example
+
+G = 120, C = 110, A = 140, T = 130 → total 500 bases → GC = **46%**

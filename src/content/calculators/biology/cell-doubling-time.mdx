@@ -1,0 +1,40 @@
+---
+title: Cell Doubling Time Calculator
+description: Calculate population doubling time and growth rate from starting and final cell counts over a time interval.
+category: biology
+keywords: [doubling time, cell doubling time, population doubling, cell culture growth, generation time]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: N0, label: Initial cell count, default: 100000, min: 0 }
+  - { id: N, label: Final cell count, default: 800000, min: 0 }
+  - { id: t, label: Time elapsed, family: time, unit: h, default: 72, min: 0 }
+  - { id: td, label: Doubling time, family: time, unit: h, min: 0 }
+  - { id: nd, label: Number of doublings, min: 0, decimals: 2 }
+equations:
+  - nd = log2(N / N0)
+  - td = t / nd
+faq:
+  - q: How is doubling time calculated?
+    a: Doubling time = time × ln 2 ÷ ln(final ÷ initial), which is the same as time divided by the number of doublings.
+  - q: Should I use cells in log phase?
+    a: Yes. Doubling time is only meaningful during exponential (log-phase) growth.
+  - q: What is a typical doubling time?
+    a: E. coli can double in about 20 minutes in rich media; many mammalian cell lines take 18–36 hours.
+related: [biology/bacterial-growth, biology/specific-growth-rate, biology/hemocytometer]
+---
+
+## How to use this calculator
+
+Enter the **initial** and **final cell counts** and the **time** between them. The number of doublings and the doubling time are calculated.
+
+## Formulas
+
+<p class="formula">doublings = log₂(N ÷ N₀)   T<sub>d</sub> = t ÷ doublings</p>
+
+## Example
+
+Cells grow from 100,000 to 800,000 in 72 hours:
+
+- Doublings = log₂(8) = **3**
+- Doubling time = 72 ÷ 3 = **24 hours**

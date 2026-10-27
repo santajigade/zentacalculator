@@ -1,0 +1,56 @@
+---
+title: Pipe Pressure Drop Calculator (Darcy–Weisbach)
+description: Calculate friction head loss and pressure drop in a pipe from length, diameter, velocity and friction factor.
+category: engineering
+keywords: [pressure drop, head loss, darcy weisbach, friction factor, pipe friction, pipe pressure loss]
+updated: 2026-10-27
+variables:
+  - { id: f, label: Darcy friction factor, default: 0.02, min: 0, help: About 0.015–0.03 for turbulent flow in commercial steel pipe }
+  - { id: L, label: Pipe length, family: length, unit: m, imperialUnit: ft, default: 100, min: 0 }
+  - { id: D, label: Pipe inner diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: v, label: Flow velocity, family: velocity, unit: ms, imperialUnit: fts, default: 1.77, min: 0 }
+  - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
+  - { id: hf, label: Head loss, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: dP, label: Pressure drop, family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+equations:
+  - hf = f * (L / D) * v^2 / (2 * g0)
+  - dP = rho * g0 * hf
+chart: { x: v, y: dP, from: 0, to: 4 }
+faq:
+  - q: What is the Darcy–Weisbach equation?
+    a: It gives the friction loss in a full pipe — head loss = f × (L/D) × v²/2g. It works for any liquid and any flow regime, as long as the right friction factor is used.
+  - q: How do I find the friction factor?
+    a: For laminar flow (Re below 2,300), f = 64/Re. For turbulent flow, use the Moody chart or the Colebrook equation with the pipe's roughness. 0.015–0.03 covers most commercial steel pipes in turbulent water flow.
+  - q: Does this include losses from valves and fittings?
+    a: No — only straight pipe. Add fittings as an equivalent length of pipe, or use their K factors separately.
+related: [engineering/pump-power, engineering/reynolds-number, engineering/pipe-flow-velocity]
+---
+
+## How to use this calculator
+
+Enter the **friction factor**, **pipe length**, **inner diameter**, **velocity** and **density**. You get the friction head loss and pressure drop. Get the velocity from flow using the [pipe flow velocity calculator](/engineering/pipe-flow-velocity/).
+
+## The formula
+
+<p class="formula">h<sub>f</sub> = f × (L ÷ D) × v² ÷ 2g   ΔP = ρ g h<sub>f</sub></p>
+
+## Worked example
+
+100 m of 100 mm pipe, water at 1.77 m/s, f = 0.02:
+
+- h<sub>f</sub> = 0.02 × (100 ÷ 0.1) × 1.77² ÷ (2 × 9.81) = **3.19 m**
+- ΔP = 998 × 9.81 × 3.19 = 31,270 Pa = **0.313 bar**
+
+## Velocity matters most
+
+Pressure drop rises with the **square** of velocity. Doubling the flow in the same pipe gives four times the loss — the chart shows the curve. Going up one pipe size usually cuts losses dramatically.
+
+## Typical friction factors (turbulent water)
+
+| Pipe | Typical f |
+|---|---|
+| Smooth plastic / copper | 0.012 – 0.018 |
+| New commercial steel | 0.015 – 0.022 |
+| Old or corroded steel | 0.025 – 0.04 |
+
+For laminar flow, f = 64 ÷ Re — check the [Reynolds number](/engineering/reynolds-number/) first.

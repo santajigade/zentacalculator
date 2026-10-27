@@ -1,0 +1,68 @@
+---
+title: Hydrostatic Pressure & Tank Level Calculator
+description: Convert liquid level to hydrostatic pressure and pressure to level for any liquid density — ideal for level transmitter ranging.
+category: engineering
+keywords: [hydrostatic pressure, tank level, level transmitter, pressure to level, rho g h, head pressure, mH2O, differential pressure level]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: h, label: Liquid level (height), family: length, unit: m, imperialUnit: ft, default: 5, min: 0 }
+  - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
+  - { id: P, label: Hydrostatic pressure, family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+equations:
+  - P = rho * g0 * h
+chart: { x: h, y: P, from: 0, to: 20 }
+faq:
+  - q: How do I calculate pressure at the bottom of a tank?
+    a: Multiply density × gravity × height. Water at 5 m depth gives 1000 × 9.80665 × 5 = 49,033 Pa, or about 0.49 bar.
+  - q: How do I convert pressure to tank level?
+    a: Level = pressure ÷ (density × g). Press × on Liquid level and type the pressure reading. Always use the actual liquid density.
+  - q: Does the tank shape matter?
+    a: No. Hydrostatic pressure depends only on liquid height and density, not on the tank's shape or volume.
+  - q: Is this gauge or absolute pressure?
+    a: Gauge pressure, as read by a vented level transmitter. Add atmospheric pressure (about 1.013 bar) for absolute.
+related: [engineering/4-20ma-scaling, engineering/pipe-flow-velocity]
+---
+
+## How to use this calculator
+
+Enter the **liquid height** and **density** to get the hydrostatic pressure at the bottom. To set up a level transmitter, enter the maximum level to get its upper range value. To read level from a pressure gauge, press × on the level and type the pressure.
+
+## The formula
+
+<p class="formula">P = ρ × g × h</p>
+
+- **ρ** — liquid density (kg/m³)
+- **g** — standard gravity, 9.80665 m/s²
+- **h** — height of liquid above the measuring point (m)
+
+## Worked examples
+
+**Water tank, 5 m level**
+
+P = 1000 × 9.80665 × 5 = 49,033 Pa = **0.490 bar** (7.11 psi)
+
+**Diesel tank (ρ ≈ 832 kg/m³), 3 m level**
+
+P = 832 × 9.80665 × 3 = 24,477 Pa = **0.245 bar**
+
+The same pressure would show only 2.5 m on a transmitter calibrated for water — always range for the real density.
+
+## Typical densities at about 20 °C
+
+| Liquid | Density (kg/m³) |
+|---|---|
+| Water | 998 |
+| Sea water | 1,025 |
+| Diesel | 820 – 845 |
+| Petrol | 720 – 775 |
+| Ethylene glycol | 1,113 |
+| Sulphuric acid (98%) | 1,830 |
+
+## Ranging a level transmitter
+
+1. Calculate the pressure at minimum level (often 0) and maximum level.
+2. If the transmitter is mounted below the tank nozzle, add the liquid head between the nozzle and the transmitter (zero elevation).
+3. Enter these as the 4 mA and 20 mA values — then use the [4–20 mA scaling calculator](/engineering/4-20ma-scaling/) to check readings.
+
+A useful rule: **1 m of water ≈ 0.098 bar ≈ 1.42 psi ≈ 9.81 kPa**.

@@ -1,0 +1,51 @@
+---
+title: ROI Calculator (Return on Investment)
+description: Calculate return on investment (ROI), gain and annualized return from the amount invested and the final value.
+category: finance
+keywords: [roi calculator, return on investment, roi formula, investment return, annualized roi, profit percentage]
+updated: 2026-10-27
+variables:
+  - { id: I, label: Amount invested, family: currency, default: 10000, min: 0, decimals: 2 }
+  - { id: F, label: Final value (returned), family: currency, default: 15000, min: 0, decimals: 2 }
+  - { id: t, label: Holding period, family: time, unit: yr, default: 3, min: 0.0001 }
+  - { id: G, label: Net gain, family: currency, decimals: 2 }
+  - { id: roi, label: Total ROI, family: percent, unit: '%' }
+  - { id: ann, label: Annualized ROI, family: percent, unit: '%' }
+equations:
+  - G = F - I
+  - roi = G / I
+  - F = I * (1 + ann)^t
+faq:
+  - q: What is the ROI formula?
+    a: ROI = (final value − amount invested) ÷ amount invested × 100. Turning 10,000 into 15,000 is a 50% ROI.
+  - q: Why is annualized ROI important?
+    a: Total ROI ignores time. 50% over 3 years (14.5% a year) is very different from 50% over 10 years (4.1% a year).
+  - q: Should I include costs?
+    a: Yes. Add fees, taxes and other costs to the amount invested, or subtract them from the final value, to get a true ROI.
+related: [finance/cagr, finance/break-even, math/percentage-change]
+---
+
+## How to use this calculator
+
+Enter the **amount invested**, the **final value** and the **holding period**. You get the net gain, total ROI and annualized ROI. Work backwards to see the final value needed for a target return.
+
+## Formulas
+
+<p class="formula">ROI = (F − I) ÷ I<br/>Annualized ROI = (F ÷ I)<sup>1/t</sup> − 1</p>
+
+## Worked example
+
+10,000 invested, worth 15,000 after 3 years:
+
+- Net gain = **5,000**
+- Total ROI = 5,000 ÷ 10,000 = **50%**
+- Annualized ROI = 1.5<sup>1/3</sup> − 1 = **14.47% per year**
+
+## ROI for business decisions
+
+ROI is also used to compare projects. A marketing campaign costing 2,000 that brings in 2,600 of extra profit has an ROI of 30%. Compare projects by **annualized** ROI when they last different lengths of time.
+
+## Limits
+
+- ROI ignores risk — a high ROI may come with high chance of loss.
+- It ignores the timing of cash flows within the period. For projects with many cash flows, use NPV or IRR.

@@ -1,0 +1,50 @@
+---
+title: Waist-to-Hip Ratio Calculator
+description: Calculate your waist-to-hip ratio (WHR) and compare it with WHO risk thresholds for men and women.
+category: health
+keywords: [waist to hip ratio, whr, body shape, apple pear, abdominal obesity, who]
+updated: 2026-10-27
+variables:
+  - { id: w, label: Waist circumference, family: length, unit: cm, imperialUnit: in, default: 85, min: 0 }
+  - { id: hp, label: Hip circumference, family: length, unit: cm, imperialUnit: in, default: 95, min: 0.1 }
+  - { id: r, label: Waist-to-hip ratio, min: 0, decimals: 3 }
+equations:
+  - r = w / hp
+faq:
+  - q: What is a healthy waist-to-hip ratio?
+    a: The WHO links higher health risk to a ratio above 0.90 for men and above 0.85 for women.
+  - q: What do "apple" and "pear" shapes mean?
+    a: Apple-shaped bodies carry more fat around the waist (higher WHR); pear-shaped bodies carry more on the hips. Fat around the waist is more strongly linked to heart disease.
+  - q: How do I measure my hips?
+    a: Around the widest part of your buttocks, keeping the tape level.
+related: [health/waist-to-height, health/body-fat, health/bmi]
+---
+
+## How to use this calculator
+
+Enter your **waist** and **hip** measurements. The ratio appears instantly — compare it with the table below for your sex.
+
+## The formula
+
+<p class="formula">WHR = waist ÷ hip</p>
+
+## Worked example
+
+Waist 85 cm, hips 95 cm: WHR = 85 ÷ 95 = **0.895**. For a man this is just under the WHO threshold of 0.90; for a woman it would be above 0.85.
+
+## WHO thresholds
+
+| | Low risk | Increased risk |
+|---|---|---|
+| Men | ≤ 0.90 | > 0.90 |
+| Women | ≤ 0.85 | > 0.85 |
+
+Source: World Health Organization, *Waist circumference and waist–hip ratio* (2008).
+
+## How to measure
+
+- **Waist:** midway between the lowest rib and the top of the hip bone, after a normal breath out.
+- **Hips:** around the widest part of the buttocks.
+- Stand relaxed with feet together; keep the tape snug but not compressing the skin.
+
+This is a screening tool, not a diagnosis.

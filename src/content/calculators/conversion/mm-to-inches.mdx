@@ -1,0 +1,68 @@
+---
+title: MM to Inches Converter
+description: Convert millimetres to inches (decimal) and inches to millimetres for engineering, tools and pipe sizes.
+category: conversion
+keywords: [mm to inches, inches to mm, millimeters to inches, mm to in, drill size, bolt size]
+updated: 2026-10-27
+variables:
+  - { id: u0, label: Millimetres, family: length, unit: mm, default: 25, min: 0 }
+  - { id: u1, label: Inches, family: length, unit: in, min: 0 }
+  - { id: u2, label: Centimetres, family: length, unit: cm, min: 0 }
+  - { id: u3, label: Micrometres (µm), family: length, unit: um, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+faq:
+  - q: How many inches is 1 mm?
+    a: "0.03937 inches."
+  - q: How many mm is 1 inch?
+    a: "Exactly 25.4 mm."
+  - q: What is 3/8 inch in mm?
+    a: "3/8 = 0.375 in × 25.4 = 9.525 mm."
+related: [conversion/cm-to-inches, math/fraction-to-decimal]
+---
+
+## How to use this converter
+
+Type a value in **millimetres** or **inches** and the others update instantly. Useful for drawings, drill bits, fasteners and machining tolerances.
+
+## Formula
+
+<p class="formula">inches = mm ÷ 25.4   mm = inches × 25.4</p>
+
+**Example:** 25 mm = 25 ÷ 25.4 = **0.984 in**. A 1/2″ bolt = 0.5 × 25.4 = **12.7 mm**.
+
+## Conversion table
+
+| Millimetres | Inches |
+|---|---|
+| 1 mm | 0.0393701 in |
+| 3 mm | 0.11811 in |
+| 5 mm | 0.19685 in |
+| 6 mm | 0.23622 in |
+| 8 mm | 0.314961 in |
+| 10 mm | 0.393701 in |
+| 12 mm | 0.472441 in |
+| 16 mm | 0.629921 in |
+| 20 mm | 0.787402 in |
+| 25 mm | 0.984252 in |
+| 50 mm | 1.9685 in |
+
+| Inches | Millimetres |
+|---|---|
+| 0.0625 in | 1.5875 mm |
+| 0.125 in | 3.175 mm |
+| 0.25 in | 6.35 mm |
+| 0.375 in | 9.525 mm |
+| 0.5 in | 12.7 mm |
+| 0.75 in | 19.05 mm |
+| 1 in | 25.4 mm |
+
+## Thousandths of an inch (thou / mil)
+
+Machinists often work in thousandths: 0.001″ = 0.0254 mm = 25.4 µm. A human hair is about 0.003″ (70–80 µm).
+
+## Pipe sizes are nominal
+
+A ½″ pipe does not measure 12.7 mm outside — nominal pipe sizes are trade names. A ½″ NPS steel pipe has an outside diameter of 21.3 mm. Always check the pipe standard.

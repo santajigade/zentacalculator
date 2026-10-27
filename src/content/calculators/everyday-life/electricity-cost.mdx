@@ -1,0 +1,56 @@
+---
+title: Electricity Cost Calculator (Appliance Running Cost)
+description: Calculate how much an appliance costs to run per day, month and year from its wattage, hours of use and electricity rate.
+category: everyday-life
+keywords: [electricity cost calculator, appliance running cost, kwh cost, power consumption, energy bill, watts to kwh]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Appliance power, family: power, unit: W, default: 1500, min: 0 }
+  - { id: h, label: Hours used per day, suffix: hours, default: 3, min: 0, max: 24 }
+  - { id: r, label: Electricity price per kWh, family: currency, default: 0.15, min: 0, decimals: 3 }
+  - { id: en, label: Energy per day, suffix: kWh, min: 0 }
+  - { id: cd, label: Cost per day, family: currency, min: 0, decimals: 2 }
+  - { id: cm, label: Cost per month (30 days), family: currency, min: 0, decimals: 2 }
+  - { id: cy, label: Cost per year, family: currency, min: 0, decimals: 2 }
+equations:
+  - en = P * h / 1000
+  - cd = en * r
+  - cm = cd * 30
+  - cy = cd * 365
+faq:
+  - q: How do I calculate electricity cost?
+    a: kWh = watts × hours ÷ 1,000. Cost = kWh × price per kWh.
+  - q: Where do I find the wattage?
+    a: On the appliance label or in the manual. For fridges and other cycling appliances, use the yearly kWh figure from the energy label instead.
+  - q: What is a unit of electricity?
+    a: In most countries one "unit" on the bill is 1 kWh.
+related: [everyday-life/fuel-cost, conversion/energy-converter, conversion/power-converter]
+---
+
+## How to use this calculator
+
+Enter the appliance's **power** in watts (or kW), how many **hours per day** you use it, and your **electricity price per kWh**. The daily, monthly and yearly running costs are calculated.
+
+## Formula
+
+<p class="formula">kWh/day = watts × hours ÷ 1000   Cost = kWh × price</p>
+
+## Example
+
+A 1,500 W heater used 3 hours a day at 0.15 per kWh:
+
+- Energy = **4.5 kWh/day**
+- Cost = **0.675/day** — about **20.25/month** and **246.38/year**
+
+## Typical appliance power
+
+| Appliance | Typical power |
+|---|---|
+| LED bulb | 8–12 W |
+| Ceiling fan | 50–75 W |
+| Laptop | 45–65 W |
+| TV (LED) | 60–150 W |
+| Air conditioner (1.5 ton) | 1,200–1,800 W |
+| Electric kettle | 1,500–2,200 W |
+| Water heater (geyser) | 2,000–3,000 W |

@@ -1,0 +1,50 @@
+---
+title: Tip Calculator (Split the Bill)
+description: Calculate the tip, total bill and amount per person when splitting a restaurant bill.
+category: everyday-life
+keywords: [tip calculator, split bill, gratuity, restaurant tip, how much to tip, per person]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: b, label: Bill amount, family: currency, default: 85, min: 0, decimals: 2 }
+  - { id: tp, label: Tip, family: percent, unit: '%', default: 15, min: 0 }
+  - { id: n, label: Number of people, default: 4, min: 1 }
+  - { id: t, label: Tip amount, family: currency, min: 0, decimals: 2 }
+  - { id: tot, label: Total including tip, family: currency, min: 0, decimals: 2 }
+  - { id: pp, label: Each person pays, family: currency, min: 0, decimals: 2 }
+equations:
+  - t = b * tp
+  - tot = b + t
+  - pp = tot / n
+faq:
+  - q: How much should I tip?
+    a: Customs vary. In the US 15–20% is usual at restaurants; in many European countries rounding up or about 5–10% is common; in some countries service is included.
+  - q: Should I tip on the amount before or after tax?
+    a: Traditionally on the pre-tax amount, though many people tip on the total for simplicity.
+  - q: How do I quickly work out 15%?
+    a: Take 10% (move the decimal point) and add half of it again.
+related: [everyday-life/unit-price, math/percentage, finance/sales-tax-vat]
+---
+
+## How to use this calculator
+
+Enter the **bill**, the **tip percentage** and the **number of people**. The tip, total and amount per person are calculated.
+
+## Example
+
+A bill of 85 with a 15% tip, split 4 ways:
+
+- Tip = **12.75**
+- Total = **97.75**
+- Each person pays **24.44**
+
+## Quick tip table (bill of 50)
+
+| Tip | Amount |
+|---|---|
+| 10% | 5.00 |
+| 15% | 7.50 |
+| 18% | 9.00 |
+| 20% | 10.00 |
+
+Check the bill first — some restaurants already add a service charge.

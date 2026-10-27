@@ -1,0 +1,41 @@
+---
+title: Daily Habit Cost Calculator
+description: See how much a daily habit — coffee, snacks, cigarettes, subscriptions — costs per month, year and decade.
+category: everyday-life
+keywords: [habit cost, latte factor, daily coffee cost, how much do i spend, savings, small expenses]
+updated: 2026-10-27
+variables:
+  - { id: c, label: Cost each time, family: currency, default: 4.5, min: 0, decimals: 2 }
+  - { id: f, label: Times per week, default: 5, min: 0 }
+  - { id: m, label: Per month, family: currency, min: 0, decimals: 2 }
+  - { id: y, label: Per year, family: currency, min: 0, decimals: 2 }
+  - { id: dec, label: Over 10 years, family: currency, min: 0, decimals: 2 }
+equations:
+  - y = c * f * 52
+  - m = y / 12
+  - dec = y * 10
+faq:
+  - q: Why do small daily costs add up?
+    a: Something bought 5 days a week happens about 260 times a year.
+  - q: What if I invested the money instead?
+    a: Put the monthly amount into the SIP calculator to see how it could grow.
+  - q: Does this include price rises?
+    a: No. With inflation, the 10-year total would be higher.
+related: [everyday-life/cost-per-use, finance/sip, finance/savings-goal]
+---
+
+## How to use this calculator
+
+Enter the **cost** of the habit and how many **times per week** you do it. The monthly, yearly and ten-year totals are calculated.
+
+## Example
+
+A 4.50 coffee 5 times a week:
+
+- **97.50 per month**
+- **1,170 per year**
+- **11,700 over 10 years**
+
+## Putting it to work
+
+Invested monthly at 8% a year instead, 97.50 a month grows to roughly 17,800 over 10 years. Try different amounts in the [SIP calculator](/finance/sip/).

@@ -1,0 +1,35 @@
+---
+title: Turkey Thawing Time Calculator
+description: Calculate how long to thaw a frozen turkey in the fridge or in cold water based on its weight.
+category: food
+keywords: [turkey thawing time, how long to thaw turkey, defrost turkey, thaw in fridge, cold water thawing]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Turkey weight, family: mass, unit: kg, imperialUnit: lb, default: 7, min: 0 }
+  - { id: fr, label: In the fridge, family: time, unit: d, min: 0 }
+  - { id: cw, label: In cold water, family: time, unit: h, min: 0 }
+equations:
+  - fr = m / 0.45359237 / 4 / 365.25
+  - cw = m / 0.45359237 * 0.5 / 8766
+faq:
+  - q: How long does a turkey take to thaw in the fridge?
+    a: About 24 hours for every 4–5 lb (1.8–2.3 kg).
+  - q: How long in cold water?
+    a: About 30 minutes per lb (about 1 hour per kg). Change the water every 30 minutes and cook immediately after.
+  - q: Can I thaw a turkey on the counter?
+    a: No. The outside can reach unsafe temperatures while the inside is still frozen.
+related: [food/turkey-cooking-time]
+---
+
+## How to use this calculator
+
+Enter the turkey's **weight**. Thawing times for the fridge and for cold water are calculated.
+
+## Rules used (US Department of Agriculture guidance)
+
+- **Fridge (4 °C / 40 °F or below):** about 24 hours per 4 lb (1.8 kg).
+- **Cold water:** about 30 minutes per lb, in a leak-proof bag, changing the water every 30 minutes.
+
+## Example
+
+A 7 kg (15.4 lb) turkey needs about **3.9 days** in the fridge or about **7.7 hours** in cold water.

@@ -1,0 +1,41 @@
+---
+title: Basketball Shooting Calculator (FG%, eFG%, TS%)
+description: Calculate field goal percentage, effective field goal percentage and true shooting percentage.
+category: sports
+keywords: [effective field goal percentage, efg, true shooting, ts%, fg%, basketball stats, shooting efficiency]
+updated: 2026-10-27
+variables:
+  - { id: fg, label: Field goals made (incl. 3-pointers), default: 8, min: 0 }
+  - { id: fga, label: Field goal attempts, default: 17, min: 1 }
+  - { id: tp, label: 3-pointers made, default: 3, min: 0 }
+  - { id: ft, label: Free throws made, default: 5, min: 0 }
+  - { id: fta, label: Free throw attempts, default: 6, min: 0 }
+  - { id: pts, label: Points, min: 0, decimals: 0 }
+  - { id: fgp, label: Field goal %, family: percent, unit: '%', min: 0 }
+  - { id: efg, label: Effective FG %, family: percent, unit: '%', min: 0 }
+  - { id: ts, label: True shooting %, family: percent, unit: '%', min: 0 }
+equations:
+  - pts = 2 * fg + tp + ft
+  - fgp = fg / fga
+  - efg = (fg + 0.5 * tp) / fga
+  - ts = pts / (2 * (fga + 0.44 * fta))
+faq:
+  - q: What is effective field goal percentage?
+    a: FG% adjusted for the extra value of three-pointers — (FG + 0.5 × 3PM) ÷ FGA.
+  - q: What is true shooting percentage?
+    a: Points per shooting possession, including free throws — PTS ÷ (2 × (FGA + 0.44 × FTA)).
+  - q: What is a good TS%?
+    a: Around 57–58% is roughly NBA average in recent seasons; above 62% is excellent.
+related: [sports/win-percentage]
+---
+
+## How to use this calculator
+
+Enter **field goals made and attempted**, **three-pointers made** and **free throws made and attempted**. Points and the three shooting percentages are calculated.
+
+## Example
+
+8/17 FG (3 threes), 5/6 FT:
+
+- Points = **24**
+- FG% = **47.1%**, eFG% = **55.9%**, TS% = **61.1%**

@@ -1,0 +1,54 @@
+---
+title: Wavelength & Frequency Calculator
+description: Convert between wavelength, frequency and wave speed for light, radio and sound (v = fλ).
+category: physics
+keywords: [wavelength calculator, frequency to wavelength, wave speed, v = f lambda, speed of light, radio wavelength]
+updated: 2026-10-27
+variables:
+  - id: c
+    label: Wave type / medium
+    default: 299792458
+    options:
+      - { label: "Light or radio in vacuum (299,792,458 m/s)", value: 299792458 }
+      - { label: "Sound in air, 20 °C (343 m/s)", value: 343 }
+      - { label: "Sound in water (1,481 m/s)", value: 1481 }
+      - { label: "Sound in steel (5,960 m/s)", value: 5960 }
+  - { id: f, label: Frequency, suffix: Hz, default: 100000000, min: 0 }
+  - { id: lam, label: Wavelength, family: length, unit: m, imperialUnit: ft, min: 0 }
+equations:
+  - c = f * lam
+faq:
+  - q: How do I convert frequency to wavelength?
+    a: Wavelength = wave speed ÷ frequency. For radio, divide 300,000,000 by the frequency in Hz to get metres.
+  - q: What is the wavelength of 2.4 GHz Wi-Fi?
+    a: About 12.5 cm.
+  - q: What is the wavelength of middle A (440 Hz) in air?
+    a: About 78 cm at 20 °C.
+related: [physics/speed-distance-time]
+---
+
+## How to use this calculator
+
+Choose the **type of wave**, then enter the **frequency** (in Hz) or the **wavelength**. The other is calculated.
+
+## The formula
+
+<p class="formula">v = f × λ</p>
+
+## Worked examples
+
+- **FM radio at 100 MHz:** λ = 299,792,458 ÷ 100,000,000 = **3.00 m**
+- **Wi-Fi at 2.4 GHz:** λ = **12.5 cm**
+- **Sound at 440 Hz in air:** λ = 343 ÷ 440 = **78 cm**
+
+## The electromagnetic spectrum
+
+| Band | Wavelength |
+|---|---|
+| AM radio | ~200–600 m |
+| FM radio | ~3 m |
+| Microwaves / Wi-Fi | 1 mm – 30 cm |
+| Visible light | 380–750 nm |
+| X-rays | 0.01–10 nm |
+
+Tip: for MHz, enter the value × 1,000,000 Hz (100 MHz = 100000000).

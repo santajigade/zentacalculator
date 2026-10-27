@@ -1,0 +1,36 @@
+---
+title: Rectangular Tank Volume Calculator
+description: Calculate the capacity of a rectangular or square water tank, sump or overhead tank in litres, m³ and gallons.
+category: construction
+keywords: [tank volume calculator, rectangular tank capacity, water tank litres, sump capacity, overhead tank size]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Inside length, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
+  - { id: W, label: Inside width, family: length, unit: m, imperialUnit: ft, default: 1.5, min: 0 }
+  - { id: H, label: Water depth (or inside height), family: length, unit: m, imperialUnit: ft, default: 1.2, min: 0 }
+  - { id: V, label: Capacity, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: M, label: Weight of water, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+equations:
+  - V = L * W * H
+  - M = V * 1000
+faq:
+  - q: How do I calculate tank capacity in litres?
+    a: Multiply length × width × height in metres to get m³, then multiply by 1,000.
+  - q: How much does the water weigh?
+    a: About 1 kg per litre — a 3,600-litre tank holds about 3.6 tonnes, so the base or roof slab must be designed for it.
+  - q: How do I size a tank for a household?
+    a: Estimate daily use (often 100–150 litres per person) and multiply by the days of storage you want.
+related: [engineering/horizontal-tank-volume, math/cylinder-volume, conversion/volume-converter]
+---
+
+## How to use this calculator
+
+Enter the tank's **inside length**, **width** and **water depth**. The capacity and the weight of the water are calculated. Find the water depth for a given volume by typing the volume instead.
+
+## Example
+
+A 2 × 1.5 m tank filled to 1.2 m:
+
+V = 2 × 1.5 × 1.2 = 3.6 m³ = **3,600 litres** (951 US gal), weighing about **3.6 tonnes**.
+
+For round tanks use the [cylinder calculator](/math/cylinder-volume/), and for horizontal cylindrical tanks the [horizontal tank calculator](/engineering/horizontal-tank-volume/).

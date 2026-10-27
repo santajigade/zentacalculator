@@ -1,0 +1,58 @@
+---
+title: Inflation Calculator
+description: See what today's money will cost in the future, or what a future amount is worth today, at any inflation rate.
+category: finance
+keywords: [inflation calculator, future value of money, purchasing power, cost of living, real value, inflation rate]
+updated: 2026-10-27
+variables:
+  - { id: C, label: Amount today, family: currency, default: 100, min: 0, decimals: 2 }
+  - { id: inf, label: Annual inflation rate, family: percent, unit: '%', default: 6, min: -0.5, max: 2 }
+  - { id: t, label: Years, family: time, unit: yr, default: 10, min: 0 }
+  - { id: F, label: Future cost of the same things, family: currency, min: 0, decimals: 2 }
+  - { id: pp, label: Future purchasing power of today's amount, family: currency, min: 0, decimals: 2 }
+equations:
+  - F = C * (1 + inf)^t
+  - pp = C / (1 + inf)^t
+chart: { x: t, y: F, from: 0, to: 30 }
+faq:
+  - q: How is future cost calculated with inflation?
+    a: Future cost = today's cost × (1 + inflation)^years. At 6% inflation, 100 today costs 179.08 in 10 years.
+  - q: What is purchasing power?
+    a: What your money can actually buy. At 6% inflation, 100 kept as cash for 10 years buys only what 55.84 buys today.
+  - q: What inflation rate should I use?
+    a: Long-run averages are about 2–3% in many developed economies and 4–6% in many developing ones. Use your country's recent CPI figures for a closer estimate.
+related: [finance/sip, finance/retirement-corpus, finance/present-value]
+---
+
+## How to use this calculator
+
+Enter an **amount**, the **inflation rate** and the **number of years**. You get two views:
+
+- **Future cost** — what the same basket of goods will cost.
+- **Purchasing power** — what today's amount will be worth in today's terms.
+
+## Formulas
+
+<p class="formula">Future cost = C × (1 + inflation)<sup>t</sup><br/>Purchasing power = C ÷ (1 + inflation)<sup>t</sup></p>
+
+## Worked example
+
+Something costing 100 today, with 6% inflation for 10 years:
+
+- Future cost = 100 × 1.06¹⁰ = **179.08**
+- 100 in cash will buy what **55.84** buys today
+
+## Inflation over 10 years
+
+| Inflation | Future cost of 100 | Value of 100 cash |
+|---|---|---|
+| 2% | 121.90 | 82.03 |
+| 4% | 148.02 | 67.56 |
+| 6% | 179.08 | 55.84 |
+| 8% | 215.89 | 46.32 |
+
+## Why it matters
+
+- **Savings** must earn more than inflation to grow in real terms.
+- **Retirement plans** must allow for much higher expenses in the future — see the [retirement corpus calculator](/finance/retirement-corpus/).
+- **Salary increases** below inflation are a pay cut in real terms.

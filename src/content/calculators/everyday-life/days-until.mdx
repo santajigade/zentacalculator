@@ -1,0 +1,43 @@
+---
+title: Days Until Calculator (Countdown)
+description: Count down the days, weeks and working days until any date — a birthday, holiday, exam or event.
+category: everyday-life
+keywords: [days until, countdown, how many days until, days left, days to go, event countdown]
+updated: 2026-10-27
+variables:
+  - { id: t, label: Today, family: date, default: 0 }
+  - { id: ev, label: Event date, family: date, default: 60 }
+  - { id: dd, label: Days to go, decimals: 0 }
+  - { id: wk, label: Weeks to go, decimals: 1 }
+  - { id: wd, label: Working days to go, decimals: 0 }
+  - { id: hh, label: Hours to go (approx.), decimals: 0 }
+equations:
+  - dd = ev - t
+  - wk = dd / 7
+  - wd = workdays(t, ev)
+  - hh = dd * 24
+faq:
+  - q: How many days until my event?
+    a: Choose the event date — the number of days from today is shown instantly.
+  - q: Why might the hours be slightly off?
+    a: Hours are counted from midnight today, not from the current time.
+  - q: Can I share the countdown?
+    a: Yes. Use Share link — the event date is saved in the link.
+related: [everyday-life/days-between-dates, everyday-life/age-calculator]
+---
+
+## How to use this calculator
+
+Set the **event date**. The days, weeks, working days and approximate hours remaining are shown. Share the link with friends — the date is saved in it.
+
+## Ideas
+
+- Birthdays and anniversaries
+- Exams and deadlines
+- Holidays and festivals
+- Weddings and trips
+- Retirement day
+
+## Planning tip
+
+Working days to go is useful for project deadlines: a "2-month" deadline might leave only about 43 working days.

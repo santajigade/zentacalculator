@@ -1,0 +1,45 @@
+---
+title: Primer Melting Temperature (Tm) Calculator
+description: Estimate a DNA primer's melting temperature from its base composition using the Wallace rule, and a suggested annealing temperature.
+category: biology
+keywords: [primer tm, melting temperature, wallace rule, annealing temperature, pcr primer, oligo tm]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Number of A, default: 5, min: 0 }
+  - { id: t, label: Number of T, default: 5, min: 0 }
+  - { id: g, label: Number of G, default: 5, min: 0 }
+  - { id: c, label: Number of C, default: 5, min: 0 }
+  - { id: tm, label: Melting temperature (Wallace rule), suffix: °C, decimals: 1 }
+  - { id: ta, label: Suggested annealing temperature, suffix: °C, decimals: 1 }
+  - { id: gc, label: GC content, family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - tm = 2 * (a + t) + 4 * (g + c)
+  - ta = tm - 5
+  - gc = (g + c) / (a + t + g + c)
+faq:
+  - q: What is the Wallace rule?
+    a: Tm = 2 °C × (A + T) + 4 °C × (G + C). It is a quick estimate for short primers (about 14–20 bases).
+  - q: What annealing temperature should I use?
+    a: Start about 3–5 °C below the lower primer Tm, then optimise with a gradient PCR.
+  - q: What is an ideal primer?
+    a: Typically 18–25 bases, 40–60% GC, Tm of 55–65 °C, and primer pairs within about 5 °C of each other.
+related: [biology/gc-content, biology/pcr-amplification]
+---
+
+## How to use this calculator
+
+Count the **A, T, G and C** bases in your primer and enter them. The melting temperature, a suggested annealing temperature and GC content are calculated.
+
+## Formula (Wallace rule)
+
+<p class="formula">Tm = 2(A + T) + 4(G + C)</p>
+
+## Example
+
+A 20-mer with 5 of each base:
+
+- Tm = 2 × 10 + 4 × 10 = **60 °C**
+- Annealing ≈ **55 °C**
+- GC = **50%**
+
+For longer primers or exact work, nearest-neighbour methods that account for salt concentration are more accurate.

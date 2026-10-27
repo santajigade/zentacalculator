@@ -1,0 +1,37 @@
+---
+title: Population Density Calculator
+description: Calculate population density (individuals per km², hectare or square mile) from count and area.
+category: ecology
+keywords: [population density, people per square km, density calculator, animals per hectare, density per area]
+updated: 2026-10-27
+variables:
+  - { id: n, label: Population (count), default: 1250000, min: 0 }
+  - { id: A, label: Area, family: area, unit: km2, imperialUnit: acre, default: 450, min: 0 }
+  - { id: dk, label: Density per km², min: 0, decimals: 1 }
+  - { id: dm, label: Density per square mile, min: 0, decimals: 1 }
+  - { id: dh, label: Density per hectare, min: 0, decimals: 2 }
+equations:
+  - dk = n / A * 1000000
+  - dm = dk * 2.589988
+  - dh = dk / 100
+faq:
+  - q: How is population density calculated?
+    a: Divide the number of individuals by the area they occupy.
+  - q: How do I convert per km² to per square mile?
+    a: Multiply by 2.59.
+  - q: Is density the same everywhere in an area?
+    a: No — it is an average. Cities and habitats are often much denser in some places than others.
+related: [ecology/mark-recapture, conversion/area-converter]
+---
+
+## How to use this calculator
+
+Enter the **population** and the **area**. Density per km², per square mile and per hectare are calculated.
+
+## Example
+
+1,250,000 people in 450 km²:
+
+- **2,778 per km²**
+- **7,194 per square mile**
+- **27.8 per hectare**

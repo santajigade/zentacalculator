@@ -1,0 +1,37 @@
+---
+title: Solar Battery Storage Size Calculator
+description: Calculate the battery capacity needed for backup or off-grid solar from daily load, autonomy days and depth of discharge.
+category: ecology
+keywords: [battery size calculator, solar battery storage, kwh battery needed, off grid battery, depth of discharge, inverter battery]
+updated: 2026-10-27
+variables:
+  - { id: load, label: Daily energy to cover, suffix: kWh, default: 6, min: 0 }
+  - { id: days, label: Days of autonomy, default: 1, min: 0 }
+  - { id: dod, label: Usable depth of discharge, family: percent, unit: '%', default: 90, min: 0.01, max: 1 }
+  - { id: eff, label: Round-trip efficiency, family: percent, unit: '%', default: 90, min: 0.01, max: 1 }
+  - { id: V, label: Battery bank voltage, family: voltage, unit: V, default: 48, min: 0.1 }
+  - { id: kwh, label: Battery capacity needed, suffix: kWh, min: 0, decimals: 1 }
+  - { id: ah, label: Capacity at bank voltage, suffix: Ah, min: 0, decimals: 0 }
+equations:
+  - kwh = load * days / (dod * eff)
+  - ah = kwh * 1000 / V
+faq:
+  - q: How big a battery do I need?
+    a: Daily load × days of backup, divided by usable depth of discharge and efficiency.
+  - q: What depth of discharge should I use?
+    a: About 80–95% for lithium iron phosphate (LFP) batteries and about 50% for lead-acid to protect battery life.
+  - q: How do I convert kWh to Ah?
+    a: Ah = kWh × 1,000 ÷ battery voltage.
+related: [ecology/solar-output, ecology/solar-system-size]
+---
+
+## How to use this calculator
+
+Enter the **daily energy** you want covered, **days of autonomy**, usable **depth of discharge**, **round-trip efficiency** and the **battery bank voltage**. Capacity in kWh and Ah is calculated.
+
+## Example
+
+6 kWh a day, 1 day of backup, 90% DoD, 90% efficiency, 48 V bank:
+
+- Capacity = 6 ÷ 0.81 = **7.4 kWh**
+- = **154 Ah** at 48 V

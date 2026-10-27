@@ -1,0 +1,65 @@
+---
+title: Thermal Expansion Calculator
+description: Calculate how much a pipe, rail or bar expands with temperature for steel, stainless steel, aluminium, copper and PVC.
+category: engineering
+keywords: [thermal expansion, linear expansion, pipe expansion, coefficient of expansion, steel expansion, expansion loop]
+updated: 2026-10-27
+variables:
+  - id: a
+    label: Material
+    default: 12
+    options:
+      - { label: Carbon steel (12 ×10⁻⁶/K), value: 12 }
+      - { label: Stainless steel 304/316 (17.3 ×10⁻⁶/K), value: 17.3 }
+      - { label: Aluminium (23.1 ×10⁻⁶/K), value: 23.1 }
+      - { label: Copper (16.5 ×10⁻⁶/K), value: 16.5 }
+      - { label: Cast iron (10.5 ×10⁻⁶/K), value: 10.5 }
+      - { label: PVC (52 ×10⁻⁶/K), value: 52 }
+      - { label: HDPE (200 ×10⁻⁶/K), value: 200 }
+      - { label: Glass (9 ×10⁻⁶/K), value: 9 }
+  - { id: L, label: Original length, family: length, unit: m, imperialUnit: ft, default: 50, min: 0 }
+  - { id: dT, label: Temperature change, family: tempdiff, unit: K, imperialUnit: F, default: 60 }
+  - { id: dL, label: Change in length, family: length, unit: mm, imperialUnit: in }
+equations:
+  - dL = a * 1e-6 * L * dT
+chart: { x: dT, y: dL, from: 0, to: 200 }
+faq:
+  - q: What is the linear expansion formula?
+    a: ΔL = α × L × ΔT, where α is the material's coefficient of linear expansion, L the original length and ΔT the temperature change.
+  - q: How much does steel pipe expand?
+    a: Carbon steel grows about 1.2 mm per metre for every 100 °C rise. A 50 m line heated by 60 °C grows about 36 mm.
+  - q: Is a 1 °C change the same as 1 K?
+    a: Yes, for temperature differences. A 1 °F difference equals 5/9 K.
+related: [conversion/temperature-converter, engineering/pt100-resistance]
+---
+
+## How to use this calculator
+
+Choose the **material**, then enter the **length** and **temperature change**. The expansion is shown in mm or inches. A negative temperature change gives contraction.
+
+## The formula
+
+<p class="formula">ΔL = α × L × ΔT</p>
+
+## Worked example
+
+A 50 m carbon steel steam line heated from 20 °C to 80 °C (ΔT = 60 K):
+
+ΔL = 12 × 10⁻⁶ × 50 × 60 = 0.036 m = **36 mm**
+
+The same run in HDPE would grow about **600 mm** — plastic pipes need much more allowance.
+
+## Expansion per 10 m for a 50 K rise
+
+| Material | Expansion |
+|---|---|
+| Carbon steel | 6.0 mm |
+| Stainless steel | 8.7 mm |
+| Copper | 8.3 mm |
+| Aluminium | 11.6 mm |
+| PVC | 26 mm |
+| HDPE | 100 mm |
+
+## Allowing for expansion
+
+Long hot lines need expansion loops, bellows or offsets, and guides and anchors placed to direct the movement. Restraining expansion completely creates very large forces that can damage supports, flanges and connected equipment.

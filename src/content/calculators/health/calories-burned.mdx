@@ -1,0 +1,61 @@
+---
+title: Calories Burned Calculator (MET)
+description: Estimate calories burned during walking, running, cycling, swimming and other activities from body weight and duration.
+category: health
+keywords: [calories burned, met calculator, exercise calories, calories walking, calories running, activity calories]
+updated: 2026-10-27
+featured: true
+variables:
+  - id: met
+    label: Activity
+    default: 3.5
+    options:
+      - { label: "Walking, moderate pace (MET 3.5)", value: 3.5 }
+      - { label: "Walking, brisk (MET 4.3)", value: 4.3 }
+      - { label: "Running, 8 km/h (MET 8.3)", value: 8.3 }
+      - { label: "Running, 10 km/h (MET 9.8)", value: 9.8 }
+      - { label: "Cycling, moderate (MET 8.0)", value: 8 }
+      - { label: "Swimming, moderate (MET 5.8)", value: 5.8 }
+      - { label: Yoga (MET 2.5), value: 2.5 }
+      - { label: Weight training (MET 5.0), value: 5 }
+      - { label: Dancing (MET 5.0), value: 5 }
+      - { label: Football / soccer (MET 7.0), value: 7 }
+      - { label: Cricket (MET 4.8), value: 4.8 }
+      - { label: "Housework, general (MET 3.3)", value: 3.3 }
+  - { id: m, label: Body weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 0 }
+  - { id: min, label: Duration, suffix: minutes, default: 30, min: 0 }
+  - { id: kcal, label: Calories burned, suffix: kcal, min: 0, decimals: 0 }
+equations:
+  - kcal = met * 3.5 * m / 200 * min
+chart: { x: min, y: kcal, from: 0, to: 120 }
+faq:
+  - q: What is a MET?
+    a: A Metabolic Equivalent of Task. 1 MET is the energy you use sitting quietly. An activity of 4 METs uses about four times as much.
+  - q: How accurate is this?
+    a: It is a reasonable average. Fitness level, technique, terrain and body composition change the real number by 10–20% or more.
+  - q: Where do the MET values come from?
+    a: From the Compendium of Physical Activities, a widely used research reference.
+related: [health/bmr, health/weight-loss-time, health/heart-rate-zones]
+---
+
+## How to use this calculator
+
+Choose an **activity**, then enter your **body weight** and **duration**. The estimated calories burned appear instantly. To find how long you need to burn a target amount, press × on Duration and type the calories.
+
+## The formula
+
+<p class="formula">kcal = MET × 3.5 × weight (kg) ÷ 200 × minutes</p>
+
+## Worked examples (70 kg, 30 minutes)
+
+| Activity | MET | Calories |
+|---|---|---|
+| Walking, moderate | 3.5 | 129 |
+| Cycling, moderate | 8.0 | 294 |
+| Running, 10 km/h | 9.8 | 360 |
+
+## Notes
+
+- A heavier person burns more for the same activity.
+- The figure includes your resting calories for that time. Subtract about 1 MET's worth for "extra" calories from the exercise.
+- Fitness trackers use similar estimates combined with heart rate.

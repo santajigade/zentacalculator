@@ -1,0 +1,43 @@
+---
+title: Work & Power Calculator
+description: Calculate work done (W = F × d) and power (P = W ÷ t) from force, distance and time.
+category: physics
+keywords: [work calculator, power calculator, work = force x distance, watts, joules, physics power]
+updated: 2026-10-27
+variables:
+  - { id: F, label: Force, family: force, unit: N, imperialUnit: lbf, default: 500 }
+  - { id: d, label: Distance moved (in direction of force), family: length, unit: m, imperialUnit: ft, default: 10 }
+  - { id: t, label: Time taken, family: seconds, unit: s, default: 20, min: 0 }
+  - { id: W, label: Work done, family: energy, unit: J }
+  - { id: P, label: Power, family: power, unit: W, imperialUnit: hp }
+equations:
+  - W = F * d
+  - P = W / t
+faq:
+  - q: What is work in physics?
+    a: Work is done when a force moves something. Work = force × distance moved in the direction of the force, measured in joules.
+  - q: What is the difference between work and power?
+    a: Work is the amount of energy transferred. Power is how fast it is transferred — work divided by time, in watts.
+  - q: What if the force is at an angle?
+    a: Use only the part of the force along the direction of motion, F × cos θ.
+related: [physics/potential-energy, physics/force, conversion/power-converter]
+---
+
+## How to use this calculator
+
+Enter the **force**, the **distance** it moves and the **time** taken. You get the work done in joules and the power in watts (or hp).
+
+## Formulas
+
+<p class="formula">W = F × d   P = W ÷ t</p>
+
+## Worked example
+
+Pushing a cart with 500 N over 10 m in 20 s:
+
+- Work = 500 × 10 = **5,000 J**
+- Power = 5,000 ÷ 20 = **250 W** (0.34 hp)
+
+## Climbing stairs
+
+A 70 kg person climbs 3 m of stairs in 4 s: work = 70 × 9.81 × 3 = 2059 J, power = 515 W — similar to a bright old-style light bulb.

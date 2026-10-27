@@ -1,0 +1,49 @@
+---
+title: Pendulum Period Calculator
+description: Calculate the period and frequency of a simple pendulum from its length — or the length for a given period.
+category: physics
+keywords: [pendulum calculator, pendulum period, simple pendulum, t = 2 pi sqrt(l/g), seconds pendulum]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Pendulum length, family: length, unit: m, imperialUnit: ft, default: 1, min: 0 }
+  - { id: T, label: Period (one full swing), family: seconds, unit: s, min: 0 }
+  - { id: f, label: Frequency, suffix: Hz, min: 0 }
+equations:
+  - T = 2 * pi * sqrt(L / g0)
+  - f = 1 / T
+chart: { x: L, y: T, from: 0, to: 5 }
+faq:
+  - q: What is the formula for a pendulum's period?
+    a: T = 2π √(L/g), where L is the length to the centre of the bob and g is gravity. It does not depend on mass.
+  - q: How long is a seconds pendulum?
+    a: About 0.994 m. Its full period is 2 s, so each swing in one direction takes 1 second.
+  - q: Does the swing size matter?
+    a: For small angles (under about 15°) hardly at all. Larger swings take slightly longer.
+related: [physics/free-fall, physics/wavelength-frequency]
+---
+
+## How to use this calculator
+
+Enter the **length** (pivot to the centre of the bob) to get the period and frequency. Or enter a period to find the length needed.
+
+## The formula
+
+<p class="formula">T = 2π √(L ÷ g)</p>
+
+## Worked example
+
+A 1 m pendulum:
+
+T = 2π √(1 ÷ 9.81) = **2.006 s**, frequency **0.498 Hz**
+
+## Period vs length
+
+| Length | Period |
+|---|---|
+| 0.25 m | 1.00 s |
+| 0.5 m | 1.42 s |
+| 1 m | 2.01 s |
+| 2 m | 2.84 s |
+| 4 m | 4.01 s |
+
+Four times the length doubles the period. This is why grandfather clocks are tall — a ~1 m pendulum ticks once per second.

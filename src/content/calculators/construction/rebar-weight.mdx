@@ -1,0 +1,64 @@
+---
+title: Rebar Weight Calculator
+description: Calculate the weight of steel reinforcement bars (rebar) from diameter, length and quantity.
+category: construction
+keywords: [rebar weight, steel bar weight, d2/162, tmt bar weight, reinforcement steel, kg per metre]
+updated: 2026-10-27
+featured: true
+variables:
+  - id: d
+    label: Bar diameter
+    default: 12
+    options:
+      - { label: 6 mm, value: 6 }
+      - { label: 8 mm, value: 8 }
+      - { label: 10 mm, value: 10 }
+      - { label: 12 mm, value: 12 }
+      - { label: 16 mm, value: 16 }
+      - { label: 20 mm, value: 20 }
+      - { label: 25 mm, value: 25 }
+      - { label: 32 mm, value: 32 }
+  - { id: L, label: Length of each bar, family: length, unit: m, imperialUnit: ft, default: 12, min: 0 }
+  - { id: n, label: Number of bars, default: 10, min: 0 }
+  - { id: wpm, label: Weight per metre, suffix: kg/m, min: 0, decimals: 3 }
+  - { id: W, label: Total weight, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+equations:
+  - wpm = d^2 / 162.2
+  - W = wpm * L * n
+faq:
+  - q: What is the formula for rebar weight?
+    a: Weight (kg/m) = d² ÷ 162.2, where d is the diameter in mm. It comes from steel's density of 7,850 kg/m³.
+  - q: How much does a 12 m, 12 mm bar weigh?
+    a: About 0.888 kg/m × 12 m = 10.65 kg.
+  - q: Is TMT bar weight the same?
+    a: Yes — TMT and other deformed bars are rated by nominal diameter and use the same formula.
+related: [construction/steel-plate-weight, construction/concrete-slab]
+---
+
+## How to use this calculator
+
+Choose the **bar diameter**, then enter the **length** and **number of bars**. The weight per metre and total weight are calculated.
+
+## Formula
+
+<p class="formula">kg/m = d² ÷ 162.2</p>
+
+## Example
+
+10 bars of 12 mm, each 12 m long:
+
+- Weight per metre = 144 ÷ 162.2 = **0.888 kg/m**
+- Total = 0.888 × 12 × 10 = **106.5 kg**
+
+## Weight per metre table
+
+| Diameter | kg/m | 12 m bar |
+|---|---|---|
+| 6 mm | 0.222 | 2.66 kg |
+| 8 mm | 0.395 | 4.73 kg |
+| 10 mm | 0.617 | 7.40 kg |
+| 12 mm | 0.888 | 10.65 kg |
+| 16 mm | 1.578 | 18.94 kg |
+| 20 mm | 2.466 | 29.59 kg |
+| 25 mm | 3.853 | 46.24 kg |
+| 32 mm | 6.313 | 75.76 kg |

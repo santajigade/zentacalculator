@@ -1,0 +1,40 @@
+---
+title: Wind Turbine Power Calculator
+description: Calculate wind turbine power from rotor diameter, wind speed, air density and power coefficient.
+category: ecology
+keywords: [wind turbine power, wind power calculator, p = 1/2 rho a v3, betz limit, wind energy, rotor diameter]
+updated: 2026-10-27
+variables:
+  - { id: D, label: Rotor diameter, family: length, unit: m, imperialUnit: ft, default: 80, min: 0 }
+  - { id: v, label: Wind speed, family: velocity, unit: ms, imperialUnit: mph, default: 8, min: 0 }
+  - { id: rho, label: Air density, family: density, unit: kgm3, default: 1.225, min: 0 }
+  - { id: cp, label: Power coefficient (Cp), default: 0.4, min: 0, max: 0.593 }
+  - { id: P, label: Power output, family: power, unit: kW, imperialUnit: hp, min: 0 }
+equations:
+  - P = 0.5 * rho * pi * (D / 2)^2 * v^3 * cp
+chart: { x: v, y: P, from: 0, to: 15 }
+faq:
+  - q: How is wind power calculated?
+    a: P = ½ ρ A v³ Cp — the power rises with the cube of wind speed and the square of rotor diameter.
+  - q: What is the Betz limit?
+    a: No turbine can capture more than 59.3% (16/27) of the wind's energy. Modern turbines reach about 40–50%.
+  - q: Why does wind speed matter so much?
+    a: Doubling the wind speed gives eight times the power, which is why turbine siting is crucial.
+related: [ecology/solar-output, physics/kinetic-energy]
+---
+
+## How to use this calculator
+
+Enter the **rotor diameter**, **wind speed**, **air density** and **power coefficient**. The power output is calculated (before generator limits).
+
+## Formula
+
+<p class="formula">P = ½ ρ A v³ C<sub>p</sub></p>
+
+## Example
+
+80 m rotor, 8 m/s wind, ρ = 1.225, Cp = 0.4:
+
+P = 0.5 × 1.225 × 5027 × 512 × 0.4 = **631 kW**
+
+Real turbines cap output at their rated power (for example 2 MW) above the rated wind speed.

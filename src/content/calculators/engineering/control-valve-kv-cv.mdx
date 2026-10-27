@@ -1,0 +1,55 @@
+---
+title: Control Valve Kv / Cv Calculator
+description: Size control valves for liquids — calculate Kv, Cv, flow or pressure drop from any three values.
+category: engineering
+keywords: [kv, cv, valve sizing, control valve, flow coefficient, kv to cv, valve flow, pressure drop]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 10, min: 0 }
+  - { id: dP, label: Pressure drop across valve, family: pressure, unit: bar, imperialUnit: psi, default: 1, min: 0 }
+  - { id: SG, label: Specific gravity, default: 1, min: 0, help: 1.0 for water at about 15 °C }
+  - { id: Kv, label: Kv, suffix: m³/h, min: 0 }
+  - { id: Cv, label: Cv, suffix: US gpm, min: 0 }
+equations:
+  - Q * 3600 = Kv * sqrt(dP / 100000 / SG)
+  - Cv = 1.156 * Kv
+chart: { x: dP, y: Q, from: 0, to: 5 }
+faq:
+  - q: What is Kv?
+    a: Kv is the flow of water in m³/h through a valve with a 1 bar pressure drop. It is the metric flow coefficient.
+  - q: What is Cv?
+    a: Cv is the flow of water in US gallons per minute with a 1 psi pressure drop. Cv = 1.156 × Kv.
+  - q: How much margin should I add?
+    a: A common rule is to select a valve whose rated Kv is about 1.25–1.5 times the calculated value, so it controls at roughly 60–80% open at normal flow.
+  - q: Does this work for gas or steam?
+    a: No. Gases and steam need compressible-flow equations. This calculator is for non-flashing, non-cavitating liquids.
+related: [engineering/orifice-flow, engineering/pipe-flow-velocity]
+---
+
+## How to use this calculator
+
+Fill in **any three** of flow, pressure drop, specific gravity and Kv (or Cv). The rest is calculated:
+
+- **Sizing:** enter flow, ΔP and SG → required Kv and Cv.
+- **Checking capacity:** enter the valve's Kv and the available ΔP → maximum flow.
+- **Pressure drop:** enter Kv and flow → ΔP across the valve.
+
+## The formulas (liquids)
+
+<p class="formula">Q = K<sub>v</sub> × √(ΔP ÷ SG)   (Q in m³/h, ΔP in bar)<br/>C<sub>v</sub> = 1.156 × K<sub>v</sub></p>
+
+The US form is Q (gpm) = C<sub>v</sub> × √(ΔP (psi) ÷ SG). Units are converted for you.
+
+## Worked examples
+
+**Required Kv:** 10 m³/h of water with 1 bar drop → Kv = 10 × √(1 ÷ 1) = **10 m³/h**, Cv = **11.56**.
+
+**Capacity check:** a valve with Kv 10 on a liquid of SG 0.85 with only 0.5 bar available passes 10 × √(0.5 ÷ 0.85) = **7.67 m³/h**.
+
+## Sizing tips
+
+- Size for the **pressure drop at the valve**, not the whole system.
+- Aim for the valve to be **60–80% open** at normal flow and below about 90% at maximum flow.
+- Check for **cavitation and flashing** when ΔP is a large share of inlet pressure.
+- Remember the installed characteristic: as flow rises, pipe losses rise and the valve's ΔP falls.

@@ -1,0 +1,41 @@
+---
+title: Pressure Calculator (P = F/A)
+description: Calculate pressure from force and area — or the force or area — in Pa, kPa, bar or psi.
+category: physics
+keywords: [pressure calculator, p = f/a, force over area, pascal, psi, stress]
+updated: 2026-10-27
+variables:
+  - { id: F, label: Force, family: force, unit: N, imperialUnit: lbf, default: 700, min: 0 }
+  - { id: A, label: Area, family: area, unit: cm2, imperialUnit: in2, default: 400, min: 0 }
+  - { id: P, label: Pressure, family: pressure, unit: kPa, imperialUnit: psi, min: 0 }
+equations:
+  - P = F / A
+faq:
+  - q: What is the pressure formula?
+    a: Pressure = force ÷ area. One pascal is one newton per square metre.
+  - q: Why do sharp knives cut better?
+    a: The same force on a much smaller area creates much higher pressure.
+  - q: Why do snowshoes work?
+    a: They spread your weight over a larger area, lowering the pressure so you don't sink.
+related: [conversion/pressure-converter, physics/force, engineering/hydraulic-cylinder-force]
+---
+
+## How to use this calculator
+
+Enter the **force** and the **area** it acts on. The pressure appears in kPa, bar, psi or any pressure unit. You can also find the area needed to keep pressure below a limit.
+
+## The formula
+
+<p class="formula">P = F ÷ A</p>
+
+## Worked example
+
+A 70 kg person (about 700 N) standing on two feet covering 400 cm²:
+
+P = 700 ÷ 0.04 = **17,500 Pa** = 17.5 kPa
+
+On stiletto heels with 1 cm² each carrying half the weight, the pressure under each heel is 350 N ÷ 0.0001 m² = **3,500 kPa** — 200 times higher.
+
+## Units
+
+1 Pa = 1 N/m² · 1 kPa = 1,000 Pa · 1 bar = 100 kPa · 1 psi = 6.895 kPa

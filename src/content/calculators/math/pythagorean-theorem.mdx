@@ -1,0 +1,59 @@
+---
+title: Pythagorean Theorem Calculator
+description: Find the hypotenuse or a missing side of a right triangle from the other two sides, in any length unit.
+category: math
+keywords: [pythagorean theorem, pythagoras, hypotenuse, right triangle, a2 b2 c2, missing side]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Side a, family: length, unit: cm, imperialUnit: in, default: 3, min: 0 }
+  - { id: b, label: Side b, family: length, unit: cm, imperialUnit: in, default: 4, min: 0 }
+  - { id: c, label: Hypotenuse c, family: length, unit: cm, imperialUnit: in, min: 0 }
+equations:
+  - c^2 = a^2 + b^2
+chart: { x: a, y: c, from: 0, to: 20 }
+faq:
+  - q: What is the Pythagorean theorem?
+    a: In a right triangle, the square of the hypotenuse equals the sum of the squares of the other two sides — a² + b² = c².
+  - q: How do I find a missing short side?
+    a: Rearrange to a = √(c² − b²). Press × on side a, then enter b and c. The hypotenuse must be the longest side.
+  - q: What are Pythagorean triples?
+    a: Whole-number sets that satisfy the theorem, such as 3-4-5, 5-12-13, 8-15-17 and 7-24-25.
+related: [math/triangle-area, math/circle]
+---
+
+## How to use this calculator
+
+Enter any **two** sides of a right-angled triangle. The third side is calculated straight away. The two shorter sides (a and b) meet at the right angle; the hypotenuse (c) is the longest side, opposite the right angle.
+
+Each side has its own unit, so you can enter a in metres and b in feet if you need to.
+
+## The formula
+
+<p class="formula">a² + b² = c²</p>
+
+- **Hypotenuse:** c = √(a² + b²)
+- **Missing side:** a = √(c² − b²)
+
+## Worked example
+
+A ladder reaches 6 m up a wall with its foot 2.5 m from the wall. How long is the ladder?
+
+c = √(6² + 2.5²) = √(36 + 6.25) = √42.25 = **6.5 m**
+
+## Common Pythagorean triples
+
+| a | b | c |
+|---|---|---|
+| 3 | 4 | 5 |
+| 5 | 12 | 13 |
+| 8 | 15 | 17 |
+| 7 | 24 | 25 |
+| 20 | 21 | 29 |
+
+Any multiple of a triple also works — 6-8-10 and 30-40-50 are both right triangles.
+
+## Practical uses
+
+- **Checking a right angle on site.** Builders mark 3 units on one side and 4 on the other; if the diagonal is exactly 5, the corner is square.
+- **Screen sizes.** A TV's size is its diagonal. A screen 120 cm wide and 67.5 cm tall has a diagonal of about 137.7 cm (54 inches).
+- **Distance on a map.** Moving 3 km east and 4 km north puts you 5 km from where you started in a straight line.

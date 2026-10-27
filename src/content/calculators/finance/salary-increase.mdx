@@ -1,0 +1,57 @@
+---
+title: Salary Increase Calculator
+description: Calculate your new salary after a raise — or the percentage raise between two salaries — yearly and monthly.
+category: finance
+keywords: [salary increase, pay raise calculator, salary hike, raise percentage, new salary, increment calculator]
+updated: 2026-10-27
+variables:
+  - { id: S0, label: Current annual salary, family: currency, default: 60000, min: 0, decimals: 2 }
+  - { id: p, label: Raise, family: percent, unit: '%', default: 8 }
+  - { id: S1, label: New annual salary, family: currency, min: 0, decimals: 2 }
+  - { id: inc, label: Increase per year, family: currency, decimals: 2 }
+  - { id: m1, label: New monthly salary, family: currency, min: 0, decimals: 2 }
+equations:
+  - S1 = S0 * (1 + p)
+  - inc = S1 - S0
+  - m1 = S1 / 12
+faq:
+  - q: How do I calculate a salary increase?
+    a: Multiply your current salary by (1 + raise %). An 8% raise on 60,000 gives 60,000 × 1.08 = 64,800.
+  - q: How do I find my raise percentage?
+    a: Press × on Raise, then type your new salary. The percentage is (new − old) ÷ old.
+  - q: Is my raise beating inflation?
+    a: Subtract the inflation rate from your raise. An 8% raise with 6% inflation is roughly a 2% real increase.
+related: [finance/hourly-to-salary, finance/inflation, math/percentage-change]
+---
+
+## How to use this calculator
+
+Enter your **current annual salary** and the **raise %** to get the new salary, the yearly increase and the new monthly pay. Already know the new salary? Press × on Raise and type it in to see the percentage.
+
+## Formula
+
+<p class="formula">New salary = Current × (1 + raise %)</p>
+
+## Worked example
+
+Current salary 60,000 with an 8% raise:
+
+- New salary = 60,000 × 1.08 = **64,800**
+- Increase = **4,800** per year
+- New monthly salary = **5,400**
+
+## Real vs nominal raise
+
+A raise only improves your living standard if it beats inflation:
+
+| Raise | Inflation | Real change (approx.) |
+|---|---|---|
+| 3% | 2% | +1% |
+| 8% | 6% | +2% |
+| 5% | 6% | −1% |
+
+## Negotiation tips
+
+- Research the market rate for your role and location.
+- Show measurable results from the past year.
+- Consider the total package — bonus, benefits, flexibility and training.

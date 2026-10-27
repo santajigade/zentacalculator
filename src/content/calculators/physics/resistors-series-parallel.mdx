@@ -1,0 +1,49 @@
+---
+title: Resistors in Series & Parallel Calculator
+description: Calculate total resistance of up to three resistors connected in series or in parallel.
+category: physics
+keywords: [resistors in parallel, resistors in series, equivalent resistance, parallel resistance calculator, ohms]
+updated: 2026-10-27
+variables:
+  - { id: R1, label: Resistor R1, family: resistance, unit: ohm, default: 100, min: 0 }
+  - { id: R2, label: Resistor R2, family: resistance, unit: ohm, default: 220, min: 0 }
+  - { id: R3, label: Resistor R3 (use a huge value like 1e12 if not used), family: resistance, unit: ohm, default: 470, min: 0 }
+  - { id: Rs, label: Total in series, family: resistance, unit: ohm, min: 0 }
+  - { id: Rp, label: Total in parallel, family: resistance, unit: ohm, min: 0 }
+equations:
+  - Rs = R1 + R2 + R3
+  - Rp = 1 / (1/R1 + 1/R2 + 1/R3)
+faq:
+  - q: How do resistors add in series?
+    a: Simply add them — R = R1 + R2 + R3. The same current flows through each one.
+  - q: How do resistors combine in parallel?
+    a: Add the reciprocals — 1/R = 1/R1 + 1/R2 + 1/R3. The total is always less than the smallest resistor.
+  - q: What about only two resistors in parallel?
+    a: Use R = (R1 × R2) ÷ (R1 + R2). For two equal resistors, the result is half of one.
+related: [physics/ohms-law, physics/rc-time-constant]
+---
+
+## How to use this calculator
+
+Enter up to **three resistor values** (Ω, kΩ or MΩ). You get the total for both a series and a parallel connection. For just two resistors, set R3 to a very large value such as 1e12 Ω.
+
+## Formulas
+
+<p class="formula">Series: R = R₁ + R₂ + R₃<br/>Parallel: 1/R = 1/R₁ + 1/R₂ + 1/R₃</p>
+
+## Worked example
+
+100 Ω, 220 Ω and 470 Ω:
+
+- Series = **790 Ω**
+- Parallel = 1 ÷ (1/100 + 1/220 + 1/470) = **60.0 Ω**
+
+## Quick rules
+
+- Two equal resistors in parallel → half the value (2 × 1 kΩ = 500 Ω).
+- n equal resistors in parallel → R ÷ n.
+- Parallel total is always smaller than the smallest single resistor.
+
+## Standard values (E12 series)
+
+10 · 12 · 15 · 18 · 22 · 27 · 33 · 39 · 47 · 56 · 68 · 82 (× 1, 10, 100, 1k …)

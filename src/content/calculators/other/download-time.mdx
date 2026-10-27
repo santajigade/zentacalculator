@@ -1,0 +1,36 @@
+---
+title: Download Time Calculator
+description: Estimate how long a file takes to download or upload at a given internet speed (Mbps).
+category: other
+keywords: [download time calculator, upload time, internet speed, mbps to mb/s, file transfer time, bandwidth]
+updated: 2026-10-27
+variables:
+  - { id: s, label: File size, family: data, unit: GB, default: 5, min: 0 }
+  - { id: sp, label: Connection speed, suffix: Mbps, default: 100, min: 0.0001 }
+  - { id: ef, label: Real-world efficiency, family: percent, unit: '%', default: 90, min: 0.01, max: 1 }
+  - { id: t, label: Time, family: seconds, unit: min, min: 0 }
+  - { id: mbs, label: Effective speed, suffix: MB/s, min: 0, decimals: 2 }
+equations:
+  - t = s * 8 / (sp * 1000000 * ef)
+  - mbs = sp * ef / 8
+faq:
+  - q: What is the difference between Mbps and MB/s?
+    a: Mbps is megabits per second; MB/s is megabytes per second. There are 8 bits in a byte, so 100 Mbps ≈ 12.5 MB/s.
+  - q: Why is my download slower than my plan?
+    a: Network overheads, Wi-Fi, server speed and other users all reduce real throughput. 80–90% of the plan is typical on a good wired connection.
+  - q: How long does a 50 GB game take on 100 Mbps?
+    a: About 74 minutes at 90% efficiency.
+related: [other/data-storage-converter, other/video-file-size]
+---
+
+## How to use this calculator
+
+Enter the **file size**, your **connection speed** in Mbps, and a **real-world efficiency**. The transfer time and effective speed are calculated.
+
+## Formula
+
+<p class="formula">time = size (bits) ÷ (speed × efficiency)</p>
+
+## Example
+
+A 5 GB file on a 100 Mbps connection at 90%: 40,000 Mb ÷ 90 Mbps = **444 s ≈ 7.4 minutes** (11.25 MB/s).

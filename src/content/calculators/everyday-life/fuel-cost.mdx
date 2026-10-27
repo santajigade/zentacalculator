@@ -1,0 +1,50 @@
+---
+title: Fuel Cost Calculator (Trip Cost)
+description: Calculate the fuel needed and the cost of a trip from distance, fuel consumption and fuel price — and split it between passengers.
+category: everyday-life
+keywords: [fuel cost calculator, trip cost, petrol cost, gas cost, road trip, fuel consumption, l/100km]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: d, label: Trip distance, family: length, unit: km, imperialUnit: mi, default: 350, min: 0 }
+  - { id: c, label: Fuel consumption, suffix: L/100 km, default: 7, min: 0 }
+  - { id: p, label: Fuel price per litre, family: currency, default: 1.6, min: 0, decimals: 3 }
+  - { id: n, label: People sharing, default: 1, min: 1 }
+  - { id: f, label: Fuel needed, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: cost, label: Total fuel cost, family: currency, min: 0, decimals: 2 }
+  - { id: pp, label: Cost per person, family: currency, min: 0, decimals: 2 }
+equations:
+  - f = d / 1000 * c / 100 / 1000
+  - cost = f * 1000 * p
+  - pp = cost / n
+faq:
+  - q: How do I calculate fuel cost?
+    a: Fuel needed = distance × consumption ÷ 100. Cost = fuel needed × price per litre.
+  - q: My car shows mpg — what do I enter?
+    a: Convert with the fuel economy converter. 30 US mpg ≈ 7.84 L/100 km.
+  - q: Should I include the return journey?
+    a: Yes — enter the total distance for a round trip.
+related: [everyday-life/fuel-economy, everyday-life/electricity-cost, physics/speed-distance-time]
+---
+
+## How to use this calculator
+
+Enter the **distance**, your car's **consumption** in L/100 km and the **fuel price**. Add the number of people sharing to split the cost.
+
+## Formula
+
+<p class="formula">Fuel = distance × consumption ÷ 100   Cost = fuel × price</p>
+
+## Example
+
+350 km at 7 L/100 km, fuel at 1.60 per litre:
+
+- Fuel = 350 × 7 ÷ 100 = **24.5 L**
+- Cost = 24.5 × 1.60 = **39.20**
+
+## Save fuel
+
+- Keep tyres at the correct pressure.
+- Drive smoothly — harsh acceleration uses much more fuel.
+- Reduce speed on motorways: drag rises sharply above about 90 km/h.
+- Remove roof racks when not in use.

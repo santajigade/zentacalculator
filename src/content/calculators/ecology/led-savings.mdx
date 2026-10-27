@@ -1,0 +1,41 @@
+---
+title: LED Bulb Savings Calculator
+description: Calculate energy, money and CO₂ saved by replacing old bulbs with LEDs.
+category: ecology
+keywords: [led savings calculator, led vs incandescent, light bulb energy savings, cfl vs led, lighting cost]
+updated: 2026-10-27
+variables:
+  - { id: ow, label: Old bulb power, family: power, unit: W, default: 60, min: 0 }
+  - { id: nw, label: LED power, family: power, unit: W, default: 9, min: 0 }
+  - { id: n, label: Number of bulbs, default: 10, min: 0 }
+  - { id: h, label: Hours on per day, suffix: hours, default: 5, min: 0, max: 24 }
+  - { id: r, label: Electricity price per kWh, family: currency, default: 0.15, min: 0, decimals: 3 }
+  - { id: ef, label: Grid emission factor, suffix: kg CO₂/kWh, default: 0.5, min: 0 }
+  - { id: kwh, label: Energy saved per year, suffix: kWh, min: 0, decimals: 0 }
+  - { id: sav, label: Money saved per year, family: currency, min: 0, decimals: 2 }
+  - { id: co2, label: CO₂ avoided per year, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+equations:
+  - kwh = (ow - nw) * n * h * 365 / 1000
+  - sav = kwh * r
+  - co2 = kwh * ef
+faq:
+  - q: How much energy do LEDs save?
+    a: About 80–90% compared with incandescent bulbs for the same light output.
+  - q: What LED replaces a 60 W bulb?
+    a: An LED of about 8–10 W gives similar brightness (around 800 lumens).
+  - q: How long do LEDs last?
+    a: Typically 15,000–25,000 hours, versus about 1,000 for incandescent bulbs.
+related: [ecology/electricity-co2, everyday-life/electricity-cost]
+---
+
+## How to use this calculator
+
+Enter the **old** and **LED** wattages, **number of bulbs**, **hours per day**, **electricity price** and **grid emission factor**. Yearly energy, money and CO₂ savings are calculated.
+
+## Example
+
+10 bulbs, 60 W → 9 W, 5 hours a day:
+
+- Energy saved = **931 kWh/year**
+- Money saved at 0.15/kWh = **139.62**
+- CO₂ avoided at 0.5 kg/kWh = **465 kg**

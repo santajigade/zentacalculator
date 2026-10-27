@@ -1,0 +1,52 @@
+---
+title: Turkey & Roast Cooking Time Calculator
+description: Estimate roasting time for turkey, chicken, beef, pork and lamb from weight — plus resting time.
+category: food
+keywords: [turkey cooking time, roast chicken time, how long to cook turkey, roasting time per kg, roast beef time]
+updated: 2026-10-27
+featured: true
+variables:
+  - id: rate
+    label: Meat (oven ~180 °C / 350 °F)
+    default: 40
+    options:
+      - { label: "Turkey, unstuffed (~40 min per kg)", value: 40 }
+      - { label: "Turkey, stuffed (~44 min per kg)", value: 44 }
+      - { label: Whole chicken (~50 min per kg), value: 50 }
+      - { label: "Beef, medium (~45 min per kg)", value: 45 }
+      - { label: Pork (~65 min per kg), value: 65 }
+      - { label: "Lamb leg, medium (~55 min per kg)", value: 55 }
+  - { id: m, label: Weight, family: mass, unit: kg, imperialUnit: lb, default: 6, min: 0 }
+  - { id: t, label: Approximate cooking time, family: time, unit: h, min: 0 }
+  - { id: rest, label: Resting time, suffix: minutes, min: 0, decimals: 0 }
+equations:
+  - t = m * rate / 60 / 8766
+  - rest = 15 + m * 3
+faq:
+  - q: How long does a turkey take to cook?
+    a: As a guide, about 40 minutes per kg (18–20 min per lb) at 180 °C for an unstuffed bird. Always check the internal temperature.
+  - q: What temperature should cooked poultry reach?
+    a: 74 °C (165 °F) in the thickest part of the thigh and the stuffing.
+  - q: Why rest the meat?
+    a: Juices redistribute and the temperature evens out, so the meat is juicier and easier to carve.
+related: [food/turkey-thawing, food/oven-temperature, food/meat-per-person]
+---
+
+## How to use this calculator
+
+Choose the **meat**, then enter its **weight**. The approximate cooking time and suggested resting time are calculated.
+
+## Example
+
+A 6 kg unstuffed turkey: 6 × 40 = 240 minutes = **4 hours**, then rest about 30 minutes.
+
+## Safe internal temperatures
+
+| Meat | Minimum internal temperature |
+|---|---|
+| Poultry | 74 °C (165 °F) |
+| Pork | 63 °C (145 °F) + 3 min rest |
+| Beef/lamb steaks and roasts | 63 °C (145 °F) + 3 min rest |
+| Minced meat | 71 °C (160 °F) |
+
+Source: US FoodSafety.gov. Times are estimates — ovens, shapes and starting temperatures vary, so use a meat thermometer.

@@ -1,0 +1,44 @@
+---
+title: Combined Gas Law Calculator
+description: Solve P₁V₁/T₁ = P₂V₂/T₂ for any unknown — pressure, volume or temperature of a fixed amount of gas.
+category: chemistry
+keywords: [combined gas law, p1v1/t1 = p2v2/t2, gas law calculator, pressure volume temperature]
+updated: 2026-10-27
+variables:
+  - { id: P1, label: Initial pressure (absolute), family: pressure, unit: kPa, imperialUnit: psi, default: 101.325, min: 0 }
+  - { id: V1, label: Initial volume, family: volume, unit: L, default: 10, min: 0 }
+  - { id: T1, label: Initial temperature, family: temperature, unit: C, imperialUnit: F, default: 25, min: 0 }
+  - { id: P2, label: Final pressure (absolute), family: pressure, unit: kPa, imperialUnit: psi, default: 200, min: 0 }
+  - { id: V2, label: Final volume, family: volume, unit: L, min: 0 }
+  - { id: T2, label: Final temperature, family: temperature, unit: C, imperialUnit: F, default: 60, min: 0 }
+equations:
+  - P1 * V1 / T1 = P2 * V2 / T2
+faq:
+  - q: What is the combined gas law?
+    a: It combines Boyle's, Charles's and Gay-Lussac's laws — P₁V₁/T₁ = P₂V₂/T₂ for a fixed amount of gas.
+  - q: When should I use the ideal gas law instead?
+    a: When you need the amount of gas (moles). The combined law only compares two states of the same gas sample.
+  - q: Which units must I use?
+    a: Absolute pressure and absolute temperature. The calculator converts units automatically.
+related: [chemistry/boyles-law, chemistry/charles-law, physics/ideal-gas-law]
+---
+
+## How to use this calculator
+
+Enter **five** of the six values (initial and final pressure, volume and temperature) to get the sixth.
+
+## Formula
+
+<p class="formula">P₁V₁ ÷ T₁ = P₂V₂ ÷ T₂</p>
+
+## Worked example
+
+10 L of air at 101.325 kPa and 25 °C is compressed to 200 kPa and warms to 60 °C:
+
+V₂ = 101.325 × 10 × 333.15 ÷ (298.15 × 200) = **5.66 L**
+
+## Special cases
+
+- Constant temperature → Boyle's law (P₁V₁ = P₂V₂)
+- Constant pressure → Charles's law (V₁/T₁ = V₂/T₂)
+- Constant volume → Gay-Lussac's law (P₁/T₁ = P₂/T₂)

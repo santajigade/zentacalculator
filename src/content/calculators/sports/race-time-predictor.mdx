@@ -1,0 +1,40 @@
+---
+title: Race Time Predictor (Riegel Formula)
+description: Predict your finish time for a 5K, 10K, half marathon or marathon from a recent race result.
+category: sports
+keywords: [race time predictor, riegel formula, marathon predictor, half marathon time, running predictor]
+updated: 2026-10-27
+variables:
+  - { id: d1, label: Recent race distance, family: length, unit: km, imperialUnit: mi, default: 5, min: 0 }
+  - { id: t1, label: Recent race time, family: seconds, unit: min, default: 25, min: 0 }
+  - { id: d2, label: Target race distance, family: length, unit: km, imperialUnit: mi, default: 21.0975, min: 0 }
+  - { id: t2, label: Predicted time, family: seconds, unit: min, min: 0 }
+equations:
+  - t2 = t1 * (d2 / d1)^1.06
+faq:
+  - q: What is the Riegel formula?
+    a: T₂ = T₁ × (D₂ ÷ D₁)^1.06, published by Peter Riegel in 1977. It assumes you slow slightly as distance increases.
+  - q: How accurate is it?
+    a: Reasonably good for well-trained runners between about 3 and 50 km. Marathon predictions are often optimistic for runners with low weekly mileage.
+  - q: Which race should I use?
+    a: A recent, all-out effort over a distance close to your target gives the best prediction.
+related: [sports/pace-calculator, sports/pace-speed-converter]
+---
+
+## How to use this calculator
+
+Enter a **recent race distance and time** and your **target distance**. The predicted finish time is calculated in minutes (switch to hours if you prefer).
+
+## Formula
+
+<p class="formula">T₂ = T₁ × (D₂ ÷ D₁)<sup>1.06</sup></p>
+
+## Example
+
+A 25:00 5K predicts:
+
+| Race | Predicted time |
+|---|---|
+| 10K | 52.1 min |
+| Half marathon | 115.0 min (1.92 h) |
+| Marathon | 239.8 min (4.00 h) |

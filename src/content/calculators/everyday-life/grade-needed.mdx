@@ -1,0 +1,40 @@
+---
+title: Final Exam Grade Calculator
+description: Find the score you need on your final exam to reach a target course grade.
+category: everyday-life
+keywords: [final grade calculator, what do i need on my final, exam score needed, grade calculator, course grade]
+updated: 2026-10-27
+variables:
+  - { id: cur, label: Current grade, family: percent, unit: '%', default: 78, min: 0 }
+  - { id: w, label: Final exam weight, family: percent, unit: '%', default: 30, min: 0.0001, max: 1 }
+  - { id: tg, label: Target course grade, family: percent, unit: '%', default: 80, min: 0 }
+  - { id: need, label: Score needed on the final, family: percent, unit: '%' }
+equations:
+  - tg = cur * (1 - w) + need * w
+faq:
+  - q: How is the score needed on the final calculated?
+    a: Needed = (target − current × (1 − weight)) ÷ weight.
+  - q: What if the result is above 100%?
+    a: The target can't be reached with this final alone — consider a lower target or ask about extra credit.
+  - q: Can I find my final grade from an exam score?
+    a: Yes. Press × on Target and enter your exam score.
+related: [math/average, math/percentage]
+---
+
+## How to use this calculator
+
+Enter your **current grade**, the **weight of the final exam** and your **target** course grade. The score you need on the final is calculated.
+
+## Formula
+
+<p class="formula">Needed = (target − current × (1 − w)) ÷ w</p>
+
+## Example
+
+Current grade 78%, final worth 30%, target 80%:
+
+Needed = (80 − 78 × 0.7) ÷ 0.3 = **84.7%**
+
+## Study planning
+
+If you need a high score, focus first on topics with the most marks and past-paper practice under timed conditions.

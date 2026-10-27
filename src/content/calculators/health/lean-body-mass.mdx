@@ -1,0 +1,54 @@
+---
+title: Lean Body Mass Calculator
+description: Estimate lean body mass (everything except fat) from height, weight and sex using the Boer formula.
+category: health
+keywords: [lean body mass, lbm calculator, fat free mass, boer formula, muscle mass, body composition]
+updated: 2026-10-27
+variables:
+  - id: sx
+    label: Sex
+    default: 0
+    options:
+      - { label: Male, value: 0 }
+      - { label: Female, value: 1 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 180, min: 1, max: 2.5 }
+  - { id: m, label: Weight, family: mass, unit: kg, imperialUnit: lb, default: 80, min: 20 }
+  - { id: lbm, label: Lean body mass, family: mass, unit: kg, imperialUnit: lb, min: 0, decimals: 1 }
+  - { id: fat, label: Estimated body fat, family: percent, unit: '%' }
+equations:
+  - lbm = (1 - sx) * (0.407 * m + 26.7 * h - 19.2) + sx * (0.252 * m + 47.3 * h - 48.3)
+  - fat = 1 - lbm / m
+faq:
+  - q: What is lean body mass?
+    a: Your total weight minus fat — muscles, bones, organs, skin and water.
+  - q: How accurate is the Boer formula?
+    a: It gives a population-average estimate from height and weight only. Very muscular or very overweight people may get less accurate results. Measured methods (DEXA, bioimpedance) are more precise.
+  - q: Why does lean body mass matter?
+    a: It drives your resting calorie burn and is used to set protein targets and some medicine doses.
+related: [health/body-fat, health/protein-intake, health/bmr]
+---
+
+## How to use this calculator
+
+Choose your **sex** and enter **height** and **weight**. Lean body mass and the implied body fat percentage appear instantly.
+
+## The Boer formula (1984)
+
+<p class="formula">Men: LBM = 0.407 × W + 0.267 × H − 19.2<br/>Women: LBM = 0.252 × W + 0.473 × H − 48.3</p>
+
+W = weight in kg, H = height in cm.
+
+## Worked example
+
+A man 180 cm and 80 kg:
+
+LBM = 0.407 × 80 + 0.267 × 180 − 19.2 = **61.4 kg** → about 23% body fat
+
+A woman 165 cm and 60 kg: LBM = **44.9 kg**.
+
+## Using your result
+
+- **Protein target:** many athletes aim for about 2 g per kg of lean mass.
+- **Tracking progress:** if weight drops but lean mass holds steady, you are losing fat rather than muscle.
+
+For a measurement-based estimate, try the [body fat calculator](/health/body-fat/).

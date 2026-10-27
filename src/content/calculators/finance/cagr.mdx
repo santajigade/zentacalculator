@@ -1,0 +1,51 @@
+---
+title: CAGR Calculator
+description: Calculate the compound annual growth rate (CAGR) between two values — or project a future value from a growth rate.
+category: finance
+keywords: [cagr, compound annual growth rate, annualized return, investment growth, growth rate]
+updated: 2026-10-27
+variables:
+  - { id: s, label: Starting value, family: currency, default: 10000, min: 0, decimals: 2 }
+  - { id: ev, label: Ending value, family: currency, default: 18000, min: 0, decimals: 2 }
+  - { id: t, label: Period, family: time, unit: yr, default: 5, min: 0 }
+  - { id: g, label: CAGR, family: percent, unit: '%', min: -0.99, max: 10 }
+equations:
+  - ev = s * (1 + g)^t
+chart: { x: t, y: ev, from: 0, to: 20 }
+faq:
+  - q: What is CAGR?
+    a: CAGR is the steady yearly growth rate that would take a value from its starting point to its ending point over a period, as if it grew at the same rate every year.
+  - q: What is the CAGR formula?
+    a: CAGR = (ending ÷ starting)^(1 ÷ years) − 1. From 10,000 to 18,000 in 5 years gives 12.47%.
+  - q: Is CAGR the same as average annual return?
+    a: No. A simple average of yearly returns overstates growth when returns vary. CAGR reflects what actually happened to the money.
+related: [finance/compound-interest, math/percentage-change]
+---
+
+## How to use this calculator
+
+Enter a **starting value**, **ending value** and the **number of years** to get the CAGR. You can also enter a growth rate to project a future value, or find how many years a target will take.
+
+The currency symbol follows your region; CAGR works the same for revenue, users, population or any other quantity.
+
+## The formula
+
+<p class="formula">CAGR = (ending ÷ starting)<sup>1/t</sup> − 1</p>
+
+## Worked example
+
+An investment grew from 10,000 to 18,000 over 5 years.
+
+CAGR = (18,000 ÷ 10,000)<sup>1/5</sup> − 1 = 1.8<sup>0.2</sup> − 1 = **12.47% per year**
+
+The total growth was 80%, but the yearly compound rate is 12.47% — not 80 ÷ 5 = 16%.
+
+## Why CAGR beats simple averages
+
+Suppose an investment rises 50% one year and falls 50% the next. The simple average return is 0%, yet 100 → 150 → 75 is a real loss. CAGR correctly shows −13.4% per year.
+
+## Limits of CAGR
+
+- It hides volatility: two investments with the same CAGR can have very different ups and downs.
+- It ignores money added or withdrawn during the period.
+- Past growth rates do not guarantee future results.

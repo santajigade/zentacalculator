@@ -1,0 +1,38 @@
+---
+title: Pond Liner Size & Volume Calculator
+description: Calculate the pond liner size you need and the pond's water volume from length, width and depth.
+category: ecology
+keywords: [pond liner calculator, pond volume, garden pond, liner size, pond litres, wildlife pond]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Pond length, family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: W, label: Pond width, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
+  - { id: D, label: Maximum depth, family: length, unit: m, imperialUnit: ft, default: 0.6, min: 0 }
+  - { id: o, label: Overlap at each edge, family: length, unit: m, imperialUnit: ft, default: 0.3, min: 0 }
+  - { id: ll, label: Liner length, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: lw, label: Liner width, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: V, label: Approx. water volume (sloped sides), family: volume, unit: L, imperialUnit: galUS, min: 0 }
+equations:
+  - ll = L + 2 * D + 2 * o
+  - lw = W + 2 * D + 2 * o
+  - V = L * W * D * 0.6
+faq:
+  - q: How do I calculate pond liner size?
+    a: Liner length = pond length + 2 × depth + 2 × overlap; liner width = pond width + 2 × depth + 2 × overlap.
+  - q: Why multiply volume by 0.6?
+    a: Ponds have sloping sides and shelves, so they hold less than a rectangular box. 0.5–0.7 is a typical factor.
+  - q: How deep should a wildlife pond be?
+    a: Include shallow edges for wildlife and a deeper zone of about 60 cm so part of the pond stays ice-free in winter.
+related: [construction/rectangular-tank, ecology/rainwater-harvesting]
+---
+
+## How to use this calculator
+
+Enter the pond's **length**, **width**, **maximum depth** and the **overlap** you want around the edge. The liner size and approximate volume are calculated.
+
+## Example
+
+A 3 × 2 m pond, 0.6 m deep, 0.3 m overlap:
+
+- Liner = **4.8 × 3.8 m**
+- Volume ≈ **2,160 litres**

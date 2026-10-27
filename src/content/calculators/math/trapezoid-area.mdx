@@ -1,0 +1,46 @@
+---
+title: Trapezoid Area Calculator
+description: Calculate the area of a trapezoid (trapezium) from its two parallel sides and height — or find a missing side.
+category: math
+keywords: [trapezoid area, trapezium area, parallel sides, area formula, land area, channel cross section]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Parallel side a, family: length, unit: m, imperialUnit: ft, default: 6, min: 0 }
+  - { id: b, label: Parallel side b, family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
+  - { id: h, label: Height, family: length, unit: m, imperialUnit: ft, default: 4, min: 0 }
+  - { id: A, label: Area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+equations:
+  - A = (a + b) / 2 * h
+faq:
+  - q: What is the area formula for a trapezoid?
+    a: Area = ½ × (a + b) × h — the average of the two parallel sides multiplied by the height.
+  - q: Is a trapezoid the same as a trapezium?
+    a: Yes, in most of the world outside North America a four-sided shape with one pair of parallel sides is called a trapezium. In the US it is a trapezoid.
+  - q: Which height do I use?
+    a: The perpendicular distance between the two parallel sides — not the length of a sloping side.
+related: [math/rectangle, math/triangle-area]
+---
+
+## How to use this calculator
+
+Enter the two **parallel sides** and the **height** (the perpendicular distance between them). The area appears instantly. You can also solve for a missing side or height from a known area.
+
+## The formula
+
+<p class="formula">A = ½ (a + b) × h</p>
+
+## Worked example
+
+A trapezoid with parallel sides of 6 m and 10 m, 4 m apart:
+
+A = ½ × (6 + 10) × 4 = **32 m²**
+
+## Practical uses
+
+- **Irregular plots of land** are often split into trapezoids and triangles.
+- **Open channels and ditches** have trapezoidal cross-sections — multiply the area by flow velocity to estimate flow.
+- **Roof sections** and **retaining walls** are frequently trapezoidal.
+
+## Check with a rectangle
+
+If both parallel sides are equal (a = b), the shape is a rectangle and the formula becomes a × h — the same as the [rectangle calculator](/math/rectangle/).

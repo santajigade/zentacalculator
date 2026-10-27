@@ -1,0 +1,53 @@
+---
+title: Calorie Deficit & Weight Loss Time Calculator
+description: Estimate how long it takes to lose weight at a given daily calorie deficit — based on about 7,700 kcal per kg of body fat.
+category: health
+keywords: [calorie deficit, weight loss calculator, how long to lose weight, 7700 calories, weight loss time, calorie deficit calculator]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Weight to lose, family: mass, unit: kg, imperialUnit: lb, default: 5, min: 0 }
+  - { id: d, label: Daily calorie deficit, suffix: kcal/day, default: 500, min: 1, max: 1000 }
+  - { id: t, label: Estimated time, family: time, unit: wk, min: 0 }
+equations:
+  - L * 7700 = d * t * 365.25
+chart: { x: d, y: t, from: 250, to: 1000 }
+faq:
+  - q: How many calories are in a kilogram of fat?
+    a: About 7,700 kcal per kg (roughly 3,500 kcal per pound). This is a useful rule of thumb, though real weight loss slows over time as the body adapts.
+  - q: What is a safe rate of weight loss?
+    a: Health services commonly suggest about 0.5–1 kg (1–2 lb) per week, which needs a deficit of roughly 500–1,000 kcal a day.
+  - q: Why do I lose weight faster at first?
+    a: Early losses include water and stored glycogen. After the first couple of weeks, the rate usually settles closer to this estimate.
+related: [health/bmr, health/calories-burned, health/macros]
+---
+
+## How to use this calculator
+
+Enter the **weight you want to lose** and your planned **daily calorie deficit**. The estimated time appears in weeks (switch to days or months). Find your maintenance calories first with the [BMR & daily calorie calculator](/health/bmr/), then subtract your deficit.
+
+This calculator is limited to deficits of up to 1,000 kcal per day.
+
+## The formula
+
+<p class="formula">Time (days) = weight to lose (kg) × 7,700 ÷ daily deficit</p>
+
+## Worked example
+
+Losing 5 kg with a 500 kcal daily deficit:
+
+5 × 7,700 ÷ 500 = 77 days ≈ **11 weeks**
+
+## Rule-of-thumb rates
+
+| Daily deficit | Approx. loss per week |
+|---|---|
+| 250 kcal | 0.23 kg (0.5 lb) |
+| 500 kcal | 0.45 kg (1 lb) |
+| 750 kcal | 0.68 kg (1.5 lb) |
+| 1,000 kcal | 0.91 kg (2 lb) |
+
+## Important
+
+- Very low-calorie diets should only be followed under medical supervision.
+- Combine a moderate deficit with enough protein and regular activity to protect muscle.
+- If you have a medical condition, are pregnant, or have a history of eating difficulties, speak to a doctor or registered dietitian before changing your diet.

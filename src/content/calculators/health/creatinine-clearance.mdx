@@ -1,0 +1,58 @@
+---
+title: Creatinine Clearance Calculator (Cockcroft–Gault)
+description: Estimate creatinine clearance (kidney function) from age, weight, sex and serum creatinine with the Cockcroft–Gault equation.
+category: health
+keywords: [creatinine clearance, cockcroft gault, kidney function, crcl calculator, serum creatinine, renal function]
+updated: 2026-10-27
+variables:
+  - id: k
+    label: Sex
+    default: 1
+    options:
+      - { label: Male, value: 1 }
+      - { label: Female, value: 0.85 }
+  - { id: age, label: Age, suffix: years, default: 60, min: 18, max: 120 }
+  - { id: m, label: Body weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 1 }
+  - { id: cr, label: Serum creatinine, suffix: mg/dL, default: 1.0, min: 0.01 }
+  - { id: crcl, label: Creatinine clearance, suffix: mL/min, min: 0, decimals: 1 }
+equations:
+  - crcl = (140 - age) * m * k / (72 * cr)
+faq:
+  - q: What is creatinine clearance?
+    a: An estimate of how quickly the kidneys remove creatinine from the blood — a practical measure of kidney filtering function.
+  - q: My lab reports creatinine in µmol/L. How do I convert?
+    a: Divide µmol/L by 88.4 to get mg/dL. For example, 88 µmol/L ≈ 1.0 mg/dL.
+  - q: Is this the same as eGFR?
+    a: No. eGFR (such as CKD-EPI) is used to stage kidney disease. Cockcroft–Gault is still widely used to adjust doses of some medicines.
+related: [health/body-surface-area, health/mean-arterial-pressure]
+---
+
+## How to use this calculator
+
+Choose **sex**, then enter **age**, **body weight** and **serum creatinine** in mg/dL. The estimated creatinine clearance appears in mL/min.
+
+## The formula (Cockcroft–Gault, 1976)
+
+<p class="formula">CrCl = (140 − age) × weight (kg) ÷ (72 × creatinine (mg/dL))   × 0.85 for women</p>
+
+## Worked example
+
+A 60-year-old man weighing 70 kg with creatinine 1.0 mg/dL:
+
+CrCl = 80 × 70 ÷ 72 = **77.8 mL/min**
+
+The same values for a woman give 77.8 × 0.85 = **66.1 mL/min**.
+
+## Interpretation (approximate)
+
+| CrCl (mL/min) | Kidney function |
+|---|---|
+| 90 or more | Normal |
+| 60–89 | Mildly reduced |
+| 30–59 | Moderately reduced |
+| 15–29 | Severely reduced |
+| below 15 | Kidney failure |
+
+## Important
+
+The formula is less accurate in people with very high or low body weight, older adults, amputees and during rapidly changing kidney function. It is a clinical estimation tool — diagnosis and dosing decisions belong to qualified healthcare professionals.

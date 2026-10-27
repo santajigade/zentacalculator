@@ -1,0 +1,40 @@
+---
+title: Mark–Recapture Population Estimator (Lincoln–Petersen)
+description: Estimate an animal population size from mark and recapture counts using the Lincoln–Petersen and Chapman methods.
+category: ecology
+keywords: [mark recapture, lincoln petersen, population estimate, capture recapture, chapman estimator, wildlife survey]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: M, label: Animals marked in first sample, default: 50, min: 0 }
+  - { id: Cc, label: Animals caught in second sample, default: 40, min: 0 }
+  - { id: R, label: Marked animals recaptured, default: 8, min: 0.0001 }
+  - { id: N, label: Population estimate (Lincoln–Petersen), min: 0, decimals: 0 }
+  - { id: Nc, label: Population estimate (Chapman), min: 0, decimals: 0 }
+equations:
+  - N = M * Cc / R
+  - Nc = (M + 1) * (Cc + 1) / (R + 1) - 1
+faq:
+  - q: How does mark–recapture work?
+    a: Mark a sample, release it, then take a second sample. The share of marked animals in the second sample estimates the share marked in the whole population.
+  - q: Why use the Chapman estimator?
+    a: It is less biased when the number recaptured is small.
+  - q: What assumptions are made?
+    a: A closed population (no births, deaths or migration between samples), marks are not lost, and marked animals are equally likely to be caught.
+related: [ecology/population-density, biology/logistic-growth]
+---
+
+## How to use this calculator
+
+Enter the number **marked** in the first sample, the number **caught** in the second, and how many of those were **recaptured** (already marked). Both population estimates are calculated.
+
+## Formulas
+
+<p class="formula">Lincoln–Petersen: N = M C ÷ R<br/>Chapman: N = (M + 1)(C + 1) ÷ (R + 1) − 1</p>
+
+## Example
+
+50 marked, 40 caught later, 8 recaptured:
+
+- Lincoln–Petersen = **250**
+- Chapman = 51 × 41 ÷ 9 − 1 = **231**

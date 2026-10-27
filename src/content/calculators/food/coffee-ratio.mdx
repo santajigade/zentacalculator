@@ -1,0 +1,40 @@
+---
+title: Coffee Ratio Calculator (Coffee to Water)
+description: Find the right amount of coffee and water for any brew ratio — pour-over, French press, drip or cold brew.
+category: food
+keywords: [coffee ratio, coffee to water ratio, how much coffee, 1:16 ratio, french press ratio, pour over]
+updated: 2026-10-27
+variables:
+  - id: r
+    label: Brew method / ratio
+    default: 16
+    options:
+      - { label: "Pour-over (1:16)", value: 16 }
+      - { label: "Drip machine (1:17)", value: 17 }
+      - { label: "French press (1:15)", value: 15 }
+      - { label: "AeroPress (1:12)", value: 12 }
+      - { label: "Cold brew concentrate (1:8)", value: 8 }
+      - { label: "Espresso (1:2)", value: 2 }
+  - { id: w, label: Water, family: volume, unit: mL, default: 500, min: 0 }
+  - { id: c, label: Ground coffee, family: mass, unit: g, min: 0 }
+equations:
+  - c = w * 1000 / r
+faq:
+  - q: What is the golden coffee ratio?
+    a: About 1:15 to 1:18 (coffee to water by weight). 1:16 is a popular starting point.
+  - q: How many grams of coffee per cup?
+    a: For a 250 ml mug at 1:16, about 15–16 g (roughly 2–3 tablespoons).
+  - q: Should I measure by weight?
+    a: Yes — scoops vary with grind size and roast.
+related: [food/cooking-converter]
+---
+
+## How to use this calculator
+
+Choose a **brew method** and enter the **water** amount. The grams of ground coffee are calculated. Or enter the coffee you have to find how much water to use.
+
+## Example
+
+500 ml of water at 1:16 → **31 g** of coffee.
+
+1 ml of water weighs about 1 g, so ratios work with either.

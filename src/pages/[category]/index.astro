@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../site.config.ts';
+import { CATEGORIES, catBySlug } from '../../data/categories.ts';
+import { allCalcs, urlOf } from '../../lib/calcs.ts';
+
+export async function getStaticPaths() {
+  return CATEGORIES.map((c) => ({ params: { category: c.slug } }));
+}
+const cat = catBySlug(Astro.params.category!)!;
+const calcs = (await allCalcs()).filter((c) => c.data.category === cat.slug);
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: cat.name, item: `${SITE.url}/${cat.slug}/` } ] },
+  { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: calcs.map((c, i) => (
+    { '@type': 'ListItem', position: i + 1, url: `${SITE.url}${urlOf(c)}`, name: c.data.title })) },
+];
+---
+<Base title={`${cat.name} Calculators`} description={`${calcs.length} free ${cat.name.toLowerCase()} calculators. ${cat.blurb}`} schema={schema} activeCat={cat.slug} noindex={calcs.length === 0}>
+  <div class="wrap" style={`--accent:${cat.color}`}>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>{cat.name}</span></nav>
+    <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.03em;margin:6px 0 4px">{cat.icon} {cat.name} calculators</h1>
+    <p class="muted">{cat.blurb} {calcs.length} calculator{calcs.length === 1 ? '' : 's'}.</p>
+    {calcs.length ? (
+      <ul class="calc-list" style="margin-top:24px">
+        {calcs.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}
+      </ul>
+    ) : <p class="muted" style="padding:40px 0">Calculators coming soon.</p>}
+  </div>
+</Base>

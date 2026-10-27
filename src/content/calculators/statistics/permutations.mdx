@@ -1,0 +1,43 @@
+---
+title: Permutation Calculator (nPr)
+description: Calculate the number of permutations — ordered arrangements of r items chosen from n.
+category: statistics
+keywords: [permutation calculator, npr, arrangements, order matters, factorial, combinatorics]
+updated: 2026-10-27
+variables:
+  - { id: n, label: Total items (n), default: 10, min: 0 }
+  - { id: r, label: Items chosen (r), default: 3, min: 0 }
+  - { id: P, label: Permutations (nPr), min: 0 }
+equations:
+  - P = nPr(n, r)
+faq:
+  - q: What is a permutation?
+    a: An arrangement where order matters. Choosing a 1st, 2nd and 3rd place from 10 runners is a permutation.
+  - q: What is the formula?
+    a: nPr = n! ÷ (n − r)!. For 10 and 3, 10 × 9 × 8 = 720.
+  - q: How is it different from combinations?
+    a: Combinations ignore order. nPr = nCr × r!, so there are always more permutations than combinations.
+related: [statistics/combinations, statistics/probability]
+---
+
+## How to use this calculator
+
+Enter the **total number of items** and how many are **chosen**. The number of ordered arrangements is calculated.
+
+## Formula
+
+<p class="formula">nPr = n! ÷ (n − r)!</p>
+
+## Worked example
+
+Gold, silver and bronze from 10 runners:
+
+10P3 = 10 × 9 × 8 = **720**
+
+## More examples
+
+| Situation | Calculation | Result |
+|---|---|---|
+| 4-digit PIN, no repeated digits | 10P4 | 5,040 |
+| Arrange 5 books on a shelf | 5P5 | 120 |
+| President, VP, secretary from 20 | 20P3 | 6,840 |

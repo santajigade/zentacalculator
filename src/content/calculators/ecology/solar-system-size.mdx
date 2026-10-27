@@ -1,0 +1,39 @@
+---
+title: Solar System Size Calculator
+description: Work out the solar PV system size (kWp) and number of panels needed to cover your electricity use.
+category: ecology
+keywords: [solar system size, how many solar panels, solar sizing, kw solar needed, rooftop solar calculator]
+updated: 2026-10-27
+variables:
+  - { id: use, label: Monthly electricity use, suffix: kWh, default: 400, min: 0 }
+  - { id: psh, label: Peak sun hours per day, suffix: hours, default: 5, min: 0.1 }
+  - { id: pr, label: Performance ratio, family: percent, unit: '%', default: 75, min: 0.01, max: 1 }
+  - { id: pw, label: Panel rating, suffix: W, default: 450, min: 1 }
+  - { id: kw, label: System size needed, suffix: kWp, min: 0, decimals: 2 }
+  - { id: n, label: Number of panels, min: 0, decimals: 0 }
+  - { id: area, label: Approx. roof area (panels only), family: area, unit: m2, imperialUnit: ft2, min: 0 }
+equations:
+  - kw = use / 30 / (psh * pr)
+  - n = ceil(kw * 1000 / pw)
+  - area = n * 2.2
+faq:
+  - q: How many solar panels do I need?
+    a: Divide daily use by (peak sun hours × performance ratio) to get kWp, then divide by the panel rating.
+  - q: How much roof space does a panel need?
+    a: A typical 400–450 W panel is about 2 m² (around 2.0 × 1.1 m).
+  - q: Should I cover 100% of my use?
+    a: It depends on local net-metering rules and budget. Many systems are sized to cover 70–100% of yearly use.
+related: [ecology/solar-output, ecology/battery-storage]
+---
+
+## How to use this calculator
+
+Enter your **monthly electricity use**, local **peak sun hours**, **performance ratio** and **panel rating**. The system size, panel count and approximate roof area are calculated.
+
+## Example
+
+400 kWh a month, 5 sun hours, 75% PR, 450 W panels:
+
+- System = 13.3 ÷ 3.75 = **3.56 kWp**
+- Panels = **8**
+- Roof area ≈ **17.6 m²**

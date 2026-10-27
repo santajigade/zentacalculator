@@ -1,0 +1,42 @@
+---
+title: Flooring Calculator (Laminate & Wood)
+description: Calculate how many boxes of laminate, vinyl or wood flooring you need — with waste and total cost.
+category: construction
+keywords: [flooring calculator, laminate flooring, how many boxes, wood flooring, vinyl plank, flooring cost]
+updated: 2026-10-27
+variables:
+  - { id: A, label: Floor area, family: area, unit: m2, imperialUnit: ft2, default: 20, min: 0 }
+  - { id: wst, label: Waste allowance, family: percent, unit: '%', default: 8, min: 0, max: 1 }
+  - { id: bx, label: Coverage per box, family: area, unit: m2, imperialUnit: ft2, default: 2.2, min: 0.01 }
+  - { id: pb, label: Price per box, family: currency, default: 35, min: 0, decimals: 2 }
+  - { id: n, label: Boxes needed, min: 0, decimals: 0 }
+  - { id: cost, label: Flooring cost, family: currency, min: 0, decimals: 2 }
+equations:
+  - n = ceil(A * (1 + wst) / bx)
+  - cost = n * pb
+faq:
+  - q: How much extra flooring should I buy?
+    a: About 5–10% for straight installation, more for diagonal layouts or rooms with many corners.
+  - q: Where do I find the coverage per box?
+    a: On the box or product page, usually in m² or ft².
+  - q: Do I need underlay?
+    a: Laminate and many vinyl floors need underlay unless it is pre-attached. Buy it for the same area.
+related: [construction/tile-calculator, construction/square-footage]
+---
+
+## How to use this calculator
+
+Enter the **floor area**, **waste** allowance, the **coverage per box** and the **price per box**. The number of boxes (rounded up) and the cost are calculated.
+
+## Example
+
+20 m² with 8% waste, boxes covering 2.2 m² at 35 each:
+
+- Boxes = 20 × 1.08 ÷ 2.2 = **10**
+- Cost = **350**
+
+## Measuring tips
+
+- Split L-shaped rooms into rectangles and add the areas.
+- Include closets and spaces under doors.
+- Let flooring acclimatise in the room for 24–48 hours before laying.

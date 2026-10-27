@@ -1,0 +1,46 @@
+---
+title: Coefficient of Variation Calculator
+description: Calculate the coefficient of variation (relative standard deviation) of a data set to compare variability.
+category: statistics
+keywords: [coefficient of variation, cv, relative standard deviation, rsd, variability, precision]
+updated: 2026-10-27
+dataset:
+  label: Your data
+  default: '98.2, 101.5, 99.8, 100.4, 100.9, 99.1'
+variables:
+  - { id: cv, label: Coefficient of variation (sample), family: percent, unit: '%' }
+  - { id: sd, label: Standard deviation (sample) }
+  - { id: mean, label: Mean }
+equations:
+  - cv = data_sd / data_mean
+  - sd = data_sd
+  - mean = data_mean
+faq:
+  - q: What is the coefficient of variation?
+    a: The standard deviation divided by the mean, as a percentage. It shows variability relative to the size of the values.
+  - q: When is it useful?
+    a: Comparing the spread of data sets with different units or very different means, such as lab precision or investment risk.
+  - q: Is there a good CV value?
+    a: It depends on the field. In analytical labs, a CV under 2–5% often indicates good precision.
+related: [statistics/standard-deviation, statistics/standard-error]
+---
+
+## How to use this calculator
+
+Paste your measurements. The coefficient of variation, standard deviation and mean are calculated.
+
+## Formula
+
+<p class="formula">CV = s ÷ x̄ × 100%</p>
+
+## Worked example
+
+Six repeat measurements: 98.2, 101.5, 99.8, 100.4, 100.9, 99.1
+
+- Mean = **99.983**
+- s = **1.209**
+- CV = **1.21%**
+
+## Comparing different scales
+
+A bolt varying by ±0.1 mm on 10 mm (CV 1%) is relatively less consistent than a beam varying by ±5 mm on 6 m (CV 0.08%), even though 5 mm is a bigger number.

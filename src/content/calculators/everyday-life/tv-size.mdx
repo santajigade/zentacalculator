@@ -1,0 +1,52 @@
+---
+title: TV Size & Viewing Distance Calculator
+description: Find a screen's width and height from its diagonal and aspect ratio — plus the recommended viewing distance.
+category: everyday-life
+keywords: [tv size calculator, screen dimensions, viewing distance, tv width height, 55 inch tv size, aspect ratio]
+updated: 2026-10-27
+variables:
+  - { id: d, label: Screen diagonal, family: length, unit: in, default: 55, min: 0 }
+  - id: r
+    label: Aspect ratio
+    default: 1.7777778
+    options:
+      - { label: "16:9 (TVs, monitors)", value: 1.7777778 }
+      - { label: "21:9 (ultrawide)", value: 2.3333333 }
+      - { label: "4:3 (older screens)", value: 1.3333333 }
+      - { label: "16:10 (laptops)", value: 1.6 }
+  - { id: w, label: Screen width, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: h, label: Screen height, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: vd, label: Recommended viewing distance (4K), family: length, unit: m, imperialUnit: ft, min: 0 }
+equations:
+  - w = d * r / sqrt(r^2 + 1)
+  - h = d / sqrt(r^2 + 1)
+  - vd = 1.2 * d
+faq:
+  - q: How wide is a 55-inch TV?
+    a: A 16:9 55-inch screen is about 121.8 cm (47.9 in) wide and 68.5 cm (27 in) tall — the frame adds a little more.
+  - q: How far should I sit from a TV?
+    a: For 4K, around 1–1.5 times the diagonal gives an immersive view; for HD, 1.5–2.5 times.
+  - q: What size TV for my room?
+    a: Press × on the diagonal and enter your viewing distance to find a matching screen size.
+related: [conversion/cm-to-inches, math/pythagorean-theorem]
+---
+
+## How to use this calculator
+
+Enter the **diagonal** and choose the **aspect ratio**. The screen's width, height and a recommended viewing distance for 4K content are calculated.
+
+## Formulas
+
+<p class="formula">width = d × r ÷ √(r² + 1)   height = d ÷ √(r² + 1)</p>
+
+## Common 16:9 sizes
+
+| Diagonal | Width | Height |
+|---|---|---|
+| 32″ | 70.8 cm | 39.8 cm |
+| 43″ | 95.2 cm | 53.5 cm |
+| 55″ | 121.8 cm | 68.5 cm |
+| 65″ | 143.9 cm | 80.9 cm |
+| 75″ | 166.0 cm | 93.4 cm |
+
+Measurements are for the visible screen; the bezel and stand add a few centimetres. Check the manufacturer's dimensions before buying furniture.

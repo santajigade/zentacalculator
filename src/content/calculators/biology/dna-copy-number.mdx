@@ -1,0 +1,37 @@
+---
+title: DNA Copy Number Calculator
+description: Calculate the number of DNA molecules (copies) from mass in ng and length in base pairs — for qPCR standards and cloning.
+category: biology
+keywords: [dna copy number, copies per ul, qpcr standard, plasmid copy number, ng to copies, molecules of dna]
+updated: 2026-10-27
+variables:
+  - { id: m, label: DNA amount, suffix: ng, default: 10, min: 0 }
+  - { id: bp, label: Length, suffix: bp, default: 5000, min: 1 }
+  - { id: cp, label: Number of copies, min: 0 }
+  - { id: pmol, label: Amount, suffix: pmol, min: 0, decimals: 5 }
+equations:
+  - cp = m * 6.02214076e23 / (bp * 650 * 1e9)
+  - pmol = m * 1000 / (bp * 650)
+faq:
+  - q: How do I convert ng of DNA to copies?
+    a: Copies = ng × 6.022 × 10²³ ÷ (length in bp × 650 × 10⁹). 650 g/mol is the average mass of one base pair.
+  - q: Does it work for single-stranded DNA?
+    a: Use about 330 g/mol per nucleotide instead of 650 per base pair.
+  - q: How do I make a qPCR standard curve?
+    a: Calculate copies per µL of your stock, then make 10-fold serial dilutions.
+related: [biology/dna-concentration, biology/ligation-ratio, biology/pcr-amplification]
+---
+
+## How to use this calculator
+
+Enter the **amount of DNA** in ng and its **length** in base pairs. The number of copies and pmol are calculated.
+
+## Formula
+
+<p class="formula">copies = ng × N<sub>A</sub> ÷ (bp × 650 × 10⁹)</p>
+
+## Example
+
+10 ng of a 5,000 bp plasmid:
+
+copies = 10 × 6.022 × 10²³ ÷ (5,000 × 650 × 10⁹) = **1.85e+09**

@@ -1,0 +1,47 @@
+---
+title: Hours Worked Calculator (Time Card)
+description: Calculate hours worked from start and end time minus breaks — plus your pay for the shift.
+category: everyday-life
+keywords: [hours worked calculator, time card, timesheet, work hours, shift hours, overtime, payroll]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: st, label: Start time, family: clock, default: 9 }
+  - { id: en, label: End time, family: clock, default: 17.5 }
+  - { id: br, label: Unpaid break, suffix: minutes, default: 30, min: 0 }
+  - { id: rate, label: Hourly rate, family: currency, default: 20, min: 0, decimals: 2 }
+  - { id: h, label: Hours worked, decimals: 2 }
+  - { id: pay, label: Pay for this shift, family: currency, decimals: 2 }
+equations:
+  - h = mod(en - st, 24) - br / 60
+  - pay = h * rate
+faq:
+  - q: How do I calculate hours worked?
+    a: Subtract the start time from the end time, then subtract unpaid breaks. 9:00 to 17:30 with a 30-minute break is 8 hours.
+  - q: Does it work for night shifts?
+    a: Yes. If the end time is earlier than the start time, the calculator assumes the shift ends the next day.
+  - q: How do I convert minutes to decimal hours?
+    a: Divide by 60. 45 minutes = 0.75 hours.
+related: [everyday-life/time-duration, finance/hourly-to-salary]
+---
+
+## How to use this calculator
+
+Enter your **start time**, **end time** and **unpaid break** in minutes. Add your **hourly rate** to see the pay for the shift. Night shifts that pass midnight are handled automatically.
+
+## Example
+
+9:00 to 17:30 with a 30-minute break: 8.5 − 0.5 = **8 hours**. At 20 per hour, pay = **160**.
+
+## Minutes to decimal hours
+
+| Minutes | Decimal hours |
+|---|---|
+| 15 | 0.25 |
+| 20 | 0.33 |
+| 30 | 0.5 |
+| 45 | 0.75 |
+
+## Overtime
+
+Many employers pay overtime above 8 hours a day or 40 hours a week, often at 1.5× the normal rate. Check your contract and local labour law.

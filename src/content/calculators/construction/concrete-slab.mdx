@@ -1,0 +1,49 @@
+---
+title: Concrete Slab Calculator
+description: Calculate the concrete volume for a slab, patio or driveway — plus pre-mix bags needed, with a waste allowance.
+category: construction
+keywords: [concrete calculator, concrete slab, cubic meters of concrete, cubic yards, concrete bags, patio, driveway]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: L, label: Length, family: length, unit: m, imperialUnit: ft, default: 4, min: 0 }
+  - { id: W, label: Width, family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: T, label: Thickness, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: wst, label: Waste allowance, family: percent, unit: '%', default: 10, min: 0, max: 1 }
+  - { id: V, label: Concrete volume (incl. waste), family: volume, unit: m3, imperialUnit: ft3, min: 0 }
+  - { id: yd, label: In cubic yards, min: 0, decimals: 2 }
+  - { id: bags, label: 40 kg pre-mix bags (≈0.018 m³ each), min: 0, decimals: 0 }
+equations:
+  - V = L * W * T * (1 + wst)
+  - yd = V / 0.764554858
+  - bags = ceil(V / 0.018)
+faq:
+  - q: How do I calculate concrete for a slab?
+    a: Multiply length × width × thickness (all in metres) to get cubic metres, then add 5–10% for waste and uneven ground.
+  - q: How thick should a slab be?
+    a: Typically 100 mm (4 in) for patios and paths, 100–150 mm for driveways for cars, and more for heavy vehicles — follow local building rules.
+  - q: Should I use bags or ready-mix?
+    a: Bags suit small jobs under about 0.5 m³. For larger pours, ready-mix concrete delivered by truck is usually cheaper and more consistent.
+related: [construction/concrete-mix, construction/concrete-column, construction/rebar-weight]
+---
+
+## How to use this calculator
+
+Enter the slab's **length**, **width** and **thickness**, and a **waste allowance**. The volume (m³ and cubic yards) and approximate number of 40 kg pre-mix bags are calculated.
+
+## Formula
+
+<p class="formula">Volume = length × width × thickness × (1 + waste)</p>
+
+## Example
+
+A 4 m × 3 m patio, 100 mm thick, 10% waste:
+
+- Volume = 4 × 3 × 0.1 × 1.1 = **1.32 m³** (1.73 yd³)
+- Pre-mix bags (40 kg) ≈ **74**
+
+## Tips
+
+- Compact the sub-base and use formwork to keep thickness even.
+- Add reinforcement mesh or rebar for driveways and larger slabs.
+- Bag yields vary by brand — check the label (a US 80 lb bag yields about 0.6 ft³).

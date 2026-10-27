@@ -1,0 +1,45 @@
+---
+title: Pregnancy Due Date Calculator
+description: Estimate your baby's due date and how many weeks pregnant you are from the first day of your last period.
+category: other
+keywords: [due date calculator, pregnancy calculator, how many weeks pregnant, estimated due date, naegele rule, lmp]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: lmp, label: First day of last menstrual period, family: date, default: -70 }
+  - { id: cyc, label: Average cycle length, suffix: days, default: 28, min: 20, max: 45 }
+  - { id: today, label: Today, family: date, default: 0 }
+  - { id: due, label: Estimated due date, family: date }
+  - { id: wk, label: Weeks pregnant today, min: 0, decimals: 1 }
+  - { id: left, label: Days until due date, decimals: 0 }
+equations:
+  - due = lmp + 280 + (cyc - 28)
+  - wk = (today - lmp - (cyc - 28)) / 7
+  - left = due - today
+faq:
+  - q: How is the due date calculated?
+    a: By Naegele's rule — 280 days (40 weeks) after the first day of the last period, adjusted for cycles longer or shorter than 28 days.
+  - q: How accurate is it?
+    a: Only about 4–5% of babies arrive on their due date; most are born within two weeks either side. An early ultrasound gives a more accurate date.
+  - q: Why count from the last period, not conception?
+    a: The period date is usually known. Conception typically happens about two weeks later, so you are counted as "2 weeks pregnant" at conception.
+related: [other/ovulation, everyday-life/days-until]
+---
+
+## How to use this calculator
+
+Choose the **first day of your last period** and your average **cycle length**. Your estimated due date, how many weeks pregnant you are today, and the days remaining are calculated.
+
+## Formula (Naegele's rule)
+
+<p class="formula">Due date = LMP + 280 days + (cycle length − 28)</p>
+
+## Trimesters
+
+| Trimester | Weeks |
+|---|---|
+| First | 1–13 |
+| Second | 14–27 |
+| Third | 28–40 |
+
+This tool gives an estimate only. Your doctor or midwife will confirm your due date, usually with an ultrasound scan.

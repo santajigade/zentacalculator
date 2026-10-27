@@ -1,0 +1,38 @@
+---
+title: Osmotic Pressure Calculator
+description: Calculate osmotic pressure from molarity, van 't Hoff factor and temperature using π = iMRT.
+category: chemistry
+keywords: [osmotic pressure, van't hoff, pi = imrt, osmosis, reverse osmosis, colligative properties]
+updated: 2026-10-27
+variables:
+  - { id: i, label: van 't Hoff factor (i), default: 2, min: 0, help: "1 for sugar, about 2 for NaCl, about 3 for CaCl₂" }
+  - { id: c, label: Molarity, suffix: mol/L, default: 0.15, min: 0 }
+  - { id: T, label: Temperature, family: temperature, unit: C, imperialUnit: F, default: 37, min: 0 }
+  - { id: P, label: Osmotic pressure, family: pressure, unit: atm, imperialUnit: psi, min: 0 }
+equations:
+  - P = i * c * 1000 * 8.314462618 * T
+faq:
+  - q: What is osmotic pressure?
+    a: The pressure needed to stop water flowing through a semi-permeable membrane into a more concentrated solution.
+  - q: What is the van 't Hoff factor?
+    a: The number of particles a substance forms in solution. Sugar stays as one molecule (i = 1); NaCl splits into Na⁺ and Cl⁻ (i ≈ 2).
+  - q: Why does reverse osmosis need high pressure?
+    a: Sea water has an osmotic pressure of about 27 bar, so desalination plants apply 50–80 bar to push fresh water through the membrane.
+related: [chemistry/molarity, chemistry/molality]
+---
+
+## How to use this calculator
+
+Enter the **van 't Hoff factor**, **molarity** and **temperature**. The osmotic pressure appears in atm, bar, kPa or psi.
+
+## Formula
+
+<p class="formula">π = i M R T</p>
+
+## Worked example — saline at body temperature
+
+0.15 M NaCl (i = 2) at 37 °C (310.15 K):
+
+π = 2 × 150 mol/m³ × 8.314 × 310.15 = 774 kPa = **7.64 atm**
+
+This is close to the osmotic pressure of blood, which is why 0.9% saline is used for IV fluids.

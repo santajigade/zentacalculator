@@ -1,0 +1,35 @@
+---
+title: Time Duration Calculator
+description: Find the time between two clock times in hours and minutes — works across midnight.
+category: everyday-life
+keywords: [time duration, time between two times, hours between times, time difference, elapsed time]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Start time, family: clock, default: 22.5 }
+  - { id: b, label: End time, family: clock, default: 6.75 }
+  - { id: h, label: Duration in hours (decimal), decimals: 2 }
+  - { id: m, label: Duration in minutes, decimals: 0 }
+equations:
+  - h = mod(b - a, 24)
+  - m = h * 60
+faq:
+  - q: How do I calculate the time between two times?
+    a: Subtract the start from the end. If the end is earlier on the clock, add 24 hours because it is the next day.
+  - q: What is 8.25 hours in hours and minutes?
+    a: 8 hours 15 minutes — multiply the decimal part by 60.
+  - q: Can it handle more than 24 hours?
+    a: No — for longer periods, use the days between dates calculator.
+related: [everyday-life/hours-worked, everyday-life/sleep-calculator]
+---
+
+## How to use this calculator
+
+Enter a **start time** and an **end time**. The duration appears in decimal hours and minutes. If the end time is earlier than the start, it is treated as the next day.
+
+## Example
+
+22:30 to 06:45 = **8.25 hours** = 8 h 15 min (495 minutes).
+
+## Converting decimal hours
+
+Multiply the decimal part by 60: 7.6 h = 7 h + 0.6 × 60 min = **7 h 36 min**.

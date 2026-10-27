@@ -1,0 +1,60 @@
+---
+title: Horizontal Tank Volume Calculator
+description: Calculate liquid volume in a partially filled horizontal cylindrical tank from its level — and the level for a given volume.
+category: engineering
+keywords: [horizontal tank volume, tank level to volume, partially filled cylinder, tank strapping, cylindrical tank, tank calibration]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: D, label: Tank inner diameter, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
+  - { id: L, label: Tank length (straight shell), family: length, unit: m, imperialUnit: ft, default: 5, min: 0 }
+  - { id: h, label: Liquid level, family: length, unit: m, imperialUnit: ft, default: 0.5, min: 0 }
+  - { id: V, label: Liquid volume, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: Vt, label: Total tank volume, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: pct, label: Filled, family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - V = L * ((D/2)^2 * acos((D/2 - h) / (D/2)) - (D/2 - h) * sqrt(D * h - h^2))
+  - Vt = pi * (D/2)^2 * L
+  - pct = V / Vt
+chart: { x: h, y: V, from: 0, to: 2 }
+faq:
+  - q: Why isn't volume proportional to level in a horizontal tank?
+    a: The tank is widest in the middle, so each centimetre of level holds more liquid near the centre than near the top or bottom. At 25% of the diameter the tank is only about 20% full.
+  - q: Does this include dished or hemispherical ends?
+    a: No. It calculates the cylindrical shell only. Heads add extra volume; the calculator gives the shell part, which is most of the tank for long vessels.
+  - q: Can I find the level for a given volume?
+    a: Yes. Press × on Liquid level, then type the volume. The level is solved numerically.
+related: [engineering/hydrostatic-pressure, engineering/4-20ma-scaling, math/cylinder-volume]
+---
+
+## How to use this calculator
+
+Enter the tank's **inner diameter**, **straight length** and the **liquid level** measured from the bottom. You get the liquid volume, the total tank volume and the percentage filled. To create a strapping table for a level transmitter, change the level in steps and note each volume — or watch the chart.
+
+## The formula
+
+For a horizontal cylinder of radius r = D/2 and level h:
+
+<p class="formula">V = L × [ r² cos⁻¹((r − h) ÷ r) − (r − h) √(2rh − h²) ]</p>
+
+## Worked example
+
+A tank 2 m in diameter and 5 m long with 0.5 m of liquid:
+
+- r = 1 m, r − h = 0.5 m
+- Segment area = 1 × cos⁻¹(0.5) − 0.5 × √0.75 = 1.0472 − 0.4330 = 0.6142 m²
+- V = 0.6142 × 5 = **3,071 litres** — only **19.6%** full at 25% of the height
+
+## Level vs volume (any horizontal cylinder)
+
+| Level (% of D) | Volume (% full) |
+|---|---|
+| 12.5% | 7.2% |
+| 25% | 19.6% |
+| 50% | 50% |
+| 75% | 80.4% |
+| 87.5% | 92.8% |
+
+## Using it with a level transmitter
+
+A pressure or radar transmitter measures **level**. To display **volume**, the control system needs this non-linear curve (a strapping table). Combine with the [hydrostatic pressure calculator](/engineering/hydrostatic-pressure/) to go from pressure to level first.

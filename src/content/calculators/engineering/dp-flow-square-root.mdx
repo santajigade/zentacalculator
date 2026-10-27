@@ -1,0 +1,61 @@
+---
+title: DP Flow Square Root Calculator
+description: Convert differential pressure to flow for orifice, venturi and other DP flow meters using square-root extraction.
+category: engineering
+keywords: [square root extraction, dp flow, differential pressure to flow, flow transmitter, orifice dp, sqrt dp]
+updated: 2026-10-27
+variables:
+  - { id: dPm, label: DP at maximum flow, family: pressure, unit: mbar, imperialUnit: inH2O, default: 250, min: 0 }
+  - { id: Qm, label: Maximum flow, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
+  - { id: dP, label: Measured DP, family: pressure, unit: mbar, imperialUnit: inH2O, default: 62.5, min: 0 }
+  - { id: dPp, label: DP (% of range), family: percent, unit: '%', min: 0 }
+  - { id: Qp, label: Flow (% of range), family: percent, unit: '%', min: 0 }
+  - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+equations:
+  - dPp = dP / dPm
+  - Qp = sqrt(dPp)
+  - Q = Qp * Qm
+chart: { x: dP, y: Q, from: 0, to: 250 }
+faq:
+  - q: Why do DP flow meters need square root extraction?
+    a: Flow through an orifice or venturi is proportional to the square root of the differential pressure. Without extraction, a reading of 25% DP would be wrongly shown as 25% flow when it is really 50%.
+  - q: Where is the square root applied — transmitter or control system?
+    a: Either, but never both. Applying it twice is a common commissioning error that makes readings far too high at low flow.
+  - q: What is low-flow cut-off?
+    a: Near zero the square-root curve is very steep, so tiny DP noise causes large flow swings. Most systems force flow to zero below about 1–6% DP.
+related: [engineering/orifice-flow, engineering/4-20ma-scaling]
+---
+
+## How to use this calculator
+
+Enter the transmitter's **DP range** (DP at maximum flow) and the **maximum flow**. Then type the **measured DP** — or a percentage — to get the actual flow. You can also work backwards: type a flow to see the DP it should produce.
+
+## The formula
+
+<p class="formula">Flow % = √(DP %)   Q = Q<sub>max</sub> × √(ΔP ÷ ΔP<sub>max</sub>)</p>
+
+## Worked example
+
+Range 0–250 mbar = 0–100 m³/h. Measured DP = 62.5 mbar.
+
+- DP % = 62.5 ÷ 250 = 25%
+- Flow % = √0.25 = 50%
+- Flow = **50 m³/h**
+
+## DP vs flow table
+
+| DP % | Flow % |
+|---|---|
+| 1% | 10% |
+| 4% | 20% |
+| 9% | 30% |
+| 25% | 50% |
+| 49% | 70% |
+| 81% | 90% |
+| 100% | 100% |
+
+At 10% flow the transmitter sees only 1% of its range, which is why turndown is limited.
+
+## With a 4–20 mA signal
+
+If the transmitter output is linear with DP, mA = 4 + 16 × DP%. For 50% flow (25% DP) that is **8 mA**, not 12 mA. If the transmitter extracts the square root itself, 50% flow reads 12 mA. Use the [4–20 mA calculator](/engineering/4-20ma-scaling/) for the conversion.

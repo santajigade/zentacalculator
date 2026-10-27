@@ -1,0 +1,52 @@
+---
+title: Acceleration Calculator
+description: Calculate acceleration from change in speed and time — or the final speed or time needed — in m/s², g and more.
+category: physics
+keywords: [acceleration calculator, a = (v-u)/t, 0-100 km/h, change in velocity, m/s2, g force]
+updated: 2026-10-27
+variables:
+  - { id: u, label: Initial speed, family: velocity, unit: kmh, imperialUnit: mph, default: 0 }
+  - { id: v, label: Final speed, family: velocity, unit: kmh, imperialUnit: mph, default: 100 }
+  - { id: t, label: Time, family: seconds, unit: s, default: 8, min: 0 }
+  - { id: a, label: Acceleration, suffix: m/s² }
+  - { id: gs, label: Acceleration in g, decimals: 3 }
+equations:
+  - a = (v - u) / t
+  - gs = a / g0
+faq:
+  - q: What is the formula for acceleration?
+    a: Acceleration = (final speed − initial speed) ÷ time. Its SI unit is metres per second squared (m/s²).
+  - q: What is 1 g?
+    a: The acceleration due to gravity at Earth's surface, 9.80665 m/s².
+  - q: What does negative acceleration mean?
+    a: Slowing down (deceleration) — the final speed is lower than the initial speed.
+related: [physics/suvat-equations, physics/force, physics/speed-distance-time]
+---
+
+## How to use this calculator
+
+Enter the **initial speed**, **final speed** and **time** to get the acceleration in m/s² and in g. Or enter the acceleration to find the time or speed.
+
+## The formula
+
+<p class="formula">a = (v − u) ÷ t</p>
+
+## Worked example
+
+A car goes from 0 to 100 km/h in 8 seconds:
+
+- Change in speed = 100 km/h = 27.78 m/s
+- a = 27.78 ÷ 8 = **3.47 m/s²** = **0.354 g**
+
+## Typical accelerations
+
+| Situation | Acceleration |
+|---|---|
+| Family car, 0–100 km/h in 12 s | 2.3 m/s² |
+| Sports car, 0–100 km/h in 3.5 s | 7.9 m/s² |
+| Free fall | 9.81 m/s² (1 g) |
+| Emergency braking (dry road) | about −8 m/s² |
+
+## Related equations
+
+For distance covered while accelerating, use the [SUVAT calculator](/physics/suvat-equations/).

@@ -1,0 +1,49 @@
+---
+title: Kinetic Energy Calculator
+description: Calculate kinetic energy from mass and speed (KE = ½mv²) — or the speed or mass from a known energy.
+category: physics
+keywords: [kinetic energy, ke = 1/2 mv2, energy of motion, joules, kinetic energy formula]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 1200, min: 0 }
+  - { id: v, label: Speed, family: velocity, unit: kmh, imperialUnit: mph, default: 100, min: 0 }
+  - { id: KE, label: Kinetic energy, family: energy, unit: kJ, min: 0 }
+equations:
+  - KE = 0.5 * m * v^2
+chart: { x: v, y: KE, from: 0, to: 150 }
+faq:
+  - q: What is the kinetic energy formula?
+    a: KE = ½ × m × v², with mass in kg and speed in m/s giving energy in joules.
+  - q: Why does speed matter so much?
+    a: Energy depends on the square of speed. Doubling speed means four times the energy — and roughly four times the braking distance.
+  - q: Where does kinetic energy go when a car brakes?
+    a: Mostly into heat in the brakes. Electric and hybrid cars recover part of it with regenerative braking.
+related: [physics/potential-energy, physics/momentum, physics/suvat-equations]
+---
+
+## How to use this calculator
+
+Enter **mass** and **speed** to get the kinetic energy, or enter the energy to find the speed. Units convert automatically (km/h, mph, m/s; J, kJ, kWh).
+
+## The formula
+
+<p class="formula">KE = ½ m v²</p>
+
+## Worked example
+
+A 1,200 kg car at 100 km/h (27.78 m/s):
+
+KE = 0.5 × 1,200 × 27.78² = **463 kJ**
+
+At 50 km/h the same car has only 116 kJ — one quarter.
+
+## Speed and safety
+
+| Speed | Kinetic energy (1,200 kg car) |
+|---|---|
+| 30 km/h | 42 kJ |
+| 50 km/h | 116 kJ |
+| 80 km/h | 296 kJ |
+| 120 km/h | 667 kJ |
+
+This is why small speed increases make crashes much more severe.

@@ -1,0 +1,45 @@
+---
+title: Percent Yield Calculator
+description: Calculate the percent yield of a chemical reaction from the actual and theoretical yield.
+category: chemistry
+keywords: [percent yield, theoretical yield, actual yield, reaction yield, chemistry yield calculator]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Actual yield, family: mass, unit: g, default: 8.5, min: 0 }
+  - { id: t, label: Theoretical yield, family: mass, unit: g, default: 10, min: 0 }
+  - { id: y, label: Percent yield, family: percent, unit: '%', min: 0 }
+equations:
+  - y = a / t
+faq:
+  - q: What is percent yield?
+    a: How much product you actually obtained compared with the maximum possible, × 100.
+  - q: Why is yield usually below 100%?
+    a: Incomplete reactions, side reactions, and product lost during filtering, transfer or purification.
+  - q: Can yield be over 100%?
+    a: Only through error — usually the product is still wet or contains impurities.
+related: [chemistry/moles, chemistry/percent-composition]
+---
+
+## How to use this calculator
+
+Enter the **actual yield** you obtained and the **theoretical yield** calculated from stoichiometry. Or enter an expected percent yield to see how much product to expect.
+
+## Formula
+
+<p class="formula">% yield = actual ÷ theoretical × 100</p>
+
+## Worked example
+
+Theoretical yield 10.0 g, actual product 8.5 g:
+
+% yield = 8.5 ÷ 10.0 = **85%**
+
+## Finding the theoretical yield
+
+1. Convert the limiting reagent's mass to moles (use the [moles calculator](/chemistry/moles/)).
+2. Use the balanced equation's mole ratio to find moles of product.
+3. Multiply by the product's molar mass.
+
+## Typical yields
+
+Simple one-step lab reactions often give 70–95%. Multi-step syntheses multiply losses: five steps at 80% each give an overall yield of only 33%.

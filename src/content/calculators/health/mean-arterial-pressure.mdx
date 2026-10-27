@@ -1,0 +1,51 @@
+---
+title: Mean Arterial Pressure (MAP) Calculator
+description: Calculate mean arterial pressure from systolic and diastolic blood pressure readings.
+category: health
+keywords: [mean arterial pressure, map calculator, blood pressure, systolic, diastolic, pulse pressure]
+updated: 2026-10-27
+variables:
+  - { id: sbp, label: Systolic pressure (top number), suffix: mmHg, default: 120, min: 0 }
+  - { id: dbp, label: Diastolic pressure (bottom number), suffix: mmHg, default: 80, min: 0 }
+  - { id: pp, label: Pulse pressure, suffix: mmHg, min: 0, decimals: 0 }
+  - { id: map, label: Mean arterial pressure, suffix: mmHg, min: 0, decimals: 1 }
+equations:
+  - pp = sbp - dbp
+  - map = dbp + pp / 3
+faq:
+  - q: What is mean arterial pressure?
+    a: The average pressure in your arteries during one heartbeat. It reflects how well blood is reaching your organs.
+  - q: What is a normal MAP?
+    a: Roughly 70–100 mmHg in healthy adults. Clinicians generally aim for at least 65 mmHg in hospital settings.
+  - q: Why isn't MAP the simple average of the two numbers?
+    a: The heart spends about two-thirds of each beat relaxing (diastole), so the diastolic pressure counts more.
+related: [health/heart-rate-zones, health/body-surface-area]
+---
+
+## How to use this calculator
+
+Enter your **systolic** (top) and **diastolic** (bottom) blood pressure in mmHg. You get the pulse pressure and the mean arterial pressure.
+
+## Formulas
+
+<p class="formula">Pulse pressure = SBP − DBP<br/>MAP ≈ DBP + (SBP − DBP) ÷ 3</p>
+
+## Worked example
+
+Blood pressure 120/80 mmHg:
+
+- Pulse pressure = 40 mmHg
+- MAP = 80 + 40 ÷ 3 = **93.3 mmHg**
+
+## Blood pressure categories (adults)
+
+| Category | Systolic | | Diastolic |
+|---|---|---|---|
+| Normal | below 120 | and | below 80 |
+| Elevated | 120–129 | and | below 80 |
+| High — stage 1 | 130–139 | or | 80–89 |
+| High — stage 2 | 140 or higher | or | 90 or higher |
+
+Source: American Heart Association / American College of Cardiology (2017). Other countries use slightly different thresholds.
+
+Seek urgent medical care for a reading above 180/120 mmHg with symptoms such as chest pain, shortness of breath or vision changes. This calculator is for information only.

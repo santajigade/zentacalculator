@@ -1,0 +1,43 @@
+---
+title: Molality Calculator
+description: Calculate molality (mol/kg) from the mass of solute, its molar mass and the mass of solvent.
+category: chemistry
+keywords: [molality calculator, mol/kg, molal concentration, solute solvent, colligative properties]
+updated: 2026-10-27
+variables:
+  - { id: ms, label: Mass of solute, family: mass, unit: g, default: 11.69, min: 0 }
+  - { id: M, label: Molar mass of solute, suffix: g/mol, default: 58.44, min: 0 }
+  - { id: mw, label: Mass of solvent, family: mass, unit: kg, default: 0.5, min: 0 }
+  - { id: n, label: Moles of solute, suffix: mol, min: 0 }
+  - { id: b, label: Molality, suffix: mol/kg, min: 0 }
+equations:
+  - n = ms * 1000 / M
+  - b = n / mw
+faq:
+  - q: What is molality?
+    a: Moles of solute per kilogram of solvent (mol/kg), written m.
+  - q: How is molality different from molarity?
+    a: Molarity uses litres of solution; molality uses kilograms of solvent. Molality does not change with temperature, because mass does not.
+  - q: Where is molality used?
+    a: In colligative properties — boiling point elevation, freezing point depression and osmotic pressure.
+related: [chemistry/molarity, chemistry/moles]
+---
+
+## How to use this calculator
+
+Enter the **mass of solute**, its **molar mass** and the **mass of solvent** (not solution). The moles of solute and molality are calculated.
+
+## Formula
+
+<p class="formula">b = n<sub>solute</sub> ÷ m<sub>solvent</sub> (kg)</p>
+
+## Worked example
+
+11.69 g of NaCl (58.44 g/mol) in 0.5 kg of water:
+
+- n = 11.69 ÷ 58.44 = 0.2 mol
+- b = 0.2 ÷ 0.5 = **0.4 mol/kg**
+
+## Freezing point depression
+
+ΔT<sub>f</sub> = i × K<sub>f</sub> × b. For water, K<sub>f</sub> = 1.86 K·kg/mol; NaCl gives i ≈ 2. This solution freezes about 2 × 1.86 × 0.4 = **1.5 °C** below 0 °C — the principle behind salting roads.

@@ -1,0 +1,39 @@
+---
+title: Magnification Calculator (Microscopy)
+description: Calculate magnification, image size or actual specimen size using image size ÷ actual size.
+category: biology
+keywords: [magnification calculator, image size, actual size, microscope magnification, specimen size, i am formula]
+updated: 2026-10-27
+variables:
+  - { id: I, label: Image size (measured), family: length, unit: mm, default: 40, min: 0 }
+  - { id: A, label: Actual size, family: length, unit: um, default: 100, min: 0 }
+  - { id: M, label: Magnification (×), min: 0 }
+equations:
+  - M = I / A
+faq:
+  - q: What is the magnification formula?
+    a: Magnification = image size ÷ actual size. Both sizes must be in the same unit — the calculator converts mm, µm and nm for you.
+  - q: How do I find actual size?
+    a: Divide the image size by the magnification. Press × on Actual size and type the magnification.
+  - q: How do I calculate total microscope magnification?
+    a: Multiply eyepiece and objective magnifications — a 10× eyepiece with a 40× objective gives 400×.
+related: [biology/field-of-view, conversion/mm-to-inches]
+---
+
+## How to use this calculator
+
+Enter any **two** of image size, actual size and magnification. Choose units for each size (mm, µm, nm and more).
+
+## Formula
+
+<p class="formula">Magnification = image size ÷ actual size</p>
+
+## Example
+
+A cell 100 µm across appears 40 mm wide in a photo:
+
+M = 40,000 µm ÷ 100 µm = **400×**
+
+## Remember the units
+
+1 mm = 1,000 µm · 1 µm = 1,000 nm

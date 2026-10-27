@@ -1,0 +1,40 @@
+---
+title: Charles's Law Calculator (V₁/T₁ = V₂/T₂)
+description: Calculate new volume or temperature of a gas at constant pressure using Charles's law.
+category: chemistry
+keywords: [charles law, v1/t1 = v2/t2, gas volume temperature, constant pressure, gas law calculator]
+updated: 2026-10-27
+variables:
+  - { id: V1, label: Initial volume, family: volume, unit: L, default: 2, min: 0 }
+  - { id: T1, label: Initial temperature, family: temperature, unit: C, imperialUnit: F, default: 20, min: 0 }
+  - { id: V2, label: Final volume, family: volume, unit: L, min: 0 }
+  - { id: T2, label: Final temperature, family: temperature, unit: C, imperialUnit: F, default: 80, min: 0 }
+equations:
+  - V1 / T1 = V2 / T2
+faq:
+  - q: What is Charles's law?
+    a: At constant pressure, a gas's volume is proportional to its absolute temperature — V₁/T₁ = V₂/T₂.
+  - q: Why must temperatures be in kelvin?
+    a: The law is based on absolute zero. The calculator converts °C and °F to kelvin for you.
+  - q: Where is it seen in daily life?
+    a: Hot-air balloons rising, balloons shrinking in a freezer, and tyre pressure warnings in cold weather.
+related: [chemistry/boyles-law, chemistry/combined-gas-law, physics/ideal-gas-law]
+---
+
+## How to use this calculator
+
+Enter **any three** of the initial and final volume and temperature. The fourth is calculated. Pressure and amount of gas stay constant.
+
+## Formula
+
+<p class="formula">V₁ ÷ T₁ = V₂ ÷ T₂   (T in kelvin)</p>
+
+## Worked example
+
+A 2 L balloon is warmed from 20 °C (293.15 K) to 80 °C (353.15 K):
+
+V₂ = 2 × 353.15 ÷ 293.15 = **2.41 L**
+
+## A common mistake
+
+Using °C directly would suggest the volume quadruples (80 ÷ 20) — completely wrong. Always use absolute temperature.

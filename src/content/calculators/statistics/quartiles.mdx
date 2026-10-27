@@ -1,0 +1,56 @@
+---
+title: Quartile & IQR Calculator (Five-Number Summary)
+description: Calculate quartiles Q1, Q2, Q3, the interquartile range and outlier fences — the five-number summary for a box plot.
+category: statistics
+keywords: [quartile calculator, iqr, interquartile range, five number summary, box plot, outliers]
+updated: 2026-10-27
+dataset:
+  label: Your data
+  default: '1, 3, 5, 6, 7, 8, 9, 12, 15, 21'
+variables:
+  - { id: mn, label: Minimum }
+  - { id: q1, label: Q1 (25th percentile) }
+  - { id: q2, label: Median (Q2) }
+  - { id: q3, label: Q3 (75th percentile) }
+  - { id: mx, label: Maximum }
+  - { id: iqr, label: Interquartile range (IQR) }
+  - { id: lf, label: Lower outlier fence (Q1 − 1.5 IQR) }
+  - { id: uf, label: Upper outlier fence (Q3 + 1.5 IQR) }
+equations:
+  - mn = data_min
+  - q1 = data_q1
+  - q2 = data_median
+  - q3 = data_q3
+  - mx = data_max
+  - iqr = q3 - q1
+  - lf = q1 - 1.5 * iqr
+  - uf = q3 + 1.5 * iqr
+faq:
+  - q: What is the interquartile range?
+    a: Q3 − Q1, the spread of the middle 50% of the data. It is not affected by extreme values.
+  - q: How are outliers identified?
+    a: A common rule flags values below Q1 − 1.5×IQR or above Q3 + 1.5×IQR.
+  - q: Why do calculators give different quartiles?
+    a: There are several methods. This one uses linear interpolation, the same as Excel's QUARTILE.INC and PERCENTILE.INC.
+related: [statistics/mean-median-mode, statistics/standard-deviation]
+---
+
+## How to use this calculator
+
+Paste your data. You get the five-number summary (min, Q1, median, Q3, max), the IQR and the outlier fences.
+
+## Method
+
+Quartiles are found by linear interpolation between sorted values — the method used by Excel's `QUARTILE.INC`.
+
+## Worked example
+
+Data: 1, 3, 5, 6, 7, 8, 9, 12, 15, 21
+
+- Q1 = **5.25**, median = **7.5**, Q3 = **11.25**
+- IQR = **6**
+- Fences: -3.75 and 20.25 → **21 is an outlier**
+
+## Box plots
+
+A box plot draws a box from Q1 to Q3 with a line at the median, and "whiskers" to the smallest and largest values inside the fences. Points beyond the fences are drawn individually as outliers.

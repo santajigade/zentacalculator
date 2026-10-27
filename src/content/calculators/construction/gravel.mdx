@@ -1,0 +1,55 @@
+---
+title: Gravel & Aggregate Calculator
+description: Calculate how much gravel, sand or crushed stone you need in m³, tonnes and cubic yards for a given area and depth.
+category: construction
+keywords: [gravel calculator, how much gravel, tonnes of gravel, crushed stone, aggregate, sand calculator, cubic yards]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Length, family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
+  - { id: W, label: Width, family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: D, label: Depth, family: length, unit: mm, imperialUnit: in, default: 75, min: 0 }
+  - id: rho
+    label: Material
+    default: 1600
+    options:
+      - { label: "Gravel / crushed stone (~1,600 kg/m³)", value: 1600 }
+      - { label: "Sand, dry (~1,550 kg/m³)", value: 1550 }
+      - { label: "Pea gravel (~1,700 kg/m³)", value: 1700 }
+      - { label: "Topsoil (~1,300 kg/m³)", value: 1300 }
+      - { label: Mulch / bark (~400 kg/m³), value: 400 }
+  - { id: V, label: Volume, family: volume, unit: m3, imperialUnit: ft3, min: 0 }
+  - { id: yd, label: Cubic yards, min: 0, decimals: 2 }
+  - { id: t, label: Weight, family: mass, unit: t, imperialUnit: lb, min: 0 }
+equations:
+  - V = L * W * D
+  - yd = V / 0.764554858
+  - t = V * rho
+faq:
+  - q: How deep should a gravel driveway be?
+    a: Typically 100–150 mm (4–6 in) of compacted base plus a 50 mm top layer. Paths need around 50–75 mm.
+  - q: How many tonnes is a cubic metre of gravel?
+    a: About 1.5–1.7 tonnes, depending on the stone and moisture.
+  - q: Should I order extra?
+    a: Yes, about 5–10%, because gravel settles and compacts.
+related: [construction/excavation, construction/concrete-slab]
+---
+
+## How to use this calculator
+
+Enter the **length**, **width** and **depth**, and choose the **material**. The volume and weight are calculated.
+
+## Example
+
+A 10 × 3 m path, 75 mm deep:
+
+- Volume = 10 × 3 × 0.075 = **2.25 m³** (2.94 yd³)
+- Gravel weight ≈ 2.25 × 1.6 = **3.60 tonnes**
+
+## Typical depths
+
+| Use | Depth |
+|---|---|
+| Decorative garden cover | 30–50 mm |
+| Footpath | 50–75 mm |
+| Driveway (total) | 150–200 mm |
+| Mulch for beds | 50–75 mm |

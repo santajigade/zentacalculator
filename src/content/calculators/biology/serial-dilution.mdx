@@ -1,0 +1,41 @@
+---
+title: Serial Dilution Calculator
+description: Calculate the final concentration after a series of dilution steps, and the total dilution factor.
+category: biology
+keywords: [serial dilution, dilution series, 10 fold dilution, dilution factor, colony counting, cfu]
+updated: 2026-10-27
+variables:
+  - { id: C0, label: Starting concentration, default: 100000000, min: 0 }
+  - { id: f, label: "Dilution factor per step (e.g. 10 for 1:10)", default: 10, min: 1 }
+  - { id: n, label: Number of steps, default: 6, min: 0 }
+  - { id: DF, label: Total dilution factor, min: 1 }
+  - { id: C, label: Final concentration, min: 0 }
+equations:
+  - DF = f^n
+  - C = C0 / DF
+faq:
+  - q: What is a serial dilution?
+    a: A series of step-by-step dilutions, each by the same factor, to reach very low concentrations accurately.
+  - q: How do I make a 1:10 dilution?
+    a: Mix 1 part sample with 9 parts diluent — for example 100 µL into 900 µL.
+  - q: How do I count CFU from a plate?
+    a: CFU/mL = colonies ÷ (volume plated in mL × total dilution).
+related: [chemistry/dilution, biology/hemocytometer]
+---
+
+## How to use this calculator
+
+Enter the **starting concentration**, the **dilution factor per step** and the **number of steps**. The total dilution and final concentration are calculated (any concentration unit works).
+
+## Formulas
+
+<p class="formula">Total dilution = f<sup>n</sup>   C = C₀ ÷ f<sup>n</sup></p>
+
+## Example
+
+10⁸ cells/mL diluted 1:10 six times:
+
+- Total dilution = 10⁶
+- Final concentration = **100 cells/mL**
+
+Plating 100 µL gives about 10 colonies — easy to count.

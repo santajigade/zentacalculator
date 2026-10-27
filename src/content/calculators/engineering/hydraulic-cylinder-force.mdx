@@ -1,0 +1,46 @@
+---
+title: Hydraulic Cylinder Force Calculator
+description: Calculate push and pull force of a hydraulic cylinder from pressure, bore and rod diameter — or the pressure for a required force.
+category: engineering
+keywords: [hydraulic cylinder force, cylinder force, bore, rod, hydraulic pressure, push force, pull force, tonnage]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Working pressure, family: pressure, unit: bar, imperialUnit: psi, default: 160, min: 0 }
+  - { id: d, label: Bore (piston) diameter, family: length, unit: mm, imperialUnit: in, default: 50, min: 0 }
+  - { id: r, label: Rod diameter, family: length, unit: mm, imperialUnit: in, default: 28, min: 0 }
+  - { id: F, label: Push force (extend), family: force, unit: kN, imperialUnit: lbf, min: 0 }
+  - { id: Fr, label: Pull force (retract), family: force, unit: kN, imperialUnit: lbf, min: 0 }
+equations:
+  - F = P * pi * d^2 / 4
+  - Fr = P * pi * (d^2 - r^2) / 4
+chart: { x: P, y: F, from: 0, to: 300 }
+faq:
+  - q: Why is the pull force lower than the push force?
+    a: When retracting, the rod takes up part of the piston area, so oil pushes on a smaller annular area.
+  - q: How do I convert kN to tonnes?
+    a: Choose "tonne-force" as the force unit. 1 tonne-force ≈ 9.81 kN.
+  - q: Should I use the full system pressure?
+    a: Use the pressure available at the cylinder. Losses in hoses and valves, plus friction in the seals, reduce the real force by a few percent.
+related: [engineering/hydrostatic-pressure, engineering/torque-power-speed]
+---
+
+## How to use this calculator
+
+Enter the **working pressure**, **bore** and **rod diameter**. You get the extend (push) and retract (pull) forces. To find the pressure needed for a load, press × on Working pressure and type the force.
+
+## The formulas
+
+<p class="formula">F<sub>push</sub> = P × π d² ÷ 4<br/>F<sub>pull</sub> = P × π (d² − r²) ÷ 4</p>
+
+## Worked example
+
+A 50 mm bore, 28 mm rod cylinder at 160 bar:
+
+- Push = 16,000,000 Pa × 0.001963 m² = **31.4 kN** (about 3.2 tonnes)
+- Pull = 16,000,000 Pa × 0.001348 m² = **21.6 kN**
+
+## Quick sizing tips
+
+- Add a safety margin of **20–30%** over the calculated load.
+- Check the rod for **buckling** on long strokes — slender rods can fail before the force limit is reached.
+- Cylinder speed depends on pump flow: speed = flow ÷ effective area.

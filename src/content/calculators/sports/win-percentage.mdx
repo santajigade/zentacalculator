@@ -1,0 +1,36 @@
+---
+title: Win Percentage Calculator
+description: Calculate a team's or player's win percentage from wins, losses and ties.
+category: sports
+keywords: [win percentage, winning percentage, win loss ratio, team record, standings]
+updated: 2026-10-27
+variables:
+  - { id: w, label: Wins, default: 42, min: 0 }
+  - { id: l, label: Losses, default: 28, min: 0 }
+  - { id: t, label: Ties / draws, default: 2, min: 0 }
+  - { id: pct, label: Win percentage (ties count as half), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: wl, label: Win–loss ratio, min: 0, decimals: 2 }
+equations:
+  - pct = (w + t / 2) / (w + l + t)
+  - wl = w / l
+faq:
+  - q: How is win percentage calculated?
+    a: Wins (plus half of ties) divided by games played. US sports often show it as a decimal such as .583.
+  - q: How are ties counted?
+    a: Usually as half a win and half a loss, as here. Some leagues ignore ties — check your league's rules.
+  - q: How many wins do I need for a target percentage?
+    a: Press × on Wins and type the target percentage.
+related: [sports/football-points, math/percentage]
+---
+
+## How to use this calculator
+
+Enter **wins**, **losses** and **ties**. Win percentage and win–loss ratio are calculated.
+
+## Formula
+
+<p class="formula">Win % = (W + T/2) ÷ (W + L + T)</p>
+
+## Example
+
+42 wins, 28 losses, 2 ties: (42 + 1) ÷ 72 = **59.7%** (.597).

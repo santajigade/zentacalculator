@@ -1,0 +1,44 @@
+---
+title: Potential Energy Calculator (PE = mgh)
+description: Calculate gravitational potential energy from mass and height — or the height for a given energy.
+category: physics
+keywords: [potential energy, pe = mgh, gravitational potential energy, joules, energy calculator, height]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 1000, min: 0 }
+  - { id: h, label: Height, family: length, unit: m, imperialUnit: ft, default: 50 }
+  - { id: PE, label: Potential energy, family: energy, unit: kJ }
+equations:
+  - PE = m * g0 * h
+chart: { x: h, y: PE, from: 0, to: 100 }
+faq:
+  - q: What is gravitational potential energy?
+    a: The energy an object has because of its height. Lifting it stores energy that is released when it falls.
+  - q: Why is it m × g × h?
+    a: Lifting a mass m against gravity g through height h takes force mg over distance h, and work = force × distance.
+  - q: Can it be converted to electricity?
+    a: Yes. Hydropower and pumped-storage plants turn falling water's potential energy into electricity at around 80–90% efficiency.
+related: [physics/kinetic-energy, physics/work-and-power, engineering/pump-power]
+---
+
+## How to use this calculator
+
+Enter the **mass** and **height** to get the potential energy, or enter the energy to find the height. Choose J, kJ, kWh or other energy units.
+
+## The formula
+
+<p class="formula">PE = m × g × h   (g = 9.80665 m/s²)</p>
+
+## Worked example
+
+1,000 kg (1 m³) of water held 50 m above a turbine:
+
+PE = 1,000 × 9.81 × 50 = **490 kJ** = 0.136 kWh
+
+## Energy conservation
+
+If dropped, the object's potential energy turns into kinetic energy. Ignoring air resistance, its speed at the bottom is v = √(2gh) — for 50 m that is 31.3 m/s. Check it with the [free fall calculator](/physics/free-fall/).
+
+## Height is measured from a reference
+
+Potential energy is always relative to a chosen zero level, such as the floor or the turbine.

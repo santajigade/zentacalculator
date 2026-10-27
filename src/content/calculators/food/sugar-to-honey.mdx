@@ -1,0 +1,37 @@
+---
+title: Sugar to Honey Substitution Calculator
+description: Replace sugar with honey or maple syrup in recipes — with the liquid reduction and oven adjustment.
+category: food
+keywords: [sugar to honey, honey substitute for sugar, replace sugar with honey, maple syrup substitution, baking with honey]
+updated: 2026-10-27
+variables:
+  - { id: s, label: Sugar in recipe, family: volume, unit: cup, default: 1, min: 0 }
+  - { id: h, label: Honey to use, family: volume, unit: cup, min: 0 }
+  - { id: lr, label: Reduce other liquids by, family: volume, unit: cup, min: 0 }
+  - { id: soda, label: Baking soda to add, suffix: tsp, min: 0, decimals: 2 }
+equations:
+  - h = s * 0.75
+  - lr = s * 0.25
+  - soda = s / 0.0002365882365 * 0.25
+faq:
+  - q: How much honey replaces a cup of sugar?
+    a: About ¾ cup of honey, because honey is sweeter. Reduce other liquids by about ¼ cup.
+  - q: Why add baking soda?
+    a: Honey is slightly acidic. About ¼ teaspoon of baking soda per cup of honey balances it in baked goods.
+  - q: Do I need to change the oven temperature?
+    a: Yes, lower it by about 15 °C (25 °F) — honey browns faster.
+related: [food/grams-to-cups, food/recipe-scaler]
+---
+
+## How to use this calculator
+
+Enter the amount of **sugar** in the recipe. The honey to use, the reduction in other liquids and the baking soda to add are calculated.
+
+## Rules of thumb
+
+- Use **¾ cup honey** per cup of sugar.
+- **Reduce liquids** by ¼ cup per cup of honey used.
+- Add **¼ tsp baking soda** per cup.
+- **Lower the oven** by about 15 °C (25 °F).
+
+Maple syrup works similarly, at roughly the same ¾ substitution.

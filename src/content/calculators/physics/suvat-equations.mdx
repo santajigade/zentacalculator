@@ -1,0 +1,48 @@
+---
+title: SUVAT Equations Calculator (Kinematics)
+description: Solve constant-acceleration motion problems — initial velocity, final velocity, acceleration, time and displacement.
+category: physics
+keywords: [suvat, kinematics calculator, equations of motion, displacement, constant acceleration, v = u + at]
+updated: 2026-10-27
+variables:
+  - { id: u, label: Initial velocity (u), family: velocity, unit: ms, imperialUnit: fts, default: 5 }
+  - { id: v, label: Final velocity (v), family: velocity, unit: ms, imperialUnit: fts }
+  - { id: a, label: Acceleration (a), suffix: m/s², default: 2 }
+  - { id: t, label: Time (t), family: seconds, unit: s, default: 10, min: 0 }
+  - { id: s, label: Displacement (s), family: length, unit: m, imperialUnit: ft }
+equations:
+  - v = u + a * t
+  - s = (u + v) / 2 * t
+chart: { x: t, y: s, from: 0, to: 20 }
+faq:
+  - q: What are the SUVAT equations?
+    a: Five equations linking displacement (s), initial velocity (u), final velocity (v), acceleration (a) and time (t) for constant acceleration.
+  - q: How many values do I need?
+    a: Any three. The other two can then be calculated.
+  - q: When do they not apply?
+    a: When acceleration changes, for example with air resistance at high speed. Then calculus or numerical methods are needed.
+related: [physics/acceleration, physics/free-fall, physics/projectile-motion]
+---
+
+## How to use this calculator
+
+Enter **any three** of u, v, a, t and s. The other two are solved automatically — press × on a field to choose which values are calculated.
+
+## The equations
+
+<p class="formula">v = u + at<br/>s = ½(u + v)t<br/>s = ut + ½at²<br/>v² = u² + 2as<br/>s = vt − ½at²</p>
+
+## Worked example
+
+u = 5 m/s, a = 2 m/s², t = 10 s:
+
+- v = 5 + 2 × 10 = **25 m/s**
+- s = 5 × 10 + ½ × 2 × 10² = **150 m**
+
+## Braking distance example
+
+A car at 20 m/s (72 km/h) brakes at −8 m/s². Set u = 20, v = 0, a = −8: it stops in **2.5 s** over **25 m**. Doubling the speed to 40 m/s quadruples the distance to 100 m.
+
+## Sign convention
+
+Pick one direction as positive. Velocities and accelerations in the opposite direction are negative — for example, a = −9.81 m/s² for an object thrown upwards.

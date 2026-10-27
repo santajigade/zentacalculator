@@ -1,0 +1,59 @@
+---
+title: Savings Goal Calculator
+description: Find how much to save each month to reach a savings goal — or how long it will take — with interest included.
+category: finance
+keywords: [savings goal, monthly savings, how much to save, savings plan, save for house, emergency fund, savings calculator]
+updated: 2026-10-27
+variables:
+  - { id: FV, label: Savings goal, family: currency, default: 50000, min: 0, decimals: 2 }
+  - { id: P0, label: Current savings, family: currency, default: 5000, min: 0, decimals: 2 }
+  - { id: r, label: Annual interest rate, family: percent, unit: '%', default: 7, min: 0.0001, max: 1 }
+  - { id: t, label: Time to goal, family: time, unit: yr, default: 5, min: 0.0833 }
+  - { id: M, label: Monthly saving needed, family: currency, min: 0, decimals: 2 }
+equations:
+  - FV = P0 * (1 + r/12)^(12*t) + M * ((1 + r/12)^(12*t) - 1) / (r/12)
+chart: { x: t, y: M, from: 1, to: 15 }
+faq:
+  - q: How much do I need to save each month?
+    a: Enter your goal, what you already have, the interest rate and the time. The calculator subtracts the growth of your current savings and spreads the rest over the months.
+  - q: How long will it take to reach my goal?
+    a: Press × on Time to goal, then type how much you can save each month.
+  - q: What interest rate should I use?
+    a: Use the rate on your savings account or a conservative estimate for investments. For short goals under 3 years, keep money in safe, low-risk accounts.
+related: [finance/sip, finance/compound-interest, finance/inflation]
+---
+
+## How to use this calculator
+
+Enter your **goal**, **current savings**, **interest rate** and **time frame**. The monthly amount you need to save appears. Change any field to explore — for example, how much sooner you would get there by saving a little more.
+
+## The formula
+
+<p class="formula">Goal = P₀(1 + i)<sup>n</sup> + M × ((1 + i)<sup>n</sup> − 1) ÷ i</p>
+
+- **P₀** — current savings, growing with interest
+- **M** — monthly deposit (end of each month)
+- **i** = annual rate ÷ 12, **n** = months
+
+## Worked example
+
+Goal 50,000 in 5 years, 5,000 saved already, 7% interest:
+
+- Current savings grow to about 7,088
+- The remaining 42,912 must come from deposits
+- Monthly saving needed = **599.39**
+
+## Common goals
+
+| Goal | Typical target |
+|---|---|
+| Emergency fund | 3–6 months of expenses |
+| Home down payment | 10–20% of the price |
+| Car | Price minus trade-in |
+| Wedding or travel | Your estimated budget |
+
+## Tips
+
+- Automate the transfer on payday so saving happens first.
+- Increase the monthly amount whenever your income rises.
+- For goals more than 5 years away, consider an [SIP](/finance/sip/) in diversified funds.

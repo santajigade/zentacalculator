@@ -1,0 +1,59 @@
+---
+title: BMI Calculator
+description: Calculate Body Mass Index from weight and height in kg, lb, cm or inches — or find the weight for a target BMI.
+category: health
+keywords: [bmi, body mass index, weight, height, obesity, healthy weight, overweight]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: m, label: Weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 0 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 172, min: 0.3, max: 3 }
+  - id: bmi
+    label: BMI
+    suffix: kg/m²
+    decimals: 1
+    min: 0
+    bands:
+      - { max: 18.5, label: Underweight, color: '#3b82f6' }
+      - { max: 22.9, label: Normal, color: '#16a34a' }
+      - { max: 24.9, label: Overweight (Asian cut-off), color: '#eab308' }
+      - { max: 29.9, label: Overweight, color: '#f97316' }
+      - { max: 1000, label: Obese, color: '#dc2626' }
+equations:
+  - bmi = m / h^2
+chart: { x: m, y: bmi, from: 40, to: 120 }
+faq:
+  - q: What is a healthy BMI?
+    a: The WHO classes 18.5–24.9 as normal weight. For Asian populations, including Indians, guidelines commonly use 18.5–22.9 as normal and 23 or above as overweight because health risks start at a lower BMI.
+  - q: How do I find my ideal weight for a target BMI?
+    a: Type your height and the target BMI (for example 22). The weight field is calculated automatically.
+  - q: Is BMI accurate for athletes?
+    a: Not always. BMI cannot tell muscle from fat, so muscular people can show a high BMI while being healthy. Waist circumference adds useful context.
+related: [physics/ohms-law]
+---
+
+## How to use this calculator
+
+Enter your **weight and height** in any units — kg or lb, cm or ft — and your BMI and category appear instantly. To find a target weight, type your height and a **BMI value** instead; the weight is worked out for you.
+
+## The formula
+
+<p class="formula">BMI = weight (kg) ÷ height (m)²</p>
+
+Example: 70 kg and 1.72 m → 70 ÷ 1.72² = 70 ÷ 2.958 = **23.7**.
+
+## BMI categories
+
+| BMI | WHO category | Asian / Indian guideline |
+|---|---|---|
+| Below 18.5 | Underweight | Underweight |
+| 18.5 – 22.9 | Normal | Normal |
+| 23 – 24.9 | Normal | Overweight |
+| 25 – 29.9 | Overweight | Obese (grade 1) |
+| 30 and above | Obese | Obese (grade 2) |
+
+The coloured bar under the BMI field uses the Asian cut-off between 23 and 25 so that both systems are visible.
+
+## Limitations
+
+BMI is a quick screening number, not a diagnosis. It does not consider muscle mass, bone density, age, sex or where fat is stored. Pregnant women and children need different charts. Talk to a doctor for a full assessment.

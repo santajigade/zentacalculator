@@ -1,0 +1,45 @@
+---
+title: Typing Speed Calculator (WPM)
+description: Calculate typing speed in words per minute (WPM) and characters per minute from your test results.
+category: everyday-life
+keywords: [typing speed, wpm calculator, words per minute, cpm, typing test, net wpm]
+updated: 2026-10-27
+variables:
+  - { id: ch, label: Characters typed (including spaces), default: 1250, min: 0 }
+  - { id: er, label: Uncorrected errors, default: 5, min: 0 }
+  - { id: t, label: Time, suffix: minutes, default: 5, min: 0.01 }
+  - { id: gross, label: Gross WPM, min: 0, decimals: 1 }
+  - { id: net, label: Net WPM, decimals: 1 }
+  - { id: cpm, label: Characters per minute, min: 0, decimals: 0 }
+equations:
+  - gross = ch / 5 / t
+  - net = gross - er / t
+  - cpm = ch / t
+faq:
+  - q: How is WPM calculated?
+    a: By convention, one "word" is 5 characters including spaces. WPM = characters ÷ 5 ÷ minutes.
+  - q: What is net WPM?
+    a: Gross WPM minus uncorrected errors per minute — a fairer measure of useful speed.
+  - q: What is a good typing speed?
+    a: About 40 WPM is average; 60–70 WPM is good for office work; professional typists exceed 80 WPM.
+related: [everyday-life/reading-time]
+---
+
+## How to use this calculator
+
+Enter the number of **characters typed**, any **uncorrected errors** and the **time** in minutes. Gross WPM, net WPM and characters per minute are calculated.
+
+## Formulas
+
+<p class="formula">Gross WPM = (characters ÷ 5) ÷ minutes<br/>Net WPM = gross WPM − errors ÷ minutes</p>
+
+## Example
+
+1,250 characters in 5 minutes with 5 errors:
+
+- Gross = 250 words ÷ 5 = **50 WPM**
+- Net = 50 − 1 = **49 WPM**
+
+## Improve your speed
+
+Use all ten fingers, keep your eyes on the screen, and practise accuracy first — speed follows.

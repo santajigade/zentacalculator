@@ -1,0 +1,38 @@
+---
+title: Cricket Bowling Economy, Average & Strike Rate
+description: Calculate a bowler's economy rate, bowling average and strike rate from runs, wickets and balls bowled.
+category: sports
+keywords: [bowling economy, bowling average, bowling strike rate, cricket bowling stats, economy rate]
+updated: 2026-10-27
+variables:
+  - { id: runs, label: Runs conceded, default: 480, min: 0 }
+  - { id: wk, label: Wickets taken, default: 20, min: 0.0001 }
+  - { id: balls, label: Balls bowled, default: 432, min: 1 }
+  - { id: econ, label: Economy rate (runs per over), min: 0, decimals: 2 }
+  - { id: avg, label: Bowling average (runs per wicket), min: 0, decimals: 2 }
+  - { id: sr, label: Strike rate (balls per wicket), min: 0, decimals: 1 }
+equations:
+  - econ = runs / (balls / 6)
+  - avg = runs / wk
+  - sr = balls / wk
+faq:
+  - q: What is economy rate?
+    a: Runs conceded per over bowled. Lower is better.
+  - q: What is bowling average?
+    a: Runs conceded per wicket. Lower is better — under 25 is excellent in Test cricket.
+  - q: What is bowling strike rate?
+    a: Balls bowled per wicket taken — how often a bowler takes a wicket.
+related: [sports/cricket-batting, sports/cricket-run-rate]
+---
+
+## How to use this calculator
+
+Enter **runs conceded**, **wickets** and **balls bowled**. Economy, average and strike rate are calculated.
+
+## Example
+
+480 runs, 20 wickets, 432 balls (72 overs):
+
+- Economy = **6.67**
+- Average = **24.00**
+- Strike rate = **21.6** balls per wicket

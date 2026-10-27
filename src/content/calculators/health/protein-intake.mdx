@@ -1,0 +1,61 @@
+---
+title: Protein Intake Calculator
+description: Work out how many grams of protein you need per day based on body weight and activity or goal.
+category: health
+keywords: [protein intake, how much protein, protein per day, grams of protein, protein calculator, muscle gain]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Body weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 0 }
+  - id: f
+    label: Activity or goal
+    default: 1.6
+    options:
+      - { label: Sedentary adult (0.8 g/kg), value: 0.8 }
+      - { label: Older adult (1.0–1.2 g/kg), value: 1.1 }
+      - { label: Regular exercise (1.2 g/kg), value: 1.2 }
+      - { label: Endurance training (1.4 g/kg), value: 1.4 }
+      - { label: Strength training / muscle gain (1.6 g/kg), value: 1.6 }
+      - { label: Losing fat while keeping muscle (2.0 g/kg), value: 2.0 }
+  - { id: p, label: Protein per day, suffix: g, min: 0, decimals: 0 }
+  - { id: pm, label: Per meal (4 meals), suffix: g, min: 0, decimals: 0 }
+equations:
+  - p = m * f
+  - pm = p / 4
+faq:
+  - q: How much protein do I need per day?
+    a: The basic requirement for adults is about 0.8 g per kg of body weight. Active people and those building muscle benefit from roughly 1.2–2.0 g/kg.
+  - q: Can I eat too much protein?
+    a: Up to about 2 g/kg is considered safe for healthy adults. People with kidney disease should follow their doctor's advice on protein.
+  - q: Is it better to spread protein across meals?
+    a: Yes. Around 20–40 g per meal, spread over the day, appears to support muscle building better than one large serving.
+related: [health/macros, health/bmr, health/lean-body-mass]
+---
+
+## How to use this calculator
+
+Enter your **body weight** and choose the option that best matches your **activity or goal**. You get a daily protein target and a per-meal amount for four meals.
+
+## The formula
+
+<p class="formula">Protein (g/day) = body weight (kg) × g/kg factor</p>
+
+## Worked example
+
+A 70 kg person doing regular strength training (1.6 g/kg):
+
+- Daily protein = 70 × 1.6 = **112 g**
+- About **28 g** per meal over four meals
+
+## Protein in common foods (approximate)
+
+| Food | Protein |
+|---|---|
+| Chicken breast, 100 g cooked | 31 g |
+| Eggs, 2 large | 12 g |
+| Greek yogurt, 200 g | 20 g |
+| Lentils, 1 cup cooked | 18 g |
+| Paneer, 100 g | 18 g |
+| Tofu, 100 g | 12–15 g |
+| Milk, 250 ml | 8 g |
+
+The 0.8 g/kg baseline is the recommended dietary allowance from the US National Academies; higher ranges for active people reflect the International Society of Sports Nutrition position stand.

@@ -1,0 +1,60 @@
+---
+title: Three-Phase Motor Power & Current Calculator
+description: Calculate input power, output power and full-load current of a three-phase motor from voltage, power factor and efficiency.
+category: engineering
+keywords: [three phase power, motor current, motor kw, full load current, 3 phase calculation, power factor, motor amps]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: V, label: Line voltage, family: voltage, unit: V, default: 415, min: 0 }
+  - { id: I, label: Line current, family: current, unit: A, min: 0 }
+  - { id: pf, label: Power factor (cos φ), default: 0.85, min: 0.01, max: 1 }
+  - { id: eta, label: Motor efficiency, family: percent, unit: '%', default: 90, min: 0.01, max: 1 }
+  - { id: Pin, label: Electrical input power, family: power, unit: kW, imperialUnit: hp, min: 0 }
+  - { id: Pout, label: Rated output (shaft) power, family: power, unit: kW, imperialUnit: hp, default: 11, min: 0 }
+equations:
+  - Pin = sqrt(3) * V * I * pf
+  - Pout = Pin * eta
+chart: { x: Pout, y: I, from: 0, to: 75 }
+faq:
+  - q: What is the formula for three-phase power?
+    a: P = √3 × V × I × cos φ, where V is the line-to-line voltage and I the line current. Shaft power is this multiplied by efficiency.
+  - q: Why does a motor draw more current than the kW rating suggests?
+    a: The kW rating is shaft output. The supply must also cover motor losses (efficiency) and reactive current (power factor), so input current is higher.
+  - q: What is a typical power factor?
+    a: Around 0.80–0.90 at full load for standard induction motors. It drops sharply at light load.
+related: [engineering/torque-power-speed, engineering/cable-voltage-drop, physics/ohms-law]
+---
+
+## How to use this calculator
+
+The defaults show an **11 kW motor on 415 V** — the full-load current is calculated. You can also enter a measured current to find the power being drawn. Use the motor's nameplate values for power factor and efficiency where possible.
+
+## The formulas
+
+<p class="formula">P<sub>in</sub> = √3 × V × I × cos φ   P<sub>out</sub> = P<sub>in</sub> × η</p>
+
+## Worked example
+
+11 kW motor, 415 V, cos φ = 0.85, efficiency 90%:
+
+- P<sub>in</sub> = 11 ÷ 0.90 = 12.22 kW
+- I = 12,222 ÷ (1.732 × 415 × 0.85) = **20.0 A**
+
+## Approximate full-load currents at 415 V
+
+| Motor | Current |
+|---|---|
+| 1.5 kW | ~3.3 A |
+| 5.5 kW | ~11 A |
+| 11 kW | ~20 A |
+| 22 kW | ~40 A |
+| 45 kW | ~80 A |
+
+Actual values vary by manufacturer and efficiency class — always check the nameplate.
+
+## Practical notes
+
+- **Starting current** of a direct-on-line motor is typically **6–8×** full-load current.
+- **Cable sizing** must account for both current and length — check with the [cable voltage drop calculator](/engineering/cable-voltage-drop/).
+- For single-phase, use P = V × I × cos φ instead.

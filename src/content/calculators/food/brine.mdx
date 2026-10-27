@@ -1,0 +1,41 @@
+---
+title: Brine Calculator (Salt Percentage)
+description: Calculate how much salt (and sugar) to add for a brine of any strength — for meat, pickles and fermentation.
+category: food
+keywords: [brine calculator, salt percentage, wet brine, pickling brine, fermentation brine, equilibrium brine]
+updated: 2026-10-27
+variables:
+  - { id: w, label: Water, family: mass, unit: g, default: 1000, min: 0 }
+  - { id: p, label: Salt concentration, family: percent, unit: '%', default: 5, min: 0, max: 0.3 }
+  - { id: s, label: Salt to add, family: mass, unit: g, min: 0 }
+  - { id: sg, label: "Sugar (optional, half the salt)", family: mass, unit: g, min: 0 }
+equations:
+  - s = w * p
+  - sg = s / 2
+faq:
+  - q: What brine strength should I use?
+    a: About 5–6% for brining poultry and pork, 2–3% for fermented vegetables like sauerkraut and pickles, and 8–10% for olives.
+  - q: Does 1 litre of water weigh 1,000 g?
+    a: Very nearly. Weighing water and salt gives the most accurate brine.
+  - q: Which salt should I use?
+    a: Non-iodised salt by weight. Different salts have very different crystal sizes, so volume measures vary a lot.
+related: [chemistry/mass-percent, food/cooking-converter]
+---
+
+## How to use this calculator
+
+Enter the **water** weight and the **salt percentage**. The salt to add is calculated, plus an optional sugar amount.
+
+This calculator measures salt as a percentage of the water weight, which is common in cooking.
+
+## Example
+
+1 litre (1,000 g) of water at 5% → **50 g** of salt (and 25 g of sugar if wanted).
+
+## Typical strengths
+
+| Use | Salt |
+|---|---|
+| Fermented vegetables | 2–3% |
+| Poultry and pork brine | 5–6% |
+| Olives | 8–10% |

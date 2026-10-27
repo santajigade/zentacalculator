@@ -1,0 +1,72 @@
+---
+title: Reynolds Number Calculator
+description: Calculate the Reynolds number of pipe flow and see whether it is laminar, transitional or turbulent.
+category: engineering
+keywords: [reynolds number, laminar flow, turbulent flow, fluid mechanics, viscosity, pipe flow regime, flow meter]
+updated: 2026-10-27
+variables:
+  - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
+  - { id: v, label: Flow velocity, family: velocity, unit: ms, imperialUnit: fts, default: 2, min: 0 }
+  - { id: D, label: Pipe inner diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: mu, label: Dynamic viscosity, family: viscosity, unit: cP, default: 1.002, min: 0 }
+  - id: Re
+    label: Reynolds number
+    min: 0
+    decimals: 0
+    bands:
+      - { max: 2300, label: Laminar, color: '#16a34a' }
+      - { max: 4000, label: Transitional, color: '#eab308' }
+      - { max: 1e30, label: Turbulent, color: '#ea580c' }
+equations:
+  - Re = rho * v * D / mu
+chart: { x: v, y: Re, from: 0, to: 5 }
+faq:
+  - q: What does the Reynolds number tell you?
+    a: It compares inertial forces to viscous forces in a flow. Low values mean smooth, layered (laminar) flow; high values mean chaotic (turbulent) flow.
+  - q: At what Reynolds number does flow become turbulent?
+    a: In pipes, flow is usually laminar below about 2,300 and turbulent above about 4,000. Between them it is transitional and unpredictable.
+  - q: Why does the Reynolds number matter for flow meters?
+    a: Many flow meters, such as vortex and orifice meters, are only accurate above a minimum Reynolds number, often 10,000 or more. Viscous liquids can fall below this.
+related: [engineering/pipe-flow-velocity, engineering/hydrostatic-pressure]
+---
+
+## How to use this calculator
+
+Enter the fluid's **density** and **viscosity**, the **velocity** and the pipe's **inner diameter**. The Reynolds number and flow regime appear immediately. Need velocity from a flow rate? Use the [pipe flow velocity calculator](/engineering/pipe-flow-velocity/) first.
+
+## The formula
+
+<p class="formula">Re = ρ v D ÷ μ</p>
+
+- **ρ** — density (kg/m³)
+- **v** — mean velocity (m/s)
+- **D** — inner diameter (m)
+- **μ** — dynamic viscosity (Pa·s; 1 cP = 0.001 Pa·s)
+
+Re has no units — as long as the inputs are consistent. The calculator handles the conversions.
+
+## Worked example
+
+Water at 20 °C (ρ = 998.2 kg/m³, μ = 1.002 cP) flowing at 2 m/s in a 100 mm pipe:
+
+Re = 998.2 × 2 × 0.1 ÷ 0.001002 ≈ **199,000** → turbulent
+
+## Flow regimes in pipes
+
+| Reynolds number | Regime |
+|---|---|
+| < 2,300 | Laminar |
+| 2,300 – 4,000 | Transitional |
+| > 4,000 | Turbulent |
+
+## Typical viscosities at 20 °C
+
+| Fluid | Viscosity (cP) |
+|---|---|
+| Water | 1.0 |
+| Diesel | 2 – 4 |
+| Olive oil | ~84 |
+| Glycerine | ~1,400 |
+| Honey | 2,000 – 10,000 |
+
+Viscosity changes strongly with temperature — use a value for your operating temperature.

@@ -1,0 +1,33 @@
+---
+title: Video File Size Calculator (Bitrate)
+description: Calculate video file size from bitrate and duration — or the bitrate for a target file size.
+category: other
+keywords: [video file size calculator, bitrate calculator, mbps video, recording size, storage for video, 4k file size]
+updated: 2026-10-27
+variables:
+  - { id: br, label: Total bitrate (video + audio), suffix: Mbps, default: 20, min: 0 }
+  - { id: t, label: Duration, family: seconds, unit: min, default: 60, min: 0 }
+  - { id: s, label: File size, family: data, unit: GB, min: 0 }
+equations:
+  - s = br * 1000000 * t / 8
+faq:
+  - q: How do I calculate video file size?
+    a: File size = bitrate × duration ÷ 8. One hour at 20 Mbps is about 9 GB.
+  - q: What bitrate should I use?
+    a: Common streaming targets are about 5–8 Mbps for 1080p and 15–25 Mbps for 4K (H.264); HEVC needs roughly half.
+  - q: How long can I record on a 128 GB card?
+    a: Press × on Duration and type 128 GB as the file size.
+related: [other/download-time, other/data-storage-converter]
+---
+
+## How to use this calculator
+
+Enter the **bitrate** in Mbps and the **duration**. The file size is calculated. Or enter a storage size to find the recording time.
+
+## Formula
+
+<p class="formula">size (bytes) = bitrate (bits/s) × seconds ÷ 8</p>
+
+## Example
+
+60 minutes at 20 Mbps: 20 × 3,600 ÷ 8 = 9,000 MB = **9 GB**.

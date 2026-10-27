@@ -1,0 +1,43 @@
+---
+title: Electricity CO₂ Emissions Calculator
+description: Calculate the carbon emissions from your electricity use with your grid's emission factor.
+category: ecology
+keywords: [electricity carbon footprint, kwh to co2, grid emission factor, carbon emissions electricity, home energy co2]
+updated: 2026-10-27
+variables:
+  - { id: kwh, label: Electricity used per month, suffix: kWh, default: 300, min: 0 }
+  - { id: ef, label: Grid emission factor, suffix: kg CO₂/kWh, default: 0.7, min: 0 }
+  - { id: m, label: CO₂ per month, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+  - { id: y, label: CO₂ per year, family: mass, unit: t, imperialUnit: lb, min: 0 }
+equations:
+  - m = kwh * ef
+  - y = m * 12
+faq:
+  - q: What is a grid emission factor?
+    a: The average CO₂ released per kWh of electricity generated in a region. It depends on how much coal, gas, nuclear and renewable power is used.
+  - q: What factor should I use?
+    a: Use your utility's or national figure. Coal-heavy grids are around 0.7–0.9 kg/kWh; grids with lots of renewables or nuclear can be below 0.1.
+  - q: Does rooftop solar count as zero?
+    a: Solar electricity has very low operating emissions, so exported or self-used solar reduces your grid footprint.
+related: [ecology/solar-output, ecology/led-savings, everyday-life/electricity-cost]
+---
+
+## How to use this calculator
+
+Enter your **monthly electricity use** (from your bill) and your **grid emission factor**. Monthly and yearly CO₂ are calculated.
+
+## Example
+
+300 kWh a month at 0.7 kg/kWh → **210 kg** per month, **2.5 t** per year.
+
+## Approximate grid factors (recent years)
+
+| Grid | kg CO₂ per kWh |
+|---|---|
+| India | ~0.7 |
+| World average | ~0.45–0.5 |
+| United States | ~0.35–0.4 |
+| United Kingdom | ~0.2 |
+| France | ~0.05 |
+
+Factors change every year as grids decarbonise — check your national energy agency for the latest value.

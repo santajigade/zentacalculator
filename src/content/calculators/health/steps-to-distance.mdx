@@ -1,0 +1,52 @@
+---
+title: Steps to Distance Calculator
+description: Convert steps to kilometres or miles using your height — plus an estimate of calories burned walking.
+category: health
+keywords: [steps to km, steps to miles, 10000 steps, step length, stride length, walking distance, pedometer]
+updated: 2026-10-27
+variables:
+  - { id: n, label: Steps, default: 10000, min: 0 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 175, min: 0.5, max: 2.5 }
+  - { id: m, label: Body weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 0 }
+  - { id: s, label: Step length, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: d, label: Distance, family: length, unit: km, imperialUnit: mi, min: 0 }
+  - { id: kcal, label: Calories burned (approx.), suffix: kcal, min: 0, decimals: 0 }
+equations:
+  - s = 0.414 * h
+  - d = n * s
+  - kcal = n * 0.00057 * m
+faq:
+  - q: How far is 10,000 steps?
+    a: For an average adult, about 7–8 km (4.5–5 miles), depending on height and stride.
+  - q: How is step length estimated?
+    a: A common estimate is 41.4% of your height. For better accuracy, walk a measured 10 m, count your steps, and type your own step length.
+  - q: How many calories do 10,000 steps burn?
+    a: Roughly 300–500 kcal depending on body weight and pace — about 400 kcal for a 70 kg person.
+related: [health/calories-burned, health/heart-rate-zones]
+---
+
+## How to use this calculator
+
+Enter your **steps**, **height** and **weight**. The calculator estimates your step length, the distance covered and calories burned. If you know your exact step length, type it in to override the estimate.
+
+## Formulas
+
+<p class="formula">Step length ≈ 0.414 × height<br/>Distance = steps × step length<br/>Calories ≈ steps × 0.00057 × weight (kg)</p>
+
+## Worked example
+
+10,000 steps at 175 cm and 70 kg:
+
+- Step length = 0.414 × 175 = 72.5 cm
+- Distance = 10,000 × 0.725 m = **7.25 km** (4.5 miles)
+- Calories ≈ **400 kcal**
+
+## Measure your own step length
+
+1. Mark out 10 m (or 30 ft) on flat ground.
+2. Walk it at your normal pace and count the steps.
+3. Step length = 10 m ÷ steps.
+
+## Is 10,000 steps a day necessary?
+
+Research published in *The Lancet Public Health* (2022) found that health benefits rise steadily up to about 6,000–8,000 steps a day for adults over 60 and 8,000–10,000 for younger adults. Any increase helps.

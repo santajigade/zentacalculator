@@ -1,0 +1,51 @@
+---
+title: Free Fall Calculator
+description: Calculate fall time, impact speed and fall height for an object dropped from rest, ignoring air resistance.
+category: physics
+keywords: [free fall calculator, falling object, fall time, impact velocity, gravity, drop height]
+updated: 2026-10-27
+variables:
+  - { id: h, label: Fall height, family: length, unit: m, imperialUnit: ft, default: 20, min: 0 }
+  - { id: t, label: Fall time, family: seconds, unit: s, min: 0 }
+  - { id: v, label: Impact speed, family: velocity, unit: ms, imperialUnit: mph, min: 0 }
+equations:
+  - h = g0 * t^2 / 2
+  - v = g0 * t
+chart: { x: h, y: v, from: 0, to: 100 }
+faq:
+  - q: How long does it take to fall 20 m?
+    a: About 2.02 seconds, reaching about 19.8 m/s (71 km/h), ignoring air resistance.
+  - q: Do heavy objects fall faster?
+    a: Not in a vacuum — all objects accelerate at the same rate. In air, drag slows light or large objects more.
+  - q: What is terminal velocity?
+    a: The speed at which air resistance balances gravity. For a skydiver in a belly-down position it is about 200 km/h.
+related: [physics/suvat-equations, physics/projectile-motion, physics/potential-energy]
+---
+
+## How to use this calculator
+
+Enter the **height**, the **fall time** or the **impact speed** — the other two are calculated. Results ignore air resistance, which is accurate for short drops of dense objects.
+
+## Formulas
+
+<p class="formula">h = ½ g t²   v = g t   v = √(2gh)</p>
+
+## Worked example
+
+A stone dropped from 20 m:
+
+- t = √(2 × 20 ÷ 9.81) = **2.02 s**
+- v = 9.81 × 2.02 = **19.8 m/s** (71 km/h)
+
+## Measuring a well's depth
+
+Drop a stone and time the splash. If it takes 2 s, the depth is about 19.6 m (a little less once you allow for the time sound takes to travel back up).
+
+## Fall distances
+
+| Time | Distance | Speed |
+|---|---|---|
+| 1 s | 4.9 m | 9.8 m/s |
+| 2 s | 19.6 m | 19.6 m/s |
+| 3 s | 44.1 m | 29.4 m/s |
+| 4 s | 78.5 m | 39.2 m/s |

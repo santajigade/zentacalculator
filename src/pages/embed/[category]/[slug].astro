@@ -1,0 +1,24 @@
+---
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource/jetbrains-mono/500.css';
+import '../../../styles/global.css';
+import Calculator from '../../../components/Calculator.tsx';
+import { allCalcs, slugOf, urlOf, type Calc } from '../../../lib/calcs.ts';
+import { catBySlug } from '../../../data/categories.ts';
+
+export async function getStaticPaths() {
+  return (await allCalcs()).map((c) => ({ params: { category: c.data.category, slug: slugOf(c) }, props: { calc: c } }));
+}
+const { calc } = Astro.props as { calc: Calc };
+const d = calc.data;
+const spec = { title: d.title, variables: d.variables, equations: d.equations, freedom: d.freedom, chart: d.chart, dataset: d.dataset };
+---
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" /><title>{d.title}</title>
+</head>
+<body style={`background:var(--surface);--accent:${catBySlug(d.category)?.color}`}>
+  <h1 style="font-size:1.15rem;margin:14px 14px 0">{d.title}</h1>
+  <Calculator client:load spec={spec} path={urlOf(calc)} embed />
+</body></html>

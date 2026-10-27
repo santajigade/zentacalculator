@@ -1,0 +1,61 @@
+---
+title: Ohm's Law Calculator
+description: Enter any two of voltage, current, resistance or power and get the other two — with steps, unit conversion and a live graph.
+category: physics
+keywords: [ohm, voltage, current, resistance, power, V=IR, electrical, watt, ampere]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: V, label: Voltage, family: voltage, unit: V, default: 24, min: 0 }
+  - { id: I, label: Current, family: current, unit: mA, min: 0 }
+  - { id: R, label: Resistance, family: resistance, unit: ohm, default: 250, min: 0 }
+  - { id: P, label: Power, family: power, unit: W, min: 0 }
+equations:
+  - V = I * R
+  - P = V * I
+chart: { x: R, y: I, from: 50, to: 1000 }
+faq:
+  - q: What is Ohm's law?
+    a: Ohm's law states that the current through a conductor is proportional to the voltage across it. V = I × R, where V is volts, I is amperes and R is ohms.
+  - q: How do I find resistance from power and voltage?
+    a: Use R = V² ÷ P. A 230 V, 60 W lamp has a hot resistance of 230² ÷ 60 ≈ 882 Ω. Enter V and P above and the calculator does this for you.
+  - q: Does Ohm's law apply to every component?
+    a: No. It applies to ohmic (linear) components like resistors. Diodes, transistors and lamp filaments change resistance with current or temperature.
+related: [conversion/number-to-million]
+---
+
+## How to use this calculator
+
+Fill in **any two** fields — for example voltage and power — and the remaining two are solved automatically. Change units with the dropdowns (mA, kΩ, kW…) and the values convert in place. Use **Show steps** to see the formula with your numbers substituted.
+
+## The formulas
+
+<p class="formula">V = I × R   P = V × I</p>
+
+Combining these gives every other form you may need:
+
+| Find | From V and I | From I and R | From V and R | From P and … |
+|---|---|---|---|---|
+| Voltage | — | I × R | — | √(P × R) |
+| Current | — | — | V ÷ R | P ÷ V |
+| Resistance | V ÷ I | — | — | V² ÷ P |
+| Power | V × I | I² × R | V² ÷ R | — |
+
+## Worked example: 4–20 mA loop
+
+A 4–20 mA transmitter drives a 250 Ω sense resistor. At full scale (20 mA):
+
+- V = 0.020 A × 250 Ω = **5 V**
+- P = 5 V × 0.020 A = **0.1 W**
+
+That is why 250 Ω resistors convert a 4–20 mA signal into a 1–5 V input. The default values above show the 24 V supply case; set Current to 20 mA to try it.
+
+## Reading the graph
+
+The chart plots one quantity against another while holding your other inputs fixed. With voltage fixed, current falls as resistance rises — the inverse curve I = V ÷ R. Switch the axes to plot power, or change the range.
+
+## Practical tips
+
+- **Resistor wattage:** choose a resistor rated at least 2× the calculated power.
+- **Wire and fuse sizing** depend on current, so calculate I first.
+- Remember to convert mA to A and kΩ to Ω when working by hand — the calculator handles this for you.

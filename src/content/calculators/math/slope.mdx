@@ -1,0 +1,59 @@
+---
+title: Slope Calculator (Two Points)
+description: Find the slope, distance and angle of a line through two points — with step-by-step working.
+category: math
+keywords: [slope calculator, gradient, rise over run, two points, distance formula, line angle, slope formula]
+updated: 2026-10-27
+variables:
+  - { id: x1, label: x₁, default: 1 }
+  - { id: y1, label: y₁, default: 2 }
+  - { id: x2, label: x₂, default: 4 }
+  - { id: y2, label: y₂, default: 6 }
+  - { id: m, label: Slope (m) }
+  - { id: d, label: Distance between points, min: 0 }
+  - { id: th, label: Angle of the line, family: angle, unit: deg }
+equations:
+  - m = (y2 - y1) / (x2 - x1)
+  - d = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+  - th = atan(m)
+faq:
+  - q: What is the slope formula?
+    a: m = (y₂ − y₁) ÷ (x₂ − x₁) — the change in y (rise) divided by the change in x (run).
+  - q: What does a negative slope mean?
+    a: The line goes down from left to right. A slope of zero is horizontal; a vertical line has an undefined slope.
+  - q: How do I turn slope into a percentage grade?
+    a: Multiply by 100. A slope of 0.05 is a 5% grade — 5 m rise for every 100 m horizontally.
+related: [math/pythagorean-theorem, math/right-triangle-trig]
+---
+
+## How to use this calculator
+
+Enter the coordinates of two points, **(x₁, y₁)** and **(x₂, y₂)**. You get the slope, the straight-line distance between the points and the angle of the line.
+
+## Formulas
+
+<p class="formula">m = (y₂ − y₁) ÷ (x₂ − x₁)<br/>d = √((x₂ − x₁)² + (y₂ − y₁)²)<br/>θ = tan⁻¹(m)</p>
+
+## Worked example
+
+Points (1, 2) and (4, 6):
+
+- Rise = 6 − 2 = 4, run = 4 − 1 = 3
+- Slope m = 4 ÷ 3 = **1.333**
+- Distance = √(3² + 4²) = **5**
+- Angle = tan⁻¹(1.333) = **53.13°**
+
+## Equation of the line
+
+With the slope, the line is y = m x + c. Find c from either point: c = y₁ − m x₁ = 2 − 1.333 × 1 = 0.667. So y = 1.333x + 0.667.
+
+## Slope as grade and angle
+
+| Grade | Slope | Angle |
+|---|---|---|
+| 1% | 0.01 | 0.57° |
+| 5% | 0.05 | 2.86° |
+| 10% | 0.1 | 5.71° |
+| 100% | 1 | 45° |
+
+Wheelchair ramps are commonly limited to about 1:12 (8.3%), or about 4.8°.

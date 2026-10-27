@@ -1,0 +1,60 @@
+---
+title: Circle Calculator
+description: Enter a circle's radius, diameter, circumference or area and get the other three instantly, in any unit.
+category: math
+keywords: [circle, area of a circle, circumference, radius, diameter, pi, πr²]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: r, label: Radius, family: length, unit: cm, imperialUnit: in, default: 5, min: 0 }
+  - { id: d, label: Diameter, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: C, label: Circumference, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: A, label: Area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+equations:
+  - d = 2 * r
+  - C = pi * d
+  - A = pi * r^2
+chart: { x: r, y: A, from: 0, to: 20 }
+faq:
+  - q: What is the formula for the area of a circle?
+    a: Area = π × r², where r is the radius. A circle with a 5 cm radius has an area of about 78.54 cm².
+  - q: How do I find the radius from the circumference?
+    a: Divide the circumference by 2π. A circumference of 31.42 cm gives a radius of 5 cm. Just type the circumference in the calculator.
+  - q: What is π?
+    a: π (pi) is the ratio of any circle's circumference to its diameter, about 3.14159. It is the same for every circle.
+related: [math/cylinder-volume, math/pythagorean-theorem]
+---
+
+## How to use this calculator
+
+Type **any one** value — radius, diameter, circumference or area — and the other three are calculated. Change the unit of any field independently; area units (cm², m², ft²…) convert automatically.
+
+## The formulas
+
+<p class="formula">d = 2r   C = πd = 2πr   A = πr²</p>
+
+Working backwards:
+
+- From circumference: r = C ÷ (2π)
+- From area: r = √(A ÷ π)
+
+## Worked example
+
+A circular table has a diameter of 1.2 m.
+
+- Radius = 1.2 ÷ 2 = 0.6 m
+- Circumference = π × 1.2 ≈ **3.77 m** (the length of edge trim needed)
+- Area = π × 0.6² ≈ **1.13 m²** (the tabletop surface)
+
+## How area grows with size
+
+Area depends on the **square** of the radius. Double the radius and the area becomes four times larger. That is why a 12-inch pizza has more than twice the area of an 8-inch pizza (113 in² vs 50 in²). The chart shows this curve.
+
+## Useful values
+
+| Radius | Circumference | Area |
+|---|---|---|
+| 1 | 6.283 | 3.142 |
+| 5 | 31.416 | 78.540 |
+| 10 | 62.832 | 314.159 |
+| 50 | 314.159 | 7,853.982 |

@@ -1,0 +1,36 @@
+---
+title: Vertical Jump Height Calculator (Hang Time)
+description: Calculate vertical jump height from flight (hang) time — or the hang time for a given jump height.
+category: sports
+keywords: [vertical jump calculator, jump height, hang time, flight time, jump test, physics of jumping]
+updated: 2026-10-27
+variables:
+  - { id: t, label: Flight (hang) time, family: seconds, unit: ms, default: 550, min: 0 }
+  - { id: h, label: Jump height, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: v, label: Take-off speed, family: velocity, unit: ms, min: 0 }
+equations:
+  - h = g0 * t^2 / 8
+  - v = g0 * t / 2
+faq:
+  - q: How is jump height calculated from hang time?
+    a: h = g × t² ÷ 8. The body rises for half the flight time and falls for the other half.
+  - q: How do I measure hang time?
+    a: Use a jump mat, force plate or slow-motion video — count the time from take-off to landing.
+  - q: What is a good vertical jump?
+    a: Around 40–50 cm is typical for active adult men and 30–40 cm for women; elite basketball players can exceed 75 cm.
+related: [physics/free-fall, sports/one-rep-max]
+---
+
+## How to use this calculator
+
+Enter your **flight time** (in milliseconds or seconds). Jump height and take-off speed are calculated.
+
+## Formula
+
+<p class="formula">h = g t² ÷ 8</p>
+
+## Example
+
+A hang time of 550 ms: h = 9.81 × 0.55² ÷ 8 = **37.1 cm**.
+
+Bending the knees on landing makes flight time look longer and overstates height — land with straight legs for accurate tests.

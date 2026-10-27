@@ -1,0 +1,43 @@
+---
+title: EV vs Petrol Car Running Cost Calculator
+description: Compare the energy cost per km and per year of an electric car against a petrol or diesel car.
+category: ecology
+keywords: [ev vs petrol cost, electric car running cost, cost per km ev, ev savings calculator, charging cost]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: d, label: Distance per year, family: length, unit: km, imperialUnit: mi, default: 12000, min: 0 }
+  - { id: ev, label: EV consumption, suffix: kWh/100 km, default: 16, min: 0 }
+  - { id: pe, label: Electricity price per kWh, family: currency, default: 0.15, min: 0, decimals: 3 }
+  - { id: ic, label: Petrol car consumption, suffix: L/100 km, default: 7, min: 0 }
+  - { id: pf, label: Fuel price per litre, family: currency, default: 1.6, min: 0, decimals: 3 }
+  - { id: cev, label: EV energy cost per year, family: currency, min: 0, decimals: 2 }
+  - { id: cic, label: Petrol cost per year, family: currency, min: 0, decimals: 2 }
+  - { id: sav, label: Yearly saving with EV, family: currency, decimals: 2 }
+equations:
+  - cev = d / 1000 / 100 * ev * pe
+  - cic = d / 1000 / 100 * ic * pf
+  - sav = cic - cev
+faq:
+  - q: Is an electric car cheaper to run?
+    a: Usually, per km — especially when charging at home. Public fast charging can cost several times more.
+  - q: What is typical EV efficiency?
+    a: About 14–20 kWh per 100 km for most cars, more in winter or at high speed.
+  - q: Does this include maintenance and purchase price?
+    a: No — energy cost only. EVs often have lower maintenance but may cost more to buy.
+related: [ecology/car-carbon-footprint, everyday-life/fuel-cost]
+---
+
+## How to use this calculator
+
+Enter yearly **distance**, the EV's **consumption** and **electricity price**, and the petrol car's **consumption** and **fuel price**. Yearly energy costs and savings are calculated.
+
+## Example
+
+12,000 km a year; EV at 16 kWh/100 km and 0.15/kWh; petrol at 7 L/100 km and 1.60/L:
+
+- EV = **288**
+- Petrol = **1,344**
+- Saving = **1,056** per year
+
+Charging losses (about 10%) are not included — add them to the EV consumption for a closer estimate.

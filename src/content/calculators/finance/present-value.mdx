@@ -1,0 +1,51 @@
+---
+title: Present Value Calculator
+description: Find what a future amount is worth today (present value) at a given discount rate — or the future value of money today.
+category: finance
+keywords: [present value, pv calculator, discount rate, time value of money, future value, discounting]
+updated: 2026-10-27
+variables:
+  - { id: FV, label: Future amount, family: currency, default: 10000, min: 0, decimals: 2 }
+  - { id: r, label: Discount rate (annual), family: percent, unit: '%', default: 8, min: -0.5, max: 2 }
+  - { id: t, label: Years, family: time, unit: yr, default: 10, min: 0 }
+  - { id: PV, label: Present value, family: currency, min: 0, decimals: 2 }
+equations:
+  - PV = FV / (1 + r)^t
+chart: { x: t, y: PV, from: 0, to: 30 }
+faq:
+  - q: What is present value?
+    a: The amount you would need to invest today, at a given rate, to have a certain sum in the future. It expresses future money in today's terms.
+  - q: What discount rate should I use?
+    a: The return you could earn elsewhere with similar risk — for example a deposit rate for safe cash flows, or a higher rate for risky business projects.
+  - q: How is this different from future value?
+    a: It is the reverse. Future value grows today's money forward; present value discounts future money back. Press × on Future amount to calculate future value instead.
+related: [finance/compound-interest, finance/inflation, finance/roi]
+---
+
+## How to use this calculator
+
+Enter a **future amount**, the **discount rate** and the **number of years** to get its present value. To go the other way, press × on Future amount and type today's value.
+
+## The formula
+
+<p class="formula">PV = FV ÷ (1 + r)<sup>t</sup></p>
+
+## Worked example
+
+You will receive 10,000 in 10 years. With an 8% discount rate:
+
+PV = 10,000 ÷ 1.08¹⁰ = **4,631.93**
+
+So 10,000 in 10 years is worth about the same as 4,632 today — because 4,632 invested at 8% would grow to 10,000.
+
+## Why money now is worth more
+
+- It can be invested to earn a return.
+- Inflation reduces what future money buys.
+- Future payments carry a risk of not arriving.
+
+## Uses
+
+- Comparing a lump sum today with payments later (lottery, settlements, pensions).
+- Valuing bonds and business projects (net present value).
+- Deciding whether to pay a bill early for a discount.

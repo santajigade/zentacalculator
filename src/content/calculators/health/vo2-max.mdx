@@ -1,0 +1,45 @@
+---
+title: VO₂ Max Calculator (Cooper Test)
+description: Estimate your VO₂ max from the distance you can run in 12 minutes using the Cooper test.
+category: health
+keywords: [vo2 max, cooper test, 12 minute run, aerobic fitness, cardio fitness, vo2max calculator]
+updated: 2026-10-27
+variables:
+  - { id: d, label: Distance run in 12 minutes, family: length, unit: m, imperialUnit: mi, default: 2400, min: 504.9 }
+  - { id: vo2, label: Estimated VO₂ max, suffix: ml/kg/min, min: 0, decimals: 1 }
+equations:
+  - vo2 = (d - 504.9) / 44.73
+chart: { x: d, y: vo2, from: 1500, to: 3500 }
+faq:
+  - q: What is VO₂ max?
+    a: The maximum amount of oxygen your body can use during intense exercise, in millilitres per kg of body weight per minute. It is a key measure of aerobic fitness.
+  - q: How do I do the Cooper test?
+    a: After warming up, run or walk as far as you can in exactly 12 minutes on a flat track, then record the distance.
+  - q: What is a good VO₂ max?
+    a: It depends on age and sex. For men aged 30–39, above about 45 is good; for women of the same age, above about 37 is good.
+related: [health/heart-rate-zones, health/calories-burned]
+---
+
+## How to use this calculator
+
+Run as far as you can in **12 minutes** and enter the distance. Your estimated VO₂ max appears instantly. You can also type a target VO₂ max to see the distance needed.
+
+## The formula (Cooper, 1968)
+
+<p class="formula">VO₂ max = (distance in metres − 504.9) ÷ 44.73</p>
+
+## Worked example
+
+Distance 2,400 m: VO₂ max = (2,400 − 504.9) ÷ 44.73 = **42.4 ml/kg/min**
+
+Improving to 2,800 m raises it to **51.3**.
+
+## Safety
+
+The test is a maximal effort. If you are new to exercise, over 40 with risk factors, or have a heart or lung condition, check with a doctor first and build up gradually.
+
+## Improving VO₂ max
+
+- Interval training (for example 4 × 4 minutes hard with 3 minutes easy).
+- Regular moderate cardio of 150 minutes or more per week.
+- Gradual increases in volume — most people improve within 6–12 weeks.

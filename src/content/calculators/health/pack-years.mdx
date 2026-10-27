@@ -1,0 +1,41 @@
+---
+title: Pack-Year Calculator (Smoking History)
+description: Calculate smoking pack-years from cigarettes per day and years smoked — used to assess lung cancer screening eligibility.
+category: health
+keywords: [pack years, pack year calculator, smoking history, lung cancer screening, cigarettes per day]
+updated: 2026-10-27
+variables:
+  - { id: cpd, label: Cigarettes per day, default: 20, min: 0 }
+  - { id: yrs, label: Years smoked, suffix: years, default: 20, min: 0 }
+  - { id: py, label: Pack-years, min: 0, decimals: 1 }
+equations:
+  - py = cpd / 20 * yrs
+faq:
+  - q: What is a pack-year?
+    a: Smoking one pack of 20 cigarettes a day for one year. 10 cigarettes a day for 20 years is also 10 pack-years.
+  - q: Why do doctors use pack-years?
+    a: It summarises lifetime smoking exposure. Higher values mean higher risk of lung cancer, COPD and heart disease.
+  - q: Who is eligible for lung cancer screening?
+    a: The US Preventive Services Task Force (2021) recommends yearly low-dose CT screening for adults aged 50–80 with a 20 pack-year history who currently smoke or quit within the past 15 years. Rules differ by country.
+related: [health/heart-rate-zones, health/mean-arterial-pressure]
+---
+
+## How to use this calculator
+
+Enter the average **cigarettes per day** and the **number of years** you smoked at that level. If your habit changed over time, calculate each period separately and add the results.
+
+## The formula
+
+<p class="formula">Pack-years = (cigarettes per day ÷ 20) × years smoked</p>
+
+## Worked examples
+
+- 20 cigarettes a day for 20 years = **20 pack-years**
+- 30 a day for 20 years = **30 pack-years**
+- 10 a day for 15 years, then 20 a day for 10 years = 7.5 + 10 = **17.5 pack-years**
+
+## It's never too late to quit
+
+Risk starts to fall soon after stopping and keeps falling for years. Free support is available in most countries through national quit lines and health services — ask your doctor or pharmacist.
+
+This calculator does not provide medical advice.

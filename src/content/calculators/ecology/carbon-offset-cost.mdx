@@ -1,0 +1,31 @@
+---
+title: Carbon Offset Cost Calculator
+description: Calculate the cost of offsetting your emissions at a given carbon price per tonne.
+category: ecology
+keywords: [carbon offset cost, carbon credit price, offset calculator, cost per tonne co2, carbon pricing]
+updated: 2026-10-27
+variables:
+  - { id: t, label: Emissions to offset, family: mass, unit: t, imperialUnit: lb, default: 5, min: 0 }
+  - { id: p, label: Price per tonne CO₂, family: currency, default: 15, min: 0, decimals: 2 }
+  - { id: cost, label: Offset cost, family: currency, min: 0, decimals: 2 }
+  - { id: m, label: Per month, family: currency, min: 0, decimals: 2 }
+equations:
+  - cost = t / 1000 * p
+  - m = cost / 12
+faq:
+  - q: How much does a carbon offset cost?
+    a: Voluntary offsets range widely — from a few to over 100 per tonne — depending on the project type and quality.
+  - q: Are all offsets equal?
+    a: No. Look for independently verified projects (for example Gold Standard or Verra) and check permanence and additionality.
+  - q: Should I offset or reduce?
+    a: Reduce first, then offset what you cannot avoid.
+related: [ecology/flight-emissions, ecology/tree-offset, ecology/car-carbon-footprint]
+---
+
+## How to use this calculator
+
+Enter the **emissions** to offset (yearly) and the **price per tonne**. The total and monthly cost are calculated.
+
+## Example
+
+5 tonnes at 15 per tonne → **75** a year (**6.25** a month).

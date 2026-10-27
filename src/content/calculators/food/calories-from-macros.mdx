@@ -1,0 +1,40 @@
+---
+title: Calories from Macros Calculator
+description: Calculate total calories from grams of protein, carbohydrate, fat and alcohol — as shown on nutrition labels.
+category: food
+keywords: [calories from macros, calorie calculator, protein carbs fat calories, nutrition label, kcal from grams]
+updated: 2026-10-27
+variables:
+  - { id: p, label: Protein, suffix: g, default: 25, min: 0 }
+  - { id: c, label: Carbohydrate, suffix: g, default: 40, min: 0 }
+  - { id: f, label: Fat, suffix: g, default: 15, min: 0 }
+  - { id: a, label: Alcohol, suffix: g, default: 0, min: 0 }
+  - { id: kcal, label: Total calories, suffix: kcal, min: 0, decimals: 0 }
+  - { id: fpct, label: Calories from fat, family: percent, unit: '%', min: 0 }
+equations:
+  - kcal = 4 * p + 4 * c + 9 * f + 7 * a
+  - fpct = 9 * f / kcal
+faq:
+  - q: How many calories are in a gram of each macronutrient?
+    a: Protein 4 kcal, carbohydrate 4 kcal, fat 9 kcal and alcohol 7 kcal (Atwater factors).
+  - q: Why doesn't my label add up exactly?
+    a: Labels round values, and fibre provides fewer calories than other carbohydrates.
+  - q: How do I convert kcal to kJ?
+    a: Multiply by 4.184.
+related: [health/macros, health/bmr, conversion/energy-converter]
+---
+
+## How to use this calculator
+
+Enter grams of **protein**, **carbohydrate**, **fat** and **alcohol**. Total calories and the share from fat are calculated.
+
+## Formula
+
+<p class="formula">kcal = 4P + 4C + 9F + 7A</p>
+
+## Example
+
+25 g protein, 40 g carbohydrate, 15 g fat:
+
+- kcal = 100 + 160 + 135 = **395 kcal**
+- Calories from fat = 135 ÷ 395 = **34%**

@@ -1,0 +1,15 @@
+---
+// Zenta Calculator logo: gradient "Z" mark + wordmark. `id` keeps gradient ids unique per instance.
+import { SITE } from '../site.config.ts';
+interface Props { id?: string; size?: number; }
+const { id = 'lg', size = 34 } = Astro.props;
+---
+<a href="/" class="logo" aria-label={`${SITE.name} home`}>
+  <svg class="logo__mark" width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
+    <defs><linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f5bff" /><stop offset="1" stop-color="#8b5cf6" /></linearGradient></defs>
+    <rect width="64" height="64" rx="17" fill={`url(#${id})`} />
+    <path d="M19 20h26L19 44h20" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="46.5" cy="44" r="4.6" fill="#ffb547" />
+  </svg>
+  <span>{SITE.short}<span class="logo__sub"> Calculator</span></span>
+</a>

@@ -1,0 +1,45 @@
+---
+title: Rule of 72 — Doubling Time Calculator
+description: Find how many years it takes for money to double at any interest rate — exact result plus the Rule of 72 estimate.
+category: finance
+keywords: [rule of 72, doubling time, how long to double money, investment doubling, compound growth]
+updated: 2026-10-27
+variables:
+  - { id: r, label: Annual return, family: percent, unit: '%', default: 8, min: 0.0001, max: 5 }
+  - { id: t, label: Exact years to double, family: time, unit: yr, min: 0 }
+  - { id: t72, label: Rule of 72 estimate, family: time, unit: yr, min: 0 }
+equations:
+  - t = ln(2) / ln(1 + r)
+  - t72 = 0.72 / r
+chart: { x: r, y: t, from: 1, to: 20 }
+faq:
+  - q: What is the Rule of 72?
+    a: A shortcut to estimate doubling time — divide 72 by the annual percentage return. At 8%, money doubles in about 72 ÷ 8 = 9 years.
+  - q: How accurate is it?
+    a: Very close for rates between about 6% and 10%. It slightly overestimates at low rates and underestimates at high ones.
+  - q: Does it work for inflation too?
+    a: Yes. At 6% inflation, prices double in about 12 years — so money halves in value in the same time.
+related: [finance/compound-interest, finance/cagr, finance/inflation]
+---
+
+## How to use this calculator
+
+Enter an **annual return** to see the exact years needed to double your money and the Rule of 72 estimate. Or press × on the return and type how many years you want — the required rate is calculated.
+
+## Formulas
+
+<p class="formula">Exact: t = ln 2 ÷ ln(1 + r)<br/>Rule of 72: t ≈ 72 ÷ (r × 100)</p>
+
+## Comparison table
+
+| Return | Exact years | Rule of 72 |
+|---|---|---|
+| 4% | 17.7 | 18 |
+| 6% | 11.9 | 12 |
+| 8% | 9.0 | 9 |
+| 10% | 7.3 | 7.2 |
+| 12% | 6.1 | 6 |
+
+## Doubling again and again
+
+At 8%, 10,000 becomes 20,000 in 9 years, 40,000 in 18 years and 80,000 in 27 years. Each extra 9 years doubles it again — the essence of compounding.

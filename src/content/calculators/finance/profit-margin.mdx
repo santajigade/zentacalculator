@@ -1,0 +1,57 @@
+---
+title: Profit Margin Calculator
+description: Calculate profit, profit margin and markup from cost and selling price — or find the price for a target margin.
+category: finance
+keywords: [profit margin, markup, gross margin, selling price, cost price, profit percentage]
+updated: 2026-10-27
+variables:
+  - { id: c, label: Cost, family: currency, default: 60, min: 0, decimals: 2 }
+  - { id: v, label: Selling price (revenue), family: currency, default: 100, min: 0, decimals: 2 }
+  - { id: p, label: Profit, family: currency, decimals: 2 }
+  - { id: m, label: Profit margin, family: percent, unit: '%', max: 1 }
+  - { id: k, label: Markup, family: percent, unit: '%' }
+equations:
+  - p = v - c
+  - m = p / v
+  - k = p / c
+chart: { x: v, y: m, from: 60, to: 200 }
+faq:
+  - q: What is the difference between margin and markup?
+    a: Margin is profit as a share of the selling price. Markup is profit as a share of the cost. Buying at 60 and selling at 100 gives a 40% margin but a 66.7% markup.
+  - q: How do I set a price for a target margin?
+    a: Price = cost ÷ (1 − margin). For a 40% margin on a cost of 60, the price is 60 ÷ 0.6 = 100. Press × on Selling price and type the margin.
+  - q: Can a margin be over 100%?
+    a: No. Margin can approach but never reach 100%. Markup has no upper limit.
+related: [finance/discount, math/percentage]
+---
+
+## How to use this calculator
+
+Enter the **cost** and **selling price** to see your profit, margin and markup. To set a price, press × on Selling price and type the margin (or markup) you want.
+
+## The formulas
+
+<p class="formula">profit = price − cost   margin = profit ÷ price   markup = profit ÷ cost</p>
+
+## Worked example
+
+You buy a product for 60 and sell it for 100.
+
+- Profit = 100 − 60 = **40**
+- Margin = 40 ÷ 100 = **40%**
+- Markup = 40 ÷ 60 = **66.7%**
+
+## Margin vs markup table
+
+| Markup | Equals margin |
+|---|---|
+| 25% | 20% |
+| 50% | 33.3% |
+| 100% | 50% |
+| 200% | 66.7% |
+
+Mixing these up is a common pricing mistake. If you want a 50% margin but add a 50% markup, your actual margin is only 33.3%.
+
+## Gross vs net margin
+
+This calculator gives **gross** margin — selling price minus the direct cost of the item. **Net** margin also subtracts overheads such as rent, salaries, marketing and tax. To estimate net margin, include those costs in the Cost field.

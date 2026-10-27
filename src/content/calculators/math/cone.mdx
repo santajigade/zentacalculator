@@ -1,0 +1,50 @@
+---
+title: Cone Calculator (Volume, Slant Height, Surface Area)
+description: Calculate a cone's volume, slant height and surface area from its radius and height.
+category: math
+keywords: [cone volume, slant height, cone surface area, 1/3 pi r2 h, conical, hopper volume]
+updated: 2026-10-27
+variables:
+  - { id: r, label: Base radius, family: length, unit: cm, imperialUnit: in, default: 3, min: 0 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 4, min: 0 }
+  - { id: s, label: Slant height, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: cm3, imperialUnit: in3, min: 0 }
+  - { id: Lat, label: Lateral (side) area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+  - { id: T, label: Total surface area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+equations:
+  - s = sqrt(r^2 + h^2)
+  - V = pi * r^2 * h / 3
+  - Lat = pi * r * s
+  - T = Lat + pi * r^2
+faq:
+  - q: What is the formula for the volume of a cone?
+    a: V = ⅓ × π × r² × h — exactly one third of a cylinder with the same base and height.
+  - q: What is the slant height?
+    a: The distance from the tip to the edge of the base along the side, s = √(r² + h²).
+  - q: How do I calculate a hopper or funnel volume?
+    a: For a full cone, use this calculator. For a truncated cone (cut off at the bottom), subtract the small cone from the large one.
+related: [math/cylinder-volume, math/sphere, math/pythagorean-theorem]
+---
+
+## How to use this calculator
+
+Enter the **base radius** and **height** to get the slant height, volume and surface areas. You can also solve for the height from a volume, or the radius from the slant height.
+
+## Formulas
+
+<p class="formula">s = √(r² + h²)   V = ⅓πr²h<br/>Lateral area = πrs   Total = πrs + πr²</p>
+
+## Worked example
+
+A cone with a 3 cm radius and 4 cm height:
+
+- Slant height = √(9 + 16) = **5 cm**
+- Volume = ⅓ × π × 9 × 4 = **37.7 cm³**
+- Lateral area = π × 3 × 5 = **47.1 cm²**
+- Total surface = 47.1 + 28.3 = **75.4 cm²**
+
+## Practical uses
+
+- **Silos and hoppers** have conical bottoms — add the cone volume to the cylinder above.
+- **Piles of sand or gravel** form cones. Measure the base circumference and height to estimate the volume.
+- **Funnels and paper cups** use the lateral area to work out how much material is needed.

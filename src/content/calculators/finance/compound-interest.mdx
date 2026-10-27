@@ -1,0 +1,90 @@
+---
+title: Compound Interest Calculator
+description: Find maturity amount, interest earned, rate or time for any compounding frequency — with a growth chart and step-by-step working.
+category: finance
+keywords: [compound interest, fd, fixed deposit, cd, certificate of deposit, savings, maturity amount, interest rate, investment growth, cagr]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: P, label: Principal, family: currency, default: 10000, min: 0, decimals: 2 }
+  - { id: r, label: Annual interest rate, family: percent, unit: '%', default: 7.5, min: 0, max: 5 }
+  - id: n
+    label: Compounding
+    default: 4
+    options:
+      - { label: Yearly, value: 1 }
+      - { label: Half-yearly, value: 2 }
+      - { label: Quarterly, value: 4 }
+      - { label: Monthly, value: 12 }
+      - { label: Daily, value: 365 }
+  - { id: t, label: Time, family: time, unit: yr, default: 5, min: 0 }
+  - { id: A, label: Maturity amount, family: currency, min: 0, decimals: 2 }
+  - { id: CI, label: Interest earned, family: currency, decimals: 2 }
+equations:
+  - A = P * (1 + r/n)^(n*t)
+  - CI = A - P
+chart: { x: t, y: A, from: 0, to: 30 }
+faq:
+  - q: What is the formula for compound interest?
+    a: A = P(1 + r/n)^(nt), where P is the principal, r the annual rate as a decimal, n the compounding periods per year and t the time in years. Interest earned is A − P.
+  - q: Which compounding frequency should I choose?
+    a: Use the frequency stated by your bank or investment. Savings accounts often compound daily or monthly, while many fixed deposits and CDs compound monthly or quarterly.
+  - q: How long does it take to double my money?
+    a: Enter the same principal and set Maturity amount to double it. The calculator solves for time. The rule of 72 gives a quick estimate — 72 ÷ rate. At 8% that is about 9 years.
+  - q: Can I find the interest rate I need?
+    a: Yes. Enter principal, target maturity amount and time. The rate is solved numerically.
+related: [conversion/number-to-million]
+---
+
+## How to use this calculator
+
+Choose the compounding frequency, then fill in **any three** of principal, rate, time and maturity amount. The fourth — and the interest earned — is calculated. One tool answers four questions:
+
+- *What will my savings grow to?* → enter principal, rate, time.
+- *What rate do I need?* → enter principal, target amount, time.
+- *How long will it take?* → press × on Time, then enter the target amount.
+- *How much should I invest now?* → press × on Principal, then enter the target amount.
+
+The currency symbol follows your region automatically. The maths is the same in any currency.
+
+## The formula
+
+<p class="formula">A = P × (1 + r/n)<sup>n×t</sup>   Interest = A − P</p>
+
+- **P** — principal (starting amount)
+- **r** — annual interest rate as a decimal (7.5% = 0.075)
+- **n** — compounding periods per year
+- **t** — time in years
+
+## Worked example
+
+10,000 invested at 7.5% compounded quarterly for 5 years:
+
+- r/n = 0.075 ÷ 4 = 0.01875
+- n × t = 4 × 5 = 20
+- A = 10,000 × 1.01875²⁰ = **14,499.48**
+- Interest earned = **4,499.48**
+
+## How compounding frequency changes the result
+
+For 10,000 at 7.5% for 5 years:
+
+| Compounding | Maturity amount |
+|---|---|
+| Yearly | 14,356.29 |
+| Half-yearly | 14,450.44 |
+| Quarterly | 14,499.48 |
+| Monthly | 14,532.94 |
+| Daily | 14,549.35 |
+
+More frequent compounding earns slightly more because interest starts earning interest sooner. The gap is small compared with the effect of rate and time — use the chart to see how time dominates.
+
+## Rule of 72
+
+To estimate how long money takes to double, divide 72 by the interest rate. At 8%, 72 ÷ 8 ≈ 9 years. The calculator gives the exact answer: clear the Time field and set the maturity amount to twice the principal.
+
+## Things to keep in mind
+
+- Interest is usually taxable, so your after-tax return is lower.
+- Inflation reduces real returns; compare your rate with current inflation.
+- Stock and fund returns are not fixed, so this formula gives an estimate only.

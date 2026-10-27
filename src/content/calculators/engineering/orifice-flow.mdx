@@ -1,0 +1,54 @@
+---
+title: Orifice Plate Flow Calculator
+description: Calculate liquid flow through an orifice plate from differential pressure, bore, pipe size and density — or the DP for a given flow.
+category: engineering
+keywords: [orifice plate, orifice flow, differential pressure flow, beta ratio, discharge coefficient, dp flow meter, iso 5167]
+updated: 2026-10-27
+variables:
+  - { id: D, label: Pipe inner diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: d, label: Orifice bore, family: length, unit: mm, imperialUnit: in, default: 50, min: 0 }
+  - { id: b, label: Beta ratio (d/D), min: 0, max: 0.99 }
+  - { id: Cd, label: Discharge coefficient, default: 0.61, min: 0, max: 1, help: Typically 0.60–0.62 for sharp-edged orifices with flange taps }
+  - { id: dP, label: Differential pressure, family: pressure, unit: mbar, imperialUnit: inH2O, default: 250, min: 0 }
+  - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
+  - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+equations:
+  - b = d / D
+  - Q = Cd * (pi * d^2 / 4) * sqrt(2 * dP / (rho * (1 - b^4)))
+chart: { x: dP, y: Q, from: 0, to: 500 }
+faq:
+  - q: What is the beta ratio?
+    a: The ratio of the orifice bore to the pipe's inner diameter (d/D). Most designs keep it between 0.2 and 0.75 for good accuracy.
+  - q: Why is flow proportional to the square root of DP?
+    a: Bernoulli's equation links velocity to the square root of pressure drop. Doubling the flow needs four times the differential pressure.
+  - q: Is this accurate enough for custody transfer?
+    a: No. This uses a fixed discharge coefficient for quick sizing and checks. Fiscal metering uses the full ISO 5167 method with Reynolds-dependent coefficients and expansibility for gases.
+related: [engineering/dp-flow-square-root, engineering/pipe-flow-velocity, engineering/reynolds-number]
+---
+
+## How to use this calculator
+
+Enter the **pipe inner diameter**, **orifice bore**, **discharge coefficient**, **differential pressure** and **liquid density** to get the flow rate. To size a DP transmitter range, press × on Differential pressure and type the maximum flow.
+
+## The formula (liquids)
+
+<p class="formula">Q = C<sub>d</sub> × A<sub>o</sub> × √(2ΔP ÷ (ρ(1 − β⁴)))</p>
+
+- **A<sub>o</sub>** = π d² ÷ 4 — orifice bore area
+- **β** = d ÷ D — beta ratio
+- **C<sub>d</sub>** — discharge coefficient (about 0.61 for sharp-edged plates)
+
+## Worked example
+
+Water (998 kg/m³) in a 100 mm pipe with a 50 mm bore (β = 0.5), C<sub>d</sub> = 0.61, ΔP = 250 mbar:
+
+- A<sub>o</sub> = 0.001963 m²
+- 1 − β⁴ = 0.9375
+- Q = 0.61 × 0.001963 × √(2 × 25,000 ÷ (998 × 0.9375)) = 0.00876 m³/s = **31.5 m³/h**
+
+## Good practice
+
+- Keep β between about **0.2 and 0.75**.
+- Provide enough **straight pipe** upstream (often 10–40 D depending on fittings) and downstream (about 5 D).
+- Turndown is limited to about **3:1 to 4:1** with one DP transmitter, because flow follows the square root of DP. See the [DP square root calculator](/engineering/dp-flow-square-root/).
+- For gases and steam, an expansibility factor is also needed.

@@ -1,0 +1,53 @@
+---
+title: RC Time Constant Calculator
+description: Calculate the RC time constant, charging time and cut-off frequency of a resistor–capacitor circuit.
+category: physics
+keywords: [rc time constant, rc circuit, capacitor charging time, tau = rc, cutoff frequency, low pass filter]
+updated: 2026-10-27
+variables:
+  - { id: R, label: Resistance, family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: Cc, label: Capacitance, family: capacitance, unit: uF, default: 100, min: 0 }
+  - { id: tau, label: Time constant (τ), family: seconds, unit: s, min: 0 }
+  - { id: t5, label: Time to ~99% charge (5τ), family: seconds, unit: s, min: 0 }
+  - { id: fc, label: Cut-off frequency, suffix: Hz, min: 0 }
+equations:
+  - tau = R * Cc
+  - t5 = 5 * tau
+  - fc = 1 / (2 * pi * tau)
+faq:
+  - q: What is the RC time constant?
+    a: τ = R × C, the time for a capacitor to charge to about 63.2% of the supply voltage through a resistor.
+  - q: How long does a capacitor take to charge fully?
+    a: About 5 time constants (5RC) to reach 99.3%.
+  - q: What is the cut-off frequency of an RC filter?
+    a: fc = 1 ÷ (2πRC) — the frequency at which the output falls to 70.7% (−3 dB).
+related: [physics/resistors-series-parallel, physics/ohms-law]
+---
+
+## How to use this calculator
+
+Enter the **resistance** and **capacitance** to get the time constant, approximate full-charge time and filter cut-off frequency. You can also solve for the capacitor needed for a target time.
+
+## Formulas
+
+<p class="formula">τ = R C   t(≈99%) = 5τ   f<sub>c</sub> = 1 ÷ (2π R C)</p>
+
+## Worked example
+
+10 kΩ and 100 µF:
+
+- τ = 10,000 × 0.0001 = **1 s**
+- Full charge ≈ **5 s**
+- Cut-off frequency = **0.159 Hz**
+
+## Charging curve
+
+| Time | Charge (% of supply) |
+|---|---|
+| 1τ | 63.2% |
+| 2τ | 86.5% |
+| 3τ | 95.0% |
+| 4τ | 98.2% |
+| 5τ | 99.3% |
+
+The same percentages apply in reverse when discharging. RC networks are used for timers, debouncing switches and simple signal filters.

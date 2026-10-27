@@ -1,0 +1,52 @@
+---
+title: Projectile Motion Calculator
+description: Calculate range, maximum height and flight time of a projectile from launch speed and angle.
+category: physics
+keywords: [projectile motion, range calculator, launch angle, maximum height, time of flight, trajectory]
+updated: 2026-10-27
+variables:
+  - { id: v, label: Launch speed, family: velocity, unit: ms, imperialUnit: fts, default: 20, min: 0 }
+  - { id: th, label: Launch angle, family: angle, unit: deg, default: 45, min: 0, max: 1.5708 }
+  - { id: R, label: Range (horizontal distance), family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: H, label: Maximum height, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: T, label: Time of flight, family: seconds, unit: s, min: 0 }
+equations:
+  - R = v^2 * sin(2 * th) / g0
+  - H = v^2 * sin(th)^2 / (2 * g0)
+  - T = 2 * v * sin(th) / g0
+chart: { x: th, y: R, from: 0, to: 90 }
+faq:
+  - q: What angle gives the maximum range?
+    a: 45° on level ground, ignoring air resistance. Complementary angles such as 30° and 60° give the same range.
+  - q: Does this include air resistance?
+    a: No. Real projectiles such as balls fall shorter, and the best angle is usually a little below 45°.
+  - q: Does this assume level ground?
+    a: Yes — the projectile lands at the same height it was launched from.
+related: [physics/free-fall, physics/suvat-equations]
+---
+
+## How to use this calculator
+
+Enter the **launch speed** and **angle** to get the range, maximum height and flight time. The chart shows how range changes with angle — note the peak at 45°.
+
+## Formulas (level ground, no air resistance)
+
+<p class="formula">R = v² sin(2θ) ÷ g<br/>H = v² sin²θ ÷ 2g<br/>T = 2v sin θ ÷ g</p>
+
+## Worked example
+
+Launched at 20 m/s and 45°:
+
+- Range = 400 × 1 ÷ 9.81 = **40.8 m**
+- Maximum height = **10.2 m**
+- Flight time = **2.88 s**
+
+## Range at different angles (20 m/s)
+
+| Angle | Range |
+|---|---|
+| 15° | 20.4 m |
+| 30° | 35.3 m |
+| 45° | 40.8 m |
+| 60° | 35.3 m |
+| 75° | 20.4 m |

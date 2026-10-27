@@ -1,0 +1,51 @@
+---
+title: Empirical Rule Calculator (68–95–99.7)
+description: Find the ranges containing 68%, 95% and 99.7% of values in a normal distribution from the mean and standard deviation.
+category: statistics
+keywords: [empirical rule, 68 95 99.7 rule, three sigma rule, normal distribution ranges, standard deviation]
+updated: 2026-10-27
+variables:
+  - { id: mu, label: Mean (μ), default: 170 }
+  - { id: s, label: Standard deviation (σ), default: 8, min: 0 }
+  - { id: l1, label: 68% range — lower (μ − σ) }
+  - { id: u1, label: 68% range — upper (μ + σ) }
+  - { id: l2, label: 95% range — lower (μ − 2σ) }
+  - { id: u2, label: 95% range — upper (μ + 2σ) }
+  - { id: l3, label: 99.7% range — lower (μ − 3σ) }
+  - { id: u3, label: 99.7% range — upper (μ + 3σ) }
+equations:
+  - l1 = mu - s
+  - u1 = mu + s
+  - l2 = mu - 2 * s
+  - u2 = mu + 2 * s
+  - l3 = mu - 3 * s
+  - u3 = mu + 3 * s
+faq:
+  - q: What is the empirical rule?
+    a: For a normal distribution, about 68% of values lie within 1 standard deviation of the mean, 95% within 2, and 99.7% within 3.
+  - q: Does it work for any data?
+    a: Only for roughly bell-shaped (normal) data. For skewed data, the percentages can be very different.
+  - q: What is "six sigma"?
+    a: A quality approach aiming for processes so consistent that defects are extremely rare — about 3.4 per million opportunities under its conventions.
+related: [statistics/normal-distribution, statistics/z-score, statistics/standard-deviation]
+---
+
+## How to use this calculator
+
+Enter the **mean** and **standard deviation**. The 68%, 95% and 99.7% ranges are calculated.
+
+## The rule
+
+<p class="formula">μ ± 1σ ≈ 68%   μ ± 2σ ≈ 95%   μ ± 3σ ≈ 99.7%</p>
+
+## Worked example — adult heights
+
+Mean 170 cm, SD 8 cm:
+
+- 68% are between **162 and 178 cm**
+- 95% are between **154 and 186 cm**
+- 99.7% are between **146 and 194 cm**
+
+## Exact values
+
+The precise percentages are 68.27%, 95.45% and 99.73%. For other ranges, use the [normal distribution calculator](/statistics/normal-distribution/).

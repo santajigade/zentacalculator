@@ -1,0 +1,76 @@
+---
+title: 4–20 mA Scaling Calculator
+description: Convert a 4–20 mA loop current to a process value (and back) for any measuring range — with live scaling chart.
+category: engineering
+keywords: [4-20 mA, 4 20 ma calculator, current loop, scaling, transmitter, mA to pressure, mA to temperature, percent span, plc scaling]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: I, label: Loop current, family: current, unit: mA, default: 12, min: 0, max: 0.03 }
+  - { id: s, label: Percent of span, family: percent, unit: '%' }
+  - { id: L, label: Range low (value at 4 mA), default: 0 }
+  - { id: H, label: Range high (value at 20 mA), default: 10 }
+  - { id: V, label: Process value }
+equations:
+  - s = (I - 0.004) / 0.016
+  - V = L + s * (H - L)
+chart: { x: I, y: V, from: 4, to: 20 }
+faq:
+  - q: How do I convert 4–20 mA to a process value?
+    a: Value = low + (mA − 4) ÷ 16 × (high − low). For 12 mA on a 0–10 bar transmitter, (12 − 4) ÷ 16 × 10 = 5 bar.
+  - q: Why does the signal start at 4 mA instead of 0?
+    a: The 4 mA "live zero" powers two-wire transmitters and lets the system tell a real zero reading (4 mA) from a broken wire (0 mA).
+  - q: What do currents below 4 mA or above 20 mA mean?
+    a: Many devices follow NAMUR NE 43. Readings below about 3.6 mA or above about 21 mA signal a fault, such as a sensor failure or open circuit.
+  - q: Can I calculate the mA output for a given value?
+    a: Yes. Press × on Loop current, then type the process value. The calculator gives the expected current, useful for loop checks.
+related: [engineering/hydrostatic-pressure, engineering/pt100-resistance, physics/ohms-law]
+---
+
+## How to use this calculator
+
+1. Enter the transmitter's **range** — the value at 4 mA (low) and at 20 mA (high), in any engineering unit such as bar, °C, m or m³/h.
+2. Enter the **loop current** to get the process value and percent of span.
+
+To check a loop the other way round, press × on Loop current and type the process value — the calculator shows the current the transmitter should send. Reverse-acting ranges (for example 100 at 4 mA and 0 at 20 mA) work too.
+
+## The formula
+
+<p class="formula">% span = (I − 4 mA) ÷ 16 mA<br/>value = low + % span × (high − low)</p>
+
+## Worked examples
+
+**Pressure transmitter, 0–10 bar, reading 12 mA**
+
+- % span = (12 − 4) ÷ 16 = 50%
+- Value = 0 + 0.5 × 10 = **5 bar**
+
+**Temperature transmitter, 0–250 °C, reading 16.8 mA**
+
+- % span = (16.8 − 4) ÷ 16 = 80%
+- Value = 0.8 × 250 = **200 °C**
+
+## Quick reference
+
+| Current | % of span |
+|---|---|
+| 4 mA | 0% |
+| 8 mA | 25% |
+| 12 mA | 50% |
+| 16 mA | 75% |
+| 20 mA | 100% |
+
+## NAMUR NE 43 fault levels
+
+| Current | Meaning |
+|---|---|
+| ≤ 3.6 mA | Fault (downscale failure) |
+| 3.8 – 4.0 mA | Under-range, still valid |
+| 20.0 – 20.5 mA | Over-range, still valid |
+| ≥ 21 mA | Fault (upscale failure) |
+
+Check your transmitter's manual — some manufacturers use slightly different limits.
+
+## Converting mA to volts
+
+Many PLC inputs read the loop as a voltage across a 250 Ω resistor, giving 1–5 V. Use the [Ohm's law calculator](/physics/ohms-law/) to check other resistor values.

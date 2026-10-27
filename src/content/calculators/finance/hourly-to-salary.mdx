@@ -1,0 +1,59 @@
+---
+title: Hourly to Salary Calculator
+description: Convert an hourly wage to annual, monthly and weekly salary — or a salary back to an hourly rate.
+category: finance
+keywords: [hourly to salary, hourly wage, annual salary, salary to hourly, per hour, wage calculator, yearly income]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: h, label: Hourly rate, family: currency, default: 25, min: 0, decimals: 2 }
+  - { id: hpw, label: Hours per week, suffix: hours, default: 40, min: 0 }
+  - { id: wpy, label: Weeks worked per year, suffix: weeks, default: 52, min: 0, max: 53 }
+  - { id: A, label: Annual salary, family: currency, min: 0, decimals: 2 }
+  - { id: M, label: Monthly salary, family: currency, min: 0, decimals: 2 }
+  - { id: W, label: Weekly pay, family: currency, min: 0, decimals: 2 }
+equations:
+  - W = h * hpw
+  - A = W * wpy
+  - M = A / 12
+faq:
+  - q: How do I convert hourly pay to annual salary?
+    a: Multiply the hourly rate by hours per week and weeks per year. 25 × 40 × 52 = 52,000 a year.
+  - q: How do I convert salary to hourly?
+    a: Press × on Hourly rate and type the annual salary. With 40 hours and 52 weeks, divide the salary by 2,080.
+  - q: Should I use 52 weeks?
+    a: Use 52 if you are paid for holidays. If you take unpaid weeks off, reduce the weeks worked to match.
+related: [finance/salary-increase, finance/sales-tax-vat]
+---
+
+## How to use this calculator
+
+Enter your **hourly rate**, **hours per week** and **weeks per year**. You see weekly, monthly and annual pay. Type a salary into any of those fields to find the equivalent hourly rate.
+
+## Formulas
+
+<p class="formula">Weekly = hourly × hours per week<br/>Annual = weekly × weeks per year   Monthly = annual ÷ 12</p>
+
+## Worked example
+
+25 per hour, 40 hours a week, 52 weeks:
+
+- Weekly = 25 × 40 = **1,000**
+- Annual = 1,000 × 52 = **52,000**
+- Monthly = **4,333.33**
+
+## Quick table (40 h/week, 52 weeks = 2,080 hours)
+
+| Hourly | Annual |
+|---|---|
+| 15 | 31,200 |
+| 20 | 41,600 |
+| 25 | 52,000 |
+| 30 | 62,400 |
+| 50 | 104,000 |
+
+A quick mental rule: **annual ≈ hourly × 2,000**.
+
+## Remember
+
+These are gross (before-tax) figures. Overtime, bonuses and benefits are not included.

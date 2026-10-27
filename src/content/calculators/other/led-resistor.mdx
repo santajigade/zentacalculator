@@ -1,0 +1,47 @@
+---
+title: LED Resistor Calculator
+description: Calculate the series resistor needed for an LED from supply voltage, LED forward voltage and current.
+category: other
+keywords: [led resistor calculator, current limiting resistor, led series resistor, forward voltage, arduino led]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: Vs, label: Supply voltage, family: voltage, unit: V, default: 5, min: 0 }
+  - id: Vf
+    label: LED colour (typical forward voltage)
+    default: 2
+    options:
+      - { label: Red (2.0 V), value: 2 }
+      - { label: Yellow / orange (2.1 V), value: 2.1 }
+      - { label: Green (2.2 V), value: 2.2 }
+      - { label: Blue / white (3.2 V), value: 3.2 }
+      - { label: Infrared (1.3 V), value: 1.3 }
+  - { id: I, label: LED current, family: current, unit: mA, default: 20, min: 0.000001 }
+  - { id: R, label: Resistor needed, family: resistance, unit: ohm, min: 0 }
+  - { id: P, label: Resistor power, family: power, unit: mW, min: 0 }
+equations:
+  - R = (Vs - Vf) / I
+  - P = (Vs - Vf) * I
+faq:
+  - q: How do I calculate the resistor for an LED?
+    a: R = (supply voltage − LED forward voltage) ÷ LED current. For a red LED on 5 V at 20 mA, R = 3 ÷ 0.02 = 150 Ω.
+  - q: Which standard resistor should I choose?
+    a: Pick the next higher standard value (E12 series), which slightly reduces current and is safer.
+  - q: What wattage resistor do I need?
+    a: Choose a rating at least double the calculated power — a ¼ W resistor is fine for most single indicator LEDs.
+related: [physics/ohms-law, other/voltage-divider]
+---
+
+## How to use this calculator
+
+Enter the **supply voltage**, choose the **LED colour** and set the **current**. The resistor value and its power dissipation are calculated.
+
+## Formula
+
+<p class="formula">R = (V<sub>supply</sub> − V<sub>f</sub>) ÷ I</p>
+
+## Example
+
+Red LED (2.0 V) on 5 V at 20 mA: R = 3 ÷ 0.02 = **150 Ω**, dissipating **60 mW**.
+
+Check your LED's datasheet for exact forward voltage and maximum current; many modern indicator LEDs are bright enough at 5–10 mA.

@@ -1,0 +1,41 @@
+---
+title: Board Feet Calculator (Lumber)
+description: Calculate board feet of lumber from thickness, width and length — plus total cost.
+category: construction
+keywords: [board feet calculator, lumber calculator, board foot, timber volume, hardwood pricing, bf]
+updated: 2026-10-27
+variables:
+  - { id: t, label: Thickness, suffix: in, default: 2, min: 0 }
+  - { id: w, label: Width, suffix: in, default: 6, min: 0 }
+  - { id: l, label: Length, suffix: ft, default: 8, min: 0 }
+  - { id: q, label: Number of pieces, default: 10, min: 0 }
+  - { id: pr, label: Price per board foot, family: currency, default: 4.5, min: 0, decimals: 2 }
+  - { id: bf, label: Total board feet, min: 0 }
+  - { id: cost, label: Total cost, family: currency, min: 0, decimals: 2 }
+equations:
+  - bf = t * w * l / 12 * q
+  - cost = bf * pr
+faq:
+  - q: What is a board foot?
+    a: A volume of wood 1 inch thick, 12 inches wide and 1 foot long (144 cubic inches).
+  - q: Do I use nominal or actual size?
+    a: Hardwood is usually priced on nominal rough-sawn thickness (such as 4/4 = 1 in). Check how your supplier measures.
+  - q: How many board feet in a cubic metre?
+    a: About 423.8 board feet.
+related: [construction/fence, conversion/volume-converter]
+---
+
+## How to use this calculator
+
+Enter **thickness** and **width** in inches, **length** in feet, the **quantity** and the **price per board foot**. Total board feet and cost are calculated.
+
+## Formula
+
+<p class="formula">Board feet = thickness (in) × width (in) × length (ft) ÷ 12</p>
+
+## Example
+
+Ten 2 × 6 in boards, 8 ft long, at 4.50 per board foot:
+
+- Board feet = 2 × 6 × 8 ÷ 12 × 10 = **80**
+- Cost = **360.00**

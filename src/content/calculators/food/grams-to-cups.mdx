@@ -1,0 +1,58 @@
+---
+title: Grams to Cups Converter (Baking)
+description: Convert grams to US cups and cups to grams for flour, sugar, butter, rice, oats and other common ingredients.
+category: food
+keywords: [grams to cups, cups to grams, flour grams to cups, sugar cups to grams, baking conversion, butter grams]
+updated: 2026-10-27
+featured: true
+variables:
+  - id: d
+    label: Ingredient
+    default: 120
+    options:
+      - { label: Flour (all-purpose) (120 g per cup), value: 120 }
+      - { label: Sugar (granulated) (200 g per cup), value: 200 }
+      - { label: Brown sugar (packed) (220 g per cup), value: 220 }
+      - { label: Butter (227 g per cup), value: 227 }
+      - { label: Rice (uncooked) (185 g per cup), value: 185 }
+      - { label: Rolled oats (90 g per cup), value: 90 }
+      - { label: Cocoa powder (85 g per cup), value: 85 }
+      - { label: Honey (340 g per cup), value: 340 }
+      - { label: Milk (245 g per cup), value: 245 }
+      - { label: Water (240 g per cup), value: 240 }
+  - { id: g, label: Grams, default: 250, min: 0 }
+  - { id: c, label: US cups, min: 0, decimals: 3 }
+  - { id: tb, label: Tablespoons, min: 0, decimals: 1 }
+equations:
+  - c = g / d
+  - tb = c * 16
+faq:
+  - q: How many grams is a cup of flour?
+    a: About 120–125 g for spooned and levelled all-purpose flour. Scooping straight from the bag packs it to 140 g or more.
+  - q: Why weigh instead of using cups?
+    a: Weight is far more accurate. The same cup of flour can vary by 20% depending on how it is filled.
+  - q: How much is a stick of butter?
+    a: One US stick is ½ cup, 8 tablespoons or about 113 g.
+related: [food/cooking-converter, food/butter-converter, food/recipe-scaler]
+---
+
+## How to use this converter
+
+Choose the **ingredient**, then enter **grams** or **cups**. The other value and the equivalent in tablespoons are calculated.
+
+## Grams per US cup
+
+| Ingredient | Grams per cup |
+|---|---|
+| Flour (all-purpose) | 120 |
+| Sugar (granulated) | 200 |
+| Brown sugar (packed) | 220 |
+| Butter | 227 |
+| Rice (uncooked) | 185 |
+| Rolled oats | 90 |
+| Cocoa powder | 85 |
+| Honey | 340 |
+| Milk | 245 |
+| Water | 240 |
+
+Values are typical averages; brands and how you fill the cup vary. For best baking results, use a kitchen scale.

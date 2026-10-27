@@ -1,0 +1,49 @@
+---
+title: Flight Carbon Emissions Calculator
+description: Estimate CO₂ emissions per passenger for a flight from distance, cabin class and non-CO₂ effects.
+category: ecology
+keywords: [flight emissions calculator, flight carbon footprint, co2 per flight, air travel emissions, radiative forcing]
+updated: 2026-10-27
+variables:
+  - { id: d, label: Flight distance (one way), family: length, unit: km, imperialUnit: mi, default: 6000, min: 0 }
+  - { id: trips, label: Number of one-way flights, default: 2, min: 0 }
+  - { id: ef, label: Emission factor (economy), suffix: kg CO₂ per passenger-km, default: 0.15, min: 0 }
+  - id: cls
+    label: Cabin class
+    default: 1
+    options:
+      - { label: Economy (×1), value: 1 }
+      - { label: Premium economy (×1.6), value: 1.6 }
+      - { label: Business (×2.9), value: 2.9 }
+      - { label: First (×4), value: 4 }
+  - id: rf
+    label: Include non-CO₂ warming effects?
+    default: 1
+    options:
+      - { label: No (CO₂ only), value: 1 }
+      - { label: Yes (×1.9 multiplier), value: 1.9 }
+  - { id: co2, label: Emissions, family: mass, unit: t, imperialUnit: lb, min: 0 }
+equations:
+  - co2 = d / 1000 * trips * ef * cls * rf
+faq:
+  - q: How much CO₂ does a flight produce per passenger?
+    a: Roughly 0.1–0.25 kg of CO₂ per passenger-km in economy, depending on distance, aircraft and load factor.
+  - q: Why does cabin class matter?
+    a: Premium seats take more cabin space, so each passenger is responsible for a bigger share of the plane's fuel.
+  - q: What is the non-CO₂ multiplier?
+    a: Contrails and nitrogen oxides at altitude add extra warming. Some methods multiply CO₂ by about 1.9 to include them; the exact effect is still debated.
+related: [ecology/tree-offset, ecology/carbon-offset-cost]
+---
+
+## How to use this calculator
+
+Enter the **distance** and **number of one-way flights**, an **emission factor**, your **cabin class**, and whether to include **non-CO₂ effects**. Your share of the emissions is calculated.
+
+## Example
+
+A 6,000 km return trip (2 flights) in economy at 0.15 kg/pkm:
+
+- CO₂ only: 6,000 × 2 × 0.15 = **1.8 t**
+- With non-CO₂ effects (×1.9): **3.4 t**
+
+Emission factors depend on the method and source; government conversion factors (such as the UK's DESNZ) are updated yearly.

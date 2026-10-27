@@ -1,0 +1,32 @@
+---
+title: LPG Gas Cylinder Duration Calculator
+description: Estimate how many days an LPG gas cylinder will last from its weight and your daily cooking use.
+category: other
+keywords: [lpg cylinder duration, how long does gas cylinder last, cooking gas usage, lpg consumption, 14.2 kg cylinder]
+updated: 2026-10-27
+variables:
+  - { id: kg, label: Gas in cylinder, family: mass, unit: kg, imperialUnit: lb, default: 14.2, min: 0 }
+  - { id: hrs, label: Burner use per day, suffix: hours, default: 2, min: 0.0001 }
+  - { id: rate, label: Burner consumption, suffix: g/hour, default: 150, min: 0.0001 }
+  - { id: per, label: Gas used per day, family: mass, unit: g, min: 0 }
+  - { id: days, label: Cylinder will last, suffix: days, min: 0, decimals: 0 }
+equations:
+  - per = hrs * rate / 1000
+  - days = kg / per
+faq:
+  - q: How long does a 14.2 kg LPG cylinder last?
+    a: For a typical family cooking about 2 burner-hours a day at around 150 g/hour, roughly 45–50 days.
+  - q: How much gas does a burner use?
+    a: Typically 100–200 g per hour depending on burner size and flame setting.
+  - q: How can I make it last longer?
+    a: Use lids, keep burners clean, use a pressure cooker and match flame size to the pan.
+related: [everyday-life/electricity-cost, conversion/energy-converter]
+---
+
+## How to use this calculator
+
+Enter the **gas weight** in the cylinder, **burner hours per day** and the burner's **consumption**. Daily use and the number of days are calculated.
+
+## Example
+
+14.2 kg cylinder, 2 burner-hours a day at 150 g/hour: 300 g/day → about **47 days**.

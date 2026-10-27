@@ -1,0 +1,54 @@
+---
+title: Heart Rate Zone Calculator
+description: Find your maximum heart rate and target heart rate for any training intensity using the Karvonen method.
+category: health
+keywords: [heart rate zones, target heart rate, max heart rate, karvonen, fat burning zone, cardio zone, training zones]
+updated: 2026-10-27
+variables:
+  - { id: age, label: Age, suffix: years, default: 40, min: 10, max: 100 }
+  - { id: rhr, label: Resting heart rate, suffix: bpm, default: 60, min: 30, max: 120 }
+  - { id: i, label: Training intensity, family: percent, unit: '%', default: 70, min: 0, max: 1 }
+  - { id: mhr, label: Maximum heart rate (estimated), suffix: bpm, min: 0, decimals: 0 }
+  - { id: thr, label: Target heart rate, suffix: bpm, min: 0, decimals: 0 }
+equations:
+  - mhr = 208 - 0.7 * age
+  - thr = rhr + i * (mhr - rhr)
+chart: { x: i, y: thr, from: 50, to: 100 }
+faq:
+  - q: How is maximum heart rate estimated?
+    a: This calculator uses the Tanaka formula, 208 − 0.7 × age, which is more accurate for adults than the older 220 − age rule.
+  - q: What is the Karvonen method?
+    a: It sets training zones using heart rate reserve (max − resting), so it adapts to your fitness level. Target = resting + intensity × (max − resting).
+  - q: How do I measure resting heart rate?
+    a: Count your pulse for 60 seconds after waking, before getting out of bed. Average several mornings.
+related: [health/calories-burned, health/vo2-max]
+---
+
+## How to use this calculator
+
+Enter your **age**, **resting heart rate** and the **intensity** you want to train at. The calculator gives your estimated maximum heart rate and the target heart rate for that intensity.
+
+## Formulas
+
+<p class="formula">Max HR = 208 − 0.7 × age   (Tanaka, 2001)<br/>Target HR = Resting HR + intensity × (Max HR − Resting HR)</p>
+
+## Worked example
+
+Age 40, resting heart rate 60 bpm, 70% intensity:
+
+- Max HR = 208 − 28 = **180 bpm**
+- Target = 60 + 0.7 × (180 − 60) = **144 bpm**
+
+## Training zones (for this example)
+
+| Zone | Intensity | Target HR | Feels like |
+|---|---|---|---|
+| 1 — Very light | 50–60% | 120–132 | Easy, recovery |
+| 2 — Light | 60–70% | 132–144 | Comfortable, can talk |
+| 3 — Moderate | 70–80% | 144–156 | Breathing harder |
+| 4 — Hard | 80–90% | 156–168 | Short sentences only |
+| 5 — Maximum | 90–100% | 168–180 | All-out effort |
+
+## Safety
+
+Formulas are estimates — individual maximum heart rates can differ by 10–15 bpm. Some medicines (such as beta-blockers) lower heart rate. If you have a heart condition, ask your doctor before starting intense exercise.

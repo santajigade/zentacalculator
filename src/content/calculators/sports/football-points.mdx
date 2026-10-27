@@ -1,0 +1,40 @@
+---
+title: League Points Calculator (Football / Soccer)
+description: Calculate league points, points per game and goal difference from wins, draws and losses.
+category: sports
+keywords: [league points calculator, football points, soccer table, points per game, goal difference, 3 points for a win]
+updated: 2026-10-27
+variables:
+  - { id: w, label: Wins, default: 18, min: 0 }
+  - { id: d, label: Draws, default: 8, min: 0 }
+  - { id: l, label: Losses, default: 6, min: 0 }
+  - { id: gf, label: Goals scored, default: 55, min: 0 }
+  - { id: ga, label: Goals conceded, default: 30, min: 0 }
+  - { id: pts, label: "Points (3 for a win, 1 for a draw)", min: 0, decimals: 0 }
+  - { id: ppg, label: Points per game, min: 0, decimals: 2 }
+  - { id: gd, label: Goal difference, decimals: 0 }
+equations:
+  - pts = 3 * w + d
+  - ppg = pts / (w + d + l)
+  - gd = gf - ga
+faq:
+  - q: How are league points calculated?
+    a: Most football leagues award 3 points for a win, 1 for a draw and 0 for a loss.
+  - q: What is points per game?
+    a: Total points divided by matches played — useful for comparing teams with games in hand.
+  - q: How many points to avoid relegation in a 38-game league?
+    a: Often around 35–40, but it varies by season.
+related: [sports/win-percentage]
+---
+
+## How to use this calculator
+
+Enter **wins**, **draws**, **losses** and **goals for and against**. Points, points per game and goal difference are calculated.
+
+## Example
+
+18 wins, 8 draws, 6 losses, 55–30 goals:
+
+- Points = **62**
+- Points per game = **1.94**
+- Goal difference = **+25**

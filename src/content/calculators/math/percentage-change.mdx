@@ -1,0 +1,62 @@
+---
+title: Percentage Change Calculator
+description: Calculate the percentage increase or decrease between two values, or find the new value after a percentage change.
+category: math
+keywords: [percentage change, percent increase, percent decrease, growth, difference, how much did it change]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Original value, default: 80 }
+  - { id: b, label: New value, default: 92 }
+  - { id: c, label: Percentage change, family: percent, unit: '%' }
+  - { id: d, label: Difference (new − original) }
+equations:
+  - b = a * (1 + c)
+  - d = b - a
+chart: { x: b, y: c, from: 0, to: 200 }
+faq:
+  - q: What is the formula for percentage change?
+    a: Percentage change = (new − original) ÷ original × 100. From 80 to 92 is (92 − 80) ÷ 80 × 100 = 15%.
+  - q: Is a negative result a decrease?
+    a: Yes. A negative percentage change means the value fell. From 92 back to 80 is −13.04%.
+  - q: Why is the change from 80 to 92 not the same as from 92 to 80?
+    a: Percentage change is always measured against the starting value. 12 is 15% of 80 but only 13.04% of 92.
+related: [math/percentage, finance/cagr, finance/discount]
+---
+
+## How to use this calculator
+
+Enter the **original** and **new** values to get the percentage change and the difference. You can also work backwards: enter the original value and a percentage change (for example −20%) to find the new value.
+
+## The formula
+
+<p class="formula">percentage change = (new − original) ÷ original × 100</p>
+
+Example: a price rises from 80 to 92.
+
+- Difference = 92 − 80 = 12
+- Percentage change = 12 ÷ 80 = 0.15 = **15% increase**
+
+## Increase or decrease?
+
+| Result | Meaning |
+|---|---|
+| Positive (for example +15%) | The value increased |
+| Zero | No change |
+| Negative (for example −13%) | The value decreased |
+
+## Percentage change is not symmetric
+
+Going up 15% and then down 15% does not bring you back to where you started:
+
+- 80 + 15% = 92
+- 92 − 15% = 78.2
+
+That is because each change is measured against a different base. To undo a 15% rise you need a fall of 13.04%.
+
+## Percentage change vs percentage points
+
+If an interest rate moves from 4% to 5%, it rose by **1 percentage point**, which is a **25% increase** in the rate itself. News reports often mix these up — this calculator gives the percentage change.
+
+## Over several years
+
+For growth over several years, the yearly average is not the total change divided by the number of years. Use the [CAGR calculator](/finance/cagr/) for the compound annual rate.

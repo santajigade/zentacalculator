@@ -1,0 +1,58 @@
+---
+title: Waist-to-Height Ratio Calculator
+description: Calculate your waist-to-height ratio (WHtR), a simple measure of central body fat and health risk.
+category: health
+keywords: [waist to height ratio, whtr, waist size, central obesity, belly fat, health risk]
+updated: 2026-10-27
+variables:
+  - { id: w, label: Waist circumference, family: length, unit: cm, imperialUnit: in, default: 85, min: 0 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 178, min: 0.5 }
+  - id: r
+    label: Waist-to-height ratio
+    min: 0
+    decimals: 3
+    bands:
+      - { max: 0.4, label: Low — may be underweight, color: '#3b82f6' }
+      - { max: 0.5, label: Healthy, color: '#16a34a' }
+      - { max: 0.6, label: Increased risk, color: '#eab308' }
+      - { max: 10, label: High risk, color: '#dc2626' }
+equations:
+  - r = w / h
+faq:
+  - q: What is a healthy waist-to-height ratio?
+    a: Below 0.5 — in other words, keep your waist to less than half your height. This simple rule works for adults of any sex and most ethnic groups.
+  - q: Is WHtR better than BMI?
+    a: It is a better indicator of belly fat, which is linked to heart disease and diabetes. Many researchers suggest using it alongside BMI.
+  - q: Where do I measure my waist?
+    a: Midway between the bottom of your ribs and the top of your hip bones, after breathing out normally.
+related: [health/bmi, health/body-fat, health/waist-to-hip]
+---
+
+## How to use this calculator
+
+Enter your **waist** and **height** in the same or different units. Your ratio and risk category appear instantly. To find the maximum healthy waist for your height, press × on Waist and type 0.5 as the ratio.
+
+## The formula
+
+<p class="formula">WHtR = waist ÷ height</p>
+
+## Worked example
+
+Waist 85 cm, height 178 cm:
+
+WHtR = 85 ÷ 178 = **0.478** → healthy (below 0.5)
+
+The maximum healthy waist for this height is 178 × 0.5 = 89 cm.
+
+## Categories
+
+| WHtR | Meaning |
+|---|---|
+| Below 0.4 | Take care — may be underweight |
+| 0.4 – 0.49 | Healthy |
+| 0.5 – 0.59 | Increased health risk |
+| 0.6 and above | High health risk |
+
+UK NICE guidance (2022) recommends keeping waist size to less than half of height.
+
+This is a screening tool. Speak to a doctor about your individual health.

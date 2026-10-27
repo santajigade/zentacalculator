@@ -1,0 +1,70 @@
+---
+title: Flow Rate Converter
+description: Convert volumetric flow between m³/h, L/min, L/s, US gpm, CFM and m³/s — for pumps, pipes and flow meters.
+category: conversion
+keywords: [flow rate converter, m3/h to l/min, gpm to m3/h, cfm converter, l/s to m3/h, flow unit conversion]
+updated: 2026-10-27
+variables:
+  - { id: u0, label: Cubic metres per hour (m³/h), family: flow, unit: m3h, default: 10, min: 0 }
+  - { id: u1, label: Litres per minute (L/min), family: flow, unit: Lmin, min: 0 }
+  - { id: u2, label: Litres per second (L/s), family: flow, unit: Ls, min: 0 }
+  - { id: u3, label: US gallons per minute (gpm), family: flow, unit: gpm, min: 0 }
+  - { id: u4, label: Cubic feet per minute (CFM), family: flow, unit: cfm, min: 0 }
+  - { id: u5, label: Cubic metres per second (m³/s), family: flow, unit: m3s, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+  - u3 = u4
+  - u4 = u5
+faq:
+  - q: How many L/min is 1 m³/h?
+    a: "16.667 L/min."
+  - q: How many m³/h is 1 US gpm?
+    a: "0.2271 m³/h."
+  - q: What does CFM mean?
+    a: "Cubic feet per minute, common for air flow in HVAC and compressors."
+related: [engineering/pipe-flow-velocity, engineering/mass-flow-rate, conversion/volume-converter]
+---
+
+## How to use this converter
+
+Type a flow rate in **any** unit and the others update instantly — handy for pump curves, flow meter ranges and datasheets.
+
+## Formula
+
+<p class="formula">1 m³/h = 16.667 L/min = 4.403 US gpm = 0.5886 CFM</p>
+
+**Example:** a pump rated 10 m³/h delivers **166.7 L/min** or **44.0 US gpm**.
+
+## Conversion table
+
+| m³/h | L/min |
+|---|---|
+| 0.1 m³/h | 1.66667 L/min |
+| 0.5 m³/h | 8.33333 L/min |
+| 1 m³/h | 16.6667 L/min |
+| 2 m³/h | 33.3333 L/min |
+| 5 m³/h | 83.3333 L/min |
+| 10 m³/h | 166.667 L/min |
+| 25 m³/h | 416.667 L/min |
+| 50 m³/h | 833.333 L/min |
+| 100 m³/h | 1,666.67 L/min |
+
+| US gpm | m³/h |
+|---|---|
+| 1 US gpm | 0.227125 m³/h |
+| 5 US gpm | 1.13562 m³/h |
+| 10 US gpm | 2.27125 m³/h |
+| 20 US gpm | 4.54249 m³/h |
+| 50 US gpm | 11.3562 m³/h |
+| 100 US gpm | 22.7125 m³/h |
+| 500 US gpm | 113.562 m³/h |
+
+## Liquids vs gases
+
+For liquids, volumetric flow is straightforward. For gases, volume changes with pressure and temperature, so flows are often quoted at reference conditions — **Nm³/h** (normal) or **SCFM** (standard). This converter changes units only; it does not correct for pressure or temperature.
+
+## Need mass flow?
+
+Multiply by density to get kg/h — use the [mass flow rate calculator](/engineering/mass-flow-rate/).

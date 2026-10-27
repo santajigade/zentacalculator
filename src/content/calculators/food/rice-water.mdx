@@ -1,0 +1,42 @@
+---
+title: Rice to Water Ratio Calculator
+description: Find how much water to use for white, basmati, jasmine, brown rice and more — by cups or grams.
+category: food
+keywords: [rice water ratio, how much water for rice, basmati rice water, brown rice water, cooking rice]
+updated: 2026-10-27
+variables:
+  - id: r
+    label: Rice type (water per cup of rice)
+    default: 1.5
+    options:
+      - { label: Basmati (1.5 cups water), value: 1.5 }
+      - { label: Jasmine (1.25 cups water), value: 1.25 }
+      - { label: Long-grain white (2 cups water), value: 2 }
+      - { label: Short-grain / sushi (1.2 cups water), value: 1.2 }
+      - { label: Brown rice (2.25 cups water), value: 2.25 }
+      - { label: Wild rice (3 cups water), value: 3 }
+  - { id: rc, label: Rice, family: volume, unit: cup, default: 2, min: 0 }
+  - { id: wc, label: Water, family: volume, unit: cup, min: 0 }
+  - { id: serv, label: Servings (about ½ cup dry each), min: 0, decimals: 0 }
+equations:
+  - wc = rc * r
+  - serv = rc / 0.0001182941
+faq:
+  - q: How much water for 1 cup of rice?
+    a: It depends on the variety — about 1.5 cups for basmati, 2 for long-grain white and 2.25 for brown rice (absorption method).
+  - q: Should I rinse rice?
+    a: Rinsing removes surface starch for fluffier grains. Soaked basmati may need a little less water.
+  - q: How much rice per person?
+    a: About ½ cup (around 90 g) uncooked rice for a main-course portion.
+related: [food/recipe-scaler, food/cooking-converter]
+---
+
+## How to use this calculator
+
+Choose the **rice type** and enter the amount of **rice**. The water needed and approximate servings are calculated. Switch units to ml or metric cups if you prefer.
+
+## Example
+
+2 cups of basmati → **3 cups of water**, about 4 servings.
+
+Ratios are for the absorption method on a stovetop with a tight lid. Rice cookers and pressure cookers may need slightly less water.

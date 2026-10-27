@@ -1,0 +1,54 @@
+---
+title: Gibbs Free Energy Calculator (ΔG = ΔH − TΔS)
+description: Calculate Gibbs free energy change to predict whether a reaction is spontaneous at a given temperature.
+category: chemistry
+keywords: [gibbs free energy, delta g, spontaneous reaction, enthalpy, entropy, thermodynamics]
+updated: 2026-10-27
+variables:
+  - { id: dH, label: Enthalpy change ΔH, suffix: kJ/mol, default: -92.2 }
+  - { id: dS, label: Entropy change ΔS, suffix: J/mol·K, default: -198.7 }
+  - { id: T, label: Temperature, family: temperature, unit: C, imperialUnit: F, default: 25, min: 0 }
+  - id: dG
+    label: Gibbs free energy ΔG
+    suffix: kJ/mol
+    bands:
+      - { max: -0.0001, label: Spontaneous (favourable), color: '#16a34a' }
+      - { max: 0.0001, label: At equilibrium, color: '#eab308' }
+      - { max: 1e12, label: Non-spontaneous, color: '#dc2626' }
+equations:
+  - dG = dH - T * dS / 1000
+chart: { x: T, y: dG, from: 0, to: 600 }
+faq:
+  - q: What does a negative ΔG mean?
+    a: The reaction is thermodynamically favourable (spontaneous) at that temperature. It says nothing about how fast it happens.
+  - q: At what temperature does a reaction become spontaneous?
+    a: Where ΔG = 0, so T = ΔH ÷ ΔS. Press × on Temperature and set ΔG to 0.
+  - q: Why are units mixed?
+    a: ΔH is usually given in kJ/mol and ΔS in J/mol·K. The calculator divides ΔS by 1,000 for you.
+related: [chemistry/arrhenius-equation, chemistry/specific-heat]
+---
+
+## How to use this calculator
+
+Enter **ΔH** (kJ/mol), **ΔS** (J/mol·K) and the **temperature**. ΔG is calculated and labelled spontaneous or not.
+
+## Formula
+
+<p class="formula">ΔG = ΔH − T ΔS</p>
+
+## Worked example — ammonia synthesis
+
+N₂ + 3H₂ → 2NH₃, ΔH = −92.2 kJ/mol, ΔS = −198.7 J/mol·K, at 25 °C:
+
+ΔG = −92.2 − 298.15 × (−0.1987) = **-33.0 kJ/mol** → spontaneous
+
+It stops being spontaneous above T = 92.2 ÷ 0.1987 ≈ 464 K (191 °C).
+
+## The four cases
+
+| ΔH | ΔS | Spontaneous? |
+|---|---|---|
+| − | + | Always |
+| + | − | Never |
+| − | − | At low temperatures |
+| + | + | At high temperatures |

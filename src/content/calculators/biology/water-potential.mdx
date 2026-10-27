@@ -1,0 +1,39 @@
+---
+title: Water Potential Calculator
+description: Calculate solute potential and total water potential of plant cells or solutions (Ψ = Ψs + Ψp).
+category: biology
+keywords: [water potential, solute potential, pressure potential, osmosis plants, psi, plant cells]
+updated: 2026-10-27
+variables:
+  - { id: i, label: Ionisation constant (i), default: 1, min: 0, help: "1 for sucrose, about 2 for NaCl" }
+  - { id: c, label: Molar concentration, suffix: mol/L, default: 0.3, min: 0 }
+  - { id: T, label: Temperature, family: temperature, unit: C, default: 22, min: 0 }
+  - { id: pp, label: Pressure potential (Ψp), suffix: MPa, default: 0 }
+  - { id: ps, label: Solute potential (Ψs), suffix: MPa }
+  - { id: psi, label: Water potential (Ψ), suffix: MPa }
+equations:
+  - ps = -i * c * 0.0083145 * T
+  - psi = ps + pp
+faq:
+  - q: What is water potential?
+    a: A measure of water's tendency to move. Water moves from higher (less negative) to lower (more negative) water potential.
+  - q: What is the formula for solute potential?
+    a: Ψs = −iCRT, with R = 0.0083145 L·MPa/(mol·K) and T in kelvin.
+  - q: What is the water potential of pure water?
+    a: Zero at atmospheric pressure. Adding solutes makes it negative.
+related: [chemistry/osmotic-pressure, biology/serial-dilution]
+---
+
+## How to use this calculator
+
+Enter the **ionisation constant**, **concentration**, **temperature** and **pressure potential** (0 for an open beaker). Solute potential and total water potential are calculated in MPa.
+
+## Formulas
+
+<p class="formula">Ψs = −i C R T   Ψ = Ψs + Ψp</p>
+
+## Example
+
+0.3 M sucrose at 22 °C in an open beaker:
+
+Ψs = −1 × 0.3 × 0.0083145 × 295.15 = **-0.736 MPa** = Ψ

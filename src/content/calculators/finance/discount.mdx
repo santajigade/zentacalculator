@@ -1,0 +1,57 @@
+---
+title: Discount Calculator
+description: Find the sale price and how much you save from a percentage discount — or work out the discount from the sale price.
+category: finance
+keywords: [discount, sale price, percent off, savings, price after discount, shopping]
+updated: 2026-10-27
+variables:
+  - { id: p, label: Original price, family: currency, default: 80, min: 0, decimals: 2 }
+  - { id: d, label: Discount, family: percent, unit: '%', default: 25, min: 0, max: 1 }
+  - { id: f, label: Price after discount, family: currency, min: 0, decimals: 2 }
+  - { id: s, label: You save, family: currency, decimals: 2 }
+equations:
+  - f = p * (1 - d)
+  - s = p - f
+faq:
+  - q: How do I calculate a discount?
+    a: Multiply the price by the discount as a decimal to get the saving, then subtract it. 25% off 80 saves 20, so you pay 60.
+  - q: How do I find the discount percentage from the sale price?
+    a: Discount = (original − sale) ÷ original. Press × on Discount and type the sale price.
+  - q: Are two discounts of 20% the same as 40% off?
+    a: No. 20% off and then another 20% off is 36% off in total, because the second discount applies to the already-reduced price.
+related: [math/percentage, finance/profit-margin]
+---
+
+## How to use this calculator
+
+Enter the **original price** and the **discount %** to see the sale price and how much you save. It also works backwards:
+
+- Know the original and sale prices? Press × on Discount and type the sale price to find the real percentage off.
+- Know the sale price and discount? Press × on Original price to find what it used to cost.
+
+## The formula
+
+<p class="formula">sale price = price × (1 − discount)   saving = price − sale price</p>
+
+## Worked example
+
+A jacket costs 80 with 25% off:
+
+- Saving = 80 × 0.25 = **20**
+- Sale price = 80 − 20 = **60**
+
+## Stacked discounts
+
+Shops sometimes offer "an extra 20% off sale prices". Discounts multiply rather than add:
+
+| Offer | Real total discount |
+|---|---|
+| 20% + 20% | 36% |
+| 30% + 10% | 37% |
+| 50% + 20% | 60% |
+
+To check a stacked offer, apply the first discount, then put the result into the Original price field and apply the second.
+
+## Discount vs markup
+
+A 25% discount on 80 gives 60, but marking 60 back up by 25% only gives 75. Use the [profit margin calculator](/finance/profit-margin/) for markups.

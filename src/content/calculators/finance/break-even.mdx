@@ -1,0 +1,56 @@
+---
+title: Break-Even Calculator
+description: Find the break-even point in units and revenue from fixed costs, selling price and variable cost per unit.
+category: finance
+keywords: [break even point, break even analysis, fixed costs, variable costs, contribution margin, units to break even]
+updated: 2026-10-27
+variables:
+  - { id: FC, label: Fixed costs (per period), family: currency, default: 50000, min: 0, decimals: 2 }
+  - { id: p, label: Selling price per unit, family: currency, default: 40, min: 0, decimals: 2 }
+  - { id: vc, label: Variable cost per unit, family: currency, default: 15, min: 0, decimals: 2 }
+  - { id: q, label: Break-even units, min: 0, decimals: 0 }
+  - { id: R, label: Break-even revenue, family: currency, min: 0, decimals: 2 }
+equations:
+  - q = FC / (p - vc)
+  - R = q * p
+chart: { x: p, y: q, from: 20, to: 100 }
+faq:
+  - q: What is the break-even point?
+    a: The sales level where total revenue equals total costs — no profit and no loss.
+  - q: What is contribution margin?
+    a: Selling price minus variable cost per unit. It is what each sale contributes towards fixed costs and then profit.
+  - q: How can I lower my break-even point?
+    a: Raise prices, reduce variable costs per unit, or cut fixed costs. The chart shows how strongly price affects break-even units.
+related: [finance/profit-margin, finance/roi]
+---
+
+## How to use this calculator
+
+Enter your **fixed costs** (rent, salaries, insurance for the period), **selling price** and **variable cost per unit**. You get the units and revenue needed to break even. To set a price for a sales target, press × on the price and type the units you expect to sell.
+
+## Formulas
+
+<p class="formula">Break-even units = Fixed costs ÷ (Price − Variable cost)<br/>Break-even revenue = units × price</p>
+
+## Worked example
+
+Fixed costs of 50,000 a month, product sells for 40 and costs 15 to make:
+
+- Contribution margin = 40 − 15 = 25 per unit
+- Break-even = 50,000 ÷ 25 = **2,000 units**
+- Revenue at break-even = 2,000 × 40 = **80,000**
+
+Every unit sold beyond 2,000 adds 25 of profit.
+
+## Fixed vs variable costs
+
+| Fixed (don't change with sales) | Variable (per unit sold) |
+|---|---|
+| Rent | Raw materials |
+| Salaries | Packaging |
+| Insurance | Shipping |
+| Software subscriptions | Sales commission |
+
+## Margin of safety
+
+If you expect to sell 2,600 units, your margin of safety is 600 units (23%) — how far sales could fall before you make a loss.

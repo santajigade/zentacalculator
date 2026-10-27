@@ -1,0 +1,52 @@
+---
+title: Alcohol Units Calculator
+description: Calculate UK alcohol units and US standard drinks in any drink from its volume and ABV.
+category: health
+keywords: [alcohol units, standard drinks, abv calculator, units in a pint, units in wine, alcohol intake]
+updated: 2026-10-27
+variables:
+  - { id: v, label: Drink volume, family: volume, unit: mL, imperialUnit: galUS, default: 500, min: 0 }
+  - { id: abv, label: Alcohol strength (ABV), family: percent, unit: '%', default: 5, min: 0, max: 1 }
+  - { id: u, label: UK units (8 g alcohol each), min: 0, decimals: 2 }
+  - { id: sd, label: US standard drinks (14 g each), min: 0, decimals: 2 }
+equations:
+  - u = v * 100000 * abv
+  - sd = v * 1000000 * abv / 17.74
+faq:
+  - q: How many units are in a pint of beer?
+    a: A UK pint (568 ml) of 4% beer has about 2.3 units. A 500 ml bottle of 5% beer has 2.5 units.
+  - q: How many units are in a glass of wine?
+    a: A 175 ml glass of 12% wine has 2.1 units; a 250 ml glass has 3 units.
+  - q: What are the guidelines?
+    a: The UK Chief Medical Officers advise not regularly drinking more than 14 units a week, spread over three or more days. Guidelines in other countries differ.
+related: [health/calories-burned, health/water-intake]
+---
+
+## How to use this calculator
+
+Enter the **volume** of the drink and its **ABV** (alcohol by volume, shown on the label). You get UK units and US standard drinks.
+
+## Formulas
+
+<p class="formula">UK units = volume (ml) × ABV% ÷ 1000<br/>US standard drinks = volume (ml) × ABV ÷ 17.74</p>
+
+One UK unit = 10 ml (8 g) of pure alcohol. One US standard drink = about 17.7 ml (14 g).
+
+## Worked example
+
+A 500 ml bottle of 5% beer:
+
+- UK units = 500 × 5 ÷ 1000 = **2.5 units**
+- US standard drinks = 500 × 0.05 ÷ 17.74 = **1.41 drinks**
+
+## Common drinks
+
+| Drink | Units |
+|---|---|
+| Pint of 4% beer (568 ml) | 2.3 |
+| 330 ml bottle of 5% beer | 1.7 |
+| 175 ml glass of 12% wine | 2.1 |
+| 25 ml single spirit, 40% | 1.0 |
+| 750 ml bottle of 13% wine | 9.75 |
+
+Never drink and drive. If you are worried about your drinking, speak to a doctor or a local support service.

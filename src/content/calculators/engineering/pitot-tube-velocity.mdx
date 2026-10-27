@@ -1,0 +1,53 @@
+---
+title: Pitot Tube Velocity Calculator
+description: Calculate air or liquid velocity from pitot tube differential pressure — and the flow in a duct or pipe.
+category: engineering
+keywords: [pitot tube, velocity pressure, air velocity, duct velocity, dynamic pressure, airflow, anemometer]
+updated: 2026-10-27
+variables:
+  - { id: dP, label: Velocity (dynamic) pressure, family: pressure, unit: Pa, imperialUnit: inH2O, default: 500, min: 0 }
+  - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1.2, min: 0 }
+  - { id: C, label: Pitot coefficient, default: 1, min: 0, help: 1.0 for standard (Prandtl) pitot-static tubes; about 0.84 for S-type tubes }
+  - { id: v, label: Velocity, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+equations:
+  - v = C * sqrt(2 * dP / rho)
+chart: { x: dP, y: v, from: 0, to: 1000 }
+faq:
+  - q: How does a pitot tube measure velocity?
+    a: It compares the total pressure facing the flow with the static pressure. The difference (dynamic pressure) equals ½ρv², so velocity is √(2ΔP/ρ).
+  - q: What density should I use for air?
+    a: About 1.2 kg/m³ at 20 °C and sea level. Hot air or high altitude is less dense, which gives a higher velocity for the same pressure.
+  - q: How do I get the flow rate?
+    a: Multiply the average velocity by the duct's cross-section area. Use the pipe flow velocity calculator with the measured velocity.
+related: [engineering/pipe-flow-velocity, engineering/orifice-flow]
+---
+
+## How to use this calculator
+
+Enter the **dynamic pressure** read from the manometer, the **fluid density** and the pitot **coefficient**. The velocity appears straight away. You can also work backwards to find the pressure you should expect for a target velocity.
+
+## The formula
+
+<p class="formula">v = C × √(2ΔP ÷ ρ)</p>
+
+## Worked example
+
+Air at 20 °C (ρ = 1.2 kg/m³), pitot reading 500 Pa (5 mbar):
+
+v = √(2 × 500 ÷ 1.2) = **28.9 m/s**
+
+## Air velocity quick table (ρ = 1.2 kg/m³)
+
+| ΔP (Pa) | Velocity (m/s) |
+|---|---|
+| 10 | 4.1 |
+| 50 | 9.1 |
+| 100 | 12.9 |
+| 250 | 20.4 |
+| 500 | 28.9 |
+
+## Measuring tips
+
+- Point the tip straight into the flow, within about ±10°.
+- Velocity varies across a duct. For flow measurement, take a **traverse** — several readings at standard positions — and average the velocities (not the pressures).
+- Below about 3 m/s in air, the pressure is very small and readings become unreliable.

@@ -1,0 +1,42 @@
+---
+title: Excavation & Dirt Calculator
+description: Calculate excavation volume in m³ and cubic yards, including soil swell, and the number of truckloads needed.
+category: construction
+keywords: [excavation calculator, dirt calculator, cubic yards of dirt, soil volume, truckloads, swell factor]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Length, family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
+  - { id: W, label: Width, family: length, unit: m, imperialUnit: ft, default: 8, min: 0 }
+  - { id: D, label: Depth, family: length, unit: m, imperialUnit: ft, default: 1.5, min: 0 }
+  - { id: sw, label: Swell factor, family: percent, unit: '%', default: 25, min: 0, max: 2 }
+  - { id: cap, label: Truck capacity, family: volume, unit: m3, imperialUnit: ft3, default: 10, min: 0.01 }
+  - { id: Vb, label: Bank (in-ground) volume, family: volume, unit: m3, imperialUnit: ft3, min: 0 }
+  - { id: Vl, label: Loose volume to haul, family: volume, unit: m3, imperialUnit: ft3, min: 0 }
+  - { id: yd, label: Loose cubic yards, min: 0, decimals: 1 }
+  - { id: trucks, label: Truckloads, min: 0, decimals: 0 }
+equations:
+  - Vb = L * W * D
+  - Vl = Vb * (1 + sw)
+  - yd = Vl / 0.764554858
+  - trucks = ceil(Vl / cap)
+faq:
+  - q: What is swell factor?
+    a: Excavated soil loosens and takes up more space than it did in the ground — typically 10–40% more depending on soil type.
+  - q: What swell factor should I use?
+    a: Around 10–15% for sand, 20–30% for common earth and clay, and 40–60% for rock.
+  - q: How big is a dump truck?
+    a: Common sizes carry about 6–15 m³ (8–20 yd³). Check with your haulier.
+related: [construction/gravel, construction/concrete-slab]
+---
+
+## How to use this calculator
+
+Enter the **length**, **width** and **depth** of the excavation, the soil's **swell factor** and the **truck capacity**. You get the in-ground volume, loose volume and number of truckloads.
+
+## Example
+
+A 10 × 8 m basement dug 1.5 m deep in common earth (25% swell), 10 m³ trucks:
+
+- Bank volume = **120 m³**
+- Loose volume = **150 m³** (196.2 yd³)
+- Truckloads = **15**

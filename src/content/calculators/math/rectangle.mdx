@@ -1,0 +1,51 @@
+---
+title: Rectangle Calculator (Area, Perimeter, Diagonal)
+description: Calculate a rectangle's area, perimeter and diagonal from length and width — or a missing side from the area.
+category: math
+keywords: [rectangle area, perimeter, diagonal, length width, area of rectangle, square feet, square metres]
+updated: 2026-10-27
+variables:
+  - { id: l, label: Length, family: length, unit: m, imperialUnit: ft, default: 8, min: 0 }
+  - { id: w, label: Width, family: length, unit: m, imperialUnit: ft, default: 5, min: 0 }
+  - { id: A, label: Area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+  - { id: P, label: Perimeter, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: dg, label: Diagonal, family: length, unit: m, imperialUnit: ft, min: 0 }
+equations:
+  - A = l * w
+  - P = 2 * (l + w)
+  - dg = sqrt(l^2 + w^2)
+faq:
+  - q: How do I find the area of a rectangle?
+    a: Multiply length by width. An 8 m × 5 m room has an area of 40 m².
+  - q: How do I find the width if I know the area?
+    a: Divide the area by the length. Press × on Width and type the area.
+  - q: How do I check a rectangle is square-cornered?
+    a: Measure both diagonals. If they are equal, the corners are right angles.
+related: [math/triangle-area, math/trapezoid-area, math/pythagorean-theorem]
+---
+
+## How to use this calculator
+
+Enter the **length** and **width** to get the area, perimeter and diagonal. Or enter any two values — for example area and length — to find the rest. Area units (m², ft², acres…) are converted automatically.
+
+## Formulas
+
+<p class="formula">A = l × w   P = 2(l + w)   d = √(l² + w²)</p>
+
+## Worked example
+
+A room 8 m long and 5 m wide:
+
+- Area = 8 × 5 = **40 m²** (430.6 ft²)
+- Perimeter = 2 × (8 + 5) = **26 m** (skirting board needed)
+- Diagonal = √(64 + 25) = **9.43 m**
+
+## Practical uses
+
+- **Flooring and tiles:** buy area + 5–10% for cuts and waste.
+- **Paint:** wall area = perimeter × ceiling height, minus doors and windows.
+- **Fencing:** perimeter of a rectangular plot.
+
+## Unit reminders
+
+1 m² = 10.764 ft² · 1 acre = 4,046.9 m² · 1 hectare = 10,000 m²

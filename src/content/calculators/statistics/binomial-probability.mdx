@@ -1,0 +1,42 @@
+---
+title: Binomial Probability Calculator
+description: Calculate the probability of exactly k successes in n independent trials with success probability p.
+category: statistics
+keywords: [binomial probability, binomial distribution, exactly k successes, bernoulli trials, coin flip probability]
+updated: 2026-10-27
+variables:
+  - { id: n, label: Number of trials (n), default: 10, min: 0 }
+  - { id: k, label: Number of successes (k), default: 3, min: 0 }
+  - { id: p, label: Probability of success per trial, family: percent, unit: '%', default: 50, min: 0, max: 1 }
+  - { id: P, label: P(exactly k successes), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: mu, label: Expected successes (n × p), min: 0 }
+equations:
+  - P = nCr(n, k) * p^k * (1 - p)^(n - k)
+  - mu = n * p
+faq:
+  - q: When does the binomial distribution apply?
+    a: When there is a fixed number of independent trials, each with the same two outcomes (success/failure) and the same probability.
+  - q: What is the probability of exactly 3 heads in 10 coin flips?
+    a: About 11.7%.
+  - q: How do I get "at most" or "at least" probabilities?
+    a: Add the exact probabilities for each value of k in the range.
+related: [statistics/combinations, statistics/probability, statistics/poisson-probability]
+---
+
+## How to use this calculator
+
+Enter the **number of trials**, the **number of successes** you want and the **probability of success** in one trial. The probability of exactly that many successes is calculated, plus the expected number.
+
+## Formula
+
+<p class="formula">P(X = k) = C(n, k) × p<sup>k</sup> × (1 − p)<sup>n − k</sup></p>
+
+## Worked example
+
+3 heads in 10 fair coin flips:
+
+P = 120 × 0.5³ × 0.5⁷ = **11.72%**
+
+## Quality-control example
+
+If 2% of parts are faulty, the chance a box of 50 has **no** faulty parts is 0.98⁵⁰ = **36.4%**.

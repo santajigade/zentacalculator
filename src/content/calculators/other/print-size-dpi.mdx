@@ -1,0 +1,38 @@
+---
+title: Print Size Calculator (Pixels & DPI)
+description: Calculate the maximum print size of an image from its pixel dimensions and print resolution (DPI/PPI).
+category: other
+keywords: [print size calculator, dpi calculator, pixels to inches, print resolution, 300 dpi, photo print size]
+updated: 2026-10-27
+variables:
+  - { id: px, label: Image width, suffix: px, default: 6000, min: 0 }
+  - { id: py, label: Image height, suffix: px, default: 4000, min: 0 }
+  - { id: dpi, label: Print resolution, suffix: DPI, default: 300, min: 1 }
+  - { id: w, label: Print width, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: h, label: Print height, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: mp, label: Megapixels, min: 0, decimals: 1 }
+equations:
+  - w = px / dpi * 0.0254
+  - h = py / dpi * 0.0254
+  - mp = px * py / 1000000
+faq:
+  - q: What DPI should I print at?
+    a: 300 DPI for high-quality photo prints viewed up close; 150–200 DPI is often fine for larger prints viewed from further away.
+  - q: How big can I print a 24 MP photo?
+    a: A 6,000 × 4,000 pixel image prints at about 50.8 × 33.9 cm (20 × 13.3 in) at 300 DPI.
+  - q: Are DPI and PPI the same?
+    a: They are often used interchangeably. Strictly, PPI is image pixels per inch and DPI is printer ink dots per inch.
+related: [other/aspect-ratio, other/screen-ppi]
+---
+
+## How to use this calculator
+
+Enter the image's **pixel dimensions** and the **print resolution**. The print size and megapixels are calculated. Or enter a print size to find the required pixels.
+
+## Formula
+
+<p class="formula">print size (in) = pixels ÷ DPI</p>
+
+## Example
+
+6,000 × 4,000 px at 300 DPI → **50.8 × 33.9 cm** (20 × 13.3 in), 24 MP.

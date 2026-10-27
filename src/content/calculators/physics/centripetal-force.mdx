@@ -1,0 +1,43 @@
+---
+title: Centripetal Force Calculator
+description: Calculate centripetal force and acceleration for an object moving in a circle from mass, speed and radius.
+category: physics
+keywords: [centripetal force, circular motion, centripetal acceleration, f = mv2/r, g force in turns]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 1200, min: 0 }
+  - { id: v, label: Speed, family: velocity, unit: kmh, imperialUnit: mph, default: 60, min: 0 }
+  - { id: r, label: Radius of the circle, family: length, unit: m, imperialUnit: ft, default: 50, min: 0 }
+  - { id: ac, label: Centripetal acceleration, suffix: m/s², min: 0 }
+  - { id: F, label: Centripetal force, family: force, unit: kN, imperialUnit: lbf, min: 0 }
+equations:
+  - ac = v^2 / r
+  - F = m * ac
+faq:
+  - q: What is centripetal force?
+    a: The inward force needed to keep an object moving in a circle. For a car, it is supplied by tyre friction.
+  - q: Why is taking a bend fast dangerous?
+    a: Force rises with the square of speed. Doubling speed needs four times the grip.
+  - q: What is centrifugal force?
+    a: The outward push you feel inside a turning car. It is an effect of your inertia, not a real outward force.
+related: [physics/force, physics/kinetic-energy]
+---
+
+## How to use this calculator
+
+Enter the **mass**, **speed** and **radius** to get the centripetal acceleration and force. Or find the maximum safe speed for a given radius and force.
+
+## Formulas
+
+<p class="formula">a = v² ÷ r   F = m v² ÷ r</p>
+
+## Worked example
+
+A 1,200 kg car takes a 50 m radius bend at 60 km/h (16.67 m/s):
+
+- a = 16.67² ÷ 50 = **5.56 m/s²** (0.57 g)
+- F = 1,200 × 5.56 = **6.67 kN**
+
+## Grip limit
+
+On a dry road, tyres can typically provide around 0.7–0.9 g of sideways acceleration; on wet roads much less. At 0.7 g, the maximum speed for a 50 m bend is about √(0.7 × 9.81 × 50) = 67 km/h.

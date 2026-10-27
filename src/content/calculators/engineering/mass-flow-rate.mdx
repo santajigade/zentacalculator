@@ -1,0 +1,49 @@
+---
+title: Mass Flow Rate Calculator
+description: Convert volumetric flow to mass flow and back using fluid density — kg/h, t/h, lb/h, m³/h, L/min and more.
+category: engineering
+keywords: [mass flow rate, volumetric flow to mass flow, kg/h to m3/h, density, flow conversion, coriolis]
+updated: 2026-10-27
+variables:
+  - { id: Q, label: Volumetric flow, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
+  - { id: rho, label: Density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
+  - { id: m, label: Mass flow, family: massflow, unit: kgh, imperialUnit: lbh, min: 0 }
+equations:
+  - m = rho * Q
+faq:
+  - q: How do I convert m³/h to kg/h?
+    a: Multiply by the density in kg/m³. 50 m³/h of water (998 kg/m³) is 49,900 kg/h.
+  - q: Why use mass flow instead of volume?
+    a: Mass does not change with temperature or pressure, while volume does. Billing, batching and chemical dosing usually rely on mass.
+  - q: Which flow meters measure mass directly?
+    a: Coriolis meters measure mass flow directly. Thermal mass meters do for gases. Others measure volume and need density to calculate mass.
+related: [engineering/pipe-flow-velocity, engineering/heat-duty]
+---
+
+## How to use this calculator
+
+Enter the **volumetric flow** and **density** to get mass flow, or enter the mass flow to get volume. Every field has its own units.
+
+## The formula
+
+<p class="formula">ṁ = ρ × Q</p>
+
+## Worked example
+
+50 m³/h of water at 20 °C (998 kg/m³):
+
+ṁ = 998 × 50 = **49,900 kg/h** = 49.9 t/h = 13.86 kg/s
+
+## Density changes with temperature
+
+Water is 998 kg/m³ at 20 °C but about 965 kg/m³ at 90 °C. A volumetric meter reading the same m³/h at 90 °C represents about 3% less mass. For oils and fuels the effect is larger — around 0.07–0.1% per °C.
+
+## Typical densities
+
+| Fluid | kg/m³ |
+|---|---|
+| Water (20 °C) | 998 |
+| Diesel | ~835 |
+| Milk | ~1,030 |
+| Air (20 °C, 1 atm) | 1.204 |
+| Natural gas (standard) | ~0.75 |

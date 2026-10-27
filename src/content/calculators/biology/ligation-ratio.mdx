@@ -1,0 +1,37 @@
+---
+title: "Ligation Calculator (Insert : Vector Ratio)"
+description: Calculate how many ng of insert to use for a ligation at a chosen molar ratio of insert to vector.
+category: biology
+keywords: [ligation calculator, insert vector ratio, molar ratio, cloning, 3:1 ratio, ng insert]
+updated: 2026-10-27
+variables:
+  - { id: vng, label: Vector amount, suffix: ng, default: 50, min: 0 }
+  - { id: vbp, label: Vector length, suffix: bp, default: 3000, min: 1 }
+  - { id: ibp, label: Insert length, suffix: bp, default: 1000, min: 1 }
+  - { id: r, label: Insert to vector molar ratio, default: 3, min: 0 }
+  - { id: ing, label: Insert needed, suffix: ng, min: 0, decimals: 2 }
+equations:
+  - ing = vng * ibp / vbp * r
+faq:
+  - q: What molar ratio should I use?
+    a: 3:1 insert to vector is a common starting point. Use 5:1 to 10:1 for short inserts and 1:1 for long ones.
+  - q: Why not just use equal masses?
+    a: Ligation depends on the number of DNA ends (molecules), not mass. A smaller insert has more molecules per ng.
+  - q: How much vector should I use?
+    a: Typically 20–100 ng in a standard ligation reaction.
+related: [biology/dna-copy-number, biology/dna-concentration]
+---
+
+## How to use this calculator
+
+Enter the **vector amount** and **length**, the **insert length** and the desired **molar ratio**. The mass of insert to use is calculated.
+
+## Formula
+
+<p class="formula">ng insert = ng vector × (insert bp ÷ vector bp) × ratio</p>
+
+## Example
+
+50 ng of a 3,000 bp vector, 1,000 bp insert, 3:1 ratio:
+
+ng insert = 50 × (1,000 ÷ 3,000) × 3 = **50 ng**

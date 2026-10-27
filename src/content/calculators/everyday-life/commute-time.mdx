@@ -1,0 +1,39 @@
+---
+title: Commute Time Calculator (Hours per Year)
+description: See how many hours and days per year you spend commuting — and what that time is worth.
+category: everyday-life
+keywords: [commute time calculator, hours commuting per year, travel time to work, commute cost, time value]
+updated: 2026-10-27
+variables:
+  - { id: m, label: One-way commute, suffix: minutes, default: 40, min: 0 }
+  - { id: d, label: Commuting days per week, default: 5, min: 0, max: 7 }
+  - { id: w, label: Working weeks per year, default: 46, min: 0, max: 52 }
+  - { id: v, label: Value of your time per hour, family: currency, default: 15, min: 0, decimals: 2 }
+  - { id: h, label: Hours per year, min: 0, decimals: 0 }
+  - { id: days, label: Full 24-hour days per year, min: 0, decimals: 1 }
+  - { id: val, label: Value of that time, family: currency, min: 0, decimals: 2 }
+equations:
+  - h = m * 2 * d * w / 60
+  - days = h / 24
+  - val = h * v
+faq:
+  - q: How much time do I spend commuting?
+    a: A 40-minute each-way commute, 5 days a week for 46 weeks, adds up to about 307 hours — nearly 13 full days a year.
+  - q: How does remote work change this?
+    a: Reduce the commuting days per week — two home-working days cut commuting time by 40%.
+  - q: What value should I give my time?
+    a: Your hourly pay is a common benchmark, or what you would pay to get that time back.
+related: [everyday-life/fuel-cost, ecology/bike-vs-car, finance/hourly-to-salary]
+---
+
+## How to use this calculator
+
+Enter your **one-way commute** in minutes, **days per week**, **working weeks** and an optional **value of your time**. Yearly hours, days and the value of that time are calculated.
+
+## Example
+
+40 minutes each way, 5 days a week, 46 weeks:
+
+- **307 hours** per year
+- **12.8 full days**
+- Worth **4,600** at 15 per hour

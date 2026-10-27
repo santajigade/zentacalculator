@@ -1,0 +1,39 @@
+---
+title: Specific Growth Rate Calculator (µ)
+description: Calculate the specific growth rate of a culture from two measurements, plus the doubling time.
+category: biology
+keywords: [specific growth rate, mu, growth rate constant, microbial growth, od600, biomass growth]
+updated: 2026-10-27
+variables:
+  - { id: X1, label: Biomass / OD at time 1, default: 0.1, min: 0 }
+  - { id: X2, label: Biomass / OD at time 2, default: 0.8, min: 0 }
+  - { id: dt, label: Time between measurements, family: time, unit: h, default: 6, min: 0 }
+  - { id: mu, label: Specific growth rate (µ), suffix: per hour, min: 0, decimals: 4 }
+  - { id: td, label: Doubling time, family: time, unit: h, min: 0 }
+equations:
+  - mu = ln(X2 / X1) / (dt * 8766)
+  - td = ln(2) / mu / 8766
+faq:
+  - q: What is specific growth rate?
+    a: The rate of increase in biomass per unit of biomass, µ = ln(X₂/X₁) ÷ (t₂ − t₁), usually in h⁻¹.
+  - q: How is it related to doubling time?
+    a: Doubling time = ln 2 ÷ µ.
+  - q: Can I use optical density?
+    a: Yes, OD600 readings in the linear range of the spectrophotometer are proportional to biomass.
+related: [biology/cell-doubling-time, biology/bacterial-growth]
+---
+
+## How to use this calculator
+
+Enter two **biomass or OD** readings and the **time** between them. The specific growth rate (per hour) and doubling time are calculated.
+
+## Formula
+
+<p class="formula">µ = ln(X₂ ÷ X₁) ÷ Δt   T<sub>d</sub> = ln 2 ÷ µ</p>
+
+## Example
+
+OD600 rises from 0.1 to 0.8 in 6 hours:
+
+- µ = ln 8 ÷ 6 = **0.3466 h⁻¹**
+- Doubling time = **2.0 h**

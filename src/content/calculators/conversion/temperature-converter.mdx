@@ -1,0 +1,55 @@
+---
+title: Temperature Converter
+description: Convert between Celsius, Fahrenheit and Kelvin instantly — type in any field.
+category: conversion
+keywords: [temperature converter, celsius to fahrenheit, fahrenheit to celsius, kelvin, c to f, f to c]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: c, label: Celsius, family: temperature, unit: C, default: 37 }
+  - { id: f, label: Fahrenheit, family: temperature, unit: F }
+  - { id: k, label: Kelvin, family: temperature, unit: K, min: 0 }
+equations:
+  - c = f
+  - f = k
+faq:
+  - q: How do I convert Celsius to Fahrenheit?
+    a: Multiply by 9/5 (1.8) and add 32. 37 °C × 1.8 + 32 = 98.6 °F.
+  - q: How do I convert Fahrenheit to Celsius?
+    a: Subtract 32 and multiply by 5/9. 212 °F − 32 = 180, × 5/9 = 100 °C.
+  - q: At what temperature are Celsius and Fahrenheit equal?
+    a: At −40. −40 °C is exactly −40 °F.
+  - q: Can Kelvin be negative?
+    a: No. 0 K is absolute zero (−273.15 °C), the lowest possible temperature.
+related: [engineering/pt100-resistance, conversion/kg-to-lb]
+---
+
+## How to use this converter
+
+Type a temperature in **any** of the three fields. The other two update as you type. Negative values work for Celsius and Fahrenheit.
+
+## Formulas
+
+<p class="formula">°F = °C × 9/5 + 32<br/>°C = (°F − 32) × 5/9<br/>K = °C + 273.15</p>
+
+## Quick reference
+
+| Description | °C | °F | K |
+|---|---|---|---|
+| Absolute zero | −273.15 | −459.67 | 0 |
+| Celsius = Fahrenheit | −40 | −40 | 233.15 |
+| Water freezes | 0 | 32 | 273.15 |
+| Room temperature | 20 | 68 | 293.15 |
+| Body temperature | 37 | 98.6 | 310.15 |
+| Water boils (sea level) | 100 | 212 | 373.15 |
+| Moderate oven | 180 | 356 | 453.15 |
+
+## Mental shortcut
+
+For a rough °C → °F, double the Celsius value and add 30. For 20 °C: 40 + 30 = 70 °F (exact: 68 °F). It is close for everyday weather but drifts at high temperatures.
+
+## Where each scale is used
+
+- **Celsius** — everyday use in almost every country, and in science.
+- **Fahrenheit** — everyday use in the United States and a few other places.
+- **Kelvin** — science and engineering; it starts at absolute zero, so it never goes negative.

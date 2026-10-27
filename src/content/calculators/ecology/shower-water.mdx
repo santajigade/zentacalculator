@@ -1,0 +1,40 @@
+---
+title: Shower Water & Energy Calculator
+description: Calculate how much water and energy your showers use — and what a low-flow head or shorter shower saves.
+category: ecology
+keywords: [shower water usage, litres per shower, water saving, low flow shower head, shower energy cost]
+updated: 2026-10-27
+variables:
+  - { id: t, label: Shower length, suffix: minutes, default: 8, min: 0 }
+  - { id: f, label: Flow rate, family: flow, unit: Lmin, imperialUnit: gpm, default: 10, min: 0 }
+  - { id: n, label: Showers per week (household), default: 21, min: 0 }
+  - { id: per, label: Water per shower, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: yr, label: Water per year, family: volume, unit: m3, imperialUnit: galUS, min: 0 }
+  - { id: kwh, label: "Energy to heat it (per year, ΔT 25 °C)", suffix: kWh, min: 0, decimals: 0 }
+equations:
+  - per = f * t * 60
+  - yr = per * n * 52
+  - kwh = yr * 1000 * 4.186 * 25 / 3600
+faq:
+  - q: How much water does a shower use?
+    a: About 8–12 litres per minute for a standard shower head and 6–8 for a low-flow head.
+  - q: How much energy does heating shower water take?
+    a: Raising water by 25 °C takes about 0.03 kWh per litre — about 2.3 kWh for an 80-litre shower.
+  - q: How do I measure my flow rate?
+    a: Time how long it takes to fill a 5-litre bucket. 30 seconds means 10 L/min.
+related: [ecology/water-leak, everyday-life/electricity-cost, chemistry/specific-heat]
+---
+
+## How to use this calculator
+
+Enter the **shower length**, **flow rate** and **showers per week**. Water per shower, per year and the energy to heat it are calculated.
+
+## Example
+
+8-minute showers at 10 L/min, 21 per week:
+
+- **80 L** per shower
+- **87 m³** per year
+- About **2,530 kWh** a year to heat (25 °C rise)
+
+Switching to a 7 L/min head cuts water and heating energy by 30%.

@@ -1,0 +1,79 @@
+---
+title: BMR & Daily Calorie Calculator
+description: Estimate your Basal Metabolic Rate (BMR) and daily calorie needs (TDEE) with the Mifflin–St Jeor equation.
+category: health
+keywords: [bmr, basal metabolic rate, tdee, calories per day, maintenance calories, mifflin st jeor, calorie calculator]
+updated: 2026-10-27
+featured: true
+variables:
+  - id: s
+    label: Sex
+    default: 5
+    options:
+      - { label: Male, value: 5 }
+      - { label: Female, value: -161 }
+  - { id: age, label: Age, suffix: years, default: 30, min: 15, max: 100 }
+  - { id: m, label: Weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 20 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 175, min: 1, max: 2.5 }
+  - id: act
+    label: Activity level
+    default: 1.375
+    options:
+      - { label: Sedentary (little or no exercise), value: 1.2 }
+      - { label: Light (exercise 1–3 days/week), value: 1.375 }
+      - { label: Moderate (exercise 3–5 days/week), value: 1.55 }
+      - { label: Active (exercise 6–7 days/week), value: 1.725 }
+      - { label: Very active (hard daily exercise or physical job), value: 1.9 }
+  - { id: bmr, label: BMR, suffix: kcal/day, min: 0, decimals: 0 }
+  - { id: tdee, label: Daily calories to maintain weight (TDEE), suffix: kcal/day, min: 0, decimals: 0 }
+equations:
+  - bmr = 10 * m + 625 * h - 5 * age + s
+  - tdee = bmr * act
+chart: { x: m, y: tdee, from: 40, to: 130 }
+faq:
+  - q: What is BMR?
+    a: Basal Metabolic Rate is the energy your body uses at complete rest to keep you alive — breathing, circulation and organ function. It is usually 60–70% of the calories you burn each day.
+  - q: What is TDEE?
+    a: Total Daily Energy Expenditure is BMR multiplied by an activity factor. It estimates how many calories keep your weight stable.
+  - q: How accurate is the Mifflin–St Jeor equation?
+    a: Studies found it is usually within about 10% of measured BMR for most healthy adults, which makes it one of the most reliable prediction equations. Individual results vary.
+  - q: How many calories should I eat to lose weight?
+    a: A modest deficit of about 300–500 kcal below your TDEE is a common starting point. Speak to a doctor or registered dietitian for a plan that suits you.
+related: [health/bmi, health/ideal-weight]
+---
+
+## How to use this calculator
+
+Choose your **sex** and **activity level**, then enter your **age**, **weight** and **height**. Your BMR and daily maintenance calories (TDEE) update instantly. Weight and height accept kg or lb and cm, m, ft or inches.
+
+## The formula (Mifflin–St Jeor, 1990)
+
+<p class="formula">BMR = 10 × weight (kg) + 6.25 × height (cm) − 5 × age + s</p>
+
+- **s** = +5 for men, −161 for women
+- **TDEE** = BMR × activity factor
+
+## Worked example
+
+A 30-year-old man, 70 kg, 175 cm, lightly active:
+
+- BMR = 700 + 1,093.75 − 150 + 5 = **1,649 kcal/day**
+- TDEE = 1,648.75 × 1.375 = **2,267 kcal/day**
+
+A 30-year-old woman, 60 kg, 165 cm: BMR = **1,320 kcal/day**.
+
+## Activity factors
+
+| Level | Factor |
+|---|---|
+| Sedentary | 1.2 |
+| Lightly active | 1.375 |
+| Moderately active | 1.55 |
+| Very active | 1.725 |
+| Extra active | 1.9 |
+
+Most people overestimate their activity. If unsure, pick one level lower.
+
+## Limitations
+
+This is an estimate for healthy adults. It does not account for body composition, medical conditions, pregnancy or medication. Muscular people often burn more than predicted. Use the result as a starting point and adjust based on real-world changes over a few weeks.

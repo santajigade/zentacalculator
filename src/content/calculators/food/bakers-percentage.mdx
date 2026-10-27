@@ -1,0 +1,50 @@
+---
+title: Baker's Percentage Calculator (Dough Hydration)
+description: Calculate dough ingredients from flour weight and baker's percentages — water (hydration), salt, yeast and more.
+category: food
+keywords: [bakers percentage, dough hydration, bread calculator, pizza dough, flour water ratio, sourdough hydration]
+updated: 2026-10-27
+variables:
+  - { id: f, label: Flour, family: mass, unit: g, default: 500, min: 0 }
+  - { id: hp, label: Hydration (water), family: percent, unit: '%', default: 70, min: 0 }
+  - { id: sp, label: Salt, family: percent, unit: '%', default: 2, min: 0 }
+  - { id: yp, label: Instant yeast, family: percent, unit: '%', default: 1, min: 0 }
+  - { id: w, label: Water, family: mass, unit: g, min: 0 }
+  - { id: s, label: Salt, family: mass, unit: g, min: 0 }
+  - { id: y, label: Yeast, family: mass, unit: g, min: 0 }
+  - { id: tot, label: Total dough weight, family: mass, unit: g, min: 0 }
+equations:
+  - w = f * hp
+  - s = f * sp
+  - y = f * yp
+  - tot = f + w + s + y
+faq:
+  - q: What is baker's percentage?
+    a: Each ingredient expressed as a percentage of the flour weight. Flour is always 100%.
+  - q: What is dough hydration?
+    a: Water ÷ flour. Sandwich bread is often 60–65%, ciabatta and focaccia 75–80%.
+  - q: How much salt is typical?
+    a: About 1.8–2.2% of the flour weight.
+related: [food/yeast-converter, food/recipe-scaler]
+---
+
+## How to use this calculator
+
+Enter the **flour** weight and the percentages for **water**, **salt** and **yeast**. Ingredient weights and the total dough weight are calculated.
+
+## Example
+
+500 g flour at 70% hydration, 2% salt, 1% instant yeast:
+
+- Water **350 g**, salt **10 g**, yeast **5 g**
+- Total dough **865 g**
+
+## Typical hydration
+
+| Bread | Hydration |
+|---|---|
+| Bagels | 55–58% |
+| Sandwich loaf | 60–65% |
+| Neapolitan pizza | 60–65% |
+| Rustic sourdough | 70–80% |
+| Ciabatta / focaccia | 75–85% |

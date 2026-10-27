@@ -1,0 +1,43 @@
+---
+title: Party Drinks Calculator
+description: Estimate how many drinks, bottles and ice to buy for a party based on guests and hours.
+category: food
+keywords: [party drinks calculator, how many drinks per guest, wedding drinks, ice per person, beverage planner]
+updated: 2026-10-27
+variables:
+  - { id: g, label: Number of guests, default: 50, min: 0 }
+  - { id: h, label: Party length, suffix: hours, default: 4, min: 0 }
+  - { id: d, label: Total drinks, min: 0, decimals: 0 }
+  - { id: ice, label: Ice, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+  - { id: wat, label: Water (also offer), family: volume, unit: L, imperialUnit: galUS, min: 0 }
+equations:
+  - d = ceil(g * (2 + (h - 1)))
+  - ice = g * 0.7
+  - wat = g * 0.5 / 1000
+faq:
+  - q: How many drinks per guest?
+    a: A common rule is 2 drinks in the first hour and 1 per hour after that.
+  - q: How much ice do I need?
+    a: About 0.7 kg (1.5 lb) per guest for drinks, more in hot weather or if chilling bottles in ice.
+  - q: How should I split drinks?
+    a: It depends on your guests. Always offer plenty of water and non-alcoholic choices.
+related: [food/meat-per-person, food/recipe-scaler]
+---
+
+## How to use this calculator
+
+Enter the **number of guests** and the **length of the party**. Total drinks, ice and water are estimated.
+
+## Rule used
+
+<p class="formula">drinks = guests × (2 + 1 per extra hour)</p>
+
+## Example
+
+50 guests for 4 hours:
+
+- Drinks = 50 × 5 = **250**
+- Ice ≈ **35 kg**
+- Water ≈ **25 L**
+
+Plan non-alcoholic options and arrange safe transport home for guests.

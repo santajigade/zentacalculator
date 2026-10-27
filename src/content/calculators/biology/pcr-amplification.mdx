@@ -1,0 +1,41 @@
+---
+title: PCR Amplification Calculator
+description: Estimate how many DNA copies a PCR produces from the starting copies, number of cycles and efficiency.
+category: biology
+keywords: [pcr calculator, pcr cycles, amplification efficiency, dna copies after pcr, exponential amplification, qpcr]
+updated: 2026-10-27
+variables:
+  - { id: N0, label: Starting copies, default: 1000, min: 0 }
+  - { id: n, label: Number of cycles, default: 30, min: 0 }
+  - { id: E, label: Efficiency, family: percent, unit: '%', default: 90, min: 0, max: 1 }
+  - { id: N, label: Copies after PCR (theoretical), min: 0 }
+  - { id: fold, label: Fold amplification, min: 0 }
+equations:
+  - fold = (1 + E)^n
+  - N = N0 * fold
+faq:
+  - q: How many copies does PCR make?
+    a: In theory each cycle doubles the DNA (100% efficiency), so 30 cycles give about 10⁹-fold amplification.
+  - q: What is PCR efficiency?
+    a: The fraction of templates copied each cycle. Good qPCR assays run at about 90–105%.
+  - q: Does amplification continue forever?
+    a: No — after 25–35 cycles it plateaus as primers and nucleotides run out.
+related: [biology/dna-copy-number, biology/primer-tm]
+---
+
+## How to use this calculator
+
+Enter the **starting copies**, **number of cycles** and **efficiency**. The theoretical number of copies and fold amplification are calculated.
+
+## Formula
+
+<p class="formula">N = N₀ × (1 + E)<sup>n</sup></p>
+
+## Example
+
+1,000 copies, 30 cycles at 90% efficiency:
+
+- Fold = 1.9³⁰ = **2.3e+08**
+- Copies = **2.3e+11**
+
+At 100% efficiency the same reaction would reach 1.07e+12 copies — showing how much efficiency matters.

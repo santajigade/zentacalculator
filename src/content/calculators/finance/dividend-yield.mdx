@@ -1,0 +1,49 @@
+---
+title: Dividend Yield Calculator
+description: Calculate dividend yield from annual dividend and share price — and the yearly income from your investment.
+category: finance
+keywords: [dividend yield, dividend income, stock yield, dividend calculator, passive income, annual dividend]
+updated: 2026-10-27
+variables:
+  - { id: D, label: Annual dividend per share, family: currency, default: 2.4, min: 0, decimals: 4 }
+  - { id: P, label: Share price, family: currency, default: 60, min: 0, decimals: 2 }
+  - { id: y, label: Dividend yield, family: percent, unit: '%', min: 0 }
+  - { id: inv, label: Amount invested, family: currency, default: 10000, min: 0, decimals: 2 }
+  - { id: inc, label: Annual dividend income, family: currency, min: 0, decimals: 2 }
+equations:
+  - y = D / P
+  - inc = inv * y
+faq:
+  - q: What is dividend yield?
+    a: The annual dividend divided by the share price. A stock paying 2.40 a year at a price of 60 yields 4%.
+  - q: Is a high yield always good?
+    a: Not necessarily. A very high yield can mean the price has fallen because investors expect the dividend to be cut.
+  - q: How do I use quarterly dividends?
+    a: Multiply the quarterly dividend by 4 to get the annual dividend before entering it.
+related: [finance/roi, finance/compound-interest]
+---
+
+## How to use this calculator
+
+Enter the **annual dividend per share** and the **share price** to get the yield. Add the **amount invested** to see your yearly dividend income. You can also find the price at which a stock would reach a target yield.
+
+## Formulas
+
+<p class="formula">Yield = Annual dividend ÷ Price<br/>Income = Amount invested × Yield</p>
+
+## Worked example
+
+A share pays 0.60 per quarter (2.40 a year) and trades at 60:
+
+- Yield = 2.40 ÷ 60 = **4%**
+- 10,000 invested earns about **400 a year** in dividends
+
+## Yield on cost
+
+If you bought at 40 and the dividend is now 2.40, your **yield on cost** is 6% — even though new buyers at 60 get 4%. Enter your purchase price to see it.
+
+## Things to check
+
+- **Payout ratio** — the share of profits paid as dividends. Very high ratios may not be sustainable.
+- **Dividend history** — consistent growth is a good sign.
+- **Taxes** — dividends are often taxed, and foreign shares may have withholding tax.

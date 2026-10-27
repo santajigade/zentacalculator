@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../site.config.ts';
+import { AUTHORS, authorUrl, type Author } from '../../data/authors.ts';
+import { allCalcs, urlOf } from '../../lib/calcs.ts';
+
+export function getStaticPaths() {
+  return AUTHORS.map((a) => ({ params: { id: a.id }, props: { a } }));
+}
+const { a } = Astro.props as { a: Author };
+const calcs = (await allCalcs()).filter((c) => c.data.author === a.id || c.data.reviewer === a.id);
+const schema = [{
+  '@context': 'https://schema.org', '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person', name: a.name, jobTitle: a.role, description: a.bio,
+    image: `${SITE.url}${a.photo}`, url: `${SITE.url}${authorUrl(a)}`,
+    sameAs: [a.linkedin, a.website].filter(Boolean), knowsAbout: a.expertise,
+    worksFor: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  },
+}];
+---
+<Base title={`${a.name} — ${a.role}`} description={a.bio.slice(0, 160)} schema={schema}>
+  <div class="wrap" style="max-width:860px;padding:32px 0 48px">
+    <div class="author-hero panel">
+      <img src={a.photo} alt={a.name} width="140" height="140" />
+      <div>
+        <h1>{a.name}</h1>
+        <p class="author-hero__role">{a.role}, {SITE.name}</p>
+        <p>{a.bio}</p>
+        <div class="author-hero__links">
+          {a.linkedin && <a href={a.linkedin} rel="me noopener" target="_blank" class="btn btn--primary">LinkedIn profile</a>}
+          {a.website && <a href={a.website} rel="me noopener" target="_blank" class="btn">Website</a>}
+        </div>
+      </div>
+    </div>
+    <h2 class="section-title">Areas of expertise</h2>
+    <ul class="chips">{a.expertise.map((e) => <li>{e}</li>)}</ul>
+    <h2 class="section-title">Calculators by {a.name.split(' ')[0]} ({calcs.length})</h2>
+    <ul class="calc-list">{calcs.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}</ul>
+  </div>
+</Base>

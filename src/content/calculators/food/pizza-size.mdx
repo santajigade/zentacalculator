@@ -1,0 +1,40 @@
+---
+title: Pizza Size & Value Calculator
+description: Compare two pizzas by area and price per square inch to see which one is the better deal.
+category: food
+keywords: [pizza size calculator, pizza area, which pizza is better value, price per square inch, two medium vs one large]
+updated: 2026-10-27
+variables:
+  - { id: d1, label: Pizza A diameter, family: length, unit: in, default: 12, min: 0 }
+  - { id: p1, label: Pizza A price, family: currency, default: 12, min: 0, decimals: 2 }
+  - { id: d2, label: Pizza B diameter, family: length, unit: in, default: 16, min: 0 }
+  - { id: p2, label: Pizza B price, family: currency, default: 18, min: 0, decimals: 2 }
+  - { id: a1, label: Pizza A area, family: area, unit: in2, min: 0 }
+  - { id: a2, label: Pizza B area, family: area, unit: in2, min: 0 }
+  - { id: more, label: B has more pizza than A by, family: percent, unit: '%' }
+  - { id: v, label: B is cheaper per area by, family: percent, unit: '%' }
+equations:
+  - a1 = pi * (d1 / 2)^2
+  - a2 = pi * (d2 / 2)^2
+  - more = a2 / a1 - 1
+  - v = 1 - (p2 / a2) / (p1 / a1)
+faq:
+  - q: Is one large pizza better than two mediums?
+    a: Often yes. One 18-inch pizza (254 in²) has more than two 12-inch pizzas (226 in² together).
+  - q: Why does a small increase in size matter so much?
+    a: Area grows with the square of the diameter — a 16-inch pizza is 78% bigger than a 12-inch.
+  - q: Is crust included?
+    a: Yes, the calculation uses the full diameter.
+related: [math/circle, everyday-life/unit-price]
+---
+
+## How to use this calculator
+
+Enter the **diameter** and **price** of two pizzas. Their areas are calculated, plus how much more pizza B gives and how much cheaper it is per square inch.
+
+## Example
+
+12-inch for 12 vs 16-inch for 18:
+
+- Areas: **113 in²** vs **201 in²** — B is **78%** bigger
+- B is **15.6%** cheaper per square inch

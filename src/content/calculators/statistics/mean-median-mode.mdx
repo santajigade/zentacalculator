@@ -1,0 +1,59 @@
+---
+title: Mean, Median & Mode Calculator
+description: Find the mean, median, mode and range of any list of numbers — paste data from a spreadsheet.
+category: statistics
+keywords: [mean median mode, mode calculator, median calculator, central tendency, average, range]
+updated: 2026-10-27
+featured: true
+dataset:
+  label: Your data
+  default: '3, 7, 7, 2, 9, 7, 4, 5, 2'
+variables:
+  - { id: mean, label: Mean }
+  - { id: median, label: Median }
+  - { id: mode, label: Mode (most frequent value) }
+  - { id: mc, label: Mode appears (times) }
+  - { id: rng, label: Range }
+  - { id: n, label: Count }
+equations:
+  - mean = data_mean
+  - median = data_median
+  - mode = data_mode
+  - mc = data_modecount
+  - rng = data_range
+  - n = data_n
+faq:
+  - q: What is the difference between mean, median and mode?
+    a: The mean is the arithmetic average, the median is the middle value when sorted, and the mode is the most frequent value.
+  - q: What if no number repeats?
+    a: Then there is no mode. The calculator shows the count as 1 to indicate every value appears once.
+  - q: What if two values are equally common?
+    a: The data is bimodal. The calculator shows the smaller of the most frequent values.
+related: [math/average, statistics/standard-deviation, statistics/quartiles]
+---
+
+## How to use this calculator
+
+Enter your numbers separated by commas, spaces or new lines. The mean, median, mode and range update as you type.
+
+## Definitions
+
+- **Mean** = sum ÷ count
+- **Median** = middle value of the sorted list (average of the two middle values if the count is even)
+- **Mode** = the value that appears most often
+- **Range** = maximum − minimum
+
+## Worked example
+
+Data: 3, 7, 7, 2, 9, 7, 4, 5, 2 → sorted: 2, 2, 3, 4, **5**, 7, 7, 7, 9
+
+- Mean = 46 ÷ 9 = **5.111**
+- Median = **5**
+- Mode = **7** (appears 3 times)
+- Range = 9 − 2 = **7**
+
+## When to use each
+
+- **Mean** — symmetric data without extreme values.
+- **Median** — skewed data such as incomes or house prices.
+- **Mode** — categories or the most popular choice (sizes, ratings).

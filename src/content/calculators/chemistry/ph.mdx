@@ -1,0 +1,60 @@
+---
+title: pH Calculator
+description: Convert between pH, pOH, hydrogen ion and hydroxide ion concentration — with acidic or basic classification.
+category: chemistry
+keywords: [ph calculator, poh, hydrogen ion concentration, h+, acidic, basic, ph scale]
+updated: 2026-10-27
+variables:
+  - { id: pH, label: pH, default: 4.5 }
+  - { id: H, label: 'Hydrogen ion concentration [H⁺]', suffix: mol/L, min: 0 }
+  - { id: pOH, label: pOH }
+  - { id: OH, label: 'Hydroxide concentration [OH⁻]', suffix: mol/L, min: 0 }
+  - id: cls
+    label: Classification (pH copy)
+    bands:
+      - { max: 6.99, label: Acidic, color: '#dc2626' }
+      - { max: 7.01, label: Neutral, color: '#16a34a' }
+      - { max: 20, label: Basic (alkaline), color: '#2563eb' }
+equations:
+  - pH = -log10(H)
+  - pOH = 14 - pH
+  - OH = 10^(-pOH)
+  - cls = pH
+faq:
+  - q: What is pH?
+    a: A measure of acidity — the negative base-10 logarithm of hydrogen ion concentration. pH 7 is neutral at 25 °C.
+  - q: How do I calculate pH from H⁺ concentration?
+    a: pH = −log₁₀[H⁺]. A concentration of 1 × 10⁻³ mol/L gives pH 3.
+  - q: Why does pH + pOH = 14?
+    a: Because water's ion product Kw is 1.0 × 10⁻¹⁴ at 25 °C. At other temperatures the sum changes slightly.
+related: [chemistry/henderson-hasselbalch, chemistry/molarity]
+---
+
+## How to use this calculator
+
+Enter **any one** of pH, [H⁺], pOH or [OH⁻] — the rest are calculated (at 25 °C). For a strong acid like HCl, [H⁺] equals the acid concentration.
+
+## Formulas
+
+<p class="formula">pH = −log₁₀[H⁺]   pOH = 14 − pH   [OH⁻] = 10<sup>−pOH</sup></p>
+
+## Worked example
+
+pH 4.5:
+
+- [H⁺] = 10⁻⁴·⁵ = **3.16e-05 mol/L**
+- pOH = **9.5**, [OH⁻] = **3.16e-10 mol/L**
+
+## pH of everyday substances
+
+| Substance | pH |
+|---|---|
+| Battery acid | ~0–1 |
+| Lemon juice | ~2 |
+| Coffee | ~5 |
+| Pure water | 7 |
+| Sea water | ~8 |
+| Baking soda solution | ~9 |
+| Household bleach | ~12–13 |
+
+Each pH unit is a **tenfold** change: pH 3 is ten times more acidic than pH 4.

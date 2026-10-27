@@ -1,0 +1,38 @@
+---
+title: Cost Per Use Calculator
+description: Work out the true cost per use of a purchase — clothing, gadgets, gym memberships and more.
+category: everyday-life
+keywords: [cost per use, cost per wear, value for money, is it worth it, gym membership cost per visit]
+updated: 2026-10-27
+variables:
+  - { id: p, label: Purchase price, family: currency, default: 120, min: 0, decimals: 2 }
+  - { id: run, label: Running or upkeep costs (total), family: currency, default: 0, min: 0, decimals: 2 }
+  - { id: u, label: Number of uses, default: 60, min: 1 }
+  - { id: cpu, label: Cost per use, family: currency, min: 0, decimals: 2 }
+equations:
+  - cpu = (p + run) / u
+faq:
+  - q: What is cost per use?
+    a: The total cost of owning something divided by how many times you use it. It shows real value better than the price tag.
+  - q: Is a gym membership worth it?
+    a: Divide the yearly cost by your visits. If it costs more per visit than a day pass, it isn't saving you money.
+  - q: How many uses do I need for a target cost?
+    a: Press × on Number of uses and type the cost per use you'd be happy with.
+related: [everyday-life/unit-price, everyday-life/habit-cost]
+---
+
+## How to use this calculator
+
+Enter the **price**, any **running costs** (cleaning, repairs, subscriptions) and how many times you expect to **use** it. The cost per use is calculated.
+
+## Formula
+
+<p class="formula">Cost per use = (price + running costs) ÷ number of uses</p>
+
+## Example
+
+A 120 pair of shoes worn 60 times costs **2.00 per wear**. A 40 pair worn only 5 times costs **8.00 per wear** — the "cheaper" option is far more expensive per use.
+
+## Gym membership
+
+A 600 yearly membership used 30 times = 20 per visit. Used 120 times = 5 per visit.

@@ -1,0 +1,41 @@
+---
+title: Butter Converter (Sticks, Grams, Cups, Tbsp)
+description: Convert butter between US sticks, grams, cups, tablespoons and ounces.
+category: food
+keywords: [butter converter, stick of butter in grams, butter cups to grams, tablespoons of butter, butter conversion]
+updated: 2026-10-27
+variables:
+  - { id: st, label: US sticks, default: 1, min: 0 }
+  - { id: g, label: Grams, min: 0, decimals: 1 }
+  - { id: cup, label: Cups, min: 0, decimals: 3 }
+  - { id: tb, label: Tablespoons, min: 0, decimals: 1 }
+  - { id: oz, label: Ounces (weight), min: 0, decimals: 2 }
+equations:
+  - g = st * 113.4
+  - cup = st / 2
+  - tb = st * 8
+  - oz = g / 28.3495
+faq:
+  - q: How many grams is a stick of butter?
+    a: One US stick is 4 oz, which is 113.4 g (often rounded to 113 or 115 g).
+  - q: How much butter is in a cup?
+    a: One cup is 2 sticks or about 227 g.
+  - q: What about European butter blocks?
+    a: They are usually 250 g — about 2.2 US sticks.
+related: [food/grams-to-cups, food/cooking-converter]
+---
+
+## How to use this converter
+
+Type an amount in **any** field — sticks, grams, cups, tablespoons or ounces.
+
+## Butter equivalents
+
+| Sticks | Grams | Cups | Tbsp |
+|---|---|---|---|
+| ½ | 57 | ¼ | 4 |
+| 1 | 113 | ½ | 8 |
+| 2 | 227 | 1 | 16 |
+| 4 | 454 | 2 | 32 |
+
+A 250 g block equals about 2.2 sticks or 1.1 cups.

@@ -1,0 +1,40 @@
+---
+title: Bacterial Growth Calculator
+description: Predict bacterial population after a given time from the starting count and generation (doubling) time.
+category: biology
+keywords: [bacterial growth calculator, generation time, exponential growth bacteria, bacteria population, microbiology]
+updated: 2026-10-27
+variables:
+  - { id: N0, label: Starting population, default: 1000, min: 0 }
+  - { id: td, label: Generation (doubling) time, family: time, unit: min, default: 20, min: 0 }
+  - { id: t, label: Time, family: time, unit: h, default: 4, min: 0 }
+  - { id: g, label: Generations, min: 0, decimals: 1 }
+  - { id: N, label: Final population, min: 0 }
+equations:
+  - g = t / td
+  - N = N0 * 2^g
+chart: { x: t, y: N, from: 0, to: 6 }
+faq:
+  - q: How fast do bacteria grow?
+    a: Under ideal conditions E. coli divides about every 20 minutes. Many other bacteria take hours.
+  - q: Does growth continue forever?
+    a: No. Nutrients run out and waste builds up, so growth slows into a stationary phase. This calculator models the exponential phase only.
+  - q: Why does food left out become unsafe so quickly?
+    a: Starting from 1,000 bacteria with a 20-minute generation time, there are over 4 million after 4 hours.
+related: [biology/cell-doubling-time, biology/logistic-growth]
+---
+
+## How to use this calculator
+
+Enter the **starting population**, the **generation time** and the **time** elapsed. The number of generations and the final population are calculated.
+
+## Formula
+
+<p class="formula">N = N₀ × 2<sup>t ÷ T<sub>d</sub></sup></p>
+
+## Example
+
+1,000 bacteria with a 20-minute generation time, after 4 hours:
+
+- Generations = 240 ÷ 20 = **12**
+- N = 1,000 × 2¹² = **4,096,000**

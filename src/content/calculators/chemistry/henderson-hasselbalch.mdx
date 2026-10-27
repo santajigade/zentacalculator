@@ -1,0 +1,45 @@
+---
+title: Buffer pH Calculator (Henderson–Hasselbalch)
+description: Calculate buffer pH from pKa and the concentrations of weak acid and conjugate base — or the ratio needed for a target pH.
+category: chemistry
+keywords: [henderson hasselbalch, buffer ph, pka, buffer calculator, acetate buffer, conjugate base]
+updated: 2026-10-27
+variables:
+  - { id: pKa, label: pKa of the weak acid, default: 4.76 }
+  - { id: A, label: 'Conjugate base concentration [A⁻]', suffix: mol/L, default: 0.15, min: 0 }
+  - { id: HA, label: 'Weak acid concentration [HA]', suffix: mol/L, default: 0.10, min: 0 }
+  - { id: pH, label: Buffer pH }
+equations:
+  - pH = pKa + log10(A / HA)
+faq:
+  - q: What is the Henderson–Hasselbalch equation?
+    a: pH = pKa + log₁₀([A⁻]/[HA]). It estimates the pH of a buffer made from a weak acid and its conjugate base.
+  - q: When is a buffer most effective?
+    a: When pH is close to pKa (within about ±1), where the acid and base concentrations are similar.
+  - q: What is the pKa of acetic acid?
+    a: About 4.76 at 25 °C.
+related: [chemistry/ph, chemistry/molarity]
+---
+
+## How to use this calculator
+
+Enter the acid's **pKa** and the concentrations of the **conjugate base** and **weak acid**. The buffer pH is calculated. To design a buffer, enter the target pH and one concentration to find the other.
+
+## Formula
+
+<p class="formula">pH = pK<sub>a</sub> + log₁₀([A⁻] ÷ [HA])</p>
+
+## Worked example — acetate buffer
+
+pKa 4.76, [acetate] = 0.15 M, [acetic acid] = 0.10 M:
+
+pH = 4.76 + log₁₀(1.5) = **4.94**
+
+## Common buffer systems
+
+| Buffer | pKa (25 °C) | Useful pH range |
+|---|---|---|
+| Acetate | 4.76 | 3.8–5.8 |
+| Phosphate (H₂PO₄⁻/HPO₄²⁻) | 7.21 | 6.2–8.2 |
+| Tris | 8.07 | 7.1–9.1 |
+| Bicarbonate (blood) | 6.35 | 5.4–7.4 |

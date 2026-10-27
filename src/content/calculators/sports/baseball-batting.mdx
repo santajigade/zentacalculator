@@ -1,0 +1,41 @@
+---
+title: Baseball Batting Average & OBP Calculator
+description: Calculate batting average, on-base percentage (OBP) and more from hits, at-bats and walks.
+category: sports
+keywords: [batting average calculator, obp, on base percentage, baseball stats, hits at bats]
+updated: 2026-10-27
+variables:
+  - { id: ab, label: At-bats (AB), default: 500, min: 1 }
+  - { id: h, label: Hits (H), default: 150, min: 0 }
+  - { id: bb, label: Walks (BB), default: 60, min: 0 }
+  - { id: hbp, label: Hit by pitch (HBP), default: 5, min: 0 }
+  - { id: sf, label: Sacrifice flies (SF), default: 5, min: 0 }
+  - { id: avg, label: Batting average, min: 0, decimals: 3 }
+  - { id: obp, label: On-base percentage, min: 0, decimals: 3 }
+equations:
+  - avg = h / ab
+  - obp = (h + bb + hbp) / (ab + bb + hbp + sf)
+faq:
+  - q: How is batting average calculated?
+    a: Hits divided by at-bats. Walks, hit-by-pitches and sacrifices do not count as at-bats.
+  - q: What is OBP?
+    a: On-base percentage — how often a batter reaches base by a hit, walk or hit by pitch.
+  - q: What is a good batting average?
+    a: .300 or higher is excellent in professional baseball; around .250 is roughly average.
+related: [sports/baseball-era, sports/win-percentage]
+---
+
+## How to use this calculator
+
+Enter **at-bats**, **hits**, **walks**, **hit by pitch** and **sacrifice flies**. Batting average and on-base percentage are calculated.
+
+## Formulas
+
+<p class="formula">AVG = H ÷ AB   OBP = (H + BB + HBP) ÷ (AB + BB + HBP + SF)</p>
+
+## Example
+
+150 hits in 500 at-bats, 60 walks, 5 HBP, 5 sacrifice flies:
+
+- AVG = **.300**
+- OBP = **0.377**

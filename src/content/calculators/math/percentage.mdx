@@ -1,0 +1,56 @@
+---
+title: Percentage Calculator
+description: Find what is P% of a number, what percent one number is of another, or the whole from a part — type in any two fields.
+category: math
+keywords: [percent, percentage, percent of, what percent, part of whole, fraction]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: p, label: Percentage, family: percent, unit: '%', default: 15 }
+  - { id: x, label: Of (whole), default: 240 }
+  - { id: y, label: Result (part) }
+equations:
+  - y = p * x
+chart: { x: p, y: y, from: 0, to: 100 }
+faq:
+  - q: How do I calculate a percentage of a number?
+    a: Convert the percentage to a decimal and multiply. 15% of 240 is 0.15 × 240 = 36.
+  - q: How do I find what percent one number is of another?
+    a: Divide the part by the whole and multiply by 100. 36 out of 240 is 36 ÷ 240 × 100 = 15%. Here, press × on Percentage and type the part instead.
+  - q: How do I find the whole if I know the part and the percentage?
+    a: Divide the part by the percentage as a decimal. If 36 is 15%, the whole is 36 ÷ 0.15 = 240.
+related: [math/percentage-change, finance/discount, finance/profit-margin]
+---
+
+## How to use this calculator
+
+This one calculator answers all three common percentage questions. Fill in any **two** fields and the third is calculated:
+
+| You know | You get | Example |
+|---|---|---|
+| Percentage and whole | Part | 15% of 240 = **36** |
+| Part and whole | Percentage | 36 of 240 = **15%** |
+| Part and percentage | Whole | 36 is 15% of **240** |
+
+To switch question, press **×** on the field you want calculated, then type the other values.
+
+## The formula
+
+<p class="formula">part = percentage × whole</p>
+
+A percentage is a fraction of 100, so 15% means 15 ÷ 100 = 0.15. Rearranging the same formula gives the other two forms:
+
+- percentage = part ÷ whole
+- whole = part ÷ percentage
+
+## Quick mental tricks
+
+- **10%** — move the decimal point one place left (10% of 240 = 24).
+- **5%** — half of 10% (12).
+- **15%** — 10% + 5% (24 + 12 = 36).
+- **x% of y = y% of x** — 8% of 50 is the same as 50% of 8, which is 4.
+
+## Common mistakes
+
+- **Percentage points vs percent.** A rate rising from 4% to 5% is a rise of 1 *percentage point* but 25 *percent*. Use the [percentage change calculator](/math/percentage-change/) for the second kind.
+- **Adding percentages in sequence.** A 20% rise followed by a 20% fall does not return to the start: 100 → 120 → 96.

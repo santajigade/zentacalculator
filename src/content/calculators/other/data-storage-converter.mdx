@@ -1,0 +1,46 @@
+---
+title: Data Storage Converter (KB, MB, GB, TB)
+description: Convert data sizes between bytes, KB, MB, GB, TB and binary units (KiB, MiB, GiB).
+category: other
+keywords: [data storage converter, mb to gb, gb to tb, bytes converter, gib vs gb, file size converter]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: u0, label: Gigabytes (GB), family: data, unit: GB, default: 1, min: 0 }
+  - { id: u1, label: Megabytes (MB), family: data, unit: MB, min: 0 }
+  - { id: u2, label: Terabytes (TB), family: data, unit: TB, min: 0 }
+  - { id: u3, label: Gibibytes (GiB), family: data, unit: GiB, min: 0 }
+  - { id: u4, label: Mebibytes (MiB), family: data, unit: MiB, min: 0 }
+  - { id: u5, label: Bytes, family: data, unit: B, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+  - u3 = u4
+  - u4 = u5
+faq:
+  - q: What is the difference between GB and GiB?
+    a: A GB (gigabyte) is 1,000,000,000 bytes; a GiB (gibibyte) is 1,073,741,824 bytes (2³⁰).
+  - q: Why does my 1 TB drive show 931 GB?
+    a: Drive makers use decimal TB, while some operating systems display binary units. 1 TB = 931 GiB.
+  - q: How many MB are in a GB?
+    a: 1,000 MB in decimal units, or 1,024 MiB in a GiB.
+related: [other/download-time, other/video-file-size]
+---
+
+## How to use this converter
+
+Type a value in **any** field — decimal (KB, MB, GB, TB) or binary (KiB, MiB, GiB). Every field updates.
+
+## Decimal vs binary
+
+| Unit | Bytes |
+|---|---|
+| 1 KB | 1,000 |
+| 1 KiB | 1,024 |
+| 1 MB | 1,000,000 |
+| 1 MiB | 1,048,576 |
+| 1 GB | 1,000,000,000 |
+| 1 GiB | 1,073,741,824 |
+
+A "1 TB" drive holds 1,000,000,000,000 bytes, shown as **931 GiB** by systems that use binary units.

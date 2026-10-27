@@ -1,0 +1,44 @@
+---
+title: Sum of Squares Calculator
+description: Calculate the total sum of squares (squared deviations from the mean) and the sum of squared values for a data set.
+category: statistics
+keywords: [sum of squares, ss, squared deviations, total sum of squares, anova, variance]
+updated: 2026-10-27
+dataset:
+  label: Your data
+  default: '2, 4, 4, 4, 5, 5, 7, 9'
+variables:
+  - { id: ss, label: Sum of squared deviations Σ(x − x̄)² }
+  - { id: sq, label: Sum of squares of values Σx² }
+  - { id: mean, label: Mean }
+  - { id: n, label: Count }
+equations:
+  - ss = data_sumsq - data_n * data_mean^2
+  - sq = data_sumsq
+  - mean = data_mean
+  - n = data_n
+faq:
+  - q: What is the sum of squares?
+    a: In statistics it usually means the sum of squared deviations from the mean, Σ(x − x̄)² — the basis of variance and ANOVA.
+  - q: How does it relate to variance?
+    a: Sample variance = SS ÷ (n − 1); population variance = SS ÷ n.
+  - q: Why square the deviations?
+    a: So negative and positive deviations don't cancel out, and so larger deviations count more.
+related: [statistics/standard-deviation, statistics/coefficient-of-variation]
+---
+
+## How to use this calculator
+
+Paste your data to get the sum of squared deviations, the sum of squared values, the mean and the count.
+
+## Formulas
+
+<p class="formula">SS = Σ(x − x̄)² = Σx² − n x̄²</p>
+
+## Worked example
+
+Data: 2, 4, 4, 4, 5, 5, 7, 9 (mean = 5)
+
+- Σx² = 232
+- SS = 232 − 8 × 25 = **32**
+- Population variance = 32 ÷ 8 = 4 → σ = 2

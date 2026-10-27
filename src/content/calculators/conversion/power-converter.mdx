@@ -1,0 +1,75 @@
+---
+title: Power Converter (kW to HP, BTU/h)
+description: Convert power between kW, W, horsepower (hp and metric PS), BTU/h and tons of refrigeration.
+category: conversion
+keywords: [kw to hp, hp to kw, power converter, btu/h to kw, tons of refrigeration, horsepower converter]
+updated: 2026-10-27
+variables:
+  - { id: u0, label: Kilowatts (kW), family: power, unit: kW, default: 1, min: 0 }
+  - { id: u1, label: "Horsepower (hp, mechanical)", family: power, unit: hp, min: 0 }
+  - { id: u2, label: Metric horsepower (PS), family: power, unit: PS, min: 0 }
+  - { id: u3, label: Watts (W), family: power, unit: W, min: 0 }
+  - { id: u4, label: BTU per hour, family: power, unit: BTUh, min: 0 }
+  - { id: u5, label: Tons of refrigeration (TR), family: power, unit: TR, min: 0 }
+  - { id: u6, label: Megawatts (MW), family: power, unit: MW, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+  - u3 = u4
+  - u4 = u5
+  - u5 = u6
+faq:
+  - q: How many hp is 1 kW?
+    a: "1.341 mechanical hp (1.360 metric PS)."
+  - q: How many kW is 1 hp?
+    a: "0.7457 kW."
+  - q: How many BTU/h is 1 ton of AC?
+    a: "12,000 BTU/h, or 3.517 kW."
+related: [conversion/energy-converter, engineering/three-phase-motor-power, engineering/pump-power]
+---
+
+## How to use this converter
+
+Type a power in **any** unit and the others update instantly. Useful for motors, engines, air conditioners and heaters.
+
+## Formula
+
+<p class="formula">1 kW = 1.341 hp = 1.360 PS = 3,412 BTU/h   1 TR = 3.517 kW = 12,000 BTU/h</p>
+
+**Example:** an 11 kW motor is **14.75 hp**. A 1.5-ton air conditioner is 1.5 × 3.517 = **5.28 kW** of cooling (18,000 BTU/h).
+
+## Conversion table
+
+| kW | hp |
+|---|---|
+| 0.75 kW | 1.00577 hp |
+| 1.5 kW | 2.01153 hp |
+| 2.2 kW | 2.95025 hp |
+| 4 kW | 5.36409 hp |
+| 5.5 kW | 7.37562 hp |
+| 7.5 kW | 10.0577 hp |
+| 11 kW | 14.7512 hp |
+| 15 kW | 20.1153 hp |
+| 22 kW | 29.5025 hp |
+| 37 kW | 49.6178 hp |
+| 55 kW | 73.7562 hp |
+| 75 kW | 100.577 hp |
+| 110 kW | 147.512 hp |
+
+| Tons (AC) | kW cooling |
+|---|---|
+| 0.75 TR | 2.63764 kW |
+| 1 TR | 3.51685 kW |
+| 1.5 TR | 5.27528 kW |
+| 2 TR | 7.03371 kW |
+| 3 TR | 10.5506 kW |
+| 5 TR | 17.5843 kW |
+
+## hp vs PS
+
+Mechanical (imperial) horsepower is 745.7 W. Metric horsepower (PS, CV, pk) is 735.5 W — about 1.4% smaller. Car brochures in Europe and Asia often quote PS.
+
+## Air conditioner sizes
+
+AC capacity is often given in tons or BTU/h of **cooling**. The electrical power drawn is much lower — divide the cooling kW by the unit's efficiency (EER/COP, often 3–4).

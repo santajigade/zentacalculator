@@ -1,0 +1,54 @@
+---
+title: Logarithm Calculator (log, ln, log₂)
+description: Calculate logarithms in any base — log₁₀, natural log (ln), log₂ — or find the number from its logarithm.
+category: math
+keywords: [logarithm, log calculator, natural log, ln, log base 2, log base 10, antilog]
+updated: 2026-10-27
+variables:
+  - { id: b, label: Base, default: 10, min: 0 }
+  - { id: x, label: Number (x), default: 1000, min: 0 }
+  - { id: y, label: Logarithm (log_b x) }
+equations:
+  - y = ln(x) / ln(b)
+faq:
+  - q: What is a logarithm?
+    a: The logarithm tells you what power the base must be raised to to get the number. log₁₀ 1000 = 3 because 10³ = 1000.
+  - q: How do I calculate the natural log (ln)?
+    a: Use base e ≈ 2.718281828. Enter 2.718281828 as the base. ln 20 ≈ 2.996.
+  - q: How do I find the antilog?
+    a: Press × on Number, then enter the base and the logarithm. The antilog of 2 in base 10 is 100.
+related: [math/exponent]
+---
+
+## How to use this calculator
+
+Enter the **base** and the **number** to get the logarithm. To go backwards (antilog), press × on Number and type the logarithm.
+
+Common bases: **10** (common log), **2** (binary log), **2.718281828** (natural log, e).
+
+## The formula
+
+<p class="formula">log<sub>b</sub>(x) = y   ⇔   bʸ = x<br/>log<sub>b</sub>(x) = ln(x) ÷ ln(b)</p>
+
+## Examples
+
+| Expression | Value | Because |
+|---|---|---|
+| log₁₀ 1000 | 3 | 10³ = 1000 |
+| log₂ 64 | 6 | 2⁶ = 64 |
+| ln 20 | 2.996 | e^2.996 ≈ 20 |
+| log₁₀ 0.01 | −2 | 10⁻² = 0.01 |
+
+## Rules of logarithms
+
+- log(a × b) = log a + log b
+- log(a ÷ b) = log a − log b
+- log(aⁿ) = n × log a
+- log<sub>b</sub>(1) = 0 for any base
+
+## Where logs are used
+
+- **Decibels:** sound level = 10 × log₁₀(P ÷ P₀).
+- **pH:** pH = −log₁₀[H⁺].
+- **Richter scale:** each step is 10× larger in amplitude.
+- **Doubling time:** years to double = ln 2 ÷ ln(1 + rate).

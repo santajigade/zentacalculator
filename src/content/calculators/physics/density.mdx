@@ -1,0 +1,51 @@
+---
+title: Density Calculator (ρ = m/V)
+description: Calculate density from mass and volume — or mass or volume from density — in kg/m³, g/cm³ and lb/ft³.
+category: physics
+keywords: [density calculator, density formula, mass volume, kg/m3, g/cm3, specific gravity]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 7.85, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: L, imperialUnit: ft3, default: 1, min: 0 }
+  - { id: rho, label: Density, family: density, unit: kgm3, imperialUnit: lbft3, min: 0 }
+  - { id: sg, label: Specific gravity (vs water), min: 0, decimals: 4 }
+equations:
+  - rho = m / V
+  - sg = rho / 1000
+faq:
+  - q: What is the density formula?
+    a: Density = mass ÷ volume. Its SI unit is kg/m³; 1 g/cm³ = 1,000 kg/m³.
+  - q: What is specific gravity?
+    a: Density relative to water (about 1,000 kg/m³). Steel has a specific gravity of about 7.85.
+  - q: Will it float?
+    a: In water, objects with specific gravity below 1 float and those above 1 sink.
+related: [engineering/mass-flow-rate, engineering/hydrostatic-pressure, physics/pressure]
+---
+
+## How to use this calculator
+
+Enter **mass** and **volume** to get density and specific gravity, or enter density to find mass or volume.
+
+## The formula
+
+<p class="formula">ρ = m ÷ V</p>
+
+## Worked example
+
+A 1-litre block of steel has a mass of 7.85 kg:
+
+ρ = 7.85 kg ÷ 0.001 m³ = **7,850 kg/m³** (specific gravity 7.85)
+
+## Common densities
+
+| Material | kg/m³ |
+|---|---|
+| Air (20 °C) | 1.2 |
+| Wood (pine) | 500 |
+| Ice | 917 |
+| Water | 998 |
+| Concrete | 2,400 |
+| Aluminium | 2,700 |
+| Steel | 7,850 |
+| Copper | 8,960 |
+| Gold | 19,300 |

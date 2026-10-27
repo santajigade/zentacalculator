@@ -1,0 +1,42 @@
+---
+title: Hardy–Weinberg Equilibrium Calculator
+description: Calculate allele and genotype frequencies (p, q, p², 2pq, q²) from the frequency of the recessive phenotype.
+category: biology
+keywords: [hardy weinberg, allele frequency, genotype frequency, p2 + 2pq + q2, population genetics, carrier frequency]
+updated: 2026-10-27
+variables:
+  - { id: qq, label: Recessive phenotype frequency (q²), family: percent, unit: '%', default: 4, min: 0, max: 1 }
+  - { id: q, label: Recessive allele frequency (q), min: 0, max: 1, decimals: 4 }
+  - { id: p, label: Dominant allele frequency (p), min: 0, max: 1, decimals: 4 }
+  - { id: pp, label: Homozygous dominant (p²), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: het, label: Heterozygous carriers (2pq), family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - q = sqrt(qq)
+  - p = 1 - q
+  - pp = p^2
+  - het = 2 * p * q
+faq:
+  - q: What is Hardy–Weinberg equilibrium?
+    a: A model where allele and genotype frequencies stay constant between generations, given random mating and no selection, mutation, migration or genetic drift.
+  - q: How do I find carrier frequency?
+    a: Take the square root of the affected (recessive) frequency to get q, then calculate 2pq.
+  - q: Do p² + 2pq + q² always add to 1?
+    a: Yes — they cover every genotype in the population.
+related: [statistics/probability, biology/exponential-population-growth]
+---
+
+## How to use this calculator
+
+Enter the share of the population showing the **recessive phenotype** (q²). Allele frequencies and all genotype frequencies are calculated.
+
+## Equations
+
+<p class="formula">p + q = 1   p² + 2pq + q² = 1</p>
+
+## Example
+
+If 4% of a population shows a recessive trait:
+
+- q = √0.04 = **0.2**, p = **0.8**
+- Homozygous dominant = **64%**
+- Carriers (2pq) = **32%**

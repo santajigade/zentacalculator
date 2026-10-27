@@ -1,0 +1,51 @@
+---
+title: Tile Calculator (Floor & Wall)
+description: Calculate how many tiles you need for a floor or wall from the area and tile size — with grout gap and waste.
+category: construction
+keywords: [tile calculator, how many tiles, floor tiles, wall tiles, tiles per square metre, bathroom tiles]
+updated: 2026-10-27
+variables:
+  - { id: L, label: Area length, family: length, unit: m, imperialUnit: ft, default: 4, min: 0 }
+  - { id: W, label: Area width, family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: tl, label: Tile length, family: length, unit: mm, imperialUnit: in, default: 600, min: 0 }
+  - { id: tw, label: Tile width, family: length, unit: mm, imperialUnit: in, default: 600, min: 0 }
+  - { id: g, label: Grout joint, family: length, unit: mm, imperialUnit: in, default: 3, min: 0 }
+  - { id: wst, label: Waste / cuts, family: percent, unit: '%', default: 10, min: 0, max: 1 }
+  - { id: A, label: Area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+  - { id: n, label: Tiles needed, min: 0, decimals: 0 }
+equations:
+  - A = L * W
+  - n = ceil(A / ((tl + g) * (tw + g)) * (1 + wst))
+faq:
+  - q: How much extra tile should I buy?
+    a: About 10% for straight layouts and 15% for diagonal or herringbone patterns. Keep a few spare for future repairs.
+  - q: How many 600 × 600 tiles are in a square metre?
+    a: About 2.8 tiles (before waste).
+  - q: Should I buy tiles by the box?
+    a: Yes — round up to whole boxes, and buy from the same batch so the colour matches.
+related: [construction/flooring, construction/square-footage, math/rectangle]
+---
+
+## How to use this calculator
+
+Enter the **area dimensions**, **tile size**, **grout joint** and **waste** allowance. The area and number of tiles are calculated.
+
+## Formula
+
+<p class="formula">Tiles = area ÷ ((tile length + joint) × (tile width + joint)) × (1 + waste)</p>
+
+## Example
+
+A 4 × 3 m floor with 600 × 600 mm tiles, 3 mm joints, 10% waste:
+
+- Area = **12 m²**
+- Tiles = 12 ÷ (0.603 × 0.603) × 1.1 = **37 tiles**
+
+## Tiles per m² (before waste)
+
+| Tile size | Tiles per m² |
+|---|---|
+| 300 × 300 mm | 10.9 |
+| 600 × 300 mm | 5.5 |
+| 600 × 600 mm | 2.8 |
+| 800 × 800 mm | 1.55 |

@@ -1,0 +1,52 @@
+---
+title: PPM Calculator (Parts per Million)
+description: Calculate concentration in ppm from solute and solution mass — and convert ppm to percent and mg/L.
+category: chemistry
+keywords: [ppm calculator, parts per million, mg/l, ppm to percent, ppb, water quality, tds]
+updated: 2026-10-27
+variables:
+  - { id: ms, label: Mass of substance, family: mass, unit: mg, default: 50, min: 0 }
+  - { id: mt, label: Mass of sample (solution), family: mass, unit: kg, default: 1, min: 0 }
+  - { id: ppm, label: Concentration, suffix: ppm, min: 0 }
+  - { id: pct, label: As a percentage, family: percent, unit: '%', min: 0 }
+  - { id: ppb, label: In parts per billion, suffix: ppb, min: 0 }
+equations:
+  - ppm = ms / mt * 1000000
+  - pct = ppm / 1000000
+  - ppb = ppm * 1000
+faq:
+  - q: What does ppm mean?
+    a: Parts per million — 1 part of a substance in 1,000,000 parts of the whole. 1 ppm = 0.0001%.
+  - q: Is ppm the same as mg/L?
+    a: For dilute water solutions, yes — 1 litre of water weighs about 1 kg, so 1 mg/L ≈ 1 ppm.
+  - q: How do I convert ppm to percent?
+    a: Divide by 10,000. 5,000 ppm = 0.5%.
+related: [chemistry/mass-percent, chemistry/dilution]
+---
+
+## How to use this calculator
+
+Enter the **mass of the substance** and the **mass of the sample**. You get ppm, percent and ppb. For water, 1 kg ≈ 1 L, so mg/kg ≈ mg/L ≈ ppm.
+
+## Formula
+
+<p class="formula">ppm = m<sub>substance</sub> ÷ m<sub>sample</sub> × 10⁶</p>
+
+## Worked example
+
+50 mg of chlorine in 1 kg (1 L) of water:
+
+ppm = 0.050 g ÷ 1,000 g × 10⁶ = **50 ppm** = 0.005%
+
+## Typical values
+
+| Example | Concentration |
+|---|---|
+| Drinking-water chlorine (typical) | 0.2–1 ppm |
+| WHO drinking-water fluoride limit | 1.5 ppm |
+| CO₂ in air | ~420 ppm |
+| Sea-water salt | ~35,000 ppm |
+
+## Conversions
+
+1% = 10,000 ppm · 1 ppm = 1,000 ppb · 1 ppm = 1 mg/kg

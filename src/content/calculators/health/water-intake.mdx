@@ -1,0 +1,50 @@
+---
+title: Water Intake Calculator
+description: Estimate how much water to drink per day based on your body weight and exercise time.
+category: health
+keywords: [water intake, how much water to drink, daily water, hydration calculator, litres per day]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Body weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 0 }
+  - { id: ex, label: Exercise per day, suffix: minutes, default: 30, min: 0 }
+  - { id: W, label: Recommended daily water, family: volume, unit: L, imperialUnit: galUS, min: 0, decimals: 2 }
+equations:
+  - W = 0.000033 * m + 0.0000117 * ex
+faq:
+  - q: How much water should I drink a day?
+    a: A common guideline is about 30–35 ml per kg of body weight, plus roughly 350 ml for every 30 minutes of exercise. For a 70 kg adult that is about 2.3 litres, plus extra for activity.
+  - q: Does food and other drinks count?
+    a: Yes. Around 20% of daily water usually comes from food, and tea, coffee and milk also count towards your intake.
+  - q: Can I drink too much water?
+    a: Yes, very large amounts in a short time can be dangerous. People with kidney or heart conditions should follow their doctor's advice.
+related: [health/bmr, health/calories-burned]
+---
+
+## How to use this calculator
+
+Enter your **body weight** and how many **minutes you exercise** on a typical day. The estimate is shown in litres (or US gallons).
+
+## The formula used
+
+<p class="formula">Water (L) ≈ 0.033 × weight (kg) + 0.35 × (exercise minutes ÷ 30)</p>
+
+## Worked example
+
+A 70 kg adult who exercises 30 minutes a day:
+
+- Base = 0.033 × 70 = 2.31 L
+- Exercise = 0.35 L
+- Total ≈ **2.66 L per day**
+
+## Drink more when…
+
+- it is hot or humid
+- you are at high altitude
+- you have a fever, vomiting or diarrhoea
+- you are pregnant or breastfeeding (follow medical advice)
+
+## A simple check
+
+Pale yellow urine usually means you are well hydrated. Dark yellow urine and thirst are signs to drink more.
+
+This is a general estimate. Individual needs vary.

@@ -1,0 +1,45 @@
+---
+title: Normal Distribution Probability Calculator
+description: Find the probability that a normally distributed value is below, above or between limits — from mean and standard deviation.
+category: statistics
+keywords: [normal distribution calculator, bell curve, probability, normal cdf, between two values, percentile]
+updated: 2026-10-27
+variables:
+  - { id: mu, label: Mean (μ), default: 100 }
+  - { id: s, label: Standard deviation (σ), default: 15, min: 0.0000001 }
+  - { id: a, label: Lower limit (a), default: 85 }
+  - { id: b, label: Upper limit (b), default: 115 }
+  - { id: pbelow, label: P(X < b), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: pabove, label: P(X > b), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: pbetween, label: P(a < X < b), family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - pbelow = normcdf((b - mu) / s)
+  - pabove = 1 - pbelow
+  - pbetween = pbelow - normcdf((a - mu) / s)
+faq:
+  - q: What is the normal distribution?
+    a: The symmetric bell-shaped curve that describes many natural measurements, such as heights, test scores and measurement errors.
+  - q: What is the probability within one standard deviation?
+    a: About 68.3%. Within two SDs about 95.4%, and within three about 99.7%.
+  - q: Can I find a value from a probability?
+    a: Yes. Press × on the upper limit and type the probability below it.
+related: [statistics/z-score, statistics/empirical-rule]
+---
+
+## How to use this calculator
+
+Enter the **mean** and **standard deviation**, and the **lower** and **upper limits**. You get the probability below the upper limit, above it, and between the two limits.
+
+## Formulas
+
+<p class="formula">P(X &lt; b) = Φ((b − μ) ÷ σ)<br/>P(a &lt; X &lt; b) = Φ((b − μ) ÷ σ) − Φ((a − μ) ÷ σ)</p>
+
+## Worked example — IQ scores (μ = 100, σ = 15)
+
+- P(85 < IQ < 115) = **68.3%**
+- P(IQ > 115) = **15.9%**
+- P(IQ > 130) = **2.28%**
+
+## Manufacturing example
+
+Bolts have a mean length of 50.0 mm with σ = 0.1 mm and a tolerance of 49.8–50.2 mm. The share within tolerance is 95.4%, so about 4.6% are rejected.

@@ -1,0 +1,68 @@
+---
+title: Energy Converter (kWh, J, kcal, BTU)
+description: Convert energy between joules, kilojoules, kWh, Wh, calories, kilocalories, BTU and therms.
+category: conversion
+keywords: [energy converter, kwh to joules, kcal to kj, btu to kwh, calories to joules, energy units]
+updated: 2026-10-27
+variables:
+  - { id: u0, label: Kilowatt-hours (kWh), family: energy, unit: kWh, default: 1, min: 0 }
+  - { id: u1, label: Megajoules (MJ), family: energy, unit: MJ, min: 0 }
+  - { id: u2, label: Kilojoules (kJ), family: energy, unit: kJ, min: 0 }
+  - { id: u3, label: Joules (J), family: energy, unit: J, min: 0 }
+  - { id: u4, label: Watt-hours (Wh), family: energy, unit: Wh, min: 0 }
+  - { id: u5, label: Kilocalories (kcal / Calories), family: energy, unit: kcal, min: 0 }
+  - { id: u6, label: BTU, family: energy, unit: BTU, min: 0 }
+  - { id: u7, label: Therms, family: energy, unit: therm, min: 0 }
+equations:
+  - u0 = u1
+  - u1 = u2
+  - u2 = u3
+  - u3 = u4
+  - u4 = u5
+  - u5 = u6
+  - u6 = u7
+faq:
+  - q: How many joules are in 1 kWh?
+    a: "3.6 million joules (3.6 MJ)."
+  - q: How many kJ are in a kcal?
+    a: "4.184 kJ."
+  - q: How many BTU are in a kWh?
+    a: "About 3,412 BTU."
+related: [conversion/power-converter, engineering/heat-duty, health/calories-burned]
+---
+
+## How to use this converter
+
+Type an energy value in **any** unit and the others update instantly — useful for electricity bills, food labels, heating and engineering.
+
+## Formula
+
+<p class="formula">1 kWh = 3.6 MJ = 3,412 BTU   1 kcal = 4.184 kJ   1 therm = 100,000 BTU</p>
+
+**Example:** **1 kWh** = 3,600 kJ = 860 kcal = 3,412 BTU. A 2,000 kcal daily diet is about **2.3 kWh** of energy.
+
+## Conversion table
+
+| kWh | MJ |
+|---|---|
+| 0.1 kWh | 0.36 MJ |
+| 1 kWh | 3.6 MJ |
+| 10 kWh | 36 MJ |
+| 100 kWh | 360 MJ |
+| 1,000 kWh | 3,600 MJ |
+
+| kcal (food Calories) | kJ |
+|---|---|
+| 1 kcal | 4.184 kJ |
+| 100 kcal | 418.4 kJ |
+| 250 kcal | 1,046 kJ |
+| 500 kcal | 2,092 kJ |
+| 2,000 kcal | 8,368 kJ |
+
+## Food calories
+
+On food labels, "Calories" with a capital C are kilocalories (kcal). Many countries also print kJ: 1 kcal = 4.184 kJ.
+
+## Energy vs power
+
+**Energy** (kWh, J) is an amount. **Power** (kW, W) is the rate of using it. A 2 kW heater running for 3 hours uses 2 × 3 = **6 kWh**. Use the [power converter](/conversion/power-converter/) for kW, hp and BTU/h.

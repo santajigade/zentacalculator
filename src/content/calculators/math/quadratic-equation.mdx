@@ -1,0 +1,58 @@
+---
+title: Quadratic Equation Solver
+description: Solve ax² + bx + c = 0 — get both roots and the discriminant with step-by-step working.
+category: math
+keywords: [quadratic equation, quadratic formula, solve ax2+bx+c, roots, discriminant, quadratic solver]
+updated: 2026-10-27
+variables:
+  - { id: a, label: a (x² coefficient), default: 2 }
+  - { id: b, label: b (x coefficient), default: -7 }
+  - { id: c, label: c (constant), default: 3 }
+  - { id: D, label: Discriminant (b² − 4ac) }
+  - { id: x1, label: Root x₁ }
+  - { id: x2, label: Root x₂ }
+equations:
+  - D = b^2 - 4 * a * c
+  - x1 = (-b + sqrt(D)) / (2 * a)
+  - x2 = (-b - sqrt(D)) / (2 * a)
+faq:
+  - q: What is the quadratic formula?
+    a: x = (−b ± √(b² − 4ac)) ÷ 2a. It gives both solutions of ax² + bx + c = 0.
+  - q: What does the discriminant tell me?
+    a: If it is positive there are two real roots; if zero, one repeated root; if negative, no real roots (the roots are complex).
+  - q: What if a = 0?
+    a: Then it is not quadratic — it is the linear equation bx + c = 0, with the single solution x = −c ÷ b.
+related: [math/exponent, math/slope]
+---
+
+## How to use this calculator
+
+Enter the coefficients **a**, **b** and **c** of ax² + bx + c = 0. The discriminant and both roots appear instantly. Click **Show steps** to see the formula with your numbers.
+
+If the discriminant is negative, the roots are complex and the calculator shows a warning — there is no real x that solves the equation.
+
+## The quadratic formula
+
+<p class="formula">x = (−b ± √(b² − 4ac)) ÷ 2a</p>
+
+## Worked example
+
+2x² − 7x + 3 = 0, so a = 2, b = −7, c = 3.
+
+- Discriminant = (−7)² − 4 × 2 × 3 = 49 − 24 = **25**
+- x₁ = (7 + 5) ÷ 4 = **3**
+- x₂ = (7 − 5) ÷ 4 = **0.5**
+
+Check: 2(3)² − 7(3) + 3 = 18 − 21 + 3 = 0 ✓
+
+## Discriminant cases
+
+| Discriminant | Roots |
+|---|---|
+| Positive | Two different real roots |
+| Zero | One repeated real root |
+| Negative | Two complex roots (no real solution) |
+
+## Sum and product of roots
+
+For any quadratic, x₁ + x₂ = −b ÷ a and x₁ × x₂ = c ÷ a. In the example: 3 + 0.5 = 3.5 = 7/2 and 3 × 0.5 = 1.5 = 3/2.

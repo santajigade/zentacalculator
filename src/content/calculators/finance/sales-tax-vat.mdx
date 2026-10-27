@@ -1,0 +1,55 @@
+---
+title: Sales Tax / VAT / GST Calculator
+description: Add or remove sales tax, VAT or GST from a price — find the net price, tax amount and gross price in one step.
+category: finance
+keywords: [vat calculator, gst calculator, sales tax calculator, add tax, remove tax, price before tax, reverse vat]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: N, label: Price before tax (net), family: currency, default: 100, min: 0, decimals: 2 }
+  - { id: r, label: Tax rate, family: percent, unit: '%', default: 18, min: 0, max: 1 }
+  - { id: T, label: Tax amount, family: currency, min: 0, decimals: 2 }
+  - { id: G, label: Price including tax (gross), family: currency, min: 0, decimals: 2 }
+equations:
+  - G = N * (1 + r)
+  - T = G - N
+faq:
+  - q: How do I add tax to a price?
+    a: Multiply the net price by (1 + tax rate). 100 plus 18% tax is 100 × 1.18 = 118.
+  - q: How do I remove tax from a price that includes it?
+    a: Divide by (1 + tax rate), not multiply by (1 − rate). 118 including 18% tax is 118 ÷ 1.18 = 100. Press × on the net price and type the gross price.
+  - q: What tax rate should I use?
+    a: It depends on your country and the product — for example many goods are taxed at 20% VAT in the UK, 18% GST is common in India, and US sales tax varies by state and city.
+related: [finance/discount, finance/profit-margin, math/percentage]
+---
+
+## How to use this calculator
+
+Enter a **net price** and **tax rate** to add tax. To **remove** tax from a price that already includes it, press × on the net price and type the gross price — the net price and tax are calculated.
+
+## Formulas
+
+<p class="formula">Gross = Net × (1 + rate)   Tax = Gross − Net<br/>Net = Gross ÷ (1 + rate)</p>
+
+## Worked examples
+
+**Adding 18%:** net 100 → tax 18 → gross **118**.
+
+**Removing 20% VAT:** gross 120 → net = 120 ÷ 1.2 = **100**, VAT = **20**.
+
+## A common mistake
+
+To remove 20% VAT from 120, many people take 20% off: 120 × 0.8 = 96. That is wrong — the tax was 20% of the **net** price, not of the gross. The correct net is 100.
+
+## Typical standard rates (check current local rules)
+
+| Region | Tax | Standard rate |
+|---|---|---|
+| United Kingdom | VAT | 20% |
+| Germany | VAT | 19% |
+| India | GST | 5%, 12%, 18% or 28% by product |
+| Australia | GST | 10% |
+| UAE | VAT | 5% |
+| United States | Sales tax | Varies by state and city |
+
+Rates and product rules change — confirm with your tax authority before invoicing.

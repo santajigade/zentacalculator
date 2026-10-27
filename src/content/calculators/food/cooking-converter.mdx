@@ -1,0 +1,50 @@
+---
+title: Cooking Measurement Converter (Cups, Tbsp, ml)
+description: Convert kitchen volume measurements — cups, tablespoons, teaspoons, fluid ounces and millilitres.
+category: food
+keywords: [cups to ml, tablespoon to ml, teaspoon to ml, cooking converter, kitchen conversion, fl oz to ml]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: v0, label: US cups, family: volume, unit: cup, default: 1, min: 0 }
+  - { id: v1, label: Millilitres, family: volume, unit: mL, min: 0 }
+  - { id: v2, label: Tablespoons, family: volume, unit: tbsp, min: 0 }
+  - { id: v3, label: Teaspoons, family: volume, unit: tsp, min: 0 }
+  - { id: v4, label: US fluid ounces, family: volume, unit: floz, min: 0 }
+  - { id: v5, label: Metric cups (250 ml), family: volume, unit: cupM, min: 0 }
+equations:
+  - v0 = v1
+  - v1 = v2
+  - v2 = v3
+  - v3 = v4
+  - v4 = v5
+faq:
+  - q: How many ml is a cup?
+    a: A US cup is 236.6 ml. A metric cup (Australia, NZ, Canada, often India) is 250 ml.
+  - q: How many tablespoons are in a cup?
+    a: 16 US tablespoons. A tablespoon is 3 teaspoons (about 14.8 ml).
+  - q: Is an Australian tablespoon different?
+    a: Yes — it is 20 ml (4 teaspoons), compared with about 15 ml elsewhere.
+related: [food/grams-to-cups, food/recipe-scaler, conversion/volume-converter]
+---
+
+## How to use this converter
+
+Type a value into **any** field — cups, ml, tablespoons, teaspoons, fluid ounces or metric cups. The others update instantly.
+
+## Quick reference (US measures)
+
+| Measure | ml |
+|---|---|
+| 1 teaspoon | 4.93 |
+| 1 tablespoon | 14.79 |
+| 1 fl oz | 29.57 |
+| ¼ cup | 59.15 |
+| ½ cup | 118.29 |
+| 1 cup | 236.59 |
+
+## Equivalents
+
+1 cup = 16 tbsp = 48 tsp = 8 fl oz
+
+For dry ingredients by weight, use the [grams to cups converter](/food/grams-to-cups/) — a cup of flour and a cup of sugar weigh very different amounts.

@@ -1,0 +1,51 @@
+---
+title: Running Pace Calculator
+description: Calculate running pace per km or mile, finish time or distance — enter any two.
+category: sports
+keywords: [pace calculator, running pace, min per km, min per mile, race time, 5k pace, marathon pace]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: d, label: Distance, family: length, unit: km, imperialUnit: mi, default: 10, min: 0 }
+  - { id: t, label: Finish time, family: seconds, unit: min, default: 55, min: 0 }
+  - { id: pk, label: Pace per km, suffix: min/km, min: 0, decimals: 2 }
+  - { id: pm, label: Pace per mile, suffix: min/mile, min: 0, decimals: 2 }
+  - { id: v, label: Average speed, family: velocity, unit: kmh, imperialUnit: mph, min: 0 }
+equations:
+  - pk = t / 60 / (d / 1000)
+  - pm = pk * 1.609344
+  - v = d / t
+faq:
+  - q: How do I calculate running pace?
+    a: Divide your time by the distance. 55 minutes for 10 km is 5.5 minutes per km — 5:30 per km.
+  - q: How do I read decimal pace?
+    a: Multiply the decimal part by 60. 5.5 min/km = 5 min 30 s per km.
+  - q: What pace do I need for a sub-2-hour half marathon?
+    a: About 5:41 per km (9:09 per mile).
+related: [sports/race-time-predictor, sports/pace-speed-converter, physics/speed-distance-time]
+---
+
+## How to use this calculator
+
+Enter any **two** of distance, finish time and pace. Time is entered in minutes (or switch to hours or seconds). Pace is shown as decimal minutes — 5.5 = 5:30.
+
+## Formula
+
+<p class="formula">pace = time ÷ distance</p>
+
+## Example
+
+10 km in 55 minutes:
+
+- Pace = **5.50 min/km** (5:30 per km) = **8.85 min/mile** (8:51 per mile)
+- Speed = **10.9 km/h**
+
+## Popular goal paces
+
+| Goal | Pace per km | Pace per mile |
+|---|---|---|
+| 5K in 25:00 | 5:00 | 8:03 |
+| 10K in 50:00 | 5:00 | 8:03 |
+| Half marathon in 2:00 | 5:41 | 9:09 |
+| Marathon in 4:00 | 5:41 | 9:09 |
+| Marathon in 3:30 | 4:59 | 8:01 |

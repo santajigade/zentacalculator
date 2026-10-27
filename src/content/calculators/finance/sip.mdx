@@ -1,0 +1,70 @@
+---
+title: SIP Calculator (Monthly Investment)
+description: See how a fixed monthly investment (SIP) grows over time with compounding — or find the monthly amount for a target.
+category: finance
+keywords: [sip calculator, systematic investment plan, monthly investment, mutual fund sip, future value of annuity, recurring investment]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: M, label: Monthly investment, family: currency, default: 5000, min: 0, decimals: 2 }
+  - { id: r, label: Expected annual return, family: percent, unit: '%', default: 12, min: 0.0001, max: 1 }
+  - { id: t, label: Investment period, family: time, unit: yr, default: 10, min: 0.0833 }
+  - { id: FV, label: Future value, family: currency, min: 0, decimals: 2 }
+  - { id: inv, label: Total invested, family: currency, min: 0, decimals: 2 }
+  - { id: gain, label: Estimated returns, family: currency, decimals: 2 }
+equations:
+  - FV = M * ((1 + r/12)^(12*t) - 1) / (r/12) * (1 + r/12)
+  - inv = M * 12 * t
+  - gain = FV - inv
+chart: { x: t, y: FV, from: 1, to: 30 }
+faq:
+  - q: What is a SIP?
+    a: A Systematic Investment Plan — investing a fixed amount every month, usually into a mutual fund. It builds discipline and averages out market ups and downs.
+  - q: How is SIP maturity calculated?
+    a: FV = M × [((1 + i)ⁿ − 1) ÷ i] × (1 + i), where M is the monthly amount, i the monthly rate (annual ÷ 12) and n the number of months.
+  - q: Are SIP returns guaranteed?
+    a: No. Equity fund returns vary from year to year. The calculator assumes a steady average return, so treat the result as an estimate.
+  - q: How much should I invest monthly to reach a goal?
+    a: Press × on Monthly investment, then type your target future value.
+related: [finance/compound-interest, finance/savings-goal, finance/inflation]
+---
+
+## How to use this calculator
+
+Enter your **monthly investment**, **expected annual return** and **period**. You see the future value, the total you put in and the returns earned. To plan for a goal, press × on Monthly investment and type the target amount.
+
+## The formula
+
+<p class="formula">FV = M × [((1 + i)<sup>n</sup> − 1) ÷ i] × (1 + i)</p>
+
+- **i** = annual return ÷ 12
+- **n** = years × 12
+- The extra (1 + i) assumes you invest at the start of each month, as with most SIPs.
+
+## Worked example
+
+5,000 per month at 12% a year for 10 years:
+
+- Total invested = 5,000 × 120 = **600,000**
+- Future value = **1,161,695**
+- Returns earned = **561,695**
+
+## The power of time
+
+At 5,000 per month and 12%:
+
+| Years | Invested | Future value |
+|---|---|---|
+| 5 | 300,000 | 412,432 |
+| 10 | 600,000 | 1,161,695 |
+| 15 | 900,000 | 2,522,880 |
+| 20 | 1,200,000 | 4,995,740 |
+| 25 | 1,500,000 | 9,488,175 |
+
+Doubling the time from 10 to 20 years doubles what you put in but more than **quadruples** the result. Starting early matters more than investing a lot.
+
+## Keep in mind
+
+- Returns are not guaranteed and markets can fall.
+- Adjust the target for inflation with the [inflation calculator](/finance/inflation/).
+- Fund expenses and taxes reduce the final amount.

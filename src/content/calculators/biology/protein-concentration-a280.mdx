@@ -1,0 +1,40 @@
+---
+title: Protein Concentration Calculator (A280)
+description: Calculate protein concentration from A280 absorbance using the molar extinction coefficient and molecular weight.
+category: biology
+keywords: [protein concentration, a280, extinction coefficient, protein quantification, beer lambert protein, mg/ml]
+updated: 2026-10-27
+variables:
+  - { id: A, label: A280 reading, default: 0.8, min: 0 }
+  - { id: eps, label: Molar extinction coefficient, suffix: M⁻¹cm⁻¹, default: 43824, min: 0.0001 }
+  - { id: mw, label: Molecular weight, suffix: Da, default: 66463, min: 0 }
+  - { id: l, label: Path length, suffix: cm, default: 1, min: 0.0001 }
+  - { id: um, label: Concentration, suffix: µM, min: 0 }
+  - { id: mg, label: Concentration, suffix: mg/mL, min: 0, decimals: 3 }
+equations:
+  - um = A / (eps * l) * 1000000
+  - mg = um * mw / 1000000
+faq:
+  - q: How do I calculate protein concentration from A280?
+    a: c (M) = A280 ÷ (ε × l). Multiply by the molecular weight to get g/L, which equals mg/mL.
+  - q: Where do I get the extinction coefficient?
+    a: From the amino-acid sequence (tryptophan, tyrosine and cystine content) using a tool such as ExPASy ProtParam.
+  - q: What is the default protein?
+    a: Bovine serum albumin (BSA), with ε ≈ 43,824 M⁻¹cm⁻¹ and MW ≈ 66,463 Da.
+related: [biology/dna-concentration, chemistry/beer-lambert, biology/protein-molecular-weight]
+---
+
+## How to use this calculator
+
+Enter the **A280** reading, the protein's **extinction coefficient** and **molecular weight**, and the **path length**. The concentration is given in µM and mg/mL.
+
+## Formula
+
+<p class="formula">c = A280 ÷ (ε × l)</p>
+
+## Example — BSA
+
+A280 = 0.8, ε = 43,824 M⁻¹cm⁻¹, 1 cm:
+
+- c = 0.8 ÷ 43,824 = **18.25 µM**
+- × 66,463 g/mol = **1.213 mg/mL**

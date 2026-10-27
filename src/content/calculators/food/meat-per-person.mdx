@@ -1,0 +1,52 @@
+---
+title: Meat per Person Calculator (BBQ & Parties)
+description: Calculate how much meat to buy for a barbecue or party based on the number of guests and appetite.
+category: food
+keywords: [meat per person, bbq calculator, how much meat for party, brisket per person, pulled pork per person]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Adults, default: 12, min: 0 }
+  - { id: k, label: Children, default: 4, min: 0 }
+  - id: per
+    label: Appetite / menu
+    default: 0.25
+    options:
+      - { label: Several sides (about 200 g per adult), value: 0.2 }
+      - { label: Standard (about 250 g per adult), value: 0.25 }
+      - { label: Big eaters / meat-focused (about 340 g per adult), value: 0.34 }
+  - { id: y, label: Cooked yield of raw meat, family: percent, unit: '%', default: 60, min: 0.01, max: 1 }
+  - { id: ck, label: Cooked meat needed, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+  - { id: raw, label: Raw meat to buy, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+equations:
+  - ck = (a + k / 2) * per
+  - raw = ck / y
+faq:
+  - q: How much meat per person?
+    a: About 200–250 g (½ lb) of cooked meat per adult with several sides, and about half that for children.
+  - q: Why buy more raw meat?
+    a: Meat loses weight when cooked. Brisket and pulled pork can lose 40–50%; boneless chicken about 25%.
+  - q: Should I plan for leftovers?
+    a: Many hosts add 10–20% extra.
+related: [food/turkey-cooking-time, food/party-drinks]
+---
+
+## How to use this calculator
+
+Enter the number of **adults** and **children**, choose the **appetite**, and set the **cooked yield** of your meat. The cooked meat needed and the raw meat to buy are calculated.
+
+## Example
+
+12 adults and 4 children at 250 g per adult, 60% yield (e.g. brisket):
+
+- Cooked = 14 × 0.25 = **3.5 kg**
+- Raw to buy = 3.5 ÷ 0.6 = **5.8 kg**
+
+## Typical cooked yields
+
+| Meat | Yield |
+|---|---|
+| Brisket | 50–60% |
+| Pork shoulder | 50–60% |
+| Bone-in chicken | 60–65% |
+| Boneless chicken | 75% |
+| Burgers | 75% |

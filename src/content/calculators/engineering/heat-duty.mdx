@@ -1,0 +1,53 @@
+---
+title: Heat Duty Calculator (Q = ṁ·cp·ΔT)
+description: Calculate heating or cooling power from mass flow, specific heat and temperature difference — for heat exchangers, chillers and boilers.
+category: engineering
+keywords: [heat duty, heat load, q = m cp dt, heat exchanger, cooling load, heating power, kw, specific heat]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Mass flow, family: massflow, unit: kgs, imperialUnit: lbh, default: 2, min: 0 }
+  - { id: cp, label: Specific heat (cp), suffix: kJ/kg·K, default: 4.186, min: 0, help: Water 4.186 · Thermal oil ~2.0 · Air ~1.005 }
+  - { id: dT, label: Temperature difference (in − out), family: tempdiff, unit: K, imperialUnit: F, default: 10 }
+  - { id: Q, label: Heat duty, family: power, unit: kW, imperialUnit: hp }
+equations:
+  - Q = m * cp * 1000 * dT
+chart: { x: dT, y: Q, from: 0, to: 50 }
+faq:
+  - q: What is heat duty?
+    a: The rate at which heat is added to or removed from a fluid, usually in kW. For a heat exchanger, it is the same on both the hot and cold sides, ignoring losses.
+  - q: What specific heat should I use for water?
+    a: 4.186 kJ/kg·K is standard. It changes only slightly between 0 and 100 °C.
+  - q: Can I use volumetric flow?
+    a: Convert it to mass flow first by multiplying by density. Use the mass flow rate calculator.
+related: [engineering/mass-flow-rate, engineering/pt100-resistance, engineering/thermal-expansion]
+---
+
+## How to use this calculator
+
+Enter the **mass flow**, **specific heat** and the **temperature difference** between inlet and outlet. The heat duty is calculated in kW (or hp). You can also find the flow needed to carry a given load, or the temperature rise for a known heater power.
+
+## The formula
+
+<p class="formula">Q̇ = ṁ × c<sub>p</sub> × ΔT</p>
+
+## Worked example
+
+2 kg/s of water cooled by 10 °C in a heat exchanger:
+
+Q̇ = 2 × 4.186 × 10 = **83.7 kW**
+
+## Typical specific heats
+
+| Fluid | c<sub>p</sub> (kJ/kg·K) |
+|---|---|
+| Water | 4.186 |
+| Glycol 30% | ~3.7 |
+| Thermal oil | ~2.0 – 2.5 |
+| Air | 1.005 |
+| Steel | 0.49 |
+
+## Practical uses
+
+- **Chiller and boiler sizing** — enter design flow and ΔT.
+- **Energy metering** — BTU/energy meters calculate exactly this using a flow meter and two temperature sensors (often matched Pt100 or Pt500 pairs).
+- **Checking performance** — compare measured duty with the design value to spot fouling.

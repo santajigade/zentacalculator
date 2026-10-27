@@ -1,0 +1,52 @@
+---
+title: Triangle Area Calculator
+description: Calculate the area of a triangle from its base and height, or find the height or base from the area.
+category: math
+keywords: [triangle area, area of triangle, base height, half base times height]
+updated: 2026-10-27
+variables:
+  - { id: b, label: Base, family: length, unit: cm, imperialUnit: in, default: 12, min: 0 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 8, min: 0 }
+  - { id: A, label: Area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+equations:
+  - A = b * h / 2
+chart: { x: h, y: A, from: 0, to: 20 }
+faq:
+  - q: What is the formula for the area of a triangle?
+    a: Area = ½ × base × height. A triangle with a 12 cm base and 8 cm height has an area of 48 cm².
+  - q: Does the formula work for every triangle?
+    a: Yes, as long as the height is measured at a right angle to the chosen base. For obtuse triangles, the height may fall outside the triangle.
+  - q: How do I find the height from the area?
+    a: Height = 2 × area ÷ base. Press × on Height, then type the area.
+related: [math/pythagorean-theorem, math/circle]
+---
+
+## How to use this calculator
+
+Enter the **base** and **height** to get the area. You can also enter the area and one dimension to find the other — useful when a plan gives you the area and the base.
+
+## The formula
+
+<p class="formula">A = ½ × b × h</p>
+
+The **height** is the perpendicular distance from the base to the opposite corner — not the length of a sloping side.
+
+## Why one half?
+
+Any triangle is exactly half of a parallelogram with the same base and height. A parallelogram's area is base × height, so the triangle gets half of that.
+
+## Worked example
+
+A triangular garden bed has a 4 m base and is 2.5 m deep (measured straight out from the base).
+
+A = ½ × 4 × 2.5 = **5 m²**
+
+At 40 litres of compost per m², you would need 200 litres.
+
+## Which side is the base?
+
+Any side can be the base, as long as you use the height measured to that side. All three choices give the same area.
+
+## Right triangles
+
+In a right triangle, the two sides that meet at the right angle are a base and its height. A 3-4-5 triangle has an area of ½ × 3 × 4 = 6. Use the [Pythagorean theorem calculator](/math/pythagorean-theorem/) to find a missing side first.

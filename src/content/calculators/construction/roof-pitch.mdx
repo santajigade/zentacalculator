@@ -1,0 +1,54 @@
+---
+title: Roof Pitch Calculator
+description: Calculate roof pitch as an angle, ratio (x:12) and percentage — plus rafter length — from rise and run.
+category: construction
+keywords: [roof pitch calculator, roof angle, rise over run, rafter length, 4/12 pitch, roof slope]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: rise, label: Rise, family: length, unit: m, imperialUnit: ft, default: 1.5, min: 0 }
+  - { id: run, label: Run (horizontal half-span), family: length, unit: m, imperialUnit: ft, default: 4.5, min: 0 }
+  - { id: ang, label: Pitch angle, family: angle, unit: deg }
+  - { id: x12, label: Pitch (x in 12), decimals: 2 }
+  - { id: pct, label: Slope, family: percent, unit: '%' }
+  - { id: raf, label: Rafter length (without overhang), family: length, unit: m, imperialUnit: ft, min: 0 }
+equations:
+  - ang = atan(rise / run)
+  - x12 = 12 * rise / run
+  - pct = rise / run
+  - raf = sqrt(rise^2 + run^2)
+faq:
+  - q: What does a 4/12 roof pitch mean?
+    a: The roof rises 4 units for every 12 units of horizontal run — an angle of about 18.4°.
+  - q: What is the minimum pitch for shingles?
+    a: Asphalt shingles generally need at least 2/12 with special underlayment and 4/12 otherwise. Check the manufacturer's instructions.
+  - q: How do I measure rise and run?
+    a: Run is half the building width (wall to ridge, horizontally). Rise is the vertical height from the wall plate to the ridge.
+related: [math/right-triangle-trig, math/slope, construction/stairs]
+---
+
+## How to use this calculator
+
+Enter the **rise** and **run** to get the pitch angle, the x:12 pitch, the slope percentage and the rafter length. You can also enter an angle to find the rise.
+
+## Formulas
+
+<p class="formula">angle = tan⁻¹(rise ÷ run)   pitch = 12 × rise ÷ run   rafter = √(rise² + run²)</p>
+
+## Example
+
+Rise 1.5 m over a run of 4.5 m:
+
+- Angle = **18.4°**
+- Pitch = **4:12**
+- Rafter = **4.74 m** (add the overhang)
+
+## Common pitches
+
+| Pitch | Angle |
+|---|---|
+| 3/12 | 14.0° |
+| 4/12 | 18.4° |
+| 6/12 | 26.6° |
+| 8/12 | 33.7° |
+| 12/12 | 45° |

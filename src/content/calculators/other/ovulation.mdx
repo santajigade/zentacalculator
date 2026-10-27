@@ -1,0 +1,37 @@
+---
+title: Ovulation & Fertile Window Calculator
+description: Estimate your ovulation date, fertile window and next period from your last period and cycle length.
+category: other
+keywords: [ovulation calculator, fertile window, when do i ovulate, fertile days, next period, cycle calculator]
+updated: 2026-10-27
+variables:
+  - { id: lmp, label: First day of last period, family: date, default: -5 }
+  - { id: cyc, label: Average cycle length, suffix: days, default: 28, min: 20, max: 45 }
+  - { id: ov, label: Estimated ovulation day, family: date }
+  - { id: fs, label: Fertile window starts, family: date }
+  - { id: fe, label: Fertile window ends, family: date }
+  - { id: np, label: Next period expected, family: date }
+equations:
+  - np = lmp + cyc
+  - ov = np - 14
+  - fs = ov - 5
+  - fe = ov + 1
+faq:
+  - q: When does ovulation happen?
+    a: About 14 days before the next period starts — day 14 of a 28-day cycle, but later in longer cycles.
+  - q: What is the fertile window?
+    a: About six days — the five days before ovulation and the day of ovulation (plus a day after as a margin), because sperm can survive several days.
+  - q: Can I use this for contraception?
+    a: No. Cycle-based estimates are not reliable enough to prevent pregnancy.
+related: [other/due-date, everyday-life/date-plus-days]
+---
+
+## How to use this calculator
+
+Choose the **first day of your last period** and your **average cycle length**. Your estimated ovulation date, fertile window and next period are shown.
+
+## How it works
+
+<p class="formula">Next period = LMP + cycle length   Ovulation ≈ next period − 14 days</p>
+
+Cycles vary month to month, so these dates are estimates. Ovulation tests or tracking basal body temperature can give a more personal picture. Speak to a doctor if your cycles are very irregular.

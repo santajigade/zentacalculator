@@ -1,0 +1,55 @@
+---
+title: Macro Calculator (Protein, Carbs, Fat)
+description: Split your daily calories into grams of protein, carbohydrate and fat using your chosen macro percentages.
+category: health
+keywords: [macro calculator, macronutrients, protein carbs fat, iifym, macro split, grams of carbs]
+updated: 2026-10-27
+variables:
+  - { id: cal, label: Daily calories, suffix: kcal, default: 2200, min: 0 }
+  - { id: pp, label: Protein share, family: percent, unit: '%', default: 30, min: 0, max: 1 }
+  - { id: cp, label: Carbohydrate share, family: percent, unit: '%', default: 40, min: 0, max: 1 }
+  - { id: fp, label: Fat share, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: pg, label: Protein, suffix: g/day, min: 0, decimals: 0 }
+  - { id: cg, label: Carbohydrate, suffix: g/day, min: 0, decimals: 0 }
+  - { id: fg, label: Fat, suffix: g/day, min: 0, decimals: 0 }
+equations:
+  - fp = 1 - pp - cp
+  - pg = cal * pp / 4
+  - cg = cal * cp / 4
+  - fg = cal * fp / 9
+faq:
+  - q: How many calories are in each macronutrient?
+    a: Protein and carbohydrates provide about 4 kcal per gram; fat provides about 9 kcal per gram.
+  - q: What macro split should I use?
+    a: Many dietary guidelines suggest 10–35% protein, 45–65% carbohydrate and 20–35% fat. Athletes and people losing fat often use higher protein.
+  - q: Where do I get my daily calories?
+    a: Use the BMR & daily calorie calculator to estimate your maintenance calories, then adjust for your goal.
+related: [health/bmr, health/protein-intake, health/weight-loss-time]
+---
+
+## How to use this calculator
+
+Enter your **daily calories** and the **protein** and **carbohydrate** percentages. Fat is whatever remains to make 100%. The grams of each macronutrient are calculated.
+
+## Formulas
+
+<p class="formula">Protein g = calories × protein % ÷ 4<br/>Carbs g = calories × carb % ÷ 4<br/>Fat g = calories × fat % ÷ 9</p>
+
+## Worked example
+
+2,200 kcal with 30% protein, 40% carbohydrate, 30% fat:
+
+- Protein = 2,200 × 0.30 ÷ 4 = **165 g**
+- Carbohydrate = 2,200 × 0.40 ÷ 4 = **220 g**
+- Fat = 2,200 × 0.30 ÷ 9 = **73 g**
+
+## Common splits
+
+| Goal | Protein | Carbs | Fat |
+|---|---|---|---|
+| Balanced | 20% | 50% | 30% |
+| Fat loss | 30–35% | 35–40% | 25–30% |
+| Muscle gain | 25–30% | 45–50% | 20–25% |
+| Lower carb | 30% | 20–25% | 45–50% |
+
+Quality matters as much as quantity: choose whole grains, lean proteins, vegetables and healthy fats. People with diabetes or other conditions should plan diets with a doctor or dietitian.

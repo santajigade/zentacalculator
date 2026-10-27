@@ -1,0 +1,44 @@
+---
+title: Arrhenius Equation Calculator
+description: Calculate the reaction rate constant from activation energy, temperature and pre-exponential factor.
+category: chemistry
+keywords: [arrhenius equation, activation energy, rate constant, reaction rate temperature, kinetics]
+updated: 2026-10-27
+variables:
+  - { id: A, label: Pre-exponential factor (A), default: 10000000000, min: 0 }
+  - { id: Ea, label: Activation energy, suffix: kJ/mol, default: 50, min: 0 }
+  - { id: T, label: Temperature, family: temperature, unit: C, imperialUnit: F, default: 25, min: 0 }
+  - { id: k, label: Rate constant (same units as A), min: 0 }
+equations:
+  - k = A * exp(-Ea * 1000 / (8.314462618 * T))
+chart: { x: T, y: k, from: 0, to: 100 }
+faq:
+  - q: What does the Arrhenius equation show?
+    a: How the rate of a reaction increases with temperature, depending on the activation energy.
+  - q: Is it true that reactions double every 10 °C?
+    a: Roughly, for activation energies around 50 kJ/mol near room temperature. It is a rule of thumb, not a law.
+  - q: What units does k have?
+    a: The same as A, which depends on the reaction order (for example s⁻¹ for first-order reactions).
+related: [chemistry/half-life, chemistry/gibbs-free-energy]
+---
+
+## How to use this calculator
+
+Enter the **pre-exponential factor**, **activation energy** and **temperature**. The rate constant is calculated. The chart shows how sharply k rises with temperature.
+
+## Formula
+
+<p class="formula">k = A × e<sup>−Ea / (RT)</sup>   (R = 8.314 J/mol·K)</p>
+
+## Worked example
+
+A = 1 × 10¹⁰ s⁻¹, Ea = 50 kJ/mol:
+
+- At 25 °C: k = **17.4 s⁻¹**
+- At 35 °C: k = **33.5 s⁻¹** — about **1.92×** faster
+
+## Why it matters
+
+- Food spoils more slowly in a fridge.
+- Industrial reactors are heated to speed up production.
+- Catalysts work by lowering Ea, raising k without extra heat.

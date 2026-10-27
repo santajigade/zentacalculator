@@ -1,0 +1,65 @@
+---
+title: Simple Interest Calculator
+description: Calculate simple interest and total amount from principal, rate and time — or find the rate or time you need.
+category: finance
+keywords: [simple interest, interest, principal, rate, time, SI, PRT]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Principal, family: currency, default: 50000, min: 0, decimals: 2 }
+  - { id: r, label: Annual interest rate, family: percent, unit: '%', default: 6, min: 0 }
+  - { id: t, label: Time, family: time, unit: yr, default: 3, min: 0 }
+  - { id: I, label: Interest, family: currency, decimals: 2 }
+  - { id: A, label: Total amount, family: currency, min: 0, decimals: 2 }
+equations:
+  - I = P * r * t
+  - A = P + I
+chart: { x: t, y: A, from: 0, to: 20 }
+faq:
+  - q: What is the simple interest formula?
+    a: Simple interest = P × r × t, where P is the principal, r the yearly rate as a decimal and t the time in years.
+  - q: What is the difference between simple and compound interest?
+    a: Simple interest is calculated only on the original principal. Compound interest is also charged on interest already added, so it grows faster over time.
+  - q: Can I enter time in months?
+    a: Yes. Switch the Time unit to months, days or weeks and the calculator converts it to years.
+related: [finance/compound-interest, finance/loan-payment]
+---
+
+## How to use this calculator
+
+Fill in **any three** of principal, rate, time and interest (or total amount). The rest is calculated. For example, to find the rate you need, press × on the rate and enter the principal, time and interest you want to earn.
+
+## The formula
+
+<p class="formula">I = P × r × t   A = P + I</p>
+
+- **P** — principal (amount borrowed or invested)
+- **r** — annual interest rate as a decimal (6% = 0.06)
+- **t** — time in years
+- **A** — total amount at the end
+
+## Worked example
+
+50,000 invested at 6% simple interest for 3 years:
+
+- I = 50,000 × 0.06 × 3 = **9,000**
+- A = 50,000 + 9,000 = **59,000**
+
+## Simple vs compound interest
+
+For the same 50,000 at 6%:
+
+| Years | Simple interest total | Compound (yearly) total |
+|---|---|---|
+| 1 | 53,000 | 53,000 |
+| 3 | 59,000 | 59,550.80 |
+| 10 | 80,000 | 89,542.38 |
+| 20 | 110,000 | 160,356.77 |
+
+The gap widens over time. See the [compound interest calculator](/finance/compound-interest/) for growth with compounding.
+
+## Where simple interest is used
+
+- Some short-term personal and car loans
+- Certain bonds and treasury bills
+- Late-payment interest on invoices
+- Quick estimates before using a more detailed model

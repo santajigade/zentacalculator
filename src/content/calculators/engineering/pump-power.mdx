@@ -1,0 +1,55 @@
+---
+title: Pump Power Calculator
+description: Calculate hydraulic power and shaft power of a pump from flow rate, head, fluid density and efficiency.
+category: engineering
+keywords: [pump power, hydraulic power, shaft power, pump head, pump efficiency, kw, hp, pump sizing]
+updated: 2026-10-27
+variables:
+  - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
+  - { id: H, label: Total head, family: length, unit: m, imperialUnit: ft, default: 30, min: 0 }
+  - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
+  - { id: eta, label: Pump efficiency, family: percent, unit: '%', default: 70, min: 0.01, max: 1 }
+  - { id: Ph, label: Hydraulic power, family: power, unit: kW, imperialUnit: hp, min: 0 }
+  - { id: Ps, label: Shaft power (required), family: power, unit: kW, imperialUnit: hp, min: 0 }
+equations:
+  - Ph = rho * g0 * Q * H
+  - Ps = Ph / eta
+chart: { x: Q, y: Ps, from: 0, to: 150 }
+faq:
+  - q: What is the difference between hydraulic and shaft power?
+    a: Hydraulic power is the energy delivered to the fluid. Shaft power is what the pump needs from the motor, which is higher because of pump losses (hydraulic power ÷ efficiency).
+  - q: What motor size should I choose?
+    a: Pick the next standard motor size above the shaft power at the highest expected duty, often with a 10–15% margin.
+  - q: What is total head?
+    a: The total energy the pump must add, expressed as a height of liquid. It includes static lift, pressure difference and friction losses.
+related: [engineering/darcy-weisbach-head-loss, engineering/three-phase-motor-power, engineering/pipe-flow-velocity]
+---
+
+## How to use this calculator
+
+Enter the **flow**, **total head**, **density** and **pump efficiency** to get the hydraulic and shaft power. You can also solve for the flow or head a pump can deliver with a given motor.
+
+## The formulas
+
+<p class="formula">P<sub>h</sub> = ρ g Q H   P<sub>shaft</sub> = P<sub>h</sub> ÷ η</p>
+
+## Worked example
+
+50 m³/h of water against 30 m head, pump efficiency 70%:
+
+- Q = 0.01389 m³/s
+- P<sub>h</sub> = 998 × 9.81 × 0.01389 × 30 = **4.08 kW**
+- P<sub>shaft</sub> = 4.08 ÷ 0.70 = **5.83 kW** → a **7.5 kW** motor is a typical choice
+
+## Typical pump efficiencies
+
+| Pump type and size | Efficiency |
+|---|---|
+| Small centrifugal (< 5 kW) | 40 – 65% |
+| Medium centrifugal | 65 – 80% |
+| Large centrifugal | 80 – 90% |
+| Positive displacement | 70 – 90% |
+
+## Finding total head
+
+Total head = static lift + pressure difference (as head) + friction losses. Use the [Darcy–Weisbach calculator](/engineering/darcy-weisbach-head-loss/) for the pipe friction part. To convert pressure to head, 1 bar ≈ 10.2 m of water.

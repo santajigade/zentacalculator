@@ -1,0 +1,45 @@
+---
+title: Speed, Distance & Time Calculator
+description: Calculate speed, distance or travel time — enter any two and get the third, in km/h, mph, m/s, km or miles.
+category: physics
+keywords: [speed distance time, speed calculator, travel time, average speed, distance calculator, how long will it take]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: d, label: Distance, family: length, unit: km, imperialUnit: mi, default: 150, min: 0 }
+  - { id: v, label: Speed, family: velocity, unit: kmh, imperialUnit: mph, default: 60, min: 0 }
+  - { id: t, label: Time, family: seconds, unit: h, min: 0 }
+equations:
+  - d = v * t
+chart: { x: v, y: t, from: 10, to: 150 }
+faq:
+  - q: What is the formula for speed?
+    a: Speed = distance ÷ time. Distance = speed × time, and time = distance ÷ speed.
+  - q: How long does 150 km take at 60 km/h?
+    a: 150 ÷ 60 = 2.5 hours, which is 2 hours 30 minutes.
+  - q: What is average speed?
+    a: Total distance divided by total time, including stops. It is usually lower than your cruising speed.
+related: [physics/acceleration, conversion/speed-converter, conversion/km-to-miles]
+---
+
+## How to use this calculator
+
+Enter any **two** of distance, speed and time — the third is calculated. Each field has its own unit, so you can mix kilometres with mph or minutes with hours.
+
+## The formula
+
+<p class="formula">distance = speed × time   speed = distance ÷ time   time = distance ÷ speed</p>
+
+## Worked examples
+
+- **Travel time:** 150 km at 60 km/h → 150 ÷ 60 = **2.5 h** (2 h 30 min).
+- **Average speed:** 42.195 km marathon in 3 h 30 min → 42.195 ÷ 3.5 = **12.06 km/h**.
+- **Distance:** walking at 5 km/h for 45 minutes → 5 × 0.75 = **3.75 km**.
+
+## Converting decimal hours
+
+0.5 h = 30 min · 0.25 h = 15 min · 0.1 h = 6 min. Switch the Time unit to minutes to avoid conversions.
+
+## Keep units consistent
+
+The most common mistake is mixing units by hand, such as metres with km/h. The calculator converts every field automatically — just pick the unit you have.

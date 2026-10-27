@@ -1,0 +1,43 @@
+---
+title: Drywall / Plasterboard Calculator
+description: Estimate the number of drywall (plasterboard) sheets for walls and ceilings, with waste.
+category: construction
+keywords: [drywall calculator, plasterboard calculator, gypsum board, how many sheets, sheetrock, wall boards]
+updated: 2026-10-27
+variables:
+  - { id: A, label: Wall and ceiling area to cover, family: area, unit: m2, imperialUnit: ft2, default: 60, min: 0 }
+  - id: sa
+    label: Sheet size
+    default: 2.88
+    options:
+      - { label: 2400 × 1200 mm (2.88 m²), value: 2.88 }
+      - { label: 1800 × 900 mm (1.62 m²), value: 1.62 }
+      - { label: 4 × 8 ft (32 ft² / 2.97 m²), value: 2.9729 }
+      - { label: 4 × 12 ft (48 ft² / 4.46 m²), value: 4.4594 }
+  - { id: wst, label: Waste, family: percent, unit: '%', default: 10, min: 0, max: 1 }
+  - { id: n, label: Sheets needed, min: 0, decimals: 0 }
+equations:
+  - n = ceil(A * (1 + wst) / sa)
+faq:
+  - q: How many drywall sheets do I need?
+    a: Divide the total area by the sheet area and add about 10% for cuts and openings.
+  - q: Should I subtract doors and windows?
+    a: For large openings, yes. Small windows are often ignored because the offcuts are rarely reusable.
+  - q: How many screws per sheet?
+    a: Roughly 30–40 screws for a 2400 × 1200 mm sheet on studs at 600 mm centres.
+related: [construction/paint-calculator, construction/square-footage]
+---
+
+## How to use this calculator
+
+Enter the total **area** of walls and ceilings and choose the **sheet size**. The number of sheets with waste is calculated.
+
+## Example
+
+60 m² with 2400 × 1200 mm sheets and 10% waste:
+
+60 × 1.1 ÷ 2.88 = **23 sheets**
+
+## Measuring walls
+
+Wall area = room perimeter × wall height. For a 5 × 4 m room with 2.4 m walls: 18 × 2.4 = 43.2 m², plus the ceiling of 20 m².

@@ -1,0 +1,50 @@
+---
+title: Poisson Probability Calculator
+description: Calculate the probability of exactly k events in an interval when events occur at an average rate λ.
+category: statistics
+keywords: [poisson distribution, poisson probability, events per hour, lambda, rare events, queueing]
+updated: 2026-10-27
+variables:
+  - { id: lam, label: Average number of events (λ), default: 3, min: 0 }
+  - { id: k, label: Number of events (k), default: 5, min: 0 }
+  - { id: P, label: P(exactly k events), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: P0, label: P(no events), family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - P = lam^k * exp(-lam) / fact(k)
+  - P0 = exp(-lam)
+faq:
+  - q: When is the Poisson distribution used?
+    a: For counts of independent events happening at a constant average rate — calls per hour, defects per metre, arrivals per minute.
+  - q: What is λ?
+    a: The expected (average) number of events in the interval.
+  - q: How is it related to the binomial distribution?
+    a: It approximates the binomial when trials are many and the success probability is small, with λ = n × p.
+related: [statistics/binomial-probability, statistics/probability]
+---
+
+## How to use this calculator
+
+Enter the **average rate** λ for your interval and the **number of events** k. The probability of exactly k events and of none are calculated.
+
+## Formula
+
+<p class="formula">P(X = k) = λ<sup>k</sup> e<sup>−λ</sup> ÷ k!</p>
+
+## Worked example
+
+A help desk averages 3 calls per hour. The chance of exactly 5 calls in an hour:
+
+P = 3⁵ × e⁻³ ÷ 120 = **10.08%**
+
+The chance of a quiet hour with no calls is e⁻³ = **4.98%**.
+
+## Distribution for λ = 3
+
+| k | P(X = k) |
+|---|---|
+| 0 | 5.0% |
+| 1 | 14.9% |
+| 2 | 22.4% |
+| 3 | 22.4% |
+| 4 | 16.8% |
+| 5 | 10.1% |

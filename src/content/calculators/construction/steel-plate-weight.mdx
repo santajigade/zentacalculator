@@ -1,0 +1,50 @@
+---
+title: Steel Plate Weight Calculator
+description: Calculate the weight of steel, stainless steel or aluminium plates and sheets from their dimensions.
+category: construction
+keywords: [steel plate weight, sheet metal weight, metal weight calculator, ms plate weight, aluminium sheet weight]
+updated: 2026-10-27
+variables:
+  - id: rho
+    label: Material
+    default: 7850
+    options:
+      - { label: "Mild / carbon steel (7,850 kg/m³)", value: 7850 }
+      - { label: "Stainless steel (8,000 kg/m³)", value: 8000 }
+      - { label: "Aluminium (2,700 kg/m³)", value: 2700 }
+      - { label: "Copper (8,960 kg/m³)", value: 8960 }
+      - { label: "Brass (8,500 kg/m³)", value: 8500 }
+  - { id: L, label: Length, family: length, unit: mm, imperialUnit: in, default: 2000, min: 0 }
+  - { id: W, label: Width, family: length, unit: mm, imperialUnit: in, default: 1000, min: 0 }
+  - { id: t, label: Thickness, family: length, unit: mm, imperialUnit: in, default: 6, min: 0 }
+  - { id: n, label: Quantity, default: 1, min: 0 }
+  - { id: M, label: Weight, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+equations:
+  - M = rho * L * W * t * n
+faq:
+  - q: How do I calculate steel plate weight?
+    a: Weight = length × width × thickness × density. Steel is about 7,850 kg/m³, so 1 m² of 1 mm plate weighs 7.85 kg.
+  - q: Quick rule for mild steel plate?
+    a: 7.85 kg per m² for each mm of thickness.
+  - q: Is stainless steel heavier?
+    a: Slightly — about 2% more than carbon steel.
+related: [construction/rebar-weight, physics/density]
+---
+
+## How to use this calculator
+
+Choose the **material** and enter the **length**, **width**, **thickness** and **quantity**. The weight appears in kg or lb.
+
+## Formula
+
+<p class="formula">Weight = length × width × thickness × density</p>
+
+## Example
+
+A 2,000 × 1,000 × 6 mm mild steel plate:
+
+Weight = 2 × 1 × 0.006 × 7,850 = **94.2 kg**
+
+## Quick rule
+
+Mild steel plate weighs **7.85 kg per m² per mm** of thickness. Aluminium weighs about 2.7 kg per m² per mm.

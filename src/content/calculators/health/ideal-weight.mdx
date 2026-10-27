@@ -1,0 +1,65 @@
+---
+title: Ideal Weight Calculator
+description: Estimate ideal body weight from height using the Devine formula, plus the healthy BMI weight range for your height.
+category: health
+keywords: [ideal weight, ideal body weight, healthy weight, devine formula, weight for height, ibw]
+updated: 2026-10-27
+variables:
+  - id: base
+    label: Sex
+    default: 50
+    options:
+      - { label: Male, value: 50 }
+      - { label: Female, value: 45.5 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 175, min: 1.524, max: 2.3 }
+  - { id: w, label: Ideal weight (Devine), family: mass, unit: kg, imperialUnit: lb, min: 0, decimals: 1 }
+  - { id: lo, label: Healthy range — lower (BMI 18.5), family: mass, unit: kg, imperialUnit: lb, min: 0, decimals: 1 }
+  - { id: hi, label: Healthy range — upper (BMI 24.9), family: mass, unit: kg, imperialUnit: lb, min: 0, decimals: 1 }
+equations:
+  - w = base + 2.3 * (h / 0.0254 - 60)
+  - lo = 18.5 * h^2
+  - hi = 24.9 * h^2
+chart: { x: h, y: w, from: 152, to: 200 }
+faq:
+  - q: What is the Devine formula?
+    a: A formula from 1974 originally used to dose medicines. Men = 50 kg + 2.3 kg per inch over 5 feet; women = 45.5 kg + 2.3 kg per inch over 5 feet.
+  - q: Is there one perfect weight for my height?
+    a: No. A healthy weight is a range. The BMI range shown (18.5–24.9) is a broader, more useful guide than any single number.
+  - q: Does this work for people under 5 feet?
+    a: The Devine formula is designed for heights of 5 feet (152.4 cm) and above. For shorter heights, use the healthy BMI range instead.
+related: [health/bmi, health/bmr]
+---
+
+## How to use this calculator
+
+Choose your **sex** and enter your **height**. You get the Devine ideal weight and the healthy weight range based on BMI 18.5–24.9. Height can be entered in cm, m, inches or feet; weights display in kg or lb.
+
+## The formulas
+
+<p class="formula">Men: 50 kg + 2.3 kg × (inches over 60)<br/>Women: 45.5 kg + 2.3 kg × (inches over 60)</p>
+
+The healthy range comes from the BMI formula, weight = BMI × height (m)².
+
+## Worked example
+
+A man 180 cm tall (70.87 inches):
+
+- Devine ideal weight = 50 + 2.3 × 10.87 = **75.0 kg** (165 lb)
+- Healthy BMI range = 18.5 × 1.8² to 24.9 × 1.8² = **59.9 – 80.7 kg**
+
+A woman 165 cm tall: Devine ideal weight = **56.9 kg**.
+
+## Other formulas
+
+| Formula (year) | Men | Women |
+|---|---|---|
+| Devine (1974) | 50 + 2.3/in | 45.5 + 2.3/in |
+| Robinson (1983) | 52 + 1.9/in | 49 + 1.7/in |
+| Miller (1983) | 56.2 + 1.41/in | 53.1 + 1.36/in |
+| Hamwi (1964) | 48 + 2.7/in | 45.5 + 2.2/in |
+
+"/in" means kilograms per inch over 5 feet. The formulas differ by several kilograms, which shows these are rough guides, not targets.
+
+## Important
+
+These formulas do not consider muscle mass, frame size, age or ethnicity. For Asian adults, health risks rise at a lower BMI, so the upper end of the range may be lower. Talk to a doctor before setting a weight goal.

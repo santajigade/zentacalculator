@@ -19,6 +19,10 @@ faq:
     a: About 0.994 m. Its full period is 2 s, so each swing in one direction takes 1 second.
   - q: Does the swing size matter?
     a: For small angles (under about 15°) hardly at all. Larger swings take slightly longer.
+  - q: "Does the mass of the bob change the period?"
+    a: "No. For a simple pendulum the period depends only on length and gravity, not on mass."
+  - q: "How long is a pendulum with a 1-second period?"
+    a: "About 24.8 cm."
 related: [physics/free-fall, physics/wavelength-frequency]
 ---
 
@@ -35,6 +39,41 @@ Enter the **length** (pivot to the centre of the bob) to get the period and freq
 A 1 m pendulum:
 
 T = 2π √(1 ÷ 9.81) = **2.006 s**, frequency **0.498 Hz**
+
+## Period for different lengths
+
+| Length | Period | Swings per minute |
+|---|---|---|
+| 0.1 m | 0.634 s | 94.6 |
+| 0.25 m | 1.003 s | 59.8 |
+| 0.5 m | 1.419 s | 42.3 |
+| 0.994 m | 2.000 s | 30.0 |
+| 1 m | 2.006 s | 29.9 |
+| 2 m | 2.837 s | 21.1 |
+| 5 m | 4.486 s | 13.4 |
+| 10 m | 6.345 s | 9.5 |
+| 67 m | 16.423 s | 3.7 |
+
+A length of 0.994 m gives a period of 2 seconds — the classic **seconds pendulum**, where each one-way swing takes 1 second. The 67 m row is about the length of Foucault's famous pendulum in the Panthéon, Paris.
+
+## Small-angle assumption
+
+The formula is accurate for swings up to about 15°. At larger angles the period is longer:
+
+| Amplitude | Period increase |
+|---|---|
+| 10° | +0.2% |
+| 20° | +0.8% |
+| 45° | +4.0% |
+| 90° | +18.0% |
+
+## Measuring g with a pendulum
+
+Rearrange the formula: g = 4π² × L ÷ T². Time 20 full swings to reduce timing error, then divide by 20. With L = 1.000 m and T = 2.006 s, g = 9.81 m/s².
+
+## Pendulum clocks
+
+A pendulum clock that runs slow has a pendulum that is too long. Raising the bob by just 1 mm on a seconds pendulum speeds it up by about 43 seconds a day.
 
 ## Period vs length
 

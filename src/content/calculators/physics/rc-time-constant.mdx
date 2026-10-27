@@ -21,6 +21,10 @@ faq:
     a: About 5 time constants (5RC) to reach 99.3%.
   - q: What is the cut-off frequency of an RC filter?
     a: fc = 1 ÷ (2πRC) — the frequency at which the output falls to 70.7% (−3 dB).
+  - q: "What is a time constant?"
+    a: "τ = R × C, the time for a charging capacitor to reach about 63.2% of the supply voltage."
+  - q: "How long does a capacitor take to fully charge?"
+    a: "About 5 time constants, when it reaches 99.3% of the supply voltage."
 related: [physics/resistors-series-parallel, physics/ohms-law]
 ---
 
@@ -39,6 +43,35 @@ Enter the **resistance** and **capacitance** to get the time constant, approxima
 - τ = 10,000 × 0.0001 = **1 s**
 - Full charge ≈ **5 s**
 - Cut-off frequency = **0.159 Hz**
+
+## Charge and discharge levels
+
+| Time | Charging (% of supply) | Discharging (% remaining) |
+|---|---|---|
+| 0.5τ | 39.3% | 60.7% |
+| 1τ | 63.2% | 36.8% |
+| 2τ | 86.5% | 13.5% |
+| 3τ | 95.0% | 5.0% |
+| 4τ | 98.2% | 1.8% |
+| 5τ | 99.3% | 0.7% |
+
+## Voltage at any time
+
+- Charging: V(t) = V<sub>s</sub> × (1 − e<sup>−t/τ</sup>)
+- Discharging: V(t) = V<sub>0</sub> × e<sup>−t/τ</sup>
+
+To find the time to reach a given voltage while charging: t = −τ × ln(1 − V ÷ V<sub>s</sub>).
+
+## Applications
+
+- **Timers and delays**: the classic 555 timer uses RC charging to set its period.
+- **Filters**: RC low-pass filters remove high-frequency noise from sensor signals; the cut-off frequency is 1 ÷ (2πRC).
+- **Debouncing switches**: a small RC network smooths mechanical switch bounce.
+- **Power supply smoothing**: capacitors hold up the voltage between rectifier peaks.
+
+## Safety with large capacitors
+
+Large capacitors in power supplies can stay charged after power is removed. Always discharge them through a suitable resistor before touching, and allow at least 5τ.
 
 ## Charging curve
 

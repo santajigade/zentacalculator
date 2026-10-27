@@ -20,6 +20,10 @@ faq:
     a: Add the reciprocals — 1/R = 1/R1 + 1/R2 + 1/R3. The total is always less than the smallest resistor.
   - q: What about only two resistors in parallel?
     a: Use R = (R1 × R2) ÷ (R1 + R2). For two equal resistors, the result is half of one.
+  - q: "Is the parallel resistance always smaller?"
+    a: "Yes. The total resistance of parallel resistors is always less than the smallest one."
+  - q: "What is the total of 10 kΩ resistors in series?"
+    a: "In series they add: three 10 kΩ resistors make 30 kΩ."
 related: [physics/ohms-law, physics/rc-time-constant]
 ---
 
@@ -43,6 +47,39 @@ Enter up to **three resistor values** (Ω, kΩ or MΩ). You get the total for bo
 - Two equal resistors in parallel → half the value (2 × 1 kΩ = 500 Ω).
 - n equal resistors in parallel → R ÷ n.
 - Parallel total is always smaller than the smallest single resistor.
+
+## Two resistors in parallel: shortcut
+
+For two resistors, the parallel value is the **product over the sum**:
+
+<p class="formula">R = R₁ × R₂ ÷ (R₁ + R₂)</p>
+
+100 Ω and 220 Ω in parallel = 22,000 ÷ 320 = **68.75 Ω**.
+
+## Making a value you do not have
+
+| Target | Combination | Result |
+|---|---|---|
+| 50 Ω | Two 100 Ω in parallel | 50 Ω |
+| 150 Ω | 100 Ω + 47 Ω in series | 147 Ω |
+| 330 Ω | 220 Ω + 100 Ω + 10 Ω in series | 330 Ω |
+| 4.7 kΩ | 10 kΩ ∥ 8.2 kΩ (close) | 4.51 kΩ |
+
+## Voltage divider
+
+Two resistors in series divide a voltage:
+
+<p class="formula">V<sub>out</sub> = V<sub>in</sub> × R₂ ÷ (R₁ + R₂)</p>
+
+With 12 V, R₁ = 10 kΩ and R₂ = 4.7 kΩ, V<sub>out</sub> = **3.84 V**. Dividers are used to scale sensor and battery voltages to a microcontroller's input range. See the [voltage divider calculator](/other/voltage-divider/).
+
+## Current in parallel branches
+
+In parallel, current splits in inverse proportion to resistance. With 100 Ω and 220 Ω across 12 V, the branches carry 120 mA and 54.5 mA, totalling 174.5 mA.
+
+## Colour codes
+
+Four-band resistors: two digit bands, a multiplier and a tolerance. Brown-black-red-gold is 1, 0, ×100 = 1,000 Ω (1 kΩ) ±5%.
 
 ## Standard values (E12 series)
 

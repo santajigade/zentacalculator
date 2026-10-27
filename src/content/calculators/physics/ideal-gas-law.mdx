@@ -20,6 +20,10 @@ faq:
     a: About 22.41 L at 0 °C and 1 atm, and about 24.47 L at 25 °C and 1 atm.
   - q: Why must pressure and temperature be absolute?
     a: The law is based on absolute zero and zero pressure. The calculator converts °C and °F to kelvin automatically; enter absolute pressure (gauge + atmospheric).
+  - q: "What is the ideal gas law?"
+    a: "PV = nRT: pressure × volume = moles × gas constant × absolute temperature."
+  - q: "What volume does 1 mole of gas occupy?"
+    a: "About 22.4 L at 0 °C and 1 atm, and about 24.5 L at 25 °C and 1 atm."
 related: [chemistry/moles, physics/density, conversion/pressure-converter]
 ---
 
@@ -42,6 +46,38 @@ At 25 °C it expands to 24.47 L.
 ## Combined gas law
 
 For a fixed amount of gas, P₁V₁/T₁ = P₂V₂/T₂. A tyre at 220 kPa absolute and 20 °C warms to 50 °C: P₂ = 220 × 323.15 ÷ 293.15 ≈ **243 kPa**.
+
+## Molar volume at different conditions
+
+The volume of 1 mole of an ideal gas:
+
+| Conditions | Temperature | Pressure | Volume |
+|---|---|---|---|
+| STP (IUPAC) | 0 °C | 100 kPa | 22.71 L |
+| Older STP | 0 °C | 101.325 kPa | 22.41 L |
+| Room conditions | 25 °C | 101.325 kPa | 24.47 L |
+
+Always check which standard a textbook or datasheet uses.
+
+## The gas constant R
+
+| Units | Value of R |
+|---|---|
+| J/(mol·K) or kPa·L/(mol·K) | 8.314 |
+| L·atm/(mol·K) | 0.08206 |
+| L·bar/(mol·K) | 0.08314 |
+
+## Using mass instead of moles
+
+n = mass ÷ molar mass. For 64 g of oxygen (O₂, 32 g/mol), n = 2 mol. Common molar masses: N₂ 28, O₂ 32, CO₂ 44, air about 28.97 g/mol.
+
+## Density of a gas
+
+Rearranging gives gas density: ρ = P × M ÷ (R × T). Air at 20 °C and 101.325 kPa has a density of about **1.204 kg/m³**.
+
+## Always use absolute values
+
+Temperature must be in kelvin (or entered in °C so the calculator converts it) and pressure must be absolute, not gauge. A tyre at 2.2 bar gauge is about 3.2 bar absolute.
 
 ## When it is less accurate
 

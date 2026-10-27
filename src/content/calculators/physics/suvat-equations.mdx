@@ -21,6 +21,10 @@ faq:
     a: Any three. The other two can then be calculated.
   - q: When do they not apply?
     a: When acceleration changes, for example with air resistance at high speed. Then calculus or numerical methods are needed.
+  - q: "What does SUVAT stand for?"
+    a: "s (displacement), u (initial velocity), v (final velocity), a (acceleration) and t (time)."
+  - q: "How do I find acceleration from distance and time?"
+    a: "If starting from rest, a = 2s ÷ t². A car covering 100 m in 10 s from rest accelerates at 2 m/s²."
 related: [physics/acceleration, physics/free-fall, physics/projectile-motion]
 ---
 
@@ -42,6 +46,42 @@ u = 5 m/s, a = 2 m/s², t = 10 s:
 ## Braking distance example
 
 A car at 20 m/s (72 km/h) brakes at −8 m/s². Set u = 20, v = 0, a = −8: it stops in **2.5 s** over **25 m**. Doubling the speed to 40 m/s quadruples the distance to 100 m.
+
+## Which equation to use
+
+Each SUVAT equation leaves out one of the five quantities:
+
+| Equation | Missing |
+|---|---|
+| v = u + at | s |
+| s = ½(u + v)t | a |
+| s = ut + ½at² | v |
+| s = vt − ½at² | u |
+| v² = u² + 2as | t |
+
+Pick the one that omits the quantity you neither know nor need. The calculator handles this automatically.
+
+## Stopping distance table
+
+Reaction time 1.5 s, deceleration 7 m/s² (dry road):
+
+| Speed | Thinking distance | Braking distance | Total |
+|---|---|---|---|
+| 30 km/h | 12.5 m | 5.0 m | 17.5 m |
+| 50 km/h | 20.8 m | 13.8 m | 34.6 m |
+| 70 km/h | 29.2 m | 27.0 m | 56.2 m |
+| 100 km/h | 41.7 m | 55.1 m | 96.8 m |
+| 120 km/h | 50.0 m | 79.4 m | 129.4 m |
+
+On wet roads deceleration may drop to about 4–5 m/s², increasing braking distance by 40–75%.
+
+## Vertical motion
+
+For objects thrown upward, use a = −9.81 m/s² (taking up as positive). A ball thrown up at 15 m/s reaches a maximum height of v² ÷ 2g = **11.5 m** after 1.53 s.
+
+## Limits
+
+SUVAT applies only when acceleration is **constant**. For changing acceleration, such as a car with varying throttle or an object with significant air resistance, use calculus or a numerical method.
 
 ## Sign convention
 

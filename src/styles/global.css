@@ -234,3 +234,5 @@ img { max-width: 100%; }
 .cat-links a { padding: 7px 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--text); text-decoration: none; font-weight: 600; font-size: .88rem; }
 .cat-links a:hover { border-color: var(--brand); color: var(--brand); }
 .ftr__pop { display: flex; flex-direction: column; gap: 6px; }
+
+.ext-links{padding-left:1.2rem;margin:0 0 1.5rem}.ext-links li{margin:.35rem 0}.ext-links a{font-weight:600}.ext-links a::after{content:" ↗";font-size:.8em}

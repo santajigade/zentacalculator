@@ -79,6 +79,12 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
             </section>
           )}
 
+          {d.links.length > 0 && <>
+            <h2 id="further-reading">Further reading</h2>
+            <ul class="ext-links">
+              {d.links.map((l) => <li><a href={l.url} target="_blank" rel="noopener">{l.title}</a>{l.note && <span> — {l.note}</span>}</li>)}
+            </ul>
+          </>}
           <h2 id="related">Related calculators</h2>
           <ul class="calc-list related-grid">
             {related.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}

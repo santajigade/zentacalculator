@@ -27,7 +27,7 @@ Zenta Calculator ("we", "us") runs the website zentacalculator.com. This policy 
 
 ## Analytics and advertising
 
-We may in future use analytics (such as Google Analytics) to understand how the site is used, and advertising (such as Google AdSense) to keep the calculators free. These services may use cookies or similar technologies to measure visits and show ads, including personalised ads.
+We use Google Analytics to understand how the site is used (for example, which pages are visited and roughly where visitors come from). We may in future use advertising (such as Google AdSense) to keep the calculators free. These services may use cookies or similar technologies to measure visits and show ads, including personalised ads.
 
 If we add them, we will update this policy before they go live and, where the law requires it (for example in the EU, UK and some US states), ask for your consent through a cookie banner. You can learn how Google uses data at [policies.google.com/technologies/partner-sites](https://policies.google.com/technologies/partner-sites) and manage ad personalisation at [adssettings.google.com](https://adssettings.google.com).
 

@@ -12,3 +12,5 @@ export async function allCalcs(): Promise<Calc[]> {
 /** Find by "category/slug" or bare slug. */
 export const findCalc = (all: Calc[], ref: string) =>
   all.find((c) => `${c.data.category}/${slugOf(c)}` === ref || slugOf(c) === ref);
+
+export { embedSnippet } from './embed.ts';

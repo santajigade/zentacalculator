@@ -4,6 +4,7 @@ import { compileAll, solve, fmtNum, type SolveResult } from '../lib/solver.ts';
 import { findUnit, getUnits, toBase, fromBase } from '../lib/units.ts';
 import Chart from './Chart.tsx';
 import { SITE } from "../site.config.ts";
+import { embedSnippet } from "../lib/embed.ts";
 import { siWhatsapp, siFacebook, siX, siTelegram, siReddit } from 'simple-icons';
 import { detectRegion, type Region } from "../lib/region.ts";
 import { parseList, listStats } from "../lib/stats.ts";
@@ -78,11 +79,12 @@ export default function Calculator({ spec, path, embed = false }: { spec: CalcSp
   const [showSteps, setShowSteps] = useState(false);
   const [toast, setToast] = useState('');
   const [shareOpen, setShareOpen] = useState(false);
+  const [embedOpen, setEmbedOpen] = useState(false);
   useEffect(() => {
-    if (!shareOpen) return;
-    const k = (e: KeyboardEvent) => { if (e.key === 'Escape') setShareOpen(false); };
+    if (!shareOpen && !embedOpen) return;
+    const k = (e: KeyboardEvent) => { if (e.key === 'Escape') { setShareOpen(false); setEmbedOpen(false); } };
     addEventListener('keydown', k); return () => removeEventListener('keydown', k);
-  }, [shareOpen]);
+  }, [shareOpen, embedOpen]);
   const lastResult = useRef<SolveResult | null>(null);
 
   // After hydration: apply the visitor's region, then restore from URL (?V=12&V.u=kV)
@@ -276,6 +278,7 @@ export default function Calculator({ spec, path, embed = false }: { spec: CalcSp
       <div class="calc__actions">
         <button type="button" class="btn btn--primary" onClick={() => copy(resultText, 'Result copied')}>Copy result</button>
         {!embed && <button type="button" class="btn" onClick={() => setShareOpen(true)}>Share</button>}
+        {!embed && <button type="button" class="btn" onClick={() => setEmbedOpen(true)}>Embed</button>}
         <button type="button" class="btn" onClick={() => setShowSteps((s) => !s)} aria-expanded={showSteps}>
           {showSteps ? 'Hide steps' : 'Show steps'}
         </button>
@@ -336,6 +339,22 @@ export default function Calculator({ spec, path, embed = false }: { spec: CalcSp
               <div class="share__link">
                 <input readOnly value={url} onFocus={(e) => (e.currentTarget as HTMLInputElement).select()} aria-label="Link" />
                 <button type="button" class="btn btn--primary" onClick={() => copy(url, 'Link copied')}>{toast === 'Link copied' ? 'Copied ✓' : 'Copy'}</button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {embedOpen && (() => {
+        const code = embedSnippet(SITE.url, SITE.name, spec.title, path);
+        return (
+          <div class="share" role="dialog" aria-modal="true" aria-label="Embed this calculator" onClick={(e) => { if (e.target === e.currentTarget) setEmbedOpen(false); }}>
+            <div class="share__box">
+              <div class="share__head"><b>Embed this calculator</b><button type="button" class="share__x" aria-label="Close" onClick={() => setEmbedOpen(false)}>×</button></div>
+              <p class="share__note">Free to use on your website, blog or LMS. Paste this code where you want the calculator to appear. It resizes itself to fit.</p>
+              <textarea class="embed__code" readOnly rows={7} value={code} onFocus={(e) => (e.currentTarget as HTMLTextAreaElement).select()} aria-label="Embed code" />
+              <div class="share__link" style={{ justifyContent: 'flex-end' }}>
+                <button type="button" class="btn btn--primary" onClick={() => copy(code, 'Code copied')}>{toast === 'Code copied' ? 'Copied ✓' : 'Copy code'}</button>
               </div>
             </div>
           </div>

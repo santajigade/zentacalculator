@@ -21,4 +21,8 @@ const spec = { title: d.title, variables: d.variables, equations: d.equations, f
 <body style={`background:var(--surface);--accent:${catBySlug(d.category)?.color}`}>
   <h1 style="font-size:1.15rem;margin:14px 14px 0">{d.title}</h1>
   <Calculator client:load spec={spec} path={urlOf(calc)} embed />
+  <script is:inline>
+    (function(){var last=0;function send(){var h=document.documentElement.scrollHeight;if(h!==last){last=h;parent.postMessage({zentaHeight:h},'*');}}
+    if(window.ResizeObserver)new ResizeObserver(send).observe(document.body);addEventListener('load',send);setInterval(send,1000);})();
+  </script>
 </body></html>

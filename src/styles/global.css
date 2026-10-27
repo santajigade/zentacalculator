@@ -227,3 +227,4 @@ img { max-width: 100%; }
 @media (max-width: 520px) { .share { align-items: flex-end; padding: 0; } .share__box { border-radius: 18px 18px 0 0; } }
 .share__dot svg { width: 22px; height: 22px; }
 .share__dot b { font: 800 1.15rem var(--font); letter-spacing: -.03em; }
+.embed__code { width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: .76rem/1.45 var(--mono, monospace); background: var(--surface-2, var(--bg)); color: var(--text); resize: vertical; }

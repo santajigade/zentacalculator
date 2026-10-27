@@ -1,0 +1,69 @@
+---
+title: Annuity Payout Calculator
+description: Find the monthly income a lump sum can pay for a fixed number of years — or the lump sum needed for a target monthly payout.
+category: finance
+keywords: [annuity calculator, annuity payout, monthly income from lump sum, pension calculator, present value of annuity, retirement income, how much will my annuity pay]
+updated: 2026-10-27
+variables:
+  - { id: PV, label: Lump sum invested, family: currency, default: 5000000, min: 0, decimals: 0 }
+  - { id: r, label: Annual interest rate, family: percent, unit: '%', default: 7, min: 0.0001, max: 0.5 }
+  - { id: t, label: Payout period, family: time, unit: yr, default: 20, min: 0.0833 }
+  - { id: M, label: Monthly payout, family: currency, min: 0, decimals: 2 }
+  - { id: T, label: Total received, family: currency, min: 0, decimals: 0 }
+  - { id: I, label: Interest earned, family: currency, decimals: 0 }
+equations:
+  - M = PV * (r/12) / (1 - (1 + r/12)^(-12*t))
+  - T = M * 12 * t
+  - I = T - PV
+faq:
+  - q: How much monthly income does 50 lakh give?
+    a: "At 7% for 20 years, about ₹38,765 a month, after which the money is fully used up."
+  - q: Is this the same as an insurance annuity?
+    a: It is a fixed-term annuity that runs the money down to zero. Life annuities from insurers pay for life and use mortality tables, so their rates differ.
+  - q: How much do I need for a given monthly income?
+    a: Press × on Lump sum and type the monthly payout you want.
+  - q: Does the payout rise with inflation?
+    a: Not in this calculation. To keep up with inflation, start lower and increase withdrawals over time, or use a growing annuity.
+related: [finance/swp, finance/retirement-corpus, finance/nps, finance/present-value]
+---
+
+## How to use this calculator
+
+Enter the **lump sum**, the **interest rate** it earns and the **payout period**. You get the level monthly payout that uses up the money exactly over that time. To find the lump sum needed for a target income, press × on Lump sum.
+
+## The formula
+
+<p class="formula">M = PV × i ÷ (1 − (1 + i)<sup>−n</sup>)</p>
+
+- **PV** = lump sum
+- **i** = monthly rate (annual ÷ 12)
+- **n** = number of monthly payments
+
+This is the same maths as a loan EMI, seen from the lender's side.
+
+## Monthly payout per 10,00,000 (or 1,000,000)
+
+| Rate | 10 years | 15 years | 20 years | 25 years |
+|---|---|---|---|---|
+| 5% | 10,607 | 7,908 | 6,600 | 5,846 |
+| 6% | 11,102 | 8,439 | 7,164 | 6,443 |
+| 7% | 11,611 | 8,988 | 7,753 | 7,068 |
+| 8% | 12,133 | 9,557 | 8,364 | 7,718 |
+| 9% | 12,668 | 10,143 | 8,997 | 8,392 |
+
+## Fixed-term vs life annuity
+
+| | Fixed-term (this calculator) | Life annuity (insurer) |
+|---|---|---|
+| Pays for | A set number of years | As long as you live |
+| Money left at end | None | None (unless return-of-purchase option) |
+| Longevity risk | You bear it | Insurer bears it |
+| Flexibility | High | Low — usually irreversible |
+
+## SWP as an alternative
+
+A [systematic withdrawal plan](/finance/swp/) from mutual funds works similarly but with market-linked returns and the option to change withdrawals.
+
+## Taxes
+
+Annuity and interest income are usually taxable at your slab rate. Only the interest part of each payment is income; the rest is return of your own capital.

@@ -1,0 +1,78 @@
+---
+title: Stock Average Calculator (Average Down Calculator)
+description: Calculate the average buy price of shares after buying at different prices — and how many more shares you need to reach a target average.
+category: finance
+keywords: [stock average calculator, average down calculator, share average calculator, average buy price, average cost per share, averaging shares]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: q1, label: First purchase — shares, default: 100, min: 0 }
+  - { id: p1, label: First purchase — price per share, family: currency, default: 250, min: 0, decimals: 2 }
+  - { id: q2, label: Second purchase — shares, default: 50, min: 0 }
+  - { id: p2, label: Second purchase — price per share, family: currency, default: 200, min: 0, decimals: 2 }
+  - { id: q3, label: Third purchase — shares (optional), default: 0, min: 0 }
+  - { id: p3, label: Third purchase — price per share, family: currency, default: 0, min: 0, decimals: 2 }
+  - { id: Q, label: Total shares, min: 0, decimals: 0 }
+  - { id: inv, label: Total invested, family: currency, min: 0, decimals: 2 }
+  - { id: avg, label: Average price per share, family: currency, min: 0, decimals: 2 }
+equations:
+  - Q = q1 + q2 + q3
+  - inv = q1 * p1 + q2 * p2 + q3 * p3
+  - avg = inv / Q
+faq:
+  - q: How do I calculate the average price of shares?
+    a: Total amount invested ÷ total shares. 100 shares at 250 plus 50 at 200 is 35,000 ÷ 150 = 233.33.
+  - q: How many shares do I need to buy to reach a target average?
+    a: Enter the target as the average price and press × on the second purchase quantity. The calculator solves for the shares needed at the new price.
+  - q: Is averaging down a good idea?
+    a: Only if your reasons for owning the stock still hold. Averaging down lowers your break-even price but increases your exposure to a falling share.
+  - q: Do brokerage and taxes change the average?
+    a: Yes. Add brokerage, exchange charges and stamp duty to the price paid for an accurate cost basis.
+related: [finance/cagr, finance/roi, finance/dividend-yield, finance/pe-ratio]
+---
+
+## How to use this calculator
+
+Enter the **number of shares** and **price** for each purchase (up to three). The calculator shows total shares, total invested and the average price per share. Leave the third purchase at zero if you only bought twice.
+
+To plan a purchase, type your **target average** in Average price and press × on the second purchase shares — the calculator finds how many to buy at the new price.
+
+## The formula
+
+<p class="formula">Average price = (q₁p₁ + q₂p₂ + q₃p₃) ÷ (q₁ + q₂ + q₃)</p>
+
+## Example: averaging down
+
+| Purchase | Shares | Price | Cost |
+|---|---|---|---|
+| First | 100 | 250 | 25,000 |
+| Second | 50 | 200 | 10,000 |
+| **Total** | **150** | **233.33** | **35,000** |
+
+The share now needs to rise only to 233.33 to break even, instead of 250.
+
+## Shares needed to reach a target average
+
+Starting with 100 shares at 250, buying at 200:
+
+| Target average | Extra shares needed |
+|---|---|
+| 240 | 25 |
+| 235 | 43 |
+| 230 | 67 |
+| 225 | 100 |
+| 220 | 150 |
+| 210 | 400 |
+
+The closer the target is to the new price, the more shares you need — the cost rises steeply.
+
+## Averaging down vs averaging up
+
+- **Averaging down**: buying more as the price falls, lowering your average.
+- **Averaging up**: buying more as the price rises, often used by momentum investors.
+
+Both increase your position size. Set a maximum allocation per stock before you start.
+
+## Tax lots
+
+For capital gains tax, many systems use **first in, first out** (FIFO) to decide which shares were sold. Your average cost and your tax cost basis may differ — check local rules.

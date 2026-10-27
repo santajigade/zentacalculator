@@ -1,0 +1,76 @@
+---
+title: Law of Cosines Calculator
+description: Find the third side, the angles and the area of any triangle from two sides and the included angle, using the law of cosines.
+category: math
+keywords: [law of cosines calculator, cosine rule, sas triangle, find third side of triangle, triangle calculator, solve triangle, cosine law]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Side a, family: length, unit: cm, imperialUnit: in, default: 7, min: 0 }
+  - { id: b, label: Side b, family: length, unit: cm, imperialUnit: in, default: 9, min: 0 }
+  - { id: C, label: Angle C (between a and b), family: angle, unit: deg, default: 50, min: 0, max: 3.1416 }
+  - { id: c, label: Side c, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: A, label: Angle A, family: angle, unit: deg, min: 0 }
+  - { id: B, label: Angle B, family: angle, unit: deg, min: 0 }
+  - { id: K, label: Area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+equations:
+  - c = sqrt(a^2 + b^2 - 2*a*b*cos(C))
+  - A = acos((b^2 + c^2 - a^2) / (2*b*c))
+  - B = pi - A - C
+  - K = a * b * sin(C) / 2
+faq:
+  - q: What is the law of cosines?
+    a: c² = a² + b² − 2ab·cos C. It relates the three sides of any triangle to one of its angles.
+  - q: When do I use the law of cosines instead of the law of sines?
+    a: Use cosines when you know two sides and the angle between them (SAS) or all three sides (SSS). Use sines when you know two angles and a side, or two sides and a non-included angle.
+  - q: How do I find an angle from three sides?
+    a: cos A = (b² + c² − a²) ÷ 2bc. In the calculator, enter a, b and c and press × on angle C.
+  - q: Is the Pythagorean theorem a special case?
+    a: Yes. When C = 90°, cos C = 0 and the formula becomes c² = a² + b².
+related: [math/pythagorean-theorem, math/right-triangle-trig, math/triangle-area, math/polygon]
+---
+
+## How to use this calculator
+
+Enter two sides, **a** and **b**, and the **angle C** between them. The calculator finds the third side, the other two angles and the area. You can also enter all three sides and press × on angle C to find the angles.
+
+## The law of cosines
+
+<p class="formula">c² = a² + b² − 2ab cos C</p>
+
+and for angles:
+
+<p class="formula">cos A = (b² + c² − a²) ÷ 2bc</p>
+
+## Worked example
+
+a = 7, b = 9, C = 50°:
+
+- c² = 49 + 81 − 126 × cos 50° = 130 − 80.99 = 49.01
+- c = **7.00**
+- Area = ½ × 7 × 9 × sin 50° = **24.13**
+
+## Third side for different angles (a = 7, b = 9)
+
+| Angle C | Side c |
+|---|---|
+| 10° | 2.43 |
+| 30° | 4.57 |
+| 60° | 8.19 |
+| 90° | 11.40 |
+| 120° | 13.89 |
+| 150° | 15.46 |
+| 170° | 15.94 |
+
+As the angle opens, the third side grows from about b − a towards a + b.
+
+## Law of sines
+
+<p class="formula">a ÷ sin A = b ÷ sin B = c ÷ sin C</p>
+
+Use it with two angles and a side. Beware the ambiguous case (two sides and a non-included angle), which can have two solutions.
+
+## Real-world uses
+
+- **Surveying**: distance across a lake from two measured sides and the angle between them.
+- **Navigation**: distance between two ships from their bearings and distances.
+- **Engineering**: forces in trusses and linkages.

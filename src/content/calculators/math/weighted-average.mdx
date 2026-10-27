@@ -1,0 +1,71 @@
+---
+title: Weighted Average Calculator
+description: Calculate a weighted average (weighted mean) from up to five values and weights — for grades, prices, portfolios and survey scores.
+category: math
+keywords: [weighted average calculator, weighted mean, weighted average formula, weighted grade calculator, average with weights, weighted score]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: x1, label: Value 1, default: 85 }
+  - { id: w1, label: Weight 1, default: 30, min: 0 }
+  - { id: x2, label: Value 2, default: 72 }
+  - { id: w2, label: Weight 2, default: 20, min: 0 }
+  - { id: x3, label: Value 3, default: 90 }
+  - { id: w3, label: Weight 3, default: 50, min: 0 }
+  - { id: x4, label: Value 4 (optional), default: 0 }
+  - { id: w4, label: Weight 4, default: 0, min: 0 }
+  - { id: x5, label: Value 5 (optional), default: 0 }
+  - { id: w5, label: Weight 5, default: 0, min: 0 }
+  - { id: W, label: Sum of weights, min: 0 }
+  - { id: wa, label: Weighted average }
+equations:
+  - W = w1 + w2 + w3 + w4 + w5
+  - wa = (x1*w1 + x2*w2 + x3*w3 + x4*w4 + x5*w5) / W
+faq:
+  - q: How do I calculate a weighted average?
+    a: Multiply each value by its weight, add the products, then divide by the sum of the weights.
+  - q: Do the weights have to add up to 100?
+    a: No. The calculator divides by the total of the weights, so you can use percentages, credits, quantities or any positive numbers.
+  - q: What is the difference between a weighted and a simple average?
+    a: A simple average treats every value equally. A weighted average gives more influence to values with larger weights.
+  - q: How do I ignore an unused row?
+    a: Leave its weight at 0.
+related: [math/average, everyday-life/grade-needed, finance/stock-average, statistics/mean-median-mode]
+---
+
+## How to use this calculator
+
+Enter up to five **values** and their **weights**. Leave unused rows with a weight of 0. The calculator shows the total weight and the weighted average.
+
+## The formula
+
+<p class="formula">Weighted average = Σ(xᵢ × wᵢ) ÷ Σwᵢ</p>
+
+## Example: course grade
+
+| Component | Score | Weight | Score × weight |
+|---|---|---|---|
+| Assignments | 85 | 30% | 25.5 |
+| Midterm | 72 | 20% | 14.4 |
+| Final exam | 90 | 50% | 45.0 |
+| **Total** | | **100%** | **84.9** |
+
+The weighted grade is **84.9**, while the simple average of 85, 72 and 90 is 82.3.
+
+## Common uses
+
+| Use | Values | Weights |
+|---|---|---|
+| Course grades | Scores | Percentage weights or credits |
+| GPA / CGPA | Grade points | Credit hours |
+| Average purchase price | Prices | Quantities bought |
+| Portfolio return | Asset returns | Amount invested in each |
+| Survey ratings | Rating levels (1–5) | Number of responses |
+
+## Weighted price example
+
+Buying 100 units at 20 and 300 units at 24 gives a weighted average price of (2,000 + 7,200) ÷ 400 = **23**, not the simple average of 22. See the [stock average calculator](/finance/stock-average/) for share purchases.
+
+## Weighted vs arithmetic mean
+
+If all weights are equal, the weighted average equals the ordinary [average](/math/average/).

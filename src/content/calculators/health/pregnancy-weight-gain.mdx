@@ -1,0 +1,78 @@
+---
+title: Pregnancy Weight Gain Calculator
+description: See the recommended total weight gain in pregnancy based on pre-pregnancy BMI, using the Institute of Medicine (IOM) 2009 guidelines.
+category: health
+keywords: [pregnancy weight gain calculator, how much weight to gain in pregnancy, iom guidelines, pregnancy bmi, weight gain during pregnancy, twins weight gain]
+updated: 2026-10-27
+variables:
+  - { id: m, label: Pre-pregnancy weight, family: mass, unit: kg, imperialUnit: lb, default: 60, min: 30 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 162, min: 1.2, max: 2.2 }
+  - id: bmi
+    label: Pre-pregnancy BMI
+    min: 0
+    decimals: 1
+    bands:
+      - { max: 18.5, label: Underweight, color: '#3b82f6' }
+      - { max: 25, label: Healthy weight, color: '#16a34a' }
+      - { max: 30, label: Overweight, color: '#f59e0b' }
+      - { max: 100, label: Obese, color: '#dc2626' }
+  - { id: lo, label: Recommended gain — lower, family: mass, unit: kg, imperialUnit: lb, min: 0, decimals: 1 }
+  - { id: hi, label: Recommended gain — upper, family: mass, unit: kg, imperialUnit: lb, min: 0, decimals: 1 }
+equations:
+  - bmi = m / h^2
+  - lo = 12.5 - 1 * step(bmi - 18.4999) - 4.5 * step(bmi - 24.9999) - 2 * step(bmi - 29.9999)
+  - hi = 18 - 2 * step(bmi - 18.4999) - 4.5 * step(bmi - 24.9999) - 2.5 * step(bmi - 29.9999)
+freedom: 2
+faq:
+  - q: How much weight should I gain during pregnancy?
+    a: It depends on your BMI before pregnancy. For a healthy BMI (18.5–24.9), the IOM recommends 11.5–16 kg (25–35 lb) for a single baby.
+  - q: How much weight should I gain with twins?
+    a: For twins, IOM provisional ranges are 17–25 kg (37–54 lb) for healthy BMI, 14–23 kg for overweight and 11–19 kg for obese.
+  - q: How fast should I gain weight?
+    a: Typically 0.5–2 kg in the first trimester, then about 0.4 kg a week (1 lb) in the second and third trimesters for a healthy BMI.
+  - q: Is it safe to lose weight during pregnancy?
+    a: Weight loss is not generally recommended in pregnancy. Speak to your doctor or midwife about any weight concerns.
+related: [other/due-date, health/bmi, health/bmr, health/water-intake]
+---
+
+## How to use this calculator
+
+Enter your **weight before pregnancy** and your **height**. The calculator works out your pre-pregnancy BMI and the recommended total weight gain range for a single baby.
+
+This is general guidance. Your doctor or midwife may recommend a different target based on your health.
+
+## IOM 2009 recommendations (single baby)
+
+| Pre-pregnancy BMI | Total gain | Weekly gain, 2nd and 3rd trimesters |
+|---|---|---|
+| Underweight (under 18.5) | 12.5–18 kg (28–40 lb) | about 0.5 kg (1–1.3 lb) |
+| Healthy (18.5–24.9) | 11.5–16 kg (25–35 lb) | about 0.4 kg (0.8–1 lb) |
+| Overweight (25–29.9) | 7–11.5 kg (15–25 lb) | about 0.3 kg (0.5–0.7 lb) |
+| Obese (30+) | 5–9 kg (11–20 lb) | about 0.2 kg (0.4–0.6 lb) |
+
+Source: Institute of Medicine (now National Academy of Medicine), *Weight Gain During Pregnancy*, 2009.
+
+## Where the weight goes
+
+For a typical healthy pregnancy of about 13 kg:
+
+| Component | Approximate weight |
+|---|---|
+| Baby | 3.4 kg |
+| Placenta | 0.7 kg |
+| Amniotic fluid | 0.8 kg |
+| Uterus | 0.9 kg |
+| Breast tissue | 0.4 kg |
+| Blood volume | 1.4 kg |
+| Fluid in tissues | 1.5 kg |
+| Fat stores | 3–4 kg |
+
+## Healthy habits
+
+- Eat regular balanced meals; most people need only about 300–450 extra kcal a day in the second and third trimesters, and none in the first.
+- Stay active with approved exercise such as walking or swimming.
+- Take supplements such as folic acid and iron as advised.
+
+## Asian BMI cut-offs
+
+Some guidelines suggest lower BMI cut-offs for Asian women, which would shift some people into a higher category. Ask your care provider which cut-offs they use.

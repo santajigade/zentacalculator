@@ -1,0 +1,77 @@
+---
+title: CPM, CPC, CTR and CPA Calculator
+description: Calculate CPM, CPC, CTR, conversion rate and cost per acquisition from ad spend, impressions, clicks and conversions — all in one place.
+category: finance
+keywords: [cpm calculator, cpc calculator, ctr calculator, cpa calculator, conversion rate calculator, cost per click, cost per thousand impressions, ad metrics]
+updated: 2026-10-27
+variables:
+  - { id: sp, label: Ad spend, family: currency, default: 500, min: 0, decimals: 2 }
+  - { id: im, label: Impressions, default: 100000, min: 1, decimals: 0 }
+  - { id: cl, label: Clicks, default: 1500, min: 1, decimals: 0 }
+  - { id: cv, label: Conversions, default: 45, min: 0.0001, decimals: 0 }
+  - { id: cpm, label: "CPM (cost per 1,000 impressions)", family: currency, min: 0, decimals: 2 }
+  - { id: cpc, label: CPC (cost per click), family: currency, min: 0, decimals: 2 }
+  - { id: ctr, label: CTR (click-through rate), family: percent, unit: '%', min: 0 }
+  - { id: cvr, label: Conversion rate, family: percent, unit: '%', min: 0 }
+  - { id: cpa, label: CPA (cost per acquisition), family: currency, min: 0, decimals: 2 }
+equations:
+  - cpm = sp / im * 1000
+  - cpc = sp / cl
+  - ctr = cl / im
+  - cvr = cv / cl
+  - cpa = sp / cv
+faq:
+  - q: How do I calculate CPM?
+    a: CPM = ad spend ÷ impressions × 1,000. 500 spent for 100,000 impressions is a CPM of 5.
+  - q: What is a good CTR?
+    a: It varies by platform and industry. Search ads often see 3–6%, while display and social ads are commonly under 1–2%.
+  - q: How are CPC, CTR and CPM related?
+    a: CPC = CPM ÷ (CTR × 1,000). A 5 CPM with a 1.5% CTR gives a CPC of about 0.33.
+  - q: What is the difference between CPA and CAC?
+    a: CPA is the ad cost per conversion (which may be a lead or a sale). CAC includes all sales and marketing costs to win a paying customer.
+related: [finance/roas, finance/customer-lifetime-value, math/percentage, finance/break-even]
+---
+
+## How to use this calculator
+
+Enter **ad spend**, **impressions**, **clicks** and **conversions** from your ad platform. The calculator gives CPM, CPC, CTR, conversion rate and CPA together. You can also work backwards — for example, enter a target CPA and press × on Ad spend to see the budget for a number of conversions.
+
+## The formulas
+
+| Metric | Formula |
+|---|---|
+| CPM | Spend ÷ Impressions × 1,000 |
+| CPC | Spend ÷ Clicks |
+| CTR | Clicks ÷ Impressions |
+| Conversion rate | Conversions ÷ Clicks |
+| CPA | Spend ÷ Conversions |
+
+## The ad funnel
+
+Each metric is one step in the funnel:
+
+<p class="formula">Impressions → (CTR) → Clicks → (Conversion rate) → Conversions</p>
+
+Improving any step lowers CPA. A 20% better CTR and a 20% better conversion rate together cut CPA by about **31%**.
+
+## Typical ranges (rough guide)
+
+| Channel | CTR | Conversion rate |
+|---|---|---|
+| Search ads | 3–6% | 3–8% |
+| Social feed ads | 0.5–1.5% | 1–5% |
+| Display banners | 0.1–0.5% | 0.5–2% |
+| Email | 1–4% | 1–5% |
+
+Benchmarks vary widely by industry, country and offer — compare against your own history first.
+
+## Example
+
+500 spent, 100,000 impressions, 1,500 clicks, 45 conversions:
+
+- CPM = **5.00**, CPC = **0.33**, CTR = **1.5%**
+- Conversion rate = **3%**, CPA = **11.11**
+
+## From CPA to profit
+
+A campaign is profitable when CPA is below the profit from each conversion. Use the [ROAS calculator](/finance/roas/) for revenue-based campaigns and the [customer lifetime value calculator](/finance/customer-lifetime-value/) when customers buy repeatedly.

@@ -1,0 +1,71 @@
+---
+title: KVP Calculator (Kisan Vikas Patra)
+description: Calculate Kisan Vikas Patra maturity — your money doubles in 115 months at the current 7.5% rate. See the maturity value for any amount.
+category: finance
+keywords: [kvp calculator, kisan vikas patra calculator, kvp interest rate, kvp maturity, kvp 115 months, post office kvp, money double scheme]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Investment amount, family: currency, prefix: '₹', default: 100000, min: 1000, decimals: 0 }
+  - { id: r, label: Interest rate (compounded yearly), family: percent, unit: '%', default: 7.5, min: 0.0001, max: 0.3 }
+  - { id: mo, label: Months to double, suffix: months, min: 0, decimals: 0 }
+  - { id: F, label: Maturity value, family: currency, prefix: '₹', min: 0, decimals: 0 }
+equations:
+  - mo = ln(2) / ln(1 + r) * 12
+  - F = 2 * P
+faq:
+  - q: How long does KVP take to double money?
+    a: 115 months (9 years 7 months) at the current 7.5% rate.
+  - q: What is the minimum and maximum investment in KVP?
+    a: Minimum ₹1,000, in multiples of ₹100. There is no maximum, though PAN and income proof are needed for larger amounts.
+  - q: Is KVP interest taxable?
+    a: Yes. Interest is taxable at your slab rate, either yearly on an accrual basis or at maturity. KVP has no 80C benefit.
+  - q: Can I withdraw KVP early?
+    a: After 2 years and 6 months, with a reduced rate. Earlier withdrawal is allowed only in special cases such as the holder’s death.
+related: [finance/nsc, finance/doubling-time, finance/fd, finance/ppf]
+---
+
+## How to use this calculator
+
+Enter the **amount** you will invest and the **interest rate** (7.5% for October–December 2026). The calculator shows how many months it takes to double and the maturity value.
+
+## How KVP works
+
+Kisan Vikas Patra is a government-backed savings certificate sold at post offices. The amount invested **doubles** after a fixed period, which the government sets from the interest rate:
+
+<p class="formula">Months = ln 2 ÷ ln(1 + r) × 12</p>
+
+At 7.5% compounded yearly, that is 115 months.
+
+## Maturity values
+
+| Investment | Maturity after 115 months |
+|---|---|
+| ₹10,000 | ₹20,000 |
+| ₹50,000 | ₹1,00,000 |
+| ₹1,00,000 | ₹2,00,000 |
+| ₹5,00,000 | ₹10,00,000 |
+| ₹10,00,000 | ₹20,00,000 |
+
+## Interest rate and doubling period
+
+| Interest rate | Months to double |
+|---|---|
+| 6.9% | 125 |
+| 7.0% | 123 |
+| 7.2% | 120 |
+| 7.5% | 115 |
+| 7.7% | 112 |
+| 8.0% | 108 |
+
+## KVP vs NSC vs FD
+
+| | KVP | NSC | Bank FD |
+|---|---|---|---|
+| Rate (Oct–Dec 2026) | 7.5% | 7.7% | Varies |
+| Tenure | 115 months | 5 years | 7 days–10 years |
+| 80C benefit | No | Yes (old regime) | Only 5-year tax saver |
+| Early exit | After 2.5 years | Restricted | Usually allowed with penalty |
+
+## Who KVP suits
+
+KVP suits conservative savers who want a guaranteed, government-backed return and do not need the money for about 10 years. For tax savings, [NSC](/finance/nsc/) or [PPF](/finance/ppf/) may be better.

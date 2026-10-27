@@ -1,0 +1,67 @@
+---
+title: SCSS Calculator (Senior Citizens Savings Scheme)
+description: Calculate quarterly interest and total returns from the Senior Citizens Savings Scheme at the current 8.2% rate — with the ₹30 lakh limit.
+category: finance
+keywords: [scss calculator, senior citizen savings scheme calculator, scss interest rate, scss quarterly interest, post office scss, scss 8.2]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Deposit amount, family: currency, prefix: '₹', default: 1500000, min: 1000, max: 3000000, decimals: 0, help: '₹1,000 to ₹30,00,000 per individual.' }
+  - { id: r, label: Interest rate, family: percent, unit: '%', default: 8.2, min: 0.0001, max: 0.3 }
+  - { id: q, label: Quarterly interest, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: m, label: Monthly equivalent, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: y, label: Yearly interest, family: currency, prefix: '₹', min: 0, decimals: 0 }
+  - { id: tot, label: Total interest over 5 years, family: currency, prefix: '₹', min: 0, decimals: 0 }
+equations:
+  - q = P * r / 4
+  - m = q / 3
+  - y = q * 4
+  - tot = y * 5
+faq:
+  - q: What is the SCSS interest rate?
+    a: 8.2% a year for the October–December 2026 quarter, paid quarterly. The rate on the date of deposit applies for the full 5 years.
+  - q: What is the maximum investment in SCSS?
+    a: ₹30 lakh per individual. A married couple can each open an account.
+  - q: Who can invest in SCSS?
+    a: Residents aged 60 and above. Retirees aged 55–60 (and some defence retirees aged 50–60) can invest retirement benefits within a set period of retirement.
+  - q: Is SCSS interest taxable?
+    a: Yes, at your slab rate, with TDS above the yearly threshold. Deposits qualify for deduction under section 80C in the old regime.
+related: [finance/post-office-mis, finance/fd, finance/annuity-payout, finance/swp]
+---
+
+## How to use this calculator
+
+Enter the **deposit amount** (up to ₹30 lakh) and the **interest rate** (currently 8.2%). You get the interest paid every quarter, its monthly equivalent, the yearly total and the total interest over the 5-year term. The deposit is returned at maturity.
+
+## The formula
+
+<p class="formula">Quarterly interest = Deposit × Rate ÷ 4</p>
+
+Interest is paid on the first working day of April, July, October and January. It is simple interest — it does not compound unless you reinvest it.
+
+## Quarterly income at 8.2%
+
+| Deposit | Quarterly | Monthly equivalent | Yearly |
+|---|---|---|---|
+| ₹5,00,000 | ₹10,250 | ₹3,417 | ₹41,000 |
+| ₹10,00,000 | ₹20,500 | ₹6,833 | ₹82,000 |
+| ₹15,00,000 | ₹30,750 | ₹10,250 | ₹1,23,000 |
+| ₹20,00,000 | ₹41,000 | ₹13,667 | ₹1,64,000 |
+| ₹30,00,000 | ₹61,500 | ₹20,500 | ₹2,46,000 |
+
+## Key rules
+
+- **Tenure**: 5 years, which can be extended by a further 3 years.
+- **Premature closure**: after 1 year with 1.5% penalty; after 2 years with 1% penalty.
+- **Joint account**: allowed with spouse only; the deposit limit applies to the first holder.
+- **Where**: post offices and authorised banks.
+
+## SCSS vs other income options
+
+| | SCSS | POMIS | Bank senior FD |
+|---|---|---|---|
+| Rate (Oct–Dec 2026) | 8.2% | 7.4% | Varies by bank |
+| Payout | Quarterly | Monthly | Monthly / quarterly |
+| Limit | ₹30 lakh | ₹9 / 15 lakh | No limit |
+| 80C benefit | Yes (old regime) | No | Only 5-year tax saver |
+
+Compare monthly income options with the [Post Office MIS calculator](/finance/post-office-mis/).

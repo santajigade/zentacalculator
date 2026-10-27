@@ -1,0 +1,76 @@
+---
+title: QTc Calculator (Corrected QT Interval)
+description: Calculate the corrected QT interval (QTc) from QT and heart rate using the Bazett, Fridericia, Framingham and Hodges formulas.
+category: health
+keywords: [qtc calculator, corrected qt interval, bazett formula, fridericia formula, qt prolongation, ecg qtc, framingham qtc]
+updated: 2026-10-27
+variables:
+  - { id: qt, label: QT interval, suffix: ms, default: 400, min: 100, max: 800 }
+  - { id: hr, label: Heart rate, suffix: bpm, default: 75, min: 20, max: 250 }
+  - { id: rr, label: RR interval, suffix: s, min: 0, decimals: 3 }
+  - { id: baz, label: QTc — Bazett, suffix: ms, min: 0, decimals: 0 }
+  - { id: fri, label: QTc — Fridericia, suffix: ms, min: 0, decimals: 0 }
+  - { id: fra, label: QTc — Framingham, suffix: ms, min: 0, decimals: 0 }
+  - { id: hod, label: QTc — Hodges, suffix: ms, min: 0, decimals: 0 }
+equations:
+  - rr = 60 / hr
+  - baz = qt / sqrt(rr)
+  - fri = qt / rr^(1/3)
+  - fra = qt + 154 * (1 - rr)
+  - hod = qt + 1.75 * (hr - 60)
+faq:
+  - q: What is a normal QTc?
+    a: Commonly under about 450 ms in men and 460–470 ms in women. Above 500 ms is associated with a higher risk of dangerous arrhythmias.
+  - q: Which QTc formula is best?
+    a: Bazett is the most widely used but over-corrects at high heart rates and under-corrects at low ones. Fridericia and Framingham are often preferred when the heart rate is outside 60–100 bpm.
+  - q: Why correct the QT interval?
+    a: QT naturally shortens as heart rate rises. Correcting it to a standard heart rate of 60 bpm lets measurements be compared.
+  - q: What can prolong the QT interval?
+    a: Some medicines (certain antibiotics, antiarrhythmics, antipsychotics and antiemetics), low potassium or magnesium, and inherited long-QT syndromes.
+related: [health/heart-rate-zones, health/mean-arterial-pressure, health/bmi, health/creatinine-clearance]
+---
+
+## How to use this calculator
+
+Enter the **QT interval** in milliseconds and the **heart rate** in beats per minute. The calculator shows the RR interval and the QTc by four common formulas.
+
+This tool is for education and does not replace interpretation of an ECG by a qualified clinician.
+
+## The formulas
+
+| Formula | QTc |
+|---|---|
+| Bazett (1920) | QT ÷ √RR |
+| Fridericia (1920) | QT ÷ ∛RR |
+| Framingham (1992) | QT + 154 × (1 − RR) |
+| Hodges (1983) | QT + 1.75 × (HR − 60) |
+
+QT is in ms and RR in seconds (RR = 60 ÷ heart rate).
+
+## How the formulas compare (QT 400 ms)
+
+| Heart rate | Bazett | Fridericia | Framingham | Hodges |
+|---|---|---|---|---|
+| 50 bpm | 365 | 376 | 369 | 382 |
+| 60 bpm | 400 | 400 | 400 | 400 |
+| 75 bpm | 447 | 431 | 431 | 426 |
+| 90 bpm | 490 | 458 | 451 | 452 |
+| 110 bpm | 542 | 490 | 470 | 488 |
+| 130 bpm | 589 | 518 | 483 | 522 |
+
+At 60 bpm all formulas agree. At faster rates Bazett gives noticeably higher values.
+
+## Interpreting QTc (adults)
+
+| QTc | Men | Women |
+|---|---|---|
+| Normal | under 450 ms | under 460 ms |
+| Borderline | 450–470 ms | 460–480 ms |
+| Prolonged | over 470 ms | over 480 ms |
+| High risk | over 500 ms | over 500 ms |
+
+Thresholds vary between guidelines. A short QTc (under about 350 ms) can also be significant.
+
+## Measuring QT
+
+Measure from the start of the QRS complex to the end of the T wave, usually in lead II or V5, and average over 3–5 beats. In atrial fibrillation, average several RR intervals.

@@ -1,0 +1,75 @@
+---
+title: Customer Lifetime Value Calculator (CLV and LTV:CAC)
+description: Calculate customer lifetime value from order value, purchase frequency, margin and retention — and compare it with acquisition cost (LTV:CAC).
+category: finance
+keywords: [customer lifetime value calculator, clv calculator, ltv calculator, ltv cac ratio, lifetime value, churn rate, customer value, cac payback]
+updated: 2026-10-27
+variables:
+  - { id: aov, label: Average order value, family: currency, default: 60, min: 0, decimals: 2 }
+  - { id: fq, label: Purchases per year, default: 4, min: 0 }
+  - { id: m, label: Gross margin, family: percent, unit: '%', default: 40, min: 0, max: 1 }
+  - { id: ch, label: Annual churn rate, family: percent, unit: '%', default: 30, min: 0.001, max: 1, help: Share of customers lost each year. Lifespan = 1 ÷ churn. }
+  - { id: cac, label: Customer acquisition cost (CAC), family: currency, default: 80, min: 0.01, decimals: 2 }
+  - { id: life, label: Average customer lifespan, family: time, unit: yr, min: 0 }
+  - { id: clv, label: Customer lifetime value (gross profit), family: currency, min: 0, decimals: 2 }
+  - { id: ratio, label: "LTV:CAC ratio", suffix: ': 1', min: 0, decimals: 2 }
+  - { id: pb, label: CAC payback period, family: time, unit: mo, min: 0 }
+equations:
+  - life = 1 / ch
+  - clv = aov * fq * m * life
+  - ratio = clv / cac
+  - pb = cac / (aov * fq * m)
+faq:
+  - q: What is a good LTV to CAC ratio?
+    a: A ratio of about 3:1 is a widely used benchmark. Below 1:1 you lose money on each customer; far above 5:1 may mean you are under-investing in growth.
+  - q: How is customer lifetime value calculated?
+    a: CLV = average order value × purchases per year × gross margin × customer lifespan in years. Lifespan can be estimated as 1 ÷ annual churn rate.
+  - q: Should CLV use revenue or profit?
+    a: Profit (gross margin) is better for comparing with acquisition cost. Revenue-based LTV overstates what you can afford to spend.
+  - q: What is CAC payback?
+    a: How long it takes for gross profit from a customer to repay the cost of acquiring them. Under 12 months is generally considered healthy.
+related: [finance/roas, finance/ad-metrics, finance/profit-margin, finance/break-even]
+---
+
+## How to use this calculator
+
+Enter the **average order value**, **purchases per year**, **gross margin**, **annual churn rate** and your **customer acquisition cost**. You get the average customer lifespan, lifetime value (in gross profit), the LTV:CAC ratio and the CAC payback period.
+
+## The formulas
+
+<p class="formula">Lifespan = 1 ÷ churn &nbsp;·&nbsp; CLV = AOV × frequency × margin × lifespan</p>
+
+<p class="formula">LTV:CAC = CLV ÷ CAC &nbsp;·&nbsp; Payback = CAC ÷ yearly gross profit per customer</p>
+
+## Example
+
+AOV 60, 4 orders a year, 40% margin, 30% churn, CAC 80:
+
+- Yearly gross profit per customer = 60 × 4 × 0.4 = 96
+- Lifespan = 1 ÷ 0.3 = 3.33 years
+- CLV = 96 × 3.33 = **320**
+- LTV:CAC = 320 ÷ 80 = **4.0 : 1**
+- Payback = 80 ÷ 96 × 12 = **10 months**
+
+## How churn changes CLV
+
+| Annual churn | Lifespan | CLV (96 profit a year) |
+|---|---|---|
+| 10% | 10.0 years | 960 |
+| 20% | 5.0 years | 480 |
+| 30% | 3.3 years | 320 |
+| 40% | 2.5 years | 240 |
+| 50% | 2.0 years | 192 |
+| 70% | 1.4 years | 137 |
+
+Cutting churn is often the fastest way to raise lifetime value.
+
+## Subscription businesses
+
+For subscriptions, use monthly figures: monthly revenue per user × margin ÷ monthly churn. A 20 monthly plan at 80% margin with 4% monthly churn has a CLV of 20 × 0.8 ÷ 0.04 = **400**.
+
+## Improving LTV:CAC
+
+- **Raise CLV**: upsells, loyalty programmes, better onboarding, lower churn.
+- **Lower CAC**: improve conversion rates, focus on efficient channels, referrals.
+- Track CAC by channel with the [ad metrics calculator](/finance/ad-metrics/).

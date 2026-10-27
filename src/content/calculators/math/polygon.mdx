@@ -1,0 +1,74 @@
+---
+title: Regular Polygon Calculator (Angles, Area, Perimeter)
+description: Find the interior and exterior angles, number of diagonals, perimeter and area of any regular polygon — triangle, hexagon, octagon and more.
+category: math
+keywords: [polygon calculator, interior angle of polygon, sum of interior angles, hexagon area, octagon area, regular polygon area, exterior angle, number of diagonals]
+updated: 2026-10-27
+variables:
+  - { id: n, label: Number of sides, default: 6, min: 3, decimals: 0 }
+  - { id: s, label: Side length, family: length, unit: cm, imperialUnit: in, default: 10, min: 0 }
+  - { id: sum, label: Sum of interior angles, suffix: °, decimals: 1 }
+  - { id: ia, label: Each interior angle, suffix: °, decimals: 2 }
+  - { id: ea, label: Each exterior angle, suffix: °, decimals: 2 }
+  - { id: dg, label: Number of diagonals, decimals: 0 }
+  - { id: P, label: Perimeter, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: A, label: Area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+equations:
+  - sum = (n - 2) * 180
+  - ia = sum / n
+  - ea = 360 / n
+  - dg = n * (n - 3) / 2
+  - P = n * s
+  - A = n * s^2 / (4 * tan(pi / n))
+faq:
+  - q: What is the sum of interior angles of a polygon?
+    a: (n − 2) × 180°. A hexagon (6 sides) has 720°, so each angle of a regular hexagon is 120°.
+  - q: How many diagonals does a polygon have?
+    a: n(n − 3) ÷ 2. An octagon has 20 diagonals.
+  - q: What is the area of a regular hexagon?
+    a: (3√3 ÷ 2) × s², about 2.598 × s². With 10 cm sides, about 259.8 cm².
+  - q: Do exterior angles always add to 360°?
+    a: Yes, for any convex polygon the exterior angles sum to 360°.
+related: [math/triangle-area, math/circle, math/rectangle, math/law-of-cosines]
+---
+
+## How to use this calculator
+
+Enter the **number of sides** and the **side length**. The calculator shows the angles, number of diagonals, perimeter and area of the regular polygon. The angle results apply to any polygon with that number of sides; the area and perimeter assume all sides and angles are equal.
+
+## The formulas
+
+| Quantity | Formula |
+|---|---|
+| Sum of interior angles | (n − 2) × 180° |
+| Each interior angle | (n − 2) × 180° ÷ n |
+| Each exterior angle | 360° ÷ n |
+| Diagonals | n(n − 3) ÷ 2 |
+| Area | n × s² ÷ (4 tan(π ÷ n)) |
+
+## Polygon table
+
+| Polygon | Sides | Interior angle | Diagonals | Area (side 1) |
+|---|---|---|---|---|
+| Triangle | 3 | 60.00° | 0 | 0.4330 |
+| Square | 4 | 90.00° | 2 | 1.0000 |
+| Pentagon | 5 | 108.00° | 5 | 1.7205 |
+| Hexagon | 6 | 120.00° | 9 | 2.5981 |
+| Heptagon | 7 | 128.57° | 14 | 3.6339 |
+| Octagon | 8 | 135.00° | 20 | 4.8284 |
+| Nonagon | 9 | 140.00° | 27 | 6.1818 |
+| Decagon | 10 | 144.00° | 35 | 7.6942 |
+| Dodecagon | 12 | 150.00° | 54 | 11.1962 |
+
+Multiply the last column by the side length squared to get the area.
+
+## Hexagons in nature and design
+
+Regular hexagons tile a flat surface with no gaps and use the least perimeter for a given area among shapes that tile, which is why honeycombs and many floor tiles are hexagonal.
+
+## Radius of a regular polygon
+
+- Circumradius (centre to corner): R = s ÷ (2 sin(π ÷ n))
+- Inradius (centre to middle of a side): r = s ÷ (2 tan(π ÷ n))
+
+As n grows large, the polygon approaches a circle.

@@ -1,0 +1,66 @@
+---
+title: Real Rate of Return Calculator (Inflation-Adjusted)
+description: Calculate your real return after inflation (and tax) from a nominal interest rate or investment return — see if your money is really growing.
+category: finance
+keywords: [real rate of return, inflation adjusted return, real return calculator, fisher equation, real interest rate, after tax return, nominal vs real]
+updated: 2026-10-27
+variables:
+  - { id: n, label: Nominal return, family: percent, unit: '%', default: 7, min: -0.99 }
+  - { id: tx, label: Tax on returns, family: percent, unit: '%', default: 0, min: 0, max: 1 }
+  - { id: i, label: Inflation rate, family: percent, unit: '%', default: 5, min: -0.5 }
+  - { id: at, label: After-tax return, family: percent, unit: '%' }
+  - { id: rr, label: Real return, family: percent, unit: '%' }
+equations:
+  - at = n * (1 - tx)
+  - rr = (1 + at) / (1 + i) - 1
+faq:
+  - q: What is the real rate of return?
+    a: The return after removing the effect of inflation — how much your purchasing power actually grows.
+  - q: Why not just subtract inflation from the return?
+    a: Subtraction is a close approximation for small rates. The exact Fisher formula is (1 + nominal) ÷ (1 + inflation) − 1. 7% with 5% inflation is 1.90%, not 2%.
+  - q: Can the real return be negative?
+    a: Yes. If inflation is higher than your after-tax return, your money is losing purchasing power even though the balance grows.
+  - q: How does tax affect the real return?
+    a: Tax reduces the nominal return first. A 7% FD taxed at 30% gives 4.9% after tax; with 5% inflation the real return is slightly negative.
+related: [finance/inflation, finance/fd, finance/compound-interest, finance/cagr]
+---
+
+## How to use this calculator
+
+Enter the **nominal return** (interest rate or investment return), the **tax rate** on those returns (0 if tax-free) and the **inflation rate**. You get the after-tax return and the real return.
+
+## The Fisher equation
+
+<p class="formula">Real return = (1 + nominal) ÷ (1 + inflation) − 1</p>
+
+With tax, use the after-tax return as the nominal: nominal × (1 − tax rate).
+
+## Real returns at a glance
+
+| Nominal | Inflation 3% | Inflation 5% | Inflation 7% |
+|---|---|---|---|
+| 4% | +0.97% | -0.95% | -2.80% |
+| 6% | +2.91% | +0.95% | -0.93% |
+| 7% | +3.88% | +1.90% | +0.00% |
+| 8% | +4.85% | +2.86% | +0.93% |
+| 10% | +6.80% | +4.76% | +2.80% |
+| 12% | +8.74% | +6.67% | +4.67% |
+
+## After-tax examples (5% inflation)
+
+| Investment | Nominal | Tax | After tax | Real |
+|---|---|---|---|---|
+| FD at 7%, 30% slab | 7% | 30% | 4.9% | −0.10% |
+| FD at 7%, 10% slab | 7% | 10% | 6.3% | +1.24% |
+| PPF at 7.1% (tax-free) | 7.1% | 0% | 7.1% | +2.00% |
+| Equity at 12%, 12.5% LTCG (approx.) | 12% | 12.5% | 10.5% | +5.24% |
+
+Equity tax is simplified here; actual tax depends on holding period and exemptions.
+
+## Why real return matters
+
+A goal planned in today's money needs a real return to reach it. Saving for something that costs 10 lakh today in 15 years at 6% inflation actually needs about 24 lakh — see the [inflation calculator](/finance/inflation/).
+
+## Real vs nominal growth over time
+
+At a 2% real return, money doubles in purchasing power in about 35 years. At 5% real, it doubles in about 14 years.

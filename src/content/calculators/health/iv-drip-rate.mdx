@@ -1,0 +1,76 @@
+---
+title: IV Drip Rate Calculator (gtt/min and mL/h)
+description: Calculate IV infusion rates in drops per minute and mL per hour from volume, time and drip factor — for nursing and clinical practice.
+category: health
+keywords: [iv drip rate calculator, drops per minute, gtt/min, infusion rate calculator, ml per hour, drip factor, iv flow rate, nursing calculations]
+updated: 2026-10-27
+variables:
+  - { id: v, label: Volume to infuse, suffix: mL, default: 1000, min: 0 }
+  - { id: t, label: Infusion time, suffix: hours, default: 8, min: 0.01 }
+  - id: df
+    label: Drip factor
+    default: 20
+    options:
+      - { label: 10 gtt/mL (macrodrip), value: 10 }
+      - { label: 15 gtt/mL (macrodrip), value: 15 }
+      - { label: 20 gtt/mL (macrodrip), value: 20 }
+      - { label: 60 gtt/mL (microdrip), value: 60 }
+  - { id: mlh, label: Flow rate, suffix: mL/h, min: 0, decimals: 1 }
+  - { id: gtt, label: Drip rate, suffix: drops/min, min: 0, decimals: 0 }
+equations:
+  - mlh = v / t
+  - gtt = v * df / (t * 60)
+faq:
+  - q: How do I calculate drops per minute?
+    a: Drops per minute = volume (mL) × drip factor (gtt/mL) ÷ time (minutes). 1,000 mL over 8 hours with a 20 gtt/mL set is about 42 drops per minute.
+  - q: What is a drip factor?
+    a: The number of drops that make 1 mL with a particular IV set. It is printed on the packaging — commonly 10, 15 or 20 for macrodrip and 60 for microdrip sets.
+  - q: Why is microdrip mL/h the same as drops per minute?
+    a: With a 60 gtt/mL set, drops per minute equals mL per hour, because there are 60 minutes in an hour.
+  - q: Should I round drops per minute?
+    a: Yes, round to the nearest whole drop, as you cannot count part of a drop.
+related: [health/body-surface-area, health/water-intake, health/creatinine-clearance, chemistry/dilution]
+---
+
+## How to use this calculator
+
+Enter the **volume** to infuse, the **time** in hours and the **drip factor** of your IV set. You get the flow rate in mL/h (for infusion pumps) and the drip rate in drops per minute (for gravity sets).
+
+This tool supports calculation practice. Always follow the prescription, local protocols and independent double-checks.
+
+## The formulas
+
+<p class="formula">mL/h = volume ÷ hours &nbsp;·&nbsp; gtt/min = volume × drip factor ÷ minutes</p>
+
+## Drip rate chart (drops per minute)
+
+| Volume and time | mL/h | 10 gtt/mL | 15 gtt/mL | 20 gtt/mL | 60 gtt/mL |
+|---|---|---|---|---|---|
+| 100 mL over 0.5 h | 200 | 33 | 50 | 67 | 200 |
+| 250 mL over 1 h | 250 | 42 | 62 | 83 | 250 |
+| 500 mL over 4 h | 125 | 21 | 31 | 42 | 125 |
+| 1000 mL over 6 h | 167 | 28 | 42 | 56 | 167 |
+| 1000 mL over 8 h | 125 | 21 | 31 | 42 | 125 |
+| 1000 mL over 12 h | 83 | 14 | 21 | 28 | 83 |
+| 500 mL over 24 h | 21 | 3 | 5 | 7 | 21 |
+
+## Worked example
+
+1,000 mL over 8 hours with a 20 gtt/mL set:
+
+- Flow rate = 1,000 ÷ 8 = **125 mL/h**
+- Time in minutes = 480
+- Drip rate = 1,000 × 20 ÷ 480 = **41.7 ≈ 42 drops/min**
+
+## Counting drops
+
+Count drops in the drip chamber for 15 seconds and multiply by 4, or count for a full minute for accuracy. Adjust the roller clamp until the count matches.
+
+## Infusion time from rate
+
+Rearranged: time (h) = volume ÷ mL/h. 500 mL at 125 mL/h takes 4 hours. In the calculator, press × on Infusion time and enter the rate.
+
+## Macrodrip vs microdrip
+
+- **Macrodrip** (10–20 gtt/mL): larger drops, for routine adult fluids.
+- **Microdrip** (60 gtt/mL): small drops, for paediatrics and precise low rates.

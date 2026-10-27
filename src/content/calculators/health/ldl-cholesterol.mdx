@@ -1,0 +1,77 @@
+---
+title: LDL Cholesterol Calculator (Friedewald)
+description: Estimate LDL cholesterol from total cholesterol, HDL and triglycerides using the Friedewald formula, plus non-HDL cholesterol and ratios.
+category: health
+keywords: [ldl calculator, ldl cholesterol calculator, friedewald formula, non hdl cholesterol, cholesterol ratio, lipid profile calculator, calculated ldl]
+updated: 2026-10-27
+variables:
+  - { id: tc, label: Total cholesterol, suffix: mg/dL, default: 200, min: 0 }
+  - { id: hdl, label: HDL cholesterol, suffix: mg/dL, default: 50, min: 1 }
+  - { id: tg, label: Triglycerides, suffix: mg/dL, default: 150, min: 0, help: 'Friedewald is not valid when triglycerides are 400 mg/dL or more.' }
+  - { id: ldl, label: LDL cholesterol (calculated), suffix: mg/dL, decimals: 0 }
+  - { id: nhdl, label: Non-HDL cholesterol, suffix: mg/dL, decimals: 0 }
+  - { id: ratio, label: Total / HDL ratio, min: 0, decimals: 2 }
+equations:
+  - ldl = tc - hdl - tg / 5
+  - nhdl = tc - hdl
+  - ratio = tc / hdl
+freedom: 3
+faq:
+  - q: What is a healthy LDL level?
+    a: Under 100 mg/dL (2.6 mmol/L) is often described as optimal for most adults. Targets are lower for people at high cardiovascular risk — your doctor will set yours.
+  - q: When is the Friedewald formula not accurate?
+    a: When triglycerides are 400 mg/dL or more, in non-fasting samples with high triglycerides, and at very low LDL levels. Labs may use the Martin–Hopkins or Sampson formulas or measure LDL directly.
+  - q: How do I convert mmol/L to mg/dL?
+    a: Multiply cholesterol values by 38.67 and triglycerides by 88.57.
+  - q: What is non-HDL cholesterol?
+    a: Total cholesterol minus HDL. It includes all the cholesterol carried by potentially harmful particles and does not need fasting.
+related: [health/bmi, health/waist-to-height, health/macros, health/heart-rate-zones]
+---
+
+## How to use this calculator
+
+Enter **total cholesterol**, **HDL** and **triglycerides** in mg/dL from your lipid profile. The calculator estimates LDL, non-HDL cholesterol and the total-to-HDL ratio.
+
+This is for understanding results, not diagnosis. Discuss your numbers and overall cardiovascular risk with a doctor.
+
+## The Friedewald formula
+
+<p class="formula">LDL = Total cholesterol − HDL − Triglycerides ÷ 5</p>
+
+In mmol/L, use triglycerides ÷ 2.2 instead of ÷ 5.
+
+## Example
+
+Total 200, HDL 50, triglycerides 150 mg/dL:
+
+- LDL = 200 − 50 − 30 = **120 mg/dL**
+- Non-HDL = **150 mg/dL**
+- Total/HDL ratio = **4.0**
+
+## General reference ranges (adults, mg/dL)
+
+| Measure | Desirable | Borderline | High |
+|---|---|---|---|
+| Total cholesterol | under 200 | 200–239 | 240+ |
+| LDL | under 100 | 130–159 | 160+ |
+| HDL | 60+ (protective) | 40–59 | under 40 is low |
+| Triglycerides | under 150 | 150–199 | 200+ |
+| Non-HDL | under 130 | 130–159 | 160+ |
+
+Ranges follow common US (NCEP ATP III) categories. Treatment targets depend on individual risk.
+
+## Unit conversion
+
+| mg/dL | mmol/L (cholesterol) | mmol/L (triglycerides) |
+|---|---|---|
+| 50 | 1.29 | 0.56 |
+| 100 | 2.59 | 1.13 |
+| 130 | 3.36 | 1.47 |
+| 150 | 3.88 | 1.69 |
+| 200 | 5.17 | 2.26 |
+| 240 | 6.21 | 2.71 |
+| 300 | 7.76 | 3.39 |
+
+## Lowering LDL
+
+Diet changes (less saturated and trans fat, more fibre), regular exercise, weight management and not smoking all help. Many people also need medication, depending on their risk. Follow your doctor's advice.

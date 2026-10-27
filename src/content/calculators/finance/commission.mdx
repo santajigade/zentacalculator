@@ -1,0 +1,70 @@
+---
+title: Commission Calculator
+description: Calculate sales commission and total pay from sales, commission rate and base salary — or the sales needed to reach an earnings target.
+category: finance
+keywords: [commission calculator, sales commission, commission rate, real estate commission, broker commission, how to calculate commission, commission percentage]
+updated: 2026-10-27
+variables:
+  - { id: S, label: Sales amount, family: currency, default: 50000, min: 0, decimals: 2 }
+  - { id: r, label: Commission rate, family: percent, unit: '%', default: 5, min: 0, max: 1 }
+  - { id: B, label: Base pay (for the period), family: currency, default: 2000, min: 0, decimals: 2 }
+  - { id: C, label: Commission earned, family: currency, min: 0, decimals: 2 }
+  - { id: T, label: Total earnings, family: currency, min: 0, decimals: 2 }
+equations:
+  - C = S * r
+  - T = B + C
+faq:
+  - q: How do I calculate commission?
+    a: Multiply the sale amount by the commission rate. 5% of 50,000 is 2,500.
+  - q: How do I find the commission rate?
+    a: Divide the commission by the sale amount. 1,500 on 30,000 is a 5% rate.
+  - q: How much do I need to sell to earn a target?
+    a: Enter your target as Total earnings, then press × on Sales amount.
+  - q: What is a typical real estate commission?
+    a: It varies by country. In India brokers often charge 1–2% of the property price; in the US total commissions have traditionally been around 5–6%, split between agents.
+related: [finance/profit-margin, finance/salary-increase, finance/break-even, finance/roas]
+---
+
+## How to use this calculator
+
+Enter the **sales amount**, the **commission rate** and any **base pay** for the period. The calculator shows the commission and total earnings. To find the sales needed for a target income, enter the target in Total earnings and press × on Sales amount.
+
+## The formulas
+
+<p class="formula">Commission = Sales × Rate &nbsp;·&nbsp; Total pay = Base + Commission</p>
+
+## Commission chart
+
+| Sales | 2% | 5% | 8% | 10% | 15% |
+|---|---|---|---|---|---|
+| 1,000 | 20 | 50 | 80 | 100 | 150 |
+| 5,000 | 100 | 250 | 400 | 500 | 750 |
+| 10,000 | 200 | 500 | 800 | 1,000 | 1,500 |
+| 25,000 | 500 | 1,250 | 2,000 | 2,500 | 3,750 |
+| 50,000 | 1,000 | 2,500 | 4,000 | 5,000 | 7,500 |
+| 100,000 | 2,000 | 5,000 | 8,000 | 10,000 | 15,000 |
+| 500,000 | 10,000 | 25,000 | 40,000 | 50,000 | 75,000 |
+
+## Common commission structures
+
+| Structure | How it works |
+|---|---|
+| Straight commission | Pay is only commission — no base |
+| Base + commission | Fixed salary plus a percentage of sales |
+| Tiered | Rate rises above targets (e.g. 5% up to 50,000, 8% above) |
+| Gross margin commission | Paid on profit, not revenue |
+| Draw against commission | Advance paid, then deducted from later commission |
+
+## Tiered example
+
+5% on the first 50,000 and 8% above it, on sales of 80,000:
+
+- First tier: 50,000 × 5% = 2,500
+- Second tier: 30,000 × 8% = 2,400
+- **Total commission = 4,900** (an effective 6.1%)
+
+For tiers, run the calculator once per tier and add the results.
+
+## Commission on margin
+
+Paying on gross margin rather than revenue stops salespeople discounting heavily to close deals. Check whether your plan pays on invoice value, collected cash or margin.

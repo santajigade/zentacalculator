@@ -1,0 +1,89 @@
+---
+title: eGFR Calculator (CKD-EPI 2021)
+description: Estimate glomerular filtration rate (eGFR) from serum creatinine, age and sex using the race-free CKD-EPI 2021 equation, with CKD stages.
+category: health
+keywords: [egfr calculator, ckd-epi 2021, glomerular filtration rate, kidney function calculator, creatinine egfr, ckd stage, gfr calculator]
+updated: 2026-10-27
+variables:
+  - { id: cr, label: Serum creatinine, suffix: mg/dL, default: 1.0, min: 0.05, help: 'To convert from µmol/L, divide by 88.4.' }
+  - { id: age, label: Age, suffix: years, default: 50, min: 18, max: 110 }
+  - id: s
+    label: Sex
+    default: 0
+    options:
+      - { label: Male, value: 0 }
+      - { label: Female, value: 1 }
+  - id: gfr
+    label: eGFR
+    suffix: mL/min/1.73 m²
+    min: 0
+    decimals: 0
+    bands:
+      - { max: 15, label: G5 Kidney failure, color: '#dc2626' }
+      - { max: 30, label: G4 Severely decreased, color: '#ea580c' }
+      - { max: 45, label: G3b Moderately–severely decreased, color: '#f59e0b' }
+      - { max: 60, label: G3a Mildly–moderately decreased, color: '#eab308' }
+      - { max: 90, label: G2 Mildly decreased, color: '#84cc16' }
+      - { max: 1000, label: G1 Normal or high, color: '#16a34a' }
+equations:
+  - gfr = 142 * min(cr / (0.9 - 0.2*s), 1)^(-0.302 + 0.061*s) * max(cr / (0.9 - 0.2*s), 1)^(-1.2) * 0.9938^age * (1 + 0.012*s)
+faq:
+  - q: What is a normal eGFR?
+    a: 90 or above is normal. Values of 60–89 can be normal in older adults if there are no other signs of kidney damage.
+  - q: Why does the 2021 equation not use race?
+    a: The 2021 CKD-EPI equation was refitted without a race coefficient, following recommendations from US kidney organisations, to avoid race-based adjustments.
+  - q: How do I convert µmol/L to mg/dL?
+    a: Divide by 88.4. A creatinine of 88 µmol/L is about 1.0 mg/dL.
+  - q: Is eGFR the same as creatinine clearance?
+    a: No. eGFR is normalised to 1.73 m² of body surface area and is used for CKD staging. Creatinine clearance (Cockcroft–Gault) is often used for drug dosing.
+related: [health/creatinine-clearance, health/body-surface-area, health/bmi, chemistry/osmotic-pressure]
+---
+
+## How to use this calculator
+
+Enter **serum creatinine** in mg/dL, **age** and **sex**. The result is the estimated GFR in mL/min per 1.73 m², with the matching CKD stage.
+
+This tool is for education. Diagnosis and treatment decisions need a clinician, repeated tests and other markers such as urine albumin.
+
+## The CKD-EPI 2021 equation
+
+<p class="formula">eGFR = 142 × min(Scr/κ, 1)<sup>α</sup> × max(Scr/κ, 1)<sup>−1.200</sup> × 0.9938<sup>age</sup> × 1.012 [female]</p>
+
+| | Female | Male |
+|---|---|---|
+| κ | 0.7 | 0.9 |
+| α | −0.241 | −0.302 |
+
+## eGFR by creatinine and age
+
+| Creatinine | Male, 40 | Male, 70 | Female, 40 | Female, 70 |
+|---|---|---|---|---|
+| 0.6 mg/dL | 125 | 104 | 116 | 97 |
+| 0.8 mg/dL | 115 | 95 | 95 | 79 |
+| 1.0 mg/dL | 98 | 81 | 73 | 61 |
+| 1.2 mg/dL | 78 | 65 | 59 | 49 |
+| 1.5 mg/dL | 60 | 50 | 45 | 37 |
+| 2.0 mg/dL | 42 | 35 | 32 | 26 |
+| 3.0 mg/dL | 26 | 22 | 20 | 16 |
+
+## CKD stages (KDIGO)
+
+| Stage | eGFR | Description |
+|---|---|---|
+| G1 | 90+ | Normal or high |
+| G2 | 60–89 | Mildly decreased |
+| G3a | 45–59 | Mildly to moderately decreased |
+| G3b | 30–44 | Moderately to severely decreased |
+| G4 | 15–29 | Severely decreased |
+| G5 | under 15 | Kidney failure |
+
+Chronic kidney disease is diagnosed when eGFR stays below 60 for more than 3 months, or when there are other signs of kidney damage.
+
+## When eGFR is less reliable
+
+- Very high or low muscle mass (bodybuilders, amputees, frail elderly).
+- Acute kidney injury, when creatinine is changing quickly.
+- Pregnancy and children (use paediatric equations).
+- High meat intake or creatine supplements shortly before the test.
+
+Cystatin C based equations can help in these situations.

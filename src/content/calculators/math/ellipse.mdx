@@ -1,0 +1,72 @@
+---
+title: Ellipse Calculator (Area, Perimeter, Eccentricity)
+description: Calculate the area, perimeter (Ramanujan approximation), eccentricity and foci distance of an ellipse from its two semi-axes.
+category: math
+keywords: [ellipse calculator, area of ellipse, perimeter of ellipse, circumference of ellipse, eccentricity calculator, oval area, ellipse foci]
+updated: 2026-10-27
+variables:
+  - { id: a, label: Semi-major axis (a), family: length, unit: cm, imperialUnit: in, default: 10, min: 0 }
+  - { id: b, label: Semi-minor axis (b), family: length, unit: cm, imperialUnit: in, default: 6, min: 0 }
+  - { id: A, label: Area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+  - { id: P, label: Perimeter (approx.), family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: ec, label: Eccentricity, min: 0, max: 1, decimals: 4 }
+  - { id: fc, label: Centre to each focus, family: length, unit: cm, imperialUnit: in, min: 0 }
+equations:
+  - A = pi * a * b
+  - P = pi * (3*(a + b) - sqrt((3*a + b) * (a + 3*b)))
+  - ec = sqrt(1 - b^2 / a^2)
+  - fc = sqrt(a^2 - b^2)
+freedom: 2
+faq:
+  - q: What is the area of an ellipse?
+    a: π × a × b, where a and b are the semi-axes (half the longest and shortest widths).
+  - q: Is there an exact formula for the perimeter of an ellipse?
+    a: No simple exact formula exists. Ramanujan’s approximation used here is accurate to within a tiny fraction of a percent for most shapes.
+  - q: What is eccentricity?
+    a: A measure of how stretched the ellipse is, from 0 (a circle) to nearly 1 (very flat).
+  - q: How do I measure an oval table?
+    a: Measure the full length and width, then halve each to get a and b.
+related: [math/circle, math/arc-length, math/sphere, math/polygon]
+---
+
+## How to use this calculator
+
+Enter the **semi-major axis** (half the longest width) and the **semi-minor axis** (half the shortest width). You get the area, perimeter, eccentricity and the distance from the centre to each focus.
+
+## The formulas
+
+| Quantity | Formula |
+|---|---|
+| Area | π a b |
+| Perimeter (Ramanujan) | π [3(a + b) − √((3a + b)(a + 3b))] |
+| Eccentricity | √(1 − b² ÷ a²) |
+| Focus distance | √(a² − b²) |
+
+## Example
+
+a = 10 cm, b = 6 cm:
+
+- Area = π × 10 × 6 = **188.50 cm²**
+- Perimeter ≈ **51.05 cm**
+- Eccentricity = **0.8000**
+
+## Ellipse table (a = 10)
+
+| b | Area | Perimeter | Eccentricity |
+|---|---|---|---|
+| 10 | 314.2 | 62.83 | 0.000 |
+| 8 | 251.3 | 56.72 | 0.600 |
+| 6 | 188.5 | 51.05 | 0.800 |
+| 4 | 125.7 | 46.03 | 0.917 |
+| 2 | 62.8 | 42.01 | 0.980 |
+| 1 | 31.4 | 40.61 | 0.995 |
+
+When b = a, the ellipse is a circle and the eccentricity is 0.
+
+## Planet orbits
+
+Planets move in ellipses with the Sun at one focus. Earth's orbit has an eccentricity of about 0.017 — almost a circle. Halley's Comet has about 0.967, a long, thin ellipse.
+
+## Drawing an ellipse
+
+Push two pins into a board at the foci, loop a string of length 2a around them and trace with a pencil keeping the string tight. This is the gardener's method for oval flower beds.

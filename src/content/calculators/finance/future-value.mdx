@@ -1,0 +1,75 @@
+---
+title: Future Value Calculator
+description: Calculate the future value of a lump sum plus regular monthly deposits, with compound interest — or find the deposit needed for a goal.
+category: finance
+keywords: [future value calculator, fv calculator, future value of investment, future value with monthly contributions, compound interest with deposits, time value of money]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: PV, label: Starting amount, family: currency, default: 10000, min: 0, decimals: 2 }
+  - { id: PMT, label: Monthly deposit, family: currency, default: 500, min: 0, decimals: 2 }
+  - { id: r, label: Annual return, family: percent, unit: '%', default: 8, min: 0.0001, max: 1 }
+  - { id: t, label: Years, family: time, unit: yr, default: 20, min: 0 }
+  - { id: FV, label: Future value, family: currency, min: 0, decimals: 2 }
+  - { id: C, label: Total contributed, family: currency, min: 0, decimals: 2 }
+  - { id: G, label: Growth (interest earned), family: currency, decimals: 2 }
+equations:
+  - FV = PV * (1 + r/12)^(12*t) + PMT * ((1 + r/12)^(12*t) - 1) / (r/12)
+  - C = PV + PMT * 12 * t
+  - G = FV - C
+chart: { x: t, y: FV, from: 1, to: 40 }
+faq:
+  - q: What is future value?
+    a: The amount an investment grows to after a period of time at a given rate of return, including interest on interest.
+  - q: How much will 10,000 plus 500 a month grow to in 20 years at 8%?
+    a: "About 343,778, from 130,000 contributed."
+  - q: Are deposits made at the start or end of each month?
+    a: This calculator assumes the end of each month (an ordinary annuity). Deposits at the start of each month grow slightly more.
+  - q: How do I find the monthly deposit for a goal?
+    a: Press × on Monthly deposit and type the future value you want.
+related: [finance/compound-interest, finance/sip, finance/present-value, finance/savings-goal]
+---
+
+## How to use this calculator
+
+Enter a **starting amount**, a **monthly deposit**, the **expected annual return** and the **number of years**. You get the future value, how much you put in and how much came from growth. It works in reverse: press × on any field to solve for it.
+
+## The formula
+
+<p class="formula">FV = PV × (1 + i)<sup>n</sup> + PMT × [((1 + i)<sup>n</sup> − 1) ÷ i]</p>
+
+- **PV** = starting amount, **PMT** = monthly deposit
+- **i** = annual return ÷ 12, **n** = months
+
+The first part grows the lump sum; the second adds up every monthly deposit with its interest.
+
+## Worked example
+
+10,000 to start, 500 a month, 8% a year, 20 years:
+
+- Lump sum grows to 49,268
+- Deposits grow to 294,510
+- **Future value = 343,778**, from 130,000 contributed
+
+## How time and rate change the result
+
+500 a month, nothing to start:
+
+| Years | 5% | 8% | 10% |
+|---|---|---|---|
+| 5 | 34,003 | 36,738 | 38,719 |
+| 10 | 77,641 | 91,473 | 102,422 |
+| 20 | 205,517 | 294,510 | 379,684 |
+| 30 | 416,129 | 745,180 | 1,130,244 |
+| 40 | 763,010 | 1,745,504 | 3,162,040 |
+
+Doubling the time more than doubles the result, because growth compounds on itself.
+
+## Real (inflation-adjusted) value
+
+A future value is in future money. To see what it is worth in today's money, divide by (1 + inflation)<sup>years</sup>, or use the [real return calculator](/finance/real-return/) with your expected inflation.
+
+## Related calculators
+
+- [SIP calculator](/finance/sip/) — monthly investing with deposits at the start of each month.
+- [Present value](/finance/present-value/) — the reverse: what a future amount is worth today.

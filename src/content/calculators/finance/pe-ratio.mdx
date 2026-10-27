@@ -1,0 +1,68 @@
+---
+title: P/E Ratio Calculator (Price to Earnings)
+description: Calculate the price-to-earnings ratio, earnings yield and PEG ratio of a stock from its share price, EPS and growth rate.
+category: finance
+keywords: [pe ratio calculator, price to earnings ratio, p/e ratio, earnings yield, peg ratio, eps calculator, stock valuation]
+updated: 2026-10-27
+variables:
+  - { id: P, label: Share price, family: currency, default: 1500, min: 0, decimals: 2 }
+  - { id: eps, label: "Earnings per share (EPS, last 12 months)", family: currency, default: 60, min: 0.0001, decimals: 2 }
+  - { id: g, label: Expected annual EPS growth, family: percent, unit: '%', default: 15, min: 0.0001 }
+  - { id: pe, label: P/E ratio, suffix: '×', min: 0, decimals: 2 }
+  - { id: ey, label: Earnings yield, family: percent, unit: '%', min: 0 }
+  - { id: peg, label: PEG ratio, min: 0, decimals: 2 }
+equations:
+  - pe = P / eps
+  - ey = eps / P
+  - peg = pe / (g * 100)
+faq:
+  - q: What is a good P/E ratio?
+    a: There is no single good number. Compare with the company’s history, its industry and the market. Fast-growing companies usually trade at higher P/Es.
+  - q: How is EPS calculated?
+    a: EPS = net profit attributable to shareholders ÷ number of shares outstanding.
+  - q: What is the PEG ratio?
+    a: P/E divided by the expected earnings growth rate (in %). A PEG near 1 is often seen as fair value; below 1 may suggest the stock is cheap relative to its growth.
+  - q: What is a negative P/E?
+    a: When a company has losses, EPS is negative and P/E is not meaningful. Analysts usually show it as “n/a”.
+related: [finance/dividend-yield, finance/stock-average, finance/cagr, finance/roi]
+---
+
+## How to use this calculator
+
+Enter the **share price**, the **earnings per share** for the last twelve months (trailing EPS) and, optionally, the **expected EPS growth rate**. The calculator gives the P/E ratio, earnings yield and PEG ratio. To find the price at a target P/E, press × on Share price.
+
+## The formulas
+
+<p class="formula">P/E = Price ÷ EPS &nbsp;·&nbsp; Earnings yield = EPS ÷ Price &nbsp;·&nbsp; PEG = P/E ÷ growth (%)</p>
+
+## Example
+
+Price 1,500, EPS 60, growth 15%:
+
+- P/E = 1,500 ÷ 60 = **25×** — investors pay 25 for each 1 of yearly earnings
+- Earnings yield = **4%**
+- PEG = 25 ÷ 15 = **1.67**
+
+## What P/E tells you
+
+| P/E | Often suggests |
+|---|---|
+| Under 10 | Low growth, cyclical business, or the market sees risk |
+| 10–20 | Mature, steady companies |
+| 20–40 | Strong growth expected |
+| Above 40 | Very high growth expectations or temporarily low earnings |
+
+## Trailing vs forward P/E
+
+- **Trailing P/E** uses the last 12 months of actual earnings.
+- **Forward P/E** uses analysts' estimates for the next 12 months.
+
+Forward P/E is lower for growing companies but relies on forecasts that may be wrong.
+
+## Earnings yield vs bond yields
+
+Earnings yield (the inverse of P/E) lets you compare stocks with bonds and deposits. A P/E of 25 means a 4% earnings yield — though earnings can grow, unlike a fixed coupon.
+
+## Limits
+
+P/E ignores debt, cash, cyclicality and one-off gains or losses. Compare it with other measures such as price-to-book, EV/EBITDA and [dividend yield](/finance/dividend-yield/).

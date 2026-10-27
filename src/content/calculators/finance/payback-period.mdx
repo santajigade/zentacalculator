@@ -1,0 +1,72 @@
+---
+title: Payback Period Calculator
+description: Calculate how long an investment takes to pay for itself from yearly savings or cash flow — simple and discounted payback.
+category: finance
+keywords: [payback period calculator, payback period, discounted payback, break even time, solar payback, investment payback, roi years]
+updated: 2026-10-27
+variables:
+  - { id: C, label: Initial investment, family: currency, default: 300000, min: 0, decimals: 2 }
+  - { id: A, label: Yearly savings or cash flow, family: currency, default: 60000, min: 0.01, decimals: 2 }
+  - { id: r, label: Discount rate (for discounted payback), family: percent, unit: '%', default: 8, min: 0.0001, max: 1 }
+  - { id: pb, label: Simple payback, family: time, unit: yr, min: 0 }
+  - { id: dpb, label: Discounted payback, family: time, unit: yr, min: 0 }
+equations:
+  - pb = C / A
+  - dpb = -ln(1 - C * r / A) / ln(1 + r)
+faq:
+  - q: How do I calculate payback period?
+    a: Divide the initial cost by the yearly savings or cash flow. 3,00,000 ÷ 60,000 = 5 years.
+  - q: What is discounted payback?
+    a: The time to recover the investment when future savings are discounted to today’s value. It is always longer than simple payback.
+  - q: What is a good payback period?
+    a: Many businesses look for 2–5 years. Home solar systems commonly pay back in 4–8 years depending on sunshine and tariffs.
+  - q: Why does discounted payback show no result?
+    a: If yearly savings never exceed the interest on the investment (C × r ≥ A), the project never pays back in present-value terms.
+related: [finance/roi, finance/present-value, ecology/solar-system-size, ecology/led-savings]
+---
+
+## How to use this calculator
+
+Enter the **initial investment**, the **yearly savings or cash flow** it produces and a **discount rate** (your cost of money or alternative return). You get the simple and discounted payback periods.
+
+## The formulas
+
+<p class="formula">Simple payback = Investment ÷ Yearly cash flow</p>
+
+<p class="formula">Discounted payback = −ln(1 − C × r ÷ A) ÷ ln(1 + r)</p>
+
+The discounted formula assumes equal yearly cash flows.
+
+## Payback at different discount rates
+
+Investment 3,00,000, savings 60,000 a year:
+
+| Discount rate | Discounted payback |
+|---|---|
+| 0.01% | 5.0 years |
+| 4% | 5.7 years |
+| 6% | 6.1 years |
+| 8% | 6.6 years |
+| 10% | 7.3 years |
+| 12% | 8.1 years |
+| 15% | 9.9 years |
+
+The first row is effectively the simple payback (5 years).
+
+## Typical payback periods
+
+| Investment | Typical payback |
+|---|---|
+| LED lighting upgrade | under 1 year |
+| Variable-speed drive on a pump or fan | 1–3 years |
+| Rooftop solar (sunny regions) | 4–8 years |
+| Building insulation | 3–10 years |
+| Industrial machinery | 2–5 years |
+
+## Limits of payback
+
+Payback ignores everything **after** the payback point. A project that pays back in 3 years but stops earning in year 4 can look better than one that pays back in 5 years and earns for 20. Use payback alongside [ROI](/finance/roi/) or net present value.
+
+## Uneven cash flows
+
+If savings vary year to year, subtract each year's cash flow from the investment until it reaches zero. The year in which the running balance turns positive is the payback year.

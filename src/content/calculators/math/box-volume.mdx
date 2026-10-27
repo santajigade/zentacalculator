@@ -1,0 +1,65 @@
+---
+title: Box Volume Calculator (Rectangular Prism)
+description: Calculate the volume, surface area and diagonal of a box or rectangular prism — in litres, cubic metres, cubic feet or gallons.
+category: math
+keywords: [box volume calculator, volume of a box, rectangular prism volume, cuboid volume, cubic feet calculator, surface area of a box, cubic meters calculator]
+updated: 2026-10-27
+variables:
+  - { id: l, label: Length, family: length, unit: cm, imperialUnit: in, default: 60, min: 0 }
+  - { id: w, label: Width, family: length, unit: cm, imperialUnit: in, default: 40, min: 0 }
+  - { id: h, label: Height, family: length, unit: cm, imperialUnit: in, default: 30, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: L, imperialUnit: ft3, min: 0 }
+  - { id: S, label: Surface area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+  - { id: d, label: Space diagonal, family: length, unit: cm, imperialUnit: in, min: 0 }
+equations:
+  - V = l * w * h
+  - S = 2 * (l*w + l*h + w*h)
+  - d = sqrt(l^2 + w^2 + h^2)
+faq:
+  - q: How do I calculate the volume of a box?
+    a: Multiply length × width × height. A 60 × 40 × 30 cm box holds 72,000 cm³, or 72 litres.
+  - q: How do I convert cm³ to litres?
+    a: Divide by 1,000. 1,000 cm³ = 1 litre.
+  - q: How many cubic feet is a box?
+    a: Measure in feet and multiply, or measure in inches, multiply and divide by 1,728.
+  - q: What is the longest item that fits in a box?
+    a: The space diagonal, √(l² + w² + h²). For a 60 × 40 × 30 cm box it is 78.1 cm.
+related: [math/cylinder-volume, math/rectangle, construction/rectangular-tank, other/aquarium-volume]
+---
+
+## How to use this calculator
+
+Enter the **length**, **width** and **height**. You get the volume, the total surface area and the space diagonal. Change any unit — the results convert automatically.
+
+## The formulas
+
+<p class="formula">V = l × w × h &nbsp;·&nbsp; S = 2(lw + lh + wh) &nbsp;·&nbsp; d = √(l² + w² + h²)</p>
+
+## Common box sizes
+
+| Box (cm) | Volume | Cubic feet |
+|---|---|---|
+| 30 × 20 × 15 | 9.0 L | 0.32 ft³ |
+| 40 × 30 × 30 | 36.0 L | 1.27 ft³ |
+| 45 × 45 × 45 | 91.1 L | 3.22 ft³ |
+| 60 × 40 × 40 | 96.0 L | 3.39 ft³ |
+| 60 × 45 × 45 | 121.5 L | 4.29 ft³ |
+| 100 × 100 × 100 | 1000.0 L | 35.31 ft³ |
+
+## Shipping: volumetric weight
+
+Couriers charge by actual or volumetric weight, whichever is higher:
+
+<p class="formula">Volumetric weight (kg) = L × W × H (cm) ÷ 5,000</p>
+
+A 60 × 40 × 30 cm box has a volumetric weight of 14.4 kg. Some carriers divide by 6,000 for road freight — check your courier.
+
+## Moving and storage
+
+- A standard moving box is roughly 1.5–3 ft³.
+- A storage unit 5 × 10 × 8 ft holds 400 ft³ (11.3 m³).
+- A 20 ft shipping container has about 33 m³ of internal space.
+
+## Cube
+
+For a cube with side s: V = s³, S = 6s², d = s√3.

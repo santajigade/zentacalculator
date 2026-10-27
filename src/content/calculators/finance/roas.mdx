@@ -1,0 +1,80 @@
+---
+title: ROAS Calculator (Return on Ad Spend)
+description: Calculate ROAS, ad profit and break-even ROAS from ad spend, revenue and margin — for Google, Meta and other paid campaigns.
+category: finance
+keywords: [roas calculator, return on ad spend, break even roas, roas formula, ad spend calculator, google ads roas, facebook ads roas, marketing roi]
+updated: 2026-10-27
+featured: true
+variables:
+  - { id: sp, label: Ad spend, family: currency, default: 1000, min: 0.01, decimals: 2 }
+  - { id: rev, label: Revenue from ads, family: currency, default: 4000, min: 0, decimals: 2 }
+  - { id: m, label: Gross margin, family: percent, unit: '%', default: 40, min: 0.001, max: 1 }
+  - { id: roas, label: ROAS, suffix: '×', min: 0, decimals: 2 }
+  - { id: pr, label: Profit after ad spend, family: currency, decimals: 2 }
+  - { id: be, label: Break-even ROAS, suffix: '×', min: 0, decimals: 2 }
+  - { id: roi, label: Marketing ROI, family: percent, unit: '%' }
+equations:
+  - roas = rev / sp
+  - pr = rev * m - sp
+  - be = 1 / m
+  - roi = pr / sp
+faq:
+  - q: What is a good ROAS?
+    a: It depends on your margin. A common benchmark is 4× (400%), but a business with 25% margins needs at least 4× just to break even, while one with 60% margins breaks even at 1.67×.
+  - q: How is ROAS calculated?
+    a: ROAS = revenue from ads ÷ ad spend. 4,000 of revenue from 1,000 of spend is a ROAS of 4× (400%).
+  - q: What is break-even ROAS?
+    a: "The ROAS at which gross profit exactly covers ad spend: 1 ÷ gross margin. At a 40% margin, break-even ROAS is 2.5×."
+  - q: What is the difference between ROAS and ROI?
+    a: ROAS uses revenue; ROI uses profit. A campaign can have a 3× ROAS and still lose money if margins are thin.
+related: [finance/customer-lifetime-value, finance/ad-metrics, finance/profit-margin, finance/roi]
+---
+
+## How to use this calculator
+
+Enter your **ad spend**, the **revenue** attributed to those ads and your **gross margin** (the share of revenue left after the cost of goods). You get ROAS, profit after ad spend, the break-even ROAS and marketing ROI.
+
+## The formulas
+
+<p class="formula">ROAS = Revenue ÷ Ad spend &nbsp;·&nbsp; Break-even ROAS = 1 ÷ Margin</p>
+
+<p class="formula">Profit = Revenue × Margin − Ad spend &nbsp;·&nbsp; ROI = Profit ÷ Ad spend</p>
+
+## Break-even ROAS by margin
+
+| Gross margin | Break-even ROAS | Target ROAS for 20% ROI |
+|---|---|---|
+| 20% | 5.00× | 6.00× |
+| 25% | 4.00× | 4.80× |
+| 30% | 3.33× | 4.00× |
+| 40% | 2.50× | 3.00× |
+| 50% | 2.00× | 2.40× |
+| 60% | 1.67× | 2.00× |
+| 70% | 1.43× | 1.71× |
+| 80% | 1.25× | 1.50× |
+
+## Example
+
+1,000 spent, 4,000 revenue, 40% margin:
+
+- ROAS = 4,000 ÷ 1,000 = **4×**
+- Gross profit = 1,600; after ad spend = **600**
+- Break-even ROAS = **2.5×**
+- Marketing ROI = **60%**
+
+## Beyond the first order
+
+ROAS looks only at the first purchase. If customers buy again, the true return is higher. Compare acquisition cost with [customer lifetime value](/finance/customer-lifetime-value/) for a fuller picture.
+
+## Attribution caveats
+
+- Ad platforms often over-attribute sales (several platforms may claim the same order).
+- View-through conversions can inflate ROAS.
+- Use consistent attribution windows when comparing campaigns.
+
+## Improving ROAS
+
+- Raise conversion rate with better landing pages and offers.
+- Increase average order value with bundles and upsells.
+- Cut spend on keywords, audiences and placements below break-even.
+- Track ad metrics such as CTR and CPC with the [ad metrics calculator](/finance/ad-metrics/).

@@ -32,6 +32,10 @@ faq:
     a: A common rule flags values below Q1 − 1.5×IQR or above Q3 + 1.5×IQR.
   - q: Why do calculators give different quartiles?
     a: There are several methods. This one uses linear interpolation, the same as Excel's QUARTILE.INC and PERCENTILE.INC.
+  - q: "What is the interquartile range?"
+    a: "Q3 − Q1: the range of the middle 50% of the data."
+  - q: "How do I find Q1?"
+    a: "Sort the data and find the median of the lower half. The calculator does this automatically."
 related: [statistics/mean-median-mode, statistics/standard-deviation]
 ---
 
@@ -50,6 +54,35 @@ Data: 1, 3, 5, 6, 7, 8, 9, 12, 15, 21
 - Q1 = **5.25**, median = **7.5**, Q3 = **11.25**
 - IQR = **6**
 - Fences: -3.75 and 20.25 → **21 is an outlier**
+
+## Different quartile methods
+
+Software packages use several slightly different methods, which can give different Q1 and Q3 for small data sets:
+
+| Method | Used by |
+|---|---|
+| Exclusive median (Tukey) | Many textbooks, TI calculators |
+| Inclusive median | Some textbooks |
+| Linear interpolation (type 7) | Excel QUARTILE.INC, R default, NumPy |
+| Type 6 | Excel QUARTILE.EXC, Minitab, SPSS |
+
+For large data sets the methods agree closely. Note which method you used in reports.
+
+## Percentiles
+
+Quartiles are special percentiles: Q1 = 25th, Q2 = 50th (median), Q3 = 75th. Deciles split data into tenths. The 90th percentile is often used for response times and growth charts.
+
+## Five-number summary
+
+Minimum, Q1, median, Q3 and maximum together describe the spread and skew of the data, and are what a box plot draws.
+
+## Outliers
+
+Values below Q1 − 1.5 × IQR or above Q3 + 1.5 × IQR are flagged as possible outliers. Using 3 × IQR marks “extreme” outliers. Always check outliers rather than deleting them automatically — they may be errors or the most interesting points.
+
+## IQR vs standard deviation
+
+The IQR ignores extreme values, so it is a robust measure of spread for skewed data. For roughly normal data, IQR ≈ 1.35 × standard deviation.
 
 ## Box plots
 

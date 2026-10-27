@@ -23,6 +23,10 @@ faq:
     a: P(A or B) = P(A) + P(B) − P(A and B), so the overlap isn't counted twice.
   - q: What does independent mean?
     a: One event doesn't change the chance of the other, like two separate coin flips.
+  - q: "What is the probability of rolling a 6 on a die?"
+    a: "1 in 6, or about 16.7%."
+  - q: "What is the probability of two independent events both happening?"
+    a: "Multiply them: P(A) × P(B). Two heads in a row is 0.5 × 0.5 = 25%."
 related: [statistics/combinations, statistics/binomial-probability, statistics/odds-probability]
 ---
 
@@ -41,6 +45,42 @@ P(A) = 50%, P(B) = 30%:
 - Both = **15%**
 - Either = 50 + 30 − 15 = **65%**
 - Neither = **35%**
+
+## Independent vs mutually exclusive
+
+| | Independent | Mutually exclusive |
+|---|---|---|
+| Meaning | One does not affect the other | Cannot both happen |
+| P(A and B) | P(A) × P(B) | 0 |
+| P(A or B) | P(A) + P(B) − P(A)P(B) | P(A) + P(B) |
+| Example | Two coin tosses | Rolling a 2 or a 5 on one die |
+
+The calculator assumes **independent** events.
+
+## Conditional probability
+
+When events are not independent:
+
+<p class="formula">P(A and B) = P(A) × P(B given A)</p>
+
+Drawing two aces from a deck without replacement: 4/52 × 3/51 = **0.45%**.
+
+## Bayes' theorem
+
+<p class="formula">P(A given B) = P(B given A) × P(A) ÷ P(B)</p>
+
+**Example**: a test is 99% sensitive and 95% specific for a condition affecting 1% of people. If you test positive, the chance you have it is 0.99 × 0.01 ÷ (0.99 × 0.01 + 0.05 × 0.99) ≈ **16.7%** — surprisingly low, because false positives from the 99% without the condition outnumber true positives.
+
+## Dice probabilities (two dice)
+
+| Total | Ways | Probability |
+|---|---|---|
+| 2 or 12 | 1 | 2.78% |
+| 3 or 11 | 2 | 5.56% |
+| 4 or 10 | 3 | 8.33% |
+| 5 or 9 | 4 | 11.11% |
+| 6 or 8 | 5 | 13.89% |
+| 7 | 6 | 16.67% |
 
 ## At least once in several tries
 

@@ -29,6 +29,10 @@ faq:
     a: How spread out the values are around the mean. A small value means the data is tightly clustered.
   - q: How is variance related?
     a: Variance is the square of the standard deviation.
+  - q: "What is a good standard deviation?"
+    a: "There is no universal value — it depends on the data. Compare it with the mean (see coefficient of variation) or with a target tolerance."
+  - q: "Why divide by n − 1?"
+    a: "Because the mean is estimated from the same data, which makes deviations slightly smaller. Dividing by n − 1 corrects this bias."
 related: [statistics/mean-median-mode, statistics/z-score, statistics/standard-error]
 ---
 
@@ -52,6 +56,37 @@ Data: 4, 8, 6, 5, 3, 7, 9, 5 (n = 8)
 ## Interpreting standard deviation
 
 For roughly bell-shaped data, about 68% of values fall within 1 SD of the mean and 95% within 2 SD. See the [empirical rule calculator](/statistics/empirical-rule/).
+
+## Step-by-step example
+
+Data: 4, 8, 6, 5, 7.
+
+| x | x − mean (6) | (x − mean)² |
+|---|---|---|
+| 4 | −2 | 4 |
+| 8 | 2 | 4 |
+| 6 | 0 | 0 |
+| 5 | −1 | 1 |
+| 7 | 1 | 1 |
+| | **Sum** | **10** |
+
+- Sample variance = 10 ÷ (5 − 1) = 2.5, sample SD = **1.581**
+- Population variance = 10 ÷ 5 = 2, population SD = **1.414**
+
+## Sample or population?
+
+- Use **sample** SD (n − 1) when your data are a sample from a larger group — the usual case.
+- Use **population** SD (n) when you have every member of the group.
+
+Dividing by n − 1 (Bessel's correction) makes the sample variance an unbiased estimate of the population variance.
+
+## Standard deviation vs standard error
+
+The SD describes the spread of individual values. The standard error (SD ÷ √n) describes how precisely the mean is estimated. See the [standard error calculator](/statistics/standard-error/).
+
+## Units
+
+The SD has the same units as the data; the variance has squared units. That is why SD is easier to interpret: “heights vary by about 7 cm” rather than “49 cm²”.
 
 ## In Excel
 

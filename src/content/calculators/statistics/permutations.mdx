@@ -17,6 +17,10 @@ faq:
     a: nPr = n! ÷ (n − r)!. For 10 and 3, 10 × 9 × 8 = 720.
   - q: How is it different from combinations?
     a: Combinations ignore order. nPr = nCr × r!, so there are always more permutations than combinations.
+  - q: "How many ways can 3 people finish first, second and third out of 10?"
+    a: "10 × 9 × 8 = 720."
+  - q: "What is the difference between nPr and nCr?"
+    a: "nPr counts ordered arrangements; nCr counts unordered selections. nPr = nCr × r!."
 related: [statistics/combinations, statistics/probability]
 ---
 
@@ -33,6 +37,41 @@ Enter the **total number of items** and how many are **chosen**. The number of o
 Gold, silver and bronze from 10 runners:
 
 10P3 = 10 × 9 × 8 = **720**
+
+## Common permutations
+
+| Situation | n | r | Permutations |
+|---|---|---|---|
+| Podium: 3 from 8 runners | 8 | 3 | 336 |
+| 4-digit PIN, no repeated digits | 10 | 4 | 5,040 |
+| Arrange 5 books on a shelf | 5 | 5 | 120 |
+| President, VP, secretary from 20 | 20 | 3 | 6,840 |
+| Order of 52 cards | 52 | 52 | 80,658,175,170,943,878,571,660,636,856,403,766,975,289,505,440,883,277,824,000,000,000,000 |
+
+52! is about 8.07 × 10<sup>67</sup>: every well-shuffled deck is almost certainly an order never seen before.
+
+## Permutations with repetition
+
+If items can repeat, there are n<sup>r</sup> arrangements. A 4-digit PIN with repeats allowed has 10<sup>4</sup> = **10,000** possibilities, compared with 5,040 without repeats.
+
+## Arranging letters with duplicates
+
+For words with repeated letters, divide by the factorial of each repeat count. MISSISSIPPI has 11 letters (4 S, 4 I, 2 P):
+
+<p class="formula">11! ÷ (4! × 4! × 2!) = 34,650</p>
+
+## Circular arrangements
+
+Seating n people around a round table, where rotations are the same, gives (n − 1)! arrangements. Six people can sit in 5! = **120** distinct ways.
+
+## Factorials grow fast
+
+| n | n! |
+|---|---|
+| 5 | 120 |
+| 10 | 3,628,800 |
+| 15 | 1,307,674,368,000 |
+| 20 | 2,432,902,008,176,640,000 |
 
 ## More examples
 

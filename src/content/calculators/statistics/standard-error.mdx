@@ -24,6 +24,10 @@ faq:
     a: SD describes spread in the data; SE describes uncertainty in the mean. SE = SD ÷ √n, so it shrinks as the sample grows.
   - q: How is SE used?
     a: To build confidence intervals — roughly, mean ± 2 SE gives a 95% interval.
+  - q: "What is the difference between standard deviation and standard error?"
+    a: "SD measures the spread of the data; SE measures how precisely the sample mean estimates the population mean."
+  - q: "How do I reduce standard error?"
+    a: "Increase the sample size or reduce variability in measurements."
 related: [statistics/standard-deviation, statistics/confidence-interval]
 ---
 
@@ -42,6 +46,44 @@ Data: 12, 15, 11, 14, 13, 16, 12, 14, 15, 13
 - Mean = **13.5**, s = **1.581**
 - SE = 1.581 ÷ √10 = **0.500**
 - Approximate 95% interval: 13.5 ± 1.00
+
+## Standard error shrinks with sample size
+
+SD = 10:
+
+| n | Standard error |
+|---|---|
+| 4 | 5.000 |
+| 9 | 3.333 |
+| 16 | 2.500 |
+| 25 | 2.000 |
+| 100 | 1.000 |
+| 400 | 0.500 |
+| 1000 | 0.316 |
+
+To halve the standard error, you need **four times** the sample.
+
+## Error bars in charts
+
+| Error bar | Shows |
+|---|---|
+| ±1 SD | Spread of individual values |
+| ±1 SE | Precision of the mean (about a 68% CI) |
+| 95% CI (≈ ±2 SE) | Range likely to contain the true mean |
+
+Always state which one a chart uses — SE bars look much smaller than SD bars.
+
+## Standard error of a proportion
+
+For percentages: SE = √(p × (1 − p) ÷ n). For 40% of 500 people, SE = √(0.4 × 0.6 ÷ 500) = **2.19%**.
+
+## Standard error of a difference
+
+For two independent means: SE<sub>diff</sub> = √(SE₁² + SE₂²). This is the basis of the two-sample t-test.
+
+## From SE to confidence interval
+
+95% CI ≈ mean ± 1.96 × SE for large samples. See the [confidence interval calculator](/statistics/confidence-interval/).
 
 ## Sample size effect
 

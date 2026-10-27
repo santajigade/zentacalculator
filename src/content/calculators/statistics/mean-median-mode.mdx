@@ -29,6 +29,10 @@ faq:
     a: Then there is no mode. The calculator shows the count as 1 to indicate every value appears once.
   - q: What if two values are equally common?
     a: The data is bimodal. The calculator shows the smaller of the most frequent values.
+  - q: "What is the mean, median and mode of 2, 3, 3, 5, 7?"
+    a: "Mean 4, median 3, mode 3."
+  - q: "Which average should I use for income data?"
+    a: "The median, because a few very high incomes pull the mean upward."
 related: [math/average, statistics/standard-deviation, statistics/quartiles]
 ---
 
@@ -51,6 +55,38 @@ Data: 3, 7, 7, 2, 9, 7, 4, 5, 2 → sorted: 2, 2, 3, 4, **5**, 7, 7, 7, 9
 - Median = **5**
 - Mode = **7** (appears 3 times)
 - Range = 9 − 2 = **7**
+
+## Skewed data
+
+The relationship between the three averages shows the shape of the data:
+
+| Shape | Typical order | Example |
+|---|---|---|
+| Symmetric | Mean ≈ median ≈ mode | Heights, test scores |
+| Right-skewed (long tail to the right) | Mode < median < mean | Incomes, house prices |
+| Left-skewed (long tail to the left) | Mean < median < mode | Age at retirement, easy test scores |
+
+## Multiple modes
+
+A data set can have:
+
+- **No mode**: every value appears once.
+- **One mode** (unimodal).
+- **Two modes** (bimodal), which may mean two groups are mixed — such as the heights of men and women together.
+
+The calculator shows the most frequent value; if several values tie, check the data for more than one mode.
+
+## Grouped data
+
+For data in classes (such as 10–19, 20–29), estimate:
+
+- **Mean** = Σ(midpoint × frequency) ÷ total frequency
+- **Median class**: the class containing the middle value
+- **Modal class**: the class with the highest frequency
+
+## Trimmed mean
+
+A trimmed mean removes a fixed share of the highest and lowest values (often 5–10%) before averaging. Sports judging often drops the top and bottom scores for this reason.
 
 ## When to use each
 

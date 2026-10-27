@@ -19,6 +19,10 @@ faq:
     a: The expected (average) number of events in the interval.
   - q: How is it related to the binomial distribution?
     a: It approximates the binomial when trials are many and the success probability is small, with λ = n × p.
+  - q: "What is λ in the Poisson formula?"
+    a: "The average number of events in the interval you are studying."
+  - q: "What is the probability of at least one event?"
+    a: "P(at least 1) = 1 − e^(−λ). For λ = 3, it is about 95%."
 related: [statistics/binomial-probability, statistics/probability]
 ---
 
@@ -37,6 +41,40 @@ A help desk averages 3 calls per hour. The chance of exactly 5 calls in an hour:
 P = 3⁵ × e⁻³ ÷ 120 = **10.08%**
 
 The chance of a quiet hour with no calls is e⁻³ = **4.98%**.
+
+## Cumulative probabilities for λ = 3
+
+| k | P(exactly k) | P(k or fewer) | P(more than k) |
+|---|---|---|---|
+| 0 | 4.98% | 4.98% | 95.02% |
+| 1 | 14.94% | 19.91% | 80.09% |
+| 2 | 22.40% | 42.32% | 57.68% |
+| 3 | 22.40% | 64.72% | 35.28% |
+| 4 | 16.80% | 81.53% | 18.47% |
+| 5 | 10.08% | 91.61% | 8.39% |
+| 6 | 5.04% | 96.65% | 3.35% |
+| 7 | 2.16% | 98.81% | 1.19% |
+| 8 | 0.81% | 99.62% | 0.38% |
+
+## When to use the Poisson distribution
+
+- Events happen independently.
+- The average rate (λ) is constant over the interval.
+- Two events cannot happen at exactly the same instant.
+
+Examples: calls to a help desk per hour, defects per metre of cable, arrivals at a counter, typos per page.
+
+## Changing the interval
+
+λ scales with the interval. If a shop averages 12 customers an hour, use λ = 3 for a 15-minute window and λ = 24 for two hours.
+
+## Mean and variance
+
+For a Poisson distribution, the mean and variance are both equal to λ. If your data's variance is much larger than its mean, events are clustered and the Poisson model will underestimate extremes.
+
+## Poisson approximation to the binomial
+
+When n is large and p is small (such as n ≥ 50 and n × p ≤ 5), the [binomial](/statistics/binomial-probability/) is well approximated by Poisson with λ = n × p.
 
 ## Distribution for λ = 3
 

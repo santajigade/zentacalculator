@@ -22,6 +22,10 @@ faq:
     a: Returns compound. +50% then −50% averages 0% arithmetically, but you actually lose 25%. The geometric mean shows the true rate.
   - q: Can I use zero or negative numbers?
     a: No. Convert percentage returns to growth factors first (+5% → 1.05, −5% → 0.95).
+  - q: "Why can’t the geometric mean use zero or negative numbers?"
+    a: "It multiplies the values and takes a root. A zero makes the product zero, and negative values can make it undefined. Use growth factors (1 + rate) for returns."
+  - q: "Is CAGR a geometric mean?"
+    a: "Yes. CAGR is the geometric mean of the yearly growth factors, minus 1."
 related: [finance/cagr, math/average]
 ---
 
@@ -39,6 +43,38 @@ Returns of +5%, +10%, −5%, +20% → factors 1.05, 1.10, 0.95, 1.20
 
 - Geometric mean = **1.0712** → average growth **7.12% per year**
 - Arithmetic mean = 1.0750 → overstates growth at 7.50%
+
+## Arithmetic vs geometric mean for returns
+
+| Year | Return | Growth factor |
+|---|---|---|
+| 1 | +50% | 1.50 |
+| 2 | −50% | 0.50 |
+
+- Arithmetic mean return: 0% — suggests you broke even.
+- Geometric mean: √(1.5 × 0.5) − 1 = **−13.4%** a year.
+- Actual result: 100 → 150 → 75, a 25% loss.
+
+The geometric mean tells the truth about compound growth.
+
+## Using growth factors
+
+For percentage changes, enter **growth factors** (1 + rate), find the geometric mean and subtract 1. For returns of 10%, −5% and 20%, enter 1.10, 0.95 and 1.20. The geometric mean is 1.0784, so the average yearly return is **7.84%**.
+
+## The AM–GM inequality
+
+For positive numbers, the geometric mean is always less than or equal to the arithmetic mean. They are equal only when all values are the same. The more volatile the data, the bigger the gap.
+
+## Harmonic mean
+
+For rates such as speeds over equal distances, use the harmonic mean: n ÷ Σ(1/x). For the same positive data: harmonic ≤ geometric ≤ arithmetic.
+
+## Other uses
+
+- Average growth of populations, sales or prices.
+- Comparing items rated on different scales (indices).
+- Aspect ratios and image scaling.
+- Bacterial counts and other log-normally distributed data.
 
 ## When to use it
 

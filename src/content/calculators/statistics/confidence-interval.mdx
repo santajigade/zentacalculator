@@ -30,6 +30,10 @@ faq:
     a: Increase the sample size (quadrupling n halves the width) or accept a lower confidence level.
   - q: Should I use z or t?
     a: This uses z, which is accurate for samples of about 30 or more. For small samples, a t-interval is wider.
+  - q: "What is a 95% confidence interval?"
+    a: "A range, built from sample data, that would contain the true population value in about 95% of repeated samples."
+  - q: "Should I use z or t?"
+    a: "Use t when the sample is small and the population standard deviation is estimated from the sample. For large samples they give almost the same result."
 related: [statistics/margin-of-error, statistics/sample-size, statistics/standard-error]
 ---
 
@@ -47,6 +51,47 @@ Mean 50, SD 12, n = 100, 95% confidence:
 
 - Margin of error = 1.96 × 12 ÷ 10 = **2.35**
 - Interval = **47.65 to 52.35**
+
+## Confidence levels and z-values
+
+| Confidence | z* |
+|---|---|
+| 80% | 1.282 |
+| 90% | 1.645 |
+| 95% | 1.960 |
+| 98% | 2.326 |
+| 99% | 2.576 |
+| 99.9% | 3.291 |
+
+## Small samples: use t instead of z
+
+For small samples (n below about 30) with an unknown population standard deviation, use the t-distribution with n − 1 degrees of freedom:
+
+| n | t* for 95% |
+|---|---|
+| 5 | 2.776 |
+| 10 | 2.262 |
+| 15 | 2.145 |
+| 20 | 2.093 |
+| 30 | 2.045 |
+| 60 | 2.001 |
+| Large | 1.960 |
+
+Replace z* with t* in the formula to get a wider, more honest interval.
+
+## What a 95% interval means
+
+If you repeated the study many times, about 95% of the intervals built this way would contain the true mean. It does **not** mean there is a 95% probability that the true mean lies in this particular interval.
+
+## Narrowing the interval
+
+- **Larger sample**: the margin shrinks with √n — four times the sample halves the margin.
+- **Lower confidence**: 90% gives a narrower interval than 99%, at the cost of more risk.
+- **Less variable data**: better measurement reduces the standard deviation.
+
+## Proportions
+
+For percentages (such as survey results) use the [margin of error calculator](/statistics/margin-of-error/), which uses the standard error of a proportion.
 
 ## z values
 

@@ -19,6 +19,10 @@ faq:
     a: The total return per unit staked, including the stake. Decimal odds of 5.0 imply a 20% chance.
   - q: Are bookmaker odds true probabilities?
     a: No. Bookmakers build in a margin, so the implied probabilities of all outcomes add up to more than 100%.
+  - q: "What does 3 to 1 odds mean?"
+    a: "Odds of 3 to 1 against mean 1 win for every 3 losses — a 25% probability."
+  - q: "How do I convert probability to odds?"
+    a: "Odds in favour = p ÷ (1 − p). A 20% probability is 0.25, or 1 to 4."
 related: [statistics/probability, statistics/relative-risk]
 ---
 
@@ -38,6 +42,40 @@ Enter the odds as two numbers — **for** and **against** (1:4 means 1 for, 4 ag
 | 1:4 | 20% | 5.00 |
 | 3:1 | 75% | 1.33 |
 | 1:99 | 1% | 100 |
+
+## Odds, probability and decimal odds
+
+| Fractional odds (against) | Probability | Decimal odds |
+|---|---|---|
+| 1/4 | 80.0% | 1.25 |
+| 1/2 | 66.7% | 1.50 |
+| 4/5 | 55.6% | 1.80 |
+| 1/1 | 50.0% | 2.00 |
+| 6/4 | 40.0% | 2.50 |
+| 2/1 | 33.3% | 3.00 |
+| 3/1 | 25.0% | 4.00 |
+| 5/1 | 16.7% | 6.00 |
+| 10/1 | 9.1% | 11.00 |
+| 100/1 | 1.0% | 101.00 |
+
+## American (moneyline) odds
+
+| American | Meaning | Probability |
+|---|---|---|
+| +200 | Win 200 on a 100 stake | 33.3% |
+| +100 | Even money | 50% |
+| −150 | Stake 150 to win 100 | 60% |
+| −300 | Stake 300 to win 100 | 75% |
+
+Positive: p = 100 ÷ (odds + 100). Negative: p = −odds ÷ (−odds + 100).
+
+## The bookmaker's margin
+
+Add up the implied probabilities for all outcomes in a market. If they total more than 100% — for example 52.4% + 52.4% = 104.8% — the extra 4.8% is the bookmaker's margin (overround). Fair odds would add to exactly 100%.
+
+## Odds in medicine and research
+
+In studies, odds compare people with and without an outcome, and the **odds ratio** compares two groups. Odds and probability are similar only when the outcome is rare. See the [relative risk calculator](/statistics/relative-risk/).
 
 ## Odds against
 

@@ -22,6 +22,10 @@ faq:
     a: Comparing the spread of data sets with different units or very different means, such as lab precision or investment risk.
   - q: Is there a good CV value?
     a: It depends on the field. In analytical labs, a CV under 2–5% often indicates good precision.
+  - q: "Is a lower coefficient of variation better?"
+    a: "It means less relative variability, which is usually better for precision, quality and consistency."
+  - q: "Can CV be more than 100%?"
+    a: "Yes, when the standard deviation is larger than the mean, which happens with skewed data or means near zero."
 related: [statistics/standard-deviation, statistics/standard-error]
 ---
 
@@ -40,6 +44,35 @@ Six repeat measurements: 98.2, 101.5, 99.8, 100.4, 100.9, 99.1
 - Mean = **99.983**
 - s = **1.209**
 - CV = **1.21%**
+
+## Interpreting CV
+
+| CV | Typical interpretation |
+|---|---|
+| Below 10% | Low variability |
+| 10–20% | Moderate |
+| 20–30% | High |
+| Above 30% | Very high |
+
+These bands are rough guides; acceptable CV depends on the field.
+
+## CV in laboratories
+
+Labs report CV to describe the precision of an assay. Many clinical assays aim for an intra-assay CV under 10% and an inter-assay CV under 15%. Run the same sample several times, enter the results and check the CV.
+
+## CV in finance
+
+In investing, CV = standard deviation of returns ÷ mean return shows risk per unit of return. A fund with a mean return of 12% and a standard deviation of 18% has a CV of 1.5; one with 8% and 9% has a CV of 1.13 — less risk per unit of return.
+
+## When not to use CV
+
+- When the mean is close to zero, CV becomes huge and meaningless.
+- For data with negative values or on interval scales such as °C, where zero is arbitrary. Convert temperatures to kelvin first, or use the standard deviation.
+- Only use CV for ratio data, where zero means “none”.
+
+## Sample vs population CV
+
+The calculator uses the **sample** standard deviation (n − 1). For a complete population, use the population standard deviation from the [standard deviation calculator](/statistics/standard-deviation/).
 
 ## Comparing different scales
 

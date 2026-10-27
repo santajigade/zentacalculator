@@ -23,6 +23,10 @@ faq:
     a: About 68.3%. Within two SDs about 95.4%, and within three about 99.7%.
   - q: Can I find a value from a probability?
     a: Yes. Press × on the upper limit and type the probability below it.
+  - q: "What percentage is above one standard deviation?"
+    a: "About 15.9% of values lie more than one standard deviation above the mean."
+  - q: "How do I find the probability between two values?"
+    a: "Enter both limits. The calculator gives P(a < X < b) = P(X < b) − P(X < a)."
 related: [statistics/z-score, statistics/empirical-rule]
 ---
 
@@ -39,6 +43,38 @@ Enter the **mean** and **standard deviation**, and the **lower** and **upper lim
 - P(85 < IQ < 115) = **68.3%**
 - P(IQ > 115) = **15.9%**
 - P(IQ > 130) = **2.28%**
+
+## Standard normal table (selected values)
+
+| z | P(Z < z) | z | P(Z < z) |
+|---|---|---|---|
+| -3.0 | 0.0013 | +0.5 | 0.6915 |
+| -2.5 | 0.0062 | +1.0 | 0.8413 |
+| -2.0 | 0.0228 | +1.5 | 0.9332 |
+| -1.5 | 0.0668 | +2.0 | 0.9772 |
+| -1.0 | 0.1587 | +2.5 | 0.9938 |
+| -0.5 | 0.3085 | +3.0 | 0.9987 |
+
+## Finding a value from a percentile
+
+To find the value below which a given percentage lies, use x = μ + z × σ. For the top 10% of IQ scores (z = 1.2816): x = 100 + 1.2816 × 15 = **119.2**.
+
+## Properties of the normal curve
+
+- Symmetric around the mean; mean = median = mode.
+- About 68%, 95% and 99.7% of values lie within 1, 2 and 3 standard deviations — see the [empirical rule](/statistics/empirical-rule/).
+- The tails never reach zero, but become tiny beyond 4σ.
+
+## Where normal distributions appear
+
+- Measurement errors.
+- Heights and many biological measurements within a group.
+- Manufacturing dimensions around a target.
+- Averages of many independent values (the central limit theorem).
+
+## When not to assume normality
+
+Incomes, waiting times, insurance claims and many financial returns are skewed or have heavy tails. Assuming normality there underestimates extreme events.
 
 ## Manufacturing example
 

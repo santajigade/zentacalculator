@@ -20,6 +20,10 @@ faq:
     a: About 11.7%.
   - q: How do I get "at most" or "at least" probabilities?
     a: Add the exact probabilities for each value of k in the range.
+  - q: "What is the probability of getting exactly 5 heads in 10 tosses?"
+    a: "24.61%."
+  - q: "What does nCr mean in the binomial formula?"
+    a: "The number of ways to choose which k of the n trials are successes. See the combinations calculator."
 related: [statistics/combinations, statistics/probability, statistics/poisson-probability]
 ---
 
@@ -36,6 +40,53 @@ Enter the **number of trials**, the **number of successes** you want and the **p
 3 heads in 10 fair coin flips:
 
 P = 120 × 0.5³ × 0.5⁷ = **11.72%**
+
+## Full distribution: 10 coin tosses (p = 0.5)
+
+| Heads (k) | P(exactly k) | P(k or fewer) | P(k or more) |
+|---|---|---|---|
+| 0 | 0.10% | 0.10% | 100.00% |
+| 1 | 0.98% | 1.07% | 99.90% |
+| 2 | 4.39% | 5.47% | 98.93% |
+| 3 | 11.72% | 17.19% | 94.53% |
+| 4 | 20.51% | 37.70% | 82.81% |
+| 5 | 24.61% | 62.30% | 62.30% |
+| 6 | 20.51% | 82.81% | 37.70% |
+| 7 | 11.72% | 94.53% | 17.19% |
+| 8 | 4.39% | 98.93% | 5.47% |
+| 9 | 0.98% | 99.90% | 1.07% |
+| 10 | 0.10% | 100.00% | 0.10% |
+
+## “At least” and “at most”
+
+The calculator gives the probability of **exactly** k successes. For cumulative questions, add the exact probabilities:
+
+- P(at most k) = P(0) + P(1) + … + P(k)
+- P(at least k) = 1 − P(at most k − 1)
+- P(at least 1) = 1 − (1 − p)<sup>n</sup>
+
+## Mean and spread
+
+| Measure | Formula |
+|---|---|
+| Mean | n × p |
+| Variance | n × p × (1 − p) |
+| Standard deviation | √(n × p × (1 − p)) |
+
+## When to use the binomial distribution
+
+All four conditions must hold:
+
+1. A fixed number of trials, n.
+2. Each trial has two outcomes (success or failure).
+3. The probability p is the same on every trial.
+4. Trials are independent.
+
+Drawing cards without replacement breaks condition 3 — use the hypergeometric distribution instead.
+
+## Normal approximation
+
+When n × p and n × (1 − p) are both at least about 10, the binomial is close to a normal distribution with the mean and standard deviation above. Use the [normal distribution calculator](/statistics/normal-distribution/) for quick estimates.
 
 ## Quality-control example
 

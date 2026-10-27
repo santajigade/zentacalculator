@@ -20,6 +20,10 @@ faq:
     a: nCr = n! ÷ (r! (n − r)!).
   - q: What are the odds of winning a 6/49 lottery?
     a: 1 in 13,983,816 for the jackpot.
+  - q: "How many combinations of 3 from 10 are there?"
+    a: "120."
+  - q: "How many 5-card poker hands are there?"
+    a: "2,598,960."
 related: [statistics/permutations, statistics/binomial-probability, statistics/probability]
 ---
 
@@ -36,6 +40,45 @@ Enter the **total items** and how many are **chosen**. You get the number of pos
 - **6/49 lottery:** 49C6 = **13,983,816**
 - **Pizza:** choose 3 toppings from 10 → **120** combinations
 - **Teams:** pick 5 players from 12 → **792** teams
+
+## Common combinations
+
+| Situation | n | r | Combinations |
+|---|---|---|---|
+| Pick 2 from 5 | 5 | 2 | 10 |
+| Poker hand | 52 | 5 | 2,598,960 |
+| Lottery 6 from 49 | 49 | 6 | 13,983,816 |
+| Lottery 5 from 50 | 50 | 5 | 2,118,760 |
+| Team of 11 from 15 | 15 | 11 | 1,365 |
+| Committee of 3 from 10 | 10 | 3 | 120 |
+| Toppings: 3 from 12 | 12 | 3 | 220 |
+
+## Combinations vs permutations
+
+| | Combinations (nCr) | Permutations (nPr) |
+|---|---|---|
+| Order matters? | No | Yes |
+| Example | A team of 3 | Gold, silver and bronze |
+| Formula | n! ÷ (r! (n − r)!) | n! ÷ (n − r)! |
+| 3 from 10 | 120 | 720 |
+
+See the [permutations calculator](/statistics/permutations/).
+
+## Combinations with repetition
+
+When items can be chosen more than once (such as scoops of ice cream from flavours):
+
+<p class="formula">C(n + r − 1, r)</p>
+
+3 scoops from 10 flavours, repeats allowed: C(12, 3) = **220**.
+
+## Total subsets
+
+The number of all possible subsets of n items (choosing any number, including none) is 2<sup>n</sup>. With 10 toppings, there are 1,024 possible pizzas.
+
+## Symmetry
+
+C(n, r) = C(n, n − r). Choosing 3 items to include from 10 is the same as choosing 7 to leave out — both give 120.
 
 ## Pascal's triangle
 

@@ -24,6 +24,10 @@ faq:
     a: Sample variance = SS ÷ (n − 1); population variance = SS ÷ n.
   - q: Why square the deviations?
     a: So negative and positive deviations don't cancel out, and so larger deviations count more.
+  - q: "What is the sum of squares used for?"
+    a: "It measures total variation around the mean and is the basis for variance, standard deviation, regression and ANOVA."
+  - q: "How do I get variance from the sum of squares?"
+    a: "Divide by n − 1 for a sample or by n for a population."
 related: [statistics/standard-deviation, statistics/coefficient-of-variation]
 ---
 
@@ -42,3 +46,29 @@ Data: 2, 4, 4, 4, 5, 5, 7, 9 (mean = 5)
 - Σx² = 232
 - SS = 232 − 8 × 25 = **32**
 - Population variance = 32 ÷ 8 = 4 → σ = 2
+
+## Where sums of squares are used
+
+| Use | How |
+|---|---|
+| Variance and SD | Variance = SS ÷ (n − 1) |
+| Regression | Total SS = explained SS + residual SS |
+| R² | R² = 1 − residual SS ÷ total SS |
+| ANOVA | Splits total SS into between-group and within-group parts |
+| Least squares | Fits the line that minimises residual SS |
+
+## Two ways to compute
+
+**Definition formula**: SS = Σ(x − x̄)². Clear and numerically stable.
+
+**Computational formula**: SS = Σx² − (Σx)² ÷ n. Faster by hand, but can lose precision when values are large and close together.
+
+Example with 2, 4, 6, 8: Σx = 20, Σx² = 120, so SS = 120 − 400 ÷ 4 = **20**. By definition: (−3)² + (−1)² + 1² + 3² = 20.
+
+## Regression example
+
+For a fitted line, the **residual sum of squares** adds up the squared vertical distances between the points and the line. A smaller residual SS relative to the total SS means a better fit (higher R²).
+
+## Degrees of freedom
+
+Each SS comes with degrees of freedom: n − 1 for total SS around the mean, n − 2 for residuals in simple linear regression. Mean squares (SS ÷ df) are what F-tests compare.

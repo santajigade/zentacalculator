@@ -25,6 +25,10 @@ faq:
     a: The margin shrinks with the square root of n. Quadrupling the sample halves the margin of error.
   - q: Does it cover all poll errors?
     a: No — only random sampling error. Biased samples, poor question wording and non-response can add more.
+  - q: "What is the margin of error for a sample of 1,000?"
+    a: "About ±3.1% at 95% confidence for a proportion near 50%."
+  - q: "Does a bigger population need a bigger sample?"
+    a: "Hardly. For large populations the margin depends almost entirely on the sample size, not the population size."
 related: [statistics/sample-size, statistics/confidence-interval]
 ---
 
@@ -41,6 +45,45 @@ Choose the **confidence level** and enter the **sample size** and **observed pro
 A poll of 1,000 people finds 50% support, at 95% confidence:
 
 E = 1.96 × √(0.25 ÷ 1000) = **±3.1%**
+
+## Margin of error at different proportions
+
+n = 1,000, 95% confidence:
+
+| Observed proportion | Margin of error |
+|---|---|
+| 5% | ±1.35% |
+| 10% | ±1.86% |
+| 20% | ±2.48% |
+| 30% | ±2.84% |
+| 50% | ±3.10% |
+| 70% | ±2.84% |
+| 90% | ±1.86% |
+
+The margin is largest at 50%, which is why planners use 50% when they do not know the result in advance.
+
+## Finite population correction
+
+When the sample is a large share of the population (more than about 5%), multiply the margin by:
+
+<p class="formula">√((N − n) ÷ (N − 1))</p>
+
+A sample of 500 from a population of 2,000 has its margin reduced by about 13%.
+
+## What the margin of error does not cover
+
+- **Biased samples**: surveying only people online or only volunteers.
+- **Non-response**: people who refuse may differ from those who answer.
+- **Question wording** and order effects.
+- **Small subgroups**: a poll of 1,000 has a much larger margin for a subgroup of 150.
+
+## Comparing two results
+
+If two candidates poll 48% and 45% with a ±3.1% margin each, the margin on the **difference** is larger — roughly 1.7 to 2 times the single margin. A 3-point lead is within the margin of error.
+
+## Planning a survey
+
+To find the sample size for a target margin, use the [sample size calculator](/statistics/sample-size/).
 
 ## Margin by sample size (p = 50%, 95%)
 

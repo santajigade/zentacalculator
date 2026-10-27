@@ -22,6 +22,10 @@ faq:
     a: Use the normal distribution — the calculator gives the share of values below x, assuming the data is normally distributed.
   - q: What z-score is unusual?
     a: Values beyond about ±2 occur roughly 5% of the time; beyond ±3, about 0.3% of the time.
+  - q: "What does a negative z-score mean?"
+    a: "The value is below the mean. A z of −1 is one standard deviation below."
+  - q: "What z-score is the top 5%?"
+    a: "About 1.645. Values above it are in the top 5% of a normal distribution."
 related: [statistics/normal-distribution, statistics/standard-deviation, statistics/empirical-rule]
 ---
 
@@ -39,6 +43,39 @@ An exam score of 85 when the class mean is 70 and SD is 10:
 
 - z = (85 − 70) ÷ 10 = **1.5**
 - Percentile = **93.3%** — better than about 93% of the class
+
+## Z-score to percentile table
+
+| z | Percentile | z | Percentile |
+|---|---|---|---|
+| -2.33 | 1.0% | +0.50 | 69.1% |
+| -1.96 | 2.5% | +1.00 | 84.1% |
+| -1.65 | 5.0% | +1.28 | 90.0% |
+| -1.28 | 10.0% | +1.65 | 95.0% |
+| -1.00 | 15.9% | +1.96 | 97.5% |
+| -0.50 | 30.9% | +2.33 | 99.0% |
+
+## Comparing scores on different tests
+
+Z-scores put different scales on a common footing:
+
+| Test | Your score | Mean | SD | z |
+|---|---|---|---|---|
+| Maths | 78 | 65 | 10 | +1.30 |
+| English | 85 | 80 | 4 | +1.25 |
+
+Although the English score is higher, the maths result is slightly better relative to other students.
+
+## Finding a raw score from z
+
+x = μ + z × σ. To reach the 90th percentile (z = 1.28) on a test with mean 70 and SD 10, you need 70 + 12.8 = **82.8**.
+
+## Z-scores in practice
+
+- **Growth charts**: children's height and weight are reported as z-scores against WHO standards.
+- **Bone density**: T-scores and Z-scores compare bone density with reference populations.
+- **Quality control**: process measurements beyond ±3 are investigated.
+- **Finance**: the Altman Z-score combines ratios to assess bankruptcy risk (a different formula with the same name).
 
 ## Common z-scores
 

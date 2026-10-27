@@ -27,6 +27,10 @@ faq:
     a: Only for roughly bell-shaped (normal) data. For skewed data, the percentages can be very different.
   - q: What is "six sigma"?
     a: A quality approach aiming for processes so consistent that defects are extremely rare — about 3.4 per million opportunities under its conventions.
+  - q: "What is the 68-95-99.7 rule?"
+    a: "In a normal distribution, about 68% of values are within 1 standard deviation of the mean, 95% within 2 and 99.7% within 3."
+  - q: "Does the empirical rule work for all data?"
+    a: "No, only for data that are approximately normally distributed. For other data, Chebyshev’s inequality gives guaranteed minimums."
 related: [statistics/normal-distribution, statistics/z-score, statistics/standard-deviation]
 ---
 
@@ -45,6 +49,39 @@ Mean 170 cm, SD 8 cm:
 - 68% are between **162 and 178 cm**
 - 95% are between **154 and 186 cm**
 - 99.7% are between **146 and 194 cm**
+
+## Beyond three standard deviations
+
+| Range | Share inside | Share outside | About 1 in … outside |
+|---|---|---|---|
+| μ ± 1σ | 68.269% | 31.7% | 3 |
+| μ ± 2σ | 95.45% | 4.55% | 22 |
+| μ ± 3σ | 99.73% | 0.27% | 370 |
+| μ ± 4σ | 99.994% | 0.00633% | 15,787 |
+| μ ± 5σ | 100% | 5.73e-05% | 1,744,278 |
+| μ ± 6σ | 100% | 1.97e-07% | 506,797,317 |
+
+“Six sigma” quality aims for so few defects that they lie beyond 6σ from the target; in practice the methodology allows a 1.5σ drift and quotes 3.4 defects per million.
+
+## Chebyshev's inequality
+
+For **any** distribution, not just normal ones, at least 1 − 1/k² of the data lies within k standard deviations:
+
+| k | Normal distribution | Any distribution (at least) |
+|---|---|---|
+| 2 | 95.4% | 75% |
+| 3 | 99.7% | 88.9% |
+| 4 | 99.994% | 93.75% |
+
+Use the empirical rule only when the data are roughly bell-shaped.
+
+## Spotting outliers
+
+Values more than 3σ from the mean are rare in normal data (about 0.3%) and worth checking for errors. For skewed data, the [quartile and IQR method](/statistics/quartiles/) is more robust.
+
+## Checking for normality
+
+Before applying the rule, look at a histogram. Data that are skewed, have long tails or have two peaks will not follow 68–95–99.7.
 
 ## Exact values
 

@@ -28,6 +28,10 @@ faq:
     a: It gives the largest (safest) sample size when you don't know the expected result.
   - q: Does population size matter much?
     a: Only for small populations. Above about 20,000, the required sample barely changes.
+  - q: "Why is 385 a common sample size?"
+    a: "It gives a ±5% margin of error at 95% confidence for a large population with p = 50%."
+  - q: "Does population size matter?"
+    a: "Only when the sample is a sizeable fraction of the population. Above about 20,000 people, the required sample barely changes."
 related: [statistics/margin-of-error, statistics/confidence-interval]
 ---
 
@@ -45,6 +49,39 @@ Choose the **confidence level**, set the **margin of error** and the **populatio
 
 - n₀ = 1.96² × 0.25 ÷ 0.0025 = 384.1 → **385**
 - With the population correction: **370** responses
+
+## Sample size for different confidence levels
+
+Large population, p = 50%:
+
+| Margin | 90% confidence | 95% confidence | 99% confidence |
+|---|---|---|---|
+| ±1% | 6,766 | 9,604 | 16,590 |
+| ±2% | 1,692 | 2,401 | 4,148 |
+| ±3% | 752 | 1,068 | 1,844 |
+| ±4% | 423 | 601 | 1,037 |
+| ±5% | 271 | 385 | 664 |
+| ±10% | 68 | 97 | 166 |
+
+## Allow for non-response
+
+If you expect only 40% of people to reply, divide the needed sample by 0.4. To get 385 completed surveys with a 40% response rate, invite about **963 people**.
+
+## Sample size for a mean
+
+When estimating a mean rather than a proportion:
+
+<p class="formula">n = (z × σ ÷ E)²</p>
+
+To estimate average weight within ±2 kg (σ ≈ 12 kg) at 95%: n = (1.96 × 12 ÷ 2)² = **139**.
+
+## Subgroups
+
+If you need results for subgroups (such as each region), each subgroup needs its own adequate sample. A national poll of 1,000 might have only 100 people in a small region, with a margin of about ±10%.
+
+## Experiments and A/B tests
+
+Comparing two groups needs a power calculation, which accounts for the smallest effect worth detecting and the chance of missing it (usually 80% power). Detecting a small difference needs a much larger sample than estimating a single proportion.
 
 ## Typical sample sizes (large population, 95%)
 

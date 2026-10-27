@@ -2,6 +2,7 @@
 title: Gas Flow Correction Calculator (Actual to Normal m³/h)
 description: Convert actual gas flow (Am³/h) to normal or standard flow (Nm³/h, Sm³/h) using line pressure and temperature — for flow meters and compressors.
 category: engineering
+intro: "Gas volume changes with pressure and temperature, so the same mass of gas can be very different volumes. Flows are corrected to normal or standard conditions to compare them — see [actual flow vs standard flow vs normal flow](https://www.instrumentationblog.in/actual-flow-standard-flow-normal-flow/)."
 keywords: [actual to normal flow, nm3/h to am3/h, gas flow correction, standard cubic meters, pressure temperature compensation, scfm to acfm, gas volume correction]
 updated: 2026-10-27
 variables:
@@ -30,14 +31,13 @@ faq:
   - q: Does this include compressibility?
     a: No. It assumes ideal gas behaviour. At high pressures, divide by the compressibility factor Z for accuracy.
 related: [physics/ideal-gas-law, chemistry/combined-gas-law, engineering/mass-flow-rate, conversion/flow-rate-converter]
-links:
-  - { title: "Actual Flow vs Standard Flow vs Normal Flow", url: "https://www.instrumentationblog.in/actual-flow-standard-flow-normal-flow/" }
-  - { title: "What Is MMSCFD? Natural Gas Flow Rate", url: "https://www.instrumentationblog.in/what-is-mmscfd-natural-gas-flow-rate/" }
 ---
 
 ## How to use this calculator
 
 Enter the **actual flow** at line conditions, the **gauge pressure** and the **temperature** in the pipe, and choose the **reference conditions**. You get the flow at reference conditions and the correction factor. To go from Nm³/h to actual flow, press × on Actual flow.
+
+For more background, read [What Is MMSCFD? Natural Gas Flow Rate](https://www.instrumentationblog.in/what-is-mmscfd-natural-gas-flow-rate/).
 
 ## The formula
 

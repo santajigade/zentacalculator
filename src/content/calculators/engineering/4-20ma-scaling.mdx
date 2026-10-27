@@ -2,6 +2,7 @@
 title: 4–20 mA Scaling Calculator
 description: Convert a 4–20 mA loop current to a process value (and back) for any measuring range — with live scaling chart.
 category: engineering
+intro: "The 4–20 mA current loop is the standard analog signal in process instrumentation: 4 mA means 0% of the range and 20 mA means 100%. Converting between current and process value is daily work for instrument engineers — see the [4 to 20 mA current loop explained](https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/) and [PLC analog scaling from raw counts](https://www.instrumentationblog.in/plc-analog-scaling-raw-count/)."
 keywords: [4-20 mA, 4 20 ma calculator, current loop, scaling, transmitter, mA to pressure, mA to temperature, percent span, plc scaling]
 updated: 2026-10-27
 featured: true
@@ -29,10 +30,6 @@ faq:
   - q: "What does a reading below 3.8 mA mean?"
     a: "Under NAMUR NE 43, values below 3.8 mA indicate a fault or a reading below range, and below 3.6 mA a failure signal."
 related: [engineering/hydrostatic-pressure, engineering/pt100-resistance, physics/ohms-law]
-links:
-  - { title: "4 to 20 mA Signal Conversion Calculator", url: "https://www.instrumentationblog.in/4-to-20-ma-signal-conversion-calculator/" }
-  - { title: "4 to 20 mA Current Loop Explained", url: "https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/" }
-  - { title: "PLC Analog Scaling from Raw Counts", url: "https://www.instrumentationblog.in/plc-analog-scaling-raw-count/" }
 ---
 
 ## How to use this calculator
@@ -41,6 +38,8 @@ links:
 2. Enter the **loop current** to get the process value and percent of span.
 
 To check a loop the other way round, press × on Loop current and type the process value — the calculator shows the current the transmitter should send. Reverse-acting ranges (for example 100 at 4 mA and 0 at 20 mA) work too.
+
+For more background, read [4 to 20 mA Signal Conversion Calculator](https://www.instrumentationblog.in/4-to-20-ma-signal-conversion-calculator/).
 
 ## The formula
 

@@ -2,6 +2,7 @@
 title: Electrolytic Capacitor Life Calculator (10 °C Rule)
 description: Estimate the expected life of an aluminium electrolytic capacitor at your operating temperature from its rated hours and temperature, using the 10-degree rule.
 category: electronics
+intro: "Aluminium electrolytic capacitors wear out as their electrolyte slowly dries, and heat speeds this up dramatically. They are often the first part to fail in power supplies and drives — see this [electrolytic capacitor lifetime calculation](https://www.instrumentationblog.in/electrolytic-capacitor-lifetime-calculation/) and how the [failure modes of electrolytic, ceramic and tantalum capacitors](https://www.instrumentationblog.in/electrolytic-vs-ceramic-vs-tantalum-capacitor-failure-modes/) differ."
 keywords: [capacitor life calculator, electrolytic capacitor lifetime, capacitor life expectancy, 10 degree rule, arrhenius capacitor, capacitor hours at temperature]
 updated: 2026-10-27
 variables:
@@ -23,15 +24,13 @@ faq:
   - q: Does voltage affect life?
     a: Less than temperature for most aluminium electrolytics. Some manufacturers add a factor for operating below rated voltage.
 related: [electronics/heat-sink, electronics/capacitor-energy, chemistry/arrhenius-equation, electronics/buck-converter]
-links:
-  - { title: "Electrolytic Capacitor Lifetime Calculation", url: "https://www.instrumentationblog.in/electrolytic-capacitor-lifetime-calculation/" }
-  - { title: "Electrolytic vs Ceramic vs Tantalum Capacitor Failure Modes", url: "https://www.instrumentationblog.in/electrolytic-vs-ceramic-vs-tantalum-capacitor-failure-modes/" }
-  - { title: "Capacitor ESR Explained", url: "https://www.instrumentationblog.in/capacitor-esr-equivalent-series-resistance/" }
 ---
 
 ## How to use this calculator
 
 Enter the capacitor's **rated life** and **rated temperature** from the datasheet (for example 2,000 h at 105 °C), and the **actual core temperature** in your circuit. You get the expected life in hours and years of continuous operation.
+
+For more background, read [Capacitor ESR Explained](https://www.instrumentationblog.in/capacitor-esr-equivalent-series-resistance/).
 
 ## The formula
 

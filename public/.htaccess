@@ -18,6 +18,8 @@ ErrorDocument 404 /404.html
   RewriteRule ^(embed/)?engineering/three-phase-motor-power/?$ /$1electrical/three-phase-motor-power/ [L,R=301]
   RewriteRule ^(embed/)?engineering/reactance/?$ /$1electronics/reactance/ [L,R=301]
   RewriteRule ^(embed/)?engineering/resonant-frequency/?$ /$1electronics/resonant-frequency/ [L,R=301]
+  RewriteRule ^(embed/)?other/led-resistor/?$ /$1electronics/led-resistor/ [L,R=301]
+  RewriteRule ^(embed/)?other/voltage-divider/?$ /$1electronics/voltage-divider/ [L,R=301]
   # Add trailing slash to folder URLs (/physics/ohms-law -> /physics/ohms-law/)
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^(.*[^/])$ /$1/ [L,R=301]

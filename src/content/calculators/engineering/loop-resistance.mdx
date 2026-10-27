@@ -2,6 +2,7 @@
 title: 4–20 mA Loop Resistance Calculator (Maximum Loop Load)
 description: Check whether a 4–20 mA loop has enough voltage — maximum loop resistance from supply and transmitter lift-off voltage, with cable and barrier resistance.
 category: engineering
+intro: "A loop-powered transmitter needs a minimum voltage at its terminals, and every resistor, barrier and cable in the loop uses some of the supply. Checking the [instrument loop impedance](https://www.instrumentationblog.in/instrument-loop-impedance-4-20ma-accuracy/) makes sure the [4–20 mA loop](https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/) still works at full scale and at [NAMUR NE 43](https://www.instrumentationblog.in/namur-ne43-standard-explained/) fault currents."
 keywords: [4-20ma loop resistance calculator, loop load calculation, maximum loop resistance, transmitter lift off voltage, loop power supply, 250 ohm resistor, 2 wire transmitter load]
 updated: 2026-10-27
 variables:
@@ -31,16 +32,13 @@ faq:
   - q: Does HART need a minimum resistance?
     a: Yes. HART communication needs at least 230–250 Ω of loop resistance between the power supply and the transmitter.
 related: [engineering/4-20ma-scaling, electrical/cable-voltage-drop, physics/ohms-law, electronics/current-divider]
-links:
-  - { title: "Instrument Loop Impedance and 4–20 mA Accuracy", url: "https://www.instrumentationblog.in/instrument-loop-impedance-4-20ma-accuracy/" }
-  - { title: "2-Wire, 3-Wire and 4-Wire Transmitters", url: "https://www.instrumentationblog.in/2-wire-3-wire-4-wire-transmitters-in-industrial-automation/" }
-  - { title: "NAMUR NE 43 Standard Explained", url: "https://www.instrumentationblog.in/namur-ne43-standard-explained/" }
-  - { title: "4 to 20 mA Current Loop Explained", url: "https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/" }
 ---
 
 ## How to use this calculator
 
 Enter the **loop supply voltage**, the transmitter's **minimum operating (lift-off) voltage** from its datasheet, the **maximum loop current**, the receiver's **input resistance**, any **barrier or isolator** resistance, and the **cable length and conductor resistance**. The calculator shows the maximum resistance the loop can tolerate, the actual resistance and the margin.
+
+For more background, read [2-Wire, 3-Wire and 4-Wire Transmitters](https://www.instrumentationblog.in/2-wire-3-wire-4-wire-transmitters-in-industrial-automation/).
 
 ## The formulas
 

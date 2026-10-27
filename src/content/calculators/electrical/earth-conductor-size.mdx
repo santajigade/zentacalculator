@@ -2,6 +2,7 @@
 title: Earth Conductor Size Calculator (Adiabatic Equation)
 description: Calculate the minimum protective earth conductor size from fault current and disconnection time with the adiabatic equation S = I√t / k (IEC 60364-5-54).
 category: electrical
+intro: "A protective earth conductor must carry the full fault current for the time it takes a breaker or fuse to trip — without overheating. The adiabatic equation gives the minimum safe size, as explained in this [earth conductor size calculation](https://www.instrumentationblog.in/earth-conductor-size-calculation/); the fault current itself comes from a [short circuit current calculation](https://www.instrumentationblog.in/short-circuit-current-calculation/)."
 keywords: [earth conductor size calculation, earthing cable size, adiabatic equation, protective conductor size, i2t/k, earth wire size, cpc size]
 updated: 2026-10-27
 variables:
@@ -31,15 +32,13 @@ faq:
   - q: Can I use the simple table instead?
     a: Yes, IEC 60364-5-54 also allows sizing by the line conductor size — equal up to 16 mm², 16 mm² up to 35 mm², and half above that.
 related: [electrical/earthing-resistance, electrical/transformer-short-circuit, electrical/cable-voltage-drop, electrical/kw-to-amps]
-links:
-  - { title: "Earth Conductor Size Calculation", url: "https://www.instrumentationblog.in/earth-conductor-size-calculation/" }
-  - { title: "Earth Fault Loop Impedance (Zs) Testing", url: "https://www.instrumentationblog.in/earth-fault-loop-impedance-zs-testing/" }
-  - { title: "Short Circuit Current Calculation", url: "https://www.instrumentationblog.in/short-circuit-current-calculation/" }
 ---
 
 ## How to use this calculator
 
 Enter the **prospective earth fault current**, the protective device's **disconnection time** at that current, and choose the **conductor and insulation** type. The result is the minimum cross-section; select the next standard size up.
+
+For more background, read [Earth Fault Loop Impedance (Zs) Testing](https://www.instrumentationblog.in/earth-fault-loop-impedance-zs-testing/).
 
 ## The adiabatic equation
 

@@ -34,6 +34,11 @@ const embedCode = embedSnippet(SITE.url, SITE.name, d.title, url);
 const author = authorById(d.author);
 if (!author) throw new Error(`${calc.id}: unknown author "${d.author}"`);
 const reviewer = authorById(d.reviewer);
+const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const introHtml = d.intro ? esc(d.intro)
+  .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+  .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_m, t, u) => /^https?:/.test(u)
+    ? `<a href="${u}" target="_blank" rel="noopener">${t}</a>` : `<a href="${u}">${t}</a>`) : '';
 const updated = d.updated.toLocaleDateString(SITE.locale, { day: 'numeric', month: 'long', year: 'numeric' });
 
 const schema: object[] = [
@@ -65,6 +70,8 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
             <br /><span class="muted">Updated {updated}</span></span>
         </div>
 
+        {introHtml && <p class="intro" set:html={introHtml} />}
+
         <section class="panel" aria-label="Calculator">
           <Calculator client:load spec={spec} path={url} />
         </section>
@@ -79,12 +86,6 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
             </section>
           )}
 
-          {d.links.length > 0 && <>
-            <h2 id="further-reading">Further reading</h2>
-            <ul class="ext-links">
-              {d.links.map((l) => <li><a href={l.url} target="_blank" rel="noopener">{l.title}</a>{l.note && <span> — {l.note}</span>}</li>)}
-            </ul>
-          </>}
           <h2 id="related">Related calculators</h2>
           <ul class="calc-list related-grid">
             {related.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}

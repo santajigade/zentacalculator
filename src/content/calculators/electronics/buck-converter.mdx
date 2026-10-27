@@ -2,6 +2,7 @@
 title: Buck Converter Calculator (Inductor and Capacitor)
 description: Calculate duty cycle, inductor value, ripple current and output capacitor for a buck (step-down) DC-DC converter.
 category: electronics
+intro: "A buck converter steps a DC voltage down efficiently by switching it on and off and smoothing the result with an inductor and capacitor — far less wasteful than a linear regulator. Learn the [buck converter working principle](https://www.instrumentationblog.in/buck-converter-working-principle/) and why [capacitor ESR](https://www.instrumentationblog.in/capacitor-esr-equivalent-series-resistance/) matters for output ripple."
 keywords: [buck converter calculator, buck inductor calculation, step down converter design, buck duty cycle, output capacitor ripple, dc dc converter calculator]
 updated: 2026-10-27
 variables:
@@ -32,15 +33,13 @@ faq:
   - q: What sets the output ripple voltage?
     a: Capacitance and the capacitor's ESR. The formula here covers capacitance; with electrolytics, ripple is usually dominated by ESR × ΔI.
 related: [electronics/boost-converter, electronics/inductor-energy, electronics/pwm-duty-cycle, electronics/capacitor-energy]
-links:
-  - { title: "Buck Converter Working Principle", url: "https://www.instrumentationblog.in/buck-converter-working-principle/" }
-  - { title: "Synchronous Rectification in Buck Converters", url: "https://www.instrumentationblog.in/synchronous-rectification-buck-converter/" }
-  - { title: "Capacitor ESR (Equivalent Series Resistance)", url: "https://www.instrumentationblog.in/capacitor-esr-equivalent-series-resistance/" }
 ---
 
 ## How to use this calculator
 
 Enter the **input** and **output voltage**, **output current**, **switching frequency**, the **inductor ripple** as a percentage of output current, and the allowed **output voltage ripple**. You get the duty cycle, ripple current, inductance, peak inductor current and minimum output capacitance.
+
+For more background, read [Synchronous Rectification in Buck Converters](https://www.instrumentationblog.in/synchronous-rectification-buck-converter/).
 
 ## The formulas (continuous conduction)
 

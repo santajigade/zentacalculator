@@ -2,6 +2,7 @@
 title: RC Filter Cutoff Frequency Calculator
 description: Calculate the −3 dB cutoff frequency of an RC low-pass or high-pass filter, or the R or C needed for a target cutoff — with attenuation at any frequency.
 category: electronics
+intro: "A resistor and capacitor make the simplest filter in electronics — removing noise from sensor signals or blocking DC from audio. Read about [RC low-pass and high-pass filters](https://www.instrumentationblog.in/rc-low-pass-high-pass-filter/) and how [Sallen-Key active filters](https://www.instrumentationblog.in/active-filter-sallen-and-key/) give a sharper response."
 keywords: [rc filter calculator, cutoff frequency calculator, rc low pass filter, rc high pass filter, 1/2πrc, -3db frequency, corner frequency]
 updated: 2026-10-27
 variables:
@@ -27,15 +28,13 @@ faq:
   - q: How do I filter noise on a sensor signal?
     a: Choose a cutoff well above the signal bandwidth but below the noise frequency — for slow process signals, a few hertz is common.
 related: [physics/rc-time-constant, electronics/reactance, physics/decibel, electronics/op-amp-gain]
-links:
-  - { title: "RC Low-Pass and High-Pass Filters", url: "https://www.instrumentationblog.in/rc-low-pass-high-pass-filter/" }
-  - { title: "Active Filter: Sallen-Key Topology", url: "https://www.instrumentationblog.in/active-filter-sallen-and-key/" }
-  - { title: "RC and RL Time Constant Explained", url: "https://www.instrumentationblog.in/rc-and-rl-time-constant-explained/" }
 ---
 
 ## How to use this calculator
 
 Enter **R** and **C** to get the cutoff frequency and time constant. Add a **test frequency** to see how much a low-pass or high-pass filter attenuates it. To design a filter, enter the target cutoff and one component, then press × on the other.
+
+For more background, read [RC and RL Time Constant Explained](https://www.instrumentationblog.in/rc-and-rl-time-constant-explained/).
 
 ## The formulas
 

@@ -2,6 +2,7 @@
 title: PCB Trace Width Calculator (IPC-2221)
 description: Calculate the PCB trace width needed for a current and temperature rise using the IPC-2221 formula — for external and internal layers and copper weights.
 category: electronics
+intro: "A copper track on a circuit board heats up as current flows through it, so it must be wide enough for the current it carries. The IPC-2221 formula links current, temperature rise and track size; for vias, see this guide to [PCB via current capacity](https://www.instrumentationblog.in/pcb-via-current-capacity/)."
 keywords: [pcb trace width calculator, ipc 2221 calculator, trace current capacity, pcb track width, copper thickness oz, trace temperature rise, pcb current carrying]
 updated: 2026-10-27
 variables:
@@ -31,14 +32,13 @@ faq:
   - q: Is IPC-2221 accurate?
     a: It is conservative for most designs. The newer IPC-2152 standard uses more detailed data that accounts for planes and board thickness.
 related: [electrical/cable-voltage-drop, physics/ohms-law, electronics/heat-sink, electronics/led-resistor]
-links:
-  - { title: "PCB Via Current Capacity (IPC-2152)", url: "https://www.instrumentationblog.in/pcb-via-current-capacity/" }
-  - { title: "Controlled Impedance PCB Traces", url: "https://www.instrumentationblog.in/controlled-impedance-pcb-traces/" }
 ---
 
 ## How to use this calculator
 
 Enter the **current**, the allowed **temperature rise** above ambient, the **copper weight** and whether the trace is on an **external or internal layer**. You get the required cross-section and minimum width in millimetres and mils.
+
+For more background, read [Controlled Impedance PCB Traces](https://www.instrumentationblog.in/controlled-impedance-pcb-traces/).
 
 ## The IPC-2221 formula
 

@@ -2,6 +2,7 @@
 title: Heat Sink Calculator (Thermal Resistance)
 description: Calculate the maximum heat sink thermal resistance for a transistor, MOSFET or regulator from power dissipation, junction and ambient temperatures.
 category: electronics
+intro: "Power transistors, MOSFETs and regulators turn some energy into heat, and too much heat shortens their life or destroys them. A heat sink with low enough thermal resistance keeps the junction cool — see this [heat sink calculation](https://www.instrumentationblog.in/heat-sink-calculation/) guide."
 keywords: [heat sink calculator, thermal resistance calculator, heatsink selection, junction temperature calculation, rth sa, mosfet heat sink, regulator heat sink]
 updated: 2026-10-27
 variables:
@@ -25,14 +26,13 @@ faq:
   - q: What is a typical case-to-sink resistance?
     a: 0.1–0.5 °C/W for a TO-220 with thermal paste; 0.5–1.5 °C/W with a silicone or mica insulating pad.
 related: [physics/heat-conduction, electronics/capacitor-lifetime, electrical/three-phase-motor-power, physics/ohms-law]
-links:
-  - { title: "Heat Sink Calculation", url: "https://www.instrumentationblog.in/heat-sink-calculation/" }
-  - { title: "What Is Thermal Conductivity?", url: "https://www.instrumentationblog.in/what-is-thermal-conductivity/" }
 ---
 
 ## How to use this calculator
 
 Enter the **power** the device dissipates, the design **junction temperature**, the **ambient temperature** inside the enclosure, and the device's **Rθjc** and interface **Rθcs**. The result is the highest heat sink thermal resistance you can use.
+
+For more background, read [What Is Thermal Conductivity?](https://www.instrumentationblog.in/what-is-thermal-conductivity/).
 
 ## The thermal circuit
 

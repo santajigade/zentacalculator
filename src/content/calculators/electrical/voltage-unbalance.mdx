@@ -2,6 +2,7 @@
 title: Voltage Unbalance Calculator (NEMA Method)
 description: Calculate percentage voltage unbalance from three line voltages, plus the motor derating and extra temperature rise it causes.
 category: electrical
+intro: "When the three phase voltages are not equal, motors draw unbalanced currents and run hotter — even a small voltage unbalance causes a much larger current unbalance. This guide to [voltage unbalance calculation for motors](https://www.instrumentationblog.in/voltage-unbalance-calculation-motors/) explains the NEMA method and its effect on motor rating."
 keywords: [voltage unbalance calculator, phase unbalance, nema voltage unbalance, motor derating unbalance, three phase voltage imbalance, percent unbalance]
 updated: 2026-10-27
 variables:
@@ -27,15 +28,13 @@ faq:
   - q: What causes voltage unbalance?
     a: Unevenly distributed single-phase loads, a blown capacitor fuse, high-resistance connections, open-delta transformers and long feeders.
 related: [electrical/three-phase-motor-power, electrical/induction-motor-slip, electrical/thd, electrical/cable-voltage-drop]
-links:
-  - { title: "Voltage Unbalance Calculation for Motors", url: "https://www.instrumentationblog.in/voltage-unbalance-calculation-motors/" }
-  - { title: "Motor Protection Relay Types", url: "https://www.instrumentationblog.in/motor-protection-relay-types/" }
-  - { title: "Power Quality Issues with VFDs and PLCs", url: "https://www.instrumentationblog.in/power-quality-issues-vfd-plc/" }
 ---
 
 ## How to use this calculator
 
 Measure the three **line-to-line voltages** with a true-RMS meter and enter them. You get the average, the maximum deviation, the percentage unbalance and the approximate increase in motor winding temperature rise.
+
+For more background, read [Motor Protection Relay Types](https://www.instrumentationblog.in/motor-protection-relay-types/) and [Power Quality Issues with VFDs and PLCs](https://www.instrumentationblog.in/power-quality-issues-vfd-plc/).
 
 ## The formula (NEMA MG 1)
 

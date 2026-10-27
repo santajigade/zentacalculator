@@ -258,3 +258,6 @@ img { max-width: 100%; }
   .navg { position: static; }
   .navg__menu { left: 12px; right: 12px; min-width: 0; }
 }
+
+.intro { font-size: 1.04rem; line-height: 1.65; color: var(--text); margin: 6px 0 18px; max-width: 75ch; }
+.intro a { color: var(--brand); font-weight: 600; }

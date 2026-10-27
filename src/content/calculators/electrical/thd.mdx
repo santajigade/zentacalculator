@@ -2,6 +2,7 @@
 title: THD Calculator (Total Harmonic Distortion)
 description: Calculate total harmonic distortion (THD) of voltage or current from the fundamental and harmonic magnitudes, with IEEE 519 limits.
 category: electrical
+intro: "Drives, UPSs, LED drivers and computers draw distorted current that adds harmonics to the supply. Total harmonic distortion (THD) sums them into one figure you can compare with IEEE 519 limits. Read [power harmonics explained](https://www.instrumentationblog.in/power-harmonics-explained/) and how to do a [THD calculation for power systems](https://www.instrumentationblog.in/harmonic-distortion-thd-calculation-power-systems/)."
 keywords: [thd calculator, total harmonic distortion, harmonic distortion calculation, ieee 519 limits, thd formula, voltage thd, current thd]
 updated: 2026-10-27
 variables:
@@ -26,16 +27,13 @@ faq:
   - q: Can I enter percentages instead of volts or amps?
     a: Yes — enter 100 for the fundamental and each harmonic as a percentage of it.
 related: [electrical/power-factor-correction, electrical/voltage-unbalance, physics/decibel, electrical/kva-to-kw]
-links:
-  - { title: "Harmonic Distortion (THD) Calculation in Power Systems", url: "https://www.instrumentationblog.in/harmonic-distortion-thd-calculation-power-systems/" }
-  - { title: "Power Harmonics Explained", url: "https://www.instrumentationblog.in/power-harmonics-explained/" }
-  - { title: "Active Harmonic Filter Working and Sizing", url: "https://www.instrumentationblog.in/active-harmonic-filter-working-sizing/" }
-  - { title: "Neutral Conductor Sizing with Harmonics", url: "https://www.instrumentationblog.in/neutral-conductor-sizing-harmonics/" }
 ---
 
 ## How to use this calculator
 
 Enter the **fundamental** and **harmonic magnitudes** from a power quality analyser — either in volts, amps or as percentages of the fundamental. You get the THD and the true RMS value. Enter 0 for harmonics you do not have.
+
+For more background, read [Active Harmonic Filter Working and Sizing](https://www.instrumentationblog.in/active-harmonic-filter-working-sizing/) and [Neutral Conductor Sizing with Harmonics](https://www.instrumentationblog.in/neutral-conductor-sizing-harmonics/).
 
 ## The formula
 

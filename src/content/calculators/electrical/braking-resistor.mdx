@@ -2,6 +2,7 @@
 title: VFD Braking Resistor Calculator
 description: Calculate the maximum braking resistor value and average power rating for a VFD braking chopper from DC bus voltage, braking power and duty cycle.
 category: electrical
+intro: "When a motor driven by a VFD slows down, it acts as a generator and pushes energy back into the drive's DC bus. A braking resistor burns off that energy as heat so the drive does not trip on over-voltage; see this guide to [VFD braking resistor sizing](https://www.instrumentationblog.in/vfd-braking-resistor-sizing/) and the common [causes of VFD overload trips](https://www.instrumentationblog.in/vfd-overload-trip-causes/)."
 keywords: [braking resistor calculator, vfd braking resistor sizing, dynamic braking resistor, braking chopper, dc bus voltage, regenerative braking resistor]
 updated: 2026-10-27
 variables:
@@ -25,15 +26,13 @@ faq:
   - q: What happens if the resistor is too small in ohms?
     a: The chopper current exceeds its rating and the drive trips or the chopper is damaged. Always respect the drive's minimum resistance.
 related: [engineering/torque-power-speed, physics/ohms-law, electrical/three-phase-motor-power, physics/kinetic-energy]
-links:
-  - { title: "VFD Braking Resistor Sizing", url: "https://www.instrumentationblog.in/vfd-braking-resistor-sizing/" }
-  - { title: "VFD Sizing and Selection Guide", url: "https://www.instrumentationblog.in/vfd-sizing-selection-guide/" }
-  - { title: "VFD Overload Trip Causes", url: "https://www.instrumentationblog.in/vfd-overload-trip-causes/" }
 ---
 
 ## How to use this calculator
 
 Enter the **DC bus voltage** at which the braking chopper switches on, the **peak braking power** and the **duty cycle**. You get the maximum resistor value, the average power rating and the peak current.
+
+For more background, read [VFD Sizing and Selection Guide](https://www.instrumentationblog.in/vfd-sizing-selection-guide/).
 
 ## The formulas
 

@@ -2,6 +2,7 @@
 title: Boost Converter Calculator (Inductor and Capacitor)
 description: Calculate duty cycle, input current, inductor value and output capacitor for a boost (step-up) DC-DC converter.
 category: electronics
+intro: "A boost converter steps a DC voltage up — for example from a 5 V USB supply to 12 V — by storing energy in an inductor and releasing it at a higher voltage. See the [boost converter working principle](https://www.instrumentationblog.in/boost-converter-working-principle/) and the related [SEPIC converter](https://www.instrumentationblog.in/sepic-converter-working-design/)."
 keywords: [boost converter calculator, boost inductor calculation, step up converter design, boost duty cycle, boost converter formula, dc dc boost]
 updated: 2026-10-27
 variables:
@@ -33,15 +34,13 @@ faq:
   - q: Why is the output ripple larger than a buck's?
     a: The output capacitor alone supplies the load while the switch is on, so the output current is pulsed.
 related: [electronics/buck-converter, electronics/inductor-energy, electronics/pwm-duty-cycle, electronics/capacitor-energy]
-links:
-  - { title: "Boost Converter Working Principle", url: "https://www.instrumentationblog.in/boost-converter-working-principle/" }
-  - { title: "PFC Circuit: Boost Power Factor Correction", url: "https://www.instrumentationblog.in/pfc-circuit-boost-power-factor-correction/" }
-  - { title: "SEPIC Converter Working and Design", url: "https://www.instrumentationblog.in/sepic-converter-working-design/" }
 ---
 
 ## How to use this calculator
 
 Enter the **input** and **output voltage**, **output current**, expected **efficiency**, **switching frequency**, inductor **ripple** and allowed **output ripple**. You get the duty cycle, input current, inductance, peak switch current and minimum output capacitance.
+
+For more background, read [PFC Circuit: Boost Power Factor Correction](https://www.instrumentationblog.in/pfc-circuit-boost-power-factor-correction/).
 
 ## The formulas (continuous conduction)
 

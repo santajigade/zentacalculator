@@ -15,6 +15,13 @@ Create `tools/gen/batch<DATE>.py` (copy the pattern of `batchE1.py` / `batchE2.p
 - Variables are stored in **SI base units** (family units in `src/lib/units.ts`); percent family stores fractions; reserved ids: `pi`, `e`, `g0`, `data_*`.
 - Select option values must be unique (add 0.000001 to duplicates). YAML answers must not start with `%`, `*`, `&`, `!`, `|`, `>`.
 
+### Linking rules for instrumentationblog.in (SEO)
+- Link **only when an article genuinely matches the calculator** — never force a link onto every page. Pages with no relevant article get none.
+- **1–3 contextual, in-text links** per page (intro or body), with **descriptive, varied anchor text** (the article topic), never the same anchor or "instrumentationblog" brand anchor everywhere.
+- **No sitewide links** (header, footer, sidebar, template blocks) to instrumentationblog.in.
+- Mix in other authoritative references (standards bodies, manufacturer data, Wikipedia) where useful, so outbound links are not all to one domain.
+- Never invent a slug — only use slugs in `tools/gen/ib_slugs.txt`.
+
 ## 3. Verify
 ```
 python3 tools/gen/batch<DATE>.py

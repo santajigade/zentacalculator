@@ -1,0 +1,332 @@
+# Zenta Calculator — calculator backlog
+
+Daily target: ~20 new calculators, focus on **Engineering, Electrical, Electronics, Physics, Chemistry, Math, Statistics**.
+Pick the next unchecked items top-down (mix 2–3 categories per batch). Tick `[x]` when published.
+Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should be added to.
+(ib) = a matching instrumentationblog.in article probably exists — check `tools/gen/ib_slugs.txt`.
+
+## Engineering — Instrumentation & signals
+- [ ] RTD lead wire error (2/3/4-wire) (ib)
+- [ ] Thermocouple mV ↔ °C (Type K, J, T — NIST polynomials) (ib)
+- [ ] Pt1000 / Ni1000 / Cu10 resistance tables
+- [ ] HART loop minimum resistance check (ib)
+- [ ] Transmitter re-ranging / turndown accuracy
+- [ ] Calibration error & as-found / as-left tolerance (ib)
+- [ ] 5-point calibration table generator (ib)
+- [ ] Analog input raw counts ↔ engineering units (PLC) (ib)
+- [ ] Square-root low-flow cutoff
+- [ ] Signal converter: 0–10 V ↔ 4–20 mA ↔ 1–5 V
+- [ ] PID tuning: Ziegler–Nichols (ib)
+- [ ] PID tuning: Cohen–Coon / IMC lambda (ib)
+- [ ] First-order process time constant & dead time
+- [ ] Sensor response time (63.2%, T90)
+- [ ] Thermowell wake frequency (ASME PTC 19.3 TW simplified) (ib)
+
+## Engineering — Flow
+- [ ] Orifice plate bore sizing (β from flow & DP) (ib)
+- [ ] Flow nozzle flow
+- [ ] V-cone flow (ib)
+- [ ] Rotameter density correction (ib)
+- [ ] Magmeter velocity & minimum conductivity
+- [ ] Ultrasonic transit-time flow (ib)
+- [ ] Vortex shedding frequency (Strouhal)
+- [ ] Gas flow through orifice (expansibility factor)
+- [ ] Steam flow (saturated steam density table)
+- [ ] SCFM ↔ ACFM ↔ Nm³/h
+- [ ] MMSCFD natural gas converter (ib)
+- [ ] Open channel: Parshall flume
+- [ ] Manning equation (open channel)
+- [ ] Hazen–Williams head loss
+- [ ] Minor losses (K factors, fittings)
+- [ ] Equivalent pipe length
+- [ ] Pipe size for target velocity
+- [ ] Flow through restriction orifice
+- [ ] Gas line sizing (velocity limit)
+
+## Engineering — Pressure, level & tanks
+- [ ] Manometer (U-tube, inclined) (ib)
+- [ ] Absolute ↔ gauge ↔ vacuum pressure (ib)
+- [ ] Bubbler (purge) level (ib)
+- [ ] Interface level by DP (ib)
+- [ ] Capacitance level probe
+- [ ] Radar level: dielectric constant & reflection
+- [ ] Spherical tank volume (ib)
+- [ ] Horizontal tank with dished/hemispherical heads
+- [ ] Cone-bottom tank volume
+- [ ] Tank fill / drain time
+- [ ] Pressure vessel wall thickness (ASME, simplified)
+- [ ] Pipe wall thickness (Barlow)
+- [ ] Hydrostatic test pressure (ib)
+- [ ] Pressure gauge range selection (ib)
+- [ ] Bourdon gauge accuracy class error (ib)
+
+## Engineering — Valves, pumps & compressors
+- [ ] Control valve sizing for gas (Cg / Cv)
+- [ ] Control valve sizing for steam
+- [ ] Valve authority
+- [ ] Cavitation index (σ) / choked flow
+- [ ] Actuator thrust / torque sizing (ib)
+- [ ] Pump NPSH available (ib)
+- [ ] Pump affinity laws
+- [ ] Pump head from pressure
+- [ ] System curve & duty point
+- [ ] Compressor power (isentropic)
+- [ ] Air compressor receiver size
+- [ ] Compressed air leak cost
+- [ ] Fan affinity laws & fan power
+- [ ] Safety relief valve sizing (API 520 liquid, simplified)
+
+## Engineering — Heat transfer & HVAC
+- [ ] LMTD heat exchanger
+- [ ] Heat exchanger area (Q = U·A·LMTD) (ib)
+- [ ] Steam consumption for heating
+- [ ] Pipe heat loss (insulated)
+- [ ] Insulation thickness
+- [ ] Convection heat transfer (Q = hAΔT)
+- [ ] Radiation heat transfer (Stefan–Boltzmann)
+- [ ] Cooling tower range/approach & evaporation
+- [ ] Chiller tonnage (TR) from flow & ΔT
+- [ ] Air conditioner BTU / room size
+- [ ] Duct size (equal friction)
+- [ ] CFM air changes per hour
+- [ ] Psychrometric: dew point from RH (ib)
+- [ ] Relative humidity ↔ absolute humidity
+- [ ] Heater kW for tank heating
+
+## Engineering — Mechanical design
+- [ ] Bolt torque (T = K·D·F)
+- [ ] Shaft diameter for torque
+- [ ] Beam deflection (simply supported, cantilever)
+- [ ] Bending stress (M/Z)
+- [ ] Moment of inertia (rectangle, circle, I-beam)
+- [ ] Spring rate (helical compression)
+- [ ] Gear ratio & speed
+- [ ] Chain / sprocket speed & length
+- [ ] Belt tension
+- [ ] Bearing L10 life
+- [ ] Press fit interference
+- [ ] Factor of safety
+- [ ] Young's modulus / stress-strain
+- [ ] Weld size (fillet throat)
+- [ ] Conveyor belt speed & capacity
+
+## Engineering — Process & chemical
+- [ ] Mass balance (mixing two streams)
+- [ ] Residence time
+- [ ] Reactor space time / conversion
+- [ ] Boiler efficiency (direct method)
+- [ ] Steam table lookup (saturated)
+- [ ] Specific gravity ↔ density ↔ °Brix / °Baumé
+- [ ] Viscosity converter (cP, cSt, SSU)
+- [ ] Kinematic ↔ dynamic viscosity
+- [ ] Combustion air requirement
+- [ ] Flue gas O₂ to excess air
+- [ ] Heating value converter (GCV/NCV)
+- [ ] Gas density (ideal + Z)
+- [ ] Molar flow ↔ mass flow ↔ volume flow
+
+## Engineering — Safety & reliability
+- [ ] Risk graph / LOPA (simplified) (ib)
+- [ ] 1oo2 / 2oo3 PFDavg (ib)
+- [ ] Safe failure fraction (SFF) (ib)
+- [ ] Proof test coverage effect
+- [ ] MTTF ↔ FIT ↔ failure rate converter
+- [ ] Weibull reliability
+- [ ] Hazardous area: temperature class check (ib)
+- [ ] IS loop entity parameters (Uo/Io/Co/Lo) check
+
+## Electrical
+- [ ] Cable size for load current (with derating) (ib)
+- [ ] Neutral sizing with harmonics (ib)
+- [ ] MCCB / breaker selection (ib)
+- [ ] Fuse I²t / let-through
+- [ ] Motor starting voltage dip (ib)
+- [ ] Soft starter current (ib)
+- [ ] Capacitor bank current & kVAr ↔ µF
+- [ ] Busbar size (current density)
+- [ ] Arc flash incident energy (simplified) (ib)
+- [ ] Battery bank sizing (Ah for backup)
+- [ ] Substation battery sizing (IEEE 485 simplified) (ib)
+- [ ] Solar string sizing (Voc, Vmp vs inverter)
+- [ ] Solar inverter sizing
+- [ ] Energy consumption kWh (plant) (ib)
+- [ ] Maximum demand & load factor
+- [ ] Electricity bill with demand charges (India HT tariff)
+- [ ] Lighting: lumens & lux (room) 
+- [ ] Number of light fixtures (lumen method)
+- [ ] Single-phase transformer current
+- [ ] Autotransformer power
+- [ ] Generator frequency & poles
+- [ ] Synchronous generator power angle
+- [ ] Transmission line: Ferranti effect (ib)
+- [ ] Skin depth (ib)
+- [ ] Insulation resistance / PI (ib)
+- [ ] Motor winding resistance unbalance (ib)
+- [ ] Watt-hour meter constant (imp/kWh)
+- [ ] Lightning protection: rolling sphere radius
+- [ ] Voltage drop for DC (solar/battery)
+
+## Electronics
+- [ ] Op-amp: summing, differential, integrator (ib)
+- [ ] Sallen–Key low-pass filter (ib)
+- [ ] LC filter / pi filter
+- [ ] RC snubber (ib)
+- [ ] Linear regulator power (LM317 resistors)
+- [ ] LM317 output voltage resistor calculator
+- [ ] Buck-boost / SEPIC (ib)
+- [ ] Flyback transformer turns ratio (ib)
+- [ ] Inductor design (turns for AL value)
+- [ ] Air-core coil inductance (Wheeler)
+- [ ] Ohm's law for AC (power, apparent, reactive)
+- [ ] Decoupling capacitor selection (ib)
+- [ ] Crystal load capacitance
+- [ ] RC oscillator / phase-shift oscillator frequency (ib)
+- [ ] Schmitt trigger thresholds
+- [ ] Comparator hysteresis resistors
+- [ ] Photodiode transimpedance amplifier (ib)
+- [ ] Thermocouple amplifier gain
+- [ ] Battery internal resistance & runtime (Peukert)
+- [ ] Antenna length (λ/2, λ/4 dipole)
+- [ ] Free-space path loss
+- [ ] Microstrip impedance (ib)
+- [ ] Skin effect in PCB / wire (ib)
+- [ ] Binary / hex / decimal / BCD converter (ib)
+- [ ] Gray code converter (ib)
+- [ ] Logic level / pull-up resistor (I2C)
+- [ ] UART baud rate error
+- [ ] RS-485 cable length & termination (ib)
+- [ ] Hall-effect current sensor scaling (ib)
+- [ ] Shunt resistor current measurement (ib)
+
+## Physics
+- [ ] Impulse & momentum change
+- [ ] Elastic / inelastic collision
+- [ ] Friction force & coefficient
+- [ ] Inclined plane
+- [ ] Angular velocity ↔ rpm
+- [ ] Rotational kinetic energy & moment of inertia
+- [ ] Simple harmonic motion
+- [ ] Spring-mass frequency
+- [ ] Stress, strain & Young's modulus
+- [ ] Bernoulli equation (ib)
+- [ ] Stokes' law / terminal velocity
+- [ ] Drag force
+- [ ] Lift force
+- [ ] Thermal expansion of liquids (volumetric)
+- [ ] Latent heat
+- [ ] Newton's law of cooling
+- [ ] Stefan–Boltzmann radiation
+- [ ] Wien's law
+- [ ] Photon energy (E = hf)
+- [ ] de Broglie wavelength
+- [ ] E = mc²
+- [ ] Radioactive activity (Bq, Ci)
+- [ ] Magnetic field of a wire / solenoid
+- [ ] Lorentz force
+- [ ] Faraday's law (EMF) (ib)
+- [ ] Capacitance of parallel plates (ib)
+- [ ] Electric field & potential
+- [ ] Speed of sound in gases
+- [ ] Standing waves / string frequency
+- [ ] Beat frequency
+- [ ] Inverse square law (light, sound, radiation)
+- [ ] Lens power & magnification (mirror)
+- [ ] Relativistic time dilation
+- [ ] Specific heat mixture (final temperature)
+- [ ] Carnot efficiency
+
+## Chemistry
+- [ ] Mass ↔ moles ↔ volume (STP)
+- [ ] Molar mass from formula
+- [ ] Empirical formula
+- [ ] Limiting reagent
+- [ ] Theoretical yield
+- [ ] Normality
+- [ ] Solution preparation from solid (mass needed)
+- [ ] Stock dilution series
+- [ ] pOH / [H+] / [OH−]
+- [ ] Ka ↔ pKa, Kb ↔ pKb
+- [ ] pH of weak acid / weak base
+- [ ] Equilibrium constant (Kc, Kp)
+- [ ] Reaction rate & order
+- [ ] Activation energy from two rates
+- [ ] Enthalpy of reaction (Hess)
+- [ ] Heat of combustion / calorimetry (bomb)
+- [ ] Faraday electrolysis (mass deposited)
+- [ ] Cell potential (E°cell)
+- [ ] Raoult's law (vapour pressure)
+- [ ] Henry's law (gas solubility)
+- [ ] Van der Waals equation
+- [ ] Gay-Lussac's law
+- [ ] Avogadro's law
+- [ ] Water hardness (ppm CaCO₃)
+- [ ] TDS ↔ conductivity (ib)
+- [ ] Dissolved oxygen saturation
+- [ ] Conductivity cell constant (ib)
+- [ ] ORP / chlorine dose (water treatment)
+
+## Math
+- [ ] Linear equation solver / two equations
+- [ ] System of 3 equations
+- [ ] Cubic equation
+- [ ] Polynomial roots
+- [ ] Matrix determinant / inverse (2×2, 3×3)
+- [ ] Vector magnitude, dot & cross product
+- [ ] Distance & midpoint
+- [ ] Equation of a line (two points)
+- [ ] Circle equation from points
+- [ ] Angle converter (deg, rad, grad)
+- [ ] Law of sines
+- [ ] Triangle solver (SSS, SAS, ASA)
+- [ ] Hexagon / octagon
+- [ ] Prism / pyramid / frustum volume
+- [ ] Torus / capsule / hemisphere
+- [ ] Surface area of shapes
+- [ ] Arithmetic sequence
+- [ ] Geometric sequence & series
+- [ ] Prime factorization
+- [ ] Prime number checker
+- [ ] LCM of many numbers
+- [ ] Fraction calculator (+ − × ÷)
+- [ ] Mixed number ↔ improper fraction
+- [ ] Decimal to fraction
+- [ ] Scientific notation
+- [ ] Significant figures
+- [ ] Rounding
+- [ ] Modulo
+- [ ] Roman numerals
+- [ ] Derivative (power rule, numeric)
+- [ ] Definite integral (numeric)
+- [ ] Limits / series sums
+- [ ] Interpolation (linear) (very useful for engineers)
+- [ ] Unit circle / trig values
+- [ ] Inverse trig
+- [ ] Complex numbers (polar ↔ rectangular)
+- [ ] Log base converter / antilog
+- [ ] Exponential growth & decay
+- [ ] Percentage increase/decrease of a value
+- [ ] Ratio to percentage
+
+## Statistics
+- [ ] t-test (one sample, two sample)
+- [ ] Chi-square test
+- [ ] Linear regression (least squares)
+- [ ] Correlation coefficient
+- [ ] Variance
+- [ ] Mean absolute deviation
+- [ ] Percentile / percentile rank
+- [ ] Outlier (IQR / Grubbs)
+- [ ] Expected value
+- [ ] Bayes' theorem
+- [ ] Birthday paradox
+- [ ] Lottery odds
+- [ ] Exponential distribution
+- [ ] Uniform distribution
+- [ ] Hypergeometric distribution
+- [ ] Geometric distribution
+- [ ] P-value from z / t
+- [ ] Moving average
+- [ ] Process capability (Cp, Cpk)
+- [ ] Control chart limits (X-bar, R)
+- [ ] Six sigma DPMO / sigma level
+- [ ] Measurement uncertainty (RSS combination)

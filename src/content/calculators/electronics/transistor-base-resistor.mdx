@@ -1,0 +1,61 @@
+---
+title: Transistor Base Resistor Calculator (BJT Switch)
+description: Calculate the base resistor for an NPN or PNP transistor used as a switch — from load current, hFE and drive voltage, with overdrive for saturation.
+category: electronics
+intro: "To use a bipolar transistor as a switch for a relay, LED strip or buzzer, you must drive enough base current to saturate it fully. This transistor base resistor calculator works out the resistor from the load current and gain — see the [basics of transistors](https://www.instrumentationblog.in/basics-of-transistors/) and [BJT currents and voltages](https://www.instrumentationblog.in/bjt-currents-and-voltages-explained/)."
+keywords: [transistor base resistor calculator, bjt base resistor, transistor as switch calculator, base current calculation, npn switch resistor, hfe calculation]
+updated: 2026-10-28
+variables:
+  - { id: Vin, label: Drive voltage (e.g. microcontroller output), family: voltage, unit: V, default: 5, min: 0 }
+  - { id: Vbe, label: Base-emitter voltage, family: voltage, unit: V, default: 0.7, min: 0 }
+  - { id: Ic, label: Load (collector) current, family: current, unit: mA, default: 100, min: 0 }
+  - { id: hfe, label: Minimum current gain (hFE), default: 100, min: 1 }
+  - { id: k, label: Overdrive factor, default: 5, min: 1, help: '2–10 × the minimum base current ensures hard saturation. Forced beta = hFE ÷ overdrive.' }
+  - { id: Ib, label: Base current, family: current, unit: mA, min: 0 }
+  - { id: Rb, label: Base resistor, family: resistance, unit: kohm, min: 0 }
+equations:
+  - Ib = Ic / hfe * k
+  - Rb = (Vin - Vbe) / Ib
+faq:
+  - q: How do I calculate a transistor base resistor?
+    a: Find the base current I_B = I_C ÷ hFE × overdrive, then R_B = (V_in − V_BE) ÷ I_B. For 100 mA with hFE 100, 5× overdrive and 5 V drive, R_B ≈ 860 Ω.
+  - q: Why use an overdrive factor?
+    a: hFE varies widely between parts and with temperature. Driving 2–10 times the minimum base current guarantees saturation and a low V_CE.
+  - q: Do I need a diode with a relay?
+    a: Yes. Put a flyback diode across the relay coil to absorb the voltage spike when the transistor turns off.
+  - q: When should I use a MOSFET instead?
+    a: For loads above a few hundred milliamps, a logic-level MOSFET needs no continuous drive current and wastes less power.
+related: [electronics/led-resistor, electronics/mosfet-power-loss, electronics/zener-resistor, physics/ohms-law]
+---
+
+## How to use the transistor base resistor calculator
+
+Enter the **drive voltage**, the transistor's **V<sub>BE</sub>**, the **load current**, the **minimum hFE** from the datasheet and an **overdrive factor**. You get the base current and the base resistor value — round down to the nearest standard value.
+
+## Base resistor formula
+
+<p class="formula">I<sub>B</sub> = (I<sub>C</sub> ÷ h<sub>FE</sub>) × k &nbsp;·&nbsp; R<sub>B</sub> = (V<sub>in</sub> − V<sub>BE</sub>) ÷ I<sub>B</sub></p>
+
+## Example
+
+Switching a 100 mA relay from a 5 V microcontroller pin with a BC547-class transistor (hFE ≥ 100), 5× overdrive:
+
+- I<sub>B</sub> = 100 ÷ 100 × 5 = **5 mA**
+- R<sub>B</sub> = 4.3 ÷ 0.005 = **860 Ω** → use 820 Ω
+
+## Common small-signal transistors
+
+| Transistor | Type | Max I<sub>C</sub> | Typical hFE |
+|---|---|---|---|
+| BC547 | NPN | 100 mA | 110–800 |
+| 2N3904 | NPN | 200 mA | 100–300 |
+| 2N2222A | NPN | 600 mA | 100–300 |
+| BC337 | NPN | 800 mA | 100–630 |
+| BD139 | NPN | 1.5 A | 40–250 |
+| TIP120 | NPN Darlington | 5 A | ≥ 1,000 |
+
+## Practical tips
+
+- Check that the microcontroller pin can supply the base current (often 10–20 mA max).
+- Add a 10 kΩ resistor from base to emitter to keep the transistor off while the pin floats at power-up.
+- Saturation voltage V<sub>CE(sat)</sub> is typically 0.1–0.3 V; power dissipated ≈ I<sub>C</sub> × V<sub>CE(sat)</sub>.

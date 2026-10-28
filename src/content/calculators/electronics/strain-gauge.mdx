@@ -1,0 +1,65 @@
+---
+title: Strain Gauge Calculator (ΔR and Bridge Output)
+description: Calculate the resistance change and Wheatstone bridge output of a strain gauge from gauge factor, strain and excitation — for quarter, half and full bridges.
+category: electronics
+intro: "A strain gauge is a fine foil grid whose resistance changes slightly when it is stretched or compressed. Wired into a Wheatstone bridge, it measures force, pressure and weight in load cells and transmitters. This strain gauge calculator gives the resistance change and bridge output — see the [strain gauge working principle](https://www.instrumentationblog.in/strain-gauge-working-principle/) and [bonded vs unbonded strain gauges](https://www.instrumentationblog.in/bonded-and-unbonded-strain-gauges/)."
+keywords: [strain gauge calculator, gauge factor calculation, strain gauge bridge output, microstrain to mv/v, quarter bridge calculator, load cell output, delta r strain]
+updated: 2026-10-28
+variables:
+  - { id: R, label: Gauge resistance, family: resistance, unit: ohm, default: 350, min: 0 }
+  - { id: GF, label: Gauge factor, default: 2.0, min: 0 }
+  - { id: ue, label: Strain, suffix: µε, default: 1000 }
+  - { id: Vex, label: Bridge excitation, family: voltage, unit: V, default: 10, min: 0 }
+  - id: n
+    label: Bridge configuration
+    default: 1
+    options:
+      - { label: Quarter bridge (1 active gauge), value: 1 }
+      - { label: "Half bridge (2 active gauges, bending)", value: 2 }
+      - { label: Full bridge (4 active gauges), value: 4 }
+  - { id: dR, label: Resistance change per gauge, family: resistance, unit: mohm, min: 0 }
+  - { id: Vo, label: Bridge output (linear approximation), family: voltage, unit: mV }
+  - { id: mvv, label: Sensitivity, suffix: mV/V, decimals: 4 }
+equations:
+  - dR = R * GF * ue * 1e-6
+  - Vo = Vex * n * GF * ue * 1e-6 / 4
+  - mvv = Vo / Vex * 1000
+faq:
+  - q: What is the gauge factor?
+    a: The ratio of relative resistance change to strain, GF = (ΔR/R) ÷ ε. Metal foil gauges have GF ≈ 2; semiconductor gauges can exceed 100.
+  - q: What is a microstrain?
+    a: One millionth of a unit of strain (10⁻⁶ m/m). Steel at its typical working stress sees about 500–1,500 µε.
+  - q: How big is the output of a strain gauge bridge?
+    a: "Very small: a quarter bridge with GF 2 at 1,000 µε gives about 0.5 mV/V — 5 mV with 10 V excitation — so an instrumentation amplifier is needed."
+  - q: Why use a full bridge?
+    a: It gives four times the output of a quarter bridge and cancels temperature effects and lead resistance, which is why load cells use full bridges.
+related: [electronics/wheatstone-bridge, electronics/instrumentation-amplifier-gain, physics/hookes-law, physics/pressure]
+---
+
+## How to use the strain gauge calculator
+
+Enter the **gauge resistance**, **gauge factor**, **strain** in microstrain, **bridge excitation** and choose the **bridge configuration**. You get the resistance change per gauge, the bridge output and its sensitivity in mV/V.
+
+## Strain gauge formulas
+
+<p class="formula">ΔR = R × GF × ε &nbsp;·&nbsp; V<sub>out</sub> ≈ V<sub>ex</sub> × N × GF × ε ÷ 4</p>
+
+where N is the number of active arms (1, 2 or 4). The quarter-bridge result is slightly non-linear at large strains — see the [Wheatstone bridge calculator](/electronics/wheatstone-bridge/) for the exact value.
+
+## Output at 10 V excitation, GF = 2
+
+| Strain | ΔR (350 Ω gauge) | Quarter bridge | Full bridge |
+|---|---|---|---|
+| 10 µε | 7.0 mΩ | 0.05 mV | 0.20 mV |
+| 100 µε | 70.0 mΩ | 0.50 mV | 2.00 mV |
+| 500 µε | 350.0 mΩ | 2.50 mV | 10.00 mV |
+| 1000 µε | 700.0 mΩ | 5.00 mV | 20.00 mV |
+| 2000 µε | 1400.0 mΩ | 10.00 mV | 40.00 mV |
+
+## From strain to stress
+
+For steel (E ≈ 200 GPa), stress = E × ε: 1,000 µε corresponds to about 200 MPa.
+
+## Load cells
+
+Load cells are rated in **mV/V** at full load — commonly 2 mV/V. With 10 V excitation, a 2 mV/V cell gives 20 mV at full capacity. Amplify it with an [instrumentation amplifier](/electronics/instrumentation-amplifier-gain/).

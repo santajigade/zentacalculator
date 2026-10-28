@@ -15,11 +15,12 @@ export const CAT_SEO: Record<string, CatSEO> = {
     h1: 'Engineering calculators',
     intro: 'Free online engineering calculators for process, instrumentation and mechanical engineers. Scale a **4–20 mA** signal, size an **orifice plate** or **control valve**, work out **pipe pressure drop**, convert **tank level to volume** or check a **Pt100** reading — every calculator solves for any value you leave blank and shows the formula and steps. For in-depth articles on field instruments, see [Instrumentation Blog](' + IB + '/).',
     groups: [
-      { name: 'Instrumentation & signals', ids: ['4-20ma-scaling', 'loop-resistance', 'pt100-resistance', 'dp-flow-square-root', 'flow-meter-k-factor'] },
+      { name: 'Instrumentation & signals', ids: ['4-20ma-scaling', 'loop-resistance', 'pt100-resistance', 'dp-flow-square-root', 'flow-meter-k-factor', 'instrument-accuracy', 'turndown-ratio'] },
       { name: 'Flow measurement', ids: ['orifice-flow', 'venturi-flow', 'pitot-tube-velocity', 'weir-flow', 'mass-flow-rate', 'gas-flow-correction', 'pipe-flow-velocity', 'reynolds-number'] },
-      { name: 'Pressure, level & tanks', ids: ['hydrostatic-pressure', 'horizontal-tank-volume', 'darcy-weisbach-head-loss'] },
+      { name: 'Pressure, level & tanks', ids: ['hydrostatic-pressure', 'dp-level-range', 'ultrasonic-level', 'vertical-tank-volume', 'horizontal-tank-volume', 'darcy-weisbach-head-loss', 'water-hammer', 'api-gravity'] },
       { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'pump-power', 'heat-duty', 'thermal-expansion'] },
       { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force'] },
+      { name: 'Safety & reliability', ids: ['pfd-avg', 'availability-mtbf'] },
     ],
     about: [
       { h: 'Calculators built for the plant floor', p: 'These tools cover the everyday sums of process instrumentation: converting transmitter signals, checking loop power budgets, sizing primary flow elements and turning level into volume. They use the same equations found in ISO 5167, IEC 60751 and standard fluid-mechanics references, with units you can switch between metric and imperial.' },
@@ -37,10 +38,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
     h1: 'Electrical calculators',
     intro: 'Free online electrical calculators for electricians, electrical engineers and students. Convert **kW to amps** and **kVA to kW**, check **cable voltage drop**, size a **capacitor bank for power factor correction**, find **transformer full-load and short-circuit current**, size **earth conductors** and measure **THD** — with formulas, worked examples and reference tables on every page.',
     groups: [
-      { name: 'Power & current', ids: ['kw-to-amps', 'amps-to-watts', 'kva-to-kw', 'power-factor-correction', 'ups-sizing'] },
-      { name: 'Motors & drives', ids: ['three-phase-motor-power', 'induction-motor-slip', 'voltage-unbalance', 'braking-resistor'] },
-      { name: 'Transformers & fault level', ids: ['transformer-current', 'transformer-short-circuit', 'transformer-turns-ratio', 'transformer-efficiency', 'per-unit'] },
-      { name: 'Cables, earthing & power quality', ids: ['cable-voltage-drop', 'earth-conductor-size', 'earthing-resistance', 'thd', 'star-delta-transformation'] },
+      { name: 'Power & current', ids: ['kw-to-amps', 'amps-to-watts', 'kva-to-kw', 'line-phase-voltage', 'power-factor-correction', 'ups-sizing', 'generator-size'] },
+      { name: 'Motors & drives', ids: ['three-phase-motor-power', 'motor-starting-current', 'induction-motor-slip', 'voltage-unbalance', 'braking-resistor'] },
+      { name: 'Transformers & fault level', ids: ['transformer-size', 'transformer-current', 'transformer-short-circuit', 'transformer-turns-ratio', 'transformer-efficiency', 'per-unit', 'ct-burden'] },
+      { name: 'Cables, earthing & power quality', ids: ['cable-voltage-drop', 'wire-resistance', 'earth-fault-loop-impedance', 'earth-conductor-size', 'earthing-resistance', 'thd', 'star-delta-transformation'] },
     ],
     about: [
       { h: 'For LV and MV power systems', p: 'The calculators cover single-phase, three-phase and DC circuits at common Indian, European and North American voltages (230/415 V, 400 V, 120/208/480 V and 11 kV). Formulas follow IEC 60364, IEC 60076, IEEE 519 and NEMA MG 1 where relevant, and each page explains the assumptions.' },
@@ -58,10 +59,12 @@ export const CAT_SEO: Record<string, CatSEO> = {
     h1: 'Electronics calculators',
     intro: 'Free online electronics calculators for hobbyists, students and circuit designers. Find the right **LED resistor**, design a **voltage divider**, read a **resistor colour code**, set a **555 timer** frequency, choose an **RC filter** cut-off, size a **buck or boost converter** and check **PCB trace width** — each with formulas, standard values and design tips.',
     groups: [
-      { name: 'Resistors & basic circuits', ids: ['led-resistor', 'voltage-divider', 'current-divider', 'resistor-color-code', 'wheatstone-bridge'] },
-      { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'inductor-energy', 'reactance', 'resonant-frequency', 'rc-filter', 'capacitor-lifetime'] },
-      { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr'] },
-      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'heat-sink', 'pcb-trace-width'] },
+      { name: 'Resistors & basic circuits', ids: ['led-resistor', 'voltage-divider', 'current-divider', 'resistor-color-code', 'zener-resistor', 'transistor-base-resistor', 'wheatstone-bridge'] },
+      { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'capacitor-lifetime'] },
+      { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts'] },
+      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'battery-charge-time']
+      },
+      { name: 'Sensors', ids: ['ntc-thermistor', 'strain-gauge'] },
     ],
     about: [
       { h: 'Design faster, with fewer mistakes', p: 'Each calculator works in both directions: get the output of a circuit, or enter the output you want and solve for the component value. Results are shown in convenient units — kΩ, µF, mH, kHz — and pages list the nearest standard values.' },

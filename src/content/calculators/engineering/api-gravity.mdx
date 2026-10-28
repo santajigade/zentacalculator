@@ -1,0 +1,61 @@
+---
+title: API Gravity Calculator (API to Specific Gravity)
+description: Convert API gravity to specific gravity and density and back — for crude oil, fuels and petroleum products at 60 °F.
+category: engineering
+intro: "API gravity is the petroleum industry's scale for how heavy or light an oil is compared with water: higher API means lighter oil. It converts directly to specific gravity and density at 60 °F. This API gravity calculator works both ways — see [what specific gravity is](https://www.instrumentationblog.in/what-is-specific-gravity/)."
+keywords: [api gravity calculator, api to specific gravity, specific gravity to api, api gravity formula, crude oil density, oil api degree, api to density]
+updated: 2026-10-28
+variables:
+  - { id: API, label: API gravity, suffix: °API, default: 35, decimals: 2 }
+  - { id: SG, label: Specific gravity (60/60 °F), min: 0.0001, decimals: 4 }
+  - { id: rho, label: Density at 60 °F, family: density, unit: kgm3, imperialUnit: lbft3, min: 0 }
+equations:
+  - SG = 141.5 / (API + 131.5)
+  - rho = SG * 999.016
+faq:
+  - q: What is the API gravity formula?
+    a: API = 141.5 ÷ SG − 131.5, where SG is the specific gravity at 60 °F relative to water at 60 °F.
+  - q: What API gravity is water?
+    a: Exactly 10 °API. Oils lighter than water have API above 10; heavier oils below 10.
+  - q: What is light and heavy crude?
+    a: Light crude is above about 31.1 °API, medium 22.3–31.1 °API, heavy 10–22.3 °API and extra-heavy below 10 °API.
+  - q: Why does API gravity matter?
+    a: Lighter crudes yield more petrol and diesel and sell at a higher price; API also feeds volume correction and flow measurement calculations.
+related: [physics/density, engineering/mass-flow-rate, engineering/hydrostatic-pressure, engineering/dp-level-range]
+---
+
+## How to use the API gravity calculator
+
+Enter the **API gravity** to get specific gravity and density at 60 °F, or enter **specific gravity** or **density** and press × on API gravity to convert the other way.
+
+## API gravity formula
+
+<p class="formula">°API = 141.5 ÷ SG − 131.5 &nbsp;·&nbsp; SG = 141.5 ÷ (°API + 131.5)</p>
+
+Density uses water at 60 °F (999.016 kg/m³).
+
+## API gravity of common products
+
+| Product | Typical °API | SG |
+|---|---|---|
+| Heavy fuel oil | 12 | 0.986 |
+| Heavy crude (e.g. Maya) | 21 | 0.928 |
+| Arab Medium | 30 | 0.876 |
+| Brent | 38 | 0.835 |
+| WTI | 40 | 0.825 |
+| Diesel | 35 | 0.850 |
+| Kerosene / jet fuel | 45 | 0.802 |
+| Petrol (gasoline) | 60 | 0.739 |
+
+## Crude classification
+
+| Class | °API |
+|---|---|
+| Light | > 31.1 |
+| Medium | 22.3 – 31.1 |
+| Heavy | 10 – 22.3 |
+| Extra heavy | < 10 |
+
+## Temperature correction
+
+API gravity is defined at 60 °F (15.6 °C). Hydrometer readings at other temperatures are corrected to 60 °F with the API MPMS Chapter 11.1 tables before use.

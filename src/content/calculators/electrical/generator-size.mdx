@@ -1,0 +1,71 @@
+---
+title: Generator Size Calculator (DG Set kVA)
+description: Calculate the diesel generator (DG set) kVA rating needed for your connected load, power factor, future margin and largest motor start.
+category: electrical
+intro: "A diesel generator must supply the running load and also survive the surge when the largest motor starts. Undersized sets stall or trip; oversized sets run lightly loaded and wet-stack. This generator size calculator gives the minimum kVA from both checks — see [how to calculate generator size for industrial load](https://www.instrumentationblog.in/how-to-calculate-generator-size-industrial-load/) and how an [AMF panel auto-starts a DG](https://www.instrumentationblog.in/amf-panel-working-dg-auto-start/)."
+keywords: [generator size calculator, dg set size calculation, diesel generator kva calculator, generator sizing for motor starting, kva required for load, genset sizing]
+updated: 2026-10-28
+variables:
+  - { id: P, label: Total running load, family: power, unit: kW, imperialUnit: hp, default: 80, min: 0 }
+  - { id: pf, label: Load power factor, default: 0.8, min: 0.1, max: 1 }
+  - { id: mg, label: Future and safety margin, family: percent, unit: '%', default: 20, min: 0 }
+  - { id: Pm, label: Largest motor (started last), family: power, unit: kW, imperialUnit: hp, default: 22, min: 0 }
+  - { id: ks, label: Starting kVA per motor kW, default: 2.5, min: 0, help: 'About 6–7 for DOL, 2–2.5 for star-delta, 1.5–2.5 for soft starters, 1.2–1.5 for VFDs.' }
+  - { id: Sr, label: kVA for running load, suffix: kVA, min: 0, decimals: 1 }
+  - { id: Ss, label: kVA during largest motor start, suffix: kVA, min: 0, decimals: 1 }
+  - { id: S, label: Recommended minimum generator rating, suffix: kVA, min: 0, decimals: 1 }
+equations:
+  - Sr = P / 1000 / pf * (1 + mg)
+  - Ss = ((P - Pm) / 1000 / pf + Pm / 1000 * ks) / 1.5
+  - S = max(Sr, Ss)
+faq:
+  - q: How do I calculate generator size?
+    a: Divide the running load in kW by the power factor (usually 0.8) to get kVA, add 20–25% margin, and check that the set can also handle the largest motor starting.
+  - q: Why use 0.8 power factor?
+    a: Generators are rated in kVA at 0.8 PF. A 100 kVA set delivers up to 80 kW.
+  - q: Why does motor starting matter?
+    a: A motor draws several times its running kVA when starting. Most generators can supply about 1.5–2 times their rating briefly while keeping voltage dip around 15–20%; this calculator uses 1.5.
+  - q: Is a bigger generator always better?
+    a: No. Diesel sets run best above 30–40% load; long periods at light load cause wet-stacking and carbon build-up.
+related: [electrical/motor-starting-current, electrical/ups-sizing, electrical/kva-to-kw, electrical/three-phase-motor-power]
+---
+
+## How to use the generator size calculator
+
+Enter the **total running load** in kW, its **power factor**, a **margin** for growth, the **largest motor** that starts while the rest of the load is running, and its **starting kVA per kW** for the starter type. The calculator gives the kVA needed for running and for the motor start; choose a standard rating at or above the larger figure.
+
+## Generator size formula
+
+<p class="formula">kVA<sub>run</sub> = kW ÷ PF × (1 + margin)</p>
+
+<p class="formula">kVA<sub>start</sub> = [(kW − kW<sub>motor</sub>) ÷ PF + kW<sub>motor</sub> × k<sub>s</sub>] ÷ 1.5</p>
+
+The 1.5 factor assumes the generator can carry 150% of its rating momentarily during motor starting while keeping voltage dip acceptable. Check the manufacturer's motor-starting curves for an exact selection.
+
+## Example
+
+80 kW running load at 0.8 PF with 20% margin; the last motor is 22 kW on a star-delta starter:
+
+- Running: 80 ÷ 0.8 × 1.2 = **120 kVA**
+- Starting: (58 ÷ 0.8 + 22 × 2.5) ÷ 1.5 = **85 kVA**
+- Choose **125 kVA**
+
+## Starting kVA per kW by starter
+
+| Starter | kVA per kW (approx.) |
+|---|---|
+| Direct-on-line | 6–7 |
+| Star-delta | 2–2.5 |
+| Autotransformer | 3–4 |
+| Soft starter | 1.5–2.5 |
+| VFD | 1.2–1.5 |
+
+## Standard DG set ratings (India)
+
+15, 20, 25, 30, 40, 62.5, 82.5, 100, 125, 160, 200, 250, 320, 380, 500, 625, 750, 1,010, 1,250, 1,500 and 2,000 kVA.
+
+## Other checks
+
+- **Non-linear loads** (VFDs, UPSs) may need generator derating or a larger alternator.
+- **Altitude and temperature** reduce output — derate above 1,000 m or 40 °C.
+- **Step loading**: start the largest motors first, when the generator is lightly loaded.

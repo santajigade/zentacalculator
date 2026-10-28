@@ -1,0 +1,69 @@
+---
+title: Instrumentation Amplifier Gain Calculator (Rg)
+description: Calculate the gain-setting resistor Rg for INA128, INA333, AD620 and other instrumentation amplifiers — or the gain from a given Rg.
+category: electronics
+intro: "Instrumentation amplifiers amplify the tiny differential signal from bridges, strain gauges and thermocouples while rejecting common-mode noise, with a single resistor setting the gain. This instrumentation amplifier gain calculator finds Rg for popular parts — see [how an instrumentation amplifier works](https://www.instrumentationblog.in/instrumentation-amplifier-working/) and how it [differs from an op-amp](https://www.instrumentationblog.in/instrumentation-amplifier-vs-op-amp-key-differences/)."
+keywords: [instrumentation amplifier gain calculator, rg calculator, ina128 gain resistor, ad620 gain calculation, in-amp gain formula, ina333 gain]
+updated: 2026-10-28
+variables:
+  - id: k
+    label: Amplifier (gain constant)
+    default: 50000
+    options:
+      - { label: 'INA128 / INA129 (50 kΩ)', value: 50000 }
+      - { label: 'AD620 (49.4 kΩ)', value: 49400 }
+      - { label: 'INA333 (100 kΩ)', value: 100000 }
+      - { label: 'AD8221 (49.4 kΩ, precision)', value: 49400.001 }
+      - { label: 'INA826 (49.4 kΩ, 36 V)', value: 49400.002 }
+  - { id: G, label: Gain, default: 100, min: 1, decimals: 2 }
+  - { id: Rg, label: Gain resistor (Rg), family: resistance, unit: ohm, min: 0 }
+  - { id: Vd, label: Differential input, family: voltage, unit: mV, default: 20 }
+  - { id: Vo, label: Output voltage, family: voltage, unit: V }
+equations:
+  - G = 1 + k / Rg
+  - Vo = G * Vd
+faq:
+  - q: What is the INA128 gain formula?
+    a: G = 1 + 50 kΩ ÷ R_G. For a gain of 100, R_G = 505 Ω.
+  - q: What is the AD620 gain formula?
+    a: G = 1 + 49.4 kΩ ÷ R_G. For a gain of 100, R_G ≈ 499 Ω.
+  - q: What gain do I get with no resistor?
+    a: A gain of 1 — leaving R_G open makes the amplifier a precision differential buffer.
+  - q: Why use an instrumentation amplifier instead of an op-amp?
+    a: It has very high input impedance on both inputs, excellent common-mode rejection and gain set by one resistor without matched-resistor networks.
+related: [electronics/op-amp-gain, electronics/wheatstone-bridge, electronics/strain-gauge, electronics/adc-resolution]
+---
+
+## How to use the instrumentation amplifier gain calculator
+
+Choose the **amplifier**, then enter the **gain** you want to get the gain resistor R<sub>G</sub> — or enter R<sub>G</sub> and press × on Gain to find the gain. Add a **differential input** to see the output voltage.
+
+## Instrumentation amplifier gain formula
+
+<p class="formula">G = 1 + k ÷ R<sub>G</sub> &nbsp;·&nbsp; R<sub>G</sub> = k ÷ (G − 1)</p>
+
+where k is the internal resistor constant from the datasheet.
+
+## Rg for common gains
+
+| Gain | INA128 (50 kΩ) | AD620 (49.4 kΩ) | INA333 (100 kΩ) |
+|---|---|---|---|
+| 2 | 50,000.0 Ω | 49,400.0 Ω | 100,000.0 Ω |
+| 5 | 12,500.0 Ω | 12,350.0 Ω | 25,000.0 Ω |
+| 10 | 5,555.6 Ω | 5,488.9 Ω | 11,111.1 Ω |
+| 20 | 2,631.6 Ω | 2,600.0 Ω | 5,263.2 Ω |
+| 50 | 1,020.4 Ω | 1,008.2 Ω | 2,040.8 Ω |
+| 100 | 505.1 Ω | 499.0 Ω | 1,010.1 Ω |
+| 200 | 251.3 Ω | 248.2 Ω | 502.5 Ω |
+| 500 | 100.2 Ω | 99.0 Ω | 200.4 Ω |
+| 1000 | 50.1 Ω | 49.4 Ω | 100.1 Ω |
+
+Use 0.1% metal-film resistors with low temperature coefficients — R<sub>G</sub> tolerance appears directly as gain error.
+
+## Typical application: load cell
+
+A 2 mV/V load cell on 5 V excitation gives 10 mV at full load. A gain of 250 (R<sub>G</sub> ≈ 200 Ω for INA128) scales it to 2.5 V for a 0–5 V ADC.
+
+## Output range
+
+The output cannot swing to the rails and is also limited by the common-mode voltage at the inputs — check the datasheet's input/output range charts, especially on single 3.3 or 5 V supplies.

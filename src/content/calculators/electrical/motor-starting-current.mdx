@@ -1,0 +1,74 @@
+---
+title: Motor Starting Current Calculator (DOL, Star-Delta, Soft Starter)
+description: Estimate the starting (inrush) current of an induction motor for DOL, star-delta, autotransformer and soft-starter starting from full-load current.
+category: electrical
+intro: "A three-phase induction motor started direct-on-line (DOL) draws 6–8 times its full-load current for a few seconds, which can dip the supply voltage and trip protection. Reduced-voltage starters cut that inrush — compare the options in [DOL vs star-delta starter](https://www.instrumentationblog.in/dol-vs-star-delta-starter-which-to-use/) and [motor starting methods compared](https://www.instrumentationblog.in/motor-starting-methods-compared/). This motor starting current calculator estimates the inrush for each method."
+keywords: [motor starting current calculator, dol starting current, star delta starting current, inrush current motor, locked rotor current, soft starter current, motor starting current formula]
+updated: 2026-10-28
+variables:
+  - { id: Ifl, label: Motor full-load current (FLC), family: current, unit: A, default: 20, min: 0 }
+  - { id: k, label: DOL starting current (× FLC), default: 6.5, min: 1, help: 'Locked-rotor current ratio from the motor datasheet — typically 6–8 for IE2/IE3 motors.' }
+  - id: m
+    label: Starting method
+    default: 0.333333
+    options:
+      - { label: 'Direct-on-line (100% voltage)', value: 1 }
+      - { label: 'Star-delta (58% voltage)', value: 0.333333 }
+      - { label: 'Autotransformer 80% tap', value: 0.64 }
+      - { label: 'Autotransformer 65% tap', value: 0.4225 }
+      - { label: 'Autotransformer 50% tap', value: 0.25 }
+  - { id: Idol, label: DOL starting current, family: current, unit: A, min: 0 }
+  - { id: Is, label: Line starting current with chosen method, family: current, unit: A, min: 0 }
+  - { id: Ts, label: Starting torque (% of DOL torque), family: percent, unit: '%', min: 0 }
+equations:
+  - Idol = k * Ifl
+  - Is = Idol * m
+  - Ts = m
+faq:
+  - q: What is the starting current of a motor?
+    a: Started direct-on-line, an induction motor draws its locked-rotor current — typically 6 to 8 times full-load current — until it approaches full speed.
+  - q: How much does a star-delta starter reduce starting current?
+    a: To one third of the DOL value. Each winding sees 1/√3 of line voltage in star, and line current is one third. Starting torque also falls to one third.
+  - q: Why does starting torque fall as much as current?
+    a: Torque is proportional to voltage squared. With an autotransformer, line current and torque both scale with the tap ratio squared.
+  - q: What about soft starters and VFDs?
+    a: A soft starter typically limits current to 2.5–4 × FLC; a VFD can start a motor at about 1–1.5 × FLC with full torque.
+related: [electrical/three-phase-motor-power, electrical/induction-motor-slip, electrical/cable-voltage-drop, electrical/generator-size]
+---
+
+## How to use the motor starting current calculator
+
+Enter the motor's **full-load current** from the nameplate, the **DOL starting current ratio** (I<sub>A</sub>/I<sub>N</sub> from the datasheet) and choose the **starting method**. You get the DOL inrush, the line current with your starter and the starting torque as a percentage of DOL torque.
+
+## Motor starting current formula
+
+<p class="formula">I<sub>DOL</sub> = k × I<sub>FL</sub> &nbsp;·&nbsp; I<sub>start</sub> = I<sub>DOL</sub> × (V<sub>start</sub>/V<sub>rated</sub>)²</p>
+
+For star-delta the factor is (1/√3)² = 1/3; for autotransformers it is the tap ratio squared.
+
+## Comparison of starting methods
+
+| Method | Line current (× DOL) | Torque (× DOL) | Typical line current |
+|---|---|---|---|
+| Direct-on-line | 1.00 | 1.00 | 6–8 × FLC |
+| Star-delta | 0.33 | 0.33 | 2–2.7 × FLC |
+| Autotransformer 80% | 0.64 | 0.64 | 4–5 × FLC |
+| Autotransformer 65% | 0.42 | 0.42 | 2.5–3.4 × FLC |
+| Soft starter (current limit) | adjustable | low | 2.5–4 × FLC |
+| VFD | — | up to 1.5 × rated | 1–1.5 × FLC |
+
+## Example
+
+A 11 kW, 415 V motor with 20 A FLC and a 6.5 × starting ratio:
+
+- DOL starting current = **130 A**
+- Star-delta starting current = **43 A**, with one third of the DOL starting torque
+
+## Choosing a method
+
+- **DOL** suits small motors (typically up to 7.5–11 kW) on a stiff supply.
+- **Star-delta** suits pumps and fans that start lightly loaded, but causes a current spike at changeover.
+- **Soft starters** give smooth acceleration and reduce mechanical shock.
+- **VFDs** give the lowest current and full torque, plus speed control.
+
+Check the voltage dip a large motor causes on a generator or weak supply — see the [generator size calculator](/electrical/generator-size/).

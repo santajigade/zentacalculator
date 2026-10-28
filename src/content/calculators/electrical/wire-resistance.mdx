@@ -1,0 +1,83 @@
+---
+title: Wire Resistance Calculator (Copper and Aluminium)
+description: Calculate the resistance of a copper or aluminium wire or cable from length, cross-section and temperature — plus resistance per km.
+category: electrical
+intro: "Every conductor has resistance that rises with length and temperature and falls with cross-section. It sets voltage drop, cable heating and the burden on instrument loops. This wire resistance calculator handles copper and aluminium at any temperature — see [what resistance is](https://www.instrumentationblog.in/what-is-resistance/) and [electrical conductivity explained](https://www.instrumentationblog.in/electrical-conductivity-explained/)."
+keywords: [wire resistance calculator, cable resistance calculator, copper wire resistance, resistance per km, conductor resistance at temperature, aluminium cable resistance, resistivity calculator]
+updated: 2026-10-28
+variables:
+  - id: rho
+    label: Conductor material
+    default: 1.724e-8
+    options:
+      - { label: Copper (annealed), value: 1.724e-8 }
+      - { label: Aluminium, value: 2.826e-8 }
+      - { label: Silver, value: 1.59e-8 }
+      - { label: Gold, value: 2.44e-8 }
+      - { label: Nichrome, value: 1.1e-6 }
+  - { id: L, label: Length (total conductor length), family: length, unit: m, imperialUnit: ft, default: 100, min: 0 }
+  - { id: A, label: Cross-section area, family: area, unit: mm2, default: 1.5, min: 0 }
+  - { id: T, label: Conductor temperature, suffix: °C, default: 20 }
+  - { id: R20, label: Resistance at 20 °C, family: resistance, unit: ohm, min: 0 }
+  - { id: R, label: Resistance at temperature, family: resistance, unit: ohm, min: 0 }
+  - { id: rkm, label: Resistance per km (at temperature), suffix: Ω/km, min: 0, decimals: 3 }
+equations:
+  - R20 = rho * L / A
+  - R = R20 * (1 + 0.00393 * (T - 20))
+  - rkm = R / L * 1000
+faq:
+  - q: How do I calculate wire resistance?
+    a: R = ρ × L ÷ A, where ρ is the resistivity, L the length and A the cross-section. 100 m of 1.5 mm² copper has about 1.15 Ω at 20 °C.
+  - q: How does temperature affect resistance?
+    a: Copper and aluminium resistance rises about 0.39–0.40% per °C. At 70 °C, copper resistance is about 20% higher than at 20 °C.
+  - q: Should I use the one-way or round-trip length?
+    a: For a circuit, use the total conductor length — twice the one-way distance for a two-wire circuit.
+  - q: Why is aluminium cable larger than copper?
+    a: Aluminium's resistivity is about 64% higher, so it needs roughly 1.6 times the cross-section for the same resistance.
+related: [electrical/cable-voltage-drop, physics/ohms-law, engineering/loop-resistance, electrical/ct-burden]
+---
+
+## How to use the wire resistance calculator
+
+Choose the **material**, enter the **total conductor length**, the **cross-section** and the **operating temperature**. You get the resistance at 20 °C, at your temperature, and per kilometre.
+
+## Wire resistance formula
+
+<p class="formula">R = ρ × L ÷ A &nbsp;·&nbsp; R<sub>T</sub> = R₂₀ × [1 + α(T − 20)]</p>
+
+The calculator uses α = 0.00393 /°C, the temperature coefficient of copper; aluminium (0.00403 /°C) is very close.
+
+## Copper conductor resistance at 20 °C
+
+| Size | Ω/km (calculated) | Typical IEC 60228 max (Class 2) |
+|---|---|---|
+| 0.5 mm² | 34.48 | 36.0 |
+| 0.75 mm² | 22.99 | 24.5 |
+| 1 mm² | 17.24 | 18.1 |
+| 1.5 mm² | 11.49 | 12.1 |
+| 2.5 mm² | 6.90 | 7.41 |
+| 4 mm² | 4.31 | 4.61 |
+| 6 mm² | 2.87 | 3.08 |
+| 10 mm² | 1.72 | 1.83 |
+| 16 mm² | 1.08 | 1.15 |
+| 25 mm² | 0.69 | 0.727 |
+
+Real stranded conductors are slightly higher than the solid-wire calculation because of stranding and compaction.
+
+## AWG equivalents
+
+| AWG | Area | Copper Ω/km |
+|---|---|---|
+| 24 | 0.205 mm² | 84.2 |
+| 20 | 0.519 mm² | 33.3 |
+| 18 | 0.823 mm² | 21.0 |
+| 16 | 1.31 mm² | 13.2 |
+| 14 | 2.08 mm² | 8.29 |
+| 12 | 3.31 mm² | 5.21 |
+| 10 | 5.26 mm² | 3.28 |
+
+## Uses
+
+- Voltage drop — see the [cable voltage drop calculator](/electrical/cable-voltage-drop/).
+- 4–20 mA loop budgets — see the [loop resistance calculator](/engineering/loop-resistance/).
+- RTD lead-wire error: 2-wire RTDs read high by the lead resistance (about 0.39 °C per 0.15 Ω for a Pt100).

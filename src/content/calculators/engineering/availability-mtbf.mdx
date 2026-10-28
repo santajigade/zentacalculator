@@ -1,0 +1,63 @@
+---
+title: Availability Calculator (MTBF and MTTR)
+description: Calculate equipment availability from MTBF and MTTR, plus failure rate, expected downtime per year and the probability of running without failure.
+category: engineering
+intro: "Availability is the fraction of time equipment is ready to work. It depends on how often it fails (MTBF) and how quickly it is repaired (MTTR). This availability calculator also gives the failure rate, downtime per year and reliability over a mission time — useful for comparing instruments, pumps and control systems, and for [SIS final element reliability](https://www.instrumentationblog.in/sis-final-element-reliability/)."
+keywords: [availability calculator, mtbf mttr calculator, availability formula, mtbf calculation, downtime per year, reliability calculator, failure rate calculator]
+updated: 2026-10-28
+variables:
+  - { id: mtbf, label: MTBF (mean time between failures), family: seconds, unit: h, default: 87600, min: 0 }
+  - { id: mttr, label: MTTR (mean time to repair), family: seconds, unit: h, default: 8, min: 0 }
+  - { id: tm, label: Mission time, family: seconds, unit: h, default: 8760, min: 0 }
+  - { id: A, label: Availability, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: dt, label: Expected downtime per year, family: seconds, unit: h, min: 0 }
+  - { id: lam, label: Failure rate, suffix: failures/year, min: 0, decimals: 4 }
+  - { id: R, label: Probability of no failure during mission, family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - A = mtbf / (mtbf + mttr)
+  - dt = (1 - A) * 8760 * 3600
+  - lam = 8760 * 3600 / mtbf
+  - R = exp(-tm / mtbf)
+faq:
+  - q: How do I calculate availability?
+    a: Availability = MTBF ÷ (MTBF + MTTR). An MTBF of 10 years and MTTR of 8 hours gives 99.991%.
+  - q: What does MTBF really mean?
+    a: The average operating time between failures across a population. An MTBF of 10 years does not mean each unit lasts 10 years — with a constant failure rate, only about 37% survive that long.
+  - q: What is "five nines"?
+    a: 99.999% availability — about 5.3 minutes of downtime per year.
+  - q: How do I improve availability?
+    a: Reduce failures (better equipment, condition monitoring) or shorten repairs (spares on site, diagnostics, redundancy with online repair).
+related: [engineering/pfd-avg, statistics/poisson-probability, statistics/probability, finance/payback-period]
+---
+
+## How to use the availability calculator
+
+Enter the **MTBF**, the **MTTR** and a **mission time**. You get availability, expected downtime per year, failure rate, and the probability of running through the mission time without a failure (assuming a constant failure rate).
+
+## Availability formulas
+
+<p class="formula">A = MTBF ÷ (MTBF + MTTR) &nbsp;·&nbsp; λ = 1 ÷ MTBF &nbsp;·&nbsp; R(t) = e<sup>−t/MTBF</sup></p>
+
+## Availability and downtime
+
+| Availability | Downtime per year |
+|---|---|
+| 99% | 87.6 hours |
+| 99.9% | 8.76 hours |
+| 99.99% | 52.6 minutes |
+| 99.999% | 5.26 minutes |
+
+## Redundancy
+
+Two identical units in parallel, where either can do the job, have unavailability of roughly (1 − A)². Two 99% units give about 99.99% — the reason redundant PLCs, transmitters and pumps are used on critical duties.
+
+## MTBF, failure rate and FIT
+
+| MTBF | Failure rate | FIT (failures per 10⁹ h) |
+|---|---|---|
+| 1 year (8,760 h) | 1 per year | 114,155 |
+| 10 years | 0.1 per year | 11,416 |
+| 100 years | 0.01 per year | 1,142 |
+| 1,000 years | 0.001 per year | 114 |
+
+For safety instrumented functions, the dangerous undetected portion of the failure rate drives the [PFDavg](/engineering/pfd-avg/).

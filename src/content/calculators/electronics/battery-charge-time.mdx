@@ -1,0 +1,72 @@
+---
+title: Battery Charging Time Calculator
+description: Calculate how long a battery takes to charge from its capacity, charging current, starting charge level and charging efficiency — lead-acid or lithium.
+category: electronics
+intro: "How long a battery takes to charge depends on its capacity, the charger current and how much charge it needs — plus losses that make real charging slower than Ah ÷ A. This battery charging time calculator includes the state of charge and efficiency — see [industrial battery charger float and boost charging](https://www.instrumentationblog.in/industrial-battery-charger-float-boost/) and the main [causes of battery failure](https://www.instrumentationblog.in/causes-of-battery-failure/)."
+keywords: [battery charging time calculator, battery charge time formula, how long to charge battery, ah charging time, lead acid charging time, lithium battery charge time]
+updated: 2026-10-28
+variables:
+  - { id: C, label: Battery capacity, suffix: Ah, default: 150, min: 0 }
+  - { id: I, label: Charging current, family: current, unit: A, default: 15, min: 0 }
+  - { id: s0, label: Starting state of charge, family: percent, unit: '%', default: 20, min: 0, max: 1 }
+  - { id: s1, label: Target state of charge, family: percent, unit: '%', default: 100, min: 0, max: 1 }
+  - id: eta
+    label: Battery type (charging efficiency)
+    default: 0.8
+    options:
+      - { label: 'Lead-acid flooded / tubular (≈ 80%)', value: 0.8 }
+      - { label: 'Lead-acid AGM / gel (≈ 85%)', value: 0.85 }
+      - { label: 'Lithium-ion / LiFePO4 (≈ 95%)', value: 0.95 }
+  - { id: Ah, label: Charge required, suffix: Ah, min: 0, decimals: 1 }
+  - { id: t, label: Estimated charging time, family: seconds, unit: h, min: 0 }
+  - { id: cr, label: Charging rate (C-rate), suffix: C, min: 0, decimals: 3 }
+equations:
+  - Ah = C * (s1 - s0)
+  - t = Ah / (I * eta) * 3600
+  - cr = I / C
+faq:
+  - q: How do I calculate battery charging time?
+    a: Time (h) = Ah needed ÷ (charging current × efficiency). Charging 120 Ah into a lead-acid battery at 15 A takes about 120 ÷ (15 × 0.8) = 10 hours.
+  - q: Why does the last 20% take longer?
+    a: Chargers switch to constant-voltage (absorption) mode near full charge, and the current tapers off. Lead-acid batteries can need several extra hours to reach 100%.
+  - q: What charging current should I use?
+    a: For lead-acid, about 10% of capacity (C/10) — 15 A for a 150 Ah battery. Lithium batteries accept 0.5C or more; check the datasheet.
+  - q: What is C-rate?
+    a: Charging current divided by capacity. 15 A on a 150 Ah battery is 0.1C.
+related: [everyday-life/inverter-battery-backup, other/battery-life, ecology/battery-storage, ecology/ev-charging-time]
+---
+
+## How to use the battery charging time calculator
+
+Enter the **battery capacity**, the **charging current**, the **starting** and **target state of charge**, and choose the **battery type** for charging efficiency. You get the charge needed in Ah, the estimated time and the C-rate.
+
+## Battery charging time formula
+
+<p class="formula">t (h) = C × (SoC<sub>target</sub> − SoC<sub>start</sub>) ÷ (I × η)</p>
+
+## Charging time for a 150 Ah lead-acid battery (20% → 100%)
+
+| Charging current | C-rate | Time |
+|---|---|---|
+| 5 A | 0.03C | 30.0 h |
+| 10 A | 0.07C | 15.0 h |
+| 15 A | 0.10C | 10.0 h |
+| 20 A | 0.13C | 7.5 h |
+| 30 A | 0.20C | 5.0 h |
+
+Add 1–3 hours for the absorption stage of lead-acid batteries.
+
+## Recommended charging currents
+
+| Battery | Typical charge rate |
+|---|---|
+| Flooded / tubular lead-acid (inverter batteries) | C/10 – C/8 |
+| AGM / gel lead-acid | C/5 – C/10 |
+| LiFePO4 | 0.2C – 1C |
+| Li-ion (phone, laptop) | 0.5C – 1C, fast charge up to 2C+ |
+
+## Charging stages (lead-acid)
+
+1. **Bulk** — constant current until about 80% charge.
+2. **Absorption** — constant voltage (about 14.4–14.8 V for 12 V) while current tapers.
+3. **Float** — lower voltage (about 13.5–13.8 V) to maintain full charge.

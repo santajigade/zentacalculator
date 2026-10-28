@@ -1,0 +1,64 @@
+---
+title: Ultrasonic Level Calculator (Time of Flight and Temperature)
+description: Calculate the distance and liquid level measured by an ultrasonic level transmitter from echo time and air temperature — with the speed-of-sound correction.
+category: engineering
+intro: "An ultrasonic level transmitter sends a sound pulse down to the liquid surface and times the echo. Because the speed of sound in air changes about 0.6 m/s per °C, temperature compensation is essential. This ultrasonic level calculator converts echo time into distance and level — see [ultrasonic level transmitter working](https://www.instrumentationblog.in/ultrasonic-level-transmitter-working/) and [how an ultrasonic level transmitter works](https://www.instrumentationblog.in/how-does-an-ultrasonic-level-transmitter-work/)."
+keywords: [ultrasonic level calculator, time of flight level calculation, ultrasonic level transmitter, speed of sound temperature, echo time to distance, ultrasonic distance calculator]
+updated: 2026-10-28
+variables:
+  - { id: t, label: Echo time (round trip), family: seconds, unit: ms, default: 20, min: 0 }
+  - { id: T, label: Air temperature, suffix: °C, default: 30 }
+  - { id: E, label: Empty distance (sensor face to tank bottom), family: length, unit: m, imperialUnit: ft, default: 6, min: 0 }
+  - { id: c, label: Speed of sound in air, family: velocity, unit: ms, min: 0 }
+  - { id: d, label: Distance to surface, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: L, label: Liquid level, family: length, unit: m, imperialUnit: ft }
+equations:
+  - c = 331.3 * sqrt(1 + T / 273.15)
+  - d = c * t / 2
+  - L = E - d
+faq:
+  - q: How does an ultrasonic level sensor calculate distance?
+    a: Distance = speed of sound × echo time ÷ 2, because the pulse travels down and back. Level = empty distance − measured distance.
+  - q: How much does temperature affect the reading?
+    a: The speed of sound changes by about 0.17% per °C. Without compensation, a 20 °C error causes about 3.5% distance error.
+  - q: What is the blanking distance?
+    a: A zone just below the sensor where echoes cannot be measured while the transducer is still ringing — typically 0.25–0.5 m.
+  - q: When is ultrasonic a poor choice?
+    a: With heavy vapour, foam, dust, high pressure or vacuum, or strong turbulence. Radar is usually better in those cases.
+related: [engineering/vertical-tank-volume, engineering/hydrostatic-pressure, physics/speed-distance-time, physics/doppler-effect]
+---
+
+## How to use the ultrasonic level calculator
+
+Enter the **round-trip echo time**, the **air temperature** in the tank and the **empty distance** from the sensor face to the bottom (0% level). You get the speed of sound, the distance to the surface and the liquid level.
+
+## Ultrasonic level formula
+
+<p class="formula">c = 331.3 × √(1 + T/273.15) m/s &nbsp;·&nbsp; d = c × t ÷ 2 &nbsp;·&nbsp; Level = E − d</p>
+
+## Speed of sound in air
+
+| Temperature | Speed of sound | Distance error if 20 °C assumed |
+|---|---|---|
+| -20 °C | 318.9 m/s | -7.1% |
+| 0 °C | 331.3 m/s | -3.5% |
+| 10 °C | 337.3 m/s | -1.7% |
+| 20 °C | 343.2 m/s | +0.0% |
+| 30 °C | 349.0 m/s | +1.7% |
+| 40 °C | 354.7 m/s | +3.4% |
+| 60 °C | 365.9 m/s | +6.6% |
+| 80 °C | 376.7 m/s | +9.8% |
+
+## Example
+
+Echo time 20 ms at 30 °C, empty distance 6 m:
+
+- c = 349.0 m/s, distance = 349.0 × 0.020 ÷ 2 = **3.49 m**
+- Level = 6 − 3.49 = **2.51 m**
+
+## Installation tips
+
+- Keep the liquid surface out of the blanking distance at maximum level.
+- Mount away from the tank wall, inlet stream and internal ladders to avoid false echoes.
+- Use the sensor's built-in temperature probe; vapour layers with a different gas composition still cause errors.
+- For foam, vapour or pressure, consider [radar level measurement](https://www.instrumentationblog.in/radar-level-selection-non-contact-vs-guided-wave/).

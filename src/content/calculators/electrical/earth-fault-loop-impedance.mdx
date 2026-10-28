@@ -1,0 +1,77 @@
+---
+title: Earth Fault Loop Impedance Calculator (Zs)
+description: Calculate prospective earth fault current from loop impedance Zs, or the maximum Zs for an MCB to trip within 0.4 s — for TN systems.
+category: electrical
+intro: "For an MCB or fuse to disconnect an earth fault quickly, the earth fault loop impedance (Zs) must be low enough to let a large fault current flow. Testing Zs is part of every installation inspection — see [earth fault loop impedance (Zs) testing](https://www.instrumentationblog.in/earth-fault-loop-impedance-zs-testing/). This earth fault loop impedance calculator gives the fault current and the maximum Zs for common MCBs."
+keywords: [earth fault loop impedance calculator, zs calculator, maximum zs mcb, prospective fault current, earth loop impedance, disconnection time, ze r1 r2]
+updated: 2026-10-28
+variables:
+  - { id: U0, label: Nominal voltage to earth (U0), family: voltage, unit: V, default: 230, min: 0 }
+  - { id: Ze, label: External loop impedance (Ze), family: resistance, unit: ohm, default: 0.35, min: 0 }
+  - { id: R12, label: Circuit R1 + R2, family: resistance, unit: ohm, default: 0.4, min: 0 }
+  - id: k
+    label: MCB type (instantaneous trip multiple)
+    default: 5
+    options:
+      - { label: Type B (5 × In), value: 5 }
+      - { label: Type C (10 × In), value: 10 }
+      - { label: Type D (20 × In), value: 20 }
+  - { id: In, label: MCB rating, family: current, unit: A, default: 32, min: 0 }
+  - { id: Zs, label: Earth fault loop impedance (Zs), family: resistance, unit: ohm, min: 0 }
+  - { id: If, label: Prospective earth fault current, family: current, unit: A, min: 0 }
+  - { id: Zmax, label: Maximum Zs for instantaneous trip, family: resistance, unit: ohm, min: 0 }
+  - { id: ok, label: Margin (positive = MCB trips instantly), family: resistance, unit: ohm }
+equations:
+  - Zs = Ze + R12
+  - If = 0.95 * U0 / Zs
+  - Zmax = 0.95 * U0 / (k * In)
+  - ok = Zmax - Zs
+faq:
+  - q: What is earth fault loop impedance?
+    a: The total impedance of the path a fault current takes — transformer winding, line conductor, the fault, the protective conductor and the return path. Zs = Ze + (R1 + R2).
+  - q: How do I find the maximum Zs for an MCB?
+    a: Max Zs = Cmin × U0 ÷ Ia, where Ia is the current that trips the MCB instantly (5 × In for Type B) and Cmin = 0.95. A 32 A Type B gives 1.37 Ω.
+  - q: Why apply a 0.8 factor when testing?
+    a: Tests are done at ambient temperature, but conductors run hotter in service with higher resistance. Measured Zs should be at most about 80% of the tabulated maximum.
+  - q: What are typical Ze values?
+    a: In the UK, typical maximums are 0.8 Ω for TN-S and 0.35 Ω for TN-C-S (PME) supplies.
+related: [electrical/earth-conductor-size, electrical/earthing-resistance, electrical/transformer-short-circuit, electrical/wire-resistance]
+---
+
+## How to use the earth fault loop impedance calculator
+
+Enter the **voltage to earth**, the **external loop impedance Ze** (measured at the origin or from the supplier), the circuit's **R1 + R2** (line plus protective conductor resistance), the **MCB type** and its **rating**. You get Zs, the prospective fault current, the maximum Zs for instantaneous tripping, and the margin.
+
+## Earth fault loop impedance formula
+
+<p class="formula">Z<sub>s</sub> = Z<sub>e</sub> + (R₁ + R₂) &nbsp;·&nbsp; I<sub>f</sub> = C<sub>min</sub> × U₀ ÷ Z<sub>s</sub></p>
+
+<p class="formula">Z<sub>s,max</sub> = C<sub>min</sub> × U₀ ÷ I<sub>a</sub></p>
+
+with C<sub>min</sub> = 0.95 and I<sub>a</sub> the instantaneous trip current of the device.
+
+## Maximum Zs for MCBs (230 V, 0.4 s)
+
+| Rating | Type B | Type C | Type D |
+|---|---|---|---|
+| 6 A | 7.28 Ω | 3.64 Ω | 1.82 Ω |
+| 10 A | 4.37 Ω | 2.19 Ω | 1.09 Ω |
+| 16 A | 2.73 Ω | 1.37 Ω | 0.68 Ω |
+| 20 A | 2.19 Ω | 1.09 Ω | 0.55 Ω |
+| 25 A | 1.75 Ω | 0.87 Ω | 0.44 Ω |
+| 32 A | 1.37 Ω | 0.68 Ω | 0.34 Ω |
+| 40 A | 1.09 Ω | 0.55 Ω | 0.27 Ω |
+| 50 A | 0.87 Ω | 0.44 Ω | 0.22 Ω |
+| 63 A | 0.69 Ω | 0.35 Ω | 0.17 Ω |
+
+For measured values at room temperature, compare against about 80% of these figures.
+
+## Reducing Zs
+
+- Use larger line and protective conductors (lower R1 + R2).
+- Shorten the circuit or move the distribution board closer.
+- Use RCD protection where Zs cannot be reduced enough — in TT systems this is the usual solution.
+
+## Measuring R1 + R2
+
+Link line and protective conductor at the distribution board and measure between them at each outlet with a low-resistance ohmmeter. Copper 2.5/1.5 mm² cable has about 19.5 mΩ/m for R1 + R2 at 20 °C.

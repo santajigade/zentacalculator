@@ -1,0 +1,58 @@
+---
+title: Zener Diode Resistor Calculator (Voltage Regulator)
+description: Calculate the series resistor and power ratings for a Zener diode shunt regulator from input voltage, Zener voltage and load current.
+category: electronics
+intro: "A Zener diode with a series resistor is the simplest voltage regulator: the Zener holds a fixed voltage while the resistor drops the rest and limits current. This Zener diode resistor calculator sizes the resistor and checks the power in both parts — see [what a Zener diode is](https://www.instrumentationblog.in/what-is-a-zener-diode/)."
+keywords: [zener diode resistor calculator, zener regulator calculator, zener series resistor, zener diode calculation, zener power dissipation, shunt regulator]
+updated: 2026-10-28
+variables:
+  - { id: Vin, label: Minimum input voltage, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: Vz, label: Zener voltage, family: voltage, unit: V, default: 5.1, min: 0 }
+  - { id: IL, label: Maximum load current, family: current, unit: mA, default: 20, min: 0 }
+  - { id: Iz, label: Minimum Zener current, family: current, unit: mA, default: 5, min: 0, help: 'Keep at least 5–10 mA (or the datasheet test current) for good regulation.' }
+  - { id: R, label: Series resistor, family: resistance, unit: ohm, min: 0 }
+  - { id: PR, label: Resistor power, family: power, unit: mW, min: 0 }
+  - { id: Pz, label: Zener power with no load, family: power, unit: mW, min: 0 }
+equations:
+  - R = (Vin - Vz) / (IL + Iz)
+  - PR = (Vin - Vz)^2 / R
+  - Pz = Vz * (Vin - Vz) / R
+faq:
+  - q: How do I calculate the Zener series resistor?
+    a: R = (V_in − V_z) ÷ (I_load + I_z,min), using the lowest input voltage and highest load current so the Zener never drops out of regulation.
+  - q: How much power does the Zener dissipate?
+    a: The most when the load is disconnected — then all the resistor current flows through the Zener. P = V_z × (V_in − V_z) ÷ R.
+  - q: When should I use a regulator IC instead?
+    a: For more than a few tens of milliamps, or when efficiency matters. Zener regulators waste power and regulate less tightly than ICs.
+  - q: Why does Zener voltage change with temperature?
+    a: Zeners below about 5 V have a negative temperature coefficient and those above have a positive one; around 5.1–5.6 V the effects nearly cancel.
+related: [electronics/led-resistor, electronics/voltage-divider, physics/ohms-law, electronics/transistor-base-resistor]
+---
+
+## How to use the Zener diode resistor calculator
+
+Enter the **minimum input voltage**, the **Zener voltage**, the **maximum load current** and the **minimum Zener current** to keep it regulating. You get the series resistor value, its power, and the Zener's worst-case dissipation when the load is removed. Choose the next lower standard resistor and a Zener rated at least twice the calculated power.
+
+## Zener resistor formula
+
+<p class="formula">R = (V<sub>in</sub> − V<sub>Z</sub>) ÷ (I<sub>L</sub> + I<sub>Z,min</sub>)</p>
+
+<p class="formula">P<sub>R</sub> = (V<sub>in</sub> − V<sub>Z</sub>)² ÷ R &nbsp;·&nbsp; P<sub>Z,max</sub> = V<sub>Z</sub> × (V<sub>in</sub> − V<sub>Z</sub>) ÷ R</p>
+
+## Example
+
+12 V in, 5.1 V Zener, 20 mA load, 5 mA minimum Zener current:
+
+- R = 6.9 ÷ 0.025 = **276 Ω** → use 270 Ω
+- Resistor power ≈ **176 mW** → 0.5 W resistor
+- Zener power with no load ≈ **130 mW** → 0.5 W Zener
+
+## Common Zener voltages (E24 series)
+
+2.7, 3.3, 3.6, 3.9, 4.7, 5.1, 5.6, 6.2, 6.8, 8.2, 9.1, 10, 12, 15, 18, 24 V. Popular packages: BZX55/BZX79 (0.5 W) and 1N47xx (1 W).
+
+## Other uses
+
+- **Overvoltage clamps** on sensor inputs.
+- **Reference voltages** for comparators.
+- **Intrinsic safety barriers** use Zeners to limit voltage into hazardous areas.

@@ -1,0 +1,66 @@
+---
+title: Line and Phase Voltage Calculator (Star and Delta)
+description: Convert between line and phase voltage and current for star (wye) and delta connections — with three-phase power from either.
+category: electrical
+intro: "In a three-phase system, line values are measured between lines and phase values across each winding or load. In star (wye), line voltage is √3 times phase voltage; in delta, line current is √3 times phase current. This line and phase voltage calculator converts both ways — see [star vs delta connection](https://www.instrumentationblog.in/star-vs-delta-connection/) explained."
+keywords: [line voltage phase voltage calculator, star delta voltage, phase to line voltage, 415 to 240, wye voltage calculator, line current phase current delta, three phase voltage]
+updated: 2026-10-28
+variables:
+  - id: c
+    label: Connection
+    default: 1
+    options:
+      - { label: Star (wye), value: 1 }
+      - { label: Delta, value: 0 }
+  - { id: VL, label: Line voltage, family: voltage, unit: V, default: 415, min: 0 }
+  - { id: Vp, label: Phase voltage, family: voltage, unit: V, min: 0 }
+  - { id: IL, label: Line current, family: current, unit: A, default: 10, min: 0 }
+  - { id: Ip, label: Phase current, family: current, unit: A, min: 0 }
+  - { id: pf, label: Power factor, default: 0.85, min: 0, max: 1 }
+  - { id: P, label: Total real power, family: power, unit: kW, min: 0 }
+equations:
+  - Vp = VL / (c * sqrt(3) + (1 - c))
+  - Ip = IL / ((1 - c) * sqrt(3) + c)
+  - P = sqrt(3) * VL * IL * pf
+faq:
+  - q: What is the relationship between line and phase voltage in star?
+    a: V_line = √3 × V_phase. A 415 V system has about 240 V from each line to neutral.
+  - q: What about delta?
+    a: Line and phase voltages are equal, but line current is √3 times the phase (winding) current.
+  - q: Is three-phase power different for star and delta?
+    a: No. P = √3 × V_L × I_L × PF for both, using line values.
+  - q: Why is 400 V three-phase paired with 230 V single-phase?
+    a: Because 400 ÷ √3 ≈ 230 V — the single-phase supply is one phase of the star system.
+related: [electrical/kw-to-amps, electrical/three-phase-motor-power, electrical/star-delta-transformation, electrical/motor-starting-current]
+---
+
+## How to use the line and phase voltage calculator
+
+Choose **star** or **delta**, enter the **line voltage** and **line current** (or the phase values, using the × buttons), and the **power factor**. The calculator gives the phase voltage and current and the total three-phase power.
+
+## Line and phase formulas
+
+| Connection | Voltage | Current |
+|---|---|---|
+| Star (wye) | V<sub>L</sub> = √3 × V<sub>ph</sub> | I<sub>L</sub> = I<sub>ph</sub> |
+| Delta | V<sub>L</sub> = V<sub>ph</sub> | I<sub>L</sub> = √3 × I<sub>ph</sub> |
+
+<p class="formula">P = √3 × V<sub>L</sub> × I<sub>L</sub> × PF = 3 × V<sub>ph</sub> × I<sub>ph</sub> × PF</p>
+
+## Common system voltages
+
+| Line voltage | Phase (line–neutral) voltage | Where |
+|---|---|---|
+| 208 V | 120 V | North America (commercial) |
+| 380 V | 219 V | Older IEC, parts of Asia |
+| 400 V | 231 V | Europe, IEC standard |
+| 415 V | 240 V | India, UK, Australia |
+| 440 V | 254 V | Marine, older Indian plants |
+| 480 V | 277 V | North America (industrial) |
+| 690 V | 398 V | Large motors, mining |
+| 11000 V | 6351 V | MV distribution |
+| 33000 V | 19053 V | Sub-transmission |
+
+## Motor windings
+
+A motor nameplate marked **Δ 415 V / Y 690 V** has windings rated at 415 V. On a 415 V supply it runs in delta, and can be started in star (where each winding gets 240 V) — the basis of the star-delta starter. See the [motor starting current calculator](/electrical/motor-starting-current/).

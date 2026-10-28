@@ -1,0 +1,72 @@
+---
+title: DP Level Transmitter Range Calculator (Wet Leg and Dry Leg)
+description: Calculate LRV and URV for a differential pressure level transmitter on open, dry-leg or wet-leg tanks — with zero elevation and suppression.
+category: engineering
+intro: "A DP transmitter measures level as the pressure of the liquid column, so its calibration range depends on liquid density, tap positions and any fill in the impulse lines. Getting LRV and URV right is the key step — see [wet leg and dry leg level measurement](https://www.instrumentationblog.in/wet-leg-dry-leg-level-measurement/) and [zero elevation and zero suppression](https://www.instrumentationblog.in/zero-elevation-and-zero-suppression/). This DP level range calculator works out both."
+keywords: [dp level transmitter calculation, wet leg calculation, dry leg level measurement, lrv urv calculation, zero suppression elevation, differential pressure level range, dp transmitter calibration range]
+updated: 2026-10-28
+variables:
+  - { id: sg, label: Process liquid specific gravity, default: 1.0, min: 0 }
+  - { id: H, label: Measuring span (min to max level), family: length, unit: mm, imperialUnit: in, default: 3000, min: 0 }
+  - { id: h0, label: Height of min level above HP tap, family: length, unit: mm, imperialUnit: in, default: 500, min: 0, help: 'Positive if the lowest level to measure is above the transmitter HP tap (zero suppression).' }
+  - id: w
+    label: LP (reference) leg
+    default: 0
+    options:
+      - { label: Open tank or dry leg, value: 0 }
+      - { label: Wet leg (filled), value: 1 }
+  - { id: sgs, label: Wet-leg fill specific gravity, default: 1.0, min: 0 }
+  - { id: Hs, label: Wet-leg height (LP tap to transmitter), family: length, unit: mm, imperialUnit: in, default: 4000, min: 0 }
+  - { id: LRV, label: LRV (at minimum level), suffix: mmH₂O, decimals: 1 }
+  - { id: URV, label: URV (at maximum level), suffix: mmH₂O, decimals: 1 }
+  - { id: span, label: Calibrated span, suffix: mmH₂O, min: 0, decimals: 1 }
+equations:
+  - LRV = (sg * h0 - w * sgs * Hs) * 1000
+  - URV = (sg * (h0 + H) - w * sgs * Hs) * 1000
+  - span = sg * H * 1000
+faq:
+  - q: How do I calculate LRV and URV for a DP level transmitter?
+    a: LRV = SG × (height from HP tap to min level) − (wet-leg SG × wet-leg height); URV = LRV + SG × span. Results are in mm (or inches) of water column.
+  - q: What is zero suppression?
+    a: When the minimum level is above the HP tap, the transmitter already sees pressure at 0% — the LRV is positive.
+  - q: What is zero elevation?
+    a: With a wet leg, the reference side has a constant head that makes the DP negative at low level — the LRV is negative and the range is "elevated".
+  - q: Does the span depend on the wet leg?
+    a: No. Span is always the process liquid SG × measuring height; the wet leg only shifts the range.
+related: [engineering/hydrostatic-pressure, engineering/4-20ma-scaling, engineering/vertical-tank-volume, engineering/horizontal-tank-volume]
+---
+
+## How to use the DP level range calculator
+
+Enter the **specific gravity** of the process liquid, the **measuring span** (distance between minimum and maximum level), and the height of the **minimum level above the HP tap**. Choose **open/dry leg** or **wet leg**; for a wet leg, enter the fill fluid's SG and the leg height. The calculator gives LRV, URV and span in mm of water column (1 mmH₂O ≈ 0.0981 mbar).
+
+## DP level range formulas
+
+<p class="formula">LRV = SG<sub>p</sub> × h₀ − SG<sub>s</sub> × H<sub>s</sub></p>
+
+<p class="formula">URV = SG<sub>p</sub> × (h₀ + H) − SG<sub>s</sub> × H<sub>s</sub></p>
+
+The wet-leg term is zero for open tanks and dry legs.
+
+## Example: wet-leg tank
+
+Process SG 1.0, span 3,000 mm, minimum level 500 mm above the HP tap, wet leg filled with water (SG 1.0) 4,000 mm high:
+
+- LRV = 500 − 4,000 = **−3,500 mmH₂O**
+- URV = 3,500 − 4,000 = **−500 mmH₂O**
+- Span = **3,000 mmH₂O**
+
+## Choosing the reference leg
+
+| Tank | LP side | Range type |
+|---|---|---|
+| Open to atmosphere | Vented | Suppressed or zero-based |
+| Closed, non-condensing gas | Dry leg | Suppressed or zero-based |
+| Closed, condensing vapour (steam drums) | Wet leg | Elevated (negative LRV) |
+| Closed, either | Remote diaphragm seals (capillary) | Elevated, fill fluid SG |
+
+## Tips
+
+- Wet legs must stay full — a partly drained leg causes large level errors.
+- With diaphragm seals, use the capillary fill fluid SG and the vertical distance between seals.
+- Density changes shift the reading; for varying density see [DP level measurement with varying density](https://www.instrumentationblog.in/dp-level-measurement-varying-density/).

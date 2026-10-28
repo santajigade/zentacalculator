@@ -1,0 +1,64 @@
+---
+title: MOSFET Power Dissipation Calculator (Conduction and Switching Loss)
+description: Estimate MOSFET conduction and switching losses from Rds(on), current, voltage, switching frequency and rise/fall times — and the junction temperature.
+category: electronics
+intro: "A MOSFET used as a switch loses power in two ways: conduction loss from its on-resistance and switching loss during each turn-on and turn-off. Together they decide whether it needs a heat sink. This MOSFET power dissipation calculator estimates both — see [what a MOSFET is](https://www.instrumentationblog.in/what-is-a-mosfet-working-principle/) and [MOSFET gate driver ICs](https://www.instrumentationblog.in/mosfet-gate-driver-ics-explained/)."
+keywords: [mosfet power dissipation calculator, mosfet conduction loss, mosfet switching loss, rds on power loss, mosfet junction temperature, mosfet heat calculation]
+updated: 2026-10-28
+variables:
+  - { id: I, label: Drain current (RMS), family: current, unit: A, default: 10, min: 0 }
+  - { id: Rds, label: Rds(on) at operating temperature, family: resistance, unit: mohm, default: 20, min: 0, help: 'Rds(on) rises about 1.5–1.8 × from 25 °C to 125 °C — use the hot value.' }
+  - { id: V, label: Drain-source voltage when off, family: voltage, unit: V, default: 24, min: 0 }
+  - { id: f, label: Switching frequency, family: frequency, unit: kHz, default: 50, min: 0 }
+  - { id: tsw, label: Rise + fall time (total), family: seconds, unit: ns, default: 100, min: 0 }
+  - { id: Rth, label: Junction-to-ambient thermal resistance, suffix: °C/W, default: 40, min: 0 }
+  - { id: Ta, label: Ambient temperature, suffix: °C, default: 40 }
+  - { id: Pc, label: Conduction loss, family: power, unit: W, min: 0 }
+  - { id: Ps, label: Switching loss, family: power, unit: W, min: 0 }
+  - { id: P, label: Total loss, family: power, unit: W, min: 0 }
+  - { id: Tj, label: Estimated junction temperature, suffix: °C, decimals: 1 }
+equations:
+  - Pc = I^2 * Rds
+  - Ps = 0.5 * V * I * tsw * f
+  - P = Pc + Ps
+  - Tj = Ta + P * Rth
+faq:
+  - q: How do I calculate MOSFET conduction loss?
+    a: P = I_RMS² × Rds(on). 10 A through 20 mΩ gives 2 W. Use Rds(on) at the expected junction temperature, not the 25 °C value.
+  - q: How do I estimate switching loss?
+    a: P_sw ≈ ½ × V × I × (t_rise + t_fall) × f. Fast gate drive and lower frequency reduce it.
+  - q: What junction temperature is safe?
+    a: Most MOSFETs are rated to 150 or 175 °C; design for 100–125 °C maximum for reliability.
+  - q: Do I need a heat sink?
+    a: If the estimated junction temperature without a heat sink exceeds your target, yes — use the heat sink calculator to size it.
+related: [electronics/heat-sink, electronics/buck-converter, electronics/pwm-duty-cycle, electronics/transistor-base-resistor]
+---
+
+## How to use the MOSFET power dissipation calculator
+
+Enter the **RMS drain current**, the **Rds(on)** at operating temperature, the **off-state voltage**, the **switching frequency**, the total **rise + fall time**, the **thermal resistance** to ambient (or to the heat sink path) and the **ambient temperature**. You get conduction loss, switching loss, total loss and the estimated junction temperature.
+
+## MOSFET loss formulas
+
+<p class="formula">P<sub>cond</sub> = I<sub>RMS</sub>² × R<sub>DS(on)</sub> &nbsp;·&nbsp; P<sub>sw</sub> ≈ ½ × V × I × (t<sub>r</sub> + t<sub>f</sub>) × f</p>
+
+<p class="formula">T<sub>j</sub> = T<sub>a</sub> + P<sub>total</sub> × R<sub>θJA</sub></p>
+
+## Example
+
+10 A, 20 mΩ, 24 V, 50 kHz, 100 ns total transition time:
+
+- Conduction loss = 100 × 0.02 = **2.0 W**
+- Switching loss = 0.5 × 24 × 10 × 100 ns × 50 kHz = **0.6 W**
+- Total = **2.6 W**; with 40 °C/W and 40 °C ambient, T<sub>j</sub> ≈ **144 °C** → add a heat sink
+
+## Reducing losses
+
+- Choose lower Rds(on) — but larger MOSFETs have more gate charge and slower switching.
+- Use a proper gate driver to switch in tens of nanoseconds.
+- Lower the switching frequency where ripple allows.
+- Improve cooling: copper area on the PCB, a heat sink or airflow. See the [heat sink calculator](/electronics/heat-sink/).
+
+## Not included
+
+Gate-drive loss (Q<sub>g</sub> × V<sub>gs</sub> × f), body-diode conduction and reverse-recovery losses add more in synchronous converters.

@@ -1,0 +1,62 @@
+---
+title: Transformer Size Calculator (kVA Rating from Load)
+description: Calculate the transformer kVA rating needed for your connected load from kW, power factor, diversity factor and future growth — and pick the next standard size.
+category: electrical
+intro: "Choosing a transformer means turning the connected load into a kVA figure, allowing for diversity, power factor and future growth. Too small and it overheats; too large and it wastes money and no-load losses. This transformer size calculator follows the usual method — see [how to calculate transformer kVA rating](https://www.instrumentationblog.in/how-to-calculate-transformer-kva-rating/)."
+keywords: [transformer size calculator, transformer kva calculation, transformer sizing, kva rating calculator, distribution transformer selection, diversity factor, how to size a transformer]
+updated: 2026-10-28
+variables:
+  - { id: P, label: Total connected load, family: power, unit: kW, imperialUnit: hp, default: 500, min: 0 }
+  - { id: df, label: Demand / diversity factor, default: 0.7, min: 0.01, max: 1, help: 'Fraction of connected load expected to run at the same time — often 0.6–0.8 for industrial plants.' }
+  - { id: pf, label: Power factor (after correction), default: 0.9, min: 0.1, max: 1 }
+  - { id: g, label: Future growth margin, family: percent, unit: '%', default: 25, min: 0 }
+  - { id: Pd, label: Maximum demand, family: power, unit: kW, min: 0 }
+  - { id: S, label: Required transformer rating, suffix: kVA, min: 0, decimals: 0 }
+equations:
+  - Pd = P * df
+  - S = Pd / 1000 / pf * (1 + g)
+faq:
+  - q: How do I calculate transformer size?
+    a: Multiply connected load by the diversity factor to get maximum demand, divide by power factor for kVA, add a growth margin, then choose the next standard rating.
+  - q: What diversity factor should I use?
+    a: It depends on how loads operate together. Continuous process plants may be 0.8–0.9; workshops and buildings 0.5–0.7.
+  - q: Why not size exactly to the load?
+    a: Transformers last longer and are most efficient at 50–80% load, and margins allow for growth and motor starting.
+  - q: Should harmonics be considered?
+    a: Yes. With many VFDs, UPSs or rectifiers, use a K-rated transformer or derate a standard one.
+related: [electrical/transformer-current, electrical/transformer-efficiency, electrical/power-factor-correction, electrical/generator-size]
+---
+
+## How to use the transformer size calculator
+
+Enter the **total connected load** in kW, the **demand (diversity) factor**, the **power factor** you expect after correction and a **growth margin**. The calculator gives maximum demand and the required kVA. Choose the next standard rating above the result.
+
+## Transformer sizing formula
+
+<p class="formula">kVA = (connected kW × demand factor) ÷ PF × (1 + growth margin)</p>
+
+## Example
+
+500 kW connected, 0.7 demand factor, 0.9 PF, 25% growth:
+
+- Maximum demand = 350 kW
+- kVA = 350 ÷ 0.9 × 1.25 = **486 kVA** → choose **500 kVA**
+
+## Standard distribution transformer ratings
+
+16, 25, 63, 100, 160, 200, 250, 315, 400, 500, 630, 800, 1,000, 1,250, 1,600, 2,000 and 2,500 kVA (IS 1180 / IEC 60076).
+
+## Typical demand factors
+
+| Installation | Demand factor |
+|---|---|
+| Continuous process plant | 0.8–0.9 |
+| General manufacturing | 0.6–0.8 |
+| Commercial buildings | 0.5–0.7 |
+| Residential complexes | 0.4–0.6 |
+
+## After sizing
+
+- Check full-load current and protection with the [transformer current calculator](/electrical/transformer-current/).
+- Check fault level with the [transformer short-circuit calculator](/electrical/transformer-short-circuit/).
+- Plan capacitor banks with the [power factor correction calculator](/electrical/power-factor-correction/) — a better PF reduces the kVA you need.

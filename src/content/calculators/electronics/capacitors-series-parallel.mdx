@@ -1,0 +1,60 @@
+---
+title: Capacitors in Series and Parallel Calculator
+description: Calculate the total capacitance of up to four capacitors in series or parallel, with the total voltage rating guide and charge.
+category: electronics
+intro: "Capacitors combine the opposite way to resistors: in parallel their capacitances add, while in series the total is smaller than the smallest one. This capacitors in series and parallel calculator handles up to four capacitors — see the [capacitor working principle](https://www.instrumentationblog.in/capacitor-working-principle/) and [series vs parallel circuits](https://www.instrumentationblog.in/series-vs-parallel-circuits-explained/)."
+keywords: [capacitors in series calculator, capacitors in parallel calculator, total capacitance calculator, series capacitance formula, equivalent capacitance, capacitor combination]
+updated: 2026-10-28
+variables:
+  - id: s
+    label: Connection
+    default: 1
+    options:
+      - { label: Series, value: 1 }
+      - { label: Parallel, value: 0 }
+  - { id: C1, label: C1, family: capacitance, unit: uF, default: 10, min: 0.000000000001 }
+  - { id: C2, label: C2, family: capacitance, unit: uF, default: 22, min: 0.000000000001 }
+  - { id: C3, label: C3 (0 = not used), family: capacitance, unit: uF, default: 0, min: 0 }
+  - { id: C4, label: C4 (0 = not used), family: capacitance, unit: uF, default: 0, min: 0 }
+  - { id: Ct, label: Total capacitance, family: capacitance, unit: uF, min: 0 }
+equations:
+  - Ct = s / (1/C1 + 1/C2 + step(C3)/(C3 + 1e-30) + step(C4)/(C4 + 1e-30)) + (1 - s) * (C1 + C2 + C3 + C4)
+faq:
+  - q: How do capacitors add in parallel?
+    a: Directly — C_total = C1 + C2 + C3 + … Two 10 µF capacitors in parallel make 20 µF.
+  - q: How do capacitors add in series?
+    a: As reciprocals — 1/C_total = 1/C1 + 1/C2 + … Two 10 µF capacitors in series make 5 µF.
+  - q: Why put capacitors in series?
+    a: To raise the voltage rating. Each capacitor shares the voltage; add balancing resistors so the voltage divides evenly.
+  - q: How do I leave a capacitor out?
+    a: Enter 0 for C3 or C4 — unused capacitors are ignored in both series and parallel.
+related: [electronics/capacitor-energy, physics/resistors-series-parallel, electronics/rc-filter, electronics/reactance]
+---
+
+## How to use the capacitors in series and parallel calculator
+
+Choose **series** or **parallel** and enter up to four capacitor values. Enter **0** for any capacitor you are not using. The result is the equivalent capacitance.
+
+## Capacitors in series and parallel formulas
+
+<p class="formula">Parallel: C = C₁ + C₂ + C₃ + … &nbsp;·&nbsp; Series: 1/C = 1/C₁ + 1/C₂ + 1/C₃ + …</p>
+
+For two capacitors in series: C = C₁C₂ ÷ (C₁ + C₂).
+
+## Examples
+
+| Capacitors | Series | Parallel |
+|---|---|---|
+| 10 µF + 10 µF | 5 µF | 20 µF |
+| 10 µF + 22 µF | 6.88 µF | 32 µF |
+| 100 nF + 100 nF + 100 nF | 33.3 nF | 300 nF |
+| 1 µF + 100 nF | 90.9 nF | 1.1 µF |
+
+## Voltage ratings
+
+- **Parallel**: every capacitor sees the full voltage, so the lowest voltage rating applies.
+- **Series**: voltage divides in inverse proportion to capacitance — the smallest capacitor takes the most voltage. For equal capacitors, ratings add, but add equal balancing resistors across each one.
+
+## Compared with resistors
+
+Capacitors in parallel behave like resistors in series, and vice versa. See the [resistors in series and parallel calculator](/physics/resistors-series-parallel/).

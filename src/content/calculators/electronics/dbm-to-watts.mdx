@@ -1,0 +1,67 @@
+---
+title: dBm to Watts Converter (and Watts to dBm)
+description: Convert dBm to watts, milliwatts and dBW and back — with voltage across 50 Ω — for RF, Wi-Fi, radio and fibre power levels.
+category: electronics
+intro: "dBm expresses power in decibels relative to 1 milliwatt, so RF and optical power levels spanning many orders of magnitude become easy numbers to add and subtract. This dBm to watts converter works both ways and shows the equivalent voltage in a 50 Ω system — see [decibels in electronics: dB and dBm](https://www.instrumentationblog.in/decibel-in-electronics-db-dbm/)."
+keywords: [dbm to watts, watts to dbm, dbm to mw, dbm calculator, dbm converter, dbw to dbm, rf power conversion]
+updated: 2026-10-28
+variables:
+  - { id: dbm, label: Power in dBm, suffix: dBm, default: 20, decimals: 2 }
+  - { id: P, label: Power, family: power, unit: mW, min: 0 }
+  - { id: dbw, label: Power in dBW, suffix: dBW, decimals: 2 }
+  - { id: V, label: RMS voltage across 50 Ω, family: voltage, unit: V, min: 0 }
+equations:
+  - P = 10^(dbm / 10) / 1000
+  - dbw = dbm - 30
+  - V = sqrt(P * 50)
+faq:
+  - q: How do I convert dBm to watts?
+    a: P(W) = 10^(dBm/10) ÷ 1,000. 20 dBm = 100 mW; 30 dBm = 1 W.
+  - q: How do I convert watts to dBm?
+    a: dBm = 10 × log₁₀(P in mW). 1 W = 30 dBm; 10 W = 40 dBm.
+  - q: What is the difference between dBm and dBW?
+    a: dBW is referenced to 1 W, so dBW = dBm − 30.
+  - q: What do negative dBm values mean?
+    a: Power below 1 mW. Wi-Fi signals of −30 to −70 dBm are tiny fractions of a milliwatt.
+related: [physics/decibel, electronics/snr, physics/wavelength-frequency, conversion/power-converter]
+---
+
+## How to use the dBm to watts converter
+
+Enter a value in **dBm** to get watts (choose W, mW or kW), dBW and the RMS voltage across a 50 Ω load. To convert from watts, enter the power and press × on dBm.
+
+## dBm to watts formula
+
+<p class="formula">P(mW) = 10<sup>dBm/10</sup> &nbsp;·&nbsp; dBm = 10 log₁₀(P/1 mW) &nbsp;·&nbsp; dBW = dBm − 30</p>
+
+## dBm to watts table
+
+| dBm | Power | Voltage (50 Ω) |
+|---|---|---|
+| -90 | 1e-06 µW | 7.07e-06 V |
+| -60 | 0.001 µW | 0.000224 V |
+| -30 | 1 µW | 0.00707 V |
+| -10 | 100 µW | 0.0707 V |
+| 0 | 1 mW | 0.224 V |
+| 10 | 10 mW | 0.707 V |
+| 20 | 100 mW | 2.24 V |
+| 27 | 501.187 mW | 5.01 V |
+| 30 | 1 W | 7.07 V |
+| 40 | 10 W | 22.4 V |
+| 50 | 100 W | 70.7 V |
+| 60 | 1000 W | 224 V |
+
+## Typical power levels
+
+| Signal | Level |
+|---|---|
+| Wi-Fi router transmit | 15–20 dBm |
+| Mobile phone transmit (max) | 23–33 dBm |
+| Wi-Fi receive (good) | −30 to −60 dBm |
+| Wi-Fi receive (usable limit) | about −80 dBm |
+| GPS signal at ground | about −130 dBm |
+| Fibre optic transmitter | −10 to +3 dBm |
+
+## Link budgets
+
+In dB terms, you simply add gains and subtract losses: transmit 20 dBm + 6 dBi antenna − 80 dB path loss + 3 dBi antenna = −51 dBm received.

@@ -1,0 +1,67 @@
+---
+title: Vertical Tank Volume Calculator (Level to Volume)
+description: Calculate the volume of liquid in a vertical cylindrical tank from its diameter and level — with full capacity, percentage fill and litres per mm.
+category: engineering
+intro: "In a vertical cylindrical tank, volume rises in direct proportion to level, so one strapping factor converts a level reading into litres. This vertical tank volume calculator gives liquid volume, total capacity and percent full — see [tank volume from level measurement](https://www.instrumentationblog.in/tank-volume-from-level-measurement/) and how to [select the right level sensor](https://www.instrumentationblog.in/how-to-select-the-right-level-sensor/)."
+keywords: [vertical tank volume calculator, cylindrical tank volume, tank level to volume, liters in tank calculator, vertical cylinder tank capacity, tank strapping]
+updated: 2026-10-28
+variables:
+  - { id: D, label: Tank inside diameter, family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: H, label: Tank height (straight side), family: length, unit: m, imperialUnit: ft, default: 5, min: 0 }
+  - { id: h, label: Liquid level, family: length, unit: m, imperialUnit: ft, default: 3.2, min: 0 }
+  - { id: V, label: Liquid volume, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: Vt, label: Total capacity, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: pc, label: Percent full, family: percent, unit: '%', min: 0 }
+  - { id: k, label: Volume per mm of level, suffix: L/mm, min: 0, decimals: 3 }
+equations:
+  - V = pi * D^2 / 4 * h
+  - Vt = pi * D^2 / 4 * H
+  - pc = h / H
+  - k = pi * D^2 / 4
+faq:
+  - q: How do I calculate the volume of a vertical tank?
+    a: Volume = π × D² ÷ 4 × level. A 3 m diameter tank holds 7,069 litres per metre of level.
+  - q: Does this include a cone or dished bottom?
+    a: No — it covers the cylindrical part. Add the bottom volume separately, or use the cone calculator for conical bottoms.
+  - q: How do I convert a level transmitter to volume?
+    a: Because volume is linear with level in a vertical cylinder, you can scale the 4–20 mA signal directly to volume once the tank diameter is known.
+  - q: Why use litres per mm?
+    a: It is a quick strapping factor — multiply any level change in mm to get the volume added or removed.
+related: [engineering/horizontal-tank-volume, engineering/hydrostatic-pressure, math/cylinder-volume, engineering/dp-level-range]
+---
+
+## How to use the vertical tank volume calculator
+
+Enter the tank's **inside diameter**, its **straight-side height** and the **liquid level** measured from the bottom. The calculator gives the liquid volume, total capacity, percentage full and the volume per millimetre of level. To find the level for a given volume, enter the volume and press × on Liquid level.
+
+## Vertical tank volume formula
+
+<p class="formula">V = (π × D² ÷ 4) × h</p>
+
+## Capacity per metre of level
+
+| Diameter | Litres per metre | Litres per mm |
+|---|---|---|
+| 1 m | 785 L | 0.785 L |
+| 1.5 m | 1,767 L | 1.767 L |
+| 2 m | 3,142 L | 3.142 L |
+| 2.5 m | 4,909 L | 4.909 L |
+| 3 m | 7,069 L | 7.069 L |
+| 4 m | 12,566 L | 12.566 L |
+| 5 m | 19,635 L | 19.635 L |
+| 6 m | 28,274 L | 28.274 L |
+| 8 m | 50,265 L | 50.265 L |
+| 10 m | 78,540 L | 78.540 L |
+
+## Level measurement for vertical tanks
+
+| Technology | Notes |
+|---|---|
+| Hydrostatic / DP | Measures pressure; needs liquid density — see the [hydrostatic pressure calculator](/engineering/hydrostatic-pressure/) |
+| Radar | Non-contact; unaffected by density and temperature |
+| Ultrasonic | Non-contact; affected by vapour and foam — see the [ultrasonic level calculator](/engineering/ultrasonic-level/) |
+| Float / magnetostrictive | High accuracy for inventory |
+
+## Bottoms and tops
+
+Cone and dished ends add volume below the straight side. Strapping tables for custody transfer also allow for wall thickness, deadwood (internals) and tank expansion with temperature.

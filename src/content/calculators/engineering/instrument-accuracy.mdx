@@ -1,0 +1,67 @@
+---
+title: Instrument Accuracy Calculator (% of Span vs % of Reading)
+description: Convert instrument accuracy between % of span, % of full scale and % of reading — and find the measurement error at any point in the range.
+category: engineering
+intro: "Instrument accuracy can be stated as a percentage of span, of full scale or of reading — and the difference matters most at low readings. A meter that is ±1% of full scale can be ±10% of reading at 10% of range. This instrument accuracy calculator shows the real error — see [accuracy reading vs full scale](https://www.instrumentationblog.in/flow-meter-accuracy-reading-vs-full-scale/) and [pressure transmitter accuracy specifications](https://www.instrumentationblog.in/pressure-transmitter-accuracy-specifications/)."
+keywords: [instrument accuracy calculator, percent of span accuracy, percent of reading vs full scale, measurement error calculation, transmitter accuracy, accuracy specification]
+updated: 2026-10-28
+variables:
+  - { id: lo, label: Range low (LRV), default: 0 }
+  - { id: hi, label: Range high (URV), default: 100 }
+  - { id: rd, label: Reading, default: 25 }
+  - { id: acc, label: Accuracy (% of span), family: percent, unit: '%', default: 0.5, min: 0 }
+  - { id: err, label: "Error band (±, engineering units)", min: 0, decimals: 4 }
+  - { id: ar, label: Same accuracy as % of reading, family: percent, unit: '%', min: 0 }
+  - { id: lo2, label: Reading could be as low as, decimals: 4 }
+  - { id: hi2, label: Reading could be as high as, decimals: 4 }
+equations:
+  - err = acc * (hi - lo)
+  - ar = err / abs(rd)
+  - lo2 = rd - err
+  - hi2 = rd + err
+faq:
+  - q: What is the difference between % of span and % of reading?
+    a: Accuracy in % of span (or full scale) gives a fixed error in engineering units across the whole range. % of reading scales with the measured value, so it stays tight at low readings.
+  - q: How do I convert % of span to % of reading?
+    a: Error (units) = % of span × span; then % of reading = error ÷ reading. ±0.5% of a 0–100 span at a reading of 25 is ±0.5 units, or ±2% of reading.
+  - q: Is accuracy the same as precision?
+    a: No. Accuracy is closeness to the true value; precision is repeatability. See accuracy vs precision.
+  - q: Does rangeability change accuracy?
+    a: Yes. Re-ranging a transmitter to a smaller span usually increases the error as a % of the new span — check the turndown effect in the datasheet.
+related: [math/percent-error, engineering/turndown-ratio, engineering/4-20ma-scaling, statistics/standard-deviation]
+---
+
+## How to use the instrument accuracy calculator
+
+Enter the instrument's **range** (LRV and URV), the current **reading** and the **accuracy as a percentage of span**. You get the error band in engineering units, the same error expressed as a percentage of reading, and the range in which the true value could lie.
+
+## Accuracy formulas
+
+<p class="formula">Error = ±(% of span) × (URV − LRV) &nbsp;·&nbsp; % of reading = Error ÷ Reading</p>
+
+## ±1% of full scale vs ±1% of reading (0–100 range)
+
+| Reading | Error at ±1% FS | as % of reading | Error at ±1% of reading |
+|---|---|---|---|
+| 100 | ±1.0 | ±1.0% | ±1.00 |
+| 75 | ±1.0 | ±1.3% | ±0.75 |
+| 50 | ±1.0 | ±2.0% | ±0.50 |
+| 25 | ±1.0 | ±4.0% | ±0.25 |
+| 10 | ±1.0 | ±10.0% | ±0.10 |
+| 5 | ±1.0 | ±20.0% | ±0.05 |
+
+## Typical accuracy specifications
+
+| Instrument | Typical accuracy |
+|---|---|
+| Smart pressure / DP transmitter | ±0.04–0.1% of span |
+| Industrial pressure gauge (class 1.0) | ±1% of full scale |
+| Electromagnetic flow meter | ±0.2–0.5% of reading |
+| Coriolis flow meter | ±0.1% of reading |
+| Vortex flow meter | ±0.75–1% of reading |
+| Variable area meter | ±1–2% of full scale |
+| Pt100 Class A | ±(0.15 + 0.002 × t) °C |
+
+## Total probable error
+
+Several independent errors (transmitter, ambient temperature effect, static pressure effect, card) combine as the square root of the sum of squares — not a simple sum. For calibration checks see [calibration error calculation](https://www.instrumentationblog.in/calibration-error-calculation/) and [accuracy vs precision](https://www.instrumentationblog.in/difference-between-accuracy-and-precision/).

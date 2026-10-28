@@ -199,6 +199,8 @@ export const UNIT_FAMILIES: Record<string, Unit[]> = {
   ],
   seconds: [
     { id: 's', label: 's', factor: 1 },
+    { id: 'ns', label: 'ns', factor: 1e-9 },
+    { id: 'us', label: 'µs', factor: 1e-6 },
     { id: 'ms', label: 'ms', factor: 1e-3 },
     { id: 'min', label: 'min', factor: 60 },
     { id: 'h', label: 'h', factor: 3600 },

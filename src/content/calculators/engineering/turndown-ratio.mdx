@@ -1,0 +1,63 @@
+---
+title: Turndown Ratio Calculator (Flow Meter Rangeability)
+description: Calculate the turndown ratio of a flow meter or control valve from maximum and minimum flow — and the minimum flow for a given turndown.
+category: engineering
+intro: "Turndown (rangeability) is the ratio of the maximum to the minimum flow an instrument can measure or control accurately. It decides whether one meter or valve can cover the whole operating range — see [turndown ratio in flow meters](https://www.instrumentationblog.in/turndown-ratio-in-flow-meters/) and [control valve rangeability](https://www.instrumentationblog.in/control-valve-rangeability-turndown/). This turndown ratio calculator works it out in either direction."
+keywords: [turndown ratio calculator, flow meter turndown, rangeability calculator, minimum flow calculation, turndown ratio formula, flow meter range]
+updated: 2026-10-28
+variables:
+  - { id: Qmax, label: Maximum flow, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
+  - { id: Qmin, label: Minimum flow, family: flow, unit: m3h, imperialUnit: gpm, default: 10, min: 0 }
+  - { id: TD, label: "Turndown ratio (x : 1)", min: 0, decimals: 1 }
+  - { id: dpr, label: DP ratio at min flow (DP meters), family: percent, unit: '%', min: 0 }
+equations:
+  - TD = Qmax / Qmin
+  - dpr = (Qmin / Qmax)^2
+faq:
+  - q: What is turndown ratio?
+    a: The maximum flow divided by the minimum flow that can be measured within the stated accuracy. A meter covering 10 to 100 m³/h has a 10:1 turndown.
+  - q: Why do orifice plates have low turndown?
+    a: DP is proportional to flow squared, so at 10% flow the DP is only 1% of maximum — too small to measure accurately. Practical turndown is about 3:1 to 5:1 with one transmitter.
+  - q: Which flow meters have high turndown?
+    a: Coriolis (often 100:1), electromagnetic and ultrasonic meters (30–100:1). Vortex meters are around 10–20:1.
+  - q: Is turndown the same as rangeability?
+    a: They are often used interchangeably. For control valves, rangeability is the ratio of maximum to minimum controllable Cv.
+related: [engineering/dp-flow-square-root, engineering/orifice-flow, engineering/flow-meter-k-factor, engineering/instrument-accuracy]
+---
+
+## How to use the turndown ratio calculator
+
+Enter the **maximum** and **minimum flow**. You get the turndown ratio and, for differential pressure meters, the DP at minimum flow as a percentage of the DP at maximum flow. Enter a turndown and press × on Minimum flow to find the lowest flow a meter can handle.
+
+## Turndown ratio formula
+
+<p class="formula">Turndown = Q<sub>max</sub> ÷ Q<sub>min</sub></p>
+
+<p class="formula">DP meters: ΔP<sub>min</sub> ÷ ΔP<sub>max</sub> = (Q<sub>min</sub> ÷ Q<sub>max</sub>)²</p>
+
+## Typical turndown by meter type
+
+| Flow meter | Typical turndown |
+|---|---|
+| Orifice / Venturi (one DP transmitter) | 3:1 – 5:1 |
+| Variable area (rotameter) | 10:1 |
+| Vortex | 10:1 – 20:1 |
+| Turbine | 10:1 – 50:1 |
+| Electromagnetic | 30:1 – 100:1+ |
+| Ultrasonic (transit time) | 30:1 – 100:1 |
+| Coriolis | 50:1 – 100:1+ |
+| Thermal mass | 50:1 – 100:1 |
+
+## DP at reduced flow
+
+| Flow | DP (% of max) |
+|---|---|
+| 100% | 100% |
+| 50% | 25% |
+| 30% | 9% |
+| 20% | 4% |
+| 10% | 1% |
+
+## Accuracy across the range
+
+Meters specified in **% of reading** keep the same relative accuracy across their turndown; meters specified in **% of full scale** become much less accurate at low flow. See the [instrument accuracy calculator](/engineering/instrument-accuracy/).

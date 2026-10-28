@@ -1,0 +1,73 @@
+---
+title: CT Burden Calculator (VA)
+description: Calculate current transformer (CT) burden in VA from secondary current, lead length, cable size and relay or meter burden — and check it against the CT rating.
+category: electrical
+intro: "A current transformer (CT) can only hold its accuracy while the load on its secondary — the burden — stays within its VA rating. Long leads and thin cable add more burden than people expect, especially with 5 A secondaries. This CT burden calculator adds up leads and devices; see [CT burden calculation](https://www.instrumentationblog.in/ct-burden-calculation-va/) and the [current transformer working principle](https://www.instrumentationblog.in/current-transformer-working-principle/)."
+keywords: [ct burden calculator, current transformer burden calculation, ct va calculation, ct lead burden, 1a vs 5a ct, ct sizing]
+updated: 2026-10-28
+variables:
+  - id: Is
+    label: CT secondary rating
+    default: 5
+    options:
+      - { label: 5 A, value: 5 }
+      - { label: 1 A, value: 1 }
+  - { id: L, label: Lead length (one way), family: length, unit: m, imperialUnit: ft, default: 50, min: 0 }
+  - { id: A, label: Cable cross-section, family: area, unit: mm2, default: 2.5, min: 0 }
+  - { id: Rd, label: Device burden (relay + meter + transducer), suffix: VA, default: 2, min: 0 }
+  - { id: Rl, label: Lead loop resistance, family: resistance, unit: ohm, min: 0 }
+  - { id: Bl, label: Lead burden, suffix: VA, min: 0, decimals: 2 }
+  - { id: B, label: Total burden, suffix: VA, min: 0, decimals: 2 }
+equations:
+  - Rl = 2 * L * 1.72e-8 / A
+  - Bl = Is^2 * Rl
+  - B = Bl + Rd
+faq:
+  - q: What is CT burden?
+    a: The total load on the CT secondary — relays, meters and leads — usually expressed in VA at rated secondary current. VA = I² × R.
+  - q: Why are 1 A CTs preferred for long cable runs?
+    a: Lead burden rises with current squared, so a 1 A secondary has 25 times less lead burden than a 5 A secondary over the same cable.
+  - q: What happens if the burden exceeds the CT rating?
+    a: Accuracy degrades and protection CTs may saturate during faults, causing relays to under-reach or operate slowly.
+  - q: Is it dangerous to open a CT secondary?
+    a: Yes. An open-circuited CT secondary can develop thousands of volts. Always short the secondary before disconnecting a meter or relay.
+related: [electrical/transformer-current, electrical/transformer-short-circuit, physics/ohms-law, electrical/wire-resistance]
+---
+
+## How to use the CT burden calculator
+
+Choose the **CT secondary rating**, enter the **one-way lead length** and **cable size**, and the **burden of the connected devices** from their datasheets. The calculator gives the lead loop resistance, lead burden and total burden. Select a CT whose rated burden is at least the total — ideally 25–100% of it, since accuracy is specified within that band.
+
+## CT burden formula
+
+<p class="formula">R<sub>leads</sub> = 2 × L × ρ ÷ A &nbsp;·&nbsp; VA<sub>leads</sub> = I<sub>s</sub>² × R<sub>leads</sub></p>
+
+with copper resistivity ρ = 1.72 × 10⁻⁸ Ω·m at 20 °C.
+
+## Lead burden: 5 A vs 1 A (2.5 mm² copper)
+
+| One-way length | Loop resistance | 5 A lead burden | 1 A lead burden |
+|---|---|---|---|
+| 5 m | 0.069 Ω | 1.72 VA | 0.069 VA |
+| 10 m | 0.138 Ω | 3.44 VA | 0.138 VA |
+| 25 m | 0.344 Ω | 8.60 VA | 0.344 VA |
+| 50 m | 0.688 Ω | 17.20 VA | 0.688 VA |
+| 100 m | 1.376 Ω | 34.40 VA | 1.376 VA |
+| 200 m | 2.752 Ω | 68.80 VA | 2.752 VA |
+
+## Typical device burdens
+
+| Device | Burden |
+|---|---|
+| Digital multifunction meter | 0.1–0.5 VA |
+| Numerical protection relay | 0.1–0.5 VA |
+| Electromechanical overcurrent relay | 3–10 VA |
+| Moving-iron ammeter | 1–3 VA |
+
+## Standard CT burdens
+
+2.5, 5, 10, 15 and 30 VA. Metering CTs are specified as e.g. **0.5 / 5 VA**; protection CTs as e.g. **5P20 / 15 VA**.
+
+## Safety
+
+Never open-circuit a live CT secondary — short it first with the test block or shorting link.

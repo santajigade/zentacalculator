@@ -1,0 +1,65 @@
+---
+title: NTC Thermistor Calculator (Beta Equation)
+description: Calculate NTC thermistor resistance at any temperature, or temperature from resistance, using the beta (B) equation — for 10k, 100k and other thermistors.
+category: electronics
+intro: "An NTC thermistor's resistance falls sharply as it warms, making it a cheap and sensitive temperature sensor. The beta equation converts between resistance and temperature using the R25 and B values from the datasheet. This NTC thermistor calculator works both ways — see [NTC and PTC thermistor working](https://www.instrumentationblog.in/ntc-ptc-thermistor-working/) and [thermistor vs thermocouple](https://www.instrumentationblog.in/thermistor-vs-thermocouple/)."
+keywords: [ntc thermistor calculator, thermistor resistance to temperature, beta equation thermistor, 10k thermistor calculator, b value thermistor, thermistor temperature calculation]
+updated: 2026-10-28
+variables:
+  - { id: R25, label: Resistance at 25 °C (R25), family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: B, label: Beta value (B25/85), suffix: K, default: 3950, min: 0 }
+  - { id: T, label: Temperature, suffix: °C, default: 60 }
+  - { id: R, label: Resistance at temperature, family: resistance, unit: kohm, min: 0 }
+  - { id: alpha, label: Sensitivity at temperature, suffix: '%/°C', decimals: 2 }
+equations:
+  - R = R25 * exp(B * (1 / (T + 273.15) - 1 / 298.15))
+  - alpha = -B / (T + 273.15)^2 * 100
+faq:
+  - q: What is the thermistor beta equation?
+    a: R = R25 × exp[B × (1/T − 1/298.15)], with T in kelvin. It is accurate to about ±1 °C over a range of 50–100 °C around 25 °C.
+  - q: How do I find temperature from resistance?
+    a: Enter the measured resistance and press × on Temperature. The calculator solves T = 1 ÷ (1/298.15 + ln(R/R25) ÷ B) − 273.15.
+  - q: What is a 10k 3950 thermistor?
+    a: A thermistor with 10 kΩ at 25 °C and a beta value of 3,950 K — one of the most common types for 3D printers, appliances and HVAC.
+  - q: When should I use the Steinhart–Hart equation instead?
+    a: For wide temperature ranges or better than ±0.5 °C accuracy, use the three-coefficient Steinhart–Hart equation or the manufacturer's R–T table.
+related: [engineering/pt100-resistance, electronics/voltage-divider, electronics/wheatstone-bridge, conversion/temperature-converter]
+---
+
+## How to use the NTC thermistor calculator
+
+Enter the thermistor's **R25** and **beta value** from the datasheet, then a **temperature** to get its resistance — or enter a measured **resistance** and press × on Temperature to read the temperature. The sensitivity shows how much resistance changes per °C at that point.
+
+## NTC beta equation
+
+<p class="formula">R<sub>T</sub> = R₂₅ × e<sup>B (1/T − 1/298.15)</sup> &nbsp;·&nbsp; T = 1 ÷ [1/298.15 + ln(R/R₂₅) ÷ B]</p>
+
+T is in kelvin (°C + 273.15).
+
+## 10 kΩ, B = 3950 thermistor
+
+| Temperature | Resistance | Sensitivity |
+|---|---|---|
+| -20 °C | 105.38 kΩ | -6.16 %/°C |
+| 0 °C | 33.62 kΩ | -5.29 %/°C |
+| 10 °C | 20.17 kΩ | -4.93 %/°C |
+| 25 °C | 10.00 kΩ | -4.44 %/°C |
+| 40 °C | 5.30 kΩ | -4.03 %/°C |
+| 60 °C | 2.49 kΩ | -3.56 %/°C |
+| 80 °C | 1.27 kΩ | -3.17 %/°C |
+| 100 °C | 0.70 kΩ | -2.84 %/°C |
+| 125 °C | 0.36 kΩ | -2.49 %/°C |
+
+## Reading a thermistor with an ADC
+
+Place the thermistor in a [voltage divider](/electronics/voltage-divider/) with a fixed resistor equal to R25. The divider output is most linear and sensitive around 25 °C. Keep the measuring current low (under about 100 µA for 10 kΩ) to avoid self-heating.
+
+## NTC vs Pt100
+
+| | NTC thermistor | Pt100 RTD |
+|---|---|---|
+| Sensitivity | about −4%/°C | +0.39%/°C |
+| Range | −40 to 150 °C typical | −200 to 600 °C+ |
+| Linearity | Strongly non-linear | Nearly linear |
+| Cost | Very low | Higher |
+| Interchangeability | ±0.2–1 °C | Class A/B standards |

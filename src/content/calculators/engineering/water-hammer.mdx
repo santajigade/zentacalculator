@@ -1,0 +1,64 @@
+---
+title: Water Hammer Calculator (Joukowsky Equation)
+description: Calculate the surge pressure from sudden valve closure or pump trip with the Joukowsky equation — with wave speed and critical closure time.
+category: engineering
+intro: "When a valve closes quickly or a pump trips, the moving liquid stops suddenly and its momentum turns into a pressure spike that can burst pipes and damage instruments. This water hammer calculator uses the Joukowsky equation to estimate the surge — see the [Joukowsky equation for water hammer](https://www.instrumentationblog.in/joukowsky-equation-water-hammer/) and the [hammer effect in pressure gauges](https://www.instrumentationblog.in/hammer-effect-in-pressure-gauges/)."
+keywords: [water hammer calculator, joukowsky equation, surge pressure calculation, pressure surge valve closure, water hammer formula, pipeline surge, critical closure time]
+updated: 2026-10-28
+variables:
+  - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
+  - { id: a, label: Pressure wave speed, family: velocity, unit: ms, imperialUnit: fts, default: 1200, min: 0, help: 'About 1,000–1,400 m/s in steel pipe full of water, 300–500 m/s in PVC/HDPE.' }
+  - { id: dv, label: Velocity change, family: velocity, unit: ms, imperialUnit: fts, default: 2, min: 0 }
+  - { id: L, label: Pipe length (valve to reservoir), family: length, unit: m, imperialUnit: ft, default: 500, min: 0 }
+  - { id: dP, label: Surge pressure rise, family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+  - { id: dH, label: Surge head, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: tc, label: Critical closure time (2L/a), family: seconds, unit: s, min: 0 }
+equations:
+  - dP = rho * a * dv
+  - dH = a * dv / g0
+  - tc = 2 * L / a
+faq:
+  - q: What is the Joukowsky equation?
+    a: ΔP = ρ × a × Δv — the pressure rise when flow velocity changes suddenly, where ρ is density, a the pressure wave speed and Δv the velocity change.
+  - q: How big can water hammer be?
+    a: Stopping water flowing at 2 m/s in steel pipe causes a surge of about 24 bar — often more than the operating pressure.
+  - q: What is the critical closure time?
+    a: 2L ÷ a, the time for a pressure wave to travel to the reservoir and back. Closing faster than this gives the full Joukowsky surge; closing slower reduces it.
+  - q: How is water hammer prevented?
+    a: Slow-closing valves, surge tanks, air vessels, surge relief valves, VFD ramp-down of pumps and lower design velocities.
+related: [engineering/pipe-flow-velocity, engineering/darcy-weisbach-head-loss, engineering/pump-power, engineering/hydrostatic-pressure]
+---
+
+## How to use the water hammer calculator
+
+Enter the liquid **density**, the **pressure wave speed** for your pipe material, the **velocity change** (usually the full flow velocity for a sudden stop) and the **pipe length** to the nearest reservoir or open end. You get the surge pressure, the surge head and the critical closure time.
+
+## Joukowsky equation
+
+<p class="formula">ΔP = ρ × a × Δv &nbsp;·&nbsp; ΔH = a × Δv ÷ g &nbsp;·&nbsp; t<sub>c</sub> = 2L ÷ a</p>
+
+## Surge for water in steel pipe (a = 1,200 m/s)
+
+| Velocity stopped | Surge pressure | Surge head |
+|---|---|---|
+| 0.5 m/s | 6.0 bar | 61 m |
+| 1 m/s | 12.0 bar | 122 m |
+| 1.5 m/s | 18.0 bar | 184 m |
+| 2 m/s | 24.0 bar | 245 m |
+| 3 m/s | 36.0 bar | 367 m |
+
+## Typical wave speeds (water)
+
+| Pipe | Wave speed |
+|---|---|
+| Steel | 1,000–1,400 m/s |
+| Ductile iron | 1,000–1,300 m/s |
+| Concrete | 900–1,200 m/s |
+| PVC | 300–500 m/s |
+| HDPE | 200–400 m/s |
+
+Flexible plastic pipes have lower wave speeds, so surges are smaller.
+
+## Protecting instruments
+
+Pressure gauges and transmitters on lines prone to surges need snubbers, liquid-filled gauges or pulsation dampers, and a pressure rating above the surge pressure.

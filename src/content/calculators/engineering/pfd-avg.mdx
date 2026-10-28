@@ -1,0 +1,67 @@
+---
+title: PFDavg Calculator (SIL Verification, 1oo1)
+description: Calculate the average probability of failure on demand (PFDavg) for a 1oo1 safety function from dangerous undetected failure rate and proof test interval — with SIL band.
+category: engineering
+intro: "In a safety instrumented system, each safety function must reach a target probability of failure on demand (PFDavg) that sets its SIL. For a single channel, PFDavg depends on the dangerous undetected failure rate and how often it is proof tested. This PFDavg calculator does the 1oo1 calculation — see the [PFDavg calculation formula](https://www.instrumentationblog.in/pfdavg-calculation-formula/), [what SIL is](https://www.instrumentationblog.in/what-is-sil-safety-integrity-level/) and [SIL verification](https://www.instrumentationblog.in/sil-verification/)."
+keywords: [pfdavg calculator, pfd avg calculation, sil calculation, probability of failure on demand, sil verification calculator, proof test interval, lambda du, iec 61511]
+updated: 2026-10-28
+variables:
+  - { id: lam, label: Dangerous undetected failure rate (λDU), suffix: FIT, default: 500, min: 0, help: '1 FIT = 1 failure per 10⁹ hours.' }
+  - { id: TI, label: Proof test interval, suffix: years, default: 1, min: 0 }
+  - { id: PFD, label: PFDavg (1oo1), min: 0, decimals: 6 }
+  - { id: RRF, label: Risk reduction factor (1/PFDavg), min: 0, decimals: 0 }
+  - { id: SIL, label: SIL achieved (by PFDavg only), min: 0, decimals: 0 }
+equations:
+  - PFD = lam * 1e-9 * TI * 8760 / 2
+  - RRF = 1 / PFD
+  - SIL = max(0, min(4, floor(log10(RRF))))
+faq:
+  - q: What is the PFDavg formula for 1oo1?
+    a: PFDavg ≈ λDU × TI ÷ 2, where λDU is the dangerous undetected failure rate per hour and TI the proof test interval in hours.
+  - q: What PFDavg does each SIL need?
+    a: SIL 1 — 10⁻² to 10⁻¹; SIL 2 — 10⁻³ to 10⁻²; SIL 3 — 10⁻⁴ to 10⁻³; SIL 4 — 10⁻⁵ to 10⁻⁴ (low-demand mode, IEC 61511).
+  - q: Is PFDavg enough to claim a SIL?
+    a: No. You must also meet architectural constraints (hardware fault tolerance), systematic capability and proof-test coverage requirements.
+  - q: How do I lower PFDavg?
+    a: Test more often, choose devices with lower λDU, add redundancy (1oo2, 2oo3) or improve diagnostic coverage.
+related: [engineering/availability-mtbf, statistics/probability, statistics/poisson-probability, engineering/instrument-accuracy]
+---
+
+## How to use the PFDavg calculator
+
+Enter the **dangerous undetected failure rate** λDU for the whole safety function (sensor + logic solver + final element) in FIT, and the **proof test interval** in years. You get PFDavg, the risk reduction factor and the SIL band that PFDavg alone supports.
+
+## PFDavg formula (1oo1, low demand)
+
+<p class="formula">PFD<sub>avg</sub> ≈ λ<sub>DU</sub> × TI ÷ 2 &nbsp;·&nbsp; RRF = 1 ÷ PFD<sub>avg</sub></p>
+
+This simplified formula assumes perfect proof testing and ignores repair time and common-cause failures.
+
+## SIL bands (low-demand mode)
+
+| SIL | PFDavg | Risk reduction factor |
+|---|---|---|
+| SIL 1 | ≥ 10⁻² to < 10⁻¹ | 10 – 100 |
+| SIL 2 | ≥ 10⁻³ to < 10⁻² | 100 – 1,000 |
+| SIL 3 | ≥ 10⁻⁴ to < 10⁻³ | 1,000 – 10,000 |
+| SIL 4 | ≥ 10⁻⁵ to < 10⁻⁴ | 10,000 – 100,000 |
+
+## PFDavg vs proof test interval (λDU = 500 FIT)
+
+| Test interval | PFDavg | RRF |
+|---|---|---|
+| 3 months | 5.48e-04 | 1,826 |
+| 6 months | 1.10e-03 | 913 |
+| 1 year | 2.19e-03 | 457 |
+| 2 years | 4.38e-03 | 228 |
+| 5 years | 1.09e-02 | 91 |
+
+## Redundant architectures
+
+| Architecture | Simplified PFDavg |
+|---|---|
+| 1oo1 | λ<sub>DU</sub> TI / 2 |
+| 1oo2 | (λ<sub>DU</sub> TI)² / 3 + β λ<sub>DU</sub> TI / 2 |
+| 2oo3 | (λ<sub>DU</sub> TI)² + β λ<sub>DU</sub> TI / 2 |
+
+β is the common-cause factor (typically 2–10%). For a full assessment, follow IEC 61508/61511 — see [SIL determination methods](https://www.instrumentationblog.in/sil-determination-risk-graph-lopa-consequence-severity-matrix/).

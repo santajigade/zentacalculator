@@ -1,0 +1,64 @@
+---
+title: Ziegler–Nichols PID Tuning Calculator (Ultimate Gain Method)
+description: Calculate P, PI and PID controller settings from ultimate gain Ku and ultimate period Pu using the Ziegler–Nichols closed-loop tuning rules.
+category: engineering
+intro: "The Ziegler–Nichols closed-loop method finds the gain at which a loop just oscillates steadily (Ku) and the period of that oscillation (Pu), then sets the controller from simple ratios. This Ziegler–Nichols PID tuning calculator gives P, PI and PID settings — see the [PID controller tuning guide](https://www.instrumentationblog.in/pid-controller-tuning-guide/) and [step-test, relay and Ziegler–Nichols auto-tuning in a DCS](https://www.instrumentationblog.in/dcs-pid-auto-tune-step-test-relay-feedback-ziegler-nichols/)."
+keywords: [ziegler nichols calculator, pid tuning calculator, ultimate gain method, ziegler nichols tuning rules, ku pu tuning, closed loop pid tuning]
+updated: 2026-10-29
+variables:
+  - { id: Ku, label: Ultimate gain (Ku), default: 2, min: 0 }
+  - { id: Pu, label: Ultimate period (Pu), family: seconds, unit: s, default: 60, min: 0 }
+  - { id: Kp, label: P-only controller gain, min: 0, decimals: 3 }
+  - { id: Kpi, label: PI controller gain, min: 0, decimals: 3 }
+  - { id: Tipi, label: PI integral time, family: seconds, unit: s, min: 0 }
+  - { id: Kpid, label: PID controller gain, min: 0, decimals: 3 }
+  - { id: Tipid, label: PID integral time, family: seconds, unit: s, min: 0 }
+  - { id: Td, label: PID derivative time, family: seconds, unit: s, min: 0 }
+equations:
+  - Kp = 0.5 * Ku
+  - Kpi = 0.45 * Ku
+  - Tipi = Pu / 1.2
+  - Kpid = 0.6 * Ku
+  - Tipid = Pu / 2
+  - Td = Pu / 8
+faq:
+  - q: How do I find Ku and Pu?
+    a: Put the controller in automatic with integral and derivative off, then raise the gain in small steps until the process variable oscillates with constant amplitude. That gain is Ku and the time between peaks is Pu.
+  - q: What are the Ziegler–Nichols PID settings?
+    a: Kc = 0.6 Ku, Ti = Pu ÷ 2 and Td = Pu ÷ 8. For PI, Kc = 0.45 Ku and Ti = Pu ÷ 1.2.
+  - q: Why are Ziegler–Nichols settings so aggressive?
+    a: They target a quarter-amplitude decay, which overshoots and oscillates. Many engineers halve the gain, or use the gentler Tyreus–Luyben rules shown in the table.
+  - q: How do I convert gain to proportional band?
+    a: PB (%) = 100 ÷ Kc. A gain of 1.2 is a proportional band of about 83%.
+related: [engineering/lambda-tuning, engineering/fopdt-step-test, engineering/sensor-response-time, engineering/4-20ma-scaling]
+---
+
+## How to use the Ziegler–Nichols PID tuning calculator
+
+Enter the **ultimate gain** Ku and the **ultimate period** Pu from your closed-loop test. The calculator gives the controller gain for P, PI and PID control and the integral and derivative times in seconds. Settings assume the ideal (non-interacting) PID form with integral time in seconds per repeat; check whether your controller uses gain or proportional band, and repeats per minute or minutes per repeat.
+
+## Ziegler–Nichols closed-loop rules
+
+| Controller | K<sub>c</sub> | T<sub>i</sub> | T<sub>d</sub> |
+|---|---|---|---|
+| P | 0.5 K<sub>u</sub> | — | — |
+| PI | 0.45 K<sub>u</sub> | P<sub>u</sub> ÷ 1.2 | — |
+| PID | 0.6 K<sub>u</sub> | P<sub>u</sub> ÷ 2 | P<sub>u</sub> ÷ 8 |
+
+## Example
+
+A loop oscillates steadily at **Ku = 2** with a period **Pu = 60 s**:
+
+| Rule | K<sub>c</sub> | PB | T<sub>i</sub> | T<sub>d</sub> |
+|---|---|---|---|---|
+| P only | 1 | 100% | — | — |
+| PI | 0.9 | 111% | 50 s | — |
+| PID (classic) | 1.2 | 83% | 30 s | 7.5 s |
+| PI (Tyreus–Luyben) | 0.625 | 160% | 132 s | — |
+| PID (Tyreus–Luyben) | 0.909 | 110% | 132 s | 9.52 s |
+
+## Cautions
+
+- The test drives the loop to the edge of instability — don't do it on loops where oscillation is unsafe; use a step test and the [lambda tuning calculator](/engineering/lambda-tuning/) instead.
+- Valve stiction and sensor lag change Ku and Pu; fix mechanical problems first.
+- After tuning, test with a small set-point step and reduce gain if overshoot is excessive.

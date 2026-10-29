@@ -6,39 +6,39 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 (ib) = a matching instrumentationblog.in article probably exists — check `tools/gen/ib_slugs.txt`.
 
 ## Engineering — Instrumentation & signals
-- [ ] RTD lead wire error (2/3/4-wire) (ib)
+- [x] RTD lead wire error (2/3/4-wire) (ib)
 - [ ] Thermocouple mV ↔ °C (Type K, J, T — NIST polynomials) (ib)
 - [ ] Pt1000 / Ni1000 / Cu10 resistance tables
 - [ ] HART loop minimum resistance check (ib)
 - [ ] Transmitter re-ranging / turndown accuracy
-- [ ] Calibration error & as-found / as-left tolerance (ib)
-- [ ] 5-point calibration table generator (ib)
-- [ ] Analog input raw counts ↔ engineering units (PLC) (ib)
-- [ ] Square-root low-flow cutoff
-- [ ] Signal converter: 0–10 V ↔ 4–20 mA ↔ 1–5 V
-- [ ] PID tuning: Ziegler–Nichols (ib)
-- [ ] PID tuning: Cohen–Coon / IMC lambda (ib)
-- [ ] First-order process time constant & dead time
-- [ ] Sensor response time (63.2%, T90)
+- [x] Calibration error & as-found / as-left tolerance (ib)
+- [x] 5-point calibration table generator (ib)
+- [x] Analog input raw counts ↔ engineering units (PLC) (ib)
+- [x] Square-root low-flow cutoff
+- [x] Signal converter: 0–10 V ↔ 4–20 mA ↔ 1–5 V
+- [x] PID tuning: Ziegler–Nichols (ib)
+- [x] PID tuning: Cohen–Coon / IMC lambda (ib)
+- [x] First-order process time constant & dead time
+- [x] Sensor response time (63.2%, T90)
 - [ ] Thermowell wake frequency (ASME PTC 19.3 TW simplified) (ib)
 
 ## Engineering — Flow
 - [ ] Orifice plate bore sizing (β from flow & DP) (ib)
 - [ ] Flow nozzle flow
 - [ ] V-cone flow (ib)
-- [ ] Rotameter density correction (ib)
+- [x] Rotameter density correction (ib)
 - [ ] Magmeter velocity & minimum conductivity
 - [ ] Ultrasonic transit-time flow (ib)
-- [ ] Vortex shedding frequency (Strouhal)
+- [x] Vortex shedding frequency (Strouhal)
 - [ ] Gas flow through orifice (expansibility factor)
 - [ ] Steam flow (saturated steam density table)
 - [ ] SCFM ↔ ACFM ↔ Nm³/h
 - [ ] MMSCFD natural gas converter (ib)
 - [ ] Open channel: Parshall flume
-- [ ] Manning equation (open channel)
-- [ ] Hazen–Williams head loss
-- [ ] Minor losses (K factors, fittings)
-- [ ] Equivalent pipe length
+- [x] Manning equation (open channel)
+- [x] Hazen–Williams head loss
+- [x] Minor losses (K factors, fittings)
+- [x] Equivalent pipe length
 - [ ] Pipe size for target velocity
 - [ ] Flow through restriction orifice
 - [ ] Gas line sizing (velocity limit)
@@ -199,14 +199,14 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Shunt resistor current measurement (ib)
 
 ## Physics
-- [ ] Impulse & momentum change
-- [ ] Elastic / inelastic collision
-- [ ] Friction force & coefficient
-- [ ] Inclined plane
-- [ ] Angular velocity ↔ rpm
-- [ ] Rotational kinetic energy & moment of inertia
+- [x] Impulse & momentum change
+- [x] Elastic / inelastic collision
+- [x] Friction force & coefficient
+- [x] Inclined plane
+- [x] Angular velocity ↔ rpm
+- [x] Rotational kinetic energy & moment of inertia
 - [ ] Simple harmonic motion
-- [ ] Spring-mass frequency
+- [x] Spring-mass frequency
 - [ ] Stress, strain & Young's modulus
 - [ ] Bernoulli equation (ib)
 - [ ] Stokes' law / terminal velocity

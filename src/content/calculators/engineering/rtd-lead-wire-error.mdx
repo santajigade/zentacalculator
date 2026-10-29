@@ -1,0 +1,80 @@
+---
+title: RTD Lead Wire Error Calculator (2-, 3- and 4-Wire Pt100)
+description: Calculate the temperature error caused by lead wire resistance in 2-wire and 3-wire Pt100 or Pt1000 RTD circuits from cable length and size.
+category: engineering
+intro: "Every metre of copper between an RTD and its transmitter adds resistance that the instrument reads as extra temperature. This RTD lead wire error calculator shows how big that error is for 2-wire and 3-wire connections — see the [difference between 2-wire, 3-wire and 4-wire RTDs](https://www.instrumentationblog.in/difference-between-2-wire-rtd-3-wire-rtd-and-4-wire-rtd/) and [how to test an RTD](https://www.instrumentationblog.in/how-to-test-an-rtd-pt100/)."
+keywords: [rtd lead wire error calculator, 2 wire rtd error, 3 wire rtd lead resistance, pt100 cable length error, rtd lead resistance compensation, pt1000 lead error]
+updated: 2026-10-29
+variables:
+  - id: R0
+    label: RTD type
+    default: 100
+    options:
+      - { label: 'Pt100 (100 Ω at 0 °C)', value: 100 }
+      - { label: 'Pt1000 (1000 Ω at 0 °C)', value: 1000 }
+  - { id: a, label: Temperature coefficient α (per °C), default: 0.00385, min: 0, decimals: 5, help: 'IEC 60751 platinum: 0.00385 Ω/Ω/°C.' }
+  - { id: L, label: Cable length (one way), family: length, unit: m, imperialUnit: ft, default: 50, min: 0 }
+  - { id: A, label: Conductor cross-section, family: area, unit: mm2, default: 0.5, min: 0 }
+  - { id: mm, label: Resistance mismatch between leads (3-wire), family: percent, unit: '%', default: 5, min: 0 }
+  - { id: Rw, label: Resistance of one lead, family: resistance, unit: ohm, min: 0 }
+  - { id: E2, label: 2-wire error (resistance), family: resistance, unit: ohm, min: 0 }
+  - { id: dT2, label: 2-wire temperature error, family: tempdiff, unit: K, min: 0 }
+  - { id: E3, label: 3-wire error (resistance), family: resistance, unit: ohm, min: 0 }
+  - { id: dT3, label: 3-wire temperature error, family: tempdiff, unit: K, min: 0 }
+equations:
+  - Rw = 1.724e-8 * L / A
+  - E2 = 2 * Rw
+  - dT2 = E2 / (R0 * a)
+  - E3 = Rw * mm
+  - dT3 = E3 / (R0 * a)
+faq:
+  - q: How much error does lead resistance cause in a 2-wire Pt100?
+    a: A Pt100 changes by about 0.385 Ω per °C, so every 0.385 Ω of total loop resistance reads as 1 °C high. 50 m of 0.5 mm² copper (both leads) adds about 3.4 Ω — nearly 9 °C.
+  - q: How does a 3-wire RTD cancel lead resistance?
+    a: The third wire puts one lead in each arm of the measuring bridge (or lets the transmitter measure it), so equal lead resistances cancel. Only the difference between the leads remains as error.
+  - q: Is a 4-wire RTD completely free of lead error?
+    a: Practically yes. Current flows in one pair and voltage is sensed on the other pair, which carries almost no current, so lead resistance does not enter the reading.
+  - q: Does a Pt1000 reduce lead wire error?
+    a: Yes, by a factor of ten. The same lead resistance is ten times smaller compared with the sensor's 3.85 Ω/°C sensitivity, which is why Pt1000 is often used with 2-wire connections.
+related: [engineering/pt100-resistance, electrical/wire-resistance, engineering/loop-resistance, engineering/instrument-accuracy]
+---
+
+## How to use the RTD lead wire error calculator
+
+Choose **Pt100** or **Pt1000**, enter the **cable length** from sensor to transmitter, the **conductor size** and, for 3-wire circuits, the expected **mismatch** between lead resistances (typically 1–5% for one cable, more if leads run through terminals or different cores). The calculator gives the resistance of one lead and the temperature error for 2-wire and 3-wire connections. Lead resistance uses annealed copper at 20 °C (1.724 × 10⁻⁸ Ω·m).
+
+## RTD lead wire error formula
+
+<p class="formula">R<sub>lead</sub> = ρ × L ÷ A</p>
+
+<p class="formula">2-wire: ΔT = 2 R<sub>lead</sub> ÷ (R<sub>0</sub> × α) &nbsp;·&nbsp; 3-wire: ΔT = R<sub>lead</sub> × mismatch ÷ (R<sub>0</sub> × α)</p>
+
+R<sub>0</sub> × α is the sensor sensitivity: 0.385 Ω/°C for a Pt100 and 3.85 Ω/°C for a Pt1000.
+
+## Example
+
+Pt100, 50 m of 0.5 mm² copper, 5% lead mismatch:
+
+- One lead: 1.724 × 10⁻⁸ × 50 ÷ 0.5 × 10⁻⁶ = **1.724 Ω**
+- 2-wire: 3.448 Ω ÷ 0.385 = **8.96 °C** reading high
+- 3-wire: 0.0862 Ω ÷ 0.385 = **0.22 °C**
+- 4-wire: **≈ 0 °C**
+
+## 2-wire Pt100 error by cable length and size
+
+| Length (one way) | 0.5 mm² | 1.0 mm² | 1.5 mm² |
+|---|---|---|---|
+| 10 m | 1.79 °C | 0.90 °C | 0.60 °C |
+| 25 m | 4.48 °C | 2.24 °C | 1.49 °C |
+| 50 m | 8.96 °C | 4.48 °C | 2.99 °C |
+| 100 m | 17.91 °C | 8.96 °C | 5.97 °C |
+| 200 m | 35.82 °C | 17.91 °C | 11.94 °C |
+
+For a Pt1000 divide these errors by ten.
+
+## Practical notes
+
+- Use **3-wire** for most plant Pt100s and **4-wire** for laboratory or custody-transfer accuracy.
+- Head-mounted transmitters remove the long RTD cable entirely — the 4–20 mA loop carries the signal instead.
+- Copper resistance rises about 0.39% per °C, so cable running through hot areas adds more error than this 20 °C figure.
+- A 2-wire error can be trimmed out at one temperature by a fixed offset, but it is only correct while the cable temperature stays the same.

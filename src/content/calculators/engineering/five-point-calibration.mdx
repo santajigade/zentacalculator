@@ -1,0 +1,63 @@
+---
+title: 5-Point Calibration Calculator (0–25–50–75–100% Table)
+description: Generate a 5-point calibration table for any transmitter — input values and expected 4–20 mA (or other) outputs at 0, 25, 50, 75 and 100% of range.
+category: engineering
+intro: "A 5-point check at 0, 25, 50, 75 and 100% of range is the standard way to calibrate a transmitter and reveal zero, span and linearity errors. This 5-point calibration calculator builds the table of input values and expected outputs for any range — see the [calibration process for a DP transmitter](https://www.instrumentationblog.in/calibration-process-differential-pressure-transmitter/)."
+keywords: [5 point calibration calculator, five point calibration table, transmitter calibration points, 4-20ma calibration table, 0 25 50 75 100 calibration, calibration check sheet]
+updated: 2026-10-29
+variables:
+  - { id: LRV, label: Input range low (LRV), default: 0, help: 'Process units, e.g. bar, °C, mbar, %.' }
+  - { id: URV, label: Input range high (URV), default: 10 }
+  - { id: Olo, label: Output low (e.g. 4 mA), default: 4 }
+  - { id: Ohi, label: Output high (e.g. 20 mA), default: 20 }
+  - { id: I25, label: Input at 25%, decimals: 4 }
+  - { id: I50, label: Input at 50%, decimals: 4 }
+  - { id: I75, label: Input at 75%, decimals: 4 }
+  - { id: O25, label: Expected output at 25%, decimals: 4 }
+  - { id: O50, label: Expected output at 50%, decimals: 4 }
+  - { id: O75, label: Expected output at 75%, decimals: 4 }
+equations:
+  - I25 = LRV + 0.25 * (URV - LRV)
+  - I50 = LRV + 0.5 * (URV - LRV)
+  - I75 = LRV + 0.75 * (URV - LRV)
+  - O25 = Olo + 0.25 * (Ohi - Olo)
+  - O50 = Olo + 0.5 * (Ohi - Olo)
+  - O75 = Olo + 0.75 * (Ohi - Olo)
+faq:
+  - q: Why calibrate at five points?
+    a: Zero and span alone only fix the ends of the range. The 25, 50 and 75% points show non-linearity, and testing upscale then downscale reveals hysteresis.
+  - q: What are the 5 calibration points for a 4–20 mA transmitter?
+    a: 4, 8, 12, 16 and 20 mA, corresponding to 0, 25, 50, 75 and 100% of the calibrated input range.
+  - q: Does the table work for a suppressed or elevated zero?
+    a: Yes. Enter a negative LRV for an elevated range (for example −50 to +150 mbar) and the input points are spaced across that range.
+  - q: What about reverse-acting outputs?
+    a: Enter the output high value as the low and vice versa (for example 20 and 4) — the expected outputs then decrease as the input rises.
+related: [engineering/calibration-error, engineering/4-20ma-scaling, engineering/signal-converter, engineering/instrument-accuracy]
+---
+
+## How to use the 5-point calibration calculator
+
+Enter the **calibrated input range** (LRV and URV) and the **output range** (4 and 20 for a 4–20 mA transmitter, 1 and 5 for a 1–5 V signal). The calculator gives the input to apply and the output you should read at 25, 50 and 75%; the 0% and 100% points are the range ends you entered. Record the measured values and check each one with the [calibration error calculator](/engineering/calibration-error/).
+
+## Calibration point formula
+
+<p class="formula">Input<sub>p</sub> = LRV + p × (URV − LRV) &nbsp;·&nbsp; Output<sub>p</sub> = O<sub>low</sub> + p × (O<sub>high</sub> − O<sub>low</sub>)</p>
+
+where p = 0, 0.25, 0.5, 0.75 and 1.
+
+## Example: 0–10 bar pressure transmitter
+
+| Point | Input | 4–20 mA output | 1–5 V output |
+|---|---|---|---|
+| 0% | 0 bar | 4.00 mA | 1.00 V |
+| 25% | 2.5 bar | 8.00 mA | 2.00 V |
+| 50% | 5 bar | 12.00 mA | 3.00 V |
+| 75% | 7.5 bar | 16.00 mA | 4.00 V |
+| 100% | 10 bar | 20.00 mA | 5.00 V |
+
+## Calibration procedure
+
+1. Isolate the transmitter, connect the pressure source and a reference gauge, and connect a multimeter or calibrator in the loop.
+2. Apply each point **upscale** (0 → 100%) and record the output, then repeat **downscale** (100 → 0%).
+3. Calculate the error at each point as % of span. If any point is out of tolerance, adjust zero and span and repeat to record as-left data.
+4. For DP flow transmitters with square-root extraction, the output at 25% DP is 50% flow — see the [DP flow square-root calculator](/engineering/dp-flow-square-root/).

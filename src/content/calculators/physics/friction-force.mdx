@@ -1,0 +1,57 @@
+---
+title: Friction Force Calculator (Coefficient of Friction)
+description: Calculate friction force from the coefficient of friction and normal force or mass, or find the coefficient — with a table of static and kinetic values.
+category: physics
+intro: "Friction opposes sliding between two surfaces and is proportional to how hard they are pressed together. This friction force calculator uses F = μN to find the friction force, the normal force or the coefficient of friction, for an object resting on a level surface or any known normal force."
+keywords: [friction force calculator, coefficient of friction calculator, static friction calculator, kinetic friction formula, normal force friction, friction coefficient table]
+updated: 2026-10-29
+variables:
+  - { id: mu, label: Coefficient of friction (μ), default: 0.4, min: 0 }
+  - { id: m, label: Mass (on a level surface), family: mass, unit: kg, imperialUnit: lb, default: 10, min: 0 }
+  - { id: N, label: Normal force, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: Ff, label: Friction force, family: force, unit: N, imperialUnit: lbf, min: 0 }
+equations:
+  - N = m * g0
+  - Ff = mu * N
+faq:
+  - q: What is the formula for friction force?
+    a: F = μ × N, where μ is the coefficient of friction and N the normal force pressing the surfaces together. On a level surface N = m × g.
+  - q: What is the difference between static and kinetic friction?
+    a: Static friction is the maximum force before an object starts to slide; kinetic friction acts while it is sliding and is usually lower. That is why it takes more force to start pushing a box than to keep it moving.
+  - q: Does friction depend on contact area?
+    a: For dry, rigid surfaces, no — the classical (Amontons) law says friction depends only on μ and the normal force. Tyres and soft materials deviate from this.
+  - q: How do I find the coefficient of friction?
+    a: Measure the force needed to slide the object and its normal force, enter both and clear μ — μ = F ÷ N.
+related: [physics/inclined-plane, physics/force, physics/weight, physics/work-and-power]
+---
+
+## How to use the friction force calculator
+
+Enter the **coefficient of friction** and the **mass** of an object on a level surface — the normal force N = mg is calculated for you — and you get the friction force. For a sloped surface or an extra pressing force, clear the mass and enter the **normal force** directly, or use the [inclined plane calculator](/physics/inclined-plane/).
+
+## Friction formula
+
+<p class="formula">F<sub>f</sub> = μ × N &nbsp;·&nbsp; N = m × g (level surface)</p>
+
+## Example
+
+A 10 kg crate on a floor with μ = 0.4:
+
+- N = 10 × 9.807 = **98.07 N**
+- F<sub>f</sub> = 0.4 × 98.07 = **39.23 N** — the force needed to keep it sliding
+
+## Typical coefficients of friction (dry, approximate)
+
+| Surfaces | Static μ<sub>s</sub> | Kinetic μ<sub>k</sub> |
+|---|---|---|
+| Steel on steel | 0.74 | 0.57 |
+| Aluminium on steel | 0.61 | 0.47 |
+| Copper on steel | 0.53 | 0.36 |
+| Rubber on dry concrete | 1.0 | 0.8 |
+| Wood on wood | 0.25–0.5 | 0.2 |
+| Glass on glass | 0.94 | 0.4 |
+| Waxed ski on snow | 0.14 | 0.1 |
+| PTFE on PTFE | 0.04 | 0.04 |
+| Ice on ice | 0.1 | 0.03 |
+
+Values vary widely with surface finish, contamination and lubrication — use measured values for design.

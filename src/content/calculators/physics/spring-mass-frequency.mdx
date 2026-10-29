@@ -1,0 +1,67 @@
+---
+title: Spring-Mass Frequency Calculator (Natural Frequency)
+description: Calculate the natural frequency, angular frequency and period of a mass on a spring from spring constant and mass — or from static deflection.
+category: physics
+intro: "A mass on a spring oscillates at a natural frequency set only by its stiffness and mass, f = (1/2π)√(k/m). This spring-mass frequency calculator gives the frequency, angular frequency, period and static deflection — the basis of vibration isolation, machine mounts and simple harmonic motion problems."
+keywords: [spring mass frequency calculator, natural frequency calculator, spring mass system, simple harmonic oscillator frequency, period of spring, static deflection natural frequency]
+updated: 2026-10-29
+variables:
+  - { id: k, label: Spring constant (stiffness), suffix: N/m, default: 2000, min: 0 }
+  - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 5, min: 0 }
+  - { id: w, label: Angular frequency (ω), suffix: rad/s, min: 0 }
+  - { id: f, label: Natural frequency, family: frequency, unit: Hz, min: 0 }
+  - { id: T, label: Period, family: seconds, unit: s, min: 0 }
+  - { id: d, label: Static deflection under gravity, family: length, unit: mm, imperialUnit: in, min: 0 }
+equations:
+  - w = sqrt(k / m)
+  - f = w / (2 * pi)
+  - T = 1 / f
+  - d = m * g0 / k
+faq:
+  - q: What is the natural frequency of a spring-mass system?
+    a: f = (1 ÷ 2π) × √(k ÷ m). Stiffer springs raise the frequency; heavier masses lower it.
+  - q: How do I find natural frequency from static deflection?
+    a: f = (1 ÷ 2π) × √(g ÷ δ). A mount that sags 25 mm under its load has a natural frequency of about 3.2 Hz — enter the deflection and clear the spring constant.
+  - q: How is this used for vibration isolation?
+    a: Isolation starts when the forcing frequency is more than √2 times the natural frequency; designers usually aim for a ratio of 3 or more.
+  - q: Does gravity change the frequency of a vertical spring?
+    a: No. Gravity shifts the equilibrium position by the static deflection, but the oscillation frequency is the same as horizontal.
+related: [physics/hookes-law, physics/pendulum, physics/wavelength-frequency, electronics/resonant-frequency]
+---
+
+## How to use the spring-mass frequency calculator
+
+Enter the **spring constant** in N/m and the **mass**. You get the angular frequency, the natural frequency in Hz, the period of one oscillation and the static deflection of the spring under the weight. If you know the deflection instead, clear the spring constant and enter it.
+
+## Spring-mass formulas
+
+<p class="formula">ω = √(k ÷ m) &nbsp;·&nbsp; f = ω ÷ 2π &nbsp;·&nbsp; T = 1 ÷ f</p>
+
+<p class="formula">δ = m g ÷ k &nbsp;⇒&nbsp; f = (1/2π) √(g ÷ δ)</p>
+
+## Example
+
+A 5 kg mass on a 2,000 N/m spring:
+
+- ω = √(2000 ÷ 5) = **20 rad/s**
+- f = 20 ÷ 2π = **3.183 Hz**
+- T = **0.3142 s**
+- Static deflection = 5 × 9.807 ÷ 2000 = **24.5 mm**
+
+## Natural frequency from static deflection
+
+| Static deflection | Natural frequency |
+|---|---|
+| 1 mm | 15.76 Hz |
+| 2.5 mm | 9.97 Hz |
+| 5 mm | 7.05 Hz |
+| 10 mm | 4.98 Hz |
+| 25 mm | 3.15 Hz |
+| 50 mm | 2.23 Hz |
+| 100 mm | 1.58 Hz |
+
+## Notes
+
+- Springs in **series** combine as 1/k = 1/k₁ + 1/k₂; in **parallel**, k = k₁ + k₂.
+- Damping lowers the observed frequency slightly: ω<sub>d</sub> = ω √(1 − ζ²).
+- See the [Hooke's law calculator](/physics/hookes-law/) to find k from a force and extension.

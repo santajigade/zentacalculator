@@ -1,0 +1,70 @@
+---
+title: Hazen–Williams Calculator (Water Pipe Head Loss)
+description: Calculate friction head loss and pressure drop in water pipes with the Hazen–Williams equation from flow, pipe diameter, length and C factor.
+category: engineering
+intro: "The Hazen–Williams equation is the go-to empirical formula for friction loss in water supply, fire-protection and irrigation pipes, using a single roughness C factor. This Hazen–Williams calculator gives head loss, pressure drop and velocity in SI units — see [how to calculate pressure drop in pipes](https://www.instrumentationblog.in/calculate-pressure-drop-in-pipes/)."
+keywords: [hazen williams calculator, hazen williams equation, water pipe head loss calculator, pipe friction loss calculator, c factor pipe, pressure drop water pipe]
+updated: 2026-10-29
+variables:
+  - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
+  - { id: d, label: Pipe internal diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: L, label: Pipe length, family: length, unit: m, imperialUnit: ft, default: 100, min: 0 }
+  - { id: C, label: Hazen–Williams C factor, default: 130, min: 1, help: 'PVC/HDPE 150, copper 130–140, new steel 120–140, old cast iron 80–100.' }
+  - { id: hf, label: Head loss, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: dp, label: Pressure drop (water), family: pressure, unit: kPa, imperialUnit: psi, min: 0 }
+  - { id: V, label: Velocity, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+equations:
+  - hf = 10.67 * L * Q^1.852 / (C^1.852 * d^4.8704)
+  - dp = 9806.65 * hf
+  - V = Q / (pi * d^2 / 4)
+faq:
+  - q: What is the Hazen–Williams formula in SI units?
+    a: h_f = 10.67 × L × Q^1.852 ÷ (C^1.852 × d^4.87), with head loss and length in metres, flow in m³/s and diameter in metres.
+  - q: When should I not use Hazen–Williams?
+    a: It is valid only for water at roughly 5–25 °C in turbulent flow. For other liquids, hot water, viscous fluids or gases, use the Darcy–Weisbach equation.
+  - q: What C factor should I use?
+    a: About 150 for plastic pipe, 130–140 for copper and new lined pipe, 120 for new steel and 100 or less for old, tuberculated cast iron. Design codes often specify the value.
+  - q: How does pipe size affect head loss?
+    a: Strongly — head loss varies with d^−4.87, so one size larger pipe often cuts friction loss by more than half.
+related: [engineering/darcy-weisbach-head-loss, engineering/minor-losses, engineering/pipe-flow-velocity, engineering/pump-power]
+---
+
+## How to use the Hazen–Williams calculator
+
+Enter the **flow rate**, the pipe **internal diameter**, its **length** and the **C factor** for the pipe material. You get the friction head loss, the equivalent pressure drop for water and the flow velocity. Add fittings with the [minor losses calculator](/engineering/minor-losses/).
+
+## Hazen–Williams equation (SI)
+
+<p class="formula">h<sub>f</sub> = 10.67 × L × Q<sup>1.852</sup> ÷ (C<sup>1.852</sup> × d<sup>4.87</sup>)</p>
+
+<p class="formula">Δp = ρ g h<sub>f</sub> ≈ 9.81 kPa per metre of head</p>
+
+## Example
+
+50 m³/h of water through 100 m of 100 mm pipe, C = 130:
+
+- Q = 50 ÷ 3600 = 0.01389 m³/s
+- h<sub>f</sub> = **3.498 m** of head
+- Δp = **34.30 kPa** (4.97 psi)
+- Velocity = **1.77 m/s**
+
+## Head loss per 100 m at 50 m³/h (C = 130)
+
+| Pipe ID | Velocity | Head loss | Pressure drop |
+|---|---|---|---|
+| 65 mm | 4.19 m/s | 28.507 m | 279.56 kPa |
+| 80 mm | 2.76 m/s | 10.369 m | 101.69 kPa |
+| 100 mm | 1.77 m/s | 3.498 m | 34.30 kPa |
+| 125 mm | 1.13 m/s | 1.180 m | 11.57 kPa |
+| 150 mm | 0.79 m/s | 0.485 m | 4.76 kPa |
+| 200 mm | 0.44 m/s | 0.120 m | 1.17 kPa |
+
+## Typical C factors
+
+| Pipe material | C |
+|---|---|
+| PVC, HDPE, copper (smooth) | 140–150 |
+| Cement-lined ductile iron | 130–140 |
+| New welded steel | 120 |
+| Galvanised steel | 120 |
+| Old cast iron | 80–100 |

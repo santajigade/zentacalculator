@@ -1,0 +1,69 @@
+---
+title: Low Flow Cutoff Calculator (Square-Root DP Flow)
+description: Calculate the DP at a square-root low-flow cutoff, the cutoff flow and the noise gain near zero for orifice and other DP flow transmitters.
+category: engineering
+intro: "With square-root extraction, flow = √DP, so tiny DP noise near zero becomes a large, jumping flow reading. A low-flow cutoff forces the output to zero below a set point. This low flow cutoff calculator converts the cutoff between flow and DP and shows how much the root amplifies noise — see [square-root extraction in DP flow measurement](https://www.instrumentationblog.in/square-root-extraction-dp-flow/)."
+keywords: [low flow cutoff calculator, square root low flow cutoff, dp flow cutoff, flow cutoff percentage, square root extraction noise, orifice low flow cutoff]
+updated: 2026-10-29
+variables:
+  - { id: q, label: Cutoff (% of maximum flow), family: percent, unit: '%', default: 5, min: 0, max: 1 }
+  - { id: Qmax, label: Maximum flow, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
+  - { id: DPmax, label: DP at maximum flow, family: pressure, unit: mbar, default: 250, min: 0 }
+  - { id: x, label: Cutoff (% of maximum DP), family: percent, unit: '%', min: 0, max: 1, decimals: 3 }
+  - { id: Qc, label: Cutoff flow, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+  - { id: DPc, label: Cutoff DP, family: pressure, unit: mbar, min: 0 }
+  - { id: Gn, label: Noise gain at cutoff (× flow % per DP %), min: 0, decimals: 2 }
+equations:
+  - x = q^2
+  - Qc = q * Qmax
+  - DPc = x * DPmax
+  - Gn = 1 / (2 * q)
+faq:
+  - q: Why is a low-flow cutoff needed with square-root extraction?
+    a: Near zero the slope of √DP becomes very steep. At 1% flow, a DP change of 0.01% of span moves the flow reading by 0.5% — so transmitter noise and zero drift look like real flow.
+  - q: What cutoff value is typical?
+    a: Most DP flow transmitters and DCS blocks use a cutoff between 5% and 10% of flow, which is only 0.25% to 1% of DP.
+  - q: What is the noise gain?
+    a: It is the slope of the square-root curve, d(flow) ÷ d(DP) = 1 ÷ (2 × flow fraction). At 5% flow it is 10, so 0.1% DP noise becomes 1% flow noise.
+  - q: Does the cutoff hide real flow?
+    a: Yes, anything below the cutoff reads zero. Totalizers will miss it, so choose a meter with better turndown if low flows matter.
+related: [engineering/dp-flow-square-root, engineering/orifice-flow, engineering/turndown-ratio, engineering/4-20ma-scaling]
+---
+
+## How to use the low flow cutoff calculator
+
+Enter the **cutoff** as a percentage of maximum flow, the **maximum flow** and the **DP at maximum flow** (the transmitter's calibrated span). You get the cutoff in DP terms, the actual cutoff flow and DP, and the noise gain at that point. To find the flow corresponding to a DP cutoff set in a transmitter, clear the flow cutoff and enter the DP percentage.
+
+## Low flow cutoff formulas
+
+<p class="formula">Flow fraction q = √(DP fraction) &nbsp;⇔&nbsp; DP fraction = q²</p>
+
+<p class="formula">Noise gain = d(q) ÷ d(DP) = 1 ÷ (2q)</p>
+
+## Example
+
+Cutoff at 5% flow on a 0–100 m³/h meter with 250 mbar DP span:
+
+- DP at cutoff = 0.05² = **0.25%** of span → **0.625 mbar**
+- Cutoff flow = **5 m³/h**
+- Noise gain = 1 ÷ (2 × 0.05) = **10** — each 0.1% of DP noise shows as 1% flow
+
+## Flow, DP and noise gain
+
+| Flow (% of max) | DP (% of max) | Noise gain |
+|---|---|---|
+| 1% | 0.01% | 50 |
+| 2% | 0.04% | 25 |
+| 3% | 0.09% | 16.6667 |
+| 5% | 0.25% | 10 |
+| 7% | 0.49% | 7.14286 |
+| 10% | 1% | 5 |
+| 20% | 4% | 2.5 |
+| 50% | 25% | 1 |
+| 100% | 100% | 0.5 |
+
+## Where to apply the cutoff
+
+- In the **transmitter** (many smart DP transmitters have a configurable low-flow cutoff and linear-to-root transition).
+- Or in the **DCS/PLC** flow block — but only in one place, not both.
+- Fix zero drift first: re-zero the transmitter at line pressure with equalising valve open before blaming noise.

@@ -1,0 +1,59 @@
+---
+title: Impulse Calculator (Impulse–Momentum Theorem)
+description: Calculate impulse from force and time, and the resulting change in velocity or momentum — J = F·Δt = m·Δv — with worked examples.
+category: physics
+intro: "Impulse is the product of force and the time it acts, and it equals the change in an object's momentum. This impulse calculator applies the impulse–momentum theorem to find impulse, change in velocity, force or contact time — useful for collisions, kicks, airbags and rocket burns."
+keywords: [impulse calculator, impulse momentum theorem, impulse formula, change in momentum calculator, force time calculator, impulse physics]
+updated: 2026-10-29
+variables:
+  - { id: F, label: Average force, family: force, unit: N, imperialUnit: lbf, default: 500 }
+  - { id: t, label: Contact time, family: seconds, unit: s, default: 0.1, min: 0 }
+  - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 2, min: 0 }
+  - { id: J, label: Impulse (= change in momentum), suffix: N·s }
+  - { id: dv, label: Change in velocity, family: velocity, unit: ms, imperialUnit: fts }
+equations:
+  - J = F * t
+  - dv = J / m
+faq:
+  - q: What is the formula for impulse?
+    a: J = F × Δt, the average force multiplied by the time it acts. By the impulse–momentum theorem it also equals m × Δv.
+  - q: What are the units of impulse?
+    a: Newton-seconds (N·s), which are the same as kg·m/s — the units of momentum.
+  - q: Why do airbags and crumple zones reduce injury?
+    a: The change in momentum in a crash is fixed, so stretching the stopping time lowers the average force by the same factor.
+  - q: How do I find the force from a change in velocity?
+    a: Enter the mass, the change in velocity and the contact time, and clear the force — F = m × Δv ÷ Δt.
+related: [physics/momentum, physics/force, physics/elastic-collision, physics/acceleration]
+---
+
+## How to use the impulse calculator
+
+Enter the **average force**, the **contact time** and the **mass** of the object. You get the impulse and the change in velocity it produces. Any field can be the unknown: enter mass, change in velocity and time to find the average force.
+
+## Impulse formula
+
+<p class="formula">J = F × Δt = m × Δv = Δp</p>
+
+## Example
+
+A 500 N average force acts on a 2 kg ball for 0.1 s:
+
+- J = 500 × 0.1 = **50 N·s**
+- Δv = 50 ÷ 2 = **25 m/s**
+
+## Same impulse, different stopping times
+
+Stopping a 70 kg person moving at 15 m/s (Δp = 1,050 N·s):
+
+| Stopping time | Average force |
+|---|---|
+| 0.01 s | 105,000 N (153.0 g) |
+| 0.05 s | 21,000 N (30.6 g) |
+| 0.1 s | 10,500 N (15.3 g) |
+| 0.2 s | 5,250 N (7.6 g) |
+| 0.5 s | 2,100 N (3.1 g) |
+
+## Notes
+
+- Impulse and momentum are **vectors** — a ball that bounces back has a change in velocity of up to twice its speed.
+- For a force that varies with time, impulse is the area under the force–time graph.

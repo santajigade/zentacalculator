@@ -1,0 +1,74 @@
+---
+title: Minor Losses Calculator (Fitting K Factors & Equivalent Length)
+description: Calculate pressure loss through pipe fittings and valves from K factors and velocity, plus the equivalent pipe length — with a table of typical K values.
+category: engineering
+intro: "Valves, elbows, tees, entrances and exits each add a pressure loss proportional to velocity head, described by a resistance coefficient K. This minor losses calculator adds them up, converts the loss to pressure and gives the equivalent straight-pipe length — see [how to calculate pressure drop in pipes](https://www.instrumentationblog.in/calculate-pressure-drop-in-pipes/)."
+keywords: [minor losses calculator, pipe fitting loss calculator, k factor pressure drop, equivalent length calculator, valve pressure loss, fittings head loss]
+updated: 2026-10-29
+variables:
+  - { id: K, label: Total K (sum of all fittings), default: 0.9, min: 0, help: 'Add the K values of every fitting — see the table below.' }
+  - { id: V, label: Flow velocity, family: velocity, unit: ms, imperialUnit: fts, default: 2, min: 0 }
+  - { id: rho, label: Fluid density, family: density, unit: kgm3, default: 998, min: 0 }
+  - { id: f, label: Darcy friction factor (for equivalent length), default: 0.02, min: 0 }
+  - { id: D, label: Pipe internal diameter, family: length, unit: mm, imperialUnit: in, default: 50, min: 0 }
+  - { id: hL, label: Head loss, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: dp, label: Pressure loss, family: pressure, unit: kPa, imperialUnit: psi, min: 0 }
+  - { id: Le, label: Equivalent pipe length, family: length, unit: m, imperialUnit: ft, min: 0 }
+equations:
+  - hL = K * V^2 / (2 * g0)
+  - dp = rho * g0 * hL
+  - Le = K * D / f
+faq:
+  - q: How do I calculate minor losses in a pipe?
+    a: Head loss = K × V² ÷ 2g, where K is the sum of all fitting coefficients and V the velocity in the pipe. Multiply by ρg for pressure loss.
+  - q: What is equivalent length?
+    a: The length of straight pipe that would give the same loss as the fittings, L_e = K × D ÷ f. Adding it to the real pipe length lets you use one Darcy–Weisbach calculation.
+  - q: Are minor losses really minor?
+    a: Not always. In short pipe runs with many valves and fittings — pump suction lines, skids, plant rooms — fitting losses can exceed straight-pipe friction.
+  - q: Where do K values come from?
+    a: From manufacturer data (often given as Cv or Kv for valves) or published tables such as Crane TP-410. Values vary with size and design, so tables give typical figures.
+related: [engineering/darcy-weisbach-head-loss, engineering/hazen-williams, engineering/control-valve-kv-cv, engineering/pipe-flow-velocity]
+---
+
+## How to use the minor losses calculator
+
+Add up the **K factors** of every valve and fitting in the line and enter the total, with the **velocity** in the pipe and the **fluid density**. You get the head loss and pressure loss. Enter the **Darcy friction factor** and **pipe diameter** to see the equivalent straight-pipe length (find f from the [Darcy–Weisbach calculator](/engineering/darcy-weisbach-head-loss/)).
+
+## Minor loss formulas
+
+<p class="formula">h<sub>L</sub> = K × V² ÷ 2g &nbsp;·&nbsp; Δp = ρ g h<sub>L</sub> = K × ½ρV²</p>
+
+<p class="formula">L<sub>e</sub> = K × D ÷ f</p>
+
+## Example
+
+A 50 mm water line at 2 m/s with total K = 0.9 (for example one standard elbow plus a gate valve), f = 0.02:
+
+- h<sub>L</sub> = 0.9 × 2² ÷ (2 × 9.807) = **0.1835 m**
+- Δp = 998 × 9.807 × 0.1835 = **1.796 kPa**
+- L<sub>e</sub> = 0.9 × 0.05 ÷ 0.02 = **2.25 m** of straight pipe
+
+## Typical K values (fully turbulent flow)
+
+Head loss at 2 m/s and equivalent length in 50 mm pipe with f = 0.02:
+
+| Fitting | K | Head loss | L<sub>e</sub> |
+|---|---|---|---|
+| Gate valve, fully open | 0.15 | 31 mm | 0.38 m |
+| Ball valve, fully open | 0.05 | 10 mm | 0.13 m |
+| Globe valve, fully open | 10 | 2039 mm | 25.00 m |
+| Swing check valve | 2 | 408 mm | 5.00 m |
+| Butterfly valve, fully open | 0.5 | 102 mm | 1.25 m |
+| 90° elbow, standard | 0.75 | 153 mm | 1.88 m |
+| 90° elbow, long radius | 0.45 | 92 mm | 1.12 m |
+| 45° elbow | 0.4 | 82 mm | 1.00 m |
+| Tee, flow through run | 0.4 | 82 mm | 1.00 m |
+| Tee, flow through branch | 1 | 204 mm | 2.50 m |
+| Pipe entrance, sharp-edged | 0.5 | 102 mm | 1.25 m |
+| Pipe exit into tank | 1 | 204 mm | 2.50 m |
+
+K values are typical; they depend on size, design and manufacturer.
+
+## Valve K from Cv or Kv
+
+For a valve with flow coefficient Kv (m³/h at 1 bar) and pipe diameter d in mm, K ≈ 0.0016 × d⁴ ÷ Kv². See the [control valve Kv/Cv calculator](/engineering/control-valve-kv-cv/).

@@ -1,0 +1,59 @@
+---
+title: Angular Velocity Calculator (rpm to rad/s & Linear Speed)
+description: Convert rpm to rad/s and Hz, and calculate the linear (tangential) speed at any radius — for motors, wheels, pulleys and rotating shafts.
+category: physics
+intro: "Rotating machines are rated in revolutions per minute, but physics formulas use angular velocity in radians per second. This angular velocity calculator converts between rpm, rad/s and Hz and gives the tangential speed at any radius, v = ωr — handy for motor shafts, wheels, grinding discs and fans."
+keywords: [angular velocity calculator, rpm to rad/s, rad/s to rpm, tangential velocity calculator, rpm to linear speed, rotational speed converter]
+updated: 2026-10-29
+variables:
+  - { id: N, label: Rotational speed, suffix: rpm, default: 1450, min: 0 }
+  - { id: r, label: Radius, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: w, label: Angular velocity (ω), suffix: rad/s, min: 0 }
+  - { id: f, label: Rotational frequency, family: frequency, unit: Hz, min: 0 }
+  - { id: v, label: Tangential (rim) speed, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+  - { id: T, label: Time per revolution, family: seconds, unit: ms, min: 0 }
+equations:
+  - w = 2 * pi * N / 60
+  - f = N / 60
+  - v = w * r
+  - T = 1 / f
+faq:
+  - q: How do I convert rpm to rad/s?
+    a: Multiply by 2π and divide by 60, so ω = rpm × 0.10472. 1,450 rpm is about 151.8 rad/s.
+  - q: How do I find linear speed from rpm?
+    a: v = ω × r = 2π r × rpm ÷ 60. A 200 mm diameter disc at 1,450 rpm has a rim speed of about 15.2 m/s.
+  - q: What is the difference between angular velocity and frequency?
+    a: Frequency counts revolutions per second (Hz); angular velocity counts radians per second. One revolution is 2π radians, so ω = 2πf.
+  - q: Why does rim speed matter?
+    a: Grinding wheels, saw blades and fans have a maximum safe peripheral speed, and belt and conveyor speeds are set by pulley rim speed.
+related: [engineering/pulley-speed, physics/centripetal-force, physics/rotational-kinetic-energy, engineering/torque-power-speed]
+---
+
+## How to use the angular velocity calculator
+
+Enter the **speed in rpm** and a **radius**. You get the angular velocity in rad/s, the rotational frequency in Hz, the tangential speed at that radius and the time for one revolution. Enter rad/s or a rim speed instead and clear rpm to convert the other way.
+
+## Angular velocity formulas
+
+<p class="formula">ω = 2π × N ÷ 60 &nbsp;·&nbsp; f = N ÷ 60 &nbsp;·&nbsp; v = ω × r</p>
+
+## Example
+
+A 4-pole motor at 1,450 rpm driving a 200 mm diameter disc (r = 100 mm):
+
+- ω = 2π × 1450 ÷ 60 = **151.84 rad/s**
+- f = **24.17 Hz** (one turn every 41.4 ms)
+- Rim speed = 151.84 × 0.1 = **15.18 m/s**
+
+## rpm conversion table
+
+| Speed | Angular velocity | Frequency |
+|---|---|---|
+| 1 rpm | 0.10 rad/s | 0.02 Hz |
+| 60 rpm | 6.28 rad/s | 1.00 Hz |
+| 750 rpm | 78.54 rad/s | 12.50 Hz |
+| 1,000 rpm | 104.72 rad/s | 16.67 Hz |
+| 1,500 rpm | 157.08 rad/s | 25.00 Hz |
+| 3,000 rpm | 314.16 rad/s | 50.00 Hz |
+| 3,600 rpm | 376.99 rad/s | 60.00 Hz |
+| 10,000 rpm | 1047.20 rad/s | 166.67 Hz |

@@ -1,0 +1,70 @@
+---
+title: Calibration Error Calculator (% of Span, As-Found / As-Left)
+description: Calculate instrument calibration error as a percent of span and of reading, and check as-found or as-left results against the tolerance.
+category: engineering
+intro: "Calibration compares an instrument's reading with a reference standard and decides whether the error is inside tolerance. This calibration error calculator works out the error in units, percent of span and percent of reading, and how much of the tolerance is used — see [how to calculate calibration error](https://www.instrumentationblog.in/calibration-error-calculation/) and [as-found and as-left on calibration certificates](https://www.instrumentationblog.in/calibration-certificate-as-found-as-left/)."
+keywords: [calibration error calculator, percent of span error, as found as left tolerance, transmitter calibration error, calibration tolerance check, instrument error calculation]
+updated: 2026-10-29
+variables:
+  - { id: Lo, label: Output range low (e.g. 4 mA), default: 4, help: 'Use any unit — mA, bar, °C — as long as all values match.' }
+  - { id: Hi, label: Output range high (e.g. 20 mA), default: 20 }
+  - { id: X, label: Expected (reference) value, default: 12 }
+  - { id: Y, label: Measured (as-found) value, default: 12.05 }
+  - { id: Tol, label: Tolerance (± % of span), family: percent, unit: '%', default: 0.25, min: 0 }
+  - { id: Err, label: Error (measured − expected), decimals: 4 }
+  - { id: Ps, label: Error (% of span), family: percent, unit: '%', decimals: 3 }
+  - { id: Pr, label: Error (% of reading), family: percent, unit: '%', decimals: 3 }
+  - { id: U, label: Tolerance used (over 100% = fail), family: percent, unit: '%', min: 0, decimals: 1 }
+equations:
+  - Err = Y - X
+  - Ps = Err / (Hi - Lo)
+  - Pr = Err / X
+  - U = abs(Ps) / Tol
+faq:
+  - q: How do I calculate calibration error as a percent of span?
+    a: Error % of span = (measured − expected) ÷ (upper range − lower range) × 100. For a 4–20 mA transmitter reading 12.05 mA instead of 12 mA, the error is 0.05 ÷ 16 = 0.31% of span.
+  - q: What is the difference between as-found and as-left?
+    a: As-found is the reading before any adjustment and shows how far the instrument drifted since the last calibration. As-left is the reading after adjustment and must be inside the tolerance.
+  - q: What tolerance should I use?
+    a: Usually the plant's calibration tolerance for that loop, which is often equal to or wider than the manufacturer's accuracy — for example ±0.25% or ±0.5% of span for a pressure transmitter.
+  - q: What is the difference between % of span and % of reading?
+    a: Percent of span divides by the full range, so it is constant across the scale. Percent of reading divides by the actual value, so the same error looks larger near the bottom of the range.
+related: [engineering/five-point-calibration, engineering/instrument-accuracy, engineering/4-20ma-scaling, math/percent-error]
+---
+
+## How to use the calibration error calculator
+
+Enter the **output range** of the instrument (4 and 20 for a 4–20 mA transmitter), the **expected value** from your reference standard, the **measured value** and the **tolerance** as ± % of span. The calculator gives the error, the error as a percentage of span and of reading, and the share of the tolerance used: **over 100% means the point fails**.
+
+## Calibration error formulas
+
+<p class="formula">Error = Measured − Expected</p>
+
+<p class="formula">% of span = Error ÷ (URV − LRV) × 100 &nbsp;·&nbsp; % of reading = Error ÷ Expected × 100</p>
+
+<p class="formula">Tolerance used = |% of span| ÷ Tolerance × 100</p>
+
+## Example
+
+A 4–20 mA pressure transmitter at 50% input should read 12.000 mA; it reads 12.050 mA. Tolerance ±0.25% of span:
+
+- Error = **+0.050 mA**
+- % of span = 0.05 ÷ 16 = **0.3125%**
+- % of reading = 0.05 ÷ 12 = **0.417%**
+- Tolerance used = 0.3125 ÷ 0.25 = **125%** → as-found **fail**, adjust and record as-left
+
+## Tolerance in mA for a 4–20 mA loop
+
+| Tolerance (% of span) | ± mA | ± µA |
+|---|---|---|
+| ±0.1% | 0.016 mA | 16 µA |
+| ±0.25% | 0.040 mA | 40 µA |
+| ±0.5% | 0.080 mA | 80 µA |
+| ±1.0% | 0.160 mA | 160 µA |
+| ±2.0% | 0.320 mA | 320 µA |
+
+## Good calibration practice
+
+- Use a reference at least **4 times more accurate** than the tolerance (test uncertainty ratio 4:1).
+- Record **as-found** data before touching zero or span — it is what tells you whether the process was measured correctly since the last calibration.
+- Test up and down the scale to reveal **hysteresis**; the [5-point calibration calculator](/engineering/five-point-calibration/) lists the test points.

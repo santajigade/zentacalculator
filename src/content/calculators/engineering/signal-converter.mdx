@@ -1,0 +1,66 @@
+---
+title: Signal Converter Calculator (4–20 mA ↔ 0–10 V ↔ 1–5 V)
+description: Convert between 4–20 mA, 0–20 mA, 0–10 V and 1–5 V analog signals and percent of range — for transmitters, PLCs and signal isolators.
+category: engineering
+intro: "Field instruments, PLC inputs and drives use different analog standards, and a signal isolator or converter maps one onto another by percent of range. This signal converter calculator translates 4–20 mA, 0–20 mA, 0–10 V and 1–5 V values in any direction — see [4 to 20 mA signal conversion](https://www.instrumentationblog.in/4-to-20-ma-signal-conversion/) and why [4–20 mA is the best signal for industrial automation](https://www.instrumentationblog.in/4-20ma-the-best-signal-for-industrial-automation/)."
+keywords: [signal converter calculator, 4-20ma to 0-10v calculator, ma to volts converter, 1-5v to 4-20ma, 0-10v to 4-20ma conversion, analog signal conversion]
+updated: 2026-10-29
+variables:
+  - { id: I, label: 4–20 mA signal, family: current, unit: mA, default: 12 }
+  - { id: P, label: Percent of range, family: percent, unit: '%', decimals: 2 }
+  - { id: I0, label: 0–20 mA signal, family: current, unit: mA }
+  - { id: V10, label: 0–10 V signal, family: voltage, unit: V }
+  - { id: V15, label: 1–5 V signal, family: voltage, unit: V }
+  - { id: V5, label: 0–5 V signal, family: voltage, unit: V }
+equations:
+  - P = (I - 0.004) / 0.016
+  - I0 = 0.02 * P
+  - V10 = 10 * P
+  - V15 = 1 + 4 * P
+  - V5 = 5 * P
+faq:
+  - q: How do I convert 4–20 mA to 0–10 V?
+    a: Find the percent of range, (mA − 4) ÷ 16, then multiply by 10 V. 12 mA is 50%, which is 5 V.
+  - q: How do I convert 4–20 mA to 1–5 V?
+    a: Pass the current through a precision 250 Ω resistor — 4 mA gives 1 V and 20 mA gives 5 V. This is how many DCS and PLC voltage inputs read current loops.
+  - q: Can I convert 0–10 V to 4–20 mA with a resistor?
+    a: No. Converting voltage to a current loop needs an active converter or isolator that drives a controlled current. Going from current to voltage only needs a resistor.
+  - q: Why is 4 mA used instead of 0 mA?
+    a: A live zero lets the receiver tell a 0% signal from a broken wire (0 mA), and leaves enough current to power 2-wire transmitters.
+related: [engineering/4-20ma-scaling, engineering/plc-analog-scaling, engineering/loop-resistance, electronics/voltage-divider]
+---
+
+## How to use the signal converter calculator
+
+Enter a value in **any one** field — a 4–20 mA current, a percent of range or one of the voltage signals — and the calculator fills in the equivalent value for every other standard. All conversions are linear by percent of range.
+
+## Signal conversion formulas
+
+<p class="formula">% = (I<sub>4–20</sub> − 4 mA) ÷ 16 mA</p>
+
+<p class="formula">I<sub>0–20</sub> = 20 mA × % &nbsp;·&nbsp; V<sub>0–10</sub> = 10 V × % &nbsp;·&nbsp; V<sub>1–5</sub> = 1 V + 4 V × % &nbsp;·&nbsp; V<sub>0–5</sub> = 5 V × %</p>
+
+## Example
+
+12 mA on a 4–20 mA loop:
+
+- Percent = (12 − 4) ÷ 16 = **50%**
+- 0–20 mA = **10 mA**, 0–10 V = **5 V**, 1–5 V = **3 V**, 0–5 V = **2.5 V**
+
+## Signal conversion table
+
+| % of range | 4–20 mA | 0–20 mA | 1–5 V | 0–10 V |
+|---|---|---|---|---|
+| 0% | 4.00 mA | 0.00 mA | 1.00 V | 0.00 V |
+| 10% | 5.60 mA | 2.00 mA | 1.40 V | 1.00 V |
+| 25% | 8.00 mA | 5.00 mA | 2.00 V | 2.50 V |
+| 50% | 12.00 mA | 10.00 mA | 3.00 V | 5.00 V |
+| 75% | 16.00 mA | 15.00 mA | 4.00 V | 7.50 V |
+| 90% | 18.40 mA | 18.00 mA | 4.60 V | 9.00 V |
+| 100% | 20.00 mA | 20.00 mA | 5.00 V | 10.00 V |
+
+## Choosing a signal
+
+- **4–20 mA** is immune to voltage drop along the cable, detects a broken wire and can power 2-wire transmitters — the plant standard.
+- **0–10 V** is common for drives, dampers and building automation over short distances.
+- **1–5 V** is the voltage across a 250 Ω resistor in a 4–20 mA loop and is how many controllers read current inputs.

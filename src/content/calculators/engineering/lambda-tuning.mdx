@@ -1,0 +1,69 @@
+---
+title: Lambda Tuning Calculator (IMC PI & Cohen–Coon)
+description: Calculate PI controller gain and integral time from process gain, time constant and dead time using lambda (IMC) tuning, with Cohen–Coon for comparison.
+category: engineering
+intro: "Lambda tuning sets a PI controller so the closed loop responds like a first-order lag with a time constant λ that you choose — fast or gentle, with no overshoot. This lambda tuning calculator uses process gain, time constant and dead time from a step test and compares the result with Cohen–Coon — see [PID controller tuning parameters](https://www.instrumentationblog.in/pid-controller-tuning-parameters/) and [how to tune a PID controller](https://www.instrumentationblog.in/how-to-tune-a-pid-controller/)."
+keywords: [lambda tuning calculator, imc tuning calculator, cohen coon calculator, pi controller tuning, fopdt tuning rules, self regulating loop tuning]
+updated: 2026-10-29
+variables:
+  - { id: K, label: Process gain (Δ PV % ÷ Δ output %), default: 2, min: 0 }
+  - { id: tau, label: Process time constant (τ), family: seconds, unit: s, default: 60, min: 0 }
+  - { id: th, label: Dead time (θ), family: seconds, unit: s, default: 10, min: 0 }
+  - { id: lam, label: Closed-loop time constant (λ), family: seconds, unit: s, default: 30, min: 0, help: 'λ = τ for a robust loop, ≥ 3θ for safety; smaller λ is faster but less robust.' }
+  - { id: Kc, label: Lambda PI gain, min: 0, decimals: 3 }
+  - { id: Ti, label: Lambda PI integral time, family: seconds, unit: s, min: 0 }
+  - { id: Kcc, label: Cohen–Coon PI gain, min: 0, decimals: 3 }
+  - { id: Ticc, label: Cohen–Coon PI integral time, family: seconds, unit: s, min: 0 }
+equations:
+  - Kc = tau / (K * (lam + th))
+  - Ti = tau
+  - Kcc = (1 / K) * (tau / th) * (0.9 + th / (12 * tau))
+  - Ticc = th * (30 + 3 * th / tau) / (9 + 20 * th / tau)
+faq:
+  - q: What is the lambda tuning formula?
+    a: For a self-regulating process, Kc = τ ÷ (K × (λ + θ)) and Ti = τ. λ is the closed-loop time constant you want.
+  - q: How do I choose lambda?
+    a: Start with λ equal to the process time constant (or three times the dead time, whichever is larger). Smaller λ gives a faster but less robust loop; larger λ is slower and more tolerant of model error.
+  - q: Why does Cohen–Coon give a much higher gain?
+    a: Cohen–Coon aims for quarter-amplitude decay, so it is aggressive and sensitive to model error. It is mainly useful for loops with dead time that is large compared with the time constant.
+  - q: Where do K, τ and θ come from?
+    a: From an open-loop step test — use the [FOPDT step test calculator](/engineering/fopdt-step-test/) to extract them from the 28.3% and 63.2% response times.
+related: [engineering/fopdt-step-test, engineering/ziegler-nichols-pid-tuning, engineering/sensor-response-time, engineering/turndown-ratio]
+---
+
+## How to use the lambda tuning calculator
+
+Enter the **process gain** K, **time constant** τ and **dead time** θ of a first-order-plus-dead-time (FOPDT) model, plus the desired **closed-loop time constant** λ. The calculator gives the lambda (IMC) PI settings and the Cohen–Coon PI settings for comparison. Gains are dimensionless (% output per % PV); integral time is in seconds per repeat.
+
+## Lambda (IMC) PI tuning
+
+<p class="formula">K<sub>c</sub> = τ ÷ [K × (λ + θ)] &nbsp;·&nbsp; T<sub>i</sub> = τ</p>
+
+## Cohen–Coon PI tuning
+
+<p class="formula">K<sub>c</sub> = (1/K)(τ/θ)(0.9 + θ/12τ) &nbsp;·&nbsp; T<sub>i</sub> = θ(30 + 3θ/τ) ÷ (9 + 20θ/τ)</p>
+
+## Example
+
+K = 2, τ = 60 s, θ = 10 s, λ = 30 s:
+
+- Lambda PI: K<sub>c</sub> = 60 ÷ (2 × 40) = **0.750**, T<sub>i</sub> = **60 s**
+- Cohen–Coon PI: K<sub>c</sub> = **2.742**, T<sub>i</sub> = **24.7 s**
+
+The Cohen–Coon gain is more than three times higher — expect overshoot. Lambda tuning gives a smooth, non-oscillating response.
+
+## Effect of λ on controller gain (same process)
+
+| λ | K<sub>c</sub> | T<sub>i</sub> |
+|---|---|---|
+| 10 s (1 θ) | 1.500 | 60 s |
+| 20 s (2 θ) | 1.000 | 60 s |
+| 30 s (3 θ) | 0.750 | 60 s |
+| 60 s (6 θ) | 0.429 | 60 s |
+| 120 s (12 θ) | 0.231 | 60 s |
+
+## Notes
+
+- These rules are for **self-regulating** processes (flow, temperature, pressure). Integrating processes such as tank level need the integrating-process lambda rules.
+- Flow loops are often tuned with λ of 1–3 × τ; temperature loops with λ = τ or slower.
+- Coordinate λ across cascaded loops: the inner (slave) loop should be at least 3–5 times faster than the outer loop.

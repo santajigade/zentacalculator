@@ -1,0 +1,79 @@
+---
+title: Manning Equation Calculator (Open Channel Flow)
+description: Calculate open channel velocity and flow with the Manning equation for a rectangular channel from width, depth, slope and roughness n.
+category: engineering
+intro: "The Manning equation is the standard formula for uniform flow in open channels, ditches and part-full gravity drains, relating velocity to roughness, hydraulic radius and slope. This Manning equation calculator works in SI units for a rectangular channel — see [open channel flow measurement](https://www.instrumentationblog.in/open-channel-flow-measurement/) and the [Parshall flume](https://www.instrumentationblog.in/parshall-flume-open-channel-flow/)."
+keywords: [manning equation calculator, open channel flow calculator, manning formula, hydraulic radius calculator, channel flow rate, manning n values]
+updated: 2026-10-29
+variables:
+  - { id: nm, label: Manning roughness (n), default: 0.013, min: 0, decimals: 4 }
+  - { id: b, label: Channel bottom width, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
+  - { id: y, label: Flow depth, family: length, unit: m, imperialUnit: ft, default: 0.5, min: 0 }
+  - { id: S, label: Channel slope, family: percent, unit: '%', default: 0.1, min: 0, decimals: 4, help: 'Fall per length: 0.1% = 1 m per 1000 m.' }
+  - { id: A, label: Flow area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+  - { id: P, label: Wetted perimeter, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: R, label: Hydraulic radius, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: V, label: Mean velocity, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+  - { id: Q, label: Flow rate, family: flow, unit: m3s, imperialUnit: cfm, min: 0 }
+equations:
+  - A = b * y
+  - P = b + 2 * y
+  - R = A / P
+  - V = (1 / nm) * R^(2/3) * sqrt(S)
+  - Q = V * A
+faq:
+  - q: What is the Manning equation?
+    a: In SI units V = (1/n) R^(2/3) S^(1/2), where V is mean velocity in m/s, R the hydraulic radius in m, S the slope and n the roughness coefficient. Flow Q = V × A.
+  - q: What is the hydraulic radius?
+    a: Flow area divided by wetted perimeter. For a rectangular channel of width b and depth y, R = b·y ÷ (b + 2y).
+  - q: How do I use Manning in US units?
+    a: The US form includes a factor 1.486, V = (1.486/n) R^(2/3) S^(1/2) with feet. This calculator works internally in SI, so you can switch display units freely.
+  - q: Can I find the normal depth for a given flow?
+    a: Yes. Clear the depth, enter the flow rate and calculate — the depth is solved numerically.
+related: [engineering/weir-flow, engineering/hazen-williams, engineering/darcy-weisbach-head-loss, engineering/pipe-flow-velocity]
+---
+
+## How to use the Manning equation calculator
+
+Enter the **roughness coefficient n**, the channel **bottom width**, the **flow depth** and the **slope**. You get the flow area, wetted perimeter, hydraulic radius, mean velocity and flow rate. To find the normal depth for a known flow, clear the depth and enter the flow.
+
+## Manning equation (SI)
+
+<p class="formula">V = (1/n) × R<sup>2/3</sup> × S<sup>1/2</sup> &nbsp;·&nbsp; Q = V × A</p>
+
+<p class="formula">Rectangular channel: A = b·y &nbsp;·&nbsp; P = b + 2y &nbsp;·&nbsp; R = A ÷ P</p>
+
+## Example
+
+Concrete channel (n = 0.013), 2 m wide, 0.5 m deep, slope 0.1%:
+
+- A = **1 m²**, P = **3 m**, R = **0.3333 m**
+- V = (1/0.013) × 0.3333<sup>2/3</sup> × √0.001 = **1.169 m/s**
+- Q = 1.169 × 1 = **1.169 m³/s** (4,210 m³/h)
+
+## Flow vs depth (same channel)
+
+| Depth | Velocity | Flow |
+|---|---|---|
+| 0.1 m | 0.492 m/s | 0.098 m³/s |
+| 0.25 m | 0.832 m/s | 0.416 m³/s |
+| 0.5 m | 1.169 m/s | 1.169 m³/s |
+| 0.75 m | 1.383 m/s | 2.074 m³/s |
+| 1 m | 1.532 m/s | 3.065 m³/s |
+| 1.5 m | 1.730 m/s | 5.191 m³/s |
+
+## Typical Manning n values
+
+| Surface | n |
+|---|---|
+| PVC / HDPE pipe | 0.009–0.011 |
+| Finished concrete | 0.012–0.014 |
+| Unfinished concrete | 0.014–0.017 |
+| Corrugated metal | 0.022–0.026 |
+| Earth channel, clean | 0.018–0.025 |
+| Natural stream, some weeds and stones | 0.030–0.040 |
+
+## Notes
+
+- Manning assumes steady, uniform, fully turbulent flow; it is not valid near weirs, gates or sudden changes.
+- For flow measurement, use a calibrated structure such as a weir or flume — see the [weir flow calculator](/engineering/weir-flow/).

@@ -1,0 +1,57 @@
+---
+title: Elastic & Inelastic Collision Calculator (1D)
+description: Calculate final velocities after a one-dimensional elastic or perfectly inelastic collision from masses and initial velocities, plus kinetic energy lost.
+category: physics
+intro: "In every collision momentum is conserved; in an elastic collision kinetic energy is conserved too, while in a perfectly inelastic one the objects stick together. This elastic collision calculator gives the final velocities for both cases in one dimension and the kinetic energy lost when the bodies stick."
+keywords: [elastic collision calculator, inelastic collision calculator, collision final velocity, conservation of momentum calculator, perfectly inelastic collision, 1d collision physics]
+updated: 2026-10-29
+variables:
+  - { id: m1, label: Mass 1, family: mass, unit: kg, imperialUnit: lb, default: 2, min: 0 }
+  - { id: u1, label: Initial velocity 1, family: velocity, unit: ms, imperialUnit: fts, default: 3 }
+  - { id: m2, label: Mass 2, family: mass, unit: kg, imperialUnit: lb, default: 1, min: 0 }
+  - { id: u2, label: Initial velocity 2 (negative = opposite direction), family: velocity, unit: ms, imperialUnit: fts, default: -1 }
+  - { id: v1, label: Elastic — final velocity 1, family: velocity, unit: ms, imperialUnit: fts }
+  - { id: v2, label: Elastic — final velocity 2, family: velocity, unit: ms, imperialUnit: fts }
+  - { id: vc, label: Perfectly inelastic — common velocity, family: velocity, unit: ms, imperialUnit: fts }
+  - { id: dKE, label: Kinetic energy lost (inelastic), family: energy, unit: J, min: 0 }
+equations:
+  - v1 = ((m1 - m2) * u1 + 2 * m2 * u2) / (m1 + m2)
+  - v2 = ((m2 - m1) * u2 + 2 * m1 * u1) / (m1 + m2)
+  - vc = (m1 * u1 + m2 * u2) / (m1 + m2)
+  - dKE = 0.5 * m1 * u1^2 + 0.5 * m2 * u2^2 - 0.5 * (m1 + m2) * vc^2
+faq:
+  - q: What is the formula for an elastic collision?
+    a: v1 = [(m1 − m2) u1 + 2 m2 u2] ÷ (m1 + m2) and v2 = [(m2 − m1) u2 + 2 m1 u1] ÷ (m1 + m2). Both momentum and kinetic energy are conserved.
+  - q: What happens in a perfectly inelastic collision?
+    a: The bodies stick together and move at v = (m1 u1 + m2 u2) ÷ (m1 + m2). Momentum is conserved but the maximum possible kinetic energy is lost to heat, sound and deformation.
+  - q: How do I enter objects moving towards each other?
+    a: Choose one direction as positive and give the other object a negative velocity, as in the default example.
+  - q: What happens when equal masses collide elastically?
+    a: They exchange velocities — the moving one stops and the stationary one moves off at the original speed, like billiard balls or Newton's cradle.
+related: [physics/momentum, physics/impulse, physics/kinetic-energy, physics/speed-distance-time]
+---
+
+## How to use the elastic collision calculator
+
+Enter the two **masses** and their **initial velocities** along the same line, using a negative sign for motion in the opposite direction. You get the final velocities if the collision is perfectly elastic, the common velocity if the objects stick together, and the kinetic energy lost in that inelastic case. Real collisions lie between the two.
+
+## Collision formulas
+
+<p class="formula">Momentum: m<sub>1</sub>u<sub>1</sub> + m<sub>2</sub>u<sub>2</sub> = m<sub>1</sub>v<sub>1</sub> + m<sub>2</sub>v<sub>2</sub></p>
+
+<p class="formula">Elastic: v<sub>1</sub> = [(m<sub>1</sub> − m<sub>2</sub>)u<sub>1</sub> + 2m<sub>2</sub>u<sub>2</sub>] ÷ (m<sub>1</sub> + m<sub>2</sub>) &nbsp;·&nbsp; v<sub>2</sub> = [(m<sub>2</sub> − m<sub>1</sub>)u<sub>2</sub> + 2m<sub>1</sub>u<sub>1</sub>] ÷ (m<sub>1</sub> + m<sub>2</sub>)</p>
+
+<p class="formula">Perfectly inelastic: v = (m<sub>1</sub>u<sub>1</sub> + m<sub>2</sub>u<sub>2</sub>) ÷ (m<sub>1</sub> + m<sub>2</sub>)</p>
+
+## Example
+
+A 2 kg cart at 3 m/s meets a 1 kg cart moving at −1 m/s (towards it):
+
+- Total momentum = 2 × 3 + 1 × (−1) = **5 kg·m/s**
+- Elastic: v<sub>1</sub> = (1 × 3 − 2) ÷ 3 = **0.333 m/s**, v<sub>2</sub> = (1 + 12) ÷ 3 = **4.333 m/s**
+- Stuck together: v = 5 ÷ 3 = **1.667 m/s**
+- Kinetic energy before = 9.5 J; after sticking = 4.167 J → **5.333 J lost**
+
+## Coefficient of restitution
+
+Real collisions are described by e = (v<sub>2</sub> − v<sub>1</sub>) ÷ (u<sub>1</sub> − u<sub>2</sub>): e = 1 for elastic, e = 0 for perfectly inelastic. Typical values: steel ball on steel about 0.6–0.9, basketball about 0.75–0.85, clay about 0.

@@ -1,0 +1,68 @@
+---
+title: PLC Analog Scaling Calculator (Raw Counts to Engineering Units)
+description: Convert PLC analog input raw counts to engineering units and back — for Siemens 0–27648, 0–4095, 0–32767 and any custom raw range.
+category: engineering
+intro: "A PLC analog input card turns a 4–20 mA or 0–10 V signal into a raw integer that the program must scale into bar, °C or m³/h. This PLC analog scaling calculator converts raw counts to engineering units in either direction and shows the resolution — see [PLC analog scaling from raw counts](https://www.instrumentationblog.in/plc-analog-scaling-raw-count/) and [analog signal resolution in PLCs](https://www.instrumentationblog.in/analog-signal-resolution-in-plc/)."
+keywords: [plc analog scaling calculator, raw count to engineering units, analog input scaling formula, siemens 27648 scaling, plc scaling 4-20ma, scale analog input plc]
+updated: 2026-10-29
+variables:
+  - { id: Cmin, label: Raw count at range low, default: 0 }
+  - { id: Cmax, label: Raw count at range high, default: 27648, help: 'Siemens S7-1200/1500: 27648. 12-bit cards: 4095. Check the card manual.' }
+  - { id: Emin, label: Engineering units at range low, default: 0 }
+  - { id: Emax, label: Engineering units at range high, default: 10 }
+  - { id: C, label: Raw count, default: 20736 }
+  - { id: P, label: Percent of range, family: percent, unit: '%', decimals: 2 }
+  - { id: EU, label: Value in engineering units, decimals: 4 }
+  - { id: R, label: Resolution (engineering units per count), decimals: 6 }
+equations:
+  - P = (C - Cmin) / (Cmax - Cmin)
+  - EU = Emin + P * (Emax - Emin)
+  - R = (Emax - Emin) / (Cmax - Cmin)
+faq:
+  - q: What is the PLC analog scaling formula?
+    a: EU = EU_min + (raw − raw_min) ÷ (raw_max − raw_min) × (EU_max − EU_min). It is the equation of a straight line through the two range end points.
+  - q: Why does Siemens use 27648 instead of 32767?
+    a: Siemens maps the nominal range to 0–27648 and keeps the counts above it (up to 32511) for overrange, so the program can detect a signal above 20 mA before it saturates.
+  - q: How do I convert engineering units back to raw counts?
+    a: Clear the raw count, enter the value in engineering units and calculate — raw = raw_min + (EU − EU_min) ÷ (EU_max − EU_min) × (raw_max − raw_min).
+  - q: Does the raw range change for 4–20 mA versus 0–20 mA?
+    a: On many cards, yes — some map 4–20 mA to the full raw range while others give a non-zero count at 4 mA (for example 3277–16384 on older 16384-count cards). Always check the input card manual.
+related: [engineering/4-20ma-scaling, electronics/adc-resolution, engineering/signal-converter, engineering/five-point-calibration]
+---
+
+## How to use the PLC analog scaling calculator
+
+Enter the **raw count range** of the analog input card for your signal type, the **engineering range** of the transmitter and the **raw count** the PLC is reading. You get the value in engineering units, the percent of range and the resolution of one count. To go the other way, clear the raw count and enter a value in engineering units.
+
+## PLC analog scaling formula
+
+<p class="formula">EU = EU<sub>min</sub> + (Raw − Raw<sub>min</sub>) ÷ (Raw<sub>max</sub> − Raw<sub>min</sub>) × (EU<sub>max</sub> − EU<sub>min</sub>)</p>
+
+This is what the Siemens NORM_X / SCALE_X pair, the Rockwell SCP instruction and most PLC "scale" blocks calculate.
+
+## Example
+
+A 0–10 bar transmitter on a Siemens S7-1200 input (0–27648) reads **20736** counts:
+
+- Percent of range = 20736 ÷ 27648 = **75.0%**
+- Pressure = 0 + 0.75 × 10 = **7.5 bar**
+- Resolution = 10 ÷ 27648 = **0.000362 bar per count**
+
+## Raw ranges and resolution of common analog inputs
+
+| Card / converter | Raw range | One count (% of span) | One count on 4–20 mA |
+|---|---|---|---|
+| Siemens S7-1200 / S7-1500 (nominal range) | 0 – 27,648 | 0.00362% | 0.579 µA |
+| 12-bit converter | 0 – 4,095 | 0.02442% | 3.907 µA |
+| Mitsubishi Q64AD (normal resolution) | 0 – 4,000 | 0.02500% | 4.000 µA |
+| Modicon M340 (default) | 0 – 10,000 | 0.01000% | 1.600 µA |
+| 15-bit unsigned | 0 – 32,767 | 0.00305% | 0.488 µA |
+| 16-bit unsigned | 0 – 65,535 | 0.00153% | 0.244 µA |
+
+Raw ranges depend on card model and configuration — confirm with the manufacturer's manual.
+
+## Tips
+
+- Scale in **floating point** (REAL) to avoid integer truncation.
+- Clamp or alarm values outside the range: below about 3.8 mA or above 20.5 mA usually means a sensor fault (NAMUR NE 43).
+- If the transmitter already does square-root extraction, scale linearly; otherwise apply the root after scaling.

@@ -1,0 +1,66 @@
+---
+title: Inclined Plane Calculator (Forces, Friction & Acceleration)
+description: Calculate the forces on an inclined plane — parallel and normal components, friction, acceleration down the slope and the push needed to move up.
+category: physics
+intro: "On a slope, gravity splits into a component pulling the object down the incline and a component pressing it into the surface, which sets the friction. This inclined plane calculator resolves those forces and gives the acceleration of a sliding object and the force needed to push it up at steady speed."
+keywords: [inclined plane calculator, incline force calculator, ramp force calculator, acceleration down incline, friction on inclined plane, force parallel to incline]
+updated: 2026-10-29
+variables:
+  - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 10, min: 0 }
+  - { id: th, label: Angle of incline, family: angle, unit: deg, default: 30, min: 0 }
+  - { id: mu, label: Coefficient of kinetic friction (μ), default: 0.2, min: 0 }
+  - { id: Fp, label: Force parallel to slope (m g sin θ), family: force, unit: N, imperialUnit: lbf }
+  - { id: N, label: Normal force (m g cos θ), family: force, unit: N, imperialUnit: lbf }
+  - { id: Ff, label: Friction force, family: force, unit: N, imperialUnit: lbf }
+  - { id: a, label: Acceleration down the slope, suffix: m/s² }
+  - { id: Fu, label: Force to push up at constant speed, family: force, unit: N, imperialUnit: lbf }
+equations:
+  - Fp = m * g0 * sin(th)
+  - N = m * g0 * cos(th)
+  - Ff = mu * N
+  - a = g0 * (sin(th) - mu * cos(th))
+  - Fu = m * g0 * (sin(th) + mu * cos(th))
+faq:
+  - q: What is the acceleration down an inclined plane?
+    a: a = g (sin θ − μ cos θ). Without friction it is simply g sin θ — about 4.9 m/s² on a 30° slope.
+  - q: What does a negative acceleration mean?
+    a: Friction is larger than the pull down the slope, so a block at rest will not start sliding (if μ is the static coefficient) and a sliding block slows down.
+  - q: At what angle will an object start to slide?
+    a: When tan θ exceeds the static coefficient of friction — the angle of repose θ = arctan μs. For μs = 0.5 that is about 26.6°.
+  - q: How much force is needed to push a load up a ramp?
+    a: F = m g (sin θ + μ cos θ) at steady speed, ignoring acceleration. A shallower ramp needs less force but a longer distance.
+related: [physics/friction-force, physics/force, physics/weight, physics/acceleration]
+---
+
+## How to use the inclined plane calculator
+
+Enter the **mass**, the **angle** of the slope and the **coefficient of friction** (use 0 for a frictionless slope). You get the gravity component along the slope, the normal force, the friction force, the acceleration of a sliding object and the force needed to push it up the slope at constant speed.
+
+## Inclined plane formulas
+
+<p class="formula">F<sub>∥</sub> = m g sin θ &nbsp;·&nbsp; N = m g cos θ &nbsp;·&nbsp; F<sub>f</sub> = μ N</p>
+
+<p class="formula">a = g (sin θ − μ cos θ) &nbsp;·&nbsp; F<sub>up</sub> = m g (sin θ + μ cos θ)</p>
+
+## Example
+
+A 10 kg block on a 30° slope with μ = 0.2:
+
+- F<sub>∥</sub> = 10 × 9.807 × 0.5 = **49.03 N**
+- N = 10 × 9.807 × 0.866 = **84.93 N**, friction = **16.99 N**
+- a = 9.807 × (0.5 − 0.2 × 0.866) = **3.205 m/s²** down the slope
+- Push up at constant speed = **66.02 N**
+
+## Acceleration by angle (m/s²)
+
+| Angle | No friction | μ = 0.2 |
+|---|---|---|
+| 5° | 0.855 | -1.099 |
+| 10° | 1.703 | -0.229 |
+| 15° | 2.538 | 0.644 |
+| 20° | 3.354 | 1.511 |
+| 30° | 4.903 | 3.205 |
+| 45° | 6.934 | 5.547 |
+| 60° | 8.493 | 7.512 |
+
+Negative values mean friction prevents sliding.

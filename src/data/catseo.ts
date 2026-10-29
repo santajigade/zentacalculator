@@ -15,8 +15,11 @@ export const CAT_SEO: Record<string, CatSEO> = {
     h1: 'Engineering calculators',
     intro: 'Free online engineering calculators for process, instrumentation and mechanical engineers. Scale a **4–20 mA** signal, size an **orifice plate** or **control valve**, work out **pipe pressure drop**, convert **tank level to volume** or check a **Pt100** reading — every calculator solves for any value you leave blank and shows the formula and steps. For in-depth articles on field instruments, see [Instrumentation Blog](' + IB + '/).',
     groups: [
-      { name: 'Instrumentation & signals', ids: ['4-20ma-scaling', 'loop-resistance', 'pt100-resistance', 'dp-flow-square-root', 'flow-meter-k-factor', 'instrument-accuracy', 'turndown-ratio'] },
-      { name: 'Flow measurement', ids: ['orifice-flow', 'venturi-flow', 'pitot-tube-velocity', 'weir-flow', 'mass-flow-rate', 'gas-flow-correction', 'pipe-flow-velocity', 'reynolds-number'] },
+      { name: 'Instrumentation & signals', ids: ['4-20ma-scaling', 'loop-resistance', 'pt100-resistance', 'dp-flow-square-root', 'flow-meter-k-factor', 'instrument-accuracy', 'turndown-ratio', 'rtd-lead-wire-error', 'signal-converter', 'plc-analog-scaling', 'low-flow-cutoff', 'sensor-response-time'] },
+      { name: 'Calibration', ids: ['calibration-error', 'five-point-calibration'] },
+      { name: 'Process control & PID tuning', ids: ['ziegler-nichols-pid-tuning', 'lambda-tuning', 'fopdt-step-test'] },
+      { name: 'Flow measurement', ids: ['orifice-flow', 'venturi-flow', 'pitot-tube-velocity', 'weir-flow', 'mass-flow-rate', 'gas-flow-correction', 'pipe-flow-velocity', 'reynolds-number', 'rotameter-correction', 'vortex-shedding-frequency'] },
+      { name: 'Pipe & open-channel hydraulics', ids: ['hazen-williams', 'minor-losses', 'manning-equation'] },
       { name: 'Pressure, level & tanks', ids: ['hydrostatic-pressure', 'dp-level-range', 'ultrasonic-level', 'vertical-tank-volume', 'horizontal-tank-volume', 'darcy-weisbach-head-loss', 'water-hammer', 'api-gravity'] },
       { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'pump-power', 'heat-duty', 'thermal-expansion'] },
       { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force'] },
@@ -82,11 +85,11 @@ export const CAT_SEO: Record<string, CatSEO> = {
     h1: 'Physics calculators',
     intro: 'Free online physics calculators for students, teachers and engineers. Solve **SUVAT** and **projectile motion** problems, find **force**, **momentum**, **kinetic** and **potential energy**, apply **Ohm’s law**, work out **pressure**, **density** and **buoyancy**, and explore **waves**, **optics** and **gravity** — every calculator shows the formula and solves for any unknown.',
     groups: [
-      { name: 'Motion & kinematics', ids: ['speed-distance-time', 'acceleration', 'suvat-equations', 'free-fall', 'projectile-motion', 'momentum'] },
-      { name: 'Forces & energy', ids: ['force', 'weight', 'torque', 'centripetal-force', 'hookes-law', 'kinetic-energy', 'potential-energy', 'work-and-power'] },
+      { name: 'Motion & kinematics', ids: ['speed-distance-time', 'acceleration', 'suvat-equations', 'free-fall', 'projectile-motion', 'momentum', 'impulse', 'elastic-collision', 'angular-velocity'] },
+      { name: 'Forces & energy', ids: ['force', 'weight', 'torque', 'centripetal-force', 'hookes-law', 'kinetic-energy', 'potential-energy', 'work-and-power', 'friction-force', 'inclined-plane', 'rotational-kinetic-energy'] },
       { name: 'Fluids, heat & gases', ids: ['pressure', 'density', 'buoyancy', 'heat-conduction', 'ideal-gas-law'] },
       { name: 'Electricity & magnetism', ids: ['ohms-law', 'resistors-series-parallel', 'rc-time-constant', 'coulombs-law'] },
-      { name: 'Waves, sound & light', ids: ['wavelength-frequency', 'doppler-effect', 'decibel', 'snells-law', 'thin-lens', 'pendulum'] },
+      { name: 'Waves, sound & light', ids: ['wavelength-frequency', 'doppler-effect', 'decibel', 'snells-law', 'thin-lens', 'pendulum', 'spring-mass-frequency'] },
       { name: 'Gravity & orbits', ids: ['gravitational-force', 'escape-velocity', 'orbital-period'] },
     ],
     about: [

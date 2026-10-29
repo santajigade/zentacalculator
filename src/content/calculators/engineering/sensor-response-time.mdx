@@ -1,0 +1,76 @@
+---
+title: Sensor Response Time Calculator (Time Constant, T63, T90)
+description: Calculate T50, T63.2, T90 and T99 response times of a first-order sensor from its time constant, and the reading at any time after a step change.
+category: engineering
+intro: "Temperature sensors in thermowells, pressure transmitters with damping and many analysers respond like a first-order lag, reaching 63.2% of a step change in one time constant. This sensor response time calculator converts the time constant into T50, T90 and T99 and predicts the reading at any time — see [temperature sensor response time](https://www.instrumentationblog.in/temperature-sensor-response-time/) and [pressure transmitter damping and response time](https://www.instrumentationblog.in/pressure-transmitter-damping-response-time/)."
+keywords: [sensor response time calculator, time constant calculator, t90 response time, t63 time constant, thermocouple response time, first order lag calculator]
+updated: 2026-10-29
+variables:
+  - { id: tau, label: Time constant (τ = T63.2), family: seconds, unit: s, default: 8, min: 0 }
+  - { id: t, label: Time after step change, family: seconds, unit: s, default: 10, min: 0 }
+  - { id: T0, label: Initial reading, family: temperature, unit: C, imperialUnit: F, default: 20 }
+  - { id: Tf, label: New process value, family: temperature, unit: C, imperialUnit: F, default: 100 }
+  - { id: T50, label: T50 response time, family: seconds, unit: s, min: 0 }
+  - { id: T90, label: T90 response time, family: seconds, unit: s, min: 0 }
+  - { id: T99, label: T99 response time, family: seconds, unit: s, min: 0 }
+  - { id: fr, label: Fraction of step reached at time t, family: percent, unit: '%', min: 0, max: 1, decimals: 2 }
+  - { id: Tr, label: Reading at time t, family: temperature, unit: C, imperialUnit: F }
+equations:
+  - T50 = tau * ln(2)
+  - T90 = tau * ln(10)
+  - T99 = tau * ln(100)
+  - fr = 1 - exp(-t / tau)
+  - Tr = T0 + (Tf - T0) * fr
+faq:
+  - q: What is the time constant of a sensor?
+    a: The time to reach 63.2% of a step change, assuming a first-order response. After 5 time constants the sensor has reached 99.3%.
+  - q: How do I convert T90 to a time constant?
+    a: For a first-order sensor, T90 = τ × ln 10 ≈ 2.303 τ, so τ = T90 ÷ 2.303. Enter T90 here and the time constant is solved for you.
+  - q: Why is my thermowell sensor so slow?
+    a: The thermowell wall, air gap and fluid velocity add thermal lag. A spring-loaded sensor tip, thermal paste and a thinner, shorter well all reduce the time constant.
+  - q: Does transmitter damping add to the response time?
+    a: Yes. Damping is a first-order filter with its own time constant; combined with the sensor, the total response is slower than either alone.
+related: [engineering/fopdt-step-test, engineering/pt100-resistance, electronics/rl-time-constant, physics/rc-time-constant]
+---
+
+## How to use the sensor response time calculator
+
+Enter the sensor's **time constant** (the T63.2 value from the datasheet) and a **time** after a step change. The calculator gives T50, T90 and T99 and the fraction of the step reached. Enter the **initial** and **new process value** to see what the sensor reads at that time. To work from a datasheet T90, clear the time constant and enter T90.
+
+## First-order response formulas
+
+<p class="formula">Reading(t) = T<sub>0</sub> + (T<sub>final</sub> − T<sub>0</sub>)(1 − e<sup>−t/τ</sup>)</p>
+
+<p class="formula">T<sub>x</sub> = −τ × ln(1 − x) &nbsp;·&nbsp; T50 = 0.693 τ &nbsp;·&nbsp; T90 = 2.303 τ &nbsp;·&nbsp; T99 = 4.605 τ</p>
+
+## Example
+
+A Pt100 in a thermowell with τ = 8 s; the process jumps from 20 °C to 100 °C:
+
+- T50 = **5.55 s**, T90 = **18.42 s**, T99 = **36.84 s**
+- After 10 s: 1 − e<sup>−10/8</sup> = **71.35%** of the step
+- Reading = 20 + 80 × 0.7135 = **77.08 °C**
+
+## Response time multiples
+
+| Time | Response (% of step) |
+|---|---|
+| 0.5 τ | 39.3% |
+| 1 τ | 63.2% |
+| 2 τ | 86.5% |
+| 2.303 τ | 90.0% |
+| 3 τ | 95.0% |
+| 4 τ | 98.2% |
+| 4.605 τ | 99.0% |
+| 5 τ | 99.3% |
+
+## Typical time constants (in water, approximate)
+
+| Sensor | Typical τ |
+|---|---|
+| Bare 0.5 mm mineral-insulated thermocouple | under 0.5 s |
+| 6 mm sheathed Pt100 | 2–5 s |
+| Pt100 in a drilled thermowell | 10–60 s |
+| Pressure transmitter (no damping) | 0.1–0.3 s |
+
+Response in air or gas is many times slower than in flowing liquid.

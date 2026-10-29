@@ -1,0 +1,66 @@
+---
+title: Rotameter Correction Calculator (Density Correction Factor)
+description: Correct a rotameter (variable area flow meter) reading for a liquid of different density from the calibration fluid, using the float density.
+category: engineering
+intro: "A rotameter is calibrated for one fluid, usually water, and reads wrong when the liquid's density changes because the float settles at a different height. This rotameter correction calculator converts the scale reading to actual flow using the float density — see the [metal tube rotameter working principle](https://www.instrumentationblog.in/metal-tube-rotameter-working/) and [10 factors in rotameter selection](https://www.instrumentationblog.in/rotameter-selection-10-factors/)."
+keywords: [rotameter correction calculator, rotameter density correction, variable area flow meter correction factor, rotameter conversion factor, rotameter different liquid, float density correction]
+updated: 2026-10-29
+variables:
+  - { id: Q1, label: Scale reading, family: flow, unit: Lmin, imperialUnit: gpm, default: 10, min: 0 }
+  - { id: r1, label: Calibration fluid density, family: density, unit: kgm3, default: 998, min: 0 }
+  - { id: r2, label: Actual fluid density, family: density, unit: kgm3, default: 800, min: 0 }
+  - { id: rf, label: Float density, family: density, unit: kgm3, default: 8000, min: 0, help: 'Stainless steel ≈ 8000, aluminium ≈ 2700, PVDF ≈ 1780 kg/m³.' }
+  - { id: CF, label: Correction factor, min: 0, decimals: 4 }
+  - { id: Q2, label: Actual volume flow, family: flow, unit: Lmin, imperialUnit: gpm, min: 0 }
+  - { id: M2, label: Actual mass flow, family: massflow, unit: kgh, min: 0 }
+equations:
+  - CF = sqrt((rf - r2) * r1 / ((rf - r1) * r2))
+  - Q2 = Q1 * CF
+  - M2 = Q2 * r2
+faq:
+  - q: How do I correct a rotameter for a different liquid?
+    a: Multiply the scale reading by √[(ρf − ρ2) ρ1 ÷ ((ρf − ρ1) ρ2)], where ρf is the float density, ρ1 the calibration fluid density and ρ2 the actual fluid density.
+  - q: Does a lighter liquid read high or low?
+    a: Low. A lighter liquid gives less buoyancy and drag, so the float sits lower; the actual flow is higher than the scale shows (correction factor above 1).
+  - q: What about gas rotameters?
+    a: Because the float is far denser than any gas, the correction simplifies to Q2 = Q1 × √(ρ1 ÷ ρ2), where density depends on gas, pressure and temperature.
+  - q: Does viscosity matter?
+    a: Yes, for viscous liquids. This correction assumes viscosity close to the calibration fluid; above a few cP the manufacturer's viscosity immunity ceiling should be checked.
+related: [engineering/gas-flow-correction, engineering/flow-meter-k-factor, engineering/turndown-ratio, physics/density]
+---
+
+## How to use the rotameter correction calculator
+
+Enter the **scale reading**, the **density of the calibration fluid** (998 kg/m³ for water at 20 °C), the **density of the liquid you are measuring** and the **float density**. You get the correction factor, the actual volume flow and the mass flow. Enter a desired actual flow and clear the scale reading to find what the scale should show.
+
+## Rotameter density correction formula
+
+<p class="formula">Q<sub>actual</sub> = Q<sub>scale</sub> × √[ (ρ<sub>f</sub> − ρ<sub>2</sub>) ρ<sub>1</sub> ÷ ((ρ<sub>f</sub> − ρ<sub>1</sub>) ρ<sub>2</sub>) ]</p>
+
+## Example
+
+A water-calibrated rotameter with a stainless-steel float (8000 kg/m³) reads 10 L/min on a liquid of 800 kg/m³:
+
+- CF = √[(8000 − 800) × 998 ÷ ((8000 − 998) × 800)] = **1.1326**
+- Actual flow = 10 × 1.1326 = **11.33 L/min**
+- Mass flow = **544 kg/h**
+
+## Correction factors for a water-calibrated meter (stainless float)
+
+| Liquid | Density | Correction factor |
+|---|---|---|
+| Petrol (gasoline) | 740 kg/m³ | 1.183 |
+| Ethanol | 789 kg/m³ | 1.141 |
+| Diesel | 832 kg/m³ | 1.108 |
+| Light oil | 900 kg/m³ | 1.060 |
+| Water (cal. fluid) | 998 kg/m³ | 1.000 |
+| Seawater | 1025 kg/m³ | 0.985 |
+| Glycol 50% | 1070 kg/m³ | 0.961 |
+| Sulphuric acid 98% | 1840 kg/m³ | 0.691 |
+
+Densities are typical values at about 20 °C; use your actual fluid density.
+
+## Notes
+
+- Correction assumes the same float and tube and a viscosity close to the calibration fluid.
+- For large density differences it is better to order the meter scaled for the actual fluid.

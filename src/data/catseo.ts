@@ -63,11 +63,12 @@ export const CAT_SEO: Record<string, CatSEO> = {
     intro: 'Free online electronics calculators for hobbyists, students and circuit designers. Find the right **LED resistor**, design a **voltage divider**, read a **resistor colour code**, set a **555 timer** frequency, choose an **RC filter** cut-off, size a **buck or boost converter** and check **PCB trace width** — each with formulas, standard values and design tips.',
     groups: [
       { name: 'Resistors & basic circuits', ids: ['led-resistor', 'voltage-divider', 'current-divider', 'resistor-color-code', 'zener-resistor', 'transistor-base-resistor', 'wheatstone-bridge'] },
-      { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'capacitor-lifetime'] },
+      { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'capacitor-lifetime', 'air-core-inductor', 'inductor-al-value'] },
       { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts'] },
-      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'battery-charge-time']
+      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'battery-charge-time', 'lm317']
       },
-      { name: 'Sensors', ids: ['ntc-thermistor', 'strain-gauge'] },
+      { name: 'RF & wireless', ids: ['antenna-length', 'free-space-path-loss'] },
+      { name: 'Sensors & current sensing', ids: ['ntc-thermistor', 'strain-gauge', 'shunt-resistor'] },
     ],
     about: [
       { h: 'Design faster, with fewer mistakes', p: 'Each calculator works in both directions: get the output of a circuit, or enter the output you want and solve for the component value. Results are shown in convenient units — kΩ, µF, mH, kHz — and pages list the nearest standard values.' },
@@ -86,10 +87,11 @@ export const CAT_SEO: Record<string, CatSEO> = {
     intro: 'Free online physics calculators for students, teachers and engineers. Solve **SUVAT** and **projectile motion** problems, find **force**, **momentum**, **kinetic** and **potential energy**, apply **Ohm’s law**, work out **pressure**, **density** and **buoyancy**, and explore **waves**, **optics** and **gravity** — every calculator shows the formula and solves for any unknown.',
     groups: [
       { name: 'Motion & kinematics', ids: ['speed-distance-time', 'acceleration', 'suvat-equations', 'free-fall', 'projectile-motion', 'momentum', 'impulse', 'elastic-collision', 'angular-velocity'] },
-      { name: 'Forces & energy', ids: ['force', 'weight', 'torque', 'centripetal-force', 'hookes-law', 'kinetic-energy', 'potential-energy', 'work-and-power', 'friction-force', 'inclined-plane', 'rotational-kinetic-energy'] },
-      { name: 'Fluids, heat & gases', ids: ['pressure', 'density', 'buoyancy', 'heat-conduction', 'ideal-gas-law'] },
+      { name: 'Forces & energy', ids: ['force', 'weight', 'torque', 'centripetal-force', 'hookes-law', 'kinetic-energy', 'potential-energy', 'work-and-power', 'friction-force', 'inclined-plane', 'rotational-kinetic-energy', 'youngs-modulus'] },
+      { name: 'Fluids, heat & gases', ids: ['pressure', 'density', 'buoyancy', 'stokes-law', 'drag-force', 'heat-conduction', 'newtons-law-of-cooling', 'latent-heat', 'ideal-gas-law'] },
       { name: 'Electricity & magnetism', ids: ['ohms-law', 'resistors-series-parallel', 'rc-time-constant', 'coulombs-law'] },
-      { name: 'Waves, sound & light', ids: ['wavelength-frequency', 'doppler-effect', 'decibel', 'snells-law', 'thin-lens', 'pendulum', 'spring-mass-frequency'] },
+      { name: 'Waves, sound & light', ids: ['wavelength-frequency', 'doppler-effect', 'decibel', 'snells-law', 'thin-lens', 'pendulum', 'spring-mass-frequency', 'simple-harmonic-motion'] },
+      { name: 'Modern & quantum physics', ids: ['photon-energy', 'de-broglie-wavelength'] },
       { name: 'Gravity & orbits', ids: ['gravitational-force', 'escape-velocity', 'orbital-period'] },
     ],
     about: [
@@ -107,9 +109,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
     intro: 'Free online chemistry calculators for students and lab work. Calculate **molarity**, **moles** and **dilutions**, find **pH** and **buffer** pH, apply the **gas laws**, check **percent yield** and **titrations**, and work with **colligative properties** and **electrochemistry** — with formulas and worked examples.',
     groups: [
       { name: 'Concentration & solutions', ids: ['molarity', 'molality', 'moles', 'dilution', 'mass-percent', 'ppm', 'percent-composition'] },
-      { name: 'Acids, bases & analysis', ids: ['ph', 'henderson-hasselbalch', 'titration', 'beer-lambert', 'nernst-equation'] },
-      { name: 'Gas laws', ids: ['boyles-law', 'charles-law', 'combined-gas-law', 'daltons-law', 'grahams-law'] },
-      { name: 'Thermodynamics, kinetics & colligative properties', ids: ['specific-heat', 'gibbs-free-energy', 'arrhenius-equation', 'half-life', 'boiling-point-elevation', 'freezing-point-depression', 'osmotic-pressure', 'percent-yield'] },
+      { name: 'Acids, bases & analysis', ids: ['ph', 'pka', 'weak-acid-ph', 'henderson-hasselbalch', 'titration', 'beer-lambert'] },
+      { name: 'Electrochemistry', ids: ['nernst-equation', 'faraday-electrolysis'] },
+      { name: 'Gas laws', ids: ['boyles-law', 'charles-law', 'combined-gas-law', 'gay-lussacs-law', 'avogadros-law', 'daltons-law', 'grahams-law'] },
+      { name: 'Thermodynamics, kinetics & colligative properties', ids: ['specific-heat', 'gibbs-free-energy', 'arrhenius-equation', 'activation-energy', 'half-life', 'boiling-point-elevation', 'freezing-point-depression', 'osmotic-pressure', 'percent-yield'] },
     ],
     faq: [
       { q: 'How do I calculate molarity?', a: 'Molarity = moles of solute ÷ litres of solution. The molarity calculator also finds the mass to weigh out.' },

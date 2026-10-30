@@ -1,0 +1,68 @@
+---
+title: pKa Calculator — Ka to pKa, Kb to pKb and Back
+description: Convert Ka to pKa and back, and find the conjugate base Kb and pKb at 25 °C using Ka × Kb = Kw — with a table of pKa values for common acids.
+category: chemistry
+intro: "pKa is the negative logarithm of an acid's dissociation constant: the lower the pKa, the stronger the acid. This pKa calculator converts Ka to pKa (or pKa to Ka) and gives the Kb and pKb of the conjugate base — the numbers you need to pick a buffer, as in [pH meter calibration buffers](https://www.instrumentationblog.in/ph-meter-calibration-buffers/), or to estimate pH."
+keywords: [pka calculator, ka to pka, pka to ka, kb to pkb, pkb calculator, acid dissociation constant, pka + pkb = 14]
+updated: 2026-10-30
+variables:
+  - { id: Ka, label: Acid dissociation constant Ka, default: 0.000018, min: 0 }
+  - { id: pKa, label: pKa, decimals: 4 }
+  - { id: Kb, label: Kb of the conjugate base, min: 0 }
+  - { id: pKb, label: pKb of the conjugate base, decimals: 4 }
+equations:
+  - pKa = -log10(Ka)
+  - Kb = 1e-14 / Ka
+  - pKb = 14 - pKa
+faq:
+  - q: How do I convert Ka to pKa?
+    a: pKa = −log₁₀(Ka). Acetic acid has Ka = 1.8 × 10⁻⁵, so its pKa is 4.74.
+  - q: How do I convert pKa back to Ka?
+    a: Ka = 10^(−pKa). Clear the Ka field, enter the pKa and the calculator does the antilog.
+  - q: What is the relationship between pKa and pKb?
+    a: For a conjugate acid–base pair in water at 25 °C, Ka × Kb = Kw = 1.0 × 10⁻¹⁴, so pKa + pKb = 14.
+  - q: What does pKa tell you about a buffer?
+    a: A buffer works best within about ±1 pH unit of the acid's pKa, and at pH = pKa the acid and its conjugate base are present in equal amounts.
+related: [chemistry/weak-acid-ph, chemistry/henderson-hasselbalch, chemistry/ph, chemistry/titration]
+---
+
+## How to use the pKa calculator
+
+Enter the **acid dissociation constant Ka** (you can type it as 0.000018 or 1.8e-5). The calculator returns the pKa and the Kb and pKb of the conjugate base. To go the other way, clear Ka and enter a pKa, Kb or pKb. For a weak base, enter its Kb in the Kb field and read the pKa of its conjugate acid.
+
+## Ka, pKa, Kb and pKb formulas
+
+<p class="formula">pKa = −log₁₀ Ka &nbsp;·&nbsp; Ka = 10<sup>−pKa</sup></p>
+
+<p class="formula">Ka × Kb = K<sub>w</sub> = 1.0 × 10⁻¹⁴ &nbsp;·&nbsp; pKa + pKb = 14 (25 °C)</p>
+
+## Example
+
+Acetic acid, Ka = 1.8 × 10⁻⁵:
+
+- pKa = −log₁₀(1.8 × 10⁻⁵) = **4.7447**
+- Kb (acetate ion) = 10⁻¹⁴ ÷ 1.8 × 10⁻⁵ = **5.556 × 10⁻¹⁰**
+- pKb = 14 − 4.7447 = **9.2553**
+
+## pKa of common weak acids at 25 °C
+
+| Acid | pKa | Ka | pKb of conjugate base | Kb of conjugate base |
+|---|---|---|---|---|
+| Phosphoric acid (pKa₁) | 2.15 | 7.08 × 10⁻³ | 11.85 | 1.41 × 10⁻¹² |
+| Hydrofluoric acid | 3.17 | 6.76 × 10⁻⁴ | 10.83 | 1.48 × 10⁻¹¹ |
+| Formic acid | 3.75 | 1.78 × 10⁻⁴ | 10.25 | 5.62 × 10⁻¹¹ |
+| Lactic acid | 3.86 | 1.38 × 10⁻⁴ | 10.14 | 7.24 × 10⁻¹¹ |
+| Benzoic acid | 4.20 | 6.31 × 10⁻⁵ | 9.80 | 1.58 × 10⁻¹⁰ |
+| Acetic acid | 4.76 | 1.74 × 10⁻⁵ | 9.24 | 5.75 × 10⁻¹⁰ |
+| Carbonic acid (pKa₁) | 6.35 | 4.47 × 10⁻⁷ | 7.65 | 2.24 × 10⁻⁸ |
+| Hypochlorous acid | 7.53 | 2.95 × 10⁻⁸ | 6.47 | 3.39 × 10⁻⁷ |
+| Hydrocyanic acid | 9.21 | 6.17 × 10⁻¹⁰ | 4.79 | 1.62 × 10⁻⁵ |
+| Ammonium ion | 9.25 | 5.62 × 10⁻¹⁰ | 4.75 | 1.78 × 10⁻⁵ |
+
+Literature values vary by about ±0.05 between sources and with ionic strength.
+
+## Notes
+
+- K<sub>w</sub> changes with temperature (pK<sub>w</sub> ≈ 14.17 at 20 °C and 13.26 at 50 °C), so pKa + pKb = 14 holds only at 25 °C.
+- Polyprotic acids have one pKa per proton — phosphoric acid has 2.15, 7.20 and 12.35.
+- Use the [Henderson–Hasselbalch calculator](/chemistry/henderson-hasselbalch/) to find buffer pH from pKa and the acid–base ratio.

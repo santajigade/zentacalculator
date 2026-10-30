@@ -1,0 +1,67 @@
+---
+title: Antenna Length Calculator (Half-Wave Dipole & Quarter-Wave)
+description: Calculate half-wave dipole and quarter-wave antenna lengths from frequency with a velocity (end-effect) factor — for 433 MHz, 868 MHz, 2.4 GHz and more.
+category: electronics
+intro: "A resonant antenna is cut to a fraction of the wavelength — half a wavelength for a dipole, a quarter for a ground-plane whip — shortened slightly because of end effects and conductor thickness. This antenna length calculator gives the free-space wavelength and the practical dipole, dipole leg and quarter-wave lengths for any frequency."
+keywords: [antenna length calculator, dipole antenna calculator, half wave dipole length, quarter wave antenna length, 433 mhz antenna length, 868 mhz antenna length, 468 / f formula]
+updated: 2026-10-30
+variables:
+  - { id: f, label: Frequency, family: frequency, unit: MHz, default: 433.92, min: 0 }
+  - { id: k, label: Velocity / end-effect factor, default: 0.95, min: 0, max: 1, decimals: 3, help: 'About 0.95 for thin wire dipoles; lower for thick elements or insulated wire.' }
+  - { id: lam, label: Free-space wavelength, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: Lh, label: Half-wave dipole (total length), family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: Lg, label: Each dipole leg, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: Lq, label: Quarter-wave monopole / whip, family: length, unit: cm, imperialUnit: in, min: 0 }
+equations:
+  - lam = 299792458 / f
+  - Lh = 0.5 * lam * k
+  - Lg = Lh / 2
+  - Lq = 0.25 * lam * k
+faq:
+  - q: How long should a half-wave dipole be?
+    a: About 0.95 × λ ÷ 2. In feet that is the familiar 468 ÷ f (MHz); in metres, 142.5 ÷ f (MHz). At 433.92 MHz that is about 32.8 cm tip to tip.
+  - q: How long is a 433 MHz quarter-wave antenna?
+    a: About 16.4 cm with a 0.95 factor (17.3 cm for a full free-space quarter wavelength). Trim while watching SWR or range for the best result.
+  - q: What does the velocity factor do?
+    a: Currents near the ends of a real conductor make it behave electrically longer, so the physical length is a few percent shorter than the free-space fraction of a wavelength. Thicker elements need a lower factor.
+  - q: Does a quarter-wave antenna need a ground plane?
+    a: Yes. A monopole uses a ground plane (a metal surface, PCB copper or radials about λ/4 long) as the other half of the dipole; without it, performance and matching suffer.
+related: [physics/wavelength-frequency, electronics/free-space-path-loss, electronics/resonant-frequency, electronics/dbm-to-watts]
+---
+
+## How to use the antenna length calculator
+
+Enter the **operating frequency** and a **velocity (end-effect) factor** — 0.95 suits a thin bare-wire dipole. The calculator gives the free-space wavelength, the total half-wave dipole length, the length of each dipole leg and the quarter-wave whip or monopole length.
+
+## Antenna length formulas
+
+<p class="formula">λ = c ÷ f &nbsp;·&nbsp; L<sub>dipole</sub> = k × λ ÷ 2 &nbsp;·&nbsp; L<sub>monopole</sub> = k × λ ÷ 4</p>
+
+c = 299,792,458 m/s. With k = 0.95 the dipole formula becomes L (m) = 142.5 ÷ f (MHz), or L (ft) ≈ 468 ÷ f (MHz).
+
+## Example
+
+A dipole for 433.92 MHz with k = 0.95:
+
+- λ = 299,792,458 ÷ 433.92 × 10⁶ = **69.09 cm**
+- Half-wave dipole = 0.5 × 69.09 × 0.95 = **32.82 cm** (16.41 cm per leg)
+- Quarter-wave whip = **16.41 cm**
+
+## Antenna lengths for common bands (k = 0.95)
+
+| Band | Frequency | Wavelength | Half-wave dipole | Quarter-wave |
+|---|---|---|---|---|
+| CB radio | 27.185 MHz | 11.028 m | 5.238 m | 2.619 m |
+| 2 m amateur | 146 MHz | 2.053 m | 97.54 cm | 48.77 cm |
+| ISM 433 MHz | 433.92 MHz | 69.09 cm | 32.82 cm | 16.41 cm |
+| LoRa / ISM 868 MHz (EU) | 868 MHz | 34.54 cm | 16.41 cm | 8.20 cm |
+| ISM 915 MHz (US) | 915 MHz | 32.76 cm | 15.56 cm | 7.78 cm |
+| GPS L1 | 1575.42 MHz | 19.03 cm | 9.04 cm | 4.52 cm |
+| Wi-Fi / Bluetooth 2.4 GHz | 2440 MHz | 12.29 cm | 5.84 cm | 2.92 cm |
+| Wi-Fi 5 GHz | 5500 MHz | 5.45 cm | 2.59 cm | 1.29 cm |
+
+## Notes
+
+- Cut slightly long and trim — it is easier to shorten an antenna than to lengthen it.
+- PCB trace antennas and helical or ceramic chip antennas follow their own design notes, not these formulas.
+- Estimate the range of the link with the [free-space path loss calculator](/electronics/free-space-path-loss/).

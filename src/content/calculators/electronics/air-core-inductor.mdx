@@ -1,0 +1,63 @@
+---
+title: Air Core Inductor Calculator (Wheeler's Formula)
+description: Calculate the inductance of a single-layer air-core coil from diameter, length and number of turns using Wheeler's formula — plus the wire length needed.
+category: electronics
+intro: "A single-layer air-core coil has no magnetic core to saturate, which makes it the choice for RF tuned circuits, filters and crossovers. This air core inductor calculator uses Wheeler's formula to find the inductance from coil diameter, length and turns, or the turns for a target inductance — background on [how an inductor works](https://www.instrumentationblog.in/inductor-working-principle/)."
+keywords: [air core inductor calculator, wheeler formula calculator, coil inductance calculator, single layer coil inductance, solenoid inductance, number of turns for inductance, rf coil calculator]
+updated: 2026-10-30
+variables:
+  - { id: D, label: Coil diameter (to wire centre), family: length, unit: mm, imperialUnit: in, default: 20, min: 0 }
+  - { id: l, label: Coil length, family: length, unit: mm, imperialUnit: in, default: 30, min: 0 }
+  - { id: N, label: Number of turns, default: 25, min: 0 }
+  - { id: L, label: Inductance, family: inductance, unit: uH, min: 0 }
+  - { id: w, label: Wire length needed (approx.), family: length, unit: m, imperialUnit: ft, min: 0 }
+equations:
+  - L = 1e-6 * (D / 0.0254)^2 * N^2 / (18 * (D / 0.0254) + 40 * (l / 0.0254))
+  - w = N * pi * D
+faq:
+  - q: What is Wheeler's formula for an air-core coil?
+    a: L (µH) = d² N² ÷ (18 d + 40 l), with the coil diameter d and length l in inches. The calculator converts millimetres for you.
+  - q: How accurate is Wheeler's formula?
+    a: About 1% for single-layer coils longer than 0.4 times their diameter. Very short coils, multi-layer windings and widely spaced turns need other formulas.
+  - q: How do I find the number of turns for a target inductance?
+    a: Clear the turns field and enter the inductance you want. Remember that changing the turns at fixed wire size also changes the coil length.
+  - q: Why use an air-core inductor?
+    a: There is no core loss or saturation, and the inductance stays constant with current and temperature — ideal for RF circuits and audio crossovers, at the cost of larger size for a given inductance.
+related: [electronics/inductor-al-value, electronics/resonant-frequency, electronics/reactance, electronics/inductor-energy]
+---
+
+## How to use the air core inductor calculator
+
+Enter the **coil diameter** measured to the centre of the wire, the **winding length** and the **number of turns**. The calculator returns the inductance and the approximate wire length (ignoring leads). Clear the turns to solve for the turns needed for a target inductance.
+
+## Wheeler's formula
+
+<p class="formula">L (µH) = d² N² ÷ (18 d + 40 l) &nbsp;&nbsp;(d, l in inches)</p>
+
+Equivalent to Wheeler's original L = r² N² ÷ (9 r + 10 l) with radius r. Inductance rises with the square of the turns and roughly with the diameter.
+
+## Example
+
+A coil 20 mm in diameter and 30 mm long with 25 turns:
+
+- d = 20 ÷ 25.4 = 0.787 in, l = 30 ÷ 25.4 = 1.181 in
+- L = 0.787² × 25² ÷ (18 × 0.787 + 40 × 1.181) = **6.309 µH**
+- Wire length ≈ 25 × π × 20 mm = **1.571 m**
+
+## Inductance of 20 mm long single-layer coils
+
+| Diameter | 10 turns | 20 turns | 40 turns |
+|---|---|---|---|
+| 10 mm | 0.402 µH | 1.61 µH | 6.43 µH |
+| 15 mm | 0.828 µH | 3.31 µH | 13.2 µH |
+| 20 mm | 1.36 µH | 5.43 µH | 21.7 µH |
+| 30 mm | 2.64 µH | 10.6 µH | 42.3 µH |
+| 50 mm | 5.79 µH | 23.2 µH | 92.6 µH |
+
+Coils shorter than 0.4 × diameter fall outside the formula's 1% range, so treat those rows as estimates.
+
+## Notes
+
+- Spacing the turns lowers inductance slightly but also lowers self-capacitance, raising the self-resonant frequency.
+- Check the tuned frequency with the [LC resonant frequency calculator](/electronics/resonant-frequency/).
+- For ferrite or powdered-iron cores, use the core's A<sub>L</sub> value in the [inductor A<sub>L</sub> calculator](/electronics/inductor-al-value/).

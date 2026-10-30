@@ -1,0 +1,72 @@
+---
+title: de Broglie Wavelength Calculator (λ = h/mv)
+description: Calculate the de Broglie wavelength of an electron, proton, neutron or any mass from its velocity, with momentum and kinetic energy in eV.
+category: physics
+intro: "Every moving particle behaves as a wave whose wavelength is Planck's constant divided by its momentum, λ = h/p. This de Broglie wavelength calculator gives the matter wavelength, momentum and kinetic energy of electrons, protons, neutrons or any object — the physics behind electron microscopes and electron diffraction."
+keywords: [de broglie wavelength calculator, lambda = h / mv, matter wave calculator, electron wavelength calculator, de broglie equation, wavelength of electron, particle wavelength]
+updated: 2026-10-30
+variables:
+  - id: m
+    label: Particle (rest mass)
+    default: 9.1093837015e-31
+    options:
+      - { label: 'Electron (9.109 × 10⁻³¹ kg)', value: 9.1093837015e-31 }
+      - { label: 'Proton (1.673 × 10⁻²⁷ kg)', value: 1.67262192369e-27 }
+      - { label: 'Neutron (1.675 × 10⁻²⁷ kg)', value: 1.67492749804e-27 }
+      - { label: 'Alpha particle (6.645 × 10⁻²⁷ kg)', value: 6.6446573357e-27 }
+  - { id: v, label: Velocity, family: velocity, unit: ms, default: 1000000, min: 0, help: 'Non-relativistic formula — keep v below about 10% of the speed of light (3 × 10⁷ m/s).' }
+  - { id: p, label: Momentum (kg·m/s), min: 0 }
+  - { id: lnm, label: de Broglie wavelength (nm), min: 0 }
+  - { id: KE, label: Kinetic energy (eV), min: 0 }
+equations:
+  - p = m * v
+  - lnm = 6.62607015e-34 / p * 1e9
+  - KE = 0.5 * m * v^2 / 1.602176634e-19
+faq:
+  - q: What is the de Broglie wavelength formula?
+    a: λ = h ÷ p = h ÷ (m v), where h = 6.626 × 10⁻³⁴ J·s. Heavier or faster particles have shorter wavelengths.
+  - q: What is the wavelength of an electron moving at 10⁶ m/s?
+    a: About 0.727 nm — comparable to the spacing of atoms in a crystal, which is why electrons diffract from crystals.
+  - q: Why don't everyday objects show wave behaviour?
+    a: Their momentum is enormous by comparison. A 0.15 kg ball at 40 m/s has λ ≈ 1.1 × 10⁻³⁴ m, far too small to observe.
+  - q: When do I need the relativistic formula?
+    a: Above about 10% of the speed of light. For electrons accelerated through more than a few kilovolts, use p = √(2 m E (1 + E ÷ 2mc²)); the table below shows the difference.
+related: [physics/photon-energy, physics/momentum, physics/kinetic-energy, physics/wavelength-frequency]
+---
+
+## How to use the de Broglie wavelength calculator
+
+Choose the **particle** and enter its **velocity**. The calculator returns the momentum, the de Broglie wavelength in nanometres and the kinetic energy in electronvolts. To find the velocity needed for a given wavelength, clear the velocity and enter the wavelength.
+
+## de Broglie wavelength formula
+
+<p class="formula">λ = h ÷ p = h ÷ (m v)</p>
+
+<p class="formula">KE = ½ m v² &nbsp;·&nbsp; λ = h ÷ √(2 m KE)</p>
+
+## Example
+
+An electron (9.109 × 10⁻³¹ kg) moving at 1 × 10⁶ m/s:
+
+- p = 9.109 × 10⁻³¹ × 10⁶ = **9.1094 × 10⁻²⁵ kg·m/s**
+- λ = 6.626 × 10⁻³⁴ ÷ 9.1094 × 10⁻²⁵ = **0.7274 nm**
+- KE = ½ × 9.109 × 10⁻³¹ × (10⁶)² = **2.843 eV**
+
+## Wavelength of electrons accelerated through a voltage
+
+| Accelerating voltage | Non-relativistic λ | Relativistic λ |
+|---|---|---|
+| 10 V | 387.830 pm | 387.828 pm |
+| 100 V | 122.643 pm | 122.637 pm |
+| 1,000 V | 38.783 pm | 38.764 pm |
+| 10,000 V | 12.264 pm | 12.205 pm |
+| 100,000 V | 3.878 pm | 3.701 pm |
+| 300,000 V | 2.239 pm | 1.969 pm |
+
+Transmission electron microscopes run at 100–300 kV, giving wavelengths of a few picometres — far below the 400–700 nm of visible light.
+
+## Notes
+
+- For an electron accelerated from rest through V volts, λ (nm) ≈ 1.226 ÷ √V (non-relativistic).
+- Thermal neutrons (about 2,200 m/s) have λ ≈ 0.18 nm, ideal for neutron diffraction.
+- The [photon energy calculator](/physics/photon-energy/) does the equivalent conversion for light, where λ = h c ÷ E.

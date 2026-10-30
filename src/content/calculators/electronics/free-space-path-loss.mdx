@@ -1,0 +1,67 @@
+---
+title: Free Space Path Loss Calculator (FSPL in dB) & Link Budget
+description: Calculate free-space path loss in dB from distance and frequency, and the received power from transmit power and antenna gains — for LoRa, Wi-Fi and RF links.
+category: electronics
+intro: "Free-space path loss is how much a radio signal weakens as it spreads out over distance in a clear line of sight. This free space path loss calculator gives the FSPL in dB and a simple link budget — received power from transmit power and antenna gains — for [LoRaWAN sensor networks](https://www.instrumentationblog.in/lorawan-industrial-iot-guide/), [wireless transmitters](https://www.instrumentationblog.in/wireless-pressure-transmitters-iiot-systems/), Wi-Fi and point-to-point links."
+keywords: [free space path loss calculator, fspl calculator, path loss formula db, link budget calculator, received signal strength calculator, rf path loss, lora range calculator]
+updated: 2026-10-30
+variables:
+  - { id: d, label: Distance, family: length, unit: km, imperialUnit: mi, default: 2, min: 0 }
+  - { id: f, label: Frequency, family: frequency, unit: MHz, default: 868, min: 0 }
+  - { id: Pt, label: Transmit power, suffix: dBm, default: 14 }
+  - { id: Gt, label: Transmit antenna gain, suffix: dBi, default: 2 }
+  - { id: Gr, label: Receive antenna gain, suffix: dBi, default: 2 }
+  - { id: L, label: Free-space path loss, suffix: dB, decimals: 2 }
+  - { id: Pr, label: Received power, suffix: dBm, decimals: 2 }
+equations:
+  - L = 20 * log10(4 * pi * d * f / 299792458)
+  - Pr = Pt + Gt + Gr - L
+faq:
+  - q: What is the free-space path loss formula?
+    a: FSPL = 20 log₁₀(4π d f ÷ c). In practical units, FSPL (dB) = 20 log₁₀ d (km) + 20 log₁₀ f (MHz) + 32.44.
+  - q: How much does path loss increase with distance?
+    a: 6 dB every time the distance doubles, and 20 dB for every tenfold increase. Doubling the frequency also adds 6 dB.
+  - q: Why is real-world loss higher than FSPL?
+    a: FSPL assumes clear line of sight with an unobstructed Fresnel zone. Walls, terrain, foliage, rain and multipath add tens of dB, so leave a fade margin of 10–20 dB or more.
+  - q: How do I check whether a link will work?
+    a: Compare the received power with the receiver's sensitivity. For example, LoRa at SF12 can decode about −137 dBm, while Wi-Fi at high data rates needs about −65 to −70 dBm.
+related: [electronics/antenna-length, electronics/dbm-to-watts, electronics/snr, physics/wavelength-frequency]
+---
+
+## How to use the free space path loss calculator
+
+Enter the **distance** and **frequency** of the link. The calculator returns the free-space path loss in dB. Add the **transmit power** and both **antenna gains** to get the received power, and compare it with the receiver sensitivity. To find the maximum free-space range, clear the distance and enter the minimum received power.
+
+## Free-space path loss formula
+
+<p class="formula">FSPL = 20 log₁₀(4π d f ÷ c)</p>
+
+<p class="formula">FSPL (dB) = 20 log₁₀ d<sub>km</sub> + 20 log₁₀ f<sub>MHz</sub> + 32.44</p>
+
+<p class="formula">P<sub>r</sub> = P<sub>t</sub> + G<sub>t</sub> + G<sub>r</sub> − FSPL</p>
+
+## Example
+
+A LoRa sensor at 868 MHz, 2 km from the gateway, 14 dBm transmit power and 2 dBi antennas at both ends:
+
+- FSPL = 20 log₁₀(4π × 2000 × 868 × 10⁶ ÷ 299,792,458) = **97.24 dB**
+- P<sub>r</sub> = 14 + 2 + 2 − 97.24 = **-79.24 dBm** — far above LoRa sensitivity, leaving a large margin for obstacles
+
+## Free-space path loss by distance and frequency
+
+| Distance | 433.92 MHz | 868 MHz | 2.44 GHz |
+|---|---|---|---|
+| 10 m | 45.2 dB | 51.2 dB | 60.2 dB |
+| 100 m | 65.2 dB | 71.2 dB | 80.2 dB |
+| 500 m | 79.2 dB | 85.2 dB | 94.2 dB |
+| 1 km | 85.2 dB | 91.2 dB | 100.2 dB |
+| 2 km | 91.2 dB | 97.2 dB | 106.2 dB |
+| 5 km | 99.2 dB | 105.2 dB | 114.2 dB |
+| 10 km | 105.2 dB | 111.2 dB | 120.2 dB |
+| 20 km | 111.2 dB | 117.2 dB | 126.2 dB |
+
+## Notes
+
+- FSPL uses isotropic antennas; real antenna gains are added separately in the link budget.
+- Keep the first Fresnel zone clear — at 868 MHz over 2 km its radius at mid-path is about 13 m, so mount antennas high.
+- Convert dBm to milliwatts with the [dBm to watts calculator](/electronics/dbm-to-watts/).

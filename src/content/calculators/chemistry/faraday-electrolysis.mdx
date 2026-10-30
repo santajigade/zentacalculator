@@ -1,0 +1,84 @@
+---
+title: Faraday's Law of Electrolysis Calculator (Mass Deposited)
+description: Calculate the mass of metal deposited or dissolved in electrolysis and electroplating from current, time and current efficiency with Faraday's law.
+category: chemistry
+intro: "Faraday's laws of electrolysis say the mass of a substance deposited at an electrode is proportional to the charge passed and to its molar mass divided by the electrons transferred. This Faraday's law of electrolysis calculator finds the mass plated or dissolved, the charge and moles of electrons — for copper, nickel, silver, zinc, gold and more."
+keywords: [faraday electrolysis calculator, faradays law of electrolysis, electroplating calculator, mass deposited electrolysis, m = itm / nf, electrochemical equivalent, plating time calculator]
+updated: 2026-10-30
+variables:
+  - { id: I, label: Current, family: current, unit: A, default: 2, min: 0 }
+  - { id: t, label: Time, family: seconds, unit: h, default: 1, min: 0 }
+  - id: Me
+    label: Metal and ion (molar mass ÷ electrons)
+    default: 31.773000
+    options:
+      - { label: 'Copper — Cu²⁺ (31.7730 g/mol per electron)', value: 31.773000 }
+      - { label: 'Silver — Ag⁺ (107.8682 g/mol per electron)', value: 107.868200 }
+      - { label: 'Nickel — Ni²⁺ (29.3467 g/mol per electron)', value: 29.346700 }
+      - { label: 'Zinc — Zn²⁺ (32.6900 g/mol per electron)', value: 32.690000 }
+      - { label: 'Tin — Sn²⁺ (59.3550 g/mol per electron)', value: 59.355000 }
+      - { label: 'Iron — Fe²⁺ (27.9225 g/mol per electron)', value: 27.922500 }
+      - { label: 'Gold — Au⁺ (cyanide bath) (196.9666 g/mol per electron)', value: 196.966570 }
+      - { label: 'Chromium — Cr³⁺ (17.3320 g/mol per electron)', value: 17.332033 }
+      - { label: 'Aluminium — Al³⁺ (8.9938 g/mol per electron)', value: 8.993846 }
+      - { label: 'Hydrogen gas — 2H⁺ (1.0079 g/mol per electron)', value: 1.007940 }
+  - { id: eta, label: Current efficiency, family: percent, unit: '%', default: 100, min: 0, max: 100 }
+  - { id: Q, label: Charge passed (coulombs), min: 0 }
+  - { id: ne, label: Moles of electrons, suffix: mol, min: 0 }
+  - { id: m, label: Mass deposited or dissolved, family: mass, unit: g, imperialUnit: oz, min: 0 }
+equations:
+  - Q = I * t
+  - ne = Q / 96485.33212
+  - m = ne * Me * eta / 1000
+faq:
+  - q: What is Faraday's law of electrolysis formula?
+    a: m = (I × t × M) ÷ (z × F), where I is current, t time in seconds, M molar mass, z the electrons per ion and F = 96,485 C/mol the Faraday constant.
+  - q: How much copper does 1 ampere-hour deposit?
+    a: About 1.186 g from a Cu²⁺ (acid sulfate) bath at 100% efficiency. Silver deposits about 4.025 g per A·h because it needs only one electron per atom.
+  - q: What is current efficiency?
+    a: The share of the current that actually deposits the metal. The rest evolves hydrogen or drives side reactions — acid copper and nickel baths run at 95–100%, hard chromium from chromic acid only about 10–25%.
+  - q: How do I find the plating time for a given mass?
+    a: Clear the time field and enter the target mass. t = m × z × F ÷ (I × M × efficiency).
+related: [chemistry/nernst-equation, chemistry/moles, physics/ohms-law, electronics/battery-charge-time]
+---
+
+## How to use the Faraday's law of electrolysis calculator
+
+Enter the **current**, the **time**, the **metal and its ion** (which fixes molar mass ÷ electrons) and the **current efficiency**. The calculator returns the charge passed, the moles of electrons and the mass deposited at the cathode (or dissolved from the anode). Clear the time or current to find how long, or how much current, a target mass needs.
+
+## Faraday's law of electrolysis formula
+
+<p class="formula">m = (I × t × M × η) ÷ (z × F)</p>
+
+<p class="formula">Q = I × t &nbsp;·&nbsp; n<sub>e</sub> = Q ÷ F &nbsp;·&nbsp; F = 96,485.332 C/mol</p>
+
+M ÷ z is the mass deposited per mole of electrons; the chromium option uses Cr³⁺ (z = 3) — decorative and hard chrome plating from chromic acid is Cr(VI), z = 6, which halves the mass per coulomb.
+
+## Example
+
+Copper plating from an acid sulfate (Cu²⁺) bath at 2 A for 1 hour, 100% efficiency:
+
+- Q = 2 × 3,600 = **7,200 C**
+- n<sub>e</sub> = 7,200 ÷ 96,485 = **0.07462 mol** of electrons
+- m = 0.07462 × 63.546 ÷ 2 = **2.3710 g** of copper
+
+## Mass deposited per ampere-hour (100% efficiency)
+
+| Metal and ion | Molar mass (g/mol) | Electrons z | Mass per A·h |
+|---|---|---|---|
+| Copper — Cu²⁺ | 63.546 | 2 | 1.1855 g |
+| Silver — Ag⁺ | 107.868 | 1 | 4.0247 g |
+| Nickel — Ni²⁺ | 58.6934 | 2 | 1.0950 g |
+| Zinc — Zn²⁺ | 65.38 | 2 | 1.2197 g |
+| Tin — Sn²⁺ | 118.71 | 2 | 2.2146 g |
+| Iron — Fe²⁺ | 55.845 | 2 | 1.0418 g |
+| Gold — Au⁺ (cyanide bath) | 196.967 | 1 | 7.3491 g |
+| Chromium — Cr³⁺ | 51.9961 | 3 | 0.6467 g |
+| Aluminium — Al³⁺ | 26.9815 | 3 | 0.3356 g |
+| Hydrogen gas — 2H⁺ | 1.00794 | 1 | 0.0376 g |
+
+## Notes
+
+- Divide the mass by density and plated area for thickness — copper is 8.96 g/cm³, so 2.37 g over 100 cm² is about 2.6 µm.
+- Real plating thickness varies across a part; edges and corners plate faster than recesses.
+- The same law gives the hydrogen produced by water electrolysis: about 0.0376 g (0.42 L at 0 °C, 1 atm) per ampere-hour.

@@ -1,0 +1,66 @@
+---
+title: Activation Energy Calculator from Two Rate Constants
+description: Calculate activation energy (Ea) from rate constants at two temperatures with the two-point Arrhenius equation — or predict the rate at a new temperature.
+category: chemistry
+intro: "Activation energy is the energy barrier a reaction must overcome, and it controls how sharply the rate rises with temperature. This activation energy calculator uses the two-point form of the Arrhenius equation to find Ea from rate constants (or rates, or reaction times) measured at two temperatures — or the new rate constant once Ea is known."
+keywords: [activation energy calculator, ea from two temperatures, two point arrhenius equation, ln k2/k1 calculator, activation energy formula, rate constant temperature, arrhenius two temperatures]
+updated: 2026-10-30
+variables:
+  - { id: k1, label: Rate constant k₁ at T₁, default: 0.001, min: 0, help: 'Any units — rates or 1/time also work, as long as k₁ and k₂ use the same units.' }
+  - { id: T1, label: Temperature T₁, family: temperature, unit: C, imperialUnit: F, default: 25, min: 0 }
+  - { id: k2, label: Rate constant k₂ at T₂, default: 0.004, min: 0 }
+  - { id: T2, label: Temperature T₂, family: temperature, unit: C, imperialUnit: F, default: 45, min: 0 }
+  - { id: r, label: Rate ratio k₂ ÷ k₁, min: 0 }
+  - { id: Ea, label: Activation energy (kJ/mol), decimals: 3 }
+equations:
+  - r = k2 / k1
+  - Ea = 8.314462618 * ln(r) / (1 / T1 - 1 / T2) / 1000
+faq:
+  - q: How do you calculate activation energy from two temperatures?
+    a: Ea = R × ln(k₂ ÷ k₁) ÷ (1/T₁ − 1/T₂), with R = 8.314 J/(mol·K) and temperatures in kelvin. A rate that quadruples from 25 °C to 45 °C gives Ea ≈ 54.7 kJ/mol.
+  - q: Can I use reaction times instead of rate constants?
+    a: Yes, but invert them — the rate constant is inversely proportional to the time to reach the same conversion, so use k₁ = 1/t₁ and k₂ = 1/t₂.
+  - q: Does the old rule "rate doubles every 10 °C" fit?
+    a: Only for activation energies around 50 kJ/mol near room temperature — that gives a factor of about 1.9 from 25 to 35 °C. Higher Ea means a steeper rise.
+  - q: How do I predict the rate at another temperature?
+    a: Enter k₁, T₁, the new T₂ and the activation energy, and clear k₂ and the ratio — the calculator solves k₂ = k₁ × exp[(Ea ÷ R)(1/T₁ − 1/T₂)].
+related: [chemistry/arrhenius-equation, chemistry/half-life, chemistry/gibbs-free-energy, chemistry/specific-heat]
+---
+
+## How to use the activation energy calculator
+
+Enter the **rate constant** measured at the first **temperature** and the rate constant at the second temperature. The calculator gives the ratio k₂/k₁ and the **activation energy** in kJ/mol. To predict a rate constant, enter k₁, both temperatures and Ea, and clear k₂ and the ratio.
+
+## Two-point Arrhenius equation
+
+<p class="formula">ln(k<sub>2</sub> ÷ k<sub>1</sub>) = (E<sub>a</sub> ÷ R) × (1/T<sub>1</sub> − 1/T<sub>2</sub>)</p>
+
+<p class="formula">E<sub>a</sub> = R ln(k<sub>2</sub> ÷ k<sub>1</sub>) ÷ (1/T<sub>1</sub> − 1/T<sub>2</sub>)</p>
+
+R = 8.314 J/(mol·K); temperatures must be absolute (kelvin). The pre-exponential factor A cancels, so only the two measurements are needed — use the [Arrhenius equation calculator](/chemistry/arrhenius-equation/) to work with A directly.
+
+## Example
+
+A rate constant rises from 0.0010 at 25 °C to 0.0040 at 45 °C:
+
+- ln(0.0040 ÷ 0.0010) = ln 4 = **1.3863**
+- 1/298.15 − 1/318.15 = **2.1084 × 10⁻⁴ K⁻¹**
+- E<sub>a</sub> = 8.314 × 1.3863 ÷ 2.1084 × 10⁻⁴ = **54.67 kJ/mol**
+
+## How much faster a reaction runs when heated from 25 °C
+
+| Activation energy | 25 → 35 °C | 25 → 75 °C |
+|---|---|---|
+| 20 kJ/mol | 1.30× | 3.2× |
+| 40 kJ/mol | 1.69× | 10.1× |
+| 50 kJ/mol | 1.92× | 18.1× |
+| 60 kJ/mol | 2.19× | 32.3× |
+| 80 kJ/mol | 2.85× | 103.0× |
+| 100 kJ/mol | 3.70× | 328.1× |
+| 150 kJ/mol | 7.13× | 5943.9× |
+
+## Notes
+
+- Measure the two rates as far apart in temperature as practical — a small ΔT magnifies measurement error in Ea.
+- A curved Arrhenius plot (ln k vs 1/T) means the mechanism changes with temperature; two points will then give only an average Ea.
+- Typical values: enzyme reactions 30–60 kJ/mol, many organic reactions 50–100 kJ/mol, diffusion-controlled reactions below 20 kJ/mol.

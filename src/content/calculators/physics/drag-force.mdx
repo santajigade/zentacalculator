@@ -1,0 +1,65 @@
+---
+title: Drag Force Calculator (F = ½ρv²CdA) & Power to Overcome Drag
+description: Calculate aerodynamic or hydrodynamic drag force from fluid density, speed, drag coefficient and frontal area — and the power needed to overcome it.
+category: physics
+intro: "Drag is the resistance a fluid exerts on a moving object, and it grows with the square of speed. This drag force calculator uses the drag equation F = ½ρv²C<sub>d</sub>A to find the force and the power needed to push through air or water — for cars, cyclists, wind loads, sensors in pipes and falling objects."
+keywords: [drag force calculator, drag equation, aerodynamic drag calculator, air resistance calculator, drag coefficient, power to overcome drag, wind resistance force]
+updated: 2026-10-30
+variables:
+  - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1.225, min: 0, help: 'Air at sea level 15 °C: 1.225 kg/m³. Water: about 1000 kg/m³.' }
+  - { id: v, label: Speed relative to the fluid, family: velocity, unit: kmh, imperialUnit: mph, default: 100, min: 0 }
+  - { id: Cd, label: Drag coefficient (Cd), default: 0.30, min: 0, decimals: 3 }
+  - { id: A, label: Frontal (reference) area, family: area, unit: m2, imperialUnit: ft2, default: 2.2, min: 0 }
+  - { id: F, label: Drag force, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: P, label: Power to overcome drag, family: power, unit: kW, imperialUnit: hp, min: 0 }
+equations:
+  - F = 0.5 * rho * v^2 * Cd * A
+  - P = F * v
+faq:
+  - q: What is the drag force formula?
+    a: F = ½ ρ v² Cd A — half the fluid density times speed squared times the drag coefficient times the frontal area.
+  - q: Why does drag power rise with the cube of speed?
+    a: Drag force grows with v², and power is force × speed, so power grows with v³. Driving at 130 km/h instead of 100 km/h needs about 2.2 times the power to beat air drag.
+  - q: What is a typical drag coefficient?
+    a: About 0.25–0.35 for modern cars, 0.47 for a sphere, 1.0–1.3 for flat plates and bluff shapes, and 0.04 for a streamlined teardrop.
+  - q: Which area should I use?
+    a: The frontal area projected onto a plane perpendicular to the flow for vehicles and bluff bodies. Wings use plan area, so check which reference area the Cd value was measured with.
+related: [physics/stokes-law, physics/work-and-power, physics/force, engineering/pitot-tube-velocity]
+---
+
+## How to use the drag force calculator
+
+Enter the **fluid density**, the **speed** of the object relative to the fluid, its **drag coefficient** and its **frontal area**. You get the drag force and the power needed to overcome it at that speed. Clear any field to solve for it instead — for example, enter a measured drag force and clear C<sub>d</sub> to find the drag coefficient.
+
+## Drag equation
+
+<p class="formula">F<sub>d</sub> = ½ ρ v² C<sub>d</sub> A</p>
+
+<p class="formula">P = F<sub>d</sub> × v = ½ ρ v³ C<sub>d</sub> A</p>
+
+## Example
+
+A car with C<sub>d</sub> = 0.30 and 2.2 m² frontal area at 100 km/h (27.78 m/s) in sea-level air:
+
+- F = 0.5 × 1.225 × 27.78² × 0.30 × 2.2 = **311.9 N**
+- P = 311.9 × 27.78 = **8.66 kW** just to push the air aside
+
+## Drag force on 1 m² of frontal area in sea-level air
+
+| Shape | Cd | 50 km/h | 100 km/h | 150 km/h |
+|---|---|---|---|---|
+| Flat plate (normal to flow) | 1.28 | 151.2 N | 604.9 N | 1,361.1 N |
+| Cube | 1.05 | 124.1 N | 496.2 N | 1,116.5 N |
+| Upright cyclist | 0.9 | 106.3 N | 425.3 N | 957.0 N |
+| Sphere (subcritical) | 0.47 | 55.5 N | 222.1 N | 499.8 N |
+| Typical car | 0.3 | 35.4 N | 141.8 N | 319.0 N |
+| Streamlined car | 0.25 | 29.5 N | 118.2 N | 265.8 N |
+| Streamlined body | 0.04 | 4.7 N | 18.9 N | 42.5 N |
+
+Drag coefficients are typical values; the real Cd depends on Reynolds number, surface finish and exact shape.
+
+## Notes
+
+- Air density falls with altitude and temperature (about 1.0 kg/m³ at 2,000 m), reducing drag.
+- At very low Reynolds numbers (dust, fine droplets) use [Stokes' law](/physics/stokes-law/) instead.
+- Terminal velocity of a falling object is where drag equals weight: v = √(2 m g ÷ (ρ C<sub>d</sub> A)).

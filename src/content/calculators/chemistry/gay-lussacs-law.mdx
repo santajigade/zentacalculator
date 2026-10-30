@@ -1,0 +1,61 @@
+---
+title: Gay-Lussac's Law Calculator (P₁/T₁ = P₂/T₂)
+description: Calculate the new pressure or temperature of a gas in a closed, rigid container with Gay-Lussac's law — pressure is proportional to absolute temperature.
+category: chemistry
+intro: "In a sealed, rigid container the pressure of a gas rises in direct proportion to its absolute temperature. This Gay-Lussac's law calculator finds the final pressure after heating or cooling — or the temperature that produces a given pressure — for gas cylinders, aerosol cans, tyres and sealed vessels."
+keywords: [gay lussacs law calculator, p1/t1 = p2/t2, pressure temperature law, gas pressure temperature calculator, amontons law, constant volume gas law, pressure law]
+updated: 2026-10-30
+variables:
+  - { id: P1, label: Initial pressure (absolute), family: pressure, unit: kPa, imperialUnit: psi, default: 200, min: 0 }
+  - { id: T1, label: Initial temperature, family: temperature, unit: C, imperialUnit: F, default: 20, min: 0 }
+  - { id: P2, label: Final pressure (absolute), family: pressure, unit: kPa, imperialUnit: psi, min: 0 }
+  - { id: T2, label: Final temperature, family: temperature, unit: C, imperialUnit: F, default: 80, min: 0 }
+equations:
+  - P1 / T1 = P2 / T2
+faq:
+  - q: What is Gay-Lussac's law?
+    a: At constant volume and amount of gas, pressure is proportional to absolute temperature — P₁ ÷ T₁ = P₂ ÷ T₂. It is also called Amontons's law or the pressure law.
+  - q: Must I use absolute pressure?
+    a: Yes. Gauge pressure is measured from atmosphere, not from zero, so add atmospheric pressure (about 101.3 kPa) first. Temperatures are converted to kelvin automatically.
+  - q: Why do aerosol cans warn against heat?
+    a: Pressure rises with absolute temperature. A can at 20 °C heated to 80 °C sees its pressure rise by about 20%, and much more if liquid propellant evaporates.
+  - q: How is Gay-Lussac's law different from Charles's law?
+    a: Charles's law holds pressure constant and relates volume to temperature; Gay-Lussac's law holds volume constant and relates pressure to temperature.
+related: [chemistry/charles-law, chemistry/boyles-law, chemistry/combined-gas-law, physics/ideal-gas-law]
+---
+
+## How to use the Gay-Lussac's law calculator
+
+Enter the **initial absolute pressure** and **temperature**, and the **final temperature**. The calculator gives the final absolute pressure. Enter any three of the four values to solve for the fourth — for example, the temperature at which a vessel reaches its design pressure.
+
+## Gay-Lussac's law formula
+
+<p class="formula">P<sub>1</sub> ÷ T<sub>1</sub> = P<sub>2</sub> ÷ T<sub>2</sub> &nbsp;⇒&nbsp; P<sub>2</sub> = P<sub>1</sub> × T<sub>2</sub> ÷ T<sub>1</sub></p>
+
+Temperatures are absolute (K = °C + 273.15) and pressures absolute.
+
+## Example
+
+A sealed container holds gas at 200 kPa absolute and 20 °C. It is heated to 80 °C:
+
+- T<sub>1</sub> = 293.15 K, T<sub>2</sub> = 353.15 K
+- P<sub>2</sub> = 200 × 353.15 ÷ 293.15 = **240.93 kPa absolute** (139.6 kPa gauge)
+
+## Pressure of a gas sealed at 200 kPa(a) and 20 °C
+
+| Temperature | P ÷ P₁ | Absolute pressure | Gauge pressure |
+|---|---|---|---|
+| -20 °C | 0.864 | 172.7 kPa | 71.4 kPa |
+| 0 °C | 0.932 | 186.4 kPa | 85.0 kPa |
+| 20 °C | 1.000 | 200.0 kPa | 98.7 kPa |
+| 40 °C | 1.068 | 213.6 kPa | 112.3 kPa |
+| 60 °C | 1.136 | 227.3 kPa | 126.0 kPa |
+| 80 °C | 1.205 | 240.9 kPa | 139.6 kPa |
+| 100 °C | 1.273 | 254.6 kPa | 153.3 kPa |
+| 150 °C | 1.443 | 288.7 kPa | 187.4 kPa |
+
+## Notes
+
+- Real gases follow the law well at moderate pressures; near condensation or at very high pressure use a compressibility factor.
+- Liquids trapped in a closed pipe behave very differently — thermal expansion of a liquid can raise pressure by several bar per °C, which is why thermal relief valves are fitted.
+- To change pressure, volume and temperature together, use the [combined gas law calculator](/chemistry/combined-gas-law/).

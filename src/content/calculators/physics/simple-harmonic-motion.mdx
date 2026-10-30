@@ -1,0 +1,78 @@
+---
+title: Simple Harmonic Motion Calculator (SHM x, v and a)
+description: Calculate displacement, velocity and acceleration in simple harmonic motion at any time from amplitude, frequency and phase — plus period and peak values.
+category: physics
+intro: "Simple harmonic motion is the back-and-forth motion of a spring, pendulum or vibrating machine, where the restoring force is proportional to displacement. This simple harmonic motion calculator gives the displacement, velocity and acceleration at any instant, along with the period, angular frequency and peak values."
+keywords: [simple harmonic motion calculator, shm calculator, shm displacement velocity acceleration, x = a cos wt, angular frequency, maximum velocity shm, oscillation calculator]
+updated: 2026-10-30
+variables:
+  - { id: A, label: Amplitude, family: length, unit: m, imperialUnit: in, default: 0.1, min: 0 }
+  - { id: f, label: Frequency, family: frequency, unit: Hz, default: 2, min: 0 }
+  - { id: t, label: Time, family: seconds, unit: s, default: 0.1, min: 0 }
+  - { id: ph, label: Phase angle at t = 0, family: angle, unit: deg, default: 0 }
+  - { id: w, label: Angular frequency (ω), suffix: rad/s, min: 0 }
+  - { id: T, label: Period, family: seconds, unit: s, min: 0 }
+  - { id: x, label: Displacement x(t), family: length, unit: m, imperialUnit: in }
+  - { id: v, label: Velocity v(t), family: velocity, unit: ms }
+  - { id: a, label: Acceleration a(t), suffix: m/s² }
+  - { id: vm, label: Maximum velocity, family: velocity, unit: ms, min: 0 }
+  - { id: am, label: Maximum acceleration, suffix: m/s², min: 0 }
+equations:
+  - w = 2 * pi * f
+  - T = 1 / f
+  - x = A * cos(w * t + ph)
+  - v = -A * w * sin(w * t + ph)
+  - a = -(w^2) * x
+  - vm = A * w
+  - am = A * w^2
+faq:
+  - q: What are the equations of simple harmonic motion?
+    a: x = A cos(ωt + φ), v = −Aω sin(ωt + φ) and a = −ω² x, where A is the amplitude, ω = 2πf the angular frequency and φ the phase angle.
+  - q: Where is velocity maximum in SHM?
+    a: At the equilibrium position (x = 0), where the speed is Aω. At the turning points (x = ±A) the velocity is zero and the acceleration reaches its maximum, Aω².
+  - q: Does the period depend on amplitude?
+    a: Not for ideal simple harmonic motion. The period depends only on the system — √(m/k) for a spring, √(L/g) for a small-angle pendulum — which is why SHM is used for clocks.
+  - q: What phase angle should I use?
+    a: Use 0° if the motion starts at maximum displacement (released from rest at +A) and −90° if it starts at the centre moving in the positive direction.
+related: [physics/spring-mass-frequency, physics/pendulum, physics/hookes-law, physics/wavelength-frequency]
+---
+
+## How to use the simple harmonic motion calculator
+
+Enter the **amplitude** (maximum displacement), the **frequency** of oscillation, the **time** at which you want the state and the **phase angle** at t = 0. The calculator returns the angular frequency, period, the displacement, velocity and acceleration at that instant, and the maximum velocity and acceleration. Negative values mean the object is on, or moving towards, the negative side of equilibrium.
+
+## Simple harmonic motion formulas
+
+<p class="formula">x = A cos(ωt + φ) &nbsp;·&nbsp; v = −Aω sin(ωt + φ) &nbsp;·&nbsp; a = −ω² x</p>
+
+<p class="formula">ω = 2πf &nbsp;·&nbsp; T = 1 ÷ f &nbsp;·&nbsp; v<sub>max</sub> = Aω &nbsp;·&nbsp; a<sub>max</sub> = Aω²</p>
+
+## Example
+
+A mass oscillates with amplitude 0.1 m at 2 Hz, starting from +A (φ = 0). At t = 0.1 s:
+
+- ω = 2π × 2 = **12.5664 rad/s**, T = **0.5 s**
+- ωt = 1.2566 rad (72°)
+- x = 0.1 × cos 72° = **0.0309 m**
+- v = −0.1 × 12.566 × sin 72° = **-1.1951 m/s**
+- a = −157.91 × 0.0309 = **-4.880 m/s²**
+- v<sub>max</sub> = **1.2566 m/s**, a<sub>max</sub> = **15.79 m/s²**
+
+## Position, velocity and acceleration over one cycle (φ = 0)
+
+| Time | Phase | Displacement | Velocity | Acceleration |
+|---|---|---|---|---|
+| 0 T | 0° | +1.000 A | 0 Aω | -1.000 Aω² |
+| 0.125 T | 45° | +0.707 A | -0.707 Aω | -0.707 Aω² |
+| 0.25 T | 90° | 0 A | -1.000 Aω | 0 Aω² |
+| 0.375 T | 135° | -0.707 A | -0.707 Aω | +0.707 Aω² |
+| 0.5 T | 180° | -1.000 A | 0 Aω | +1.000 Aω² |
+| 0.75 T | 270° | 0 A | +1.000 Aω | 0 Aω² |
+| 1 T | 360° | +1.000 A | 0 Aω | -1.000 Aω² |
+
+## Notes
+
+- Velocity leads displacement by 90° and acceleration is always opposite to displacement — the signature of SHM.
+- Total energy stays constant: ½ k A² = ½ m v<sub>max</sub>².
+- Real oscillators lose energy to damping, so the amplitude decays with time while the frequency stays almost the same.
+- To get the frequency of a spring or pendulum first, use the [spring-mass frequency](/physics/spring-mass-frequency/) or [pendulum](/physics/pendulum/) calculators.

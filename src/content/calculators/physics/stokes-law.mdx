@@ -1,0 +1,67 @@
+---
+title: Stokes' Law Calculator (Terminal Settling Velocity)
+description: Calculate the terminal settling velocity of a small sphere in a fluid with Stokes' law, plus the particle Reynolds number to check the law is valid.
+category: physics
+intro: "Stokes' law describes how fast a small sphere sinks or rises through a viscous fluid once drag balances its weight and buoyancy. This Stokes' law calculator gives the terminal settling velocity, drag force and particle Reynolds number — useful for sedimentation tanks, dust settling, [viscosity measurement](https://www.instrumentationblog.in/viscosity-measurement-explained/) with a falling-ball viscometer and emulsions."
+keywords: [stokes law calculator, terminal velocity calculator, settling velocity calculator, stokes settling velocity, falling ball viscometer, particle settling rate, sedimentation velocity]
+updated: 2026-10-30
+variables:
+  - { id: d, label: Particle diameter, family: length, unit: um, imperialUnit: in, default: 50, min: 0 }
+  - { id: rp, label: Particle density, family: density, unit: kgm3, imperialUnit: lbft3, default: 2650, min: 0 }
+  - { id: rf, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
+  - { id: mu, label: Fluid dynamic viscosity, family: viscosity, unit: mPas, default: 1.0, min: 0, help: 'Water at 20 °C ≈ 1.0 mPa·s; air ≈ 0.018 mPa·s.' }
+  - { id: v, label: Terminal settling velocity, family: velocity, unit: ms }
+  - { id: Re, label: Particle Reynolds number (valid below ~1), min: 0, decimals: 4 }
+  - { id: Fd, label: Drag force at terminal velocity, family: force, unit: N, min: 0 }
+equations:
+  - v = (rp - rf) * g0 * d^2 / (18 * mu)
+  - Re = rf * abs(v) * d / mu
+  - Fd = 3 * pi * mu * d * abs(v)
+faq:
+  - q: What is Stokes' law for settling velocity?
+    a: v = (ρp − ρf) g d² ÷ (18 μ). Velocity grows with the square of particle diameter, so a particle twice as large settles four times faster.
+  - q: When is Stokes' law valid?
+    a: For creeping flow around a smooth sphere — particle Reynolds number below about 1 (strictly below 0.1 for high accuracy). Larger or faster particles need a drag coefficient correlation instead.
+  - q: What does a negative velocity mean?
+    a: The particle is lighter than the fluid, so it rises instead of sinking — for example oil droplets or air bubbles in water.
+  - q: How is Stokes' law used to measure viscosity?
+    a: In a falling-ball viscometer a ball of known size and density falls a measured distance; rearranging gives μ = (ρp − ρf) g d² ÷ (18 v). Clear the viscosity field and enter the measured velocity.
+related: [engineering/reynolds-number, physics/buoyancy, physics/drag-force, physics/density]
+---
+
+## How to use the Stokes' law calculator
+
+Enter the **particle diameter**, the **particle density**, the **fluid density** and the fluid's **dynamic viscosity**. The calculator returns the terminal settling velocity (negative means the particle rises), the drag force at that speed and the **particle Reynolds number** — keep it below about 1 for Stokes' law to apply. To find viscosity from a falling-ball test, clear the viscosity and enter the measured velocity.
+
+## Stokes' law formula
+
+<p class="formula">v<sub>t</sub> = (ρ<sub>p</sub> − ρ<sub>f</sub>) g d² ÷ (18 μ)</p>
+
+<p class="formula">F<sub>d</sub> = 3 π μ d v &nbsp;·&nbsp; Re<sub>p</sub> = ρ<sub>f</sub> v d ÷ μ</p>
+
+## Example
+
+A 50 µm quartz sand grain (2,650 kg/m³) settling in water at 20 °C (998 kg/m³, 1.0 mPa·s):
+
+- v = (2650 − 998) × 9.807 × (50 × 10⁻⁶)² ÷ (18 × 0.001) = **0.002250 m/s** (2.25 mm/s)
+- Re = 998 × 0.002250 × 50 × 10⁻⁶ ÷ 0.001 = **0.112** — below 1, so Stokes' law applies
+- Drag force = 3π × 0.001 × 50 × 10⁻⁶ × 0.002250 = **1.060 × 10⁻⁹ N**, equal to the grain's submerged weight
+
+## Settling of quartz particles in water at 20 °C
+
+| Diameter | Settling velocity | Reynolds number | Time to settle 1 m |
+|---|---|---|---|
+| 1 µm | 0.9 µm/s | 9.0 × 10⁻⁷ | 309 h |
+| 5 µm | 22.5 µm/s | 1.1 × 10⁻⁴ | 12.3 h |
+| 10 µm | 90 µm/s | 9.0 × 10⁻⁴ | 3.09 h |
+| 20 µm | 360 µm/s | 7.2 × 10⁻³ | 46.3 min |
+| 50 µm | 2.25 mm/s | 0.11 | 7.41 min |
+| 100 µm | 9 mm/s | 0.9 | 1.85 min |
+
+At 100 µm the Reynolds number approaches 1, so Stokes' law starts to overpredict the velocity of larger grains.
+
+## Notes
+
+- Viscosity changes strongly with temperature — water at 5 °C is about 1.5 mPa·s, slowing settling by a third.
+- Non-spherical particles settle more slowly than the equivalent sphere.
+- For larger objects, use the [drag force calculator](/physics/drag-force/) with a drag coefficient instead.

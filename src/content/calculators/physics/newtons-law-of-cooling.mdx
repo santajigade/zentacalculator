@@ -1,0 +1,72 @@
+---
+title: Newton's Law of Cooling Calculator (Temperature vs Time)
+description: Calculate how an object cools or heats towards ambient over time with Newton's law of cooling, find the cooling constant k and the half-time.
+category: physics
+intro: "Newton's law of cooling says an object's rate of temperature change is proportional to the difference between it and its surroundings, giving an exponential approach to ambient. This Newton's law of cooling calculator finds the temperature after any time, the cooling constant from a measurement and the time for the difference to halve — the same first-order behaviour behind a [temperature sensor's response time](https://www.instrumentationblog.in/temperature-sensor-response-time/)."
+keywords: [newtons law of cooling calculator, cooling rate calculator, temperature vs time cooling, cooling constant k, exponential cooling, how long to cool, newton cooling formula]
+updated: 2026-10-30
+variables:
+  - { id: T0, label: Initial temperature, family: temperature, unit: C, imperialUnit: F, default: 90 }
+  - { id: Ta, label: Ambient (surrounding) temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
+  - { id: k, label: Cooling constant k (per minute), default: 0.05, min: 0, decimals: 5 }
+  - { id: t, label: Elapsed time, family: seconds, unit: min, default: 10, min: 0 }
+  - { id: Tt, label: Temperature after time t, family: temperature, unit: C, imperialUnit: F }
+  - { id: th, label: Half-time (difference halves), family: seconds, unit: min, min: 0 }
+  - { id: tau, label: Time constant (1/k), family: seconds, unit: min, min: 0 }
+equations:
+  - Tt = Ta + (T0 - Ta) * exp(-k * t / 60)
+  - th = 60 * ln(2) / k
+  - tau = 60 / k
+faq:
+  - q: What is the formula for Newton's law of cooling?
+    a: T(t) = Tₐ + (T₀ − Tₐ) e^(−kt). The temperature difference to ambient decays exponentially with the cooling constant k.
+  - q: How do I find the cooling constant k?
+    a: Measure the temperature at a known time, clear k and enter the measured value — k = −ln[(T − Tₐ) ÷ (T₀ − Tₐ)] ÷ t. For example, coffee falling from 90 to 62.5 °C in 10 minutes in a 20 °C room gives k ≈ 0.05 per minute.
+  - q: Does it work for heating too?
+    a: Yes. If the ambient is hotter than the object, the same equation gives an exponential rise towards ambient.
+  - q: When is Newton's law of cooling accurate?
+    a: When heat loss is dominated by convection with a roughly constant heat transfer coefficient, the object's temperature is uniform, and the temperature difference is moderate. Strong radiation or boiling make k change with temperature.
+related: [physics/heat-conduction, engineering/sensor-response-time, physics/latent-heat, chemistry/half-life]
+---
+
+## How to use the Newton's law of cooling calculator
+
+Enter the **initial temperature** of the object, the **ambient temperature**, the **cooling constant** k (per minute) and the **elapsed time**. The calculator returns the temperature at that time, the **half-time** (when the difference to ambient has halved) and the time constant 1/k. To find k from a measurement, clear k and enter the measured temperature; to find how long cooling takes, clear the time.
+
+## Newton's law of cooling formula
+
+<p class="formula">T(t) = T<sub>a</sub> + (T<sub>0</sub> − T<sub>a</sub>) e<sup>−kt</sup></p>
+
+<p class="formula">t<sub>½</sub> = ln 2 ÷ k &nbsp;·&nbsp; τ = 1 ÷ k &nbsp;·&nbsp; k = h A ÷ (m c)</p>
+
+The constant k combines the heat transfer coefficient h, surface area A, mass m and specific heat c of the object.
+
+## Example
+
+A cup of coffee at 90 °C in a 20 °C room with k = 0.05 per minute, after 10 minutes:
+
+- T = 20 + (90 − 20) × e<sup>−0.05 × 10</sup> = 20 + 70 × 0.6065 = **62.46 °C**
+- Half-time = ln 2 ÷ 0.05 = **13.86 min**
+- Time constant = 1 ÷ 0.05 = **20 min**
+
+## Cooling curve for the example (90 °C → 20 °C ambient, k = 0.05 /min)
+
+| Time | Temperature | Remaining difference |
+|---|---|---|
+| 0 min | 90.0 °C | 100.0% |
+| 5 min | 74.5 °C | 77.9% |
+| 10 min | 62.5 °C | 60.7% |
+| 15 min | 53.1 °C | 47.2% |
+| 20 min | 45.8 °C | 36.8% |
+| 30 min | 35.6 °C | 22.3% |
+| 45 min | 27.4 °C | 10.5% |
+| 60 min | 23.5 °C | 5.0% |
+| 90 min | 20.8 °C | 1.1% |
+
+After one time constant 36.8% of the difference remains; after five time constants less than 1% remains.
+
+## Notes
+
+- Stirring, wind or a fan raises h and therefore k — the cup cools faster.
+- The same exponential law describes a thermometer or [sensor reaching a step change](/engineering/sensor-response-time/), with τ as its time constant.
+- Forensic "time since death" estimates use the same principle, with empirically corrected k values.

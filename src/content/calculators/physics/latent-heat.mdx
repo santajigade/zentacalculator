@@ -1,0 +1,75 @@
+---
+title: Latent Heat Calculator (Q = mL) — Melting & Boiling Energy
+description: Calculate the heat needed to melt, freeze, boil or condense a substance with Q = mL — water, ethanol, ammonia and metals, or any specific latent heat.
+category: physics
+intro: "Latent heat is the energy a substance absorbs or releases while it changes phase at constant temperature — melting, freezing, boiling or condensing. This latent heat calculator applies Q = mL to find the energy for a given mass, or the mass that a given amount of energy can melt or evaporate."
+keywords: [latent heat calculator, q = ml calculator, latent heat of fusion, latent heat of vaporization, energy to melt ice, energy to boil water, specific latent heat]
+updated: 2026-10-30
+variables:
+  - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 2, min: 0 }
+  - id: L
+    label: Substance and phase change (specific latent heat)
+    default: 2257
+    options:
+      - { label: 'Water — melting / freezing (334 kJ/kg)', value: 334 }
+      - { label: 'Water — boiling at 100 °C (2,257 kJ/kg)', value: 2257 }
+      - { label: 'Ethanol — melting (108 kJ/kg)', value: 108 }
+      - { label: 'Ammonia — boiling at −33 °C (1,369 kJ/kg)', value: 1369 }
+      - { label: 'Aluminium — melting (397 kJ/kg)', value: 397 }
+      - { label: 'Copper — melting (209 kJ/kg)', value: 209 }
+      - { label: 'Iron — melting (247 kJ/kg)', value: 247 }
+      - { label: 'Lead — melting (23 kJ/kg)', value: 23 }
+  - { id: Q, label: Heat energy, family: energy, unit: kJ, imperialUnit: BTU, min: 0 }
+  - { id: Qk, label: Heat energy in kWh, suffix: kWh, min: 0 }
+equations:
+  - Q = m * L * 1000
+  - Qk = Q / 3.6e6
+faq:
+  - q: What is the formula for latent heat?
+    a: Q = m × L, where m is the mass and L the specific latent heat of fusion (melting) or vaporisation (boiling) in J/kg.
+  - q: How much energy does it take to boil 1 kg of water?
+    a: About 2,257 kJ (0.63 kWh) once it is already at 100 °C — more than five times the 419 kJ needed to heat it from 0 to 100 °C.
+  - q: Why does temperature stay constant during melting or boiling?
+    a: The added energy breaks the bonds between molecules instead of making them move faster, so the temperature holds until the phase change is complete.
+  - q: Is energy released when steam condenses?
+    a: Yes — exactly the same amount, 2,257 kJ per kg at 100 °C. This is why steam is such an effective heating medium and why steam burns are severe.
+related: [chemistry/specific-heat, engineering/heat-duty, physics/newtons-law-of-cooling, physics/heat-conduction]
+---
+
+## How to use the latent heat calculator
+
+Enter the **mass** and choose the **substance and phase change**. The calculator gives the heat that must be added (melting, boiling) or removed (freezing, condensing) in kJ and kWh. To find how much mass a given amount of heat can melt or evaporate, clear the mass and enter the energy.
+
+## Latent heat formula
+
+<p class="formula">Q = m × L</p>
+
+L<sub>f</sub> is the specific latent heat of fusion (solid ↔ liquid) and L<sub>v</sub> the specific latent heat of vaporisation (liquid ↔ gas). This calculation covers only the phase change; add the sensible heat m c ΔT from the [specific heat calculator](/chemistry/specific-heat/) to bring the substance to its melting or boiling point first.
+
+## Example
+
+Boiling off 2 kg of water that is already at 100 °C:
+
+- Q = 2 kg × 2,257 kJ/kg = **4,514 kJ**
+- = 4,514 ÷ 3,600 = **1.254 kWh**
+
+## Energy per kilogram for each phase change
+
+| Substance and change | Energy per kg | In kWh |
+|---|---|---|
+| Water — melting / freezing | 334 kJ | 0.09278 kWh |
+| Water — boiling at 100 °C | 2,257 kJ | 0.6269 kWh |
+| Ethanol — melting | 108 kJ | 0.03 kWh |
+| Ammonia — boiling at −33 °C | 1,369 kJ | 0.3803 kWh |
+| Aluminium — melting | 397 kJ | 0.1103 kWh |
+| Copper — melting | 209 kJ | 0.05806 kWh |
+| Iron — melting | 247 kJ | 0.06861 kWh |
+| Lead — melting | 23 kJ | 0.006389 kWh |
+
+Values are at the normal melting or boiling point at 1 atm; the latent heat of vaporisation of water falls as pressure (and boiling temperature) rises.
+
+## Notes
+
+- Melting ice absorbs as much energy as heating the same water by about 80 °C — the basis of ice storage cooling.
+- Steam tables give h<sub>fg</sub> for water at other pressures, for example about 2,015 kJ/kg at 10 bar(a).
+- Use the [heat duty calculator](/engineering/heat-duty/) when a stream changes temperature at a steady flow rate.

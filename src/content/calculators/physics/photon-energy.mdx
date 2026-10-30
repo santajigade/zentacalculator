@@ -1,0 +1,72 @@
+---
+title: Photon Energy Calculator (E = hf = hc/λ) in eV and Joules
+description: Calculate photon energy in electronvolts and joules from wavelength, plus frequency, energy per mole and photons per second for a given light power.
+category: physics
+intro: "A photon's energy depends only on its frequency, E = hf, or equivalently on its wavelength, E = hc/λ. This photon energy calculator converts a wavelength into energy in eV and joules, frequency, energy per mole and the number of photons a light source emits per second — useful for lasers, LEDs, [photodiodes and phototransistors](https://www.instrumentationblog.in/photodiode-vs-phototransistor-key-differences/) and photochemistry."
+keywords: [photon energy calculator, e = hf calculator, wavelength to ev, photon energy in ev, e = hc / lambda, photons per second calculator, planck equation]
+updated: 2026-10-30
+variables:
+  - { id: lam, label: Wavelength (nm), default: 532, min: 0 }
+  - { id: fT, label: Frequency (THz), min: 0 }
+  - { id: eV, label: Photon energy (eV), min: 0, decimals: 4 }
+  - { id: EJ, label: Photon energy (joules), family: energy, unit: J, min: 0 }
+  - { id: Em, label: Energy per mole of photons (kJ/mol), min: 0 }
+  - { id: P, label: Light (optical) power, family: power, unit: mW, default: 1, min: 0 }
+  - { id: N, label: Photons per second, min: 0 }
+equations:
+  - fT = 299792.458 / lam
+  - EJ = 6.62607015e-34 * fT * 1e12
+  - eV = EJ / 1.602176634e-19
+  - Em = EJ * 6.02214076e20
+  - N = P / EJ
+faq:
+  - q: How do I convert wavelength to photon energy in eV?
+    a: E (eV) = 1239.84 ÷ λ (nm). A 532 nm green laser photon carries about 2.33 eV.
+  - q: What is the energy of a photon in joules?
+    a: E = h f = h c ÷ λ, with h = 6.626 × 10⁻³⁴ J·s and c = 2.998 × 10⁸ m/s. A 532 nm photon has about 3.73 × 10⁻¹⁹ J.
+  - q: How many photons per second does a 1 mW laser emit?
+    a: Divide the power by the photon energy. A 1 mW green laser at 532 nm emits about 2.7 × 10¹⁵ photons per second.
+  - q: Why can't infrared light trigger some photodetectors?
+    a: A photon can only free an electron if its energy exceeds the material's band gap. Silicon (1.12 eV) responds up to about 1,100 nm; beyond that, detectors such as InGaAs are needed.
+related: [physics/wavelength-frequency, physics/de-broglie-wavelength, electronics/led-resistor, physics/snells-law]
+---
+
+## How to use the photon energy calculator
+
+Enter the **wavelength in nanometres**. The calculator returns the frequency in THz, the photon energy in electronvolts and joules and the energy of one mole of photons. Enter the **optical power** of a source to find how many photons it emits each second. To go from energy to wavelength, clear the wavelength and enter the energy in eV.
+
+## Photon energy formula
+
+<p class="formula">E = h f = h c ÷ λ</p>
+
+<p class="formula">E (eV) ≈ 1239.84 ÷ λ (nm) &nbsp;·&nbsp; N = P ÷ E</p>
+
+h = 6.62607015 × 10⁻³⁴ J·s (Planck constant), c = 299,792,458 m/s and 1 eV = 1.602176634 × 10⁻¹⁹ J — all exact SI values.
+
+## Example
+
+A 532 nm green laser with 1 mW output:
+
+- f = 299,792,458 ÷ 532 × 10⁻⁹ = **563.52 THz**
+- E = 6.626 × 10⁻³⁴ × 563.52 × 10¹² = **3.7339 × 10⁻¹⁹ J** = **2.3305 eV**
+- Per mole: **224.9 kJ/mol**
+- Photons per second = 0.001 ÷ 3.7339 × 10⁻¹⁹ = **2.678 × 10¹⁵**
+
+## Photon energy of common light sources
+
+| Source | Wavelength | Frequency | Energy | Per mole |
+|---|---|---|---|---|
+| UV-C germicidal lamp | 254 nm | 1180.3 THz | 4.881 eV | 471.0 kJ/mol |
+| UV-A / violet laser | 405 nm | 740.2 THz | 3.061 eV | 295.4 kJ/mol |
+| Blue LED | 450 nm | 666.2 THz | 2.755 eV | 265.8 kJ/mol |
+| Green laser | 532 nm | 563.5 THz | 2.331 eV | 224.9 kJ/mol |
+| Red laser | 650 nm | 461.2 THz | 1.907 eV | 184.0 kJ/mol |
+| Near-IR (sensors, remotes) | 850 nm | 352.7 THz | 1.459 eV | 140.7 kJ/mol |
+| Near-IR LED | 940 nm | 318.9 THz | 1.319 eV | 127.3 kJ/mol |
+| Telecom fibre | 1550 nm | 193.4 THz | 0.800 eV | 77.2 kJ/mol |
+
+## Notes
+
+- Shorter wavelength means higher energy: UV-C photons (about 4.9 eV) can break chemical bonds, which is why they disinfect.
+- An LED's forward voltage is roughly its photon energy in eV — a blue LED needs about 2.8–3.3 V, a red one about 1.8–2.2 V.
+- For a matter wave instead of light, use the [de Broglie wavelength calculator](/physics/de-broglie-wavelength/).

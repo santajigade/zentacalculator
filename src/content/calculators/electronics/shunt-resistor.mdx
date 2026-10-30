@@ -1,0 +1,66 @@
+---
+title: Shunt Resistor Calculator — Resistance, Voltage Drop & Power
+description: Calculate current shunt resistance from full-scale current and millivolt rating (75 mV, 50 mV), plus the voltage drop and power at any measured current.
+category: electronics
+intro: "A current shunt is a precise low-value resistor whose small voltage drop is proportional to the current through it. This shunt resistor calculator finds the resistance for a given full-scale current and millivolt rating, the drop and power at any current, and the reading you should expect — see [shunt resistors in instrumentation](https://www.instrumentationblog.in/shunt-resistors-in-instrumentation/), and [Hall-effect current sensors](https://www.instrumentationblog.in/hall-effect-current-sensor-acs712/) for an isolated alternative."
+keywords: [shunt resistor calculator, current shunt calculator, 75mv shunt calculator, shunt resistance formula, current sense resistor, ammeter shunt, shunt power dissipation]
+updated: 2026-10-30
+variables:
+  - { id: If, label: Full-scale (rated) current, family: current, unit: A, default: 50, min: 0 }
+  - { id: Vf, label: Full-scale voltage drop, family: voltage, unit: mV, default: 75, min: 0, help: 'Standard ratings: 50, 60, 75 and 100 mV.' }
+  - { id: I, label: Measured current, family: current, unit: A, default: 30, min: 0 }
+  - { id: R, label: Shunt resistance, family: resistance, unit: mohm, min: 0 }
+  - { id: Pf, label: Power at full-scale current, family: power, unit: W, min: 0 }
+  - { id: V, label: Voltage drop at measured current, family: voltage, unit: mV, min: 0 }
+  - { id: P, label: Power at measured current, family: power, unit: W, min: 0 }
+equations:
+  - R = Vf / If
+  - Pf = Vf * If
+  - V = I * R
+  - P = I^2 * R
+faq:
+  - q: How do I calculate shunt resistance?
+    a: R = full-scale voltage ÷ full-scale current. A 50 A, 75 mV shunt is 0.075 ÷ 50 = 1.5 mΩ.
+  - q: How do I convert the shunt voltage back to current?
+    a: I = V ÷ R. On a 50 A / 75 mV shunt, every 1.5 mV is 1 A — a 45 mV reading means 30 A. Clear the current and enter the measured millivolts.
+  - q: How much power does a shunt dissipate?
+    a: P = I² R = V × I. The 50 A / 75 mV shunt dissipates 3.75 W at full current. Many manufacturers rate shunts for continuous use at about two-thirds of nameplate current to limit heating and drift.
+  - q: Why do shunts have four terminals?
+    a: The large terminals carry the current; the small sense screws measure the voltage across the calibrated section only (Kelvin connection), so contact and lead resistance do not add error.
+related: [physics/ohms-law, electrical/wire-resistance, electronics/heat-sink, electronics/adc-resolution]
+---
+
+## How to use the shunt resistor calculator
+
+Enter the shunt's **rated current** and **full-scale millivolt drop** (from the nameplate, for example 50 A / 75 mV), and the **current** you are measuring. The calculator returns the shunt resistance, its power at full scale, and the voltage drop and power at your current. To design a current-sense resistor, enter the current and the drop your amplifier or ADC needs.
+
+## Shunt resistor formulas
+
+<p class="formula">R = V<sub>FS</sub> ÷ I<sub>FS</sub> &nbsp;·&nbsp; V = I × R &nbsp;·&nbsp; P = I² × R</p>
+
+## Example
+
+A 50 A / 75 mV DC shunt carrying 30 A:
+
+- R = 0.075 ÷ 50 = **1.50 mΩ**
+- Voltage drop = 30 × 1.50 mΩ = **45 mV**
+- Power = 30² × 0.0015 = **1.35 W** (full scale: **3.75 W**)
+
+## Resistance and full-scale power of standard shunts
+
+| Rated current | 75 mV shunt | Power at 75 mV | 50 mV shunt | Power at 50 mV |
+|---|---|---|---|---|
+| 5 A | 15 mΩ | 0.375 W | 10 mΩ | 0.25 W |
+| 10 A | 7.5 mΩ | 0.75 W | 5 mΩ | 0.5 W |
+| 20 A | 3.75 mΩ | 1.5 W | 2.5 mΩ | 1 W |
+| 50 A | 1.5 mΩ | 3.75 W | 1 mΩ | 2.5 W |
+| 100 A | 0.75 mΩ | 7.5 W | 0.5 mΩ | 5 W |
+| 200 A | 0.375 mΩ | 15 W | 0.25 mΩ | 10 W |
+| 500 A | 0.15 mΩ | 37.5 W | 0.1 mΩ | 25 W |
+| 1000 A | 0.075 mΩ | 75 W | 0.05 mΩ | 50 W |
+
+## Notes
+
+- Low-side shunts are easy to read but lift the load's ground; high-side shunts need a current-sense amplifier with enough common-mode range.
+- Manganin shunts have a very low temperature coefficient (about 15 ppm/°C), which keeps the reading stable as they warm.
+- Check the ADC resolution against the small shunt signal with the [ADC resolution calculator](/electronics/adc-resolution/).

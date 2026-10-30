@@ -1,0 +1,63 @@
+---
+title: Avogadro's Law Calculator (V₁/n₁ = V₂/n₂)
+description: Calculate gas volume or moles at constant temperature and pressure with Avogadro's law, plus the molar volume — with a table of molar volumes at STP and NTP.
+category: chemistry
+intro: "Avogadro's law states that, at the same temperature and pressure, equal volumes of gas contain equal numbers of molecules — so volume is proportional to the amount of gas. This Avogadro's law calculator finds the new volume when moles are added or removed, or the moles in a given volume, and shows the molar volume."
+keywords: [avogadros law calculator, v1/n1 = v2/n2, volume and moles of gas, molar volume calculator, avogadro gas law, gas volume moles, 22.4 l per mol]
+updated: 2026-10-30
+variables:
+  - { id: V1, label: Initial volume, family: volume, unit: L, imperialUnit: ft3, default: 6, min: 0 }
+  - { id: n1, label: Initial amount of gas, suffix: mol, default: 0.25, min: 0 }
+  - { id: V2, label: Final volume, family: volume, unit: L, imperialUnit: ft3, min: 0 }
+  - { id: n2, label: Final amount of gas, suffix: mol, default: 0.40, min: 0 }
+  - { id: Vm, label: Molar volume at these conditions, suffix: L/mol, min: 0 }
+equations:
+  - V1 / n1 = V2 / n2
+  - Vm = V1 / n1 * 1000
+faq:
+  - q: What is Avogadro's law?
+    a: At constant temperature and pressure, the volume of a gas is directly proportional to the number of moles — V₁ ÷ n₁ = V₂ ÷ n₂.
+  - q: What is the molar volume of a gas at STP?
+    a: 22.414 L/mol at 0 °C and 1 atm, or 22.711 L/mol at 0 °C and 1 bar (the current IUPAC STP). At 25 °C and 1 atm it is about 24.47 L/mol.
+  - q: Does Avogadro's law depend on the type of gas?
+    a: No. For ideal gases the molar volume is the same for hydrogen, oxygen or carbon dioxide at the same conditions; real gases deviate slightly at high pressure.
+  - q: How does Avogadro's law relate to the ideal gas law?
+    a: It is the ideal gas law PV = nRT with P and T held constant, so V ÷ n = RT ÷ P is a constant — the molar volume.
+related: [physics/ideal-gas-law, chemistry/moles, chemistry/charles-law, chemistry/gay-lussacs-law]
+---
+
+## How to use the Avogadro's law calculator
+
+Enter the **initial volume** and **amount of gas** in moles, and the **final amount**. The calculator gives the final volume at the same temperature and pressure, and the molar volume implied by your first state. Enter any three of the four values to solve for the remaining one.
+
+## Avogadro's law formula
+
+<p class="formula">V<sub>1</sub> ÷ n<sub>1</sub> = V<sub>2</sub> ÷ n<sub>2</sub> &nbsp;⇒&nbsp; V<sub>2</sub> = V<sub>1</sub> × n<sub>2</sub> ÷ n<sub>1</sub></p>
+
+<p class="formula">V<sub>m</sub> = V ÷ n = R T ÷ P</p>
+
+## Example
+
+A balloon holds 6.0 L containing 0.25 mol of gas. Gas is added until it holds 0.40 mol, at the same temperature and pressure:
+
+- V<sub>2</sub> = 6.0 × 0.40 ÷ 0.25 = **9.6 L**
+- Molar volume = 6.0 ÷ 0.25 = **24.0 L/mol** — about room temperature at 1 atm
+
+## Molar volume of an ideal gas
+
+| Conditions | Molar volume |
+|---|---|
+| 0 °C, 1 atm (STP, older definition) | 22.414 L/mol |
+| 0 °C, 1 bar (IUPAC STP) | 22.711 L/mol |
+| 15 °C, 1 atm | 23.645 L/mol |
+| 20 °C, 1 atm (NTP) | 24.055 L/mol |
+| 25 °C, 1 atm | 24.465 L/mol |
+| 25 °C, 1 bar (SATP) | 24.790 L/mol |
+
+Calculated from V<sub>m</sub> = RT ÷ P with R = 8.314462618 J/(mol·K).
+
+## Notes
+
+- Keep temperature and pressure the same in both states; if they change too, use the [ideal gas law calculator](/physics/ideal-gas-law/).
+- In gas reactions, volumes combine in the same ratios as moles — 2 L of H₂ reacts with 1 L of O₂.
+- Convert grams to moles with the [moles calculator](/chemistry/moles/).

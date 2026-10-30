@@ -1,0 +1,76 @@
+---
+title: Young's Modulus Calculator (Stress, Strain & Elongation)
+description: Calculate stress, strain and Young's modulus from force, cross-section, original length and extension — or find the elongation of a bar under load.
+category: physics
+intro: "Young's modulus measures how stiff a material is in tension or compression: the ratio of stress to strain in the elastic range. This Young's modulus calculator works out stress, strain, modulus and extension for a rod, wire or bar — the same relationship a [strain gauge](https://www.instrumentationblog.in/strain-gauge-working-principle/) uses to turn tiny deformations into force or pressure readings."
+keywords: [youngs modulus calculator, stress strain calculator, modulus of elasticity, elongation calculator, tensile stress formula, strain formula, e = stress / strain]
+updated: 2026-10-30
+variables:
+  - { id: F, label: Axial force, family: force, unit: kN, imperialUnit: lbf, default: 10 }
+  - { id: A, label: Cross-sectional area, family: area, unit: mm2, imperialUnit: in2, default: 78.5398, min: 0, help: 'A 10 mm diameter rod has an area of 78.54 mm².' }
+  - { id: L0, label: Original length, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
+  - { id: dL, label: Extension (change in length), family: length, unit: mm, imperialUnit: in, default: 1.25 }
+  - { id: s, label: Stress (σ), family: pressure, unit: MPa, imperialUnit: psi }
+  - { id: ep, label: Strain (ε) }
+  - { id: E, label: Young's modulus (E), family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+  - { id: EG, label: Young's modulus in GPa, suffix: GPa, min: 0 }
+equations:
+  - s = F / A
+  - ep = dL / L0
+  - E = s / ep
+  - EG = E / 1e9
+faq:
+  - q: How do you calculate Young's modulus?
+    a: E = stress ÷ strain = (F ÷ A) ÷ (ΔL ÷ L₀). A 10 kN load on a 10 mm steel rod 2 m long that stretches 1.25 mm gives about 204 GPa.
+  - q: How do I find the elongation of a bar?
+    a: ΔL = F L₀ ÷ (A E). Enter the force, area, length and the material's modulus, and clear the extension field.
+  - q: What is the difference between stress and strain?
+    a: Stress is force per unit area (Pa or MPa). Strain is the fractional change in length (dimensionless, often quoted in microstrain, µε = 10⁻⁶).
+  - q: When is Young's modulus valid?
+    a: Only in the linear elastic region — below the proportional limit, roughly below the yield strength. Beyond that, strain grows faster than stress and the deformation becomes permanent.
+related: [physics/hookes-law, electronics/strain-gauge, engineering/thermal-expansion, physics/force]
+---
+
+## How to use the Young's modulus calculator
+
+Enter the **axial force**, the **cross-sectional area** of the specimen, its **original length** and the measured **extension**. The calculator gives the stress, strain and Young's modulus in MPa and GPa. To predict the extension instead, enter the modulus of the material (for example 200,000 MPa for steel) and clear the extension field. Use a negative force and extension for compression.
+
+## Stress, strain and Young's modulus formulas
+
+<p class="formula">σ = F ÷ A &nbsp;·&nbsp; ε = ΔL ÷ L<sub>0</sub> &nbsp;·&nbsp; E = σ ÷ ε</p>
+
+<p class="formula">ΔL = F L<sub>0</sub> ÷ (A E)</p>
+
+## Example
+
+A 10 mm diameter steel rod, 2 m long, carries a 10 kN tensile load and stretches 1.25 mm:
+
+- A = π × 10² ÷ 4 = **78.54 mm²**
+- σ = 10,000 ÷ 78.54 mm² = **127.32 MPa**
+- ε = 1.25 ÷ 2000 = **0.000625** (625 µε)
+- E = 127.32 ÷ 0.000625 = **203,718 MPa ≈ 203.7 GPa** — typical for steel
+
+## Typical Young's modulus and strain at 100 MPa
+
+| Material | E | Strain at 100 MPa | Extension of 1 m at 100 MPa |
+|---|---|---|---|
+| Structural steel | 200 GPa | 500 µε | 0.5 mm |
+| Stainless steel | 193 GPa | 518 µε | 0.518 mm |
+| Cast iron | 110 GPa | 909 µε | 0.909 mm |
+| Aluminium alloy | 69 GPa | 1,449 µε | 1.45 mm |
+| Copper | 117 GPa | 855 µε | 0.855 mm |
+| Brass | 100 GPa | 1,000 µε | 1 mm |
+| Titanium alloy | 114 GPa | 877 µε | 0.877 mm |
+| Concrete | 30 GPa | 3,333 µε | 3.33 mm |
+| Glass | 70 GPa | 1,429 µε | 1.43 mm |
+| Wood (along grain) | 11 GPa | 9,091 µε | 9.09 mm |
+| Nylon | 3 GPa | 33,333 µε | 33.3 mm |
+| Rubber | 0.05 GPa | 2,000,000 µε | 2e+03 mm |
+
+Values are typical room-temperature figures; grades and alloys vary. Rubber and nylon would not stay elastic at 100 MPa — those rows only show how compliant they are.
+
+## Notes
+
+- 1 GPa = 1,000 MPa = 1 kN/mm². Most metals sit between 40 and 400 GPa.
+- The modulus falls as temperature rises — carbon steel loses roughly 5–10% of its room-temperature value by 300 °C.
+- For a spring-like view of the same bar, its stiffness is k = A E ÷ L<sub>0</sub>; see the [Hooke's law calculator](/physics/hookes-law/).

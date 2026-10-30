@@ -1,0 +1,71 @@
+---
+title: LM317 Calculator — Output Voltage, Resistors & Power Dissipation
+description: Calculate LM317 output voltage from R1 and R2 (or the R2 for a target voltage), plus dropout headroom and regulator power dissipation.
+category: electronics
+intro: "The LM317 is an adjustable three-terminal linear regulator that holds 1.25 V between its output and adjust pins, so two resistors set the output voltage. This LM317 calculator finds the output voltage or the R2 value you need, and the heat the regulator must dissipate — see [linear vs switching voltage regulators](https://www.instrumentationblog.in/linear-vs-switching-voltage-regulators/) and [LDO dropout voltage](https://www.instrumentationblog.in/ldo-regulator-dropout-voltage/) for when a linear regulator is the right choice."
+keywords: [lm317 calculator, lm317 resistor calculator, lm317 output voltage formula, lm317 r1 r2, adjustable voltage regulator calculator, lm317 power dissipation, linear regulator calculator]
+updated: 2026-10-30
+variables:
+  - { id: R1, label: R1 (output to adjust), family: resistance, unit: ohm, default: 240, min: 0, help: '240 Ω (about 5 mA through the divider) helps meet the minimum load current; 120 Ω is also common.' }
+  - { id: R2, label: R2 (adjust to ground), family: resistance, unit: ohm, default: 715, min: 0 }
+  - { id: Vi, label: Input voltage, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: IL, label: Load current, family: current, unit: A, default: 0.5, min: 0 }
+  - { id: Vo, label: Output voltage, family: voltage, unit: V, min: 0 }
+  - { id: Hd, label: Headroom Vin − Vout (keep ≥ 3 V), family: voltage, unit: V }
+  - { id: Pd, label: Regulator power dissipation, family: power, unit: W }
+equations:
+  - Vo = 1.25 * (1 + R2 / R1) + 0.00005 * R2
+  - Hd = Vi - Vo
+  - Pd = Hd * IL
+faq:
+  - q: What is the LM317 output voltage formula?
+    a: Vout = 1.25 V × (1 + R2 ÷ R1) + I_ADJ × R2. I_ADJ is about 50 µA, so the second term adds only a few tens of millivolts with R2 below a few kΩ.
+  - q: What R2 do I need for 5 V with R1 = 240 Ω?
+    a: R2 = R1 × (Vout ÷ 1.25 − 1) = 240 × 3 = 720 Ω. A 715 Ω (E96) resistor gives about 5.01 V once the adjust current is included.
+  - q: What is the LM317 dropout voltage?
+    a: The datasheet specifies the LM317 for an input–output difference of 3 V to 40 V; the actual dropout is roughly 1.5–2.5 V depending on load current and temperature. Design for at least 3 V of headroom, or use an LDO.
+  - q: How hot will the LM317 get?
+    a: It dissipates (Vin − Vout) × I_load. 3.5 W in a TO-220 needs a heat sink — without one, the package's roughly 50 °C/W thermal resistance would push the junction far past its limit.
+related: [electronics/heat-sink, electronics/voltage-divider, electronics/zener-resistor, electronics/buck-converter]
+---
+
+## How to use the LM317 calculator
+
+Enter **R1** (between the output and adjust pins) and **R2** (between adjust and ground), plus the **input voltage** and **load current**. The calculator returns the output voltage, the headroom between input and output and the power the regulator turns into heat. To design for a target voltage, clear R2 and enter the output voltage you want.
+
+## LM317 formula
+
+<p class="formula">V<sub>out</sub> = 1.25 V × (1 + R2 ÷ R1) + I<sub>ADJ</sub> × R2</p>
+
+<p class="formula">P<sub>D</sub> = (V<sub>in</sub> − V<sub>out</sub>) × I<sub>load</sub></p>
+
+V<sub>REF</sub> = 1.25 V (1.20–1.30 V between parts) and I<sub>ADJ</sub> ≈ 50 µA typical.
+
+## Example
+
+R1 = 240 Ω, R2 = 715 Ω, 12 V input, 0.5 A load:
+
+- V<sub>out</sub> = 1.25 × (1 + 715 ÷ 240) + 50 µA × 715 = **5.010 V**
+- Headroom = 12 − 5.010 = **6.99 V** — comfortably above 3 V
+- P<sub>D</sub> = 6.99 × 0.5 = **3.50 W** — needs a heat sink
+
+## R2 for common output voltages (R1 = 240 Ω)
+
+| Target | Exact R2 | Nearest E24 | Output with E24 R2 |
+|---|---|---|---|
+| 1.8 V | 106 Ω | 110 Ω | 1.83 V |
+| 3.3 V | 394 Ω | 390 Ω | 3.30 V |
+| 5 V | 720 Ω | 750 Ω | 5.19 V |
+| 6 V | 912 Ω | 910 Ω | 6.04 V |
+| 9 V | 1488 Ω | 1.5 kΩ | 9.14 V |
+| 12 V | 2064 Ω | 2 kΩ | 11.77 V |
+| 15 V | 2640 Ω | 2.7 kΩ | 15.45 V |
+| 24 V | 4368 Ω | 4.3 kΩ | 23.86 V |
+
+Output includes the 50 µA adjust current; use 1% resistors, or a trimmer in series with a smaller R2, for precise voltages.
+
+## Design tips
+
+- Fit a 0.1 µF input capacitor near the regulator and at least 1 µF on the output; 10 µF from adjust to ground improves ripple rejection.
+- Dropping a large voltage wastes power — a 24 V to 5 V regulator at 1 A turns 19 W into heat. Consider a [buck converter](/electronics/buck-converter/) instead.
+- Size the heat sink with the [heat sink calculator](/electronics/heat-sink/) using the P<sub>D</sub> above.

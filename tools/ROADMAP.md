@@ -106,7 +106,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Bearing L10 life
 - [ ] Press fit interference
 - [ ] Factor of safety
-- [ ] Young's modulus / stress-strain
+- [x] Young's modulus / stress-strain
 - [ ] Weld size (fillet throat)
 - [ ] Conveyor belt speed & capacity
 
@@ -171,12 +171,12 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Sallen–Key low-pass filter (ib)
 - [ ] LC filter / pi filter
 - [ ] RC snubber (ib)
-- [ ] Linear regulator power (LM317 resistors)
-- [ ] LM317 output voltage resistor calculator
+- [x] Linear regulator power (LM317 resistors)
+- [x] LM317 output voltage resistor calculator
 - [ ] Buck-boost / SEPIC (ib)
 - [ ] Flyback transformer turns ratio (ib)
-- [ ] Inductor design (turns for AL value)
-- [ ] Air-core coil inductance (Wheeler)
+- [x] Inductor design (turns for AL value)
+- [x] Air-core coil inductance (Wheeler)
 - [ ] Ohm's law for AC (power, apparent, reactive)
 - [ ] Decoupling capacitor selection (ib)
 - [ ] Crystal load capacitance
@@ -186,8 +186,8 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Photodiode transimpedance amplifier (ib)
 - [ ] Thermocouple amplifier gain
 - [ ] Battery internal resistance & runtime (Peukert)
-- [ ] Antenna length (λ/2, λ/4 dipole)
-- [ ] Free-space path loss
+- [x] Antenna length (λ/2, λ/4 dipole)
+- [x] Free-space path loss
 - [ ] Microstrip impedance (ib)
 - [ ] Skin effect in PCB / wire (ib)
 - [ ] Binary / hex / decimal / BCD converter (ib)
@@ -196,7 +196,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] UART baud rate error
 - [ ] RS-485 cable length & termination (ib)
 - [ ] Hall-effect current sensor scaling (ib)
-- [ ] Shunt resistor current measurement (ib)
+- [x] Shunt resistor current measurement (ib)
 
 ## Physics
 - [x] Impulse & momentum change
@@ -205,20 +205,20 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Inclined plane
 - [x] Angular velocity ↔ rpm
 - [x] Rotational kinetic energy & moment of inertia
-- [ ] Simple harmonic motion
+- [x] Simple harmonic motion
 - [x] Spring-mass frequency
-- [ ] Stress, strain & Young's modulus
+- [x] Stress, strain & Young's modulus
 - [ ] Bernoulli equation (ib)
-- [ ] Stokes' law / terminal velocity
-- [ ] Drag force
+- [x] Stokes' law / terminal velocity
+- [x] Drag force
 - [ ] Lift force
 - [ ] Thermal expansion of liquids (volumetric)
-- [ ] Latent heat
-- [ ] Newton's law of cooling
+- [x] Latent heat
+- [x] Newton's law of cooling
 - [ ] Stefan–Boltzmann radiation
 - [ ] Wien's law
-- [ ] Photon energy (E = hf)
-- [ ] de Broglie wavelength
+- [x] Photon energy (E = hf)
+- [x] de Broglie wavelength
 - [ ] E = mc²
 - [ ] Radioactive activity (Bq, Ci)
 - [ ] Magnetic field of a wire / solenoid
@@ -244,21 +244,21 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Normality
 - [ ] Solution preparation from solid (mass needed)
 - [ ] Stock dilution series
-- [ ] pOH / [H+] / [OH−]
-- [ ] Ka ↔ pKa, Kb ↔ pKb
-- [ ] pH of weak acid / weak base
+- [x] pOH / [H+] / [OH−]
+- [x] Ka ↔ pKa, Kb ↔ pKb
+- [x] pH of weak acid / weak base
 - [ ] Equilibrium constant (Kc, Kp)
 - [ ] Reaction rate & order
-- [ ] Activation energy from two rates
+- [x] Activation energy from two rates
 - [ ] Enthalpy of reaction (Hess)
 - [ ] Heat of combustion / calorimetry (bomb)
-- [ ] Faraday electrolysis (mass deposited)
+- [x] Faraday electrolysis (mass deposited)
 - [ ] Cell potential (E°cell)
 - [ ] Raoult's law (vapour pressure)
 - [ ] Henry's law (gas solubility)
 - [ ] Van der Waals equation
-- [ ] Gay-Lussac's law
-- [ ] Avogadro's law
+- [x] Gay-Lussac's law
+- [x] Avogadro's law
 - [ ] Water hardness (ppm CaCO₃)
 - [ ] TDS ↔ conductivity (ib)
 - [ ] Dissolved oxygen saturation

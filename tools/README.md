@@ -13,6 +13,7 @@ Create `tools/gen/batch<DATE>.py` (copy the pattern of `batchE1.py` / `batchE2.p
 - Frontmatter: `title` (keyword first, ≤ 60 chars ideally), `description` (120–160 chars), `category`, `intro` (2–3 sentences, contains the exact keyword phrase "X calculator", 1–3 in-text instrumentationblog.in links where relevant), `keywords`, `updated`, `variables`, `equations`, `faq` (3–4), `related` (existing ids only).
 - Body headings: `## How to use the X calculator`, `## X formula`, examples, reference tables computed in Python (never typed by hand), practical notes.
 - Variables are stored in **SI base units** (family units in `src/lib/units.ts`); percent family stores fractions; reserved ids: `pi`, `e`, `g0`, `data_*`.
+- Do **not** set `featured: true` on new calculators (the homepage picks its own popular lists).
 - Select option values must be unique (add 0.000001 to duplicates). YAML answers must not start with `%`, `*`, `&`, `!`, `|`, `>`.
 
 ### Linking rules for instrumentationblog.in (SEO)

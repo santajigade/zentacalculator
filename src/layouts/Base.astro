@@ -121,40 +121,49 @@ const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);
       try { localStorage.setItem('theme', root.dataset.theme); } catch {}
     });
 
-    // Instant search over /search.json (title + keywords + category)
+    // Instant search over /search.json (title + keywords + category) — header box and any [data-search] box
     type Item = { t: string; u: string; c: string; k: string };
-    const q = document.getElementById('q') as HTMLInputElement;
-    const list = document.getElementById('q-results') as HTMLUListElement;
-    let items: Item[] | null = null, sel = -1, hits: Item[] = [];
+    let items: Item[] | null = null;
     const load = async () => { if (!items) items = await (await fetch('/search.json')).json(); };
     const esc = (s: string) => s.replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]!));
-    const render = () => {
-      list.innerHTML = hits.map((h, i) =>
-        `<li role="option" aria-selected="${i === sel}"><a href="${h.u}"><span>${esc(h.t)}</span><small>${esc(h.c)}</small></a></li>`).join('')
-        || (q.value.trim() ? '<li class="search__none">No calculator found</li>' : '');
-      list.hidden = !list.innerHTML; q.setAttribute('aria-expanded', String(!list.hidden));
+    const bind = (q: HTMLInputElement, list: HTMLUListElement) => {
+      let sel = -1, hits: Item[] = [];
+      const render = () => {
+        list.innerHTML = hits.map((h, i) =>
+          `<li role="option" aria-selected="${i === sel}"><a href="${h.u}"><span>${esc(h.t)}</span><small>${esc(h.c)}</small></a></li>`).join('')
+          || (q.value.trim() ? '<li class="search__none">No calculator found</li>' : '');
+        list.hidden = !list.innerHTML; q.setAttribute('aria-expanded', String(!list.hidden));
+      };
+      q.addEventListener('focus', load);
+      q.addEventListener('input', async () => {
+        await load();
+        const words = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+        hits = words.length ? items!.map((it) => {
+          const t = it.t.toLowerCase(), hay = `${t} ${it.k} ${it.c.toLowerCase()}`;
+          if (!words.every((w) => hay.includes(w))) return null;
+          const score = words.reduce((s, w) => s + (t.startsWith(w) ? 3 : t.includes(w) ? 2 : 1), 0);
+          return { it, score };
+        }).filter(Boolean).sort((a, b) => b!.score - a!.score).slice(0, 8).map((x) => x!.it) : [];
+        sel = -1; render();
+      });
+      q.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown') { sel = Math.min(sel + 1, hits.length - 1); render(); e.preventDefault(); }
+        else if (e.key === 'ArrowUp') { sel = Math.max(sel - 1, 0); render(); e.preventDefault(); }
+        else if (e.key === 'Enter' && hits[Math.max(sel, 0)]) location.href = hits[Math.max(sel, 0)].u;
+        else if (e.key === 'Escape') { list.hidden = true; q.blur(); }
+      });
+      document.addEventListener('click', (e) => { if (!(e.target as Element).closest('.search')) list.hidden = true; });
     };
-    q.addEventListener('focus', load);
-    q.addEventListener('input', async () => {
-      await load();
-      const words = q.value.toLowerCase().split(/\s+/).filter(Boolean);
-      hits = words.length ? items!.map((it) => {
-        const t = it.t.toLowerCase(), hay = `${t} ${it.k} ${it.c.toLowerCase()}`;
-        if (!words.every((w) => hay.includes(w))) return null;
-        const score = words.reduce((s, w) => s + (t.startsWith(w) ? 3 : t.includes(w) ? 2 : 1), 0);
-        return { it, score };
-      }).filter(Boolean).sort((a, b) => b!.score - a!.score).slice(0, 8).map((x) => x!.it) : [];
-      sel = -1; render();
-    });
-    q.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowDown') { sel = Math.min(sel + 1, hits.length - 1); render(); e.preventDefault(); }
-      else if (e.key === 'ArrowUp') { sel = Math.max(sel - 1, 0); render(); e.preventDefault(); }
-      else if (e.key === 'Enter' && hits[Math.max(sel, 0)]) location.href = hits[Math.max(sel, 0)].u;
-      else if (e.key === 'Escape') { list.hidden = true; q.blur(); }
-    });
-    document.addEventListener('click', (e) => { if (!(e.target as Element).closest('.search')) list.hidden = true; });
+    const q = document.getElementById('q') as HTMLInputElement;
+    bind(q, document.getElementById('q-results') as HTMLUListElement);
+    document.querySelectorAll<HTMLElement>('[data-search]').forEach((box) =>
+      bind(box.querySelector('input')!, box.querySelector('ul')!));
+    // ?q= deep link (Google sitelinks search box)
+    const pq = new URLSearchParams(location.search).get('q');
+    const main = document.querySelector<HTMLInputElement>('[data-search] input') ?? q;
+    if (pq) { main.value = pq; main.dispatchEvent(new Event('input')); main.focus(); }
     document.addEventListener('keydown', (e) => {
-      if (e.key === '/' && !(e.target as Element).closest('input,textarea,select')) { e.preventDefault(); q.focus(); }
+      if (e.key === '/' && !(e.target as Element).closest('input,textarea,select')) { e.preventDefault(); main.focus(); }
     });
   </script>
 </body>

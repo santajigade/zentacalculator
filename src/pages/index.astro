@@ -1,12 +1,33 @@
 ---
 import Base from '../layouts/Base.astro';
+import Calculator from '../components/Calculator.tsx';
 import { SITE } from '../site.config.ts';
 import { CATEGORIES } from '../data/categories.ts';
-import { allCalcs, urlOf } from '../lib/calcs.ts';
+import { allCalcs, findCalc, urlOf } from '../lib/calcs.ts';
 
 const calcs = await allCalcs();
 const count = (slug: string) => calcs.filter((c) => c.data.category === slug).length;
-const featured = calcs.filter((c) => c.data.featured);
+const pick = (ids: string[]) => ids.map((id) => findCalc(calcs, id)).filter((c): c is NonNullable<typeof c> => !!c);
+
+// Popular, by audience (8 each)
+const TABS = [
+  { name: 'Engineers', ids: ['engineering/4-20ma-scaling', 'electrical/kw-to-amps', 'electrical/power-factor-correction', 'electrical/cable-voltage-drop', 'engineering/orifice-flow', 'engineering/pt100-resistance', 'physics/ohms-law', 'electronics/led-resistor'] },
+  { name: 'Students', ids: ['math/percentage', 'math/quadratic-equation', 'math/pythagorean-theorem', 'chemistry/molarity', 'statistics/standard-deviation', 'physics/suvat-equations', 'everyday-life/cgpa-to-percentage', 'math/fraction-to-decimal'] },
+  { name: 'Finance', ids: ['finance/emi', 'finance/sip', 'finance/income-tax-india', 'finance/gst', 'finance/compound-interest', 'finance/fd', 'finance/ppf', 'finance/cagr'] },
+  { name: 'Health', ids: ['health/bmi', 'health/bmr', 'health/body-fat', 'health/ideal-weight', 'health/macros', 'health/water-intake', 'health/calories-burned', 'other/due-date'] },
+].map((t) => ({ ...t, items: pick(t.ids) }));
+
+const QUICK = pick(['finance/emi', 'health/bmi', 'electrical/kw-to-amps', 'engineering/4-20ma-scaling', 'finance/gst', 'math/percentage', 'physics/ohms-law', 'conversion/kg-to-lb']);
+const short = (t: string) => t.replace(/\s*\(.*?\)\s*/g, ' ').replace(/\s*(Calculator|Converter)\b.*$/, '').trim();
+
+// Newest calculators (from the daily batches)
+const fresh = [...calcs].sort((a, b) => +b.data.updated - +a.data.updated || a.data.title.localeCompare(b.data.title)).slice(0, 12);
+
+// Live demo
+const demo = findCalc(calcs, 'physics/ohms-law')!;
+const d = demo.data;
+const demoSpec = { title: d.title, variables: d.variables, equations: d.equations, freedom: d.freedom, chart: undefined, dataset: d.dataset };
+
 const schema = [{
   '@context': 'https://schema.org', '@type': 'Organization', name: SITE.name, url: SITE.url, logo: `${SITE.url}/apple-touch-icon.png`,
   founder: { '@type': 'Person', name: 'Santaji Gadepatil', url: `${SITE.url}/author/santaji-gadepatil/`, sameAs: ['https://www.linkedin.com/in/santaji-gadepatil6680/'] },
@@ -14,36 +35,81 @@ const schema = [{
   '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: SITE.url,
   potentialAction: { '@type': 'SearchAction', target: `${SITE.url}/?q={query}`, 'query-input': 'required name=query' },
 }];
+const total = Math.floor(calcs.length / 10) * 10;
 ---
 <Base title="Free Online Calculators for Engineering, Science, Math & Finance" description={`${calcs.length}+ free online calculators: electrical, electronics, engineering, physics, chemistry, math, statistics, unit conversion, finance and health. Solve for any value with steps and charts.`} schema={schema}>
-  <section class="hero wrap">
-    <h1>Calculators that solve <em>for any value</em></h1>
-    <p>Fill in whatever you know. We calculate the rest, show every step, and plot how the result changes.</p>
-    <div class="stats">
-      <div><b>{calcs.length}</b><span>calculators</span></div>
-      <div><b>{CATEGORIES.length}</b><span>categories</span></div>
-      <div><b>0</b><span>sign-ups needed</span></div>
+  <section class="hx wrap">
+    <div class="hx__text">
+      <h1>Calculators that solve <em>for any value</em></h1>
+      <p>Fill in what you know — we calculate the rest and show the working. {total}+ free calculators, no sign-up.</p>
+      <div class="search hx__search" data-search role="search">
+        <input type="search" placeholder={`Search ${calcs.length} calculators… e.g. EMI, kW to amps, BMI`} autocomplete="off" aria-label="Search calculators" aria-expanded="false" />
+        <ul class="search__results" role="listbox" hidden></ul>
+      </div>
+      <p class="hx__chips">{QUICK.map((c) => <a href={urlOf(c)}>{short(c.data.title)}</a>)}</p>
+      <div class="hx__stats">
+        <div><b>{total}+</b><span>calculators</span></div>
+        <div><b>{CATEGORIES.length}</b><span>categories</span></div>
+        <div><b>Daily</b><span>new tools</span></div>
+      </div>
+    </div>
+    <div class="hx__demo panel">
+      <div class="hx__demohead"><b>Try it: Ohm's law</b><a href={urlOf(demo)}>Open full calculator →</a></div>
+      <Calculator client:visible spec={demoSpec} path={urlOf(demo)} embed />
     </div>
   </section>
 
   <div class="wrap">
-    {featured.length > 0 && <>
-      <h2 class="section-title">Popular right now</h2>
-      <ul class="calc-list">
-        {featured.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}
-      </ul>
-    </>}
-
-    <h2 class="section-title">Browse by category</h2>
-    <div class="cat-grid">
-      {CATEGORIES.map((c) => (
-        <a class="cat-card" href={`/${c.slug}/`} style={`--c:${c.color}`}>
-          <span class="cat-card__icon" aria-hidden="true">{c.icon}</span>
-          <h3>{c.name}</h3>
-          <p>{c.blurb}</p>
-          <span class="cat-card__n">{count(c.slug)} calculator{count(c.slug) === 1 ? "" : "s"} →</span>
-        </a>
+    <section>
+      <div class="hs__head">
+        <h2 class="hs__title">Popular calculators</h2>
+        <div class="tabs" role="tablist">
+          {TABS.map((t, i) => <button type="button" role="tab" class="tabs__b" aria-selected={i === 0 ? 'true' : 'false'} data-tab={i}>{t.name}</button>)}
+        </div>
+      </div>
+      {TABS.map((t, i) => (
+        <ul class="mini-list" role="tabpanel" data-panel={i} hidden={i !== 0}>
+          {t.items.map((c) => <li><a href={urlOf(c)}><b>{short(c.data.title)}</b><span>{c.data.description}</span></a></li>)}
+        </ul>
       ))}
-    </div>
+    </section>
+
+    <section>
+      <h2 class="hs__title">Browse by category</h2>
+      <div class="cat-mini">
+        {CATEGORIES.map((c) => (
+          <a href={`/${c.slug}/`} style={`--c:${c.color}`}>
+            <span class="cat-mini__i" aria-hidden="true">{c.icon}</span>
+            <span><b>{c.name}</b><small>{count(c.slug)} calculators</small></span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <div class="hs__head"><h2 class="hs__title">New this week</h2><span class="muted">Fresh calculators added every day</span></div>
+      <div class="strip">
+        {fresh.map((c) => <a href={urlOf(c)}><small>{CATEGORIES.find((x) => x.slug === c.data.category)?.name}</small><b>{short(c.data.title)}</b></a>)}
+      </div>
+    </section>
+
+    <section class="why">
+      <div><span aria-hidden="true">🔄</span><b>Solve for any value</b><p>Every field can be an input or the answer — enter what you know.</p></div>
+      <div><span aria-hidden="true">🧮</span><b>See the working</b><p>Formulas, steps and worked examples on every page.</p></div>
+      <div><span aria-hidden="true">🌍</span><b>Any units</b><p>Metric and imperial, with your local currency and number format.</p></div>
+      <div><span aria-hidden="true">✅</span><b>Free, no sign-up</b><p>Works on any phone or computer, instantly.</p></div>
+    </section>
+
+    <section class="hseo">
+      <h2>Free online calculators for engineering, science, math and everyday life</h2>
+      <p>Zenta Calculator brings together {calcs.length} free calculators — from <a href="/electrical/">electrical</a>, <a href="/electronics/">electronics</a> and <a href="/engineering/">instrumentation and process engineering</a> to <a href="/physics/">physics</a>, <a href="/chemistry/">chemistry</a>, <a href="/math/">math</a> and <a href="/statistics/">statistics</a>, plus <a href="/finance/">finance</a>, <a href="/health/">health</a> and <a href="/conversion/">unit conversion</a>. Each calculator explains the formula, shows a worked example and lets you solve for any unknown.</p>
+    </section>
   </div>
+
+  <script>
+    document.querySelectorAll<HTMLButtonElement>('.tabs__b').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll<HTMLButtonElement>('.tabs__b').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+      document.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== b.dataset.tab));
+    }));
+  </script>
 </Base>

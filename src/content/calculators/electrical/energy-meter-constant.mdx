@@ -1,0 +1,71 @@
+---
+title: Energy Meter Constant Calculator (imp/kWh to Load kW)
+description: Calculate load power from an energy meter's pulse LED or disc using its meter constant (imp/kWh or rev/kWh), and check the meter's percentage error.
+category: electrical
+intro: "Every electricity meter has a constant, printed as imp/kWh (pulses) or rev/kWh (disc turns), that says how many pulses mean one kilowatt-hour. This energy meter constant calculator converts pulses counted over a time into load power and energy, and compares it with a reference load to give the meter error — useful alongside an [electrical energy consumption calculation](https://www.instrumentationblog.in/electrical-energy-consumption-calculation/)."
+keywords: [energy meter constant calculator, imp/kwh calculator, meter pulse to kw, energy meter testing, rev/kwh calculator, meter error calculation, kwh meter pulse calculation]
+updated: 2026-11-02
+variables:
+  - { id: C, label: Meter constant, suffix: imp/kWh, default: 3200, min: 0, help: 'For a disc meter, enter the rev/kWh value and count revolutions.' }
+  - { id: n, label: Pulses (or revolutions) counted, default: 32, min: 0 }
+  - { id: t, label: Counting time, family: seconds, unit: s, default: 30, min: 0 }
+  - { id: Pr, label: Reference (actual) load, family: power, unit: kW, default: 1.19, min: 0, help: 'From a calibrated wattmeter or a known load.' }
+  - { id: P, label: Load power indicated by the meter, family: power, unit: kW, min: 0 }
+  - { id: E, label: Energy recorded, family: energy, unit: Wh, min: 0 }
+  - { id: err, label: Meter error, family: percent, unit: '%' }
+  - { id: ti, label: Time between pulses at reference load, family: seconds, unit: s, min: 0 }
+equations:
+  - P = n * 3600000 / (C * t)
+  - E = n * 3600000 / C
+  - err = (P - Pr) / Pr
+  - ti = 3600000 / (C * Pr)
+faq:
+  - q: How do I calculate load from the meter's pulse LED?
+    a: P (kW) = 3,600 × pulses ÷ (meter constant × seconds). With 3,200 imp/kWh, 32 pulses in 30 s means 1.2 kW.
+  - q: What does 3200 imp/kWh mean?
+    a: The LED flashes 3,200 times for every kilowatt-hour recorded, so each pulse is 1 ÷ 3,200 kWh = 0.3125 Wh.
+  - q: How do I check if my energy meter is accurate?
+    a: Run a known, steady load (a heater measured with a calibrated wattmeter), count pulses for at least a minute and compare. Error = (meter reading − actual) ÷ actual. Class 1 meters must be within ±1%.
+  - q: What about CT-operated meters?
+    a: For a meter on current and voltage transformers, the constant refers to the secondary side. Multiply the result by the CT ratio × PT ratio to get the primary power.
+related: [electrical/load-factor, electrical/amps-to-watts, electrical/kw-to-amps, electrical/power-factor-correction]
+---
+
+## How to use the energy meter constant calculator
+
+Enter the **meter constant** from the nameplate, the number of **pulses** (or disc revolutions) you counted and the **time** you counted for. The calculator returns the load power the meter is registering and the energy recorded. Add a **reference load** from a calibrated instrument to see the meter's percentage error and the expected time between pulses.
+
+## Meter constant formulas
+
+<p class="formula">P (kW) = 3600 × n ÷ (C × t) &nbsp;·&nbsp; E (kWh) = n ÷ C</p>
+
+<p class="formula">Error = (P<sub>meter</sub> − P<sub>actual</sub>) ÷ P<sub>actual</sub> × 100%</p>
+
+## Example
+
+A 3,200 imp/kWh meter flashes 32 times in 30 s while a reference wattmeter reads 1.19 kW:
+
+- P = 3600 × 32 ÷ (3200 × 30) = **1.20 kW**
+- Energy recorded = 32 ÷ 3200 kWh = **10 Wh**
+- Error = (1.20 − 1.19) ÷ 1.19 = **+0.84%** (the meter reads high)
+- At 1.19 kW the LED should flash every **0.945 s**
+
+## Time between pulses
+
+| Meter constant | at 100 W | at 1 kW | at 5 kW |
+|---|---|---|---|
+| 100 imp/kWh | 360 s | 36 s | 7.2 s |
+| 400 imp/kWh | 90 s | 9 s | 1.8 s |
+| 800 imp/kWh | 45 s | 4.5 s | 0.9 s |
+| 1,000 imp/kWh | 36 s | 3.6 s | 0.72 s |
+| 1,600 imp/kWh | 22.5 s | 2.25 s | 0.45 s |
+| 3,200 imp/kWh | 11.2 s | 1.12 s | 0.225 s |
+| 6,400 imp/kWh | 5.62 s | 0.562 s | 0.113 s |
+| 10,000 imp/kWh | 3.6 s | 0.36 s | 0.072 s |
+
+## Testing tips
+
+- Count for at least 60 s or 20 pulses to keep timing error below about 1%.
+- Use a purely resistive, steady load; motor or switching loads fluctuate.
+- For three-phase meters, apply a balanced load or test each element separately.
+- To turn monthly kWh into load factor and demand figures, use the [load factor calculator](/electrical/load-factor/).

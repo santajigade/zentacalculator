@@ -1,0 +1,74 @@
+---
+title: Parallel Plate Capacitor Calculator (C = ε₀εrA/d)
+description: Calculate the capacitance of a parallel plate capacitor from plate area, gap and dielectric constant — plus stored charge, energy and electric field.
+category: physics
+intro: "Two conducting plates separated by an insulator form a capacitor whose value depends only on the plate area, the gap and the permittivity of the material between them. This parallel plate capacitor calculator gives the capacitance, charge, stored energy and electric field — see [what capacitance is](https://www.instrumentationblog.in/what-is-capacitance/), and how the same principle is used in [capacitance level measurement](https://www.instrumentationblog.in/capacitance-level-measurement/)."
+keywords: [parallel plate capacitor calculator, capacitance calculator, c = e0 er a / d, dielectric constant calculator, plate capacitor formula, capacitance of two plates, electric field between plates]
+updated: 2026-11-02
+variables:
+  - { id: er, label: Relative permittivity (dielectric constant εr), default: 1, min: 0 }
+  - { id: A, label: Plate area (overlap), family: area, unit: cm2, imperialUnit: in2, default: 100, min: 0 }
+  - { id: d, label: Plate separation, family: length, unit: mm, imperialUnit: in, default: 1, min: 0 }
+  - { id: V, label: Applied voltage, family: voltage, unit: V, default: 100, min: 0 }
+  - { id: C, label: Capacitance, family: capacitance, unit: pF, min: 0 }
+  - { id: Q, label: Stored charge, suffix: nC, min: 0 }
+  - { id: W, label: Stored energy, suffix: µJ, min: 0 }
+  - { id: Ef, label: Electric field between the plates, suffix: kV/mm, min: 0 }
+equations:
+  - C = 8.8541878128e-12 * er * A / d
+  - Q = C * V * 1e9
+  - W = 0.5 * C * V^2 * 1e6
+  - Ef = V / d / 1e6
+faq:
+  - q: What is the formula for a parallel plate capacitor?
+    a: C = ε₀ εr A ÷ d, with ε₀ = 8.854 × 10⁻¹² F/m, A the overlapping plate area in m² and d the gap in metres. 100 cm² plates 1 mm apart in air give 88.5 pF.
+  - q: How does the dielectric change the capacitance?
+    a: Capacitance is multiplied by the relative permittivity εr. Filling the same gap with FR-4 (εr ≈ 4.4) gives about 390 pF instead of 88.5 pF.
+  - q: What limits the voltage of a capacitor?
+    a: The dielectric strength. Dry air breaks down at about 3 kV/mm, so a 1 mm air gap arcs at around 3 kV; good film dielectrics withstand hundreds of kV/mm.
+  - q: Does the formula include fringing?
+    a: No. It assumes the gap is small compared with the plate size. Fringing fields at the edges add a little extra capacitance when the gap is not small.
+related: [electronics/capacitor-energy, electronics/capacitors-series-parallel, physics/coulombs-law, electronics/reactance]
+---
+
+## How to use the parallel plate capacitor calculator
+
+Enter the **dielectric constant** of the material between the plates (1 for air), the **overlapping plate area**, the **separation** and the **applied voltage**. The calculator returns the capacitance, the charge on each plate, the stored energy and the electric field in the gap. To design for a target value, enter the capacitance and clear the area or the gap.
+
+## Parallel plate capacitor formulas
+
+<p class="formula">C = ε<sub>0</sub> ε<sub>r</sub> A ÷ d &nbsp;·&nbsp; Q = C V &nbsp;·&nbsp; W = ½ C V² &nbsp;·&nbsp; E = V ÷ d</p>
+
+ε<sub>0</sub> = 8.8541878128 × 10⁻¹² F/m.
+
+## Example
+
+Two 100 cm² plates 1 mm apart in air, charged to 100 V:
+
+- C = 8.854 × 10⁻¹² × 1 × 0.01 ÷ 0.001 = **88.54 pF**
+- Q = 88.54 pF × 100 V = **8.854 nC**
+- W = ½ × 88.54 pF × 100² = **0.4427 µJ**
+- E = 100 V ÷ 1 mm = **0.1 kV/mm** — well below air's breakdown of about 3 kV/mm
+
+## Capacitance with different dielectrics
+
+Same plates as the example (100 cm², 1 mm gap):
+
+| Dielectric | εr | Capacitance |
+|---|---|---|
+| Vacuum / air | 1 | 88.5 pF |
+| PTFE (Teflon) | 2.1 | 185.9 pF |
+| Polypropylene | 2.2 | 194.8 pF |
+| Paper (dry) | 3.5 | 309.9 pF |
+| FR-4 PCB laminate | 4.4 | 389.6 pF |
+| Glass | 6 | 531.3 pF |
+| Mica | 6.5 | 575.5 pF |
+| Water (20 °C) | 80 | 7,083.4 pF |
+
+Dielectric constants are typical values; they vary with frequency, temperature and grade.
+
+## Applications
+
+- **Capacitive level probes** measure the change in capacitance as a liquid with higher εr replaces air between a probe and the tank wall.
+- **Touch sensors and proximity switches** detect the extra capacitance of a finger or object.
+- **PCB planes**: a power–ground plane pair 0.2 mm apart in FR-4 gives about 19 pF per cm².

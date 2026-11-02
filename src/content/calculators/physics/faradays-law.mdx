@@ -1,0 +1,66 @@
+---
+title: Faraday's Law Calculator (Induced EMF)
+description: Calculate the EMF induced in a coil by a changing magnetic flux with Faraday's law, ε = N ΔΦ/Δt — plus the flux change and induced current.
+category: physics
+intro: "Faraday's law of induction says that a changing magnetic flux through a coil induces a voltage proportional to the number of turns and the rate of change. This Faraday's law calculator works out the change in flux, the average induced EMF and the resulting current — see [Faraday's law of electromagnetic induction](https://www.instrumentationblog.in/faradays-law-electromagnetic-induction/) and [Lenz's law](https://www.instrumentationblog.in/lenzs-law-electromagnetic-induction/) for the direction of the induced current."
+keywords: [faradays law calculator, induced emf calculator, electromagnetic induction calculator, emf = n dphi/dt, magnetic flux calculator, induced voltage in a coil, lenz's law]
+updated: 2026-11-02
+variables:
+  - { id: N, label: Number of turns, default: 200, min: 0 }
+  - { id: A, label: Coil area, family: area, unit: cm2, imperialUnit: in2, default: 50, min: 0 }
+  - { id: B1, label: Initial flux density, suffix: T, default: 0 }
+  - { id: B2, label: Final flux density, suffix: T, default: 0.4 }
+  - { id: dt, label: Time for the change, family: seconds, unit: ms, default: 20, min: 0 }
+  - { id: R, label: Circuit resistance, family: resistance, unit: ohm, default: 10, min: 0 }
+  - { id: dPhi, label: Change in flux (ΔΦ), suffix: Wb }
+  - { id: emf, label: Average induced EMF, family: voltage, unit: V, min: 0 }
+  - { id: Ii, label: Induced current, family: current, unit: A, min: 0 }
+equations:
+  - dPhi = A * (B2 - B1)
+  - emf = N * abs(dPhi) / dt
+  - Ii = emf / R
+faq:
+  - q: What is Faraday's law?
+    a: The induced EMF equals the rate of change of magnetic flux linkage, ε = −N dΦ/dt. The minus sign (Lenz's law) means the induced current opposes the change that caused it.
+  - q: What is magnetic flux?
+    a: Φ = B × A × cos θ, in webers (1 Wb = 1 T·m²), where θ is the angle between the field and the normal to the coil. This calculator assumes the field is perpendicular to the coil (cos θ = 1).
+  - q: How can I increase the induced voltage?
+    a: Use more turns, a larger coil area, a stronger field or a faster change. Doubling any one of them doubles the EMF.
+  - q: What about a conductor moving through a field?
+    a: A straight conductor of length L moving at speed v across a field B has a motional EMF ε = B L v — the same law applied to the area it sweeps.
+related: [physics/magnetic-field, physics/lorentz-force, electronics/inductor-energy, electrical/transformer-turns-ratio]
+---
+
+## How to use the Faraday's law calculator
+
+Enter the coil's **number of turns** and **area**, the **initial** and **final** magnetic flux density through it, the **time** over which the change happens and the **resistance** of the circuit. The calculator returns the change in flux, the average induced EMF (magnitude) and the current that flows.
+
+## Faraday's law formula
+
+<p class="formula">ε = −N × ΔΦ ÷ Δt &nbsp;·&nbsp; ΔΦ = A × (B<sub>2</sub> − B<sub>1</sub>) &nbsp;·&nbsp; I = ε ÷ R</p>
+
+## Example
+
+A 200-turn coil of 50 cm² is placed in a field that rises from 0 to 0.4 T in 20 ms; the circuit resistance is 10 Ω:
+
+- ΔΦ = 0.005 m² × 0.4 T = **0.0020 Wb**
+- ε = 200 × 0.0020 ÷ 0.02 = **20 V**
+- I = 20 ÷ 10 = **2 A**
+
+## Induced EMF for a 1 mWb flux change
+
+| Turns | in 10 ms | in 100 ms | in 1 s |
+|---|---|---|---|
+| 1 | 0.1 V | 0.01 V | 0.001 V |
+| 10 | 1 V | 0.1 V | 0.01 V |
+| 50 | 5 V | 0.5 V | 0.05 V |
+| 100 | 10 V | 1 V | 0.1 V |
+| 500 | 50 V | 5 V | 0.5 V |
+| 1000 | 100 V | 10 V | 1 V |
+
+## Where Faraday's law is used
+
+- **Generators and alternators**: a rotating coil sees a sinusoidal flux, giving an EMF of N Φ<sub>max</sub> ω.
+- **Transformers**: the same changing flux links both windings, so the voltages divide in the turns ratio — see the [transformer turns ratio calculator](/electrical/transformer-turns-ratio/).
+- **Magnetic flow meters**: a conducting liquid moving through a magnetic field produces a voltage proportional to its velocity (ε = B D v).
+- **Inductive kick**: switching off a coil collapses its flux quickly and induces a large voltage spike.

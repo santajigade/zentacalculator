@@ -1,0 +1,61 @@
+---
+title: Generator Frequency Calculator (Poles & RPM, f = PN/120)
+description: Calculate the output frequency of an alternator from its number of poles and speed — or the speed in rpm needed for 50 Hz or 60 Hz.
+category: electrical
+intro: "A synchronous generator's output frequency is fixed by how fast its rotor turns and how many magnetic poles it has. This generator frequency calculator applies f = P × N ÷ 120 to find the frequency from the speed, or the speed a prime mover must run at for 50 Hz or 60 Hz — see [how an alternator works](https://www.instrumentationblog.in/alternator-working-principle-explained/)."
+keywords: [generator frequency calculator, alternator frequency formula, f = pn/120 calculator, generator rpm calculator, number of poles calculator, synchronous speed generator, 50 hz generator speed]
+updated: 2026-11-02
+variables:
+  - { id: p, label: Number of poles, default: 4, min: 2, help: 'Always an even number — poles come in north–south pairs.' }
+  - { id: N, label: Rotor speed, suffix: rpm, default: 1500, min: 0 }
+  - { id: f, label: Output frequency, family: frequency, unit: Hz, min: 0 }
+  - { id: pp, label: Pole pairs, min: 0 }
+equations:
+  - f = p * N / 120
+  - pp = p / 2
+faq:
+  - q: How do you calculate generator frequency?
+    a: f = P × N ÷ 120, with P the number of poles and N the speed in rpm. A 4-pole alternator at 1,500 rpm gives 50 Hz; at 1,800 rpm it gives 60 Hz.
+  - q: Why is the formula divided by 120?
+    a: Each pole pair produces one electrical cycle per revolution, so f = (P ÷ 2) × (N ÷ 60) = P N ÷ 120.
+  - q: What speed does a 2-pole generator run at?
+    a: 3,000 rpm for 50 Hz and 3,600 rpm for 60 Hz — the usual speed of steam- and gas-turbine generators.
+  - q: Why do hydro generators have so many poles?
+    a: Water turbines turn slowly (often 100–500 rpm), so the generator needs many poles to reach 50 or 60 Hz. A 48-pole machine runs at 125 rpm for 50 Hz.
+related: [electrical/induction-motor-slip, electrical/generator-size, electrical/generator-power-angle, physics/angular-velocity]
+---
+
+## How to use the generator frequency calculator
+
+Enter the **number of poles** and the **rotor speed** in rpm to get the output frequency. To find the speed for a target frequency, enter the frequency and clear the speed field; to find the pole count for a turbine speed, clear the poles field.
+
+## Generator frequency formula
+
+<p class="formula">f = P × N ÷ 120 &nbsp;·&nbsp; N = 120 f ÷ P</p>
+
+## Example
+
+A 4-pole diesel generator set running at 1,500 rpm:
+
+- f = 4 × 1500 ÷ 120 = **50 Hz**
+- At 1,800 rpm the same machine gives 4 × 1800 ÷ 120 = **60 Hz**
+
+## Synchronous speed by number of poles
+
+| Poles | Pole pairs | Speed for 50 Hz | Speed for 60 Hz | Typical machines |
+|---|---|---|---|---|
+| 2 | 1 | 3,000 rpm | 3,600 rpm | Steam / gas turbine generators |
+| 4 | 2 | 1,500 rpm | 1,800 rpm | Diesel gensets, turbo sets |
+| 6 | 3 | 1,000 rpm | 1,200 rpm | Medium-speed diesel |
+| 8 | 4 | 750 rpm | 900 rpm | Medium-speed diesel, small hydro |
+| 12 | 6 | 500 rpm | 600 rpm | Gas engines, hydro |
+| 16 | 8 | 375 rpm | 450 rpm | Low-speed engines, hydro |
+| 24 | 12 | 250 rpm | 300 rpm | Hydro |
+| 48 | 24 | 125 rpm | 150 rpm | Low-head hydro |
+| 96 | 48 | 62.5 rpm | 75 rpm | Very low-head hydro |
+
+## Notes
+
+- The governor holds speed — and therefore frequency — constant as load changes; a 2% droop governor lets a 50 Hz set fall to 49 Hz at full load.
+- Induction motors run slightly slower than synchronous speed; see the [induction motor slip calculator](/electrical/induction-motor-slip/).
+- Before paralleling with the grid, a generator must match its frequency, voltage and phase angle.

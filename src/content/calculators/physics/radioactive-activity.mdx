@@ -1,0 +1,77 @@
+---
+title: Radioactive Activity Calculator (Bq & Ci from Mass)
+description: Calculate the activity of a radioactive sample in becquerels and curies from its mass, molar mass and half-life — and the activity left after time.
+category: physics
+intro: "Activity is the number of nuclei that decay per second, A = λN, and is measured in becquerels (Bq) or curies (Ci). This radioactive activity calculator works out the decay constant, the number of atoms and the activity of a sample from its mass and half-life, plus how much activity remains later — useful for the sealed Cs-137 and Co-60 sources used in [nuclear level measurement](https://www.instrumentationblog.in/types-of-nuclear-level-measurement/)."
+keywords: [radioactive activity calculator, becquerel calculator, curie calculator, specific activity calculator, a = lambda n, decay constant calculator, activity from half life]
+updated: 2026-11-02
+variables:
+  - { id: m, label: Mass of the radionuclide, family: mass, unit: mg, default: 1, min: 0 }
+  - { id: M, label: Molar mass (g/mol), default: 59.9338, min: 0, help: 'Close to the mass number: Co-60 = 59.93, Cs-137 = 136.91, Am-241 = 241.06.' }
+  - { id: th, label: Half-life, family: time, unit: yr, default: 5.2714, min: 0 }
+  - { id: t, label: Elapsed time, family: time, unit: yr, default: 10, min: 0 }
+  - { id: lam, label: Decay constant (λ), suffix: 1/s, min: 0 }
+  - { id: N, label: Number of atoms, min: 0 }
+  - { id: A0, label: Activity now, suffix: Bq, min: 0 }
+  - { id: Ci, label: Activity now in curies, suffix: Ci, min: 0 }
+  - { id: At, label: Activity after elapsed time, suffix: Bq, min: 0 }
+  - { id: Cit, label: Activity after elapsed time in curies, suffix: Ci, min: 0 }
+equations:
+  - lam = ln(2) / (th * 31557600)
+  - N = m * 1000 / M * 6.02214076e23
+  - A0 = lam * N
+  - Ci = A0 / 3.7e10
+  - At = A0 * 2^(-t / th)
+  - Cit = At / 3.7e10
+faq:
+  - q: How do you calculate radioactive activity?
+    a: A = λN, with the decay constant λ = ln 2 ÷ t½ (in seconds) and the number of atoms N = (mass ÷ molar mass) × Avogadro's number. The result is in becquerels.
+  - q: What is the difference between a becquerel and a curie?
+    a: 1 Bq is one decay per second. 1 Ci = 3.7 × 10¹⁰ Bq, originally the activity of 1 g of radium-226, so 1 mCi = 37 MBq.
+  - q: How does activity change with time?
+    a: It halves every half-life, A(t) = A₀ × 2^(−t/t½). After 10 half-lives about 0.1% of the original activity is left.
+  - q: What is specific activity?
+    a: Activity per unit mass, usually Bq/g or Ci/g. Short half-lives give high specific activity — 1 g of Co-60 is about 1,100 Ci, while 1 g of U-238 is only 12 kBq.
+related: [chemistry/half-life, physics/mass-energy-equivalence, chemistry/moles, physics/photon-energy]
+---
+
+## How to use the radioactive activity calculator
+
+Enter the **mass** of the radioactive isotope itself (not the whole source capsule), its **molar mass**, its **half-life** and, optionally, an **elapsed time**. The calculator returns the decay constant, the number of atoms and the activity now and after that time, in becquerels and curies. To find the mass of isotope in a source of known activity, enter the activity and clear the mass field.
+
+## Activity formula
+
+<p class="formula">λ = ln 2 ÷ t<sub>½</sub> &nbsp;·&nbsp; N = (m ÷ M) × N<sub>A</sub> &nbsp;·&nbsp; A = λN</p>
+
+<p class="formula">A(t) = A<sub>0</sub> × 2<sup>−t/t½</sup> &nbsp;·&nbsp; 1 Ci = 3.7 × 10¹⁰ Bq</p>
+
+## Example
+
+1 mg of cobalt-60 (M = 59.9338 g/mol, t<sub>½</sub> = 5.2714 years):
+
+- λ = 0.693147 ÷ (5.2714 × 31,557,600 s) = **4.1667 × 10⁻⁹ s⁻¹**
+- N = 0.001 ÷ 59.9338 × 6.022 × 10²³ = **1.0048 × 10¹⁹ atoms**
+- A = λN = **4.1867 × 10¹⁰ Bq** = **1.132 Ci**
+- After 10 years: A = 4.1867 × 10¹⁰ × 2<sup>−10/5.2714</sup> = **1.1241 × 10¹⁰ Bq** (0.304 Ci)
+
+## Specific activity of common radionuclides
+
+| Isotope | Half-life | Specific activity | Ci per gram |
+|---|---|---|---|
+| Cobalt-60 | 5.2714 y | 4.187 × 10¹³ Bq/g | 1.13e+03 Ci/g |
+| Caesium-137 | 30.08 y | 3.212 × 10¹² Bq/g | 86.8 Ci/g |
+| Strontium-90 | 28.79 y | 5.110 × 10¹² Bq/g | 138 Ci/g |
+| Americium-241 | 432.6 y | 1.268 × 10¹¹ Bq/g | 3.43 Ci/g |
+| Radium-226 | 1,600 y | 3.658 × 10¹⁰ Bq/g | 0.989 Ci/g |
+| Carbon-14 | 5,700 y | 1.657 × 10¹¹ Bq/g | 4.48 Ci/g |
+| Iodine-131 | 8.025 d | 4.599 × 10¹⁵ Bq/g | 1.24e+05 Ci/g |
+| Technetium-99m | 6.007 h | 1.952 × 10¹⁷ Bq/g | 5.27e+06 Ci/g |
+| Uranium-238 | 4.468e+09 y | 1.244 × 10⁴ Bq/g | 3.36e-07 Ci/g |
+
+Specific activity here is for the pure isotope; real sources contain carrier material and encapsulation.
+
+## Notes
+
+- The half-life field accepts years, days, hours, minutes or seconds.
+- Activity alone does not give dose — that also depends on the radiation type, its energy, distance and shielding.
+- For half-life arithmetic without atoms or masses, use the [half-life calculator](/chemistry/half-life/).

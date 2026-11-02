@@ -1,0 +1,76 @@
+---
+title: Stefan–Boltzmann Law Calculator (Radiation Heat Transfer)
+description: Calculate thermal radiation power from a surface with the Stefan–Boltzmann law, and the net radiant heat exchange with its surroundings.
+category: physics
+intro: "Every surface above absolute zero radiates energy in proportion to the fourth power of its absolute temperature. This Stefan–Boltzmann law calculator gives the emitted power, the radiant flux per square metre and the net radiation heat transfer between a hot surface and cooler surroundings."
+keywords: [stefan boltzmann law calculator, radiation heat transfer calculator, thermal radiation calculator, emissive power calculator, q = εσa(t⁴ − ts⁴), black body radiation power, emissivity calculator]
+updated: 2026-11-02
+variables:
+  - { id: eps, label: Emissivity (ε), default: 0.9, min: 0, max: 1, help: '1 for a black body; about 0.9 for paint, 0.05 for polished aluminium.' }
+  - { id: A, label: Surface area, family: area, unit: m2, imperialUnit: ft2, default: 1, min: 0 }
+  - { id: T, label: Surface temperature, family: temperature, unit: C, imperialUnit: F, default: 100 }
+  - { id: Ts, label: Surroundings temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
+  - { id: E, label: Emitted flux (εσT⁴), suffix: W/m², min: 0 }
+  - { id: P, label: Total power emitted, family: power, unit: W, imperialUnit: BTUh, min: 0 }
+  - { id: Pn, label: Net radiation heat loss, family: power, unit: W, imperialUnit: BTUh }
+equations:
+  - E = eps * 5.670374419e-8 * T^4
+  - P = E * A
+  - Pn = eps * 5.670374419e-8 * A * (T^4 - Ts^4)
+faq:
+  - q: What is the Stefan–Boltzmann law?
+    a: The power radiated by a surface is P = ε σ A T⁴, where σ = 5.670 × 10⁻⁸ W/(m²·K⁴), ε is the emissivity and T the absolute temperature in kelvin.
+  - q: How do I calculate net radiation heat transfer?
+    a: For a small object inside large surroundings, Q = ε σ A (T⁴ − T_s⁴). The object also absorbs radiation from its surroundings, so only the difference is lost.
+  - q: Why must temperatures be in kelvin?
+    a: The law uses absolute temperature raised to the fourth power. The calculator converts °C or °F to kelvin for you.
+  - q: When is radiation more important than convection?
+    a: At high temperatures. Near room temperature a painted surface loses heat by radiation and by natural convection at similar rates (each roughly 5 W/m²·K), but radiation grows with T⁴ and dominates in furnaces and above a few hundred °C.
+related: [physics/heat-conduction, physics/newtons-law-of-cooling, physics/wiens-law, engineering/heat-duty]
+---
+
+## How to use the Stefan–Boltzmann law calculator
+
+Enter the surface's **emissivity**, its **area**, its **temperature** and the **temperature of the surroundings**. The calculator returns the radiant flux, the total power the surface emits and the net heat it loses by radiation once the radiation it absorbs from the surroundings is subtracted. A negative net value means the surface is gaining heat.
+
+## Stefan–Boltzmann formula
+
+<p class="formula">P = ε σ A T⁴ &nbsp;·&nbsp; Q<sub>net</sub> = ε σ A (T⁴ − T<sub>s</sub>⁴)</p>
+
+σ = 5.670374419 × 10⁻⁸ W/(m²·K⁴), with T in kelvin.
+
+## Example
+
+A painted steel surface (ε = 0.9) of 1 m² at 100 °C in a room at 20 °C:
+
+- T = 373.15 K, T<sub>s</sub> = 293.15 K
+- Emitted: 0.9 × 5.670 × 10⁻⁸ × 373.15⁴ = **989.4 W**
+- Net loss: 0.9 × 5.670 × 10⁻⁸ × 1 × (373.15⁴ − 293.15⁴) = **612.5 W**
+
+## Radiation from a surface vs temperature
+
+Black-body flux σT⁴ and the net loss of an ε = 0.9 surface to 20 °C surroundings, per square metre:
+
+| Surface temperature | Absolute | Black-body flux | Net loss (ε = 0.9) |
+|---|---|---|---|
+| 0 °C | 273.15 K | 315.7 W/m² | -93 W/m² |
+| 50 °C | 323.15 K | 618.3 W/m² | 180 W/m² |
+| 100 °C | 373.15 K | 1,099.4 W/m² | 613 W/m² |
+| 200 °C | 473.15 K | 2,841.9 W/m² | 2,181 W/m² |
+| 300 °C | 573.15 K | 6,119.1 W/m² | 5,130 W/m² |
+| 500 °C | 773.15 K | 20,261.3 W/m² | 17,858 W/m² |
+| 800 °C | 1,073.15 K | 75,206.2 W/m² | 67,309 W/m² |
+| 1,000 °C | 1,273.15 K | 148,980.7 W/m² | 133,706 W/m² |
+| 1,500 °C | 1,773.15 K | 560,523.3 W/m² | 504,094 W/m² |
+
+## Typical emissivities
+
+| Surface | ε |
+|---|---|
+| Polished aluminium / silver | 0.03–0.05 |
+| Galvanised steel (new) | 0.2–0.3 |
+| Oxidised steel | 0.8 |
+| Paint (any colour), brick, concrete | 0.9–0.95 |
+| Water, human skin | 0.95–0.98 |
+
+The wavelength at which a hot body radiates most is given by [Wien's law](/physics/wiens-law/).

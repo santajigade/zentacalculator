@@ -1,0 +1,72 @@
+---
+title: Magnetic Field Calculator (Straight Wire & Solenoid)
+description: Calculate the magnetic flux density B around a straight current-carrying wire and inside a solenoid coil, plus the field strength H in A/m.
+category: physics
+intro: "An electric current creates a magnetic field: it circles a straight wire and becomes strong and uniform inside a coil. This magnetic field calculator gives the flux density around a long straight conductor and inside a solenoid — the same field that pulls the plunger in a [solenoid valve](https://www.instrumentationblog.in/solenoid-valve-working-principle/) and that a [Hall-effect sensor](https://www.instrumentationblog.in/how-a-hall-effect-sensor-works/) measures."
+keywords: [magnetic field calculator, magnetic field of a wire calculator, solenoid magnetic field calculator, b = mu0 i / 2 pi r, b = mu0 n i / l, flux density calculator, ampere's law calculator]
+updated: 2026-11-02
+variables:
+  - { id: I, label: Current, family: current, unit: A, default: 10, min: 0 }
+  - { id: r, label: Distance from the wire, family: length, unit: mm, imperialUnit: in, default: 10, min: 0 }
+  - { id: N, label: Number of turns (solenoid), default: 500, min: 0 }
+  - { id: Ls, label: Solenoid length, family: length, unit: cm, imperialUnit: in, default: 10, min: 0 }
+  - { id: mur, label: Relative permeability of the core (μr), default: 1, min: 0, help: '1 for an air core. A closed iron core can be 1,000 or more but saturates near 1.5–2 T.' }
+  - { id: Bw, label: Field around the wire, suffix: mT, min: 0 }
+  - { id: Bs, label: Field inside the solenoid, suffix: mT, min: 0 }
+  - { id: H, label: Field strength inside the solenoid (H), suffix: A/m, min: 0 }
+equations:
+  - Bw = 1.25663706212e-6 * I / (2 * pi * r) * 1000
+  - Bs = 1.25663706212e-6 * mur * N * I / Ls * 1000
+  - H = N * I / Ls
+faq:
+  - q: What is the magnetic field around a straight wire?
+    a: B = μ₀ I ÷ (2π r), with μ₀ = 4π × 10⁻⁷ H/m. A 10 A current gives 0.2 mT (200 µT) at 10 mm — about four times the Earth's field.
+  - q: What is the magnetic field inside a solenoid?
+    a: B = μ₀ μr N I ÷ L for a long coil (length much greater than diameter). 500 turns on a 10 cm air-core coil with 10 A give about 62.8 mT.
+  - q: How do I convert tesla to gauss?
+    a: 1 T = 10,000 G, so 1 mT = 10 G and 1 µT = 0.01 G. The Earth's field is about 25–65 µT (0.25–0.65 G).
+  - q: Why is the field at the end of a solenoid weaker?
+    a: At each open end of a long solenoid the flux density drops to about half the central value, because the field lines spread out.
+related: [physics/lorentz-force, physics/faradays-law, electronics/air-core-inductor, physics/coulombs-law]
+---
+
+## How to use the magnetic field calculator
+
+For a **straight wire**, enter the **current** and the **distance** from the conductor's centre. For a **solenoid**, enter the same current, the **number of turns**, the **coil length** and the **relative permeability** of the core. The calculator returns both flux densities in millitesla and the solenoid's field strength H.
+
+## Magnetic field formulas
+
+<p class="formula">Straight wire: B = μ<sub>0</sub> I ÷ (2π r)</p>
+
+<p class="formula">Solenoid: B = μ<sub>0</sub> μ<sub>r</sub> N I ÷ L &nbsp;·&nbsp; H = N I ÷ L</p>
+
+μ<sub>0</sub> = 1.25663706212 × 10⁻⁶ H/m (≈ 4π × 10⁻⁷).
+
+## Example
+
+10 A flowing in a long straight wire, measured 10 mm away; and the same current through a 500-turn, 10 cm air-core solenoid:
+
+- Wire: B = 1.2566 × 10⁻⁶ × 10 ÷ (2π × 0.01) = **0.200 mT** (200 µT)
+- Solenoid: H = 500 × 10 ÷ 0.1 = **50,000 A/m**
+- Solenoid: B = 1.2566 × 10⁻⁶ × 500 × 10 ÷ 0.1 = **62.83 mT**
+
+## Field around a straight wire
+
+| Distance | 1 A | 10 A | 100 A | 1,000 A |
+|---|---|---|---|---|
+| 1 mm | 200.00 µT | 2,000.0 µT | 20,000 µT | 200,000 µT |
+| 5 mm | 40.00 µT | 400.0 µT | 4,000 µT | 40,000 µT |
+| 10 mm | 20.00 µT | 200.0 µT | 2,000 µT | 20,000 µT |
+| 50 mm | 4.00 µT | 40.0 µT | 400 µT | 4,000 µT |
+| 100 mm | 2.00 µT | 20.0 µT | 200 µT | 2,000 µT |
+| 500 mm | 0.40 µT | 4.0 µT | 40 µT | 400 µT |
+| 1000 mm | 0.20 µT | 2.0 µT | 20 µT | 200 µT |
+| 5000 mm | 0.04 µT | 0.4 µT | 4 µT | 40 µT |
+
+For comparison, the Earth's magnetic field is about 50 µT and a fridge magnet about 5–10 mT.
+
+## Notes
+
+- The wire formula assumes a long, straight conductor and a point outside it. Inside a round conductor, B rises linearly from zero at the centre.
+- The field of two conductors carrying equal and opposite currents (a cable's live and neutral) largely cancels, which is why twisted pairs pick up little interference.
+- The force on a conductor or a moving charge in this field is given by the [Lorentz force calculator](/physics/lorentz-force/).

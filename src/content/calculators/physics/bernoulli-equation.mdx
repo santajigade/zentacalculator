@@ -1,0 +1,68 @@
+---
+title: Bernoulli Equation Calculator (Pressure, Velocity & Height)
+description: Solve Bernoulli's equation for pressure, velocity or elevation at a second point in a pipe — with total head, velocity head and a worked example.
+category: physics
+intro: "Bernoulli's equation says that along a streamline the sum of pressure, kinetic energy per volume and potential energy per volume stays constant for a steady, frictionless, incompressible flow. This Bernoulli equation calculator finds the pressure, velocity or height at a second point from conditions at the first — see [Bernoulli's equation and its formula](https://www.instrumentationblog.in/bernoullis-equation-formula/) for the derivation."
+keywords: [bernoulli equation calculator, bernoulli's principle calculator, bernoulli pressure calculator, total head calculator, velocity head, p1 + 1/2 rho v^2 + rho g h, fluid pressure velocity]
+updated: 2026-11-02
+variables:
+  - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
+  - { id: P1, label: Pressure at point 1, family: pressure, unit: kPa, imperialUnit: psi, default: 200 }
+  - { id: v1, label: Velocity at point 1, family: velocity, unit: ms, imperialUnit: fts, default: 2, min: 0 }
+  - { id: h1, label: Elevation of point 1, family: length, unit: m, imperialUnit: ft, default: 0 }
+  - { id: v2, label: Velocity at point 2, family: velocity, unit: ms, imperialUnit: fts, default: 5, min: 0 }
+  - { id: h2, label: Elevation of point 2, family: length, unit: m, imperialUnit: ft, default: 3 }
+  - { id: P2, label: Pressure at point 2, family: pressure, unit: kPa, imperialUnit: psi }
+  - { id: H, label: Total head, family: length, unit: m, imperialUnit: ft }
+equations:
+  - P2 = P1 + 0.5 * rho * (v1^2 - v2^2) + rho * g0 * (h1 - h2)
+  - H = P1 / (rho * g0) + v1^2 / (2 * g0) + h1
+faq:
+  - q: What is Bernoulli's equation?
+    a: P + ½ρv² + ρgh = constant along a streamline. P is static pressure, ½ρv² the dynamic pressure and ρgh the hydrostatic term, all in pascals (J/m³).
+  - q: Why does pressure drop when velocity increases?
+    a: Energy is conserved. If the fluid speeds up through a narrower section, its kinetic energy rises, so its pressure energy must fall — the principle behind venturi meters, carburettors and aspirators.
+  - q: When is Bernoulli's equation not valid?
+    a: It assumes steady, incompressible, inviscid flow with no pumps or turbines between the points. For real pipes add the friction head loss, and for gases above about Mach 0.3 use compressible-flow relations.
+  - q: What is total head?
+    a: The Bernoulli sum expressed as a height of fluid — pressure head P/ρg plus velocity head v²/2g plus elevation z. Without losses it is the same at every point.
+related: [engineering/venturi-flow, engineering/pitot-tube-velocity, engineering/darcy-weisbach-head-loss, physics/pressure]
+---
+
+## How to use the Bernoulli equation calculator
+
+Enter the **fluid density**, the **pressure**, **velocity** and **elevation** at point 1, and the velocity and elevation at point 2. The calculator returns the pressure at point 2 and the total head of the flow. To find a velocity or height instead, enter P2 and clear the field you want. Use absolute or gauge pressure consistently at both points.
+
+## Bernoulli equation formula
+
+<p class="formula">P<sub>1</sub> + ½ρv<sub>1</sub>² + ρgh<sub>1</sub> = P<sub>2</sub> + ½ρv<sub>2</sub>² + ρgh<sub>2</sub></p>
+
+<p class="formula">H = P ÷ (ρg) + v² ÷ (2g) + h</p>
+
+## Example
+
+Water (1,000 kg/m³) flows at 2 m/s and 200 kPa at ground level, then rises 3 m into a narrower pipe where it moves at 5 m/s:
+
+- Velocity term: ½ × 1000 × (2² − 5²) = **−10.5 kPa**
+- Elevation term: 1000 × 9.80665 × (0 − 3) = **−29.42 kPa**
+- P<sub>2</sub> = 200 − 10.5 − 29.42 = **160.08 kPa**
+- Total head H = 20.394 + 0.204 + 0 = **20.598 m**
+
+## Dynamic pressure and velocity head
+
+| Velocity | Dynamic pressure (water) | Velocity head v²/2g | Dynamic pressure (air, 1.2 kg/m³) |
+|---|---|---|---|
+| 0.5 m/s | 0.125 kPa | 0.013 m | 0.1 Pa |
+| 1 m/s | 0.500 kPa | 0.051 m | 0.6 Pa |
+| 2 m/s | 2.000 kPa | 0.204 m | 2.4 Pa |
+| 3 m/s | 4.500 kPa | 0.459 m | 5.4 Pa |
+| 5 m/s | 12.500 kPa | 1.275 m | 15.0 Pa |
+| 10 m/s | 50.000 kPa | 5.099 m | 60.0 Pa |
+| 20 m/s | 200.000 kPa | 20.394 m | 240.0 Pa |
+| 30 m/s | 450.000 kPa | 45.887 m | 540.0 Pa |
+
+## Practical notes
+
+- Real pipe flow loses head to friction and fittings: P<sub>2</sub> is lower than this ideal value by ρg·h<sub>L</sub>. Estimate h<sub>L</sub> with the [Darcy–Weisbach calculator](/engineering/darcy-weisbach-head-loss/).
+- Flow meters such as the [venturi](/engineering/venturi-flow/) and the [pitot tube](/engineering/pitot-tube-velocity/) are direct applications of Bernoulli's equation.
+- If P<sub>2</sub> falls below the liquid's vapour pressure, the liquid flashes or cavitates and the equation no longer applies.

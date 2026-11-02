@@ -1,0 +1,64 @@
+---
+title: Wien's Law Calculator (Peak Wavelength from Temperature)
+description: Find the peak wavelength of black-body radiation from temperature with Wien's displacement law — or estimate a star's or hot object's temperature.
+category: physics
+intro: "Wien's displacement law says the wavelength at which a black body radiates most strongly is inversely proportional to its absolute temperature. This Wien's law calculator gives the peak wavelength and peak frequency for any temperature, and solves backwards to estimate temperature from the colour of a star or a glowing object."
+keywords: [wiens law calculator, wien's displacement law calculator, peak wavelength calculator, black body peak wavelength, lambda max = b / t, star temperature from wavelength, wien constant]
+updated: 2026-11-02
+variables:
+  - { id: T, label: Temperature, family: temperature, unit: K, imperialUnit: F, default: 5778, min: 0 }
+  - { id: lam, label: Peak wavelength (λ_max), suffix: nm, min: 0 }
+  - { id: lum, label: Peak wavelength in micrometres, suffix: µm, min: 0 }
+  - { id: fp, label: Peak frequency (per unit frequency), suffix: THz, min: 0 }
+equations:
+  - lam = 2897771.955 / T
+  - lum = lam / 1000
+  - fp = 0.05878925757 * T
+faq:
+  - q: What is Wien's displacement law?
+    a: λ_max = b ÷ T, with b = 2.897771955 × 10⁻³ m·K. A body at 5,778 K (the Sun) peaks at about 501 nm; one at 310 K (a person) peaks at about 9.3 µm in the infrared.
+  - q: How do I find a star's temperature from its peak wavelength?
+    a: T = b ÷ λ_max. Enter the peak wavelength in nanometres and clear the temperature field — a peak at 290 nm means about 10,000 K.
+  - q: Why don't the peak wavelength and peak frequency match?
+    a: They describe the spectrum per unit wavelength and per unit frequency, which have different shapes. The frequency peak, ν_max = 5.879 × 10¹⁰ Hz/K × T, corresponds to a wavelength about 1.76 times longer than λ_max.
+  - q: Why do infrared thermometers work at 8–14 µm?
+    a: Objects near room temperature radiate most strongly around 10 µm, and the atmosphere is transparent in the 8–14 µm window.
+related: [physics/stefan-boltzmann-law, physics/photon-energy, physics/wavelength-frequency, physics/doppler-effect]
+---
+
+## How to use the Wien's law calculator
+
+Enter the **temperature** of the radiating body (switch the unit to °C or °F if you prefer). The calculator returns the peak wavelength in nanometres and micrometres and the peak frequency of the spectrum. To estimate a temperature, enter the peak wavelength and clear the temperature field.
+
+## Wien's displacement law formula
+
+<p class="formula">λ<sub>max</sub> = b ÷ T &nbsp;·&nbsp; b = 2.897771955 × 10⁻³ m·K</p>
+
+<p class="formula">ν<sub>max</sub> = 5.878925757 × 10¹⁰ Hz/K × T</p>
+
+## Example
+
+The Sun's photosphere is about 5,778 K:
+
+- λ<sub>max</sub> = 2.897772 × 10⁻³ ÷ 5778 = **501.5 nm** (blue-green light)
+- ν<sub>max</sub> = 5.879 × 10¹⁰ × 5778 = **339.7 THz** — a wavelength of 883 nm in the per-frequency spectrum
+
+## Peak wavelength of common sources
+
+| Source | Temperature | Peak wavelength | Band |
+|---|---|---|---|
+| Liquid nitrogen | 77 K | 37,633 nm (37.6 µm) | Infrared |
+| Ice / water at 0 °C | 273 K | 10,609 nm (10.6 µm) | Infrared |
+| Human body | 310 K | 9,343 nm (9.34 µm) | Infrared |
+| Boiling water | 373 K | 7,766 nm (7.77 µm) | Infrared |
+| Red-hot iron | 1,000 K | 2,898 nm (2.9 µm) | Near infrared |
+| Incandescent filament | 2,800 K | 1,035 nm (1.03 µm) | Near infrared |
+| Red dwarf star | 3,200 K | 906 nm (0.906 µm) | Near infrared |
+| Sun (photosphere) | 5,778 K | 502 nm (0.502 µm) | Visible |
+| Sirius A | 9,940 K | 292 nm (0.292 µm) | Ultraviolet |
+
+## Notes
+
+- Only ideal black bodies follow the law exactly; real surfaces have emissivity below 1, but their peak position is usually close.
+- The total power radiated rises with T⁴ — see the [Stefan–Boltzmann law calculator](/physics/stefan-boltzmann-law/).
+- To convert the peak wavelength to photon energy, use the [photon energy calculator](/physics/photon-energy/).

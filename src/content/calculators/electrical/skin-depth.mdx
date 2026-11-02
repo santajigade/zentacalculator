@@ -1,0 +1,72 @@
+---
+title: Skin Depth Calculator (Skin Effect in Conductors)
+description: Calculate the skin depth of copper, aluminium and other conductors at any frequency — the depth where AC current density falls to 37% of the surface value.
+category: electrical
+intro: "Alternating current crowds towards the surface of a conductor, so at high frequency only a thin outer layer carries it and the AC resistance rises. This skin depth calculator finds that layer's depth for copper, aluminium and other metals at any frequency — see [skin effect in conductors](https://www.instrumentationblog.in/skin-effect-in-conductors/) for why it matters in busbars, cables and RF circuits."
+keywords: [skin depth calculator, skin effect calculator, skin depth formula, copper skin depth, skin depth at 50 hz, ac resistance skin effect, rf skin depth]
+updated: 2026-11-02
+variables:
+  - id: rho
+    label: Conductor
+    default: 1.678e-8
+    options:
+      - { label: 'Copper (1.678 × 10⁻⁸ Ω·m)', value: 1.678e-8 }
+      - { label: 'Aluminium (2.65 × 10⁻⁸ Ω·m)', value: 2.65e-8 }
+      - { label: 'Silver (1.59 × 10⁻⁸ Ω·m)', value: 1.59e-8 }
+      - { label: 'Gold (2.44 × 10⁻⁸ Ω·m)', value: 2.44e-8 }
+      - { label: 'Stainless steel 304 (7.2 × 10⁻⁷ Ω·m)', value: 7.2e-7 }
+  - { id: mur, label: Relative permeability (μr), default: 1, min: 0, help: '1 for copper, aluminium and austenitic stainless steel; mild steel is 100 or more.' }
+  - { id: f, label: Frequency, family: frequency, unit: Hz, default: 50, min: 0 }
+  - { id: dl, label: Skin depth (δ), family: length, unit: mm, imperialUnit: in, min: 0 }
+equations:
+  - dl = sqrt(rho / (pi * f * 1.25663706212e-6 * mur))
+faq:
+  - q: What is the skin depth formula?
+    a: δ = √(ρ ÷ (π f μ₀ μr)), where ρ is the resistivity, f the frequency and μ₀μr the permeability. It is the depth at which current density falls to 1/e (about 37%) of its surface value.
+  - q: What is the skin depth of copper at 50 Hz?
+    a: About 9.2 mm (8.4 mm at 60 Hz). Copper conductors thicker than about 2δ — roughly 18 mm — gain little from extra thickness at power frequency.
+  - q: How does skin depth change with frequency?
+    a: It falls with the square root of frequency. Copper's skin depth is about 2.1 mm at 1 kHz, 65 µm at 1 MHz and 2.1 µm at 1 GHz.
+  - q: How do I reduce skin effect losses?
+    a: Use flat or hollow conductors, several smaller conductors in parallel, or Litz wire (many insulated, twisted strands) for kHz-range transformers and inductors.
+related: [electrical/busbar-size, electrical/wire-resistance, electronics/pcb-trace-width, electronics/reactance]
+---
+
+## How to use the skin depth calculator
+
+Choose the **conductor material**, enter its **relative permeability** (1 for non-magnetic metals) and the **frequency**. The calculator returns the skin depth δ. At depth δ the current density is 37% of its surface value; about 86% of the current flows within the outer δ of a thick conductor.
+
+## Skin depth formula
+
+<p class="formula">δ = √(ρ ÷ (π f μ<sub>0</sub> μ<sub>r</sub>))</p>
+
+μ<sub>0</sub> = 1.25663706212 × 10⁻⁶ H/m; resistivities are at 20 °C.
+
+## Example
+
+Copper (ρ = 1.678 × 10⁻⁸ Ω·m, μ<sub>r</sub> = 1) at 50 Hz:
+
+- π × 50 × 1.2566 × 10⁻⁶ = 1.974 × 10⁻⁴
+- δ = √(1.678 × 10⁻⁸ ÷ 1.974 × 10⁻⁴) = **9.22 mm**
+
+## Skin depth vs frequency
+
+| Frequency | Copper | Aluminium | Stainless steel 304 |
+|---|---|---|---|
+| 50 Hz | 9.22 mm | 11.6 mm | 60.4 mm |
+| 60 Hz | 8.42 mm | 10.6 mm | 55.1 mm |
+| 400 Hz | 3.26 mm | 4.1 mm | 21.4 mm |
+| 1 kHz | 2.06 mm | 2.59 mm | 13.5 mm |
+| 10 kHz | 652 µm | 819 µm | 4.27 mm |
+| 100 kHz | 206 µm | 259 µm | 1.35 mm |
+| 1 MHz | 65.2 µm | 81.9 µm | 427 µm |
+| 10 MHz | 20.6 µm | 25.9 µm | 135 µm |
+| 100 MHz | 6.52 µm | 8.19 µm | 42.7 µm |
+| 1 GHz | 2.06 µm | 2.59 µm | 13.5 µm |
+
+## Practical consequences
+
+- **Busbars and large cables**: at 50/60 Hz, bars thicker than about 10 mm (copper) gain little capacity; large cables use segmented (Milliken) conductors — see the [busbar size calculator](/electrical/busbar-size/).
+- **Switch-mode power supplies**: at 100 kHz copper's δ is about 0.2 mm, so windings use Litz wire or copper foil.
+- **RF and PCB traces**: above about 100 MHz current flows in a few micrometres, so surface roughness and plating matter.
+- Resistivity rises with temperature, so hot conductors have a slightly larger skin depth.

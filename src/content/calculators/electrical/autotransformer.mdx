@@ -1,0 +1,73 @@
+---
+title: Autotransformer Calculator (Currents, kVA & Copper Saving)
+description: Calculate autotransformer primary, secondary and common-winding currents, the kVA transformed vs conducted, and the copper saved over a two-winding unit.
+category: electrical
+intro: "An autotransformer uses a single tapped winding, so part of the power passes straight through by conduction and only the rest is transformed magnetically. This autotransformer calculator gives the line and common-winding currents and the split between transformed and conducted kVA — see the [autotransformer working principle](https://www.instrumentationblog.in/autotransformer-working-principle/) for how the shared winding works."
+keywords: [autotransformer calculator, autotransformer current calculation, autotransformer kva calculation, copper saving in autotransformer, transformed and conducted power, auto transformer formula, variac calculator]
+updated: 2026-11-02
+variables:
+  - { id: S, label: Load rating, suffix: kVA, default: 10, min: 0 }
+  - { id: Vh, label: High-voltage side, family: voltage, unit: V, default: 240, min: 0 }
+  - { id: Vl, label: Low-voltage side, family: voltage, unit: V, default: 200, min: 0 }
+  - { id: Ih, label: High-side current, family: current, unit: A, min: 0 }
+  - { id: Il, label: Low-side current, family: current, unit: A, min: 0 }
+  - { id: Ic, label: Current in the common winding, family: current, unit: A, min: 0 }
+  - { id: Si, label: Power transformed (inductively), suffix: kVA, min: 0, decimals: 3 }
+  - { id: Sc, label: Power conducted directly, suffix: kVA, min: 0, decimals: 3 }
+  - { id: cs, label: Copper saved vs a two-winding transformer, family: percent, unit: '%', min: 0 }
+equations:
+  - Ih = S * 1000 / Vh
+  - Il = S * 1000 / Vl
+  - Ic = Il - Ih
+  - Si = S * (1 - Vl / Vh)
+  - Sc = S * Vl / Vh
+  - cs = Vl / Vh
+faq:
+  - q: How do you calculate autotransformer current?
+    a: I_high = S ÷ V_high and I_low = S ÷ V_low, as for any transformer. The common part of the winding carries only the difference, I_low − I_high.
+  - q: How much power is transformed in an autotransformer?
+    a: Only S × (1 − V_low ÷ V_high). The rest, S × V_low ÷ V_high, is conducted straight through the shared winding. A 240/200 V, 10 kVA unit transforms just 1.67 kVA.
+  - q: How much copper does an autotransformer save?
+    a: Copper needed = (1 − K) × that of a two-winding transformer, with K = V_low ÷ V_high, so the saving is K. The closer the two voltages, the bigger the saving.
+  - q: What is the main disadvantage of an autotransformer?
+    a: There is no electrical isolation between primary and secondary, and if the common winding opens, the full input voltage can appear at the output. It also has lower impedance, so fault currents are higher.
+related: [electrical/transformer-turns-ratio, electrical/transformer-current, electrical/transformer-size, electrical/transformer-efficiency]
+---
+
+## How to use the autotransformer calculator
+
+Enter the **load rating** in kVA and the **high-** and **low-voltage** sides of the autotransformer (it works the same for step-up and step-down). The calculator returns the current on each side, the current in the common section of the winding, how much of the power is transformed magnetically versus conducted directly, and the copper saved compared with a two-winding transformer of the same rating.
+
+## Autotransformer formulas
+
+<p class="formula">I<sub>H</sub> = S ÷ V<sub>H</sub> &nbsp;·&nbsp; I<sub>L</sub> = S ÷ V<sub>L</sub> &nbsp;·&nbsp; I<sub>common</sub> = I<sub>L</sub> − I<sub>H</sub></p>
+
+<p class="formula">S<sub>transformed</sub> = S (1 − K) &nbsp;·&nbsp; S<sub>conducted</sub> = S K &nbsp;·&nbsp; K = V<sub>L</sub> ÷ V<sub>H</sub></p>
+
+## Example
+
+A 10 kVA, 240 V to 200 V step-down autotransformer:
+
+- I<sub>H</sub> = 10,000 ÷ 240 = **41.67 A**, I<sub>L</sub> = 10,000 ÷ 200 = **50.00 A**
+- Common winding current = 50 − 41.67 = **8.33 A**
+- Transformed = 10 × (1 − 200/240) = **1.667 kVA**; conducted = **8.333 kVA**
+- Copper saved ≈ **83.3%** of a 10 kVA two-winding transformer
+
+## Transformed power and copper saving by voltage ratio
+
+| Ratio | K | Share of kVA transformed | Copper saving |
+|---|---|---|---|
+| 240 / 220 V | 0.917 | 8.3% | 91.7% |
+| 240 / 200 V | 0.833 | 16.7% | 83.3% |
+| 415 / 380 V | 0.916 | 8.4% | 91.6% |
+| 480 / 415 V | 0.865 | 13.5% | 86.5% |
+| 400 / 230 V | 0.575 | 42.5% | 57.5% |
+| 240 / 120 V | 0.500 | 50.0% | 50.0% |
+| 400 / 100 V | 0.250 | 75.0% | 25.0% |
+
+## Where autotransformers are used
+
+- **Motor starting**: autotransformer starters apply 50–80% voltage taps, cutting line current to K² of the direct-on-line value.
+- **Grid interconnection**: large 400/220 kV and 220/132 kV interbus transformers, where the ratio is close to 1.
+- **Variacs**: variable autotransformers for test benches.
+- Not suitable where isolation is required, or for large ratios such as 11 kV/415 V.

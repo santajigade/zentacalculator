@@ -1,0 +1,69 @@
+---
+title: Generator Power Angle Calculator (P = EV sin δ / Xs)
+description: Calculate the active and reactive power of a synchronous generator from its internal EMF, terminal voltage, synchronous reactance and load angle δ.
+category: electrical
+intro: "The power a synchronous generator delivers to the grid depends on the angle δ between its internal EMF and the terminal voltage, while its excitation decides the reactive power. This generator power angle calculator gives the active power, the steady-state stability limit and the reactive power for a round-rotor machine — see how the [excitation system and AVR](https://www.instrumentationblog.in/generator-excitation-system-avr/) control the EMF."
+keywords: [generator power angle calculator, power angle equation, load angle calculator, p = ev sin delta / x, synchronous generator power, steady state stability limit, torque angle calculator]
+updated: 2026-11-02
+variables:
+  - { id: E, label: Internal EMF E (line-to-line), family: voltage, unit: kV, default: 12, min: 0 }
+  - { id: V, label: Terminal / bus voltage (line-to-line), family: voltage, unit: kV, default: 11, min: 0 }
+  - { id: X, label: Synchronous reactance per phase, family: resistance, unit: ohm, default: 10, min: 0 }
+  - { id: d, label: Power (load) angle δ, family: angle, unit: deg, default: 20 }
+  - { id: P, label: Active power (3-phase), family: power, unit: MW }
+  - { id: Pmax, label: Maximum power (δ = 90°), family: power, unit: MW, min: 0 }
+  - { id: Q, label: Reactive power delivered, suffix: MVAr }
+equations:
+  - P = E * V / X * sin(d)
+  - Pmax = E * V / X
+  - Q = (E * V * cos(d) - V^2) / X / 1e6
+faq:
+  - q: What is the power angle equation?
+    a: P = (E × V ÷ X_s) × sin δ for a round-rotor machine with armature resistance neglected. With line-to-line voltages it gives the total three-phase power.
+  - q: What is the steady-state stability limit?
+    a: The maximum power E V ÷ X_s, reached at δ = 90°. Beyond that, more mechanical input makes the machine slip poles, so generators normally run at δ = 20–40°.
+  - q: How does excitation affect reactive power?
+    a: Q = (E V cos δ − V²) ÷ X_s. Raising the field current raises E and the generator exports more reactive power (over-excited, lagging PF); weakening it makes the machine absorb reactive power.
+  - q: Does this apply to salient-pole machines?
+    a: Only approximately. Salient-pole generators add a reluctance term, V² (1/X_q − 1/X_d) sin 2δ ÷ 2, which this calculator does not include.
+related: [electrical/generator-frequency, electrical/generator-size, electrical/per-unit, electrical/kva-to-kw]
+---
+
+## How to use the generator power angle calculator
+
+Enter the generator's **internal EMF** and the **terminal (bus) voltage**, both line-to-line, the **synchronous reactance per phase** and the **power angle δ**. The calculator returns the three-phase active power, the maximum (pull-out) power and the reactive power delivered — negative Q means the machine is absorbing reactive power. To find the load angle for a given output, enter P and clear δ.
+
+## Power angle equations
+
+<p class="formula">P = (E × V ÷ X<sub>s</sub>) × sin δ &nbsp;·&nbsp; P<sub>max</sub> = E × V ÷ X<sub>s</sub></p>
+
+<p class="formula">Q = (E × V × cos δ − V²) ÷ X<sub>s</sub></p>
+
+## Example
+
+An 11 kV generator with E = 12 kV, X<sub>s</sub> = 10 Ω per phase, running at δ = 20°:
+
+- P<sub>max</sub> = 12,000 × 11,000 ÷ 10 = **13.2 MW**
+- P = 13.2 × sin 20° = **4.515 MW**
+- Q = (12,000 × 11,000 × cos 20° − 11,000²) ÷ 10 = **0.304 MVAr** (exporting)
+
+## Power and reactive power vs load angle
+
+Same machine (E = 12 kV, V = 11 kV, X<sub>s</sub> = 10 Ω):
+
+| δ | sin δ | Active power | Reactive power |
+|---|---|---|---|
+| 0° | 0.000 | 0.00 MW | +1.10 MVAr |
+| 10° | 0.174 | 2.29 MW | +0.90 MVAr |
+| 20° | 0.342 | 4.51 MW | +0.30 MVAr |
+| 30° | 0.500 | 6.60 MW | -0.67 MVAr |
+| 45° | 0.707 | 9.33 MW | -2.77 MVAr |
+| 60° | 0.866 | 11.43 MW | -5.50 MVAr |
+| 75° | 0.966 | 12.75 MW | -8.68 MVAr |
+| 90° | 1.000 | 13.20 MW | -12.10 MVAr |
+
+## Notes
+
+- Armature resistance is neglected — typically less than 1% of X<sub>s</sub> for large machines.
+- In per-unit, P = E V sin δ ÷ X<sub>s</sub> with E, V and X<sub>s</sub> in pu; see the [per-unit calculator](/electrical/per-unit/).
+- During a fault the transient reactance X′<sub>d</sub> replaces X<sub>s</sub> in transient-stability studies.

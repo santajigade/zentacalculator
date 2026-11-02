@@ -1,0 +1,69 @@
+---
+title: Battery Bank Size Calculator (Ah for Backup Time)
+description: Calculate battery bank capacity in Ah for a load and backup time, allowing for inverter efficiency, depth of discharge and an ageing margin.
+category: electrical
+intro: "Sizing a battery bank starts with the energy the load needs, then allows for inverter losses, how deeply the batteries may be discharged and their loss of capacity with age. This battery bank size calculator gives the amp-hour capacity and the number of batteries in series — see [how to calculate battery backup time](https://www.instrumentationblog.in/calculate-battery-backup-time/) and the [IEEE 485 approach to substation battery sizing](https://www.instrumentationblog.in/substation-battery-sizing-ieee-485/)."
+keywords: [battery bank size calculator, battery ah calculator, battery backup calculator, inverter battery size, solar battery bank sizing, ups battery ah calculation, how many batteries do i need]
+updated: 2026-11-02
+variables:
+  - { id: P, label: Load power, family: power, unit: W, default: 500, min: 0 }
+  - { id: tb, label: Backup time required, family: seconds, unit: h, default: 4, min: 0 }
+  - { id: V, label: Battery bank voltage, family: voltage, unit: V, default: 48, min: 0 }
+  - { id: eta, label: Inverter efficiency, family: percent, unit: '%', default: 90, min: 0, max: 100, help: 'Use 100% for a DC load fed directly from the battery.' }
+  - { id: dod, label: Allowed depth of discharge, family: percent, unit: '%', default: 80, min: 0, max: 100, help: 'Lead-acid 50–80%, lithium (LiFePO₄) 80–90%.' }
+  - { id: k, label: Ageing / design margin factor, default: 1.25, min: 1, help: '1.25 allows for capacity falling to 80% at end of life (IEEE 485). Add a temperature factor for cold rooms.' }
+  - { id: Vb, label: Voltage of one battery, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: E, label: Energy delivered to the load, family: energy, unit: Wh, min: 0 }
+  - { id: Ah, label: Required battery capacity, suffix: Ah, min: 0, decimals: 1 }
+  - { id: ns, label: Batteries in series, min: 0, decimals: 1 }
+equations:
+  - E = P * tb
+  - Ah = E / 3600 / (V * eta * dod) * k
+  - ns = V / Vb
+faq:
+  - q: How do I calculate battery Ah for backup?
+    a: Ah = (load W × hours) ÷ (bank voltage × inverter efficiency × depth of discharge) × margin. A 500 W load for 4 h on a 48 V bank at 90% efficiency, 80% DoD and a 1.25 margin needs about 72 Ah.
+  - q: How many batteries do I need?
+    a: Batteries in series = bank voltage ÷ battery voltage (48 V ÷ 12 V = 4). If one string's Ah is not enough, add parallel strings; total batteries = series × parallel.
+  - q: Why is the Ah rating at a high discharge rate lower?
+    a: Lead-acid capacity is usually quoted at the 10- or 20-hour rate. Discharging in 1–2 hours can deliver only 60–75% of the nameplate Ah, so check the manufacturer's constant-power discharge tables for short backups.
+  - q: Should I use a higher bank voltage?
+    a: For loads above about 1–2 kW, yes. A higher voltage halves the current for the same power, which reduces cable size and losses.
+related: [electrical/ups-sizing, electronics/battery-charge-time, electrical/cable-voltage-drop, electrical/amps-to-watts]
+---
+
+## How to use the battery bank size calculator
+
+Enter the **load power**, the **backup time**, the **bank voltage**, the **inverter efficiency**, the **allowed depth of discharge**, a **design margin** and the **voltage of one battery**. The calculator returns the energy the load uses, the amp-hour capacity the bank must have and how many batteries to connect in series. Choose the next standard Ah size above the result.
+
+## Battery sizing formula
+
+<p class="formula">Ah = (P × t) ÷ (V<sub>bank</sub> × η × DoD) × k &nbsp;·&nbsp; N<sub>series</sub> = V<sub>bank</sub> ÷ V<sub>battery</sub></p>
+
+## Example
+
+A 500 W load must run for 4 hours from a 48 V lead-acid bank through a 90% efficient inverter, discharging to 80% with a 1.25 ageing margin:
+
+- Energy = 500 × 4 = **2,000 Wh**
+- Ah = 2000 ÷ (48 × 0.9 × 0.8) × 1.25 = **72.3 Ah**
+- Series batteries = 48 ÷ 12 = **4** → four 12 V, 75 Ah (or larger) batteries
+
+## Capacity needed on a 48 V bank
+
+90% inverter efficiency, 80% depth of discharge, 1.25 margin:
+
+| Load | 1 h | 2 h | 4 h | 8 h |
+|---|---|---|---|---|
+| 250 W | 9 Ah | 18 Ah | 36 Ah | 72 Ah |
+| 500 W | 18 Ah | 36 Ah | 72 Ah | 145 Ah |
+| 1,000 W | 36 Ah | 72 Ah | 145 Ah | 289 Ah |
+| 2,000 W | 72 Ah | 145 Ah | 289 Ah | 579 Ah |
+| 3,000 W | 109 Ah | 217 Ah | 434 Ah | 868 Ah |
+| 5,000 W | 181 Ah | 362 Ah | 723 Ah | 1,447 Ah |
+
+## Practical notes
+
+- Lead-acid batteries last much longer when discharged to only 50%; LiFePO₄ tolerates 80–90% routinely.
+- At 0–10 °C, lead-acid capacity falls by 10–20% — add a temperature correction factor.
+- The charger must be able to recharge the bank in a reasonable time; see the [battery charge time calculator](/electronics/battery-charge-time/).
+- For the UPS kVA rating itself, use the [UPS sizing calculator](/electrical/ups-sizing/).

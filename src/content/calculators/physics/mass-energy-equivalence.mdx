@@ -1,0 +1,66 @@
+---
+title: E = mc² Calculator (Mass–Energy Equivalence)
+description: Convert mass to energy with Einstein's E = mc² — in joules, kWh and tonnes of TNT — or find the mass equivalent of any amount of energy.
+category: physics
+intro: "Einstein's equation E = mc² says that mass and energy are two forms of the same thing, linked by the square of the speed of light. This E = mc² calculator converts a mass into its rest energy in joules, kilowatt-hours and TNT equivalent, and works backwards to find the tiny mass change behind chemical and nuclear energy."
+keywords: [e=mc2 calculator, mass energy equivalence calculator, mass to energy calculator, einstein equation calculator, rest energy calculator, energy to mass calculator, e = mc squared]
+updated: 2026-11-02
+variables:
+  - { id: m, label: Mass, family: mass, unit: g, imperialUnit: oz, default: 1, min: 0 }
+  - { id: E, label: Energy (E = mc²), family: energy, unit: kWh, min: 0 }
+  - { id: Ej, label: Energy in terajoules, suffix: TJ, min: 0 }
+  - { id: tnt, label: TNT equivalent, suffix: kilotonnes, min: 0 }
+equations:
+  - E = m * 299792458^2
+  - Ej = E / 1e12
+  - tnt = E / 4.184e12
+faq:
+  - q: How much energy is in 1 gram of mass?
+    a: E = 0.001 kg × (299,792,458 m/s)² ≈ 8.99 × 10¹³ J — about 25 million kWh, or 21.5 kilotonnes of TNT.
+  - q: Does burning fuel convert mass into energy?
+    a: Yes, but the mass change is tiny. Burning 1 kg of petrol releases about 46 MJ, which corresponds to only about 5 × 10⁻¹⁰ kg of mass.
+  - q: How much mass is converted in a nuclear reactor?
+    a: Fission of uranium-235 converts roughly 0.09% of the fuel's mass into energy, millions of times more per kilogram than chemical reactions.
+  - q: What units does E = mc² use?
+    a: With mass in kilograms and c in metres per second, energy comes out in joules. The calculator converts grams, ounces and other units automatically.
+related: [physics/photon-energy, physics/kinetic-energy, physics/de-broglie-wavelength, physics/radioactive-activity]
+---
+
+## How to use the E = mc² calculator
+
+Enter a **mass** in grams, kilograms or another unit. The calculator returns the equivalent rest energy in kWh (switch to J, MJ or BTU), in terajoules and in kilotonnes of TNT. To find the mass equivalent of an energy, enter the energy and clear the mass field.
+
+## Mass–energy equivalence formula
+
+<p class="formula">E = m c² &nbsp;·&nbsp; c = 299,792,458 m/s</p>
+
+## Example
+
+Converting 1 gram of mass entirely into energy:
+
+- E = 0.001 × 299,792,458² = **8.9876 × 10¹³ J**
+- = **24,965,422 kWh** (24.97 GWh)
+- = **21.48 kilotonnes of TNT**
+
+## Rest energy of particles
+
+| Particle | Mass | Rest energy |
+|---|---|---|
+| Electron | 9.1094 × 10⁻³¹ kg | 0.511 MeV |
+| Proton | 1.6726 × 10⁻²⁷ kg | 938.272 MeV |
+| Neutron | 1.6749 × 10⁻²⁷ kg | 939.565 MeV |
+| Atomic mass unit (1 u) | 1.6605 × 10⁻²⁷ kg | 931.494 MeV |
+
+## Mass equivalent of everyday energies
+
+| Energy source | Energy | Equivalent mass |
+|---|---|---|
+| 1 kWh of electricity | 3.600 × 10⁶ J | 4.006 × 10⁻¹¹ kg |
+| 1 kg of petrol burned (≈ 46 MJ) | 4.600 × 10⁷ J | 5.118 × 10⁻¹⁰ kg |
+| 1 tonne of TNT | 4.184 × 10⁹ J | 4.655 × 10⁻⁸ kg |
+| 1 kg of U-235 fully fissioned (≈ 8.2 × 10¹³ J) | 8.200 × 10¹³ J | 9.124 × 10⁻⁴ kg |
+
+## Notes
+
+- 1 kilotonne of TNT is defined as 4.184 × 10¹² J.
+- In nuclear reactions the energy released equals the mass defect × c²; in radioactive decay this energy is carried by the emitted particles — see the [radioactive activity calculator](/physics/radioactive-activity/).

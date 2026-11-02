@@ -1,0 +1,67 @@
+---
+title: Liquid Thermal Expansion Calculator (Volumetric)
+description: Calculate how much a liquid's volume increases when heated, using the volumetric expansion coefficient β — for fuel, water, oil and solvent tanks.
+category: physics
+intro: "Liquids expand far more than solids when heated, which is why fuel tanks, hot-water systems and closed pipelines need expansion space or thermal relief valves. This liquid thermal expansion calculator applies ΔV = β V₀ ΔT to find the volume change, the final volume and the percentage increase."
+keywords: [liquid thermal expansion calculator, volumetric expansion calculator, coefficient of volume expansion, fuel expansion calculator, water expansion calculator, delta v = beta v delta t, volume expansion formula]
+updated: 2026-11-02
+variables:
+  - { id: b, label: Volumetric expansion coefficient β (×10⁻⁶ per K), default: 950, min: 0, help: 'Petrol ≈ 950, water at 20 °C ≈ 207, ethanol ≈ 1090. See the table below.' }
+  - { id: V0, label: Initial volume, family: volume, unit: L, imperialUnit: galUS, default: 1000, min: 0 }
+  - { id: T1, label: Initial temperature, family: temperature, unit: C, imperialUnit: F, default: 15 }
+  - { id: T2, label: Final temperature, family: temperature, unit: C, imperialUnit: F, default: 35 }
+  - { id: dV, label: Volume increase, family: volume, unit: L, imperialUnit: galUS }
+  - { id: V1, label: Final volume, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: pct, label: Percentage increase, family: percent, unit: '%' }
+equations:
+  - dV = b * 1e-6 * V0 * (T2 - T1)
+  - V1 = V0 + dV
+  - pct = b * 1e-6 * (T2 - T1)
+faq:
+  - q: What is the formula for thermal expansion of a liquid?
+    a: ΔV = β × V₀ × ΔT, where β is the volumetric expansion coefficient (per K), V₀ the initial volume and ΔT the temperature rise. The final volume is V₀ (1 + β ΔT).
+  - q: How much does petrol expand when it warms up?
+    a: About 0.095% per °C. 1,000 L delivered at 15 °C becomes about 1,019 L at 35 °C, which is why fuel is traded at a reference temperature of 15 °C.
+  - q: Why does water expand differently?
+    a: Water's β changes strongly with temperature — it is zero at 4 °C (maximum density), about 207 × 10⁻⁶/K at 20 °C and about 750 × 10⁻⁶/K near 100 °C. For large temperature changes use densities from a steam table instead of a single β.
+  - q: Does the container expansion matter?
+    a: Yes. A steel tank's volume grows by about 3α ≈ 36 × 10⁻⁶ per K, so the apparent expansion of the liquid is β − 3α. For most liquids this is a small correction.
+related: [engineering/thermal-expansion, physics/density, engineering/vertical-tank-volume, physics/latent-heat]
+---
+
+## How to use the liquid thermal expansion calculator
+
+Enter the liquid's **volumetric expansion coefficient β** in units of 10⁻⁶ per kelvin, the **initial volume** and the **initial and final temperatures**. The calculator returns the volume increase, the final volume and the percentage change. A negative result means the liquid contracts on cooling.
+
+## Volumetric expansion formula
+
+<p class="formula">ΔV = β × V<sub>0</sub> × (T<sub>2</sub> − T<sub>1</sub>) &nbsp;·&nbsp; V<sub>1</sub> = V<sub>0</sub> + ΔV</p>
+
+## Example
+
+A tank is filled with 1,000 L of petrol at 15 °C, which then warms to 35 °C in the sun (β = 950 × 10⁻⁶/K):
+
+- ΔT = 35 − 15 = 20 K
+- ΔV = 950 × 10⁻⁶ × 1000 × 20 = **19.0 L**
+- Final volume = **1,019 L**, an increase of **1.9%**
+
+## Expansion coefficients and volume change per 1,000 L
+
+| Liquid | β (×10⁻⁶/K, near 20 °C) | ΔT = 10 K | ΔT = 20 K | ΔT = 40 K |
+|---|---|---|---|---|
+| Water (at 20 °C) | 207 | 2.07 L | 4.14 L | 8.28 L |
+| Mercury | 181 | 1.81 L | 3.62 L | 7.24 L |
+| Glycerine | 505 | 5.05 L | 10.10 L | 20.20 L |
+| Petrol (gasoline) | 950 | 9.50 L | 19.00 L | 38.00 L |
+| Kerosene / jet fuel | 990 | 9.90 L | 19.80 L | 39.60 L |
+| Ethanol | 1090 | 10.90 L | 21.80 L | 43.60 L |
+| Acetone | 1430 | 14.30 L | 28.60 L | 57.20 L |
+
+Coefficients are typical values near room temperature; they vary with temperature and composition.
+
+## Why it matters
+
+- **Blocked-in liquid**: a full, closed pipe that warms up builds pressure very quickly because liquids are nearly incompressible — fit a thermal relief valve.
+- **Tank ullage**: leave enough free space for the expansion over the full storage temperature range.
+- **Custody transfer**: fuel volumes are corrected to 15 °C (or 60 °F) using expansion tables.
+- For solids (pipes, rails), use the linear [thermal expansion calculator](/engineering/thermal-expansion/).

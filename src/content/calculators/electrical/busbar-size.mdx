@@ -1,0 +1,77 @@
+---
+title: Busbar Size Calculator (Current Density Method)
+description: Estimate copper or aluminium busbar cross-section and width from current and a design current density, with the resistive loss per metre.
+category: electrical
+intro: "A first estimate of busbar size divides the current by a safe current density, typically about 1.2–1.6 A/mm² for copper and 0.8–1.0 A/mm² for aluminium inside switchboards. This busbar size calculator gives the cross-section, the bar width for a chosen thickness and the resistive loss per metre — see the [busbar sizing calculation guide](https://www.instrumentationblog.in/busbar-sizing-calculation-guide/) for temperature-rise and short-circuit checks."
+keywords: [busbar size calculator, busbar sizing calculation, copper busbar current capacity, busbar current density, aluminium busbar size, busbar cross section calculator, panel busbar calculation]
+updated: 2026-11-02
+variables:
+  - { id: I, label: Rated current, family: current, unit: A, default: 1600, min: 0 }
+  - id: rho
+    label: Material
+    default: 1.724e-8
+    options:
+      - { label: 'Copper (ρ = 1.724 × 10⁻⁸ Ω·m)', value: 1.724e-8 }
+      - { label: 'Aluminium (ρ = 2.826 × 10⁻⁸ Ω·m)', value: 2.826e-8 }
+  - { id: J, label: Design current density, suffix: A/mm², default: 1.6, min: 0, help: 'Typical: copper 1.2–1.6 A/mm², aluminium 0.8–1.0 A/mm² in enclosed panels.' }
+  - { id: t, label: Bar thickness, family: length, unit: mm, imperialUnit: in, default: 10, min: 0 }
+  - { id: nb, label: Bars per phase, default: 1, min: 1 }
+  - { id: A, label: Required cross-section, family: area, unit: mm2, imperialUnit: in2, min: 0 }
+  - { id: w, label: Width of each bar, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: Pm, label: "Resistive loss per metre per phase (DC, 20 °C)", suffix: W/m, min: 0 }
+equations:
+  - A = I / (J * 1e6)
+  - w = A / (nb * t)
+  - Pm = I^2 * rho / A
+faq:
+  - q: How do I calculate busbar size?
+    a: Cross-section = current ÷ current density. For 1,600 A at 1.6 A/mm², a copper busbar needs 1,000 mm² — for example one 100 × 10 mm bar per phase.
+  - q: What current density should I use for a copper busbar?
+    a: About 1.2–1.6 A/mm² for enclosed switchboards and up to about 2 A/mm² for small, well-ventilated bars. Large bars need lower densities because their surface area per mm² is smaller.
+  - q: Why is aluminium busbar larger than copper?
+    a: Aluminium has about 1.6 times the resistivity of copper, so it needs roughly 60% more cross-section for the same loss and temperature rise — but it is much lighter and cheaper.
+  - q: Is the current density method enough for final design?
+    a: No. Final sizing should be verified by temperature-rise tests or tables (IEC 61439, DIN 43671), and the bars and supports checked for short-circuit thermal and mechanical stress.
+related: [electrical/cable-voltage-drop, electrical/wire-resistance, electrical/skin-depth, electrical/transformer-current]
+---
+
+## How to use the busbar size calculator
+
+Enter the **rated current**, choose **copper** or **aluminium**, set the **design current density**, the **bar thickness** and the number of **bars per phase**. The calculator returns the cross-section required, the width of each bar and the resistive loss per metre of each phase at 20 °C DC. Round up to the next standard bar size.
+
+## Busbar sizing formulas
+
+<p class="formula">A = I ÷ J &nbsp;·&nbsp; w = A ÷ (n × t) &nbsp;·&nbsp; P/L = I² ρ ÷ A</p>
+
+## Example
+
+1,600 A copper busbar at 1.6 A/mm², 10 mm thick bars, one bar per phase:
+
+- A = 1600 ÷ 1.6 = **1,000 mm²**
+- w = 1000 ÷ (1 × 10) = **100 mm** → one 100 × 10 mm bar per phase
+- Loss = 1600² × 1.724 × 10⁻⁸ ÷ 0.001 = **44.1 W/m** per phase
+
+## Current estimate for standard flat bars
+
+| Size | Area | Copper at 1.2 A/mm² | Copper at 1.6 A/mm² | Aluminium at 0.8 A/mm² |
+|---|---|---|---|---|
+| 20 × 5 mm | 100 mm² | 120 A | 160 A | 80 A |
+| 30 × 5 mm | 150 mm² | 180 A | 240 A | 120 A |
+| 40 × 5 mm | 200 mm² | 240 A | 320 A | 160 A |
+| 40 × 10 mm | 400 mm² | 480 A | 640 A | 320 A |
+| 50 × 10 mm | 500 mm² | 600 A | 800 A | 400 A |
+| 60 × 10 mm | 600 mm² | 720 A | 960 A | 480 A |
+| 80 × 10 mm | 800 mm² | 960 A | 1,280 A | 640 A |
+| 100 × 10 mm | 1,000 mm² | 1,200 A | 1,600 A | 800 A |
+| 120 × 10 mm | 1,200 mm² | 1,440 A | 1,920 A | 960 A |
+| 160 × 10 mm | 1,600 mm² | 1,920 A | 2,560 A | 1,280 A |
+| 200 × 10 mm | 2,000 mm² | 2,400 A | 3,200 A | 1,600 A |
+
+These are current-density estimates, not certified ratings — large bars carry less per mm² than small ones.
+
+## Design notes
+
+- **AC effects**: above about 10 mm thickness the [skin effect](/electrical/skin-depth/) means the centre of a copper bar carries little current at 50 Hz, so use several thinner bars with gaps rather than one thick bar.
+- **Multiple bars per phase** do not share current perfectly; derate by about 10–20% for 2–4 bars.
+- **Painting** bars matt black improves heat dissipation by radiation; enclosure ventilation and ambient temperature matter as much as cross-section.
+- Check the short-circuit withstand: copper needs about A ≥ I<sub>sc</sub> × √t ÷ 143 mm² for a 1 s fault from 90 °C to 250 °C (k ≈ 143).

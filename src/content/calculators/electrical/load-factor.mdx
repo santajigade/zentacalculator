@@ -1,0 +1,67 @@
+---
+title: Load Factor Calculator (Maximum Demand & Demand Factor)
+description: Calculate load factor from energy consumed and maximum demand, plus average load and demand factor — for monthly electricity bills and plant studies.
+category: electrical
+intro: "Load factor compares the average load over a period with the peak, or maximum demand, so it shows how steadily a plant uses its electrical capacity. This load factor calculator works out average load, load factor and demand factor from a bill's kWh and kW figures — see [maximum demand calculation with diversity](https://www.instrumentationblog.in/maximum-demand-calculation-diversity/) for estimating the peak at design stage."
+keywords: [load factor calculator, maximum demand calculator, demand factor calculator, load factor formula, average load calculation, electricity load factor, kwh to load factor]
+updated: 2026-11-02
+variables:
+  - { id: E, label: Energy consumed in the period, family: energy, unit: kWh, default: 216000, min: 0 }
+  - { id: tp, label: Length of the period, family: seconds, unit: h, default: 720, min: 0, help: '720 h = 30 days; 8,760 h = one year.' }
+  - { id: MD, label: Maximum demand, family: power, unit: kW, default: 500, min: 0 }
+  - { id: Pc, label: Connected load, family: power, unit: kW, default: 800, min: 0 }
+  - { id: Pa, label: Average load, family: power, unit: kW, min: 0 }
+  - { id: LF, label: Load factor, family: percent, unit: '%', min: 0 }
+  - { id: DF, label: Demand factor (MD ÷ connected load), family: percent, unit: '%', min: 0 }
+equations:
+  - Pa = E / tp
+  - LF = Pa / MD
+  - DF = MD / Pc
+faq:
+  - q: How do you calculate load factor?
+    a: Load factor = energy consumed ÷ (maximum demand × hours in the period). 216,000 kWh in a 30-day month (720 h) with a 500 kW maximum demand gives 216,000 ÷ 360,000 = 60%.
+  - q: What is a good load factor?
+    a: Higher is better — continuous process plants reach 70–90%, while offices and single-shift factories are often 20–40%. A high load factor means fixed demand charges are spread over more kWh.
+  - q: What is the difference between load factor and demand factor?
+    a: Load factor is average ÷ peak load over time. Demand factor is maximum demand ÷ total connected load, and shows how much of the installed equipment runs at the same time.
+  - q: How can I improve load factor?
+    a: Reduce the peak rather than the energy — stagger motor starts, shift batch loads to off-peak hours and use demand controllers or energy storage.
+related: [electrical/energy-meter-constant, electrical/kw-to-amps, electrical/transformer-size, electrical/power-factor-correction]
+---
+
+## How to use the load factor calculator
+
+Enter the **energy consumed** (kWh) and the **length of the period** from your electricity bill or meter readings, the **maximum demand** recorded in that period and, optionally, the total **connected load**. The calculator returns the average load, the load factor and the demand factor.
+
+## Load factor formulas
+
+<p class="formula">Average load = E ÷ t &nbsp;·&nbsp; Load factor = Average load ÷ Maximum demand</p>
+
+<p class="formula">Demand factor = Maximum demand ÷ Connected load</p>
+
+## Example
+
+A factory used 216,000 kWh in a 30-day month with a recorded maximum demand of 500 kW and 800 kW of connected load:
+
+- Average load = 216,000 ÷ 720 = **300 kW**
+- Load factor = 300 ÷ 500 = **60%**
+- Demand factor = 500 ÷ 800 = **62.5%**
+
+## Energy for a 500 kW maximum demand
+
+| Load factor | kWh per 30 days | MWh per year | Equivalent full-load hours per day |
+|---|---|---|---|
+| 20% | 72,000 kWh | 876 MWh | 4.8 h |
+| 30% | 108,000 kWh | 1,314 MWh | 7.2 h |
+| 40% | 144,000 kWh | 1,752 MWh | 9.6 h |
+| 50% | 180,000 kWh | 2,190 MWh | 12.0 h |
+| 60% | 216,000 kWh | 2,628 MWh | 14.4 h |
+| 70% | 252,000 kWh | 3,066 MWh | 16.8 h |
+| 80% | 288,000 kWh | 3,504 MWh | 19.2 h |
+| 90% | 324,000 kWh | 3,942 MWh | 21.6 h |
+
+## Notes
+
+- Utilities measure maximum demand as the highest average over a 15- or 30-minute window, not the instantaneous peak.
+- With kVA-based demand tariffs, improving power factor also cuts the billed maximum demand.
+- The transformer only needs to be sized for the diversified maximum demand, not the connected load — see the [transformer size calculator](/electrical/transformer-size/).

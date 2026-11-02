@@ -83,7 +83,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Pipe heat loss (insulated)
 - [ ] Insulation thickness
 - [ ] Convection heat transfer (Q = hAΔT)
-- [ ] Radiation heat transfer (Stefan–Boltzmann)
+- [x] Radiation heat transfer (Stefan–Boltzmann)
 - [ ] Cooling tower range/approach & evaporation
 - [ ] Chiller tonnage (TR) from flow & ΔT
 - [ ] Air conditioner BTU / room size
@@ -142,27 +142,27 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Fuse I²t / let-through
 - [ ] Motor starting voltage dip (ib)
 - [ ] Soft starter current (ib)
-- [ ] Capacitor bank current & kVAr ↔ µF
-- [ ] Busbar size (current density)
+- [x] Capacitor bank current & kVAr ↔ µF
+- [x] Busbar size (current density)
 - [ ] Arc flash incident energy (simplified) (ib)
-- [ ] Battery bank sizing (Ah for backup)
+- [x] Battery bank sizing (Ah for backup)
 - [ ] Substation battery sizing (IEEE 485 simplified) (ib)
 - [ ] Solar string sizing (Voc, Vmp vs inverter)
 - [ ] Solar inverter sizing
 - [ ] Energy consumption kWh (plant) (ib)
-- [ ] Maximum demand & load factor
+- [x] Maximum demand & load factor
 - [ ] Electricity bill with demand charges (India HT tariff)
 - [ ] Lighting: lumens & lux (room) 
 - [ ] Number of light fixtures (lumen method)
 - [ ] Single-phase transformer current
-- [ ] Autotransformer power
-- [ ] Generator frequency & poles
-- [ ] Synchronous generator power angle
+- [x] Autotransformer power
+- [x] Generator frequency & poles
+- [x] Synchronous generator power angle
 - [ ] Transmission line: Ferranti effect (ib)
-- [ ] Skin depth (ib)
+- [x] Skin depth (ib)
 - [ ] Insulation resistance / PI (ib)
 - [ ] Motor winding resistance unbalance (ib)
-- [ ] Watt-hour meter constant (imp/kWh)
+- [x] Watt-hour meter constant (imp/kWh)
 - [ ] Lightning protection: rolling sphere radius
 - [ ] Voltage drop for DC (solar/battery)
 
@@ -189,7 +189,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Antenna length (λ/2, λ/4 dipole)
 - [x] Free-space path loss
 - [ ] Microstrip impedance (ib)
-- [ ] Skin effect in PCB / wire (ib)
+- [x] Skin effect in PCB / wire (ib)
 - [ ] Binary / hex / decimal / BCD converter (ib)
 - [ ] Gray code converter (ib)
 - [ ] Logic level / pull-up resistor (I2C)
@@ -208,23 +208,23 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Simple harmonic motion
 - [x] Spring-mass frequency
 - [x] Stress, strain & Young's modulus
-- [ ] Bernoulli equation (ib)
+- [x] Bernoulli equation (ib)
 - [x] Stokes' law / terminal velocity
 - [x] Drag force
-- [ ] Lift force
-- [ ] Thermal expansion of liquids (volumetric)
+- [x] Lift force
+- [x] Thermal expansion of liquids (volumetric)
 - [x] Latent heat
 - [x] Newton's law of cooling
-- [ ] Stefan–Boltzmann radiation
-- [ ] Wien's law
+- [x] Stefan–Boltzmann radiation
+- [x] Wien's law
 - [x] Photon energy (E = hf)
 - [x] de Broglie wavelength
-- [ ] E = mc²
-- [ ] Radioactive activity (Bq, Ci)
-- [ ] Magnetic field of a wire / solenoid
-- [ ] Lorentz force
-- [ ] Faraday's law (EMF) (ib)
-- [ ] Capacitance of parallel plates (ib)
+- [x] E = mc²
+- [x] Radioactive activity (Bq, Ci)
+- [x] Magnetic field of a wire / solenoid
+- [x] Lorentz force
+- [x] Faraday's law (EMF) (ib)
+- [x] Capacitance of parallel plates (ib)
 - [ ] Electric field & potential
 - [ ] Speed of sound in gases
 - [ ] Standing waves / string frequency

@@ -41,10 +41,12 @@ export const CAT_SEO: Record<string, CatSEO> = {
     h1: 'Electrical calculators',
     intro: 'Free online electrical calculators for electricians, electrical engineers and students. Convert **kW to amps** and **kVA to kW**, check **cable voltage drop**, size a **capacitor bank for power factor correction**, find **transformer full-load and short-circuit current**, size **earth conductors** and measure **THD** — with formulas, worked examples and reference tables on every page.',
     groups: [
-      { name: 'Power & current', ids: ['kw-to-amps', 'amps-to-watts', 'kva-to-kw', 'line-phase-voltage', 'power-factor-correction', 'ups-sizing', 'generator-size'] },
+      { name: 'Power & current', ids: ['kw-to-amps', 'amps-to-watts', 'kva-to-kw', 'line-phase-voltage', 'power-factor-correction', 'capacitor-bank-kvar', 'ups-sizing', 'battery-bank-size', 'generator-size'] },
+      { name: 'Generators', ids: ['generator-frequency', 'generator-power-angle'] },
+      { name: 'Energy, demand & metering', ids: ['load-factor', 'energy-meter-constant'] },
       { name: 'Motors & drives', ids: ['three-phase-motor-power', 'motor-starting-current', 'induction-motor-slip', 'voltage-unbalance', 'braking-resistor'] },
-      { name: 'Transformers & fault level', ids: ['transformer-size', 'transformer-current', 'transformer-short-circuit', 'transformer-turns-ratio', 'transformer-efficiency', 'per-unit', 'ct-burden'] },
-      { name: 'Cables, earthing & power quality', ids: ['cable-voltage-drop', 'wire-resistance', 'earth-fault-loop-impedance', 'earth-conductor-size', 'earthing-resistance', 'thd', 'star-delta-transformation'] },
+      { name: 'Transformers & fault level', ids: ['transformer-size', 'transformer-current', 'transformer-short-circuit', 'transformer-turns-ratio', 'transformer-efficiency', 'autotransformer', 'per-unit', 'ct-burden'] },
+      { name: 'Cables, busbars, earthing & power quality', ids: ['cable-voltage-drop', 'wire-resistance', 'busbar-size', 'skin-depth', 'earth-fault-loop-impedance', 'earth-conductor-size', 'earthing-resistance', 'thd', 'star-delta-transformation'] },
     ],
     about: [
       { h: 'For LV and MV power systems', p: 'The calculators cover single-phase, three-phase and DC circuits at common Indian, European and North American voltages (230/415 V, 400 V, 120/208/480 V and 11 kV). Formulas follow IEC 60364, IEC 60076, IEEE 519 and NEMA MG 1 where relevant, and each page explains the assumptions.' },
@@ -88,10 +90,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
     groups: [
       { name: 'Motion & kinematics', ids: ['speed-distance-time', 'acceleration', 'suvat-equations', 'free-fall', 'projectile-motion', 'momentum', 'impulse', 'elastic-collision', 'angular-velocity'] },
       { name: 'Forces & energy', ids: ['force', 'weight', 'torque', 'centripetal-force', 'hookes-law', 'kinetic-energy', 'potential-energy', 'work-and-power', 'friction-force', 'inclined-plane', 'rotational-kinetic-energy', 'youngs-modulus'] },
-      { name: 'Fluids, heat & gases', ids: ['pressure', 'density', 'buoyancy', 'stokes-law', 'drag-force', 'heat-conduction', 'newtons-law-of-cooling', 'latent-heat', 'ideal-gas-law'] },
-      { name: 'Electricity & magnetism', ids: ['ohms-law', 'resistors-series-parallel', 'rc-time-constant', 'coulombs-law'] },
+      { name: 'Fluids, heat & gases', ids: ['pressure', 'density', 'buoyancy', 'stokes-law', 'drag-force', 'heat-conduction', 'newtons-law-of-cooling', 'latent-heat', 'ideal-gas-law', 'bernoulli-equation', 'lift-force', 'liquid-thermal-expansion', 'stefan-boltzmann-law'] },
+      { name: 'Electricity & magnetism', ids: ['ohms-law', 'resistors-series-parallel', 'rc-time-constant', 'coulombs-law', 'parallel-plate-capacitor', 'magnetic-field', 'lorentz-force', 'faradays-law'] },
       { name: 'Waves, sound & light', ids: ['wavelength-frequency', 'doppler-effect', 'decibel', 'snells-law', 'thin-lens', 'pendulum', 'spring-mass-frequency', 'simple-harmonic-motion'] },
-      { name: 'Modern & quantum physics', ids: ['photon-energy', 'de-broglie-wavelength'] },
+      { name: 'Modern, nuclear & quantum physics', ids: ['photon-energy', 'de-broglie-wavelength', 'wiens-law', 'mass-energy-equivalence', 'radioactive-activity'] },
       { name: 'Gravity & orbits', ids: ['gravitational-force', 'escape-velocity', 'orbital-period'] },
     ],
     about: [

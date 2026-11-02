@@ -1,0 +1,72 @@
+---
+title: Lorentz Force Calculator (F = qvB & F = BIL)
+description: Calculate the magnetic Lorentz force on a moving charge (F = qvB sin θ), its radius of curvature and cyclotron frequency, and the force on a wire.
+category: physics
+intro: "A charged particle moving through a magnetic field feels a force at right angles to both its velocity and the field, and a current-carrying wire feels the same force — the principle behind electric motors, loudspeakers and mass spectrometers. This Lorentz force calculator gives the force on a moving charge, the radius of its circular path and its cyclotron frequency, plus the force on a conductor."
+keywords: [lorentz force calculator, magnetic force calculator, f = qvb calculator, force on a moving charge, force on current carrying wire, f = bil calculator, cyclotron frequency calculator, gyroradius calculator]
+updated: 2026-11-02
+variables:
+  - { id: z, label: Charge number (multiples of e), default: 1, help: '+1 for a proton, −1 for an electron, +2 for an alpha particle.' }
+  - { id: v, label: Particle speed, family: velocity, unit: ms, default: 2000000, min: 0 }
+  - { id: B, label: Magnetic flux density, suffix: T, default: 0.5, min: 0 }
+  - { id: th, label: Angle between velocity (or current) and field, family: angle, unit: deg, default: 90 }
+  - { id: mu, label: Particle mass (atomic mass units), suffix: u, default: 1.007276, min: 0, help: 'Proton 1.007276 u, electron 0.00054858 u, alpha 4.001506 u.' }
+  - { id: I, label: Current in a conductor, family: current, unit: A, default: 5, min: 0 }
+  - { id: Lc, label: Conductor length in the field, family: length, unit: m, imperialUnit: in, default: 0.2, min: 0 }
+  - { id: F, label: Force on the charge, family: force, unit: N, min: 0 }
+  - { id: r, label: Radius of the circular path, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: fc, label: Cyclotron frequency, family: frequency, unit: MHz, min: 0 }
+  - { id: Fc, label: Force on the conductor (F = BIL sin θ), family: force, unit: N, imperialUnit: lbf }
+equations:
+  - F = abs(z) * 1.602176634e-19 * v * B * sin(th)
+  - r = mu * 1.66053906660e-27 * v * sin(th) / (abs(z) * 1.602176634e-19 * B)
+  - fc = abs(z) * 1.602176634e-19 * B / (2 * pi * mu * 1.66053906660e-27)
+  - Fc = B * I * Lc * sin(th)
+faq:
+  - q: What is the Lorentz force formula?
+    a: F = q(E + v × B). With no electric field the magnitude is F = |q| v B sin θ, where θ is the angle between the velocity and the magnetic field.
+  - q: What is the force on a current-carrying wire?
+    a: F = B I L sin θ. A 0.2 m conductor carrying 5 A at right angles to a 0.5 T field feels 0.5 N — the basic force in every electric motor.
+  - q: Why do charged particles move in circles in a magnetic field?
+    a: The magnetic force is always perpendicular to the velocity, so it changes the direction but not the speed. The radius is r = m v⊥ ÷ (|q| B).
+  - q: Which way does the force act?
+    a: Use the right-hand rule for positive charges (or conventional current) — fingers along v, curl towards B, thumb gives F. The force on an electron is in the opposite direction.
+related: [physics/magnetic-field, physics/faradays-law, physics/centripetal-force, physics/coulombs-law]
+---
+
+## How to use the Lorentz force calculator
+
+For a **moving charge**, enter its **charge number**, **speed**, **mass** in atomic mass units, the **magnetic flux density** and the **angle** between velocity and field. You get the force, the radius of the circular (or helical) path and the cyclotron frequency. For a **wire**, enter the **current** and the **length** inside the field; the same B and angle are used.
+
+## Lorentz force formulas
+
+<p class="formula">F = |q| v B sin θ &nbsp;·&nbsp; r = m v sin θ ÷ (|q| B) &nbsp;·&nbsp; f<sub>c</sub> = |q| B ÷ (2π m)</p>
+
+<p class="formula">Conductor: F = B I L sin θ</p>
+
+## Example
+
+A proton (1.007276 u, charge +e) moving at 2 × 10⁶ m/s at right angles to a 0.5 T field:
+
+- F = 1.602 × 10⁻¹⁹ × 2 × 10⁶ × 0.5 = **1.6022 × 10⁻¹³ N**
+- r = 1.6726 × 10⁻²⁷ × 2 × 10⁶ ÷ (1.602 × 10⁻¹⁹ × 0.5) = **41.76 mm**
+- f<sub>c</sub> = **7.623 MHz**
+
+A 0.2 m wire carrying 5 A across the same field: F = 0.5 × 5 × 0.2 = **0.50 N**.
+
+## Cyclotron frequency and radius in a 1 T field
+
+The radius column is for a speed of 10⁶ m/s perpendicular to the field.
+
+| Particle | Charge | Cyclotron frequency | Radius at 10⁶ m/s |
+|---|---|---|---|
+| Electron | -1 | 2.799e+04 MHz | 0.005686 mm |
+| Proton | +1 | 15.25 MHz | 10.44 mm |
+| Alpha particle | +2 | 7.675 MHz | 20.74 mm |
+| Deuteron | +1 | 7.626 MHz | 20.87 mm |
+
+## Notes
+
+- The formulas are non-relativistic; above about 10% of the speed of light use the relativistic momentum γmv.
+- A velocity component parallel to B is unaffected, so the particle spirals along the field lines.
+- Find the field of a coil or wire first with the [magnetic field calculator](/physics/magnetic-field/).

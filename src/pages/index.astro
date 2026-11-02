@@ -18,10 +18,11 @@ const TABS = [
 ].map((t) => ({ ...t, items: pick(t.ids) }));
 
 const QUICK = pick(['finance/emi', 'health/bmi', 'electrical/kw-to-amps', 'engineering/4-20ma-scaling', 'finance/gst', 'math/percentage', 'physics/ohms-law', 'conversion/kg-to-lb']);
+const catOf = (slug: string) => CATEGORIES.find((x) => x.slug === slug);
 const short = (t: string) => t.replace(/\s*\(.*?\)\s*/g, ' ').replace(/\s*(Calculator|Converter)\b.*$/, '').trim();
 
 // Newest calculators (from the daily batches)
-const fresh = [...calcs].sort((a, b) => +b.data.updated - +a.data.updated || a.data.title.localeCompare(b.data.title)).slice(0, 12);
+const fresh = [...calcs].sort((a, b) => +b.data.updated - +a.data.updated || a.data.title.localeCompare(b.data.title)).slice(0, 14);
 
 // Live demo
 const demo = findCalc(calcs, 'physics/ohms-law')!;
@@ -29,7 +30,7 @@ const d = demo.data;
 const demoSpec = { title: d.title, variables: d.variables, equations: d.equations, freedom: d.freedom, chart: undefined, dataset: d.dataset };
 
 const schema = [{
-  '@context': 'https://schema.org', '@type': 'Organization', name: SITE.name, url: SITE.url, logo: `${SITE.url}/apple-touch-icon.png`,
+  '@context': 'https://schema.org', '@type': 'Organization', name: SITE.name, url: SITE.url, logo: `${SITE.url}/apple-touch-icon.png`, sameAs: SITE.social.map((x) => x.url),
   founder: { '@type': 'Person', name: 'Santaji Gadepatil', url: `${SITE.url}/author/santaji-gadepatil/`, sameAs: ['https://www.linkedin.com/in/santaji-gadepatil6680/'] },
 }, {
   '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: SITE.url,
@@ -60,7 +61,7 @@ const total = Math.floor(calcs.length / 10) * 10;
   </section>
 
   <div class="wrap">
-    <section>
+    <section class="hcard">
       <div class="hs__head">
         <h2 class="hs__title">Popular calculators</h2>
         <div class="tabs" role="tablist">
@@ -68,29 +69,32 @@ const total = Math.floor(calcs.length / 10) * 10;
         </div>
       </div>
       {TABS.map((t, i) => (
-        <ul class="mini-list" role="tabpanel" data-panel={i} hidden={i !== 0}>
-          {t.items.map((c) => <li><a href={urlOf(c)}><b>{short(c.data.title)}</b><span>{c.data.description}</span></a></li>)}
+        <ul class="plist" role="tabpanel" data-panel={i} hidden={i !== 0}>
+          {t.items.map((c) => { const k = catOf(c.data.category); return (
+            <li><a href={urlOf(c)} style={`--c:${k?.color}`}><span class="plist__i" aria-hidden="true">{k?.icon}</span><span class="plist__t">{short(c.data.title)}</span><span class="plist__a" aria-hidden="true">→</span></a></li>
+          ); })}
         </ul>
       ))}
     </section>
 
-    <section>
-      <h2 class="hs__title">Browse by category</h2>
-      <div class="cat-mini">
+    <section class="hcard">
+      <div class="hs__head"><h2 class="hs__title">Browse by category</h2><span class="muted">{calcs.length} calculators in {CATEGORIES.length} categories</span></div>
+      <div class="cgrid">
         {CATEGORIES.map((c) => (
           <a href={`/${c.slug}/`} style={`--c:${c.color}`}>
-            <span class="cat-mini__i" aria-hidden="true">{c.icon}</span>
-            <span><b>{c.name}</b><small>{count(c.slug)} calculators</small></span>
+            <span class="cgrid__i" aria-hidden="true">{c.icon}</span>
+            <span class="cgrid__n">{c.name}</span>
+            <span class="cgrid__c">{count(c.slug)}</span>
           </a>
         ))}
       </div>
     </section>
 
-    <section>
+    <section class="hcard">
       <div class="hs__head"><h2 class="hs__title">New this week</h2><span class="muted">Fresh calculators added every day</span></div>
-      <div class="strip">
-        {fresh.map((c) => <a href={urlOf(c)}><small>{CATEGORIES.find((x) => x.slug === c.data.category)?.name}</small><b>{short(c.data.title)}</b></a>)}
-      </div>
+      <p class="newchips">
+        {fresh.map((c) => <a href={urlOf(c)}><i style={`background:${catOf(c.data.category)?.color}`}></i>{short(c.data.title)}</a>)}
+      </p>
     </section>
 
     <section class="why">
@@ -109,7 +113,7 @@ const total = Math.floor(calcs.length / 10) * 10;
   <script>
     document.querySelectorAll<HTMLButtonElement>('.tabs__b').forEach((b) => b.addEventListener('click', () => {
       document.querySelectorAll<HTMLButtonElement>('.tabs__b').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
-      document.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== b.dataset.tab));
+      document.querySelectorAll<HTMLElement>('.plist').forEach((p) => (p.hidden = p.dataset.panel !== b.dataset.tab));
     }));
   </script>
 </Base>

@@ -369,3 +369,7 @@ body:has(.hx__search) header .search { visibility: hidden; } @media (max-width: 
 .ftr__social a:hover { background: var(--brand); color: var(--brand-ink); }
 .ftr__social svg { width: 17px; height: 17px; fill: currentColor; }
 .hx__text > p.hx__chips { margin: 22px 0 0; gap: 8px; }
+.cgrid a { background: color-mix(in srgb, var(--c) 9%, transparent); }
+.cgrid a:hover { background: color-mix(in srgb, var(--c) 17%, transparent); transform: translateY(-1px); }
+.cgrid__i { background: color-mix(in srgb, var(--c) 18%, var(--surface)); }
+.cgrid__c { background: var(--surface); }

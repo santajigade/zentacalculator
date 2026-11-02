@@ -368,3 +368,4 @@ body:has(.hx__search) header .search { visibility: hidden; } @media (max-width: 
 .ftr__social a { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; background: var(--surface-2); color: var(--muted); transition: .15s; }
 .ftr__social a:hover { background: var(--brand); color: var(--brand-ink); }
 .ftr__social svg { width: 17px; height: 17px; fill: currentColor; }
+.hx__text > p.hx__chips { margin: 22px 0 0; gap: 8px; }

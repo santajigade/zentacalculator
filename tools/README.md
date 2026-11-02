@@ -29,9 +29,9 @@ python3 tools/gen/batch<DATE>.py
 python3 tools/gen/validate.py            # must print bad 0 / bad2 0
 npm run build && python3 tools/gen/linkcheck.py   # must print 0
 setsid npx astro preview --port 4399 &   # (never pkill by pattern)
-node tools/test/t8.js <ids>   # 0 errors, 0 warnings
-node tools/test/t6.js <ids>   # 0 overflow at 360 px
-node tools/test/t9.js <ids>   # read every default result and check it by hand against the worked example
+node tools/test/t8.cjs <ids>   # 0 errors, 0 warnings
+node tools/test/t6.cjs <ids>   # 0 overflow at 360 px
+node tools/test/t9.cjs <ids>   # read every default result and check it by hand against the worked example
 ```
 Fix any example text that disagrees with the calculator.
 

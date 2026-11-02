@@ -271,7 +271,7 @@ img { max-width: 100%; }
 .hx__text > p { font-size: 1.08rem; color: var(--muted); margin: 0 0 18px; max-width: 560px; }
 .hx__search { max-width: 560px; }
 .hx__search input { padding: 15px 20px; font-size: 1.02rem; background: var(--surface); box-shadow: var(--shadow); }
-.hx__chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; }
+.hx__chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
 .hx__chips a { font-size: .85rem; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: var(--brand-soft); color: var(--brand); text-decoration: none; }
 .hx__chips a:hover { background: var(--brand); color: var(--brand-ink); }
 .hx__stats { display: flex; gap: 28px; margin-top: 22px; }

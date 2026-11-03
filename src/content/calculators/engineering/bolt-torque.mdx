@@ -1,0 +1,65 @@
+---
+title: Bolt Torque Calculator (T = K·D·F, Preload & Stress)
+description: Calculate bolt tightening torque from preload, nominal diameter and nut factor with T = K·D·F, plus bolt stress — with an ISO metric 8.8 and 10.9 torque table.
+category: engineering
+intro: "Tightening torque is the practical way to set a bolt's clamping force, but only a small part of the torque stretches the bolt — most is lost to friction in the threads and under the nut. This bolt torque calculator uses the short-form equation T = K × D × F, with the nut factor K capturing that friction, and checks the resulting tensile stress in the bolt."
+keywords: [bolt torque calculator, bolt tightening torque, torque to preload calculator, nut factor, t = kdf, bolt preload calculator, metric bolt torque chart]
+updated: 2026-11-03
+variables:
+  - { id: K, label: Nut factor K, default: 0.2, min: 0, help: 'Dry steel ≈ 0.20 · zinc plated ≈ 0.20 · lightly oiled ≈ 0.15–0.18 · MoS₂ paste ≈ 0.10–0.12' }
+  - { id: d, label: Nominal bolt diameter, family: length, unit: mm, imperialUnit: in, default: 12, min: 0 }
+  - { id: F, label: Target preload (clamp force), family: force, unit: kN, imperialUnit: lbf, default: 30, min: 0 }
+  - { id: At, label: Tensile stress area, family: area, unit: mm2, imperialUnit: in2, default: 84.3, min: 0, help: 'M8 36.6 · M10 58.0 · M12 84.3 · M16 157 · M20 245 mm²' }
+  - { id: T, label: Tightening torque, family: torque, unit: Nm, imperialUnit: lbft, min: 0 }
+  - { id: s, label: Bolt tensile stress, family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+equations:
+  - T = K * d * F
+  - s = F / At
+faq:
+  - q: What is the formula for bolt torque?
+    a: T = K × D × F, where K is the nut factor (about 0.2 for dry steel), D the nominal diameter and F the desired preload. Use metres and newtons to get N·m.
+  - q: What preload should a bolt have?
+    a: A common target is 70–75% of the bolt's proof load for reusable joints. For an ISO 8.8 bolt up to M16 the proof stress is 580 MPa, so 75% is about 435 MPa on the tensile stress area.
+  - q: How much does lubrication change the torque?
+    a: A lot. Oiled or MoS₂-coated threads have a lower K, so the same torque produces 30–60% more preload. Always use the K value matching the actual thread condition, or the bolt may be over-stressed.
+  - q: Why is torque tightening imprecise?
+    a: Friction varies from bolt to bolt, so the same torque can give ±25% scatter in preload. Critical joints use torque-angle tightening, hydraulic tensioners or ultrasonic bolt-elongation measurement.
+related: [engineering/torque-power-speed, physics/torque, engineering/factor-of-safety, engineering/hydraulic-cylinder-force]
+---
+
+## How to use the bolt torque calculator
+
+Enter the **nut factor K**, the **nominal bolt diameter**, the **target preload** and the bolt's **tensile stress area**. The calculator returns the tightening torque and the tensile stress the preload creates. To find the preload a given torque produces, enter the torque and clear the preload.
+
+## Bolt torque formula
+
+<p class="formula">T = K × D × F &nbsp;·&nbsp; σ = F ÷ A<sub>t</sub></p>
+
+For ISO metric threads the tensile stress area is A<sub>t</sub> = π/4 × (d − 0.9382 p)², where p is the thread pitch.
+
+## Example
+
+An M12 × 1.75 bolt (A<sub>t</sub> = 84.3 mm²) tightened dry (K = 0.2) to a 30 kN preload:
+
+- T = 0.2 × 0.012 m × 30,000 N = **72 N·m**
+- Bolt stress σ = 30,000 ÷ 84.3 = **356 MPa** — about 61% of the 580 MPa proof stress of class 8.8
+
+## Indicative torque for ISO metric coarse bolts (K = 0.2, 75% of proof load)
+
+| Thread | Stress area | Preload 8.8 | Torque 8.8 | Preload 10.9 | Torque 10.9 |
+|---|---|---|---|---|---|
+| M6 × 1 | 20.1 mm² | 8.8 kN | 11 N·m | 12.5 kN | 15 N·m |
+| M8 × 1.25 | 36.6 mm² | 15.9 kN | 25 N·m | 22.8 kN | 36 N·m |
+| M10 × 1.5 | 58.0 mm² | 25.2 kN | 50 N·m | 36.1 kN | 72 N·m |
+| M12 × 1.75 | 84.3 mm² | 36.7 kN | 88 N·m | 52.5 kN | 126 N·m |
+| M16 × 2 | 156.7 mm² | 68.2 kN | 218 N·m | 97.5 kN | 312 N·m |
+| M20 × 2.5 | 244.8 mm² | 110.2 kN | 441 N·m | 152.4 kN | 610 N·m |
+| M24 × 3 | 352.5 mm² | 158.6 kN | 761 N·m | 219.4 kN | 1053 N·m |
+| M30 × 3.5 | 560.6 mm² | 252.3 kN | 1514 N·m | 349.0 kN | 2094 N·m |
+
+Proof stresses from ISO 898-1: class 8.8 — 580 MPa (≤ M16), 600 MPa (> M16); class 10.9 — 830 MPa. Use the fastener supplier's data for critical joints.
+
+## Notes
+
+- Check the clamped joint as well as the bolt: soft gaskets and painted surfaces relax and lose preload.
+- Use the [factor of safety calculator](/engineering/factor-of-safety/) to compare the bolt stress with the material's proof or yield strength.

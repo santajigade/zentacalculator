@@ -1,0 +1,62 @@
+---
+title: Bending Stress Calculator (σ = M/Z = M·y/I)
+description: Calculate the maximum bending stress in a beam from bending moment and section modulus, σ = M/Z, and compare it with yield strength for a factor of safety.
+category: engineering
+intro: "A bending moment stretches one face of a beam and compresses the other, with the stress greatest at the outer fibres. This bending stress calculator applies σ = M ÷ Z (equivalently M·y ÷ I) to find that peak stress and compares it with the material's yield strength — the surface strain it produces is what [strain gauges](https://www.instrumentationblog.in/strain-gauge-working-principle/) measure on loaded beams."
+keywords: [bending stress calculator, flexural stress calculator, beam bending stress, section modulus stress, sigma = m/z, my/i calculator, maximum bending stress formula]
+updated: 2026-11-03
+variables:
+  - { id: M, label: Bending moment, family: torque, unit: kNm, imperialUnit: lbft, default: 15, min: 0 }
+  - { id: Z, label: Elastic section modulus Z, suffix: cm³, default: 194, min: 0, help: 'Z = I ÷ y_max. IPE 200 ≈ 194 cm³; rectangle b·h²/6; solid round πd³/32.' }
+  - { id: Sy, label: Yield strength of the material, family: pressure, unit: MPa, imperialUnit: psi, default: 250, min: 0, help: 'S235 / A36 ≈ 235–250 MPa · S355 ≈ 355 MPa · 6061-T6 aluminium ≈ 240 MPa' }
+  - { id: s, label: Maximum bending stress, family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+  - { id: FoS, label: Factor of safety against yield, min: 0, decimals: 2 }
+equations:
+  - s = M / (Z * 1e-6)
+  - FoS = Sy / s
+faq:
+  - q: What is the bending stress formula?
+    a: σ = M·y ÷ I = M ÷ Z, where M is the bending moment, y the distance from the neutral axis to the outer fibre, I the second moment of area and Z = I/y the elastic section modulus.
+  - q: Where is bending stress highest?
+    a: At the top and bottom surfaces, farthest from the neutral axis, at the section with the largest bending moment — mid-span of a simply supported beam, or the fixed end of a cantilever.
+  - q: What is the difference between elastic and plastic section modulus?
+    a: The elastic modulus Z gives the moment at which the outer fibre first yields. The plastic modulus (larger, by about 15% for I-beams and 50% for rectangles) gives the moment when the whole section has yielded; steel design codes use it for compact sections.
+  - q: How do I get the bending moment?
+    a: For a simply supported beam with a central load it is PL/4; with a uniform load wL²/8; for a cantilever with an end load PL. The beam deflection calculator gives these moments too.
+related: [engineering/beam-deflection, engineering/area-moment-of-inertia, engineering/factor-of-safety, physics/youngs-modulus]
+---
+
+## How to use the bending stress calculator
+
+Enter the **bending moment**, the section's **elastic section modulus Z** in cm³ and the material's **yield strength**. The calculator returns the maximum bending stress at the outer fibre and the factor of safety against yielding. To size a section, enter the stress you will allow and clear Z.
+
+## Bending stress formula
+
+<p class="formula">σ = M × y ÷ I = M ÷ Z &nbsp;·&nbsp; FoS = S<sub>y</sub> ÷ σ</p>
+
+## Example
+
+An IPE 200 (Z = 194 cm³) carrying a 15 kN·m moment, S235/A36-type steel with 250 MPa yield:
+
+- σ = 15,000 N·m ÷ 194 × 10⁻⁶ m³ = **77.3 MPa**
+- Factor of safety = 250 ÷ 77.3 = **3.23**
+
+## Moment capacity of IPE sections (S<sub>y</sub> = 250 MPa)
+
+| Section | Z (strong axis) | Moment at first yield | With FoS 1.5 |
+|---|---|---|---|
+| IPE 100 | 34.2 cm³ | 8.6 kN·m | 5.7 kN·m |
+| IPE 120 | 53 cm³ | 13.2 kN·m | 8.8 kN·m |
+| IPE 140 | 77.3 cm³ | 19.3 kN·m | 12.9 kN·m |
+| IPE 160 | 109 cm³ | 27.2 kN·m | 18.2 kN·m |
+| IPE 180 | 146 cm³ | 36.5 kN·m | 24.3 kN·m |
+| IPE 200 | 194 cm³ | 48.5 kN·m | 32.3 kN·m |
+| IPE 240 | 324 cm³ | 81.0 kN·m | 54.0 kN·m |
+| IPE 300 | 557 cm³ | 139.2 kN·m | 92.8 kN·m |
+
+Section moduli are nominal values from European IPE tables.
+
+## Notes
+
+- Slender beams can fail by lateral-torsional buckling before reaching the yield stress; design codes reduce the capacity of unrestrained beams.
+- Combine bending with axial or shear stresses (for example with the von Mises criterion) when both act together.

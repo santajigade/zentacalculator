@@ -1,0 +1,67 @@
+---
+title: Bayes' Theorem Calculator (Posterior Probability)
+description: Calculate the posterior probability P(A|B) with Bayes' theorem from a prior, the true-positive rate and the false-positive rate, for tests and alarms.
+category: statistics
+intro: "Bayes' theorem updates a prior belief with new evidence: it turns the probability of a positive test given a condition into the probability of the condition given a positive test. This Bayes' theorem calculator works from the prior probability, the true-positive rate and the false-positive rate, and shows why rare events give many false alarms."
+keywords: [bayes theorem calculator, bayes calculator, posterior probability calculator, conditional probability calculator, p(a|b), false positive paradox, bayes rule]
+updated: 2026-11-03
+variables:
+  - { id: pA, label: Prior probability P(A), family: percent, unit: '%', default: 1, min: 0, max: 1, help: 'How common A is before the evidence — for example the prevalence of a condition.' }
+  - { id: pBA, label: P(B | A) — true-positive rate, family: percent, unit: '%', default: 95, min: 0, max: 1, help: 'Sensitivity: chance of the evidence when A is true.' }
+  - { id: pBnA, label: P(B | not A) — false-positive rate, family: percent, unit: '%', default: 5, min: 0, max: 1, help: '1 − specificity: chance of the evidence when A is false.' }
+  - { id: pB, label: Total probability of the evidence P(B), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: pAB, label: Posterior P(A | B), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: pAnB, label: P(A | not B), family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - pB = pBA * pA + pBnA * (1 - pA)
+  - pAB = pBA * pA / pB
+  - pAnB = (1 - pBA) * pA / (1 - pB)
+faq:
+  - q: What is Bayes' theorem?
+    a: P(A|B) = P(B|A) × P(A) ÷ P(B), where P(B) = P(B|A)P(A) + P(B|not A)(1 − P(A)). It gives the probability of A after observing B.
+  - q: Why is a positive result from a 95% accurate test often wrong?
+    a: When the condition is rare, false positives from the large healthy group outnumber the true positives. With 1% prevalence and a 5% false-positive rate, only about 16% of positives are real.
+  - q: What are prior and posterior probabilities?
+    a: The prior P(A) is what you believe before the evidence; the posterior P(A|B) is the updated probability after it. Today's posterior can be the prior for the next test.
+  - q: What is P(A | not B)?
+    a: The chance that A is true even though the evidence was negative — the false-negative risk. It depends on the sensitivity and the prior.
+related: [statistics/probability, statistics/relative-risk, statistics/odds-probability, statistics/binomial-probability]
+---
+
+## How to use the Bayes' theorem calculator
+
+Enter the **prior probability** of A, the probability of the evidence B when A is true (**true-positive rate** or sensitivity) and when A is false (**false-positive rate**, 1 − specificity). The calculator returns the overall probability of seeing B, the posterior probability of A given B, and the probability of A despite a negative result.
+
+## Bayes' theorem formula
+
+<p class="formula">P(A|B) = P(B|A) × P(A) ÷ P(B)</p>
+
+<p class="formula">P(B) = P(B|A) × P(A) + P(B|¬A) × (1 − P(A))</p>
+
+## Example
+
+A condition affects 1% of people. A test detects it 95% of the time and gives a false positive 5% of the time:
+
+- P(B) = 0.95 × 0.01 + 0.05 × 0.99 = **5.90%**
+- P(A|B) = 0.95 × 0.01 ÷ 0.0590 = **16.10%**
+- P(A|not B) = 0.05 × 0.01 ÷ 0.9410 = **0.0531%**
+
+Out of 10,000 people: 95 true positives and 495 false positives — so only about 1 in 6 positives has the condition.
+
+## Posterior probability after one positive result
+
+| Prior P(A) | Test 95% / 5% | Test 99% / 1% |
+|---|---|---|
+| 0.1% | 1.9% | 9.0% |
+| 0.5% | 8.7% | 33.2% |
+| 1% | 16.1% | 50.0% |
+| 2% | 27.9% | 66.9% |
+| 5% | 50.0% | 83.9% |
+| 10% | 67.9% | 91.7% |
+| 20% | 82.6% | 96.1% |
+| 50% | 95.0% | 99.0% |
+
+## Notes
+
+- A second, independent positive test uses the first posterior as the new prior and raises the probability sharply.
+- The same reasoning applies to alarm systems: a sensitive alarm for a rare fault produces mostly nuisance trips.

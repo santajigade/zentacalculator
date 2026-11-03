@@ -1,0 +1,79 @@
+---
+title: Carnot Efficiency Calculator (Heat Engine, Heat Pump COP)
+description: Calculate the maximum Carnot efficiency of a heat engine and the ideal COP of a refrigerator or heat pump from hot and cold reservoir temperatures.
+category: physics
+intro: "No heat engine working between two temperatures can beat the efficiency of an ideal reversible Carnot cycle, η = 1 − T_c/T_h, and no refrigerator or heat pump can beat the Carnot COP. This Carnot efficiency calculator gives all three limits from the reservoir temperatures, together with the maximum work from a heat input — the benchmark for judging real [chiller capacity and COP](https://www.instrumentationblog.in/calculate-industrial-chiller-capacity/)."
+keywords: [carnot efficiency calculator, carnot cycle calculator, maximum efficiency heat engine, carnot cop calculator, heat pump cop calculator, 1 - tc/th, thermal efficiency limit]
+updated: 2026-11-03
+variables:
+  - { id: Th, label: Hot reservoir temperature, family: temperature, unit: C, imperialUnit: F, default: 500, min: 0 }
+  - { id: Tc, label: Cold reservoir temperature, family: temperature, unit: C, imperialUnit: F, default: 30, min: 0 }
+  - { id: Qh, label: Heat input rate, family: power, unit: kW, imperialUnit: BTUh, default: 100, min: 0 }
+  - { id: eta, label: Carnot efficiency, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: W, label: Maximum work output, family: power, unit: kW, imperialUnit: hp, min: 0 }
+  - { id: COPr, label: Carnot COP (refrigerator), min: 0, decimals: 3 }
+  - { id: COPh, label: Carnot COP (heat pump), min: 0, decimals: 3 }
+equations:
+  - eta = 1 - Tc / Th
+  - W = eta * Qh
+  - COPr = Tc / (Th - Tc)
+  - COPh = Th / (Th - Tc)
+faq:
+  - q: What is the Carnot efficiency formula?
+    a: η = 1 − T_c ÷ T_h, with both temperatures in kelvin. It is the highest efficiency any heat engine can reach between those two temperatures.
+  - q: Why must temperatures be in kelvin?
+    a: The formula uses a ratio of absolute temperatures. The calculator converts °C or °F to kelvin for you; entering 500 °C and 30 °C means 773.15 K and 303.15 K.
+  - q: How efficient are real power plants compared with Carnot?
+    a: Typically 50–70% of the Carnot limit. A steam plant with 550 °C steam and 30 °C cooling water has a Carnot limit near 63% but achieves about 35–45%; combined-cycle gas plants reach about 60%.
+  - q: What is the Carnot COP of a heat pump?
+    a: COP = T_h ÷ (T_h − T_c). Heating to 35 °C from 0 °C outside gives an ideal COP of 8.8; real heat pumps achieve about 3–4.5 because of compressor and heat-exchanger losses.
+related: [physics/ideal-gas-law, engineering/heat-duty, physics/work-and-power, physics/stefan-boltzmann-law]
+---
+
+## How to use the Carnot efficiency calculator
+
+Enter the **hot** and **cold reservoir temperatures** and, optionally, the **heat input rate**. The calculator returns the Carnot efficiency, the maximum power output, and the ideal coefficients of performance for a refrigerator and a heat pump working between the same temperatures.
+
+## Carnot efficiency formula
+
+<p class="formula">η = 1 − T<sub>c</sub> ÷ T<sub>h</sub> &nbsp;·&nbsp; W = η × Q<sub>h</sub></p>
+
+<p class="formula">COP<sub>ref</sub> = T<sub>c</sub> ÷ (T<sub>h</sub> − T<sub>c</sub>) &nbsp;·&nbsp; COP<sub>HP</sub> = T<sub>h</sub> ÷ (T<sub>h</sub> − T<sub>c</sub>)</p>
+
+## Example
+
+An engine takes 100 kW of heat at 500 °C (773.15 K) and rejects heat at 30 °C (303.15 K):
+
+- η = 1 − 303.15 ÷ 773.15 = **60.79%**
+- Maximum work = 0.6079 × 100 = **60.79 kW**
+- Carnot COP as a refrigerator = 303.15 ÷ 470 = **0.645**; as a heat pump = 773.15 ÷ 470 = **1.645**
+
+## Carnot efficiency with a 25 °C cold sink
+
+| Hot temperature | Carnot efficiency |
+|---|---|
+| 100 °C | 20.1% |
+| 200 °C | 37.0% |
+| 300 °C | 48.0% |
+| 400 °C | 55.7% |
+| 500 °C | 61.4% |
+| 600 °C | 65.9% |
+| 800 °C | 72.2% |
+| 1000 °C | 76.6% |
+| 1500 °C | 83.2% |
+
+## Ideal heat pump and refrigerator COP (delivering heat at 35 °C)
+
+| Cold source | Hot side | Carnot COP (heating) | Carnot COP (cooling) |
+|---|---|---|---|
+| -20 °C | 35 °C | 5.60 | 4.60 |
+| -10 °C | 35 °C | 6.85 | 5.85 |
+| 0 °C | 35 °C | 8.80 | 7.80 |
+| 5 °C | 35 °C | 10.27 | 9.27 |
+| 10 °C | 35 °C | 12.33 | 11.33 |
+| 15 °C | 35 °C | 15.41 | 14.41 |
+
+## Notes
+
+- Efficiency improves by raising T<sub>h</sub> or lowering T<sub>c</sub>; that is why gas turbines run hot and power plants want cold cooling water.
+- A smaller temperature lift gives a much higher heat-pump COP, which is why underfloor heating (low flow temperature) suits heat pumps.

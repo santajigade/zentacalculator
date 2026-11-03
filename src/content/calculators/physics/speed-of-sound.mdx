@@ -1,0 +1,78 @@
+---
+title: Speed of Sound Calculator (Air & Gases, by Temperature)
+description: Calculate the speed of sound in air or any ideal gas from temperature, heat capacity ratio γ and molar mass with v = √(γRT/M), plus the wavelength.
+category: physics
+intro: "Sound travels faster in warm gas and in light gas, because the speed depends on temperature and molar mass rather than pressure. This speed of sound calculator uses v = √(γRT/M) for air, nitrogen, CO₂, helium and other gases — the same temperature correction that [ultrasonic level transmitters](https://www.instrumentationblog.in/how-does-an-ultrasonic-level-transmitter-work/) and [ultrasonic flow meters](https://www.instrumentationblog.in/how-ultrasonic-flow-meter-works/) apply to their time-of-flight readings."
+keywords: [speed of sound calculator, speed of sound in air calculator, speed of sound temperature, sound velocity in gas, v = sqrt(gamma r t / m), speed of sound helium, wavelength of sound]
+updated: 2026-11-03
+variables:
+  - { id: gam, label: Heat capacity ratio γ (cp/cv), default: 1.4, min: 1, help: 'Air, N₂, O₂ ≈ 1.40 · CO₂ 1.29 · CH₄ 1.30 · He, Ar 1.667' }
+  - { id: M, label: Molar mass, suffix: g/mol, default: 28.965, min: 0, help: 'Dry air 28.965 · N₂ 28.014 · CO₂ 44.01 · He 4.003' }
+  - { id: T, label: Gas temperature, family: temperature, unit: C, imperialUnit: F, default: 20, min: 0 }
+  - { id: f, label: Sound frequency, family: frequency, unit: Hz, default: 1000, min: 0 }
+  - { id: v, label: Speed of sound, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+  - { id: lam, label: Wavelength, family: length, unit: m, imperialUnit: ft, min: 0 }
+equations:
+  - v = sqrt(gam * 8.314462618 * T / (M * 1e-3))
+  - lam = v / f
+faq:
+  - q: What is the speed of sound in air?
+    a: About 331 m/s at 0 °C and 343 m/s at 20 °C in dry air. It rises by roughly 0.6 m/s for every degree Celsius.
+  - q: Does pressure change the speed of sound?
+    a: Not for an ideal gas. Raising the pressure raises the density by the same factor, so √(γP/ρ) = √(γRT/M) stays the same. Only temperature and gas composition matter.
+  - q: Why does helium make your voice sound higher?
+    a: Sound travels almost three times faster in helium (about 1,000 m/s), so the resonances of your vocal tract shift upward even though your vocal cords vibrate at the same rate.
+  - q: How does humidity affect the speed of sound?
+    a: Water vapour (18 g/mol) is lighter than air, so humid air carries sound slightly faster — about 0.1–0.6% faster at room temperature, depending on humidity.
+related: [physics/wavelength-frequency, physics/doppler-effect, physics/decibel, engineering/ultrasonic-level]
+---
+
+## How to use the speed of sound calculator
+
+Enter the gas's **heat capacity ratio γ**, its **molar mass** and the **temperature**. The calculator returns the speed of sound and, for the frequency you enter, the wavelength. Values for common gases are in the table below; for mixtures use the mole-weighted molar mass.
+
+## Speed of sound formula
+
+<p class="formula">v = √(γ R T ÷ M) &nbsp;·&nbsp; λ = v ÷ f</p>
+
+R = 8.314 J/(mol·K), T is the absolute temperature in kelvin and M the molar mass in kg/mol.
+
+## Example
+
+Dry air (γ = 1.4, M = 28.965 g/mol) at 20 °C:
+
+- v = √(1.4 × 8.314 × 293.15 ÷ 0.028965) = **343.2 m/s**
+- Wavelength of a 1 kHz tone = 343.2 ÷ 1000 = **0.3432 m**
+
+## Speed of sound in common gases
+
+| Gas | γ | M (g/mol) | 0 °C | 20 °C | 100 °C |
+|---|---|---|---|---|---|
+| Dry air | 1.4 | 28.965 | 331 m/s | 343 m/s | 387 m/s |
+| Nitrogen (N₂) | 1.4 | 28.014 | 337 m/s | 349 m/s | 394 m/s |
+| Oxygen (O₂) | 1.395 | 31.999 | 315 m/s | 326 m/s | 368 m/s |
+| Carbon dioxide (CO₂) | 1.289 | 44.01 | 258 m/s | 267 m/s | 301 m/s |
+| Methane (CH₄) | 1.304 | 16.043 | 430 m/s | 445 m/s | 502 m/s |
+| Hydrogen (H₂) | 1.405 | 2.016 | 1258 m/s | 1303 m/s | 1470 m/s |
+| Helium (He) | 1.667 | 4.0026 | 973 m/s | 1008 m/s | 1137 m/s |
+| Argon (Ar) | 1.667 | 39.948 | 308 m/s | 319 m/s | 360 m/s |
+
+## Speed of sound in dry air by temperature
+
+| Temperature | Speed | Distance per millisecond |
+|---|---|---|
+| -40 °C | 306.1 m/s | 306.1 mm/ms |
+| -20 °C | 319.0 m/s | 319.0 mm/ms |
+| 0 °C | 331.3 m/s | 331.3 mm/ms |
+| 10 °C | 337.3 m/s | 337.3 mm/ms |
+| 20 °C | 343.2 m/s | 343.2 mm/ms |
+| 30 °C | 349.0 m/s | 349.0 mm/ms |
+| 40 °C | 354.7 m/s | 354.7 mm/ms |
+| 60 °C | 365.9 m/s | 365.9 mm/ms |
+| 80 °C | 376.7 m/s | 376.7 mm/ms |
+| 100 °C | 387.2 m/s | 387.2 mm/ms |
+
+## Practical notes
+
+- An ultrasonic level gauge that assumes 343 m/s but works in 60 °C air reads the distance about 6.6% short — the reason these instruments carry a temperature sensor. See the [ultrasonic level calculator](/engineering/ultrasonic-level/).
+- Sound travels much faster in liquids and solids (water ≈ 1,480 m/s, steel ≈ 5,900 m/s); this formula applies to gases only.

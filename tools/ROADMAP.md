@@ -94,20 +94,20 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Heater kW for tank heating
 
 ## Engineering — Mechanical design
-- [ ] Bolt torque (T = K·D·F)
-- [ ] Shaft diameter for torque
-- [ ] Beam deflection (simply supported, cantilever)
-- [ ] Bending stress (M/Z)
-- [ ] Moment of inertia (rectangle, circle, I-beam)
-- [ ] Spring rate (helical compression)
-- [ ] Gear ratio & speed
+- [x] Bolt torque (T = K·D·F)
+- [x] Shaft diameter for torque
+- [x] Beam deflection (simply supported, cantilever)
+- [x] Bending stress (M/Z)
+- [x] Moment of inertia (rectangle, circle, I-beam) — area-moment-of-inertia (rectangle, circle, tube; I-beam not yet)
+- [x] Spring rate (helical compression)
+- [x] Gear ratio & speed
 - [ ] Chain / sprocket speed & length
 - [ ] Belt tension
-- [ ] Bearing L10 life
+- [x] Bearing L10 life
 - [ ] Press fit interference
-- [ ] Factor of safety
+- [x] Factor of safety
 - [x] Young's modulus / stress-strain
-- [ ] Weld size (fillet throat)
+- [x] Weld size (fillet throat)
 - [ ] Conveyor belt speed & capacity
 
 ## Engineering — Process & chemical
@@ -225,15 +225,15 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Lorentz force
 - [x] Faraday's law (EMF) (ib)
 - [x] Capacitance of parallel plates (ib)
-- [ ] Electric field & potential
-- [ ] Speed of sound in gases
-- [ ] Standing waves / string frequency
-- [ ] Beat frequency
-- [ ] Inverse square law (light, sound, radiation)
-- [ ] Lens power & magnification (mirror)
-- [ ] Relativistic time dilation
-- [ ] Specific heat mixture (final temperature)
-- [ ] Carnot efficiency
+- [x] Electric field & potential
+- [x] Speed of sound in gases
+- [x] Standing waves / string frequency
+- [x] Beat frequency
+- [x] Inverse square law (light, sound, radiation)
+- [x] Lens power & magnification (mirror) — covered by thin-lens
+- [x] Relativistic time dilation
+- [x] Specific heat mixture (final temperature)
+- [x] Carnot efficiency
 
 ## Chemistry
 - [ ] Mass ↔ moles ↔ volume (STP)
@@ -317,10 +317,10 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Percentile / percentile rank
 - [ ] Outlier (IQR / Grubbs)
 - [ ] Expected value
-- [ ] Bayes' theorem
+- [x] Bayes' theorem
 - [ ] Birthday paradox
 - [ ] Lottery odds
-- [ ] Exponential distribution
+- [x] Exponential distribution
 - [ ] Uniform distribution
 - [ ] Hypergeometric distribution
 - [ ] Geometric distribution

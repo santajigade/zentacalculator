@@ -1,0 +1,72 @@
+---
+title: Exponential Distribution Calculator (CDF, PDF, Mean)
+description: Calculate exponential distribution probabilities P(X ≤ x) and P(X > x), the density, mean and median from the rate λ — for waiting times and failure times.
+category: statistics
+intro: "The exponential distribution models the time between random, independent events that happen at a constant average rate — calls arriving, radioactive decays or component failures. This exponential distribution calculator gives the probability that the waiting time is shorter or longer than x, the probability density, the mean and the median."
+keywords: [exponential distribution calculator, exponential cdf calculator, exponential probability calculator, waiting time probability, 1 - e^(-lambda x), exponential pdf, memoryless distribution]
+updated: 2026-11-03
+variables:
+  - { id: lam, label: Rate λ (events per unit time), default: 0.5, min: 0, help: 'Mean time between events = 1/λ.' }
+  - { id: x, label: Time or value x, default: 3, min: 0 }
+  - { id: Pl, label: P(X ≤ x), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: Pg, label: P(X > x), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: f, label: Probability density f(x), min: 0, decimals: 5 }
+  - { id: mu, label: Mean (and standard deviation), min: 0, decimals: 4 }
+  - { id: med, label: Median, min: 0, decimals: 4 }
+equations:
+  - Pl = 1 - exp(-lam * x)
+  - Pg = exp(-lam * x)
+  - f = lam * exp(-lam * x)
+  - mu = 1 / lam
+  - med = ln(2) / lam
+faq:
+  - q: What is the exponential distribution formula?
+    a: The density is f(x) = λe^(−λx) for x ≥ 0, and the cumulative probability is P(X ≤ x) = 1 − e^(−λx). The mean and standard deviation are both 1/λ.
+  - q: What does memoryless mean?
+    a: The chance of waiting another t units does not depend on how long you have already waited. P(X > s + t | X > s) = P(X > t). It is the only continuous distribution with this property.
+  - q: How is it related to the Poisson distribution?
+    a: If events occur as a Poisson process with rate λ, the number in a fixed time is Poisson and the time between events is exponential with the same λ.
+  - q: How is it used in reliability?
+    a: With a constant failure rate λ, reliability over time t is R(t) = e^(−λt) and the MTBF is 1/λ. After one MTBF only about 36.8% of units are still working.
+related: [statistics/poisson-probability, statistics/normal-distribution, engineering/availability-mtbf, physics/radioactive-activity]
+---
+
+## How to use the exponential distribution calculator
+
+Enter the **rate λ** — the average number of events per unit of time — and the value **x** in the same time unit. The calculator returns the probability that the waiting time is at most x and more than x, the density at x, and the mean and median. To find the time by which a given share of events has happened, enter P(X ≤ x) and clear x.
+
+## Exponential distribution formulas
+
+<p class="formula">P(X ≤ x) = 1 − e<sup>−λx</sup> &nbsp;·&nbsp; P(X &gt; x) = e<sup>−λx</sup> &nbsp;·&nbsp; f(x) = λ e<sup>−λx</sup></p>
+
+<p class="formula">Mean = 1 ÷ λ &nbsp;·&nbsp; Median = ln 2 ÷ λ</p>
+
+## Example
+
+Customers arrive at an average rate of 0.5 per minute. The chance that the next one arrives within 3 minutes:
+
+- P(X ≤ 3) = 1 − e<sup>−0.5 × 3</sup> = **77.69%**
+- P(X > 3) = **22.31%**
+- Density f(3) = 0.5 × e<sup>−1.5</sup> = **0.11157**
+- Mean wait = **2 min**; median = ln 2 ÷ 0.5 = **1.3863 min**
+
+## Probabilities in multiples of the mean
+
+| x | P(X ≤ x) | P(X > x) |
+|---|---|---|
+| 0.1 × mean | 9.52% | 90.48% |
+| 0.25 × mean | 22.12% | 77.88% |
+| 0.5 × mean | 39.35% | 60.65% |
+| 0.693147 × mean | 50.00% | 50.00% |
+| 1 × mean | 63.21% | 36.79% |
+| 2 × mean | 86.47% | 13.53% |
+| 3 × mean | 95.02% | 4.98% |
+| 4 × mean | 98.17% | 1.83% |
+| 5 × mean | 99.33% | 0.67% |
+
+(0.693 × mean is the median.)
+
+## Notes
+
+- The exponential model fits the flat "useful life" part of the reliability bathtub curve, not early failures or wear-out; use the Weibull distribution for those.
+- Radioactive decay follows the same law, with λ the decay constant — see the [radioactive activity calculator](/physics/radioactive-activity/).

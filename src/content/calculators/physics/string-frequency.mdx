@@ -1,0 +1,64 @@
+---
+title: String Frequency Calculator (Standing Waves & Harmonics)
+description: Find the fundamental frequency and harmonics of a vibrating string from its length, tension and linear density, f = (n/2L)·√(T/μ), plus wave speed.
+category: physics
+intro: "A string fixed at both ends vibrates in standing waves whose wavelengths fit a whole number of half-waves into its length. This string frequency calculator uses f = (n ÷ 2L) √(T ÷ μ) to find the fundamental and harmonic frequencies, the wave speed and the wavelength — useful for musical instruments, cables and wire-tension checks."
+keywords: [string frequency calculator, standing wave calculator, vibrating string frequency, string tension frequency, harmonics calculator, f = 1/2l sqrt(t/mu), guitar string tension calculator]
+updated: 2026-11-03
+variables:
+  - { id: L, label: Vibrating length, family: length, unit: mm, imperialUnit: in, default: 648, min: 0 }
+  - { id: T, label: String tension, family: force, unit: N, imperialUnit: lbf, default: 70, min: 0 }
+  - { id: mu, label: Linear density (mass per length), suffix: g/m, default: 0.4, min: 0, help: 'Mass of the string divided by its length. A steel guitar high-E string is about 0.4 g/m.' }
+  - { id: k, label: Harmonic number n, default: 1, min: 1 }
+  - { id: v, label: Wave speed on the string, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+  - { id: f, label: Frequency of harmonic n, family: frequency, unit: Hz, min: 0 }
+  - { id: lam, label: Wavelength, family: length, unit: mm, imperialUnit: in, min: 0 }
+equations:
+  - v = sqrt(T / (mu * 1e-3))
+  - f = k / (2 * L) * v
+  - lam = 2 * L / k
+faq:
+  - q: What is the formula for the frequency of a string?
+    a: f = (n ÷ 2L) × √(T ÷ μ), where L is the vibrating length, T the tension in newtons, μ the mass per metre in kg/m and n the harmonic number (1 for the fundamental).
+  - q: How does tension change the pitch?
+    a: Frequency is proportional to the square root of tension, so raising the pitch by an octave (double the frequency) needs four times the tension.
+  - q: What are harmonics?
+    a: A string can vibrate with 1, 2, 3… half-wavelengths along its length. These modes have frequencies n × f₁ and together give an instrument its tone. Harmonic n has n − 1 nodes between the ends.
+  - q: How do I find the tension needed for a note?
+    a: Enter the length, the linear density and the target frequency, then clear the tension field. The calculator solves T = μ (2Lf ÷ n)².
+related: [physics/wavelength-frequency, physics/beat-frequency, physics/simple-harmonic-motion, physics/speed-of-sound]
+---
+
+## How to use the string frequency calculator
+
+Enter the **vibrating length** (nut to bridge on an instrument), the **tension**, the string's **linear density** in grams per metre and the **harmonic number**. The calculator returns the wave speed, the frequency of that harmonic and its wavelength. To find the tension for a target note, enter the frequency and clear the tension.
+
+## String frequency formula
+
+<p class="formula">v = √(T ÷ μ) &nbsp;·&nbsp; f<sub>n</sub> = n v ÷ (2L) &nbsp;·&nbsp; λ<sub>n</sub> = 2L ÷ n</p>
+
+## Example
+
+A steel guitar string, 648 mm long, 0.4 g/m, tensioned to 70 N:
+
+- Wave speed v = √(70 ÷ 0.0004) = **418.3 m/s**
+- Fundamental f₁ = 1 ÷ (2 × 0.648) × 418.3 = **322.8 Hz** (close to the E₄ note at 329.6 Hz)
+
+## Harmonics of the example string
+
+| Harmonic n | Frequency | Wavelength | Nodes between ends |
+|---|---|---|---|
+| 1 | 322.8 Hz | 1.296 m | 0 |
+| 2 | 645.6 Hz | 0.648 m | 1 |
+| 3 | 968.4 Hz | 0.432 m | 2 |
+| 4 | 1291.1 Hz | 0.324 m | 3 |
+| 5 | 1613.9 Hz | 0.259 m | 4 |
+| 6 | 1936.7 Hz | 0.216 m | 5 |
+| 7 | 2259.5 Hz | 0.185 m | 6 |
+| 8 | 2582.3 Hz | 0.162 m | 7 |
+
+## Notes
+
+- Stiff, thick strings are slightly inharmonic: their overtones sit a little above exact multiples of f₁.
+- The same equation estimates the tension in a stay cable or wire rope from its measured natural frequency.
+- Two strings tuned slightly apart produce audible beats — see the [beat frequency calculator](/physics/beat-frequency/).

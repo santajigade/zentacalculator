@@ -1,0 +1,67 @@
+---
+title: Time Dilation Calculator (Special Relativity, Lorentz Factor)
+description: Calculate relativistic time dilation and the Lorentz factor γ for a speed as a fraction of light speed — how much time passes for a stationary observer.
+category: physics
+intro: "Special relativity predicts that a moving clock ticks slower than a clock at rest, by the Lorentz factor γ = 1/√(1 − v²/c²). This time dilation calculator converts the proper time measured on board into the time that passes for a stationary observer, and gives γ and the speed in km/s."
+keywords: [time dilation calculator, lorentz factor calculator, special relativity calculator, relativistic time dilation, gamma factor, t = t0 / sqrt(1 - v^2/c^2), twin paradox calculator]
+updated: 2026-11-03
+variables:
+  - { id: t0, label: Proper time (moving clock), family: time, unit: yr, default: 1, min: 0 }
+  - { id: b, label: Speed as a fraction of light speed (v/c), family: percent, unit: '%', default: 90, min: 0, max: 0.999999999 }
+  - { id: gam, label: Lorentz factor γ, min: 1, decimals: 4 }
+  - { id: t, label: Time for the stationary observer, family: time, unit: yr, min: 0 }
+  - { id: dt, label: Extra time elapsed (t − t₀), family: time, unit: yr, min: 0 }
+  - { id: v, label: Speed, family: velocity, unit: ms, imperialUnit: mph, min: 0 }
+equations:
+  - gam = 1 / sqrt(1 - b^2)
+  - t = gam * t0
+  - dt = t - t0
+  - v = b * 299792458
+faq:
+  - q: What is the time dilation formula?
+    a: t = t₀ ÷ √(1 − v²/c²) = γ t₀, where t₀ is the proper time measured by the moving clock and t the time measured by an observer who sees it moving at speed v.
+  - q: What is the Lorentz factor?
+    a: γ = 1 ÷ √(1 − v²/c²). It is 1 at rest, about 1.005 at 10% of light speed, 2.29 at 90% and grows without limit as v approaches c.
+  - q: Is time dilation real?
+    a: Yes. Fast muons from cosmic rays survive long enough to reach the ground only because of it, and GPS satellite clocks are corrected for both velocity (special) and gravitational (general) time dilation.
+  - q: Does the moving traveller feel time slow down?
+    a: No. Each observer sees their own clock tick normally. The difference appears when the clocks are compared, as in the twin paradox.
+related: [physics/mass-energy-equivalence, physics/de-broglie-wavelength, physics/photon-energy, physics/speed-distance-time]
+---
+
+## How to use the time dilation calculator
+
+Enter the **proper time** that passes on the moving clock and the **speed as a percentage of the speed of light**. The calculator returns the Lorentz factor γ, the time that passes for a stationary observer, the extra time and the speed itself. Clear the speed and enter both times to find the speed that produces a given dilation.
+
+## Time dilation formula
+
+<p class="formula">γ = 1 ÷ √(1 − v²/c²) &nbsp;·&nbsp; t = γ × t<sub>0</sub></p>
+
+c = 299,792,458 m/s.
+
+## Example
+
+A spacecraft travels at 90% of light speed for 1 year of on-board time:
+
+- γ = 1 ÷ √(1 − 0.9²) = 1 ÷ √0.19 = **2.2942**
+- Time for an observer on Earth = 2.2942 × 1 = **2.2942 years** (838 days)
+- Extra time = **1.2942 years**
+
+## Lorentz factor by speed
+
+| Speed (v/c) | Speed | γ | Earth time for 1 year on board |
+|---|---|---|---|
+| 1% | 2,998 km/s | 1.0001 | 365.3 days |
+| 10% | 29,979 km/s | 1.0050 | 367.1 days |
+| 30% | 89,938 km/s | 1.0483 | 382.9 days |
+| 50% | 149,896 km/s | 1.1547 | 421.8 days |
+| 80% | 239,834 km/s | 1.6667 | 608.8 days |
+| 90% | 269,813 km/s | 2.2942 | 837.9 days |
+| 95% | 284,803 km/s | 3.2026 | 1,169.7 days |
+| 99% | 296,795 km/s | 7.0888 | 2,589.2 days |
+| 99.9% | 299,493 km/s | 22.3663 | 8,169.3 days |
+
+## Notes
+
+- The same γ contracts lengths along the motion (L = L₀ ÷ γ) and raises the energy of a moving mass (E = γmc²) — compare the [E = mc² calculator](/physics/mass-energy-equivalence/).
+- Gravity also slows clocks (general relativity); this calculator covers only the speed effect.

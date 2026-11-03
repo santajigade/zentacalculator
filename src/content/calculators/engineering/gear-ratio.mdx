@@ -1,0 +1,65 @@
+---
+title: Gear Ratio Calculator (Speed & Torque from Teeth)
+description: Calculate gear ratio, output speed and output torque of a gear pair from the number of teeth, input speed, input torque and gear efficiency.
+category: engineering
+intro: "A gear pair trades speed for torque in proportion to its tooth counts: a small pinion driving a large gear slows the output and multiplies the torque. This gear ratio calculator gives the ratio, the output speed and the output torque after gear losses, for spur, helical and other parallel or bevel gear pairs."
+keywords: [gear ratio calculator, gear speed calculator, gear torque calculator, number of teeth ratio, output rpm calculator, gear reduction calculator, driver driven gear]
+updated: 2026-11-03
+variables:
+  - { id: z1, label: Teeth on the driving gear (pinion), default: 20, min: 1 }
+  - { id: z2, label: Teeth on the driven gear, default: 60, min: 1 }
+  - { id: N1, label: Input speed, suffix: rpm, default: 1450, min: 0 }
+  - { id: T1, label: Input torque, family: torque, unit: Nm, imperialUnit: lbft, default: 50, min: 0 }
+  - { id: eta, label: Gear efficiency, family: percent, unit: '%', default: 98, min: 0, max: 1, help: 'Spur / helical pair ≈ 97–99% · bevel ≈ 95–98% · worm 40–90%' }
+  - { id: i, label: Gear ratio (z₂ ÷ z₁), min: 0, decimals: 3 }
+  - { id: N2, label: Output speed, suffix: rpm, min: 0, decimals: 1 }
+  - { id: T2, label: Output torque, family: torque, unit: Nm, imperialUnit: lbft, min: 0 }
+equations:
+  - i = z2 / z1
+  - N2 = N1 / i
+  - T2 = T1 * i * eta
+faq:
+  - q: How do you calculate gear ratio?
+    a: "Gear ratio = teeth on the driven gear ÷ teeth on the driving gear. A 20-tooth pinion driving a 60-tooth gear gives 3 : 1 — the output turns three times slower with three times the torque (less losses)."
+  - q: How do I find the output speed?
+    a: N₂ = N₁ × z₁ ÷ z₂ = N₁ ÷ ratio. Speed and tooth count are inversely proportional because both gears move the same number of teeth past the mesh.
+  - q: What is the ratio of a multi-stage gearbox?
+    a: "Multiply the ratios of each stage. Two stages of 3 : 1 and 4 : 1 give 12 : 1 overall; efficiencies also multiply (0.98 × 0.98 ≈ 0.96)."
+  - q: Does an idler gear change the ratio?
+    a: No. An idler between two gears only reverses the direction of rotation; the ratio still depends only on the first and last gears.
+related: [engineering/pulley-speed, engineering/torque-power-speed, engineering/shaft-diameter, sports/cycling-gear-speed]
+---
+
+## How to use the gear ratio calculator
+
+Enter the **number of teeth** on the driving and driven gears, the **input speed**, the **input torque** and the **efficiency** of the gear mesh. The calculator returns the gear ratio, the output speed and the output torque. A ratio below 1 is a speed-up (overdrive) and reduces torque.
+
+## Gear ratio formula
+
+<p class="formula">i = z<sub>2</sub> ÷ z<sub>1</sub> &nbsp;·&nbsp; N<sub>2</sub> = N<sub>1</sub> ÷ i &nbsp;·&nbsp; T<sub>2</sub> = T<sub>1</sub> × i × η</p>
+
+## Example
+
+A 20-tooth pinion on a 1,450 rpm motor delivering 50 N·m drives a 60-tooth gear with 98% efficiency:
+
+- Ratio i = 60 ÷ 20 = **3 : 1**
+- Output speed = 1,450 ÷ 3 = **483.3 rpm**
+- Output torque = 50 × 3 × 0.98 = **147 N·m**
+
+## Gear pairs on a 1,450 rpm, 50 N·m input (98% efficiency)
+
+| z₁ : z₂ | Ratio | Output speed | Output torque |
+|---|---|---|---|
+| 20 : 20 | 1.000 | 1450.0 rpm | 49.0 N·m |
+| 20 : 30 | 1.500 | 966.7 rpm | 73.5 N·m |
+| 18 : 45 | 2.500 | 580.0 rpm | 122.5 N·m |
+| 20 : 60 | 3.000 | 483.3 rpm | 147.0 N·m |
+| 17 : 68 | 4.000 | 362.5 rpm | 196.0 N·m |
+| 15 : 75 | 5.000 | 290.0 rpm | 245.0 N·m |
+| 12 : 96 | 8.000 | 181.2 rpm | 392.0 N·m |
+
+## Notes
+
+- Use gear counts with no common factor (a "hunting tooth" ratio such as 17 : 68 → 17 : 69) to spread wear evenly across teeth.
+- Belt and chain drives follow the same speed rule with pulley diameters or sprocket teeth — see the [pulley speed calculator](/engineering/pulley-speed/).
+- Size the output shaft for the increased torque with the [shaft diameter calculator](/engineering/shaft-diameter/).

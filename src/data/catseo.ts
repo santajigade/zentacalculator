@@ -22,7 +22,8 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Pipe & open-channel hydraulics', ids: ['hazen-williams', 'minor-losses', 'manning-equation'] },
       { name: 'Pressure, level & tanks', ids: ['hydrostatic-pressure', 'dp-level-range', 'ultrasonic-level', 'vertical-tank-volume', 'horizontal-tank-volume', 'darcy-weisbach-head-loss', 'water-hammer', 'api-gravity'] },
       { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'pump-power', 'heat-duty', 'thermal-expansion'] },
-      { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force'] },
+      { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force', 'gear-ratio', 'shaft-diameter', 'bearing-life', 'bolt-torque', 'spring-rate'] },
+      { name: 'Strength of materials & structures', ids: ['beam-deflection', 'bending-stress', 'area-moment-of-inertia', 'factor-of-safety', 'weld-size'] },
       { name: 'Safety & reliability', ids: ['pfd-avg', 'availability-mtbf'] },
     ],
     about: [
@@ -90,10 +91,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
     groups: [
       { name: 'Motion & kinematics', ids: ['speed-distance-time', 'acceleration', 'suvat-equations', 'free-fall', 'projectile-motion', 'momentum', 'impulse', 'elastic-collision', 'angular-velocity'] },
       { name: 'Forces & energy', ids: ['force', 'weight', 'torque', 'centripetal-force', 'hookes-law', 'kinetic-energy', 'potential-energy', 'work-and-power', 'friction-force', 'inclined-plane', 'rotational-kinetic-energy', 'youngs-modulus'] },
-      { name: 'Fluids, heat & gases', ids: ['pressure', 'density', 'buoyancy', 'stokes-law', 'drag-force', 'heat-conduction', 'newtons-law-of-cooling', 'latent-heat', 'ideal-gas-law', 'bernoulli-equation', 'lift-force', 'liquid-thermal-expansion', 'stefan-boltzmann-law'] },
-      { name: 'Electricity & magnetism', ids: ['ohms-law', 'resistors-series-parallel', 'rc-time-constant', 'coulombs-law', 'parallel-plate-capacitor', 'magnetic-field', 'lorentz-force', 'faradays-law'] },
-      { name: 'Waves, sound & light', ids: ['wavelength-frequency', 'doppler-effect', 'decibel', 'snells-law', 'thin-lens', 'pendulum', 'spring-mass-frequency', 'simple-harmonic-motion'] },
-      { name: 'Modern, nuclear & quantum physics', ids: ['photon-energy', 'de-broglie-wavelength', 'wiens-law', 'mass-energy-equivalence', 'radioactive-activity'] },
+      { name: 'Fluids, heat & gases', ids: ['pressure', 'density', 'buoyancy', 'stokes-law', 'drag-force', 'heat-conduction', 'newtons-law-of-cooling', 'latent-heat', 'ideal-gas-law', 'bernoulli-equation', 'lift-force', 'liquid-thermal-expansion', 'stefan-boltzmann-law', 'final-temperature', 'carnot-efficiency'] },
+      { name: 'Electricity & magnetism', ids: ['ohms-law', 'resistors-series-parallel', 'rc-time-constant', 'coulombs-law', 'parallel-plate-capacitor', 'magnetic-field', 'lorentz-force', 'faradays-law', 'electric-field'] },
+      { name: 'Waves, sound & light', ids: ['wavelength-frequency', 'doppler-effect', 'decibel', 'snells-law', 'thin-lens', 'pendulum', 'spring-mass-frequency', 'simple-harmonic-motion', 'speed-of-sound', 'string-frequency', 'beat-frequency', 'inverse-square-law'] },
+      { name: 'Modern, nuclear & quantum physics', ids: ['photon-energy', 'de-broglie-wavelength', 'wiens-law', 'mass-energy-equivalence', 'radioactive-activity', 'time-dilation'] },
       { name: 'Gravity & orbits', ids: ['gravitational-force', 'escape-velocity', 'orbital-period'] },
     ],
     about: [
@@ -145,9 +146,9 @@ export const CAT_SEO: Record<string, CatSEO> = {
     intro: 'Free online statistics and probability calculators. Paste a data set to get the **mean, median, mode**, **standard deviation** and **quartiles**, find **z-scores** and **normal distribution** probabilities, calculate **confidence intervals**, **margin of error** and **sample size**, and work out **binomial**, **Poisson**, **permutation** and **combination** problems.',
     groups: [
       { name: 'Descriptive statistics', ids: ['mean-median-mode', 'standard-deviation', 'quartiles', 'coefficient-of-variation', 'geometric-mean', 'sum-of-squares', 'standard-error'] },
-      { name: 'Distributions', ids: ['z-score', 'normal-distribution', 'empirical-rule', 'binomial-probability', 'poisson-probability'] },
+      { name: 'Distributions', ids: ['z-score', 'normal-distribution', 'empirical-rule', 'binomial-probability', 'poisson-probability', 'exponential-distribution'] },
       { name: 'Inference & surveys', ids: ['confidence-interval', 'margin-of-error', 'sample-size', 'relative-risk'] },
-      { name: 'Probability & counting', ids: ['probability', 'odds-probability', 'permutations', 'combinations'] },
+      { name: 'Probability & counting', ids: ['probability', 'odds-probability', 'permutations', 'combinations', 'bayes-theorem'] },
     ],
     faq: [
       { q: 'Can I paste a list of numbers?', a: 'Yes. Data-set calculators accept numbers separated by commas, spaces or new lines.' },

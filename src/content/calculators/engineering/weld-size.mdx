@@ -1,0 +1,67 @@
+---
+title: Fillet Weld Size Calculator (Throat, Stress & Capacity)
+description: Calculate fillet weld throat thickness, shear stress and load capacity from leg size, weld length and allowable stress — a = 0.707 × leg size.
+category: engineering
+intro: "A fillet weld transfers load through its throat, the shortest distance from the root to the weld face, which for an equal-leg weld is 0.707 times the leg size. This fillet weld size calculator finds the throat, the shear stress for a given load and weld length, and the load the weld can safely carry at an allowable stress."
+keywords: [fillet weld size calculator, weld strength calculator, fillet weld throat thickness, weld capacity calculator, weld stress calculator, 0.707 leg size, aws fillet weld strength]
+updated: 2026-11-03
+variables:
+  - { id: s, label: Fillet leg size, family: length, unit: mm, imperialUnit: in, default: 6, min: 0 }
+  - { id: L, label: Effective weld length, family: length, unit: mm, imperialUnit: in, default: 100, min: 0, help: 'Total length of weld carrying the load, excluding start and end craters.' }
+  - { id: F, label: Applied load, family: force, unit: kN, imperialUnit: lbf, default: 50, min: 0 }
+  - { id: ta, label: Allowable shear stress on the throat, family: pressure, unit: MPa, imperialUnit: psi, default: 145, min: 0, help: 'AWS D1.1: 0.30 × electrode strength — E70 / E7018 ≈ 145 MPa (21 ksi).' }
+  - { id: a, label: Throat thickness, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: tau, label: Shear stress on the throat, family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+  - { id: Fmax, label: Weld load capacity, family: force, unit: kN, imperialUnit: lbf, min: 0 }
+  - { id: u, label: Utilisation, family: percent, unit: '%', min: 0 }
+equations:
+  - a = 0.70710678 * s
+  - tau = F / (a * L)
+  - Fmax = ta * a * L
+  - u = tau / ta
+faq:
+  - q: How do you calculate fillet weld strength?
+    a: Capacity = allowable shear stress × throat × length, with throat a = 0.707 × leg size for an equal-leg 45° fillet. A 6 mm fillet 100 mm long at 145 MPa carries about 61.5 kN.
+  - q: Why is the throat 0.707 times the leg?
+    a: The throat of a right-angled isosceles triangle is the leg times sin 45° = 0.7071. It is the smallest section through the weld, so the stress is calculated there.
+  - q: What allowable stress should I use for fillet welds?
+    a: AWS D1.1 allows 0.30 × the electrode's tensile strength on the effective throat — about 145 MPa (21 ksi) for E70XX electrodes. Eurocode 3 uses a directional or simplified method based on the parent metal's strength.
+  - q: Is there a minimum fillet weld size?
+    a: "Yes. Codes set minimum leg sizes based on the thicker plate (in AWS D1.1: 3 mm up to 6 mm plate, 5 mm for 6–12 mm, 6 mm for 12–20 mm and 8 mm above) so the weld cools slowly enough to fuse properly, and a maximum leg along plate edges."
+related: [engineering/factor-of-safety, engineering/bending-stress, engineering/bolt-torque, physics/youngs-modulus]
+---
+
+## How to use the fillet weld size calculator
+
+Enter the **leg size**, the **effective weld length**, the **load** and the **allowable shear stress** on the throat. The calculator returns the throat thickness, the actual stress, the weld's load capacity and its utilisation (below 100% passes). Clear the leg size and enter the load to find the fillet size you need.
+
+## Fillet weld formula
+
+<p class="formula">a = 0.707 × s &nbsp;·&nbsp; τ = F ÷ (a × L) &nbsp;·&nbsp; F<sub>max</sub> = τ<sub>allow</sub> × a × L</p>
+
+## Example
+
+A 6 mm fillet, 100 mm long, made with E70 electrodes (τ<sub>allow</sub> = 145 MPa), carries 50 kN:
+
+- Throat a = 0.707 × 6 = **4.24 mm**
+- Stress τ = 50,000 ÷ (4.24 × 100) = **117.9 MPa**
+- Capacity = 145 × 4.24 × 100 = **61.5 kN**; utilisation 81% — OK
+
+## Fillet weld capacity at 145 MPa (E70 electrode)
+
+| Leg size | Throat | Capacity per mm of weld | Capacity of 100 mm |
+|---|---|---|---|
+| 3 mm | 2.12 mm | 0.308 kN/mm | 30.8 kN |
+| 4 mm | 2.83 mm | 0.410 kN/mm | 41.0 kN |
+| 5 mm | 3.54 mm | 0.513 kN/mm | 51.3 kN |
+| 6 mm | 4.24 mm | 0.615 kN/mm | 61.5 kN |
+| 8 mm | 5.66 mm | 0.820 kN/mm | 82.0 kN |
+| 10 mm | 7.07 mm | 1.025 kN/mm | 102.5 kN |
+| 12 mm | 8.49 mm | 1.230 kN/mm | 123.0 kN |
+| 16 mm | 11.31 mm | 1.640 kN/mm | 164.0 kN |
+
+## Notes
+
+- This simplified method treats the load as shear on the throat in any direction; it is conservative for welds loaded transversely.
+- The parent metal next to the weld must also be checked.
+- Compare the weld stress with your required [factor of safety](/engineering/factor-of-safety/).

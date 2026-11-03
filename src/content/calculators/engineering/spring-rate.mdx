@@ -1,0 +1,83 @@
+---
+title: Spring Rate Calculator (Helical Compression Spring)
+description: Calculate helical compression spring rate from wire diameter, coil diameter, active coils and shear modulus, plus deflection and Wahl shear stress.
+category: engineering
+intro: "The stiffness of a coil spring comes from twisting its wire, so it depends strongly on the wire diameter and the coil diameter. This spring rate calculator uses k = G d⁴ ÷ (8 D³ n) for a helical compression or extension spring, then finds the deflection under a load and the corrected shear stress in the wire using the Wahl factor."
+keywords: [spring rate calculator, spring constant calculator, compression spring calculator, helical spring stiffness, k = gd^4/8d^3n, wahl factor, spring stress calculator]
+updated: 2026-11-03
+variables:
+  - { id: d, label: Wire diameter d, family: length, unit: mm, imperialUnit: in, default: 2, min: 0 }
+  - { id: D, label: Mean coil diameter D, family: length, unit: mm, imperialUnit: in, default: 20, min: 0, help: 'Mean diameter = outer diameter − wire diameter.' }
+  - { id: n, label: Number of active coils, default: 10, min: 0, help: 'Squared-and-ground ends: active coils ≈ total coils − 2.' }
+  - { id: G, label: Shear modulus G, family: pressure, unit: MPa, imperialUnit: psi, default: 79300, min: 0, help: 'Music wire / spring steel 79,300 MPa · Stainless 302 69,000 MPa · Phosphor bronze 41,000 MPa' }
+  - { id: F, label: Applied load, family: force, unit: N, imperialUnit: lbf, default: 20, min: 0 }
+  - { id: k, label: Spring rate, suffix: N/mm, min: 0, decimals: 3 }
+  - { id: x, label: Deflection under load, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: C, label: Spring index C = D/d, min: 0, decimals: 2 }
+  - { id: tau, label: Corrected shear stress (Wahl), family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+equations:
+  - k = G * d^4 / (8 * D^3 * n) / 1000
+  - x = F / (k * 1000)
+  - C = D / d
+  - tau = ((4 * C - 1) / (4 * C - 4) + 0.615 / C) * 8 * F * D / (pi * d^3)
+faq:
+  - q: What is the formula for spring rate?
+    a: k = G d⁴ ÷ (8 D³ n), where G is the shear modulus of the wire, d the wire diameter, D the mean coil diameter and n the number of active coils.
+  - q: How do wire and coil diameter affect stiffness?
+    a: Stiffness rises with the fourth power of wire diameter and falls with the cube of coil diameter. A 10% thicker wire makes the spring 46% stiffer; a 10% larger coil makes it 25% softer.
+  - q: What is the Wahl factor?
+    a: A correction, K_w = (4C − 1)/(4C − 4) + 0.615/C, for the extra stress on the inside of the coil caused by wire curvature and direct shear. It matters most for tightly wound springs with a small index C.
+  - q: What spring index is recommended?
+    a: C = D/d between about 4 and 12. Below 4 the spring is hard to coil; above 12 it tends to buckle and tangle.
+related: [physics/hookes-law, physics/spring-mass-frequency, engineering/factor-of-safety, physics/youngs-modulus]
+---
+
+## How to use the spring rate calculator
+
+Enter the **wire diameter**, the **mean coil diameter**, the number of **active coils** and the wire material's **shear modulus**, plus a **load** to check. The calculator returns the spring rate in N/mm, the deflection under that load, the spring index and the Wahl-corrected shear stress in the wire. Compare the stress with the wire's allowable value (often 40–50% of its tensile strength for static loads).
+
+## Spring rate formula
+
+<p class="formula">k = G d⁴ ÷ (8 D³ n) &nbsp;·&nbsp; x = F ÷ k</p>
+
+<p class="formula">τ = K<sub>w</sub> × 8 F D ÷ (π d³) &nbsp;·&nbsp; K<sub>w</sub> = (4C − 1) ÷ (4C − 4) + 0.615 ÷ C</p>
+
+## Example
+
+Music wire (G = 79.3 GPa), d = 2 mm, D = 20 mm, 10 active coils, loaded with 20 N:
+
+- k = 79.3 × 10⁹ × 0.002⁴ ÷ (8 × 0.02³ × 10) = **1.982 N/mm**
+- Deflection = 20 ÷ 1.982 = **10.09 mm**
+- Index C = 20 ÷ 2 = 10; Wahl factor K<sub>w</sub> = 1.1448
+- τ = 1.1448 × 8 × 20 × 0.02 ÷ (π × 0.002³) = **145.8 MPa**
+
+## Wahl correction factor
+
+| Spring index C | K<sub>w</sub> |
+|---|---|
+| 4 | 1.404 |
+| 5 | 1.310 |
+| 6 | 1.252 |
+| 8 | 1.184 |
+| 10 | 1.145 |
+| 12 | 1.119 |
+| 14 | 1.102 |
+| 16 | 1.088 |
+
+## Spring rate for steel springs with 10 active coils
+
+| Wire d | Mean coil D | Rate k |
+|---|---|---|
+| 1 mm | 10 mm | 0.99 N/mm |
+| 1.5 mm | 12 mm | 2.90 N/mm |
+| 2 mm | 16 mm | 3.87 N/mm |
+| 2 mm | 20 mm | 1.98 N/mm |
+| 3 mm | 25 mm | 5.14 N/mm |
+| 4 mm | 32 mm | 7.74 N/mm |
+| 5 mm | 40 mm | 9.68 N/mm |
+| 6 mm | 50 mm | 10.28 N/mm |
+
+## Notes
+
+- Springs in series add like resistors in parallel (1/k = 1/k₁ + 1/k₂); springs in parallel add directly.
+- The natural frequency of the spring with a mass on it follows from the [spring-mass frequency calculator](/physics/spring-mass-frequency/).

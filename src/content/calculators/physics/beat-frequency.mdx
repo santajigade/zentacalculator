@@ -1,0 +1,64 @@
+---
+title: Beat Frequency Calculator (f_beat = |f₁ − f₂|)
+description: Calculate the beat frequency and beat period when two tones of nearly equal frequency combine, plus the perceived average pitch, for tuning and acoustics.
+category: physics
+intro: "When two sound waves of slightly different frequency overlap, their sum swells and fades at a rate equal to the difference between them. This beat frequency calculator gives the number of beats per second, the time between beats and the average pitch you hear — the basis of tuning instruments by ear."
+keywords: [beat frequency calculator, beats per second calculator, beat frequency formula, f beat = f1 - f2, tuning beats, beat period, interference of sound waves]
+updated: 2026-11-03
+variables:
+  - { id: f1, label: Frequency 1, family: frequency, unit: Hz, default: 440, min: 0 }
+  - { id: f2, label: Frequency 2, family: frequency, unit: Hz, default: 444, min: 0 }
+  - { id: fb, label: Beat frequency, family: frequency, unit: Hz, min: 0 }
+  - { id: Tb, label: Beat period, family: seconds, unit: s, min: 0 }
+  - { id: fa, label: Perceived (average) pitch, family: frequency, unit: Hz, min: 0 }
+equations:
+  - fb = abs(f1 - f2)
+  - Tb = 1 / fb
+  - fa = (f1 + f2) / 2
+faq:
+  - q: What is beat frequency?
+    a: The rate at which the loudness of two combined tones rises and falls. It equals the difference between the two frequencies, f_beat = |f₁ − f₂|.
+  - q: How are beats used to tune instruments?
+    a: Play the string together with a reference tone and adjust until the beats slow down and disappear. At 0 Hz beat frequency the two are in unison.
+  - q: Why can't we hear beats between very different frequencies?
+    a: Above roughly 15–20 Hz the beats blur into a rough sound, and with larger differences the ear hears two separate tones instead.
+  - q: What pitch do you hear during beats?
+    a: The average of the two frequencies, (f₁ + f₂) ÷ 2, whose loudness pulses at the beat frequency.
+related: [physics/string-frequency, physics/wavelength-frequency, physics/doppler-effect, physics/decibel]
+---
+
+## How to use the beat frequency calculator
+
+Enter the two **frequencies**. The calculator returns the beat frequency (beats per second), the beat period and the average pitch you hear. To find an unknown second frequency, count the beats and remember there are two answers: f₁ + f<sub>beat</sub> or f₁ − f<sub>beat</sub>.
+
+## Beat frequency formula
+
+<p class="formula">f<sub>beat</sub> = |f<sub>1</sub> − f<sub>2</sub>| &nbsp;·&nbsp; T<sub>beat</sub> = 1 ÷ f<sub>beat</sub> &nbsp;·&nbsp; f<sub>avg</sub> = (f<sub>1</sub> + f<sub>2</sub>) ÷ 2</p>
+
+The sum of two equal-amplitude waves is 2A cos(2π·Δf/2·t) · sin(2π·f<sub>avg</sub>·t); the envelope peaks twice per cycle of Δf/2, so loudness pulses at Δf.
+
+## Example
+
+A tuning fork at 440 Hz and a string at 444 Hz:
+
+- Beat frequency = |440 − 444| = **4 Hz** (four beats every second)
+- Beat period = 1 ÷ 4 = **0.25 s**
+- Perceived pitch = (440 + 444) ÷ 2 = **442 Hz**
+
+## Beats against an A440 reference
+
+| Reference | Second tone | Beat frequency | Beat period | Perceived pitch |
+|---|---|---|---|---|
+| 440 Hz | 440.5 Hz | 0.5 Hz | 2.000 s | 440.25 Hz |
+| 440 Hz | 441 Hz | 1 Hz | 1.000 s | 440.5 Hz |
+| 440 Hz | 442 Hz | 2 Hz | 0.500 s | 441 Hz |
+| 440 Hz | 443 Hz | 3 Hz | 0.333 s | 441.5 Hz |
+| 440 Hz | 444 Hz | 4 Hz | 0.250 s | 442 Hz |
+| 440 Hz | 445 Hz | 5 Hz | 0.200 s | 442.5 Hz |
+| 440 Hz | 447 Hz | 7 Hz | 0.143 s | 443.5 Hz |
+| 440 Hz | 450 Hz | 10 Hz | 0.100 s | 445 Hz |
+
+## Notes
+
+- The same principle appears in radio as the heterodyne: mixing two signals produces their difference frequency.
+- Beats also occur between a moving and a stationary source because of the [Doppler effect](/physics/doppler-effect/).

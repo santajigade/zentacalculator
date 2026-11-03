@@ -1,0 +1,78 @@
+---
+title: Area Moment of Inertia Calculator (Rectangle, Circle, Tube)
+description: Calculate the second moment of area I and section modulus Z of rectangular, solid round and hollow circular sections for beam deflection and bending stress.
+category: engineering
+intro: "The second moment of area I describes how a cross-section's material is spread around its bending axis, and it decides how stiff a beam is. This area moment of inertia calculator gives I and the elastic section modulus Z for a rectangle and for a solid or hollow circular section, in the cm⁴ and cm³ units used in steel tables."
+keywords: [area moment of inertia calculator, second moment of area calculator, moment of inertia rectangle, moment of inertia circle, section modulus calculator, bh^3/12, hollow tube moment of inertia]
+updated: 2026-11-03
+variables:
+  - { id: b, label: Rectangle width b, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: h, label: Rectangle depth h (in the bending direction), family: length, unit: mm, imperialUnit: in, default: 200, min: 0 }
+  - { id: Do, label: Circle outer diameter D, family: length, unit: mm, imperialUnit: in, default: 60, min: 0 }
+  - { id: Di, label: Circle inner diameter d (0 = solid), family: length, unit: mm, imperialUnit: in, default: 0, min: 0 }
+  - { id: Ir, label: I — rectangle, suffix: cm⁴, min: 0 }
+  - { id: Zr, label: Z — rectangle, suffix: cm³, min: 0 }
+  - { id: Ic, label: I — circle / tube, suffix: cm⁴, min: 0 }
+  - { id: Zc, label: Z — circle / tube, suffix: cm³, min: 0 }
+equations:
+  - Ir = b * h^3 / 12 * 1e8
+  - Zr = b * h^2 / 6 * 1e6
+  - Ic = pi * (Do^4 - Di^4) / 64 * 1e8
+  - Zc = pi * (Do^4 - Di^4) / (32 * Do) * 1e6
+faq:
+  - q: What is the moment of inertia of a rectangle?
+    a: I = b h³ ÷ 12 about the centroidal axis parallel to b, where h is the depth in the direction of bending. The section modulus is Z = b h² ÷ 6.
+  - q: What is the moment of inertia of a circle and a tube?
+    a: Solid circle I = π d⁴ ÷ 64; hollow tube I = π (D⁴ − d⁴) ÷ 64. The section modulus is I divided by the outer radius, Z = π (D⁴ − d⁴) ÷ (32 D).
+  - q: Is area moment of inertia the same as mass moment of inertia?
+    a: No. The area moment (m⁴) describes a cross-section's resistance to bending; the mass moment (kg·m²) describes a body's resistance to rotation. They share a name and the r² weighting but are used for different problems.
+  - q: Why are I-beams so efficient?
+    a: I grows with the square of the distance from the neutral axis, so putting most material in flanges far from the centre gives a high I and Z for little weight.
+related: [engineering/beam-deflection, engineering/bending-stress, physics/rotational-kinetic-energy, physics/youngs-modulus]
+---
+
+## How to use the area moment of inertia calculator
+
+For a **rectangle**, enter the width b and the depth h measured in the direction of bending. For a **round section**, enter the outer diameter and the inner diameter (0 for a solid bar). The calculator returns the second moment of area I in cm⁴ and the elastic section modulus Z in cm³ for both shapes — ready for the [beam deflection](/engineering/beam-deflection/) and [bending stress](/engineering/bending-stress/) calculators.
+
+## Second moment of area formulas
+
+<p class="formula">Rectangle: I = b h³ ÷ 12 &nbsp;·&nbsp; Z = b h² ÷ 6</p>
+
+<p class="formula">Circle / tube: I = π (D⁴ − d⁴) ÷ 64 &nbsp;·&nbsp; Z = π (D⁴ − d⁴) ÷ (32 D)</p>
+
+1 cm⁴ = 10⁻⁸ m⁴ and 1 cm³ = 10⁻⁶ m³.
+
+## Example
+
+A 100 × 200 mm timber beam bending about its strong axis, and a 60 mm solid steel bar:
+
+- Rectangle: I = 100 × 200³ ÷ 12 = 66,666,667 mm⁴ = **6,666.7 cm⁴**; Z = 100 × 200² ÷ 6 = **666.7 cm³**
+- Solid bar: I = π × 60⁴ ÷ 64 = **63.62 cm⁴**; Z = π × 60³ ÷ 32 = **21.21 cm³**
+
+## Rectangular sections
+
+| b × h | I (strong axis) | Z (strong axis) | I (weak axis) |
+|---|---|---|---|
+| 50 × 100 mm | 416.7 cm⁴ | 83.3 cm³ | 104.2 cm⁴ |
+| 50 × 150 mm | 1,406.2 cm⁴ | 187.5 cm³ | 156.2 cm⁴ |
+| 75 × 150 mm | 2,109.4 cm⁴ | 281.2 cm³ | 527.3 cm⁴ |
+| 100 × 200 mm | 6,666.7 cm⁴ | 666.7 cm³ | 1,666.7 cm⁴ |
+| 100 × 300 mm | 22,500.0 cm⁴ | 1,500.0 cm³ | 2,500.0 cm⁴ |
+| 150 × 300 mm | 33,750.0 cm⁴ | 2,250.0 cm³ | 8,437.5 cm⁴ |
+
+## Steel pipe (Schedule 40) as a beam
+
+| Pipe | I | Z |
+|---|---|---|
+| 25 NB (33.4 × 3.4) | 3.6 cm⁴ | 2.18 cm³ |
+| 50 NB (60.3 × 3.9) | 27.7 cm⁴ | 9.18 cm³ |
+| 80 NB (88.9 × 5.5) | 125.7 cm⁴ | 28.27 cm³ |
+| 100 NB (114.3 × 6.0) | 301.1 cm⁴ | 52.68 cm³ |
+| 150 NB (168.3 × 7.1) | 1,171.6 cm⁴ | 139.23 cm³ |
+| 200 NB (219.1 × 8.2) | 3,018.7 cm⁴ | 275.55 cm³ |
+
+## Notes
+
+- Turning a rectangle on its side swaps b and h: a 100 × 200 mm plank is four times stiffer on edge than flat.
+- For built-up shapes, add the I of each part about the common axis using the parallel-axis theorem, I = I<sub>c</sub> + A d².

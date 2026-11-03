@@ -1,0 +1,65 @@
+---
+title: Factor of Safety Calculator (FoS & Margin of Safety)
+description: Calculate the factor of safety and margin of safety from material strength and working stress or load — and the allowable stress for a required safety factor.
+category: engineering
+intro: "A factor of safety tells you how many times stronger a part is than it needs to be for the load it carries. This factor of safety calculator divides the material's strength by the actual working stress, gives the margin of safety, and works out the allowable stress for the safety factor your design code or company standard requires."
+keywords: [factor of safety calculator, safety factor calculator, margin of safety calculator, allowable stress calculator, fos formula, design factor, yield strength safety factor]
+updated: 2026-11-03
+variables:
+  - { id: S, label: Material strength (yield or ultimate), family: pressure, unit: MPa, imperialUnit: psi, default: 250, min: 0 }
+  - { id: s, label: Working (applied) stress, family: pressure, unit: MPa, imperialUnit: psi, default: 100, min: 0, help: 'You can also enter loads in the same unit for both fields — the ratio is the same.' }
+  - { id: nr, label: Required factor of safety, default: 2, min: 0 }
+  - { id: n, label: Factor of safety, min: 0, decimals: 2 }
+  - { id: MS, label: Margin of safety, family: percent, unit: '%' }
+  - { id: sa, label: Allowable stress for required FoS, family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+equations:
+  - n = S / s
+  - MS = S / s - 1
+  - sa = S / nr
+faq:
+  - q: How do you calculate factor of safety?
+    a: FoS = strength ÷ applied stress (or failure load ÷ working load). A bracket with 250 MPa yield strength stressed to 100 MPa has a factor of safety of 2.5.
+  - q: What is the difference between factor of safety and margin of safety?
+    a: Margin of safety = FoS − 1. A factor of safety of 2.5 is a margin of 1.5 (150%). Aerospace work often quotes the margin, where any positive value passes.
+  - q: What factor of safety should I use?
+    a: Typical values are 1.25–1.5 for well-known loads and materials (aircraft structures), 2–3 for general machine design, 3–4 for uncertain loads or brittle materials, and higher for lifting equipment and pressure parts as set by codes.
+  - q: Should I use yield or ultimate strength?
+    a: Use yield strength for ductile metals where permanent deformation counts as failure, and ultimate strength for brittle materials such as cast iron or ceramics. State which one you used.
+related: [engineering/bending-stress, physics/youngs-modulus, engineering/bolt-torque, engineering/weld-size]
+---
+
+## How to use the factor of safety calculator
+
+Enter the **material strength** (yield strength for ductile metals, ultimate strength for brittle ones) and the **working stress** in the part. The calculator returns the factor of safety and the margin of safety. Enter the **required factor of safety** to get the allowable working stress for design.
+
+## Factor of safety formula
+
+<p class="formula">FoS = S ÷ σ<sub>working</sub> &nbsp;·&nbsp; MS = FoS − 1 &nbsp;·&nbsp; σ<sub>allow</sub> = S ÷ FoS<sub>required</sub></p>
+
+## Example
+
+A steel part with 250 MPa yield strength is stressed to 100 MPa; the design standard asks for FoS = 2:
+
+- FoS = 250 ÷ 100 = **2.50**
+- Margin of safety = 2.50 − 1 = **150%**
+- Allowable stress at FoS 2 = 250 ÷ 2 = **125 MPa** — the part passes
+
+## Allowable stress for common materials
+
+| Material | Strength used | FoS 1.5 | FoS 2 | FoS 3 |
+|---|---|---|---|---|
+| Structural steel S235 / A36 | 250 MPa | 167 MPa | 125 MPa | 83 MPa |
+| Structural steel S355 | 355 MPa | 237 MPa | 178 MPa | 118 MPa |
+| Carbon steel AISI 1045 (cold drawn) | 530 MPa | 353 MPa | 265 MPa | 177 MPa |
+| Stainless 304 (annealed) | 215 MPa | 143 MPa | 108 MPa | 72 MPa |
+| Aluminium 6061-T6 | 276 MPa | 184 MPa | 138 MPa | 92 MPa |
+| Aluminium 7075-T6 | 503 MPa | 335 MPa | 252 MPa | 168 MPa |
+| Titanium Ti-6Al-4V | 880 MPa | 587 MPa | 440 MPa | 293 MPa |
+| Grey cast iron (ultimate tensile) | 200 MPa | 133 MPa | 100 MPa | 67 MPa |
+
+Strengths are typical minimum values; use the certified values for your material grade and thickness.
+
+## Notes
+
+- For fatigue (fluctuating) loading, compare the stress amplitude with the endurance limit, not the static strength.
+- Find working stresses with the [bending stress](/engineering/bending-stress/), [bolt torque](/engineering/bolt-torque/) or [weld size](/engineering/weld-size/) calculators.

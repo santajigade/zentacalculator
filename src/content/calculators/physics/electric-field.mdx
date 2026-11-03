@@ -1,0 +1,67 @@
+---
+title: Electric Field Calculator (Point Charge E & Potential V)
+description: Calculate the electric field strength and electric potential at a distance from a point charge with E = kq/r² and V = kq/r, plus the force on a test charge.
+category: physics
+intro: "A point charge creates an electric field that weakens with the square of distance, and an electric potential that falls off with distance itself. This electric field calculator applies Coulomb's law to give the field strength E, the potential V and the force on a test charge placed at that point — the same field that a [capacitor uses to store energy](https://www.instrumentationblog.in/capacitor-working-principle/) between its plates."
+keywords: [electric field calculator, electric field strength calculator, electric potential calculator, point charge electric field, e = kq/r^2, v = kq/r, coulomb constant]
+updated: 2026-11-03
+variables:
+  - { id: q, label: Source charge, suffix: µC, default: 5, help: 'Negative for a negative charge; the field then points toward the charge.' }
+  - { id: r, label: Distance from the charge, family: length, unit: m, imperialUnit: ft, default: 0.5, min: 0 }
+  - { id: q0, label: Test charge, suffix: µC, default: 1 }
+  - { id: E, label: Electric field strength, suffix: V/m }
+  - { id: V, label: Electric potential, family: voltage, unit: V }
+  - { id: F, label: Force on the test charge, family: force, unit: N, imperialUnit: lbf }
+equations:
+  - E = 8.9875517923e9 * q * 1e-6 / r^2
+  - V = 8.9875517923e9 * q * 1e-6 / r
+  - F = E * q0 * 1e-6
+faq:
+  - q: What is the formula for the electric field of a point charge?
+    a: E = kq ÷ r², where k = 8.988 × 10⁹ N·m²/C², q is the charge in coulombs and r the distance in metres. The unit is volts per metre, which is the same as newtons per coulomb.
+  - q: What is the difference between electric field and electric potential?
+    a: The field E is a vector — the force per coulomb on a test charge — and falls as 1/r². The potential V = kq/r is a scalar — the energy per coulomb — and falls as 1/r. The field is the rate at which potential changes with distance.
+  - q: How do I find the field from several charges?
+    a: Calculate the field of each charge separately and add them as vectors (superposition). Potentials are simply added as numbers, which is often easier.
+  - q: What field strength causes air to break down?
+    a: Dry air at sea level breaks down at roughly 3 × 10⁶ V/m (3 kV/mm), which limits how much charge an object in air can hold.
+related: [physics/coulombs-law, physics/parallel-plate-capacitor, physics/lorentz-force, physics/ohms-law]
+---
+
+## How to use the electric field calculator
+
+Enter the **source charge** in microcoulombs (negative for a negative charge), the **distance** from it, and optionally a **test charge**. The calculator returns the electric field strength, the electric potential at that point (taking zero at infinity) and the force on the test charge. Clear the distance and enter a field value to find how far away a given field strength occurs.
+
+## Electric field formula
+
+<p class="formula">E = k q ÷ r² &nbsp;·&nbsp; V = k q ÷ r &nbsp;·&nbsp; F = E q<sub>0</sub></p>
+
+k = 1 ÷ (4πε<sub>0</sub>) = 8.9875517923 × 10⁹ N·m²/C².
+
+## Example
+
+A 5 µC charge, measured 0.5 m away:
+
+- E = 8.988 × 10⁹ × 5 × 10⁻⁶ ÷ 0.5² = **179,751 V/m**
+- V = 8.988 × 10⁹ × 5 × 10⁻⁶ ÷ 0.5 = **89,876 V**
+- Force on a 1 µC test charge = 179,751 × 10⁻⁶ = **0.1798 N**
+
+## Field and potential of a 1 µC charge
+
+| Distance | Field E | Potential V |
+|---|---|---|
+| 0.01 m | 89,875,518 V/m | 898,755 V |
+| 0.05 m | 3,595,021 V/m | 179,751 V |
+| 0.1 m | 898,755 V/m | 89,876 V |
+| 0.2 m | 224,689 V/m | 44,938 V |
+| 0.5 m | 35,950 V/m | 17,975 V |
+| 1 m | 8,988 V/m | 8,988 V |
+| 2 m | 2,247 V/m | 4,494 V |
+| 5 m | 360 V/m | 1,798 V |
+| 10 m | 90 V/m | 899 V |
+
+## Notes
+
+- Outside a uniformly charged sphere the field is the same as for a point charge at its centre.
+- Between two parallel plates the field is uniform, E = V ÷ d — see the [parallel plate capacitor calculator](/physics/parallel-plate-capacitor/).
+- The force between two charges follows directly from [Coulomb's law](/physics/coulombs-law/).

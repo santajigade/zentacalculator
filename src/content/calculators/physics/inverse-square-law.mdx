@@ -1,0 +1,63 @@
+---
+title: Inverse Square Law Calculator (Light, Sound & Radiation)
+description: Calculate how intensity of light, sound or radiation falls with distance using I₂ = I₁(d₁/d₂)², with the decibel drop and distance for a target level.
+category: physics
+intro: "Energy spreading out from a point source covers an area that grows with the square of distance, so its intensity falls as 1/d². This inverse square law calculator scales a measured intensity, illuminance, sound intensity or radiation dose rate from one distance to another and gives the change in decibels."
+keywords: [inverse square law calculator, inverse square law light, inverse square law sound, radiation dose distance calculator, intensity distance formula, i1 d1^2 = i2 d2^2, lux distance calculator]
+updated: 2026-11-03
+variables:
+  - { id: I1, label: Intensity at distance 1, default: 100, min: 0, help: 'Any unit — lux, W/m², µSv/h, cd — the result is in the same unit.' }
+  - { id: d1, label: Distance 1, family: length, unit: m, imperialUnit: ft, default: 1, min: 0 }
+  - { id: d2, label: Distance 2, family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: I2, label: Intensity at distance 2, min: 0 }
+  - { id: ratio, label: Intensity ratio I₂/I₁, family: percent, unit: '%', min: 0 }
+  - { id: dB, label: Level change (drop), suffix: dB, decimals: 2 }
+equations:
+  - I2 = I1 * (d1 / d2)^2
+  - ratio = (d1 / d2)^2
+  - dB = 20 * log10(d2 / d1)
+faq:
+  - q: What is the inverse square law?
+    a: The intensity from a point source is inversely proportional to the square of the distance, I ∝ 1/d². Doubling the distance cuts the intensity to one quarter.
+  - q: How many decibels does sound drop when distance doubles?
+    a: About 6 dB (20 × log₁₀ 2 = 6.02 dB) for a point source in free field. Indoors, reflections make the drop smaller.
+  - q: How does the inverse square law apply to radiation safety?
+    a: Dose rate from a small gamma source falls as 1/d², so moving from 1 m to 2 m cuts exposure to 25%. Distance is one of the three basic protections, with time and shielding.
+  - q: When does the inverse square law not apply?
+    a: Close to large sources (a line or area source), with focused beams such as lasers or spotlights, and where the medium absorbs energy (fog, water). A rule of thumb is that it holds beyond about five times the source's largest dimension.
+related: [physics/decibel, physics/stefan-boltzmann-law, physics/radioactive-activity, physics/gravitational-force]
+---
+
+## How to use the inverse square law calculator
+
+Enter the **intensity measured at distance 1** in any unit, then the two **distances**. The calculator returns the intensity at distance 2 in the same unit, the ratio as a percentage and the level change in decibels. To find how far away a target intensity occurs, enter I₂ and clear distance 2.
+
+## Inverse square law formula
+
+<p class="formula">I<sub>2</sub> = I<sub>1</sub> × (d<sub>1</sub> ÷ d<sub>2</sub>)² &nbsp;·&nbsp; ΔL = 20 log<sub>10</sub>(d<sub>2</sub> ÷ d<sub>1</sub>) dB</p>
+
+## Example
+
+A lamp gives 100 lux at 1 m. At 3 m:
+
+- I₂ = 100 × (1 ÷ 3)² = **11.11 lux** (11.11% of the original)
+- Level change = 20 × log₁₀(3) = **9.54 dB**
+
+## Intensity versus distance multiple
+
+| Distance multiple | Remaining intensity | Drop in dB |
+|---|---|---|
+| 1.5 × | 44.44% | 3.52 dB |
+| 2 × | 25.00% | 6.02 dB |
+| 3 × | 11.11% | 9.54 dB |
+| 4 × | 6.25% | 12.04 dB |
+| 5 × | 4.00% | 13.98 dB |
+| 10 × | 1.00% | 20.00 dB |
+| 20 × | 0.25% | 26.02 dB |
+| 50 × | 0.04% | 33.98 dB |
+| 100 × | 0.01% | 40.00 dB |
+
+## Notes
+
+- Decibels use 10 log₁₀ of an intensity ratio, which equals 20 log₁₀ of the distance ratio.
+- The same 1/r² rule governs gravity and electric fields — see the [gravitational force calculator](/physics/gravitational-force/).

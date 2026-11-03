@@ -1,0 +1,62 @@
+---
+title: Shaft Diameter Calculator (Torsion, from Power & Speed)
+description: Calculate the minimum diameter of a solid shaft to transmit a given power at a given speed without exceeding the allowable shear stress, τ = 16T/πd³.
+category: engineering
+intro: "A rotating shaft must carry its torque without the torsional shear stress at its surface exceeding a safe limit. This shaft diameter calculator converts power and speed into torque and then sizes a solid circular shaft from the torsion formula τ = 16T ÷ (πd³), using an allowable shear stress that already includes your safety margin."
+keywords: [shaft diameter calculator, shaft size calculator, torsional shear stress calculator, shaft design calculator, solid shaft torque, tau = 16t / pi d^3, motor shaft diameter]
+updated: 2026-11-03
+variables:
+  - { id: P, label: Power transmitted, family: power, unit: kW, imperialUnit: hp, default: 15, min: 0 }
+  - { id: N, label: Shaft speed, suffix: rpm, default: 1450, min: 0 }
+  - { id: tau, label: Allowable shear stress, family: pressure, unit: MPa, imperialUnit: psi, default: 40, min: 0, help: 'Commercial steel shafting with keyways ≈ 40 MPa (ASME guideline); higher for alloy steels without keyways.' }
+  - { id: T, label: Torque, family: torque, unit: Nm, imperialUnit: lbft, min: 0 }
+  - { id: d, label: Minimum shaft diameter, family: length, unit: mm, imperialUnit: in, min: 0 }
+equations:
+  - T = P / (2 * pi * N / 60)
+  - d = (16 * T / (pi * tau))^(1/3)
+faq:
+  - q: How do you calculate shaft diameter from torque?
+    a: For a solid round shaft, d = ∛(16T ÷ (π τ)), where T is the torque and τ the allowable shear stress. Torque comes from power and speed, T = P ÷ (2πN/60).
+  - q: What allowable shear stress should I use?
+    a: The ASME shaft code suggests the lower of 18% of ultimate strength or 30% of yield, reduced by 25% for keyways. For commercial mild-steel shafting this gives about 40 MPa.
+  - q: Does this account for bending?
+    a: No. Shafts carrying pulleys, gears or overhung loads also bend. Then combine them with the equivalent torque √(M² + T²) in place of T, and apply shock factors for the load type.
+  - q: How does speed affect shaft size?
+    a: At the same power, torque is inversely proportional to speed, and diameter grows with the cube root of torque. Halving the speed increases the diameter by about 26%.
+related: [engineering/torque-power-speed, physics/torque, engineering/bending-stress, engineering/gear-ratio]
+---
+
+## How to use the shaft diameter calculator
+
+Enter the **power** to be transmitted, the **shaft speed** in rpm and the **allowable shear stress** for the shaft material. The calculator returns the torque and the minimum solid-shaft diameter; round up to the next standard size. To check an existing shaft, enter its diameter and clear the allowable stress to see the actual stress.
+
+## Shaft diameter formula (torsion)
+
+<p class="formula">T = P ÷ (2πN ÷ 60) &nbsp;·&nbsp; τ = 16 T ÷ (π d³) &nbsp;·&nbsp; d = ∛(16 T ÷ (π τ))</p>
+
+## Example
+
+A 15 kW motor running at 1,450 rpm, steel shaft with τ<sub>allow</sub> = 40 MPa:
+
+- T = 15,000 ÷ (2π × 1450 ÷ 60) = **98.79 N·m**
+- d = ∛(16 × 98.79 ÷ (π × 40 × 10⁶)) = **23.3 mm** → choose a 25 mm shaft
+
+## Minimum shaft diameter at τ = 40 MPa
+
+| Power | Torque at 1450 rpm | d at 1450 rpm | d at 960 rpm | d at 2900 rpm |
+|---|---|---|---|---|
+| 0.75 kW | 4.9 N·m | 8.6 mm | 9.8 mm | 6.8 mm |
+| 2.2 kW | 14.5 N·m | 12.3 mm | 14.1 mm | 9.7 mm |
+| 5.5 kW | 36.2 N·m | 16.6 mm | 19.1 mm | 13.2 mm |
+| 11 kW | 72.4 N·m | 21.0 mm | 24.1 mm | 16.6 mm |
+| 15 kW | 98.8 N·m | 23.3 mm | 26.7 mm | 18.5 mm |
+| 30 kW | 197.6 N·m | 29.3 mm | 33.6 mm | 23.3 mm |
+| 55 kW | 362.2 N·m | 35.9 mm | 41.1 mm | 28.5 mm |
+| 90 kW | 592.7 N·m | 42.3 mm | 48.5 mm | 33.5 mm |
+| 160 kW | 1053.7 N·m | 51.2 mm | 58.7 mm | 40.6 mm |
+
+## Notes
+
+- Keyways, shoulders and grooves concentrate stress; fatigue design for these features needs stress-concentration factors.
+- Long shafts may be governed by twist rather than strength — a common limit is 0.25° per metre for machinery shafts.
+- Check that a motor's shaft size matches its output torque using the [torque, power & speed calculator](/engineering/torque-power-speed/).

@@ -1,0 +1,76 @@
+---
+title: Beam Deflection Calculator (Simply Supported & Cantilever)
+description: Calculate the maximum deflection and bending moment of a simply supported beam with a central point load and a cantilever with an end load, from E and I.
+category: engineering
+intro: "How much a beam sags depends on the load, the cube of its span and its flexural stiffness E·I. This beam deflection calculator gives the maximum deflection and bending moment for the two most common cases — a simply supported beam with a central point load and a cantilever with a load at its tip — the same elastic bending that a [beam-type load cell](https://www.instrumentationblog.in/load-cell-working-principle/) uses to measure force."
+keywords: [beam deflection calculator, simply supported beam deflection, cantilever beam deflection, point load deflection, pl^3/48ei, pl^3/3ei, steel beam deflection calculator]
+updated: 2026-11-03
+variables:
+  - { id: P, label: Point load, family: force, unit: kN, imperialUnit: lbf, default: 5, min: 0 }
+  - { id: L, label: Span (length), family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: E, label: Young's modulus E, family: pressure, unit: MPa, imperialUnit: psi, default: 200000, min: 0, help: 'Steel 200,000–210,000 MPa · Aluminium 69,000 · Timber 8,000–12,000' }
+  - { id: I, label: Second moment of area I, suffix: cm⁴, default: 1943, min: 0, help: 'IPE 200 ≈ 1943 cm⁴ (strong axis). For a rectangle use b·h³/12.' }
+  - { id: dss, label: "Deflection — simply supported, centre load", family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: Mss, label: Max moment — simply supported, family: torque, unit: kNm, imperialUnit: lbft, min: 0 }
+  - { id: dc, label: "Deflection — cantilever, end load", family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: Mc, label: Max moment — cantilever, family: torque, unit: kNm, imperialUnit: lbft, min: 0 }
+equations:
+  - dss = P * L^3 / (48 * E * I * 1e-8)
+  - Mss = P * L / 4
+  - dc = P * L^3 / (3 * E * I * 1e-8)
+  - Mc = P * L
+faq:
+  - q: What is the deflection formula for a simply supported beam?
+    a: With a point load P at mid-span, δ = PL³ ÷ (48EI). For a uniformly distributed load w per metre, δ = 5wL⁴ ÷ (384EI). Both occur at mid-span.
+  - q: What is the deflection of a cantilever beam?
+    a: With a point load P at the free end, δ = PL³ ÷ (3EI) — 16 times the simply supported value for the same span. With a uniform load w, δ = wL⁴ ÷ (8EI).
+  - q: What deflection limit should a beam meet?
+    a: Typical serviceability limits are span/360 for floors with brittle finishes, span/250 for general floors and span/180 for roofs. Check your design code.
+  - q: What is EI?
+    a: The flexural rigidity — Young's modulus of the material times the second moment of area of the cross-section. Doubling the depth of a rectangular beam increases I, and the stiffness, eightfold.
+related: [engineering/bending-stress, engineering/area-moment-of-inertia, physics/youngs-modulus, engineering/factor-of-safety]
+---
+
+## How to use the beam deflection calculator
+
+Enter the **point load**, the **span**, the material's **Young's modulus** and the section's **second moment of area I** in cm⁴ (from a steel table or the [area moment of inertia calculator](/engineering/area-moment-of-inertia/)). The calculator returns the maximum deflection and bending moment for a simply supported beam loaded at mid-span and for a cantilever loaded at its tip. Self-weight is not included.
+
+## Beam deflection formulas
+
+<p class="formula">Simply supported, centre load: δ = P L³ ÷ (48 E I) &nbsp;·&nbsp; M = P L ÷ 4</p>
+
+<p class="formula">Cantilever, end load: δ = P L³ ÷ (3 E I) &nbsp;·&nbsp; M = P L</p>
+
+## Example
+
+A steel IPE 200 (I = 1,943 cm⁴, E = 200 GPa) spanning 3 m with a 5 kN load:
+
+- EI = 200 × 10⁹ × 1,943 × 10⁻⁸ = 3.89 × 10⁶ N·m²
+- Simply supported: δ = 5,000 × 3³ ÷ (48 × 3.89 × 10⁶) = **0.72 mm** (span/4,145); M = 5 × 3 ÷ 4 = **3.75 kN·m**
+- As a 3 m cantilever: δ = 5,000 × 3³ ÷ (3 × 3.89 × 10⁶) = **11.6 mm**; M = **15 kN·m**
+
+## Deflection of the example beam (5 kN) by span
+
+| Span | Simply supported δ | Span/δ | Cantilever δ | Max moment (s.s.) |
+|---|---|---|---|---|
+| 1 m | 0.03 mm | L/37,306 | 0.4 mm | 1.25 kN·m |
+| 1.5 m | 0.09 mm | L/16,580 | 1.4 mm | 1.88 kN·m |
+| 2 m | 0.21 mm | L/9,326 | 3.4 mm | 2.50 kN·m |
+| 2.5 m | 0.42 mm | L/5,969 | 6.7 mm | 3.12 kN·m |
+| 3 m | 0.72 mm | L/4,145 | 11.6 mm | 3.75 kN·m |
+| 4 m | 1.72 mm | L/2,332 | 27.4 mm | 5.00 kN·m |
+| 5 m | 3.35 mm | L/1,492 | 53.6 mm | 6.25 kN·m |
+| 6 m | 5.79 mm | L/1,036 | 92.6 mm | 7.50 kN·m |
+
+## Other common load cases
+
+| Case | Maximum deflection | Maximum moment |
+|---|---|---|
+| Simply supported, uniform load w | 5wL⁴ ÷ (384EI) | wL² ÷ 8 |
+| Cantilever, uniform load w | wL⁴ ÷ (8EI) | wL² ÷ 2 |
+| Fixed both ends, centre load P | PL³ ÷ (192EI) | PL ÷ 8 |
+
+## Notes
+
+- Check the bending stress as well as deflection — use the [bending stress calculator](/engineering/bending-stress/) with the moment from this page.
+- These formulas assume small, elastic deflections of a straight, uniform beam.

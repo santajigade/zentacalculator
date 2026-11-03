@@ -1,0 +1,64 @@
+---
+title: Final Temperature Calculator (Mixing Two Substances)
+description: Find the equilibrium temperature when two substances at different temperatures are mixed, from their masses and specific heats, plus the heat transferred.
+category: physics
+intro: "When a hot object meets a cold one in an insulated container, heat flows until both reach the same temperature, and the heat lost by one equals the heat gained by the other. This final temperature calculator solves that heat balance for any two substances from their masses, specific heat capacities and starting temperatures."
+keywords: [final temperature calculator, equilibrium temperature calculator, mixing temperature calculator, specific heat mixture, heat balance calculator, calorimetry final temperature, m1c1t1 + m2c2t2]
+updated: 2026-11-03
+variables:
+  - { id: m1, label: Mass of substance 1, family: mass, unit: kg, imperialUnit: lb, default: 0.5, min: 0 }
+  - { id: c1, label: Specific heat of substance 1, suffix: J/kg·K, default: 897, min: 0, help: 'Water 4186 · Aluminium 897 · Steel 450 · Copper 385' }
+  - { id: T1, label: Temperature of substance 1, family: temperature, unit: C, imperialUnit: F, default: 150, min: 0 }
+  - { id: m2, label: Mass of substance 2, family: mass, unit: kg, imperialUnit: lb, default: 2, min: 0 }
+  - { id: c2, label: Specific heat of substance 2, suffix: J/kg·K, default: 4186, min: 0 }
+  - { id: T2, label: Temperature of substance 2, family: temperature, unit: C, imperialUnit: F, default: 20, min: 0 }
+  - { id: Tf, label: Final (equilibrium) temperature, family: temperature, unit: C, imperialUnit: F, min: 0 }
+  - { id: Q, label: Heat transferred from 1 to 2, family: energy, unit: kJ, imperialUnit: BTU }
+equations:
+  - Tf = (m1 * c1 * T1 + m2 * c2 * T2) / (m1 * c1 + m2 * c2)
+  - Q = m1 * c1 * (T1 - Tf)
+faq:
+  - q: How do you calculate the final temperature of a mixture?
+    a: Set heat lost equal to heat gained, m₁c₁(T₁ − T_f) = m₂c₂(T_f − T₂), and solve — T_f = (m₁c₁T₁ + m₂c₂T₂) ÷ (m₁c₁ + m₂c₂). It is a weighted average of the temperatures, weighted by heat capacity m·c.
+  - q: What if one of the substances melts or boils?
+    a: This formula assumes no phase change. If ice melts or water boils, add the latent heat (m·L) to the balance — see the latent heat calculator.
+  - q: Why does a small hot metal block barely warm a lot of water?
+    a: Water's specific heat (4186 J/kg·K) is about 4.7 times aluminium's and 11 times copper's, so water absorbs a lot of heat for a small temperature rise.
+  - q: Do the temperatures have to be in kelvin?
+    a: No. Because the formula is a weighted average and uses only temperature differences, °C, °F or K all give the correct result in the same scale.
+related: [chemistry/specific-heat, physics/latent-heat, engineering/heat-duty, physics/newtons-law-of-cooling]
+---
+
+## How to use the final temperature calculator
+
+Enter the **mass**, **specific heat capacity** and **starting temperature** of each substance. The calculator returns the equilibrium temperature and the heat that flows from substance 1 to substance 2 (negative if substance 1 is the colder one). It assumes an insulated container and no melting or boiling.
+
+## Final temperature formula
+
+<p class="formula">T<sub>f</sub> = (m<sub>1</sub>c<sub>1</sub>T<sub>1</sub> + m<sub>2</sub>c<sub>2</sub>T<sub>2</sub>) ÷ (m<sub>1</sub>c<sub>1</sub> + m<sub>2</sub>c<sub>2</sub>) &nbsp;·&nbsp; Q = m<sub>1</sub>c<sub>1</sub>(T<sub>1</sub> − T<sub>f</sub>)</p>
+
+## Example
+
+A 0.5 kg aluminium block at 150 °C is dropped into 2 kg of water at 20 °C:
+
+- Heat capacities: 0.5 × 897 = 448.5 J/K and 2 × 4186 = 8,372 J/K
+- T<sub>f</sub> = (448.5 × 150 + 8,372 × 20) ÷ (448.5 + 8,372) = **26.61 °C**
+- Heat transferred Q = 448.5 × (150 − 26.61) = **55.34 kJ**
+
+## 1 kg at 100 °C mixed with 1 kg of water at 20 °C
+
+| Substance at 100 °C | Specific heat (J/kg·K) | Final temperature |
+|---|---|---|
+| Water | 4,186 | 60.0 °C |
+| Ice (−10 °C) | 2,050 | 46.3 °C |
+| Aluminium | 897 | 34.1 °C |
+| Copper | 385 | 26.7 °C |
+| Iron / steel | 450 | 27.8 °C |
+| Glass | 840 | 33.4 °C |
+| Olive oil | 1,970 | 45.6 °C |
+| Ethanol | 2,440 | 49.5 °C |
+
+## Notes
+
+- Real containers absorb some heat; in a calorimeter, add the vessel's heat capacity (its "water equivalent") to the cold side.
+- For heating a flowing stream rather than a batch, use the [heat duty calculator](/engineering/heat-duty/).

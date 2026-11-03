@@ -1,0 +1,68 @@
+---
+title: Bearing Life Calculator (L10 Rating Life, Hours)
+description: Calculate the basic L10 rating life of a ball or roller bearing in millions of revolutions and operating hours from dynamic load rating, load and speed.
+category: engineering
+intro: "Rolling bearings eventually fail by fatigue of the raceways, and their life is quoted statistically as L10 — the life that 90% of identical bearings will reach. This bearing life calculator applies the ISO 281 basic rating life equation L10 = (C ÷ P)^p and converts it into operating hours at the shaft speed."
+keywords: [bearing life calculator, l10 bearing life calculator, bearing rating life, bearing life hours, iso 281 bearing life, l10 = (c/p)^3, ball bearing life calculator]
+updated: 2026-11-03
+variables:
+  - id: p
+    label: Bearing type (life exponent)
+    default: 3
+    options:
+      - { label: 'Ball bearing (p = 3)', value: 3 }
+      - { label: 'Roller bearing (p = 10/3)', value: 3.333333 }
+  - { id: C, label: Basic dynamic load rating C, family: force, unit: kN, imperialUnit: lbf, default: 32.5, min: 0, help: 'From the bearing catalogue — for example about 32.5 kN for a 6208 deep-groove ball bearing.' }
+  - { id: P, label: Equivalent dynamic load P, family: force, unit: kN, imperialUnit: lbf, default: 4, min: 0 }
+  - { id: N, label: Rotational speed, suffix: rpm, default: 1500, min: 0 }
+  - { id: L10, label: Rating life L10, suffix: million rev, min: 0, decimals: 1 }
+  - { id: L10h, label: Rating life in hours L10h, family: seconds, unit: h, min: 0 }
+equations:
+  - L10 = (C / P)^p
+  - L10h = L10 * 1e6 / (60 * N) * 3600
+faq:
+  - q: What is L10 bearing life?
+    a: The number of revolutions (or hours at constant speed) that 90% of a group of identical bearings will complete or exceed before the first sign of fatigue. Median (L50) life is roughly four to five times L10.
+  - q: What is the bearing life formula?
+    a: L10 = (C ÷ P)^p million revolutions, with p = 3 for ball bearings and 10/3 for roller bearings. In hours, L10h = 10⁶ ÷ (60 n) × L10, where n is the speed in rpm.
+  - q: How does load affect bearing life?
+    a: Very strongly. For a ball bearing, doubling the load cuts life to one-eighth; halving it raises life eightfold.
+  - q: What life should I design for?
+    a: Typical targets are 8,000–12,000 h for machines used intermittently, 20,000–30,000 h for 8-hour-a-day machinery, and 40,000–60,000 h or more for continuous 24-hour service such as pumps and fans.
+related: [engineering/shaft-diameter, engineering/gear-ratio, engineering/availability-mtbf, engineering/torque-power-speed]
+---
+
+## How to use the bearing life calculator
+
+Choose **ball** or **roller** bearing, then enter the **basic dynamic load rating C** from the catalogue, the **equivalent dynamic load P** acting on the bearing and the **speed**. The calculator returns the L10 life in millions of revolutions and in operating hours. To pick a bearing, enter the required hours and clear C to get the load rating you need.
+
+## Bearing life formula (ISO 281)
+
+<p class="formula">L<sub>10</sub> = (C ÷ P)<sup>p</sup> &nbsp;·&nbsp; L<sub>10h</sub> = 10⁶ ÷ (60 n) × L<sub>10</sub></p>
+
+p = 3 for ball bearings, 10/3 for roller bearings. When both radial and axial loads act, P = X F<sub>r</sub> + Y F<sub>a</sub> with the X and Y factors from the catalogue.
+
+## Example
+
+A deep-groove ball bearing with C = 32.5 kN carries 4 kN at 1,500 rpm:
+
+- L<sub>10</sub> = (32.5 ÷ 4)³ = **536.4 million revolutions**
+- L<sub>10h</sub> = 10⁶ ÷ (60 × 1500) × 536.4 = **5,960 hours**
+
+## Life versus load ratio at 1,500 rpm
+
+| C/P | Ball L₁₀ (million rev) | Ball L₁₀h | Roller L₁₀ (million rev) | Roller L₁₀h |
+|---|---|---|---|---|
+| 2 | 8 | 89 h | 10 | 112 h |
+| 3 | 27 | 300 h | 39 | 433 h |
+| 4 | 64 | 711 h | 102 | 1,129 h |
+| 5 | 125 | 1,389 h | 214 | 2,375 h |
+| 6 | 216 | 2,400 h | 392 | 4,361 h |
+| 8 | 512 | 5,689 h | 1,024 | 11,378 h |
+| 10 | 1,000 | 11,111 h | 2,154 | 23,938 h |
+| 12 | 1,728 | 19,200 h | 3,956 | 43,957 h |
+
+## Notes
+
+- Modern catalogues add a modified life L<sub>nm</sub> = a₁ a<sub>ISO</sub> L₁₀, which accounts for lubrication, contamination and the required reliability.
+- Real bearings often fail early from poor lubrication, misalignment or contamination rather than fatigue. On inverter-fed motors, [shaft currents from VFDs](ib:vfd-motor-bearing-currents) can also damage the raceways.

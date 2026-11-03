@@ -1,10 +1,10 @@
 ---
-title: Centrifuge RPM ↔ RCF (g-force) Calculator
-description: Convert centrifuge speed between RPM and relative centrifugal force (× g) using the rotor radius.
+title: "RCF to RPM Calculator (g-Force ↔ RPM Centrifuge Converter)"
+description: "Convert RCF (× g) to RPM and RPM to g-force for any centrifuge rotor radius — e.g. 1000 × g at 10 cm ≈ 2,990 rpm. Includes ready tables for common g values."
 category: biology
 intro: "Lab protocols specify centrifugation in g-force (RCF), but centrifuges are set in rpm — and the conversion depends on the rotor radius. Using the right RCF makes results repeatable on any machine. This free centrifuge RPM ↔ RCF calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [rpm to g, rcf calculator, centrifuge, g force, relative centrifugal force, rotor radius]
-updated: 2026-10-27
+updated: 2026-11-03
 featured: true
 variables:
   - { id: rpm, label: Speed, suffix: rpm, default: 12000, min: 0 }
@@ -23,6 +23,12 @@ faq:
     a: "RCF = 1.118 × 10⁻⁵ × radius (cm) × rpm². At 12,000 rpm and 8 cm, RCF ≈ 12,880 × g."
   - q: "What radius should I use?"
     a: "Use r_max (centre of rotation to the tube bottom) from the rotor manual unless your protocol says otherwise."
+  - q: "Is RCF the same as g?"
+    a: "RCF is expressed in multiples of g. \"1,000 × g\" and \"1,000 g\" mean a relative centrifugal force 1,000 times Earth's gravity."
+  - q: "How do I convert 1000 × g to rpm?"
+    a: "It depends on the rotor radius: about 2,991 rpm at 10 cm, 3,244 rpm at 8.5 cm and 2,442 rpm at 15 cm."
+  - q: "How do I convert rpm to g?"
+    a: "RCF = 1.118 × 10⁻⁵ × radius (cm) × rpm². Enter rpm and radius in the calculator to get × g."
 related: [physics/centripetal-force, biology/serial-dilution]
 ---
 
@@ -57,6 +63,29 @@ RCF = 1.118 × 10⁻⁵ × 8.5 × 12,000² = **13,684 × g**
 <p class="formula">rpm = √(RCF ÷ (1.118 × 10⁻⁵ × r))</p>
 
 To get 1,500 × g in a rotor with a 10 cm radius: rpm = √(1,500 ÷ 0.0001118) ≈ **3,663 rpm**. Press × on Speed in the calculator and type the RCF.
+
+## RCF to RPM table (by rotor radius)
+
+| RCF | r = 5 cm | r = 7 cm | r = 8.5 cm | r = 10 cm | r = 15 cm |
+|---|---|---|---|---|---|
+| 100 × g | 1,338 | 1,130 | 1,026 | 946 | 772 |
+| 300 × g | 2,317 | 1,958 | 1,777 | 1,638 | 1,338 |
+| 500 × g | 2,991 | 2,528 | 2,294 | 2,115 | 1,727 |
+| 1,000 × g | 4,230 | 3,575 | 3,244 | 2,991 | 2,442 |
+| 1,500 × g | 5,180 | 4,378 | 3,973 | 3,663 | 2,991 |
+| 2,000 × g | 5,981 | 5,055 | 4,588 | 4,230 | 3,453 |
+| 3,000 × g | 7,326 | 6,191 | 5,619 | 5,180 | 4,230 |
+| 5,000 × g | 9,458 | 7,993 | 7,254 | 6,688 | 5,460 |
+| 10,000 × g | 13,375 | 11,304 | 10,258 | 9,458 | 7,722 |
+| 12,000 × g | 14,652 | 12,383 | 11,237 | 10,360 | 8,459 |
+| 15,000 × g | 16,381 | 13,844 | 12,564 | 11,583 | 9,458 |
+| 20,000 × g | 18,915 | 15,986 | 14,507 | 13,375 | 10,921 |
+
+Values are rpm, from rpm = √(RCF ÷ (1.118 × 10⁻⁵ × r)). Use your rotor's maximum radius from the manual for the closest match to protocol g-forces.
+
+## RCF vs RPM: what is the difference?
+
+**RPM** is how fast the rotor turns. **RCF** (relative centrifugal force, written × g) is the force the sample actually feels, as a multiple of Earth's gravity. Two centrifuges at the same rpm give different g-forces if their rotors have different radii — which is why protocols specify × g.
 
 ## Why protocols use × g
 

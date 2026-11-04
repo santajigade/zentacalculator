@@ -1,0 +1,85 @@
+---
+title: Water Hardness Calculator (ppm CaCO₃, °dH, gpg)
+description: Calculate total water hardness as mg/L (ppm) CaCO₃ from calcium and magnesium, with °dH, °fH, grains per gallon and a soft-to-very-hard rating.
+category: chemistry
+intro: "Water hardness comes mainly from dissolved calcium and magnesium, and is reported as the equivalent amount of calcium carbonate. This water hardness calculator converts Ca and Mg results from a lab report into mg/L (ppm) as CaCO₃, German and French degrees and grains per gallon, and rates the water from soft to very hard."
+keywords: [water hardness calculator, total hardness calculator, hardness as caco3, ppm caco3, german degrees hardness, grains per gallon hardness, calcium magnesium hardness]
+updated: 2026-11-04
+variables:
+  - { id: Ca, label: Calcium (Ca²⁺), suffix: mg/L, default: 60, min: 0 }
+  - { id: Mg, label: Magnesium (Mg²⁺), suffix: mg/L, default: 15, min: 0 }
+  - id: H
+    label: Total hardness as CaCO₃
+    suffix: mg/L (ppm)
+    min: 0
+    bands:
+      - { max: 60, label: Soft, color: '#16a34a' }
+      - { max: 120, label: Moderately hard, color: '#84cc16' }
+      - { max: 180, label: Hard, color: '#eab308' }
+      - { max: 1e12, label: Very hard, color: '#dc2626' }
+  - { id: dH, label: German degrees (°dH), min: 0, decimals: 2 }
+  - { id: fH, label: French degrees (°fH), min: 0, decimals: 2 }
+  - { id: gpg, label: Grains per US gallon (gpg), min: 0, decimals: 2 }
+  - { id: mmol, label: Hardness, suffix: mmol/L, min: 0, decimals: 3 }
+equations:
+  - H = 2.49730 * Ca + 4.11796 * Mg
+  - dH = H / 17.848
+  - fH = H / 10
+  - gpg = H / 17.118
+  - mmol = H / 100.0869
+faq:
+  - q: How is total hardness calculated from calcium and magnesium?
+    a: Hardness (mg/L as CaCO₃) = 2.497 × Ca + 4.118 × Mg, with Ca and Mg in mg/L. The factors are the molar mass of CaCO₃ (100.09) divided by the molar masses of Ca (40.08) and Mg (24.31).
+  - q: What is a good water hardness?
+    a: Below 60 mg/L is soft, 61–120 moderately hard, 121–180 hard and above 180 very hard (USGS classification). Hardness is not a health concern, but above about 120 mg/L scale builds up in kettles, boilers and pipes.
+  - q: How do I convert ppm hardness to °dH or grains per gallon?
+    a: 1 °dH = 17.848 mg/L CaCO₃, 1 °fH = 10 mg/L CaCO₃ and 1 grain per US gallon = 17.118 mg/L CaCO₃. Divide the ppm value by these factors.
+  - q: What is the difference between temporary and permanent hardness?
+    a: Temporary (carbonate) hardness is the part balanced by bicarbonate and is removed by boiling, which precipitates CaCO₃ scale. Permanent hardness is balanced by sulfate or chloride and stays after boiling; it needs ion exchange or reverse osmosis.
+related: [chemistry/ppm, chemistry/molarity, chemistry/normality, chemistry/titration]
+---
+
+## How to use the water hardness calculator
+
+Enter the **calcium** and **magnesium** concentrations in mg/L from your water test. The calculator returns total hardness as mg/L CaCO₃ (the same as ppm in dilute water) with a soft-to-very-hard rating, plus German degrees, French degrees, grains per gallon and mmol/L. If you only have a total hardness result, clear Ca and Mg and enter it directly to convert between units.
+
+## Water hardness formula
+
+<p class="formula">Hardness (mg/L CaCO₃) = 2.497 × Ca + 4.118 × Mg</p>
+
+<p class="formula">°dH = ppm ÷ 17.848 &nbsp;·&nbsp; °fH = ppm ÷ 10 &nbsp;·&nbsp; gpg = ppm ÷ 17.118 &nbsp;·&nbsp; mmol/L = ppm ÷ 100.09</p>
+
+## Example
+
+A well water with 60 mg/L calcium and 15 mg/L magnesium:
+
+- From calcium: 2.497 × 60 = 149.8 mg/L
+- From magnesium: 4.118 × 15 = 61.8 mg/L
+- Total hardness = **211.6 mg/L as CaCO₃** — very hard
+- = 11.86 °dH = 21.16 °fH = 12.36 gpg
+
+## Hardness classification
+
+| Hardness as CaCO₃ | Rating | German degrees | Grains per gallon |
+|---|---|---|---|
+| 0–60 mg/L | Soft | 0.0–3.4 °dH | 0.0–3.5 gpg |
+| 61–120 mg/L | Moderately hard | 3.4–6.7 °dH | 3.6–7.0 gpg |
+| 121–180 mg/L | Hard | 6.8–10.1 °dH | 7.1–10.5 gpg |
+| 181–… mg/L | Very hard | 10.1+ °dH | 10.6+ gpg |
+
+## Hardness for typical Ca and Mg levels
+
+| Calcium | Magnesium | Total hardness | German degrees |
+|---|---|---|---|
+| 10 mg/L | 2 mg/L | 33 mg/L | 1.9 °dH |
+| 20 mg/L | 5 mg/L | 71 mg/L | 4.0 °dH |
+| 40 mg/L | 10 mg/L | 141 mg/L | 7.9 °dH |
+| 60 mg/L | 15 mg/L | 212 mg/L | 11.9 °dH |
+| 80 mg/L | 20 mg/L | 282 mg/L | 15.8 °dH |
+| 100 mg/L | 30 mg/L | 373 mg/L | 20.9 °dH |
+| 150 mg/L | 40 mg/L | 539 mg/L | 30.2 °dH |
+
+## Notes
+
+- Lab titrations with EDTA report total hardness directly as mg/L CaCO₃.
+- To convert between mg/L and other concentration units, use the [ppm calculator](/chemistry/ppm/).

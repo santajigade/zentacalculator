@@ -1,0 +1,72 @@
+---
+title: Process Capability Calculator (Cp, Cpk, PPM)
+description: Calculate process capability indices Cp, Cpk, Cpu and Cpl from the specification limits, process mean and standard deviation, plus expected ppm defects.
+category: statistics
+intro: "Process capability compares the spread of a process with the tolerance it has to meet. This process capability calculator returns Cp (potential capability), Cpk (actual capability, allowing for an off-centre mean) and the expected parts per million outside the specification limits, assuming a normal distribution."
+keywords: [process capability calculator, cpk calculator, cp cpk calculator, process capability index, cpk formula, ppm defects, cpu cpl]
+updated: 2026-11-04
+variables:
+  - { id: USL, label: Upper specification limit (USL), default: 10.05 }
+  - { id: LSL, label: Lower specification limit (LSL), default: 9.95 }
+  - { id: mu, label: Process mean (x̄), default: 10.01 }
+  - { id: s, label: Process standard deviation (σ), default: 0.012, min: 0, help: 'Use the within-subgroup σ for Cp/Cpk; the overall σ gives Pp/Ppk.' }
+  - { id: Cp, label: Cp (potential capability), decimals: 3 }
+  - { id: Cpu, label: Cpu (upper), decimals: 3 }
+  - { id: Cpl, label: Cpl (lower), decimals: 3 }
+  - { id: Cpk, label: Cpk (actual capability), decimals: 3 }
+  - { id: ppm, label: Expected out of specification, suffix: ppm, min: 0, decimals: 1 }
+equations:
+  - Cp = (USL - LSL) / (6 * s)
+  - Cpu = (USL - mu) / (3 * s)
+  - Cpl = (mu - LSL) / (3 * s)
+  - Cpk = min(Cpu, Cpl)
+  - ppm = (normcdf(-3 * Cpu) + normcdf(-3 * Cpl)) * 1e6
+faq:
+  - q: What is the difference between Cp and Cpk?
+    a: Cp = (USL − LSL) ÷ 6σ compares the tolerance width with the process spread and ignores where the process is centred. Cpk = min(USL − x̄, x̄ − LSL) ÷ 3σ also accounts for an off-centre mean, so Cpk ≤ Cp, and they are equal only when the process is centred.
+  - q: What is a good Cpk value?
+    a: 1.33 is the usual minimum for an established process (about 63 ppm out of tolerance when centred), 1.67 for new or safety-critical characteristics, and 2.0 corresponds to six sigma quality.
+  - q: What is the difference between Cpk and Ppk?
+    a: Cpk uses the short-term, within-subgroup standard deviation (from a control chart, R̄/d₂); Ppk uses the overall standard deviation of all data. Ppk reflects what the customer actually receives.
+  - q: Does Cpk assume a normal distribution?
+    a: The ppm estimate does. Check normality with a histogram or probability plot first; skewed data (such as flatness or runout) need a transformation or a non-normal capability method.
+related: [statistics/six-sigma, statistics/normal-distribution, statistics/z-score, statistics/standard-deviation]
+---
+
+## How to use the process capability calculator
+
+Enter the **upper and lower specification limits**, the **process mean** and the **process standard deviation**. The calculator returns Cp, the one-sided indices Cpu and Cpl, Cpk (the smaller of the two) and the expected fraction outside the limits in parts per million. Collect at least 25 subgroups from a stable process before trusting the result.
+
+## Process capability formulas
+
+<p class="formula">Cp = (USL − LSL) ÷ 6σ &nbsp;·&nbsp; Cpu = (USL − x̄) ÷ 3σ &nbsp;·&nbsp; Cpl = (x̄ − LSL) ÷ 3σ &nbsp;·&nbsp; Cpk = min(Cpu, Cpl)</p>
+
+<p class="formula">ppm = [Φ(−3 Cpu) + Φ(−3 Cpl)] × 10⁶</p>
+
+## Example
+
+A shaft diameter specified 10.00 ± 0.05 mm (USL 10.05, LSL 9.95), with mean 10.01 mm and σ = 0.012 mm:
+
+- Cp = 0.10 ÷ (6 × 0.012) = **1.389**
+- Cpu = (10.05 − 10.01) ÷ (3 × 0.012) = **1.111**, Cpl = (10.01 − 9.95) ÷ 0.036 = **1.667**
+- Cpk = min(1.111, 1.667) = **1.111**
+- Expected out of tolerance = [Φ(−3.333) + Φ(−5.000)] × 10⁶ = **429.3 ppm**
+
+Centring the process at 10.00 mm would raise Cpk to 1.389 without reducing the variation.
+
+## Cpk and expected defects (centred process)
+
+| Cpk | Distance to nearest limit | Out of spec (ppm) | Yield |
+|---|---|---|---|
+| 0.50 | 1.5σ | 133,614.4 | 86.63856% |
+| 0.67 | 2.0σ | 44,431.2 | 95.55688% |
+| 1.00 | 3.0σ | 2,699.8 | 99.73002% |
+| 1.33 | 4.0σ | 66.1 | 99.99339% |
+| 1.50 | 4.5σ | 6.8 | 99.99932% |
+| 1.67 | 5.0σ | 0.5 | 99.99995% |
+| 2.00 | 6.0σ | 0.002 | 100.00000% |
+
+## Notes
+
+- Capability only means something for a process in statistical control.
+- Six sigma quality with a 1.5σ long-term shift corresponds to 3.4 defects per million — see the [six sigma calculator](/statistics/six-sigma/).

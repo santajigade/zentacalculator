@@ -1,0 +1,65 @@
+---
+title: Normality Calculator (Equivalents per Litre, N)
+description: Calculate the normality of a solution from the mass of solute, molar mass, equivalents per mole and volume — or the grams needed for a target normality.
+category: chemistry
+intro: "Normality counts reactive equivalents per litre — protons for an acid, hydroxide ions for a base, electrons for a redox reagent — so a 1 N acid exactly neutralises the same volume of a 1 N base. This normality calculator works out normality and molarity from the mass you weigh out, or the mass needed for a target N."
+keywords: [normality calculator, normality formula, equivalent weight calculator, gram equivalent, normality to molarity, how to calculate normality, 0.1 n solution]
+updated: 2026-11-04
+variables:
+  - { id: m, label: Mass of solute, family: mass, unit: g, imperialUnit: g, default: 4.904, min: 0 }
+  - { id: Mw, label: Molar mass of solute, suffix: g/mol, default: 98.079, min: 0 }
+  - { id: neq, label: Equivalents per mole (n), default: 2, min: 0, help: 'H⁺ per acid molecule, OH⁻ per base, or electrons per formula unit in a redox reaction.' }
+  - { id: V, label: Solution volume, family: volume, unit: mL, imperialUnit: mL, default: 500, min: 0 }
+  - { id: c, label: Molarity, suffix: mol/L, min: 0 }
+  - { id: N, label: Normality, suffix: eq/L (N), min: 0 }
+  - { id: EW, label: Equivalent weight, suffix: g/eq, min: 0 }
+equations:
+  - c = m * 1000 / Mw / (1000 * V)
+  - N = c * neq
+  - EW = Mw / neq
+faq:
+  - q: What is the formula for normality?
+    a: N = (mass ÷ equivalent weight) ÷ volume in litres, where equivalent weight = molar mass ÷ n. Equivalently, N = molarity × n.
+  - q: What is the difference between normality and molarity?
+    a: Molarity counts moles per litre; normality counts reacting equivalents per litre. 1 M H₂SO₄ is 2 N because each molecule gives two H⁺ ions, while 1 M HCl is 1 N.
+  - q: How do I make 1 L of 0.1 N H₂SO₄?
+    a: The equivalent weight is 98.079 ÷ 2 = 49.04 g/eq, so 0.1 N needs 4.904 g per litre. In practice it is made by diluting concentrated acid and standardised by titration.
+  - q: Why is normality used less today?
+    a: Because n depends on the reaction — KMnO₄ transfers 5 electrons in acid but 3 in neutral solution — the same solution can have two normalities. IUPAC recommends molarity, but normality remains common in titration and water-testing methods.
+related: [chemistry/molarity, chemistry/titration, chemistry/dilution, chemistry/water-hardness]
+---
+
+## How to use the normality calculator
+
+Enter the **mass of solute**, its **molar mass**, the **equivalents per mole** and the final **solution volume**. The calculator returns the molarity, normality and equivalent weight. To find how much to weigh out, clear the mass and enter the normality you want.
+
+## Normality formula
+
+<p class="formula">N = M × n = (m ÷ EW) ÷ V &nbsp;·&nbsp; EW = molar mass ÷ n</p>
+
+## Example
+
+4.904 g of sulfuric acid (98.079 g/mol, n = 2) made up to 500 mL:
+
+- Molarity = 4.904 ÷ 98.079 ÷ 0.500 = **0.1000 mol/L**
+- Normality = 0.1000 × 2 = **0.2000 N**
+- Equivalent weight = 98.079 ÷ 2 = **49.039 g/eq**
+
+## Equivalent weights of common reagents
+
+| Reagent | Molar mass (g/mol) | n (basis) | Equivalent weight (g/eq) | Mass for 1 L of 1 N |
+|---|---|---|---|---|
+| Hydrochloric acid (HCl) | 36.46 | 1 (acid–base) | 36.460 | 36.460 g |
+| Sulfuric acid (H₂SO₄) | 98.079 | 2 (acid–base) | 49.039 | 49.039 g |
+| Phosphoric acid (H₃PO₄) | 97.994 | 3 (full neutralisation) | 32.665 | 32.665 g |
+| Sodium hydroxide (NaOH) | 39.997 | 1 (acid–base) | 39.997 | 39.997 g |
+| Calcium hydroxide (Ca(OH)₂) | 74.093 | 2 (acid–base) | 37.047 | 37.047 g |
+| Sodium carbonate (Na₂CO₃) | 105.988 | 2 (to CO₂) | 52.994 | 52.994 g |
+| Oxalic acid dihydrate (H₂C₂O₄·2H₂O) | 126.065 | 2 (acid–base or redox) | 63.032 | 63.032 g |
+| Potassium permanganate (KMnO₄) | 158.034 | 5 (redox, acid solution) | 31.607 | 31.607 g |
+| Potassium dichromate (K₂Cr₂O₇) | 294.185 | 6 (redox, acid solution) | 49.031 | 49.031 g |
+
+## Notes
+
+- In a titration at the end point, N₁V₁ = N₂V₂ — see the [titration calculator](/chemistry/titration/).
+- To dilute a stock solution, the [dilution calculator](/chemistry/dilution/) works the same way with normality as with molarity.

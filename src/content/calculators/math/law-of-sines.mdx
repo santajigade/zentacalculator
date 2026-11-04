@@ -1,0 +1,65 @@
+---
+title: Law of Sines Calculator (Solve a Triangle, AAS & ASA)
+description: Solve any triangle with the law of sines — enter one side and two angles to get the third angle, the missing sides and the area, with the formula and steps.
+category: math
+intro: "The law of sines says that each side of a triangle divided by the sine of its opposite angle gives the same ratio. This law of sines calculator uses that rule to solve a triangle from one side and two angles (AAS or ASA), returning the third angle, both missing sides and the area."
+keywords: [law of sines calculator, sine rule calculator, solve triangle calculator, law of sines formula, aas triangle, asa triangle, missing side of a triangle]
+updated: 2026-11-04
+variables:
+  - { id: a, label: Side a, default: 10, min: 0 }
+  - { id: A, label: Angle A (opposite side a), family: angle, unit: deg, default: 30, min: 0, max: 3.14159265 }
+  - { id: B, label: Angle B (opposite side b), family: angle, unit: deg, default: 45, min: 0, max: 3.14159265 }
+  - { id: C, label: Angle C, family: angle, unit: deg, min: 0, max: 3.14159265 }
+  - { id: b, label: Side b, min: 0 }
+  - { id: c, label: Side c, min: 0 }
+  - { id: K, label: Area of the triangle, min: 0 }
+equations:
+  - C = pi - A - B
+  - b = a * sin(B) / sin(A)
+  - c = a * sin(C) / sin(A)
+  - K = 0.5 * a * b * sin(C)
+faq:
+  - q: What is the law of sines?
+    a: a ÷ sin A = b ÷ sin B = c ÷ sin C. In any triangle, the ratio of a side to the sine of the angle opposite it is the same for all three sides (and equals the diameter of the circumscribed circle).
+  - q: When should I use the law of sines instead of the law of cosines?
+    a: Use the law of sines when you know two angles and a side (AAS, ASA) or two sides and a non-included angle (SSA). Use the law of cosines when you know three sides (SSS) or two sides and the included angle (SAS).
+  - q: What is the ambiguous case of the law of sines?
+    a: With two sides and a non-included angle (SSA) there can be two different triangles, because sin B = sin(180° − B). Check whether 180° − B also leaves a positive third angle; if it does, both triangles are valid.
+  - q: Do the sides need units?
+    a: Any length unit works — the missing sides come out in the same unit you used for side a, and the area in that unit squared.
+related: [math/law-of-cosines, math/right-triangle-trig, math/triangle-area, math/pythagorean-theorem]
+---
+
+## How to use the law of sines calculator
+
+Enter one **side a** and the two angles **A** (opposite a) and **B**. The calculator finds the third angle C = 180° − A − B, then sides b and c from the law of sines, and the area. For the SSA case, clear angle B and enter side b instead — the calculator solves sin B and returns the acute solution (see the ambiguous case below).
+
+## Law of sines formula
+
+<p class="formula">a ÷ sin A = b ÷ sin B = c ÷ sin C &nbsp;·&nbsp; Area = ½ a b sin C</p>
+
+## Example
+
+Side a = 10, angle A = 30°, angle B = 45°:
+
+- C = 180° − 30° − 45° = **105°**
+- b = 10 × sin 45° ÷ sin 30° = 10 × 0.7071 ÷ 0.5 = **14.142**
+- c = 10 × sin 105° ÷ sin 30° = 10 × 0.9659 ÷ 0.5 = **19.319**
+- Area = ½ × 10 × 14.142 × sin 105° = **68.30**
+
+## Same triangle, different angle B (a = 10, A = 30°)
+
+| Angle B | Angle C | Side b | Side c | Area |
+|---|---|---|---|---|
+| 15° | 135° | 5.176 | 14.142 | 18.30 |
+| 30° | 120° | 10.000 | 17.321 | 43.30 |
+| 45° | 105° | 14.142 | 19.319 | 68.30 |
+| 60° | 90° | 17.321 | 20.000 | 86.60 |
+| 75° | 75° | 19.319 | 19.319 | 93.30 |
+| 90° | 60° | 20.000 | 17.321 | 86.60 |
+| 105° | 45° | 19.319 | 14.142 | 68.30 |
+| 120° | 30° | 17.321 | 10.000 | 43.30 |
+
+## The ambiguous case (SSA)
+
+When you know a, b and A, sin B = b sin A ÷ a. If that value is above 1 there is no triangle; if it equals 1 there is one right triangle; if it is below 1, B can be acute or 180° minus that angle, and both give a valid triangle whenever A + B stays below 180°. For three known sides use the [law of cosines calculator](/math/law-of-cosines/).

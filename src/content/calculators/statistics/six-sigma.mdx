@@ -1,0 +1,71 @@
+---
+title: Six Sigma Calculator (DPMO, Yield & Sigma Level)
+description: Calculate defects per million opportunities (DPMO), process yield and the six sigma level from defects, units and opportunities per unit, with the 1.5σ shift.
+category: statistics
+intro: "Six Sigma measures quality by counting defects per million opportunities and converting that rate into a sigma level, where 6σ means just 3.4 defects per million. This six sigma calculator works out DPU, DPMO, yield and the sigma level from your defect count, using the standard 1.5σ long-term shift."
+keywords: [six sigma calculator, dpmo calculator, sigma level calculator, defects per million opportunities, process sigma calculator, dpmo to sigma, yield to sigma]
+updated: 2026-11-04
+variables:
+  - { id: Dn, label: Number of defects, default: 27, min: 0 }
+  - { id: U, label: Number of units inspected, default: 1500, min: 0 }
+  - { id: O, label: Defect opportunities per unit, default: 5, min: 0 }
+  - { id: DPU, label: Defects per unit (DPU), min: 0, decimals: 4 }
+  - { id: DPMO, label: Defects per million opportunities (DPMO), min: 0, max: 1000000, decimals: 1 }
+  - { id: Y, label: Yield (1 − DPMO ÷ 10⁶), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: sig, label: Sigma level (with 1.5σ shift), decimals: 2 }
+equations:
+  - DPU = Dn / U
+  - DPMO = Dn / (U * O) * 1e6
+  - Y = 1 - DPMO / 1e6
+  - Y = normcdf(sig - 1.5)
+faq:
+  - q: How do I calculate DPMO?
+    a: DPMO = defects ÷ (units × opportunities per unit) × 1,000,000. With 27 defects in 1,500 units having 5 opportunities each, DPMO = 27 ÷ 7,500 × 10⁶ = 3,600.
+  - q: How is DPMO converted to a sigma level?
+    a: Sigma level = z(1 − DPMO/10⁶) + 1.5, where z is the inverse of the standard normal distribution. The 1.5 is the conventional allowance for the process mean drifting over the long term.
+  - q: Why is six sigma 3.4 defects per million and not 0.001?
+    a: A pure 6σ distance to the limit gives about 0.001 ppm, but Six Sigma assumes the mean shifts 1.5σ in the long run, leaving 4.5σ to the nearest limit — and 4.5σ corresponds to 3.4 ppm.
+  - q: What is an opportunity?
+    a: A distinct chance for a defect that the customer cares about and that you check — for example each solder joint on a board. Define opportunities consistently, because counting more of them lowers DPMO.
+related: [statistics/process-capability, statistics/normal-distribution, statistics/z-score, statistics/probability]
+---
+
+## How to use the six sigma calculator
+
+Enter the **number of defects** found, the **number of units** inspected and the **defect opportunities per unit**. The calculator returns defects per unit, DPMO, the yield (first-pass yield per opportunity) and the process sigma level. To find the DPMO for a target sigma level, clear the defects and enter the sigma level.
+
+## Six sigma formulas
+
+<p class="formula">DPU = D ÷ U &nbsp;·&nbsp; DPMO = D ÷ (U × O) × 10⁶ &nbsp;·&nbsp; Yield = 1 − DPMO ÷ 10⁶</p>
+
+<p class="formula">Sigma level = Φ⁻¹(Yield) + 1.5</p>
+
+## Example
+
+27 defects found in 1,500 assemblies with 5 opportunities each:
+
+- DPU = 27 ÷ 1,500 = **0.0180**
+- DPMO = 27 ÷ (1,500 × 5) × 10⁶ = **3,600**
+- Yield = 1 − 0.0036 = **99.64%**
+- Sigma level = Φ⁻¹(0.9964) + 1.5 = 2.687 + 1.5 = **4.19σ**
+
+## Sigma level to DPMO (1.5σ shift)
+
+| Sigma level | DPMO | Yield |
+|---|---|---|
+| 1σ | 691,462 | 30.8538% |
+| 1.5σ | 500,000 | 50.0000% |
+| 2σ | 308,538 | 69.1462% |
+| 2.5σ | 158,655 | 84.1345% |
+| 3σ | 66,807 | 93.3193% |
+| 3.5σ | 22,750 | 97.7250% |
+| 4σ | 6,210 | 99.3790% |
+| 4.5σ | 1,350 | 99.8650% |
+| 5σ | 232.6 | 99.9767% |
+| 5.5σ | 31.7 | 99.9968% |
+| 6σ | 3.4 | 99.9997% |
+
+## Notes
+
+- Without the 1.5σ shift (short-term sigma), subtract 1.5 from the sigma levels above.
+- For a measured characteristic with specification limits, use the [process capability calculator](/statistics/process-capability/) — Cpk × 3 is the short-term sigma level.

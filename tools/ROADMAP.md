@@ -241,7 +241,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Empirical formula
 - [ ] Limiting reagent
 - [ ] Theoretical yield
-- [ ] Normality
+- [x] Normality
 - [ ] Solution preparation from solid (mass needed)
 - [ ] Stock dilution series
 - [x] pOH / [H+] / [OH−]
@@ -254,12 +254,12 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Heat of combustion / calorimetry (bomb)
 - [x] Faraday electrolysis (mass deposited)
 - [ ] Cell potential (E°cell)
-- [ ] Raoult's law (vapour pressure)
-- [ ] Henry's law (gas solubility)
-- [ ] Van der Waals equation
+- [x] Raoult's law (vapour pressure)
+- [x] Henry's law (gas solubility)
+- [x] Van der Waals equation
 - [x] Gay-Lussac's law
 - [x] Avogadro's law
-- [ ] Water hardness (ppm CaCO₃)
+- [x] Water hardness (ppm CaCO₃)
 - [ ] TDS ↔ conductivity (ib)
 - [ ] Dissolved oxygen saturation
 - [ ] Conductivity cell constant (ib)
@@ -271,19 +271,19 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Cubic equation
 - [ ] Polynomial roots
 - [ ] Matrix determinant / inverse (2×2, 3×3)
-- [ ] Vector magnitude, dot & cross product
-- [ ] Distance & midpoint
+- [x] Vector magnitude, dot & cross product
+- [x] Distance & midpoint
 - [ ] Equation of a line (two points)
 - [ ] Circle equation from points
 - [ ] Angle converter (deg, rad, grad)
-- [ ] Law of sines
+- [x] Law of sines
 - [ ] Triangle solver (SSS, SAS, ASA)
 - [ ] Hexagon / octagon
 - [ ] Prism / pyramid / frustum volume
 - [ ] Torus / capsule / hemisphere
 - [ ] Surface area of shapes
-- [ ] Arithmetic sequence
-- [ ] Geometric sequence & series
+- [x] Arithmetic sequence
+- [x] Geometric sequence & series
 - [ ] Prime factorization
 - [ ] Prime number checker
 - [ ] LCM of many numbers
@@ -298,10 +298,10 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Derivative (power rule, numeric)
 - [ ] Definite integral (numeric)
 - [ ] Limits / series sums
-- [ ] Interpolation (linear) (very useful for engineers)
+- [x] Interpolation (linear) (very useful for engineers)
 - [ ] Unit circle / trig values
 - [ ] Inverse trig
-- [ ] Complex numbers (polar ↔ rectangular)
+- [x] Complex numbers (polar ↔ rectangular)
 - [ ] Log base converter / antilog
 - [ ] Exponential growth & decay
 - [ ] Percentage increase/decrease of a value
@@ -316,17 +316,17 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Mean absolute deviation
 - [ ] Percentile / percentile rank
 - [ ] Outlier (IQR / Grubbs)
-- [ ] Expected value
+- [x] Expected value
 - [x] Bayes' theorem
-- [ ] Birthday paradox
+- [x] Birthday paradox
 - [ ] Lottery odds
 - [x] Exponential distribution
-- [ ] Uniform distribution
-- [ ] Hypergeometric distribution
-- [ ] Geometric distribution
+- [x] Uniform distribution
+- [x] Hypergeometric distribution
+- [x] Geometric distribution
 - [ ] P-value from z / t
 - [ ] Moving average
-- [ ] Process capability (Cp, Cpk)
+- [x] Process capability (Cp, Cpk)
 - [ ] Control chart limits (X-bar, R)
-- [ ] Six sigma DPMO / sigma level
-- [ ] Measurement uncertainty (RSS combination)
+- [x] Six sigma DPMO / sigma level
+- [x] Measurement uncertainty (RSS combination)

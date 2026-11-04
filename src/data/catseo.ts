@@ -111,10 +111,11 @@ export const CAT_SEO: Record<string, CatSEO> = {
     h1: 'Chemistry calculators',
     intro: 'Free online chemistry calculators for students and lab work. Calculate **molarity**, **moles** and **dilutions**, find **pH** and **buffer** pH, apply the **gas laws**, check **percent yield** and **titrations**, and work with **colligative properties** and **electrochemistry** — with formulas and worked examples.',
     groups: [
-      { name: 'Concentration & solutions', ids: ['molarity', 'molality', 'moles', 'dilution', 'mass-percent', 'ppm', 'percent-composition'] },
+      { name: 'Concentration & solutions', ids: ['molarity', 'molality', 'moles', 'dilution', 'mass-percent', 'ppm', 'percent-composition', 'normality'] },
+      { name: 'Vapour pressure, gas solubility & water chemistry', ids: ['raoults-law', 'henrys-law', 'water-hardness'] },
       { name: 'Acids, bases & analysis', ids: ['ph', 'pka', 'weak-acid-ph', 'henderson-hasselbalch', 'titration', 'beer-lambert'] },
       { name: 'Electrochemistry', ids: ['nernst-equation', 'faraday-electrolysis'] },
-      { name: 'Gas laws', ids: ['boyles-law', 'charles-law', 'combined-gas-law', 'gay-lussacs-law', 'avogadros-law', 'daltons-law', 'grahams-law'] },
+      { name: 'Gas laws', ids: ['boyles-law', 'charles-law', 'combined-gas-law', 'gay-lussacs-law', 'avogadros-law', 'daltons-law', 'grahams-law', 'van-der-waals'] },
       { name: 'Thermodynamics, kinetics & colligative properties', ids: ['specific-heat', 'gibbs-free-energy', 'arrhenius-equation', 'activation-energy', 'half-life', 'boiling-point-elevation', 'freezing-point-depression', 'osmotic-pressure', 'percent-yield'] },
     ],
     faq: [
@@ -131,8 +132,9 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Percentages & ratios', ids: ['percentage', 'percentage-change', 'percent-error', 'ratio', 'fraction-to-decimal', 'average', 'weighted-average'] },
       { name: 'Geometry: 2D shapes', ids: ['circle', 'rectangle', 'triangle-area', 'trapezoid-area', 'polygon', 'ellipse', 'arc-length'] },
       { name: 'Geometry: 3D shapes', ids: ['box-volume', 'cylinder-volume', 'cone', 'sphere'] },
-      { name: 'Triangles & trigonometry', ids: ['pythagorean-theorem', 'right-triangle-trig', 'law-of-cosines', 'slope'] },
-      { name: 'Algebra & numbers', ids: ['quadratic-equation', 'exponent', 'square-root', 'logarithm', 'factorial', 'gcf-lcm'] },
+      { name: 'Triangles & trigonometry', ids: ['pythagorean-theorem', 'right-triangle-trig', 'law-of-cosines', 'law-of-sines', 'slope'] },
+      { name: 'Coordinate geometry, vectors & interpolation', ids: ['distance-midpoint', 'vector', 'complex-number', 'linear-interpolation'] },
+      { name: 'Algebra & numbers', ids: ['quadratic-equation', 'exponent', 'square-root', 'logarithm', 'factorial', 'gcf-lcm', 'arithmetic-sequence', 'geometric-sequence'] },
     ],
     faq: [
       { q: 'How do I calculate a percentage of a number?', a: 'Multiply the number by the percentage and divide by 100. The percentage calculator also finds what percent one number is of another.' },
@@ -146,9 +148,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
     intro: 'Free online statistics and probability calculators. Paste a data set to get the **mean, median, mode**, **standard deviation** and **quartiles**, find **z-scores** and **normal distribution** probabilities, calculate **confidence intervals**, **margin of error** and **sample size**, and work out **binomial**, **Poisson**, **permutation** and **combination** problems.',
     groups: [
       { name: 'Descriptive statistics', ids: ['mean-median-mode', 'standard-deviation', 'quartiles', 'coefficient-of-variation', 'geometric-mean', 'sum-of-squares', 'standard-error'] },
-      { name: 'Distributions', ids: ['z-score', 'normal-distribution', 'empirical-rule', 'binomial-probability', 'poisson-probability', 'exponential-distribution'] },
+      { name: 'Distributions', ids: ['z-score', 'normal-distribution', 'empirical-rule', 'binomial-probability', 'poisson-probability', 'exponential-distribution', 'uniform-distribution', 'geometric-distribution', 'hypergeometric-distribution'] },
       { name: 'Inference & surveys', ids: ['confidence-interval', 'margin-of-error', 'sample-size', 'relative-risk'] },
-      { name: 'Probability & counting', ids: ['probability', 'odds-probability', 'permutations', 'combinations', 'bayes-theorem'] },
+      { name: 'Probability & counting', ids: ['probability', 'odds-probability', 'permutations', 'combinations', 'bayes-theorem', 'expected-value', 'birthday-paradox'] },
+      { name: 'Quality & measurement', ids: ['process-capability', 'six-sigma', 'measurement-uncertainty'] },
     ],
     faq: [
       { q: 'Can I paste a list of numbers?', a: 'Yes. Data-set calculators accept numbers separated by commas, spaces or new lines.' },

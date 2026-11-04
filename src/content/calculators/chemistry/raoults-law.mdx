@@ -1,0 +1,81 @@
+---
+title: Raoult's Law Calculator (Vapour Pressure of a Mixture)
+description: Calculate the partial and total vapour pressure of an ideal binary liquid mixture with Raoult's law, P = x_A·P°_A + x_B·P°_B, and the vapour composition.
+category: chemistry
+intro: "In an ideal liquid mixture each component contributes a vapour pressure in proportion to its mole fraction. This Raoult's law calculator gives the partial pressures, the total vapour pressure and the mole fraction of each component in the vapour — the basis of distillation and of vapour-pressure lowering by a dissolved solute."
+keywords: [raoults law calculator, raoult's law calculator, vapour pressure of mixture, vapor pressure calculator, partial pressure raoults law, vapour pressure lowering, ideal solution]
+updated: 2026-11-04
+variables:
+  - { id: xA, label: Mole fraction of A in the liquid (x_A), default: 0.4, min: 0, max: 1, help: 'Mole fraction of B is 1 − x_A.' }
+  - { id: PA0, label: Vapour pressure of pure A (P°_A), family: pressure, unit: kPa, default: 101, min: 0 }
+  - { id: PB0, label: Vapour pressure of pure B (P°_B), family: pressure, unit: kPa, default: 38.8, min: 0, help: 'Enter 0 for a non-volatile solute (vapour pressure lowering).' }
+  - { id: PA, label: Partial pressure of A, family: pressure, unit: kPa, min: 0 }
+  - { id: PB, label: Partial pressure of B, family: pressure, unit: kPa, min: 0 }
+  - { id: P, label: Total vapour pressure, family: pressure, unit: kPa, min: 0 }
+  - { id: yA, label: Mole fraction of A in the vapour (y_A), min: 0, max: 1, decimals: 4 }
+equations:
+  - PA = xA * PA0
+  - PB = (1 - xA) * PB0
+  - P = PA + PB
+  - yA = PA / P
+faq:
+  - q: What is Raoult's law?
+    a: The partial vapour pressure of a component in an ideal solution equals its mole fraction in the liquid times the vapour pressure of the pure component — Pᵢ = xᵢ P°ᵢ. The total pressure is the sum of the partial pressures.
+  - q: How does Raoult's law explain vapour pressure lowering?
+    a: With a non-volatile solute (P°_B = 0), P = x_solvent × P°_solvent. Dissolving a solute lowers the solvent's mole fraction, so the vapour pressure drops — which is why solutions boil at a higher temperature.
+  - q: Why is the vapour richer in the more volatile component?
+    a: The component with the higher pure vapour pressure contributes more partial pressure per mole, so y_A = x_A P°_A ÷ P is larger than x_A. Distillation exploits this difference.
+  - q: When does Raoult's law not apply?
+    a: For non-ideal mixtures with strong attraction or repulsion between unlike molecules (ethanol–water, acetone–chloroform). These show positive or negative deviations and can form azeotropes. Dilute dissolved gases follow Henry's law instead.
+related: [chemistry/henrys-law, chemistry/daltons-law, chemistry/boiling-point-elevation, chemistry/freezing-point-depression]
+---
+
+## How to use the Raoult's law calculator
+
+Enter the **mole fraction of component A** in the liquid and the **vapour pressures of the pure components** at the mixture temperature. The calculator returns each partial pressure, the total vapour pressure and the composition of the vapour. For a solvent with a non-volatile solute, set P°_B to 0.
+
+## Raoult's law formula
+
+<p class="formula">P_A = x_A P°_A &nbsp;·&nbsp; P_B = (1 − x_A) P°_B &nbsp;·&nbsp; P = P_A + P_B &nbsp;·&nbsp; y_A = P_A ÷ P</p>
+
+## Example
+
+A benzene (A) – toluene (B) liquid with x_A = 0.4 at 80 °C, where P°_benzene = 101 kPa and P°_toluene = 38.8 kPa:
+
+- P_A = 0.4 × 101 = **40.40 kPa**
+- P_B = 0.6 × 38.8 = **23.28 kPa**
+- P = 40.40 + 23.28 = **63.68 kPa**
+- y_A = 40.40 ÷ 63.68 = **0.6344** — the vapour is 63% benzene although the liquid is only 40%.
+
+## Benzene–toluene at 80 °C
+
+| x benzene (liquid) | P benzene | P toluene | Total P | y benzene (vapour) |
+|---|---|---|---|---|
+| 0.0 | 0.0 kPa | 38.8 kPa | 38.8 kPa | 0.000 |
+| 0.1 | 10.1 kPa | 34.9 kPa | 45.0 kPa | 0.224 |
+| 0.2 | 20.2 kPa | 31.0 kPa | 51.2 kPa | 0.394 |
+| 0.3 | 30.3 kPa | 27.2 kPa | 57.5 kPa | 0.527 |
+| 0.4 | 40.4 kPa | 23.3 kPa | 63.7 kPa | 0.634 |
+| 0.5 | 50.5 kPa | 19.4 kPa | 69.9 kPa | 0.722 |
+| 0.6 | 60.6 kPa | 15.5 kPa | 76.1 kPa | 0.796 |
+| 0.7 | 70.7 kPa | 11.6 kPa | 82.3 kPa | 0.859 |
+| 0.8 | 80.8 kPa | 7.8 kPa | 88.6 kPa | 0.912 |
+| 0.9 | 90.9 kPa | 3.9 kPa | 94.8 kPa | 0.959 |
+| 1.0 | 101.0 kPa | 0.0 kPa | 101.0 kPa | 1.000 |
+
+## Pure-component vapour pressures (Antoine equation)
+
+| Temperature | Benzene | Toluene |
+|---|---|---|
+| 20 °C | 10.0 kPa | 2.9 kPa |
+| 40 °C | 24.4 kPa | 7.9 kPa |
+| 60 °C | 52.2 kPa | 18.5 kPa |
+| 80 °C | 101.0 kPa | 38.8 kPa |
+| 100 °C | 180.1 kPa | 74.2 kPa |
+
+Calculated with the Antoine equation (log₁₀P[mmHg] = A − B ÷ (C + T[°C])), benzene A = 6.90565, B = 1211.033, C = 220.79; toluene A = 6.95464, B = 1344.8, C = 219.482.
+
+## Notes
+
+- Benzene–toluene is close to ideal; most real mixtures deviate somewhat.
+- In the vapour, the partial pressures add up by [Dalton's law](/chemistry/daltons-law/).

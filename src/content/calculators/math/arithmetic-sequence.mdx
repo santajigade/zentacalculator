@@ -1,0 +1,64 @@
+---
+title: Arithmetic Sequence Calculator (nth Term & Sum)
+description: Find the nth term and the sum of the first n terms of an arithmetic sequence from the first term and common difference, or solve for any missing value.
+category: math
+intro: "An arithmetic sequence adds the same common difference d to get from one term to the next — 3, 7, 11, 15 and so on. This arithmetic sequence calculator finds the nth term and the sum of the first n terms, and can solve backwards for the first term, the difference or the number of terms."
+keywords: [arithmetic sequence calculator, arithmetic series calculator, nth term calculator, sum of arithmetic sequence, arithmetic progression calculator, common difference, ap formula]
+updated: 2026-11-04
+variables:
+  - { id: a1, label: First term (a₁), default: 3 }
+  - { id: d, label: Common difference (d), default: 4 }
+  - { id: n, label: Term number (n), default: 10, min: 1 }
+  - { id: an, label: nth term (aₙ) }
+  - { id: S, label: Sum of the first n terms (Sₙ) }
+equations:
+  - an = a1 + (n - 1) * d
+  - S = n * (a1 + an) / 2
+faq:
+  - q: What is the formula for the nth term of an arithmetic sequence?
+    a: aₙ = a₁ + (n − 1)d, where a₁ is the first term and d the common difference.
+  - q: How do I find the sum of an arithmetic series?
+    a: Sₙ = n(a₁ + aₙ) ÷ 2 — the number of terms times the average of the first and last term. Equivalently Sₙ = n[2a₁ + (n − 1)d] ÷ 2.
+  - q: How do I find the common difference?
+    a: Subtract any term from the next one — d = a₂ − a₁. From two known terms, d = (aₙ − aₘ) ÷ (n − m).
+  - q: What is the sum of the numbers 1 to 100?
+    a: 5,050 — with a₁ = 1, d = 1 and n = 100, Sₙ = 100 × (1 + 100) ÷ 2.
+related: [math/geometric-sequence, math/average, math/exponent, math/quadratic-equation]
+---
+
+## How to use the arithmetic sequence calculator
+
+Enter the **first term**, the **common difference** and the **term number n**. The calculator returns the nth term and the sum of the first n terms. To work backwards, clear any field and fill in the nth term or the sum — for example, find which term of a sequence equals a given value.
+
+## Arithmetic sequence formulas
+
+<p class="formula">aₙ = a₁ + (n − 1) d &nbsp;·&nbsp; Sₙ = n (a₁ + aₙ) ÷ 2</p>
+
+## Example
+
+First term 3, common difference 4, n = 10:
+
+- a₁₀ = 3 + (10 − 1) × 4 = **39**
+- S₁₀ = 10 × (3 + 39) ÷ 2 = **210**
+
+## Terms and running sums (a₁ = 3, d = 4)
+
+| n | aₙ | Sₙ |
+|---|---|---|
+| 1 | 3 | 3 |
+| 2 | 7 | 10 |
+| 3 | 11 | 21 |
+| 4 | 15 | 36 |
+| 5 | 19 | 55 |
+| 6 | 23 | 78 |
+| 7 | 27 | 105 |
+| 8 | 31 | 136 |
+| 9 | 35 | 171 |
+| 10 | 39 | 210 |
+| 11 | 43 | 253 |
+| 12 | 47 | 300 |
+
+## Notes
+
+- A negative common difference gives a decreasing sequence.
+- The terms of an arithmetic sequence grow linearly; for terms that grow by a constant *ratio*, use the [geometric sequence calculator](/math/geometric-sequence/).

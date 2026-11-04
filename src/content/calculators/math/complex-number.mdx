@@ -1,0 +1,68 @@
+---
+title: Complex Number Calculator (Polar ↔ Rectangular Form)
+description: Convert a complex number between rectangular form a + bi and polar form r∠θ — get the magnitude (modulus) and angle (argument), or the real and imaginary parts.
+category: math
+intro: "A complex number can be written in rectangular form a + bi or in polar form r∠θ, where r is the magnitude and θ the angle from the real axis. This complex number calculator converts either way — the same conversion used for phasors when working with [impedance and reactance in AC circuits](https://www.instrumentationblog.in/impedance-reactance-ac-circuits/)."
+keywords: [complex number calculator, polar to rectangular calculator, rectangular to polar calculator, complex number to polar form, modulus and argument calculator, phasor conversion, magnitude and angle]
+updated: 2026-11-04
+variables:
+  - { id: re, label: Real part (a), default: 3 }
+  - { id: im, label: Imaginary part (b), default: 4 }
+  - { id: r, label: Magnitude (modulus) r, min: 0 }
+  - { id: th, label: Angle (argument) θ, family: angle, unit: deg }
+equations:
+  - r = sqrt(re^2 + im^2)
+  - th = atan2(im, re)
+  - re = r * cos(th)
+  - im = r * sin(th)
+freedom: 2
+faq:
+  - q: How do I convert a complex number to polar form?
+    a: r = √(a² + b²) and θ = atan2(b, a). For 3 + 4i, r = 5 and θ = 53.13°, so 3 + 4i = 5∠53.13°.
+  - q: How do I convert polar form to rectangular form?
+    a: a = r cos θ and b = r sin θ. In this calculator, clear the real and imaginary parts and enter r and θ instead.
+  - q: Why use atan2 instead of arctan(b/a)?
+    a: arctan(b/a) cannot tell 1 + i from −1 − i, because both give b/a = 1. atan2 uses the signs of both parts and returns the angle in the correct quadrant, from −180° to +180°.
+  - q: Where are polar complex numbers used?
+    a: In AC circuit analysis, voltages, currents and impedances are phasors — a magnitude and a phase angle. Multiplying and dividing is easiest in polar form (multiply magnitudes, add angles), adding is easiest in rectangular form.
+related: [math/pythagorean-theorem, math/right-triangle-trig, math/vector, electrical/kva-to-kw]
+---
+
+## How to use the complex number calculator
+
+To convert **rectangular to polar**, enter the real part a and imaginary part b; the calculator returns the magnitude r and the angle θ. To convert **polar to rectangular**, clear a and b and enter r and θ instead. The angle can be shown in degrees, radians or other units.
+
+## Complex number conversion formulas
+
+<p class="formula">r = √(a² + b²) &nbsp;·&nbsp; θ = atan2(b, a) &nbsp;·&nbsp; a = r cos θ &nbsp;·&nbsp; b = r sin θ</p>
+
+In exponential form, a + bi = r e<sup>iθ</sup> (Euler's formula).
+
+## Example
+
+z = 3 + 4i:
+
+- r = √(3² + 4²) = **5**
+- θ = atan2(4, 3) = **53.13°** (0.9273 rad)
+- So 3 + 4i = 5∠53.13°
+
+## Unit phasors (r = 1)
+
+| Angle θ | Real part cos θ | Imaginary part sin θ |
+|---|---|---|
+| 0° | 1.0000 | 0.0000 |
+| 30° | 0.8660 | 0.5000 |
+| 45° | 0.7071 | 0.7071 |
+| 60° | 0.5000 | 0.8660 |
+| 90° | 0.0000 | 1.0000 |
+| 120° | -0.5000 | 0.8660 |
+| 135° | -0.7071 | 0.7071 |
+| 150° | -0.8660 | 0.5000 |
+| 180° | -1.0000 | 0.0000 |
+| -90° | 0.0000 | -1.0000 |
+| -45° | 0.7071 | -0.7071 |
+
+## Notes
+
+- An angle and that angle ± 360° describe the same complex number.
+- In electrical work, an impedance Z = R + jX has magnitude |Z| = √(R² + X²) and phase angle θ = atan(X/R); cos θ is the power factor — see the [kVA to kW calculator](/electrical/kva-to-kw/).

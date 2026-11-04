@@ -1,0 +1,68 @@
+---
+title: Van der Waals Equation Calculator (Real Gas Pressure)
+description: Calculate the pressure of a real gas with the van der Waals equation, (P + an²/V²)(V − nb) = nRT, and compare it with the ideal gas law and compressibility Z.
+category: chemistry
+intro: "Real gas molecules attract each other and take up space, so at high pressure they stop behaving like an ideal gas. This van der Waals calculator corrects the ideal gas law with the attraction constant a and the excluded volume b, and shows how far the real pressure departs from PV = nRT."
+keywords: [van der waals calculator, van der waals equation calculator, real gas calculator, van der waals constants, real gas pressure, compressibility factor, non-ideal gas]
+updated: 2026-11-04
+variables:
+  - { id: nm, label: Amount of gas, suffix: mol, default: 1, min: 0 }
+  - { id: T, label: Temperature, family: temperature, unit: C, default: 25, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: L, default: 1, min: 0 }
+  - { id: a, label: Van der Waals constant a, suffix: L²·bar/mol², default: 3.64, min: 0, help: 'CO₂ 3.640 · N₂ 1.370 · O₂ 1.382 · CH₄ 2.283 · He 0.0346' }
+  - { id: b, label: Van der Waals constant b, suffix: L/mol, default: 0.04267, min: 0, help: 'CO₂ 0.04267 · N₂ 0.0387 · O₂ 0.03186 · CH₄ 0.04278 · He 0.0238' }
+  - { id: P, label: Pressure (van der Waals), family: pressure, unit: bar }
+  - { id: Pi, label: Pressure (ideal gas law), family: pressure, unit: bar, min: 0 }
+  - { id: Z, label: Compressibility factor Z = P ÷ P_ideal, decimals: 4 }
+equations:
+  - P = nm * 8.314462618 * T / (V - nm * b * 1e-3) - a * 0.1 * nm^2 / V^2
+  - Pi = nm * 8.314462618 * T / V
+  - Z = P / Pi
+faq:
+  - q: What is the van der Waals equation?
+    a: (P + a n² ÷ V²)(V − n b) = n R T. The a term adds back the pressure lost to attraction between molecules, and the b term subtracts the volume the molecules themselves occupy.
+  - q: What do the constants a and b mean?
+    a: a measures how strongly the molecules attract (large for polar or big molecules such as CO₂ and water), b is the volume excluded per mole of molecules. Both are found from the gas's critical point — a = 27R²T_c² ÷ (64P_c), b = RT_c ÷ (8P_c).
+  - q: When is the ideal gas law good enough?
+    a: At low pressure and high temperature — below a few bar near room temperature most gases are within 1% of ideal. The van der Waals correction matters at high pressure, low temperature or near condensation.
+  - q: Which units do a and b use here?
+    a: a in L²·bar/mol² and b in L/mol, the most common table units. To convert a from L²·atm/mol², multiply by 1.01325.
+related: [physics/ideal-gas-law, chemistry/combined-gas-law, chemistry/boyles-law, chemistry/daltons-law]
+---
+
+## How to use the van der Waals calculator
+
+Enter the **amount of gas**, the **temperature**, the **volume** and the gas's **van der Waals constants a and b** (see the table). The calculator returns the real-gas pressure, the ideal-gas pressure for comparison and the compressibility factor Z. Clear the volume and enter a pressure to solve for volume instead.
+
+## Van der Waals equation
+
+<p class="formula">P = n R T ÷ (V − n b) − a n² ÷ V²</p>
+
+R = 8.314 J/(mol·K), T in kelvin. With a in L²·bar/mol² and b in L/mol, use V in litres and R = 0.08314 L·bar/(mol·K) to get P in bar.
+
+## Example
+
+1 mol of CO₂ in 1 L at 25 °C (a = 3.640, b = 0.04267):
+
+- Ideal: P = 0.08314 × 298.15 ÷ 1 = **24.79 bar**
+- Van der Waals: P = 0.08314 × 298.15 ÷ (1 − 0.04267) − 3.640 × 1² ÷ 1² = 25.89 − 3.64 = **22.25 bar**
+- Z = 22.25 ÷ 24.79 = **0.8977** — attraction lowers the pressure about 10% below ideal.
+
+## Van der Waals constants and pressure of 1 mol in 1 L at 25 °C
+
+| Gas | a (L²·bar/mol²) | b (L/mol) | Van der Waals P | Z |
+|---|---|---|---|---|
+| Helium (He) | 0.0346 | 0.0238 | 25.36 bar | 1.023 |
+| Hydrogen (H₂) | 0.2476 | 0.02661 | 25.22 bar | 1.017 |
+| Nitrogen (N₂) | 1.37 | 0.0387 | 24.42 bar | 0.985 |
+| Oxygen (O₂) | 1.382 | 0.03186 | 24.22 bar | 0.977 |
+| Argon (Ar) | 1.355 | 0.03201 | 24.25 bar | 0.978 |
+| Methane (CH₄) | 2.283 | 0.04278 | 23.61 bar | 0.953 |
+| Carbon dioxide (CO₂) | 3.64 | 0.04267 | 22.25 bar | 0.898 |
+
+The ideal-gas pressure under the same conditions is 24.79 bar. Light gases (He, H₂) have Z above 1 because the excluded volume outweighs the weak attraction.
+
+## Notes
+
+- The van der Waals equation is a teaching model; for accurate design work use Peng–Robinson or tabulated Z values.
+- For an ideal gas, use the [ideal gas law calculator](/physics/ideal-gas-law/).

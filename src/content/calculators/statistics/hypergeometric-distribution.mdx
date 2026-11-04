@@ -1,0 +1,67 @@
+---
+title: Hypergeometric Distribution Calculator (Without Replacement)
+description: Calculate the hypergeometric probability of exactly k successes in n draws without replacement — for cards, lotteries and lot sampling — with the mean.
+category: statistics
+intro: "When you draw items without putting them back — cards from a deck, parts from a production lot — each draw changes the odds for the next one, and the binomial distribution no longer fits. This hypergeometric distribution calculator gives the probability of exactly k successes in n draws, the chance of at least one, and the expected number of successes."
+keywords: [hypergeometric distribution calculator, hypergeometric probability calculator, sampling without replacement, card probability calculator, lot acceptance sampling, hypergeometric formula, probability of at least one]
+updated: 2026-11-04
+variables:
+  - { id: N, label: Population size (N), default: 52, min: 1 }
+  - { id: K, label: Successes in the population (K), default: 4, min: 0 }
+  - { id: n, label: Number of draws (n), default: 5, min: 0 }
+  - { id: k, label: Successes in the draw (k), default: 1, min: 0 }
+  - { id: P, label: P(X = k), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: P1, label: P(X ≥ 1) — at least one success, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: mu, label: Expected successes (n K ÷ N), min: 0 }
+  - { id: sd, label: Standard deviation, min: 0 }
+equations:
+  - P = nCr(K, k) * nCr(N - K, n - k) / nCr(N, n)
+  - P1 = 1 - nCr(N - K, n) / nCr(N, n)
+  - mu = n * K / N
+  - sd = sqrt(n * K / N * (N - K) / N * (N - n) / (N - 1))
+faq:
+  - q: What is the hypergeometric distribution formula?
+    a: P(X = k) = C(K, k) × C(N − K, n − k) ÷ C(N, n) — the ways to choose k of the K successes and n − k of the failures, divided by all ways to choose n items.
+  - q: When should I use hypergeometric instead of binomial?
+    a: When sampling without replacement from a finite population. If the sample is less than about 5% of the population, the binomial distribution with p = K/N gives nearly the same answer.
+  - q: What is the probability of being dealt exactly one ace in 5 cards?
+    a: C(4,1) × C(48,4) ÷ C(52,5) = 778,320 ÷ 2,598,960 ≈ 29.95%.
+  - q: How is it used in quality control?
+    a: In acceptance sampling, a lot of N parts contains K defectives and you inspect n. P(X = 0) is the chance the sample shows no defects, so 1 − P(X = 0) is the chance of catching at least one.
+related: [statistics/binomial-probability, statistics/combinations, statistics/probability, statistics/geometric-distribution]
+---
+
+## How to use the hypergeometric distribution calculator
+
+Enter the **population size N**, the number of **successes K** in it, the number of **draws n** and the number of **successes k** you want in the draw. The calculator returns the probability of exactly k successes, the probability of at least one success, and the mean and standard deviation of the number of successes.
+
+## Hypergeometric formula
+
+<p class="formula">P(X = k) = C(K, k) × C(N − K, n − k) ÷ C(N, n)</p>
+
+<p class="formula">μ = n K ÷ N &nbsp;·&nbsp; σ² = n (K/N) (1 − K/N) (N − n) ÷ (N − 1)</p>
+
+## Example
+
+The chance of exactly one ace in a 5-card hand (N = 52 cards, K = 4 aces, n = 5, k = 1):
+
+- C(4, 1) × C(48, 4) = 4 × 194,580 = 778,320 favourable hands
+- C(52, 5) = 2,598,960 possible hands
+- P = 778,320 ÷ 2,598,960 = **29.95%**
+- P(at least one ace) = 1 − C(48, 5) ÷ C(52, 5) = **34.12%**
+- Expected aces = 5 × 4 ÷ 52 = **0.3846**, standard deviation = **0.5720**
+
+## Aces in a 5-card hand
+
+| Aces k | Hands | P(X = k) | P(X ≤ k) |
+|---|---|---|---|
+| 0 | 1,712,304 | 65.8842% | 65.8842% |
+| 1 | 778,320 | 29.9474% | 95.8316% |
+| 2 | 103,776 | 3.9930% | 99.8245% |
+| 3 | 4,512 | 0.1736% | 99.9982% |
+| 4 | 48 | 0.0018% | 100.0000% |
+
+## Notes
+
+- k cannot exceed K or n, and n − k cannot exceed N − K; such combinations have zero probability.
+- The counts use combinations — see the [combinations calculator](/statistics/combinations/).

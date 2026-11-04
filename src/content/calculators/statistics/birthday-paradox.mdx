@@ -1,0 +1,73 @@
+---
+title: Birthday Paradox Calculator (Shared Birthday Probability)
+description: Calculate the probability that at least two people in a group share a birthday — the birthday problem — and the chance someone shares your birthday.
+category: statistics
+intro: "In a room of just 23 people there is a better than even chance that two share a birthday, which surprises most people because there are 365 days. This birthday paradox calculator gives the exact probability of a shared birthday for any group size, and the much smaller chance that someone shares your own birthday."
+keywords: [birthday paradox calculator, birthday problem calculator, shared birthday probability, probability two people share a birthday, 23 people birthday, birthday probability, collision probability]
+updated: 2026-11-04
+variables:
+  - { id: n, label: Number of people, default: 23, min: 1, help: 'Exact up to about 120 people; beyond that the probability is effectively 100%.' }
+  - { id: d, label: Days in the year, default: 365, min: 1, help: 'Use 365 (ignoring 29 February), or any number of equally likely categories.' }
+  - { id: P, label: P(at least two share a birthday), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: Pn, label: P(all birthdays different), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: Py, label: P(someone shares your birthday), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: pairs, label: Number of pairs in the group, min: 0 }
+equations:
+  - Pn = nPr(d, n) / d^n
+  - P = 1 - Pn
+  - Py = 1 - ((d - 1) / d)^(n - 1)
+  - pairs = n * (n - 1) / 2
+faq:
+  - q: Why do only 23 people give a 50% chance?
+    a: Because every pair of people is a chance for a match, and 23 people form 253 pairs. The probability that all birthdays differ is 365/365 × 364/365 × … × 343/365 = 49.3%, so a shared birthday has a 50.7% chance.
+  - q: What is the formula for the birthday problem?
+    a: P(shared) = 1 − 365! ÷ ((365 − n)! × 365ⁿ) = 1 − (365 × 364 × … × (366 − n)) ÷ 365ⁿ.
+  - q: How many people do you need for a 99% chance?
+    a: 57 people give about 99.0%, and 70 people about 99.9%. With 366 people a match is certain (ignoring 29 February).
+  - q: How likely is it that someone shares my birthday?
+    a: Much less likely — 1 − (364/365)^(n − 1). In a group of 23 (you plus 22 others) it is only about 5.9%, and you need 253 other people for a 50% chance.
+related: [statistics/probability, statistics/permutations, statistics/combinations, statistics/odds-probability]
+---
+
+## How to use the birthday paradox calculator
+
+Enter the **number of people** in the group. The calculator returns the probability that at least two of them share a birthday, the probability that all birthdays are different, the chance that at least one other person shares *your* birthday, and the number of pairs. Change the number of days to apply the same maths to other "collisions", such as hash values or ID numbers.
+
+## Birthday problem formula
+
+<p class="formula">P(all different) = d × (d − 1) × … × (d − n + 1) ÷ dⁿ = ₙP(d, n) ÷ dⁿ</p>
+
+<p class="formula">P(shared) = 1 − P(all different) &nbsp;·&nbsp; P(shares yours) = 1 − ((d − 1) ÷ d)<sup>n−1</sup></p>
+
+## Example
+
+A group of 23 people:
+
+- P(all different) = 365 × 364 × … × 343 ÷ 365²³ = **49.27%**
+- P(at least one shared birthday) = 1 − 0.4927 = **50.73%**
+- P(someone shares your birthday) = 1 − (364/365)²² = **5.86%**
+- Pairs = 23 × 22 ÷ 2 = **253**
+
+## Shared-birthday probability by group size
+
+| People | P(any two share) | P(someone shares yours) |
+|---|---|---|
+| 2 | 0.27% | 0.27% |
+| 5 | 2.71% | 1.09% |
+| 10 | 11.69% | 2.44% |
+| 15 | 25.29% | 3.77% |
+| 20 | 41.14% | 5.08% |
+| 23 | 50.73% | 5.86% |
+| 30 | 70.63% | 7.65% |
+| 40 | 89.12% | 10.15% |
+| 50 | 97.04% | 12.58% |
+| 57 | 99.01% | 14.24% |
+| 60 | 99.41% | 14.94% |
+| 70 | 99.92% | 17.25% |
+| 80 | 99.99% | 19.49% |
+| 100 | 100.00% | 23.78% |
+
+## Notes
+
+- Real birthdays are not perfectly uniform, which makes a match slightly *more* likely than these figures.
+- The counting uses permutations — see the [permutations calculator](/statistics/permutations/).

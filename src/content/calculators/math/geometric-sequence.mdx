@@ -1,0 +1,64 @@
+---
+title: Geometric Sequence Calculator (nth Term & Series Sum)
+description: Find the nth term and the sum of a geometric sequence or series from the first term and common ratio, with the infinite-series sum for ratios between −1 and 1.
+category: math
+intro: "A geometric sequence multiplies each term by the same common ratio r — 2, 6, 18, 54 and so on. This geometric sequence calculator returns the nth term and the sum of the first n terms (the geometric series), and solves backwards for the first term, the ratio or the number of terms."
+keywords: [geometric sequence calculator, geometric series calculator, sum of geometric series, nth term geometric sequence, common ratio calculator, geometric progression calculator, infinite geometric series]
+updated: 2026-11-04
+variables:
+  - { id: a1, label: First term (a₁), default: 2 }
+  - { id: r, label: Common ratio (r), default: 3, help: 'Any value except 1. For r = 1 every term equals a₁ and Sₙ = n × a₁.' }
+  - { id: n, label: Term number (n), default: 6, min: 1 }
+  - { id: an, label: nth term (aₙ) }
+  - { id: S, label: Sum of the first n terms (Sₙ) }
+equations:
+  - an = a1 * r^(n - 1)
+  - S = a1 * (1 - r^n) / (1 - r)
+faq:
+  - q: What is the formula for the nth term of a geometric sequence?
+    a: aₙ = a₁ × rⁿ⁻¹, where a₁ is the first term and r the common ratio.
+  - q: How do I find the sum of a geometric series?
+    a: Sₙ = a₁(1 − rⁿ) ÷ (1 − r) for r ≠ 1. For r = 1 the sum is simply n × a₁.
+  - q: When does an infinite geometric series converge?
+    a: Only when −1 < r < 1. The sum is then S∞ = a₁ ÷ (1 − r) — for example 1 + ½ + ¼ + … = 1 ÷ (1 − 0.5) = 2.
+  - q: How do I find the common ratio?
+    a: Divide any term by the one before it — r = a₂ ÷ a₁. From two terms n − m places apart, r = (aₙ ÷ aₘ)^(1/(n − m)).
+related: [math/arithmetic-sequence, math/exponent, math/logarithm, finance/compound-interest]
+---
+
+## How to use the geometric sequence calculator
+
+Enter the **first term**, the **common ratio** and the **term number n**. The calculator returns the nth term and the sum of the first n terms. Clear a field to solve for it instead — for example, enter the nth term to find the ratio, or a target sum to find how many terms are needed.
+
+## Geometric sequence formulas
+
+<p class="formula">aₙ = a₁ rⁿ⁻¹ &nbsp;·&nbsp; Sₙ = a₁ (1 − rⁿ) ÷ (1 − r) &nbsp;·&nbsp; S∞ = a₁ ÷ (1 − r) for |r| &lt; 1</p>
+
+## Example
+
+First term 2, common ratio 3, n = 6:
+
+- a₆ = 2 × 3⁵ = 2 × 243 = **486**
+- S₆ = 2 × (1 − 3⁶) ÷ (1 − 3) = 2 × (−728) ÷ (−2) = **728**
+
+## Terms and partial sums
+
+| n | aₙ (a₁ = 2, r = 3) | Sₙ (a₁ = 2, r = 3) | aₙ (a₁ = 1, r = 0.5) | Sₙ (a₁ = 1, r = 0.5) |
+|---|---|---|---|---|
+| 1 | 2 | 2 | 1 | 1 |
+| 2 | 6 | 8 | 0.5 | 1.5 |
+| 3 | 18 | 26 | 0.25 | 1.75 |
+| 4 | 54 | 80 | 0.125 | 1.875 |
+| 5 | 162 | 242 | 0.0625 | 1.9375 |
+| 6 | 486 | 728 | 0.03125 | 1.96875 |
+| 7 | 1,458 | 2,186 | 0.015625 | 1.98438 |
+| 8 | 4,374 | 6,560 | 0.0078125 | 1.99219 |
+| 9 | 13,122 | 19,682 | 0.00390625 | 1.99609 |
+| 10 | 39,366 | 59,048 | 0.00195312 | 1.99805 |
+
+The second pair of columns shows a converging series: the partial sums approach S∞ = 1 ÷ (1 − 0.5) = 2.
+
+## Notes
+
+- A negative ratio makes the terms alternate in sign.
+- Compound interest is a geometric sequence with r = 1 + the interest rate per period — see the [compound interest calculator](/finance/compound-interest/).

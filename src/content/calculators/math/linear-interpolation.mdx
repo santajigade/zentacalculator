@@ -1,0 +1,60 @@
+---
+title: Linear Interpolation Calculator (Find y Between Two Points)
+description: Interpolate a value between two known data points with y = y₁ + (x − x₁)(y₂ − y₁)/(x₂ − x₁) — for steam tables, calibration charts and any table lookup.
+category: math
+intro: "Engineering tables only list values at fixed steps, so values in between are found by drawing a straight line between the two nearest points. This linear interpolation calculator does that for any table — steam tables, density charts or sensor calibration points, where the error depends on how well the curve follows a straight line, the [sensor linearity](https://www.instrumentationblog.in/what-is-sensor-linearity/)."
+keywords: [linear interpolation calculator, interpolation calculator, interpolate between two points, linear interpolation formula, extrapolation calculator, table interpolation, double interpolation]
+updated: 2026-11-04
+variables:
+  - { id: x1, label: Known point 1 — x₁, default: 20 }
+  - { id: y1, label: Known point 1 — y₁, default: 0.99821 }
+  - { id: x2, label: Known point 2 — x₂, default: 30 }
+  - { id: y2, label: Known point 2 — y₂, default: 0.99565 }
+  - { id: x, label: x value to interpolate at, default: 25 }
+  - { id: y, label: Interpolated y value }
+equations:
+  - y = y1 + (x - x1) * (y2 - y1) / (x2 - x1)
+faq:
+  - q: What is the linear interpolation formula?
+    a: y = y₁ + (x − x₁)(y₂ − y₁) ÷ (x₂ − x₁). It assumes a straight line between the two known points (x₁, y₁) and (x₂, y₂).
+  - q: What is the difference between interpolation and extrapolation?
+    a: Interpolation estimates a value between the known points; extrapolation extends the line beyond them. The same formula works for both, but extrapolation is much less reliable.
+  - q: How accurate is linear interpolation?
+    a: It is exact for straight-line data. For curved data the error grows with the curvature and the spacing between table rows — use the closest bracketing rows, or a closer-spaced table.
+  - q: How do I interpolate in a two-way table?
+    a: Use double (bilinear) interpolation — interpolate along one variable in two rows, then interpolate between those two results along the other variable.
+related: [math/slope, math/distance-midpoint, engineering/five-point-calibration, engineering/4-20ma-scaling]
+---
+
+## How to use the linear interpolation calculator
+
+Enter the two known points that bracket your value — (x₁, y₁) and (x₂, y₂) — and the **x value** you want. The calculator returns the interpolated y. To find x for a known y (inverse interpolation), clear x and enter y.
+
+## Linear interpolation formula
+
+<p class="formula">y = y₁ + (x − x₁) × (y₂ − y₁) ÷ (x₂ − x₁)</p>
+
+## Example
+
+The density of water is 0.99821 g/cm³ at 20 °C and 0.99565 g/cm³ at 30 °C. At 25 °C:
+
+- y = 0.99821 + (25 − 20) × (0.99565 − 0.99821) ÷ (30 − 20)
+- y = 0.99821 + 5 × (−0.000256) = **0.99693 g/cm³**
+
+The tabulated value at 25 °C is 0.99705 g/cm³, so the straight-line estimate is off by 0.00012 g/cm³ — water density is slightly curved over this range.
+
+## Interpolated water density between 20 °C and 30 °C
+
+| Temperature | Interpolated density |
+|---|---|
+| 20 °C | 0.99821 g/cm³ |
+| 22 °C | 0.99770 g/cm³ |
+| 24 °C | 0.99719 g/cm³ |
+| 26 °C | 0.99667 g/cm³ |
+| 28 °C | 0.99616 g/cm³ |
+| 30 °C | 0.99565 g/cm³ |
+
+## Notes
+
+- Always interpolate between the two closest table rows.
+- A 4–20 mA signal is converted to engineering units with exactly this formula — see the [4–20 mA scaling calculator](/engineering/4-20ma-scaling/).

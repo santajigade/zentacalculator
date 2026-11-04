@@ -1,0 +1,65 @@
+---
+title: Expected Value Calculator (Mean, Variance of Outcomes)
+description: Calculate the expected value E(X) of a discrete random variable from up to four outcomes and their probabilities, with the variance and standard deviation.
+category: statistics
+intro: "The expected value is the long-run average result of a random event — each outcome weighted by its probability. This expected value calculator takes up to four outcomes and their probabilities and returns E(X), the variance and the standard deviation, and checks that the probabilities add up to 100%."
+keywords: [expected value calculator, expected value formula, e(x) calculator, mean of discrete random variable, probability distribution calculator, expected value of a game, variance of random variable]
+updated: 2026-11-04
+variables:
+  - { id: x1, label: Outcome 1 value, default: 100 }
+  - { id: p1, label: Outcome 1 probability, family: percent, unit: '%', default: 5, min: 0, max: 1 }
+  - { id: x2, label: Outcome 2 value, default: 20 }
+  - { id: p2, label: Outcome 2 probability, family: percent, unit: '%', default: 15, min: 0, max: 1 }
+  - { id: x3, label: Outcome 3 value, default: 0 }
+  - { id: p3, label: Outcome 3 probability, family: percent, unit: '%', default: 50, min: 0, max: 1 }
+  - { id: x4, label: Outcome 4 value, default: -10 }
+  - { id: p4, label: Outcome 4 probability, family: percent, unit: '%', default: 30, min: 0, max: 1, help: 'Set unused outcomes to probability 0.' }
+  - { id: E, label: Expected value E(X) }
+  - { id: V, label: Variance, min: 0 }
+  - { id: sd, label: Standard deviation, min: 0 }
+  - { id: ps, label: Sum of probabilities (should be 100%), family: percent, unit: '%', min: 0 }
+equations:
+  - E = x1*p1 + x2*p2 + x3*p3 + x4*p4
+  - V = x1^2*p1 + x2^2*p2 + x3^2*p3 + x4^2*p4 - E^2
+  - sd = sqrt(V)
+  - ps = p1 + p2 + p3 + p4
+faq:
+  - q: What is the formula for expected value?
+    a: E(X) = Σ xᵢ pᵢ — multiply each outcome by its probability and add the results. The probabilities must add up to 1 (100%).
+  - q: How do I calculate the variance of a random variable?
+    a: Var(X) = Σ xᵢ² pᵢ − E(X)². The standard deviation is the square root of the variance and is in the same units as the outcomes.
+  - q: What is the expected value of rolling a die?
+    a: (1 + 2 + 3 + 4 + 5 + 6) ÷ 6 = 3.5. The expected value need not be a possible outcome — it is the average over many rolls.
+  - q: How is expected value used in decisions?
+    a: A bet or project with a positive expected value gains on average over many repetitions. Insurance, lotteries and casino games have a negative expected value for the buyer; risk (the standard deviation) matters too when the stake is large.
+related: [statistics/probability, statistics/binomial-probability, math/weighted-average, statistics/standard-deviation]
+---
+
+## How to use the expected value calculator
+
+Enter up to four **outcome values** (gains as positive numbers, losses as negative) and the **probability** of each. Set the probability of unused outcomes to 0. The calculator returns the expected value, variance and standard deviation, and the total of the probabilities so you can check it is 100%.
+
+## Expected value formulas
+
+<p class="formula">E(X) = Σ xᵢ pᵢ &nbsp;·&nbsp; Var(X) = Σ xᵢ² pᵢ − E(X)² &nbsp;·&nbsp; σ = √Var(X)</p>
+
+## Example
+
+A game pays +100 with probability 5%, +20 with 15% and 0 with 50%, and costs −10 with probability 30%:
+
+| Outcome x | Probability p | x × p | x² × p |
+|---|---|---|---|
+| +100 | 5% | +5.00 | 500.00 |
+| +20 | 15% | +3.00 | 60.00 |
+| +0 | 50% | +0.00 | 0.00 |
+| -10 | 30% | -3.00 | 30.00 |
+
+- E(X) = 5 + 3 + 0 − 3 = **5**
+- Var(X) = 590 − 5² = **565**, standard deviation = √565 = **23.77**
+
+On average the game pays 5 per play, but the large standard deviation shows individual results vary widely.
+
+## Notes
+
+- For a fair die the expected value is 3.5.
+- Expected value is a [weighted average](/math/weighted-average/) with probabilities as the weights.

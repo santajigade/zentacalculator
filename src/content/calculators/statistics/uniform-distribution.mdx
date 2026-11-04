@@ -1,0 +1,71 @@
+---
+title: Uniform Distribution Calculator (Continuous, Probability)
+description: Calculate probabilities for a continuous uniform distribution between a and b — P(x₁ ≤ X ≤ x₂), the density, the mean, variance and standard deviation.
+category: statistics
+intro: "In a continuous uniform distribution every value between a minimum a and a maximum b is equally likely, so probabilities are simply lengths of intervals. This uniform distribution calculator gives the probability that X falls between two values, the probability density, and the mean, variance and standard deviation."
+keywords: [uniform distribution calculator, continuous uniform distribution, uniform probability calculator, rectangular distribution, uniform distribution mean and variance, uniform distribution formula, probability between two values]
+updated: 2026-11-04
+variables:
+  - { id: a, label: Minimum a, default: 2 }
+  - { id: b, label: Maximum b, default: 10 }
+  - { id: x1, label: Lower value x₁, default: 4 }
+  - { id: x2, label: Upper value x₂, default: 7 }
+  - { id: P, label: P(x₁ ≤ X ≤ x₂), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: f, label: Probability density f(x) = 1 ÷ (b − a), min: 0, decimals: 6 }
+  - { id: mu, label: Mean (a + b) ÷ 2 }
+  - { id: v, label: Variance (b − a)² ÷ 12, min: 0 }
+  - { id: sd, label: Standard deviation, min: 0 }
+equations:
+  - P = max(0, min(x2, b) - max(x1, a)) / (b - a)
+  - f = 1 / (b - a)
+  - mu = (a + b) / 2
+  - v = (b - a)^2 / 12
+  - sd = sqrt(v)
+faq:
+  - q: What is the formula for a uniform distribution probability?
+    a: P(x₁ ≤ X ≤ x₂) = (x₂ − x₁) ÷ (b − a) for an interval inside [a, b]. Parts of the interval outside [a, b] have zero probability.
+  - q: What are the mean and variance of a uniform distribution?
+    a: Mean = (a + b) ÷ 2, variance = (b − a)² ÷ 12, standard deviation = (b − a) ÷ √12 ≈ 0.2887 (b − a).
+  - q: Where is the uniform distribution used?
+    a: For random number generators, rounding and quantisation error, waiting times when arrivals are spread evenly, and in measurement uncertainty — a ± tolerance with no other information is treated as rectangular, giving a standard uncertainty of half-width ÷ √3.
+  - q: What about the discrete uniform distribution?
+    a: For n equally likely whole-number outcomes (like a die), each has probability 1/n, the mean is (a + b) ÷ 2 and the variance is (n² − 1) ÷ 12.
+related: [statistics/normal-distribution, statistics/exponential-distribution, statistics/probability, statistics/measurement-uncertainty]
+---
+
+## How to use the uniform distribution calculator
+
+Enter the **minimum a** and **maximum b** of the distribution and the interval **x₁ to x₂** you are interested in. The calculator returns the probability that X falls in that interval, the constant probability density, and the mean, variance and standard deviation. For P(X ≤ x), set x₁ equal to a.
+
+## Uniform distribution formulas
+
+<p class="formula">f(x) = 1 ÷ (b − a) &nbsp;·&nbsp; P(x₁ ≤ X ≤ x₂) = (x₂ − x₁) ÷ (b − a)</p>
+
+<p class="formula">μ = (a + b) ÷ 2 &nbsp;·&nbsp; σ² = (b − a)² ÷ 12</p>
+
+## Example
+
+A bus arrives at a random time uniformly between 2 and 10 minutes after you reach the stop. The chance it arrives between minute 4 and minute 7:
+
+- P = (7 − 4) ÷ (10 − 2) = 3 ÷ 8 = **37.5%**
+- Density = 1 ÷ 8 = **0.125** per minute
+- Mean wait = (2 + 10) ÷ 2 = **6 min**, variance = 8² ÷ 12 = **5.3333**, standard deviation = **2.3094 min**
+
+## Cumulative probabilities (a = 2, b = 10)
+
+| x | P(X ≤ x) | P(X > x) |
+|---|---|---|
+| 2 | 0.0000 | 1.0000 |
+| 3 | 0.1250 | 0.8750 |
+| 4 | 0.2500 | 0.7500 |
+| 5 | 0.3750 | 0.6250 |
+| 6 | 0.5000 | 0.5000 |
+| 7 | 0.6250 | 0.3750 |
+| 8 | 0.7500 | 0.2500 |
+| 9 | 0.8750 | 0.1250 |
+| 10 | 1.0000 | 0.0000 |
+
+## Notes
+
+- Every interval of the same length inside [a, b] has the same probability.
+- The sum of many independent uniform variables tends towards a [normal distribution](/statistics/normal-distribution/).

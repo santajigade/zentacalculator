@@ -1,0 +1,67 @@
+---
+title: Distance & Midpoint Calculator (Two Points)
+description: Calculate the distance between two points, the midpoint and the slope of the line joining them from (x₁, y₁) and (x₂, y₂), with the formula and steps.
+category: math
+intro: "The distance between two points on a graph comes from the Pythagorean theorem, and the midpoint is simply the average of their coordinates. This distance and midpoint calculator takes two points (x₁, y₁) and (x₂, y₂) and returns the straight-line distance, the midpoint and the slope of the line through them."
+keywords: [distance calculator, midpoint calculator, distance between two points calculator, distance formula, midpoint formula, distance and midpoint calculator, coordinate geometry]
+updated: 2026-11-04
+variables:
+  - { id: x1, label: Point 1 — x₁, default: 1 }
+  - { id: y1, label: Point 1 — y₁, default: 2 }
+  - { id: x2, label: Point 2 — x₂, default: 7 }
+  - { id: y2, label: Point 2 — y₂, default: 10 }
+  - { id: d, label: Distance between the points, min: 0 }
+  - { id: xm, label: Midpoint — x }
+  - { id: ym, label: Midpoint — y }
+  - { id: m, label: Slope of the line (Δy ÷ Δx) }
+equations:
+  - d = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+  - xm = (x1 + x2) / 2
+  - ym = (y1 + y2) / 2
+  - m = (y2 - y1) / (x2 - x1)
+faq:
+  - q: What is the distance formula?
+    a: d = √((x₂ − x₁)² + (y₂ − y₁)²). It is the Pythagorean theorem applied to the horizontal and vertical differences between the two points.
+  - q: What is the midpoint formula?
+    a: The midpoint is ((x₁ + x₂) ÷ 2, (y₁ + y₂) ÷ 2) — the average of the x-coordinates and the average of the y-coordinates.
+  - q: How do I find a missing endpoint from the midpoint?
+    a: Rearrange the midpoint formula — x₂ = 2xₘ − x₁ and y₂ = 2yₘ − y₁. In this calculator, clear x₂ and y₂ and enter the midpoint instead.
+  - q: How do I find the distance between two points in 3D?
+    a: Add the z term — d = √(Δx² + Δy² + Δz²). The vector calculator gives the magnitude of a 3D difference vector directly.
+related: [math/slope, math/pythagorean-theorem, math/vector, math/linear-interpolation]
+---
+
+## How to use the distance and midpoint calculator
+
+Enter the coordinates of the two points. The calculator returns the straight-line (Euclidean) distance between them, the midpoint, and the slope of the line joining them. Any of the inputs can be solved for instead — for example, clear y₂ and enter a distance to find where the second point must lie.
+
+## Distance and midpoint formulas
+
+<p class="formula">d = √((x₂ − x₁)² + (y₂ − y₁)²) &nbsp;·&nbsp; M = ((x₁ + x₂) ÷ 2, (y₁ + y₂) ÷ 2) &nbsp;·&nbsp; m = (y₂ − y₁) ÷ (x₂ − x₁)</p>
+
+## Example
+
+Points (1, 2) and (7, 10):
+
+- Δx = 7 − 1 = 6, Δy = 10 − 2 = 8
+- Distance = √(6² + 8²) = √100 = **10**
+- Midpoint = ((1 + 7) ÷ 2, (2 + 10) ÷ 2) = **(4, 6)**
+- Slope = 8 ÷ 6 = **1.3333**
+
+## Worked distances and midpoints
+
+| Point 1 | Point 2 | Distance | Midpoint | Slope |
+|---|---|---|---|---|
+| (0, 0) | (3, 4) | 5 | (1.5, 2) | 1.333 |
+| (1, 2) | (7, 10) | 10 | (4, 6) | 1.333 |
+| (-3, 5) | (4, -2) | 9.899 | (0.5, 1.5) | -1 |
+| (2, -1) | (-6, 3) | 8.944 | (-2, 1) | -0.5 |
+| (0, 0) | (5, 12) | 13 | (2.5, 6) | 2.4 |
+| (-4, -4) | (4, 4) | 11.31 | (0, 0) | 1 |
+| (1.5, 2.5) | (4, 8) | 6.042 | (2.75, 5.25) | 2.2 |
+
+## Notes
+
+- Distance is always positive and does not depend on which point you call "1".
+- A vertical line (x₁ = x₂) has an undefined slope; the distance and midpoint are still valid.
+- For the full equation of the line, use the [slope calculator](/math/slope/).

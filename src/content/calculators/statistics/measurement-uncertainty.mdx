@@ -1,0 +1,69 @@
+---
+title: Measurement Uncertainty Calculator (RSS Combined & Expanded)
+description: Combine standard uncertainties by root-sum-square into a combined standard uncertainty and an expanded uncertainty U = k·uc, as in the GUM method.
+category: statistics
+intro: "A measurement result is only complete with its uncertainty, built from several independent contributions such as the reference standard, repeatability and resolution. This measurement uncertainty calculator combines up to five standard uncertainties by root-sum-square and applies a coverage factor, the method used in [measurement uncertainty for calibration](https://www.instrumentationblog.in/measurement-uncertainty-in-calibration/) and when checking the [test uncertainty ratio](https://www.instrumentationblog.in/test-uncertainty-ratio-tur-calibration/)."
+keywords: [measurement uncertainty calculator, uncertainty calculator, combined standard uncertainty, expanded uncertainty calculator, root sum square uncertainty, uncertainty budget, gum uncertainty]
+updated: 2026-11-04
+variables:
+  - { id: u1, label: Standard uncertainty u₁, default: 0.05, min: 0, help: 'All contributions in the same unit as the measurement, already converted to standard uncertainties (1σ).' }
+  - { id: u2, label: Standard uncertainty u₂, default: 0.03, min: 0 }
+  - { id: u3, label: Standard uncertainty u₃, default: 0.02887, min: 0 }
+  - { id: u4, label: Standard uncertainty u₄, default: 0.02, min: 0 }
+  - { id: u5, label: Standard uncertainty u₅, default: 0, min: 0, help: 'Leave at 0 if not used.' }
+  - { id: k, label: Coverage factor k, default: 2, min: 0, help: 'k = 2 gives about 95% confidence for a normal distribution; k = 3 about 99.7%.' }
+  - { id: uc, label: Combined standard uncertainty u_c, min: 0, decimals: 5 }
+  - { id: U, label: Expanded uncertainty U = k × u_c, min: 0, decimals: 5 }
+equations:
+  - uc = sqrt(u1^2 + u2^2 + u3^2 + u4^2 + u5^2)
+  - U = k * uc
+faq:
+  - q: How do I combine measurement uncertainties?
+    a: Convert each contribution to a standard uncertainty (one standard deviation), then add them in quadrature — u_c = √(u₁² + u₂² + …). This root-sum-square rule applies to independent (uncorrelated) contributions with sensitivity coefficients of 1.
+  - q: What is the coverage factor k?
+    a: It multiplies the combined standard uncertainty to give an interval with a stated confidence. k = 2 gives about 95% for a normal distribution and is the usual choice on calibration certificates.
+  - q: How do I convert a tolerance or resolution to a standard uncertainty?
+    a: Treat a ± a limit with equal probability across it as a rectangular distribution and divide the half-width by √3. A digital display of resolution r has half-width r/2, so u = r ÷ (2√3).
+  - q: Why not just add the uncertainties?
+    a: Independent errors rarely all reach their maximum in the same direction at once. Simple addition gives a worst case that overstates the uncertainty; root-sum-square gives a statistically realistic combination.
+related: [engineering/calibration-error, engineering/instrument-accuracy, statistics/standard-error, statistics/uniform-distribution]
+---
+
+## How to use the measurement uncertainty calculator
+
+Enter up to five **standard uncertainties** in the same unit as the measurement (convert each one first — see the divisor table below) and the **coverage factor k**. The calculator returns the combined standard uncertainty and the expanded uncertainty U, which is reported as result ± U.
+
+## Measurement uncertainty formula
+
+<p class="formula">u<sub>c</sub> = √(u₁² + u₂² + u₃² + u₄² + u₅²) &nbsp;·&nbsp; U = k × u<sub>c</sub></p>
+
+## Example
+
+Uncertainty budget for a pressure gauge calibration (values in bar):
+
+| Contribution | Standard uncertainty | u² | Share of variance |
+|---|---|---|---|
+| Reference standard (certificate, k = 2 → 0.10 ÷ 2) | 0.0500 | 0.002500 | 54.0% |
+| Repeatability (standard deviation of the mean) | 0.0300 | 0.000900 | 19.4% |
+| Resolution 0.1 (half-width 0.05 ÷ √3) | 0.0289 | 0.000833 | 18.0% |
+| Temperature effect | 0.0200 | 0.000400 | 8.6% |
+
+- u_c = √(0.05² + 0.03² + 0.0289² + 0.02²) = **0.06807 bar**
+- U = 2 × 0.06807 = **0.13614 bar** (≈ ±0.14 bar at about 95% confidence)
+
+The reference standard dominates the budget, so a better standard would reduce the uncertainty most.
+
+## Converting a contribution to a standard uncertainty
+
+| Distribution | Standard uncertainty | Divisor | Multiplier |
+|---|---|---|---|
+| Normal (from a certificate, k = 2) | U ÷ 2 | 2.0000 | 0.5000 |
+| Normal (k = 3) | U ÷ 3 | 3.0000 | 0.3333 |
+| Rectangular (tolerance, resolution) | a ÷ √3 | 1.7321 | 0.5774 |
+| Triangular | a ÷ √6 | 2.4495 | 0.4082 |
+| U-shaped (sinusoidal, mismatch) | a ÷ √2 | 1.4142 | 0.7071 |
+
+## Notes
+
+- If contributions are correlated, or the result depends on inputs through a formula, apply sensitivity coefficients cᵢ and use u_c² = Σ(cᵢ uᵢ)² plus covariance terms.
+- Compare the expanded uncertainty with the instrument's tolerance — see the [calibration error calculator](/engineering/calibration-error/).

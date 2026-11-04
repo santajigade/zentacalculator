@@ -1,0 +1,72 @@
+---
+title: Geometric Distribution Calculator (Trials to First Success)
+description: Calculate geometric distribution probabilities — the chance the first success comes on trial k, within k trials or after k — plus the mean and variance.
+category: statistics
+intro: "The geometric distribution describes how many independent tries it takes to get the first success when each try has the same probability p. This geometric distribution calculator gives the probability that the first success comes exactly on trial k, by trial k or only after k, along with the expected number of trials."
+keywords: [geometric distribution calculator, geometric probability calculator, probability of first success, number of trials until success, geometric distribution formula, geometric distribution mean, cumulative geometric probability]
+updated: 2026-11-04
+variables:
+  - { id: p, label: Probability of success per trial (p), family: percent, unit: '%', default: 20, min: 0, max: 1 }
+  - { id: k, label: Trial number of the first success (k), default: 3, min: 1 }
+  - { id: P, label: P(X = k) — first success on trial k, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: Pc, label: P(X ≤ k) — success within k trials, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: Pg, label: P(X > k) — no success in k trials, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: mu, label: Expected number of trials (1 ÷ p), min: 0 }
+  - { id: sd, label: Standard deviation, min: 0 }
+equations:
+  - P = (1 - p)^(k - 1) * p
+  - Pc = 1 - (1 - p)^k
+  - Pg = (1 - p)^k
+  - mu = 1 / p
+  - sd = sqrt(1 - p) / p
+faq:
+  - q: What is the geometric distribution formula?
+    a: P(X = k) = (1 − p)^(k − 1) × p — k − 1 failures followed by one success. The probability of success within k trials is P(X ≤ k) = 1 − (1 − p)^k.
+  - q: What is the mean of a geometric distribution?
+    a: The expected number of trials up to and including the first success is 1 ÷ p, and the variance is (1 − p) ÷ p². With p = 20% you expect 5 trials on average.
+  - q: What is the difference between the two definitions of the geometric distribution?
+    a: This calculator counts trials up to and including the first success (k = 1, 2, 3 …). Some textbooks count only the failures before it (k = 0, 1, 2 …); then P = (1 − p)^k × p and the mean is (1 − p) ÷ p.
+  - q: Is the geometric distribution memoryless?
+    a: Yes — having already failed several times does not change the chance of success on the next trial. It is the discrete counterpart of the exponential distribution.
+related: [statistics/binomial-probability, statistics/exponential-distribution, statistics/poisson-probability, statistics/probability]
+---
+
+## How to use the geometric distribution calculator
+
+Enter the **probability of success** on each trial and the **trial number k**. The calculator returns the probability that the first success happens exactly on trial k, by trial k at the latest, and not within k trials, plus the mean and standard deviation of the number of trials. Clear p and enter a target P(X ≤ k) to find the success rate needed.
+
+## Geometric distribution formulas
+
+<p class="formula">P(X = k) = (1 − p)<sup>k−1</sup> p &nbsp;·&nbsp; P(X ≤ k) = 1 − (1 − p)<sup>k</sup></p>
+
+<p class="formula">μ = 1 ÷ p &nbsp;·&nbsp; σ = √(1 − p) ÷ p</p>
+
+## Example
+
+A sales call succeeds 20% of the time. The chance that the first sale comes on the 3rd call:
+
+- P(X = 3) = 0.8² × 0.2 = **12.8%**
+- P(X ≤ 3) = 1 − 0.8³ = **48.8%**, P(X > 3) = 0.8³ = **51.2%**
+- Expected calls = 1 ÷ 0.2 = **5**, standard deviation = √0.8 ÷ 0.2 = **4.4721**
+
+## Geometric probabilities for p = 20%
+
+| k | P(X = k) | P(X ≤ k) | P(X > k) |
+|---|---|---|---|
+| 1 | 20.00% | 20.00% | 80.00% |
+| 2 | 16.00% | 36.00% | 64.00% |
+| 3 | 12.80% | 48.80% | 51.20% |
+| 4 | 10.24% | 59.04% | 40.96% |
+| 5 | 8.19% | 67.23% | 32.77% |
+| 6 | 6.55% | 73.79% | 26.21% |
+| 7 | 5.24% | 79.03% | 20.97% |
+| 8 | 4.19% | 83.22% | 16.78% |
+| 9 | 3.36% | 86.58% | 13.42% |
+| 10 | 2.68% | 89.26% | 10.74% |
+| 11 | 2.15% | 91.41% | 8.59% |
+| 12 | 1.72% | 93.13% | 6.87% |
+
+## Notes
+
+- The trials must be independent with a constant success probability.
+- To count successes in a fixed number of trials instead, use the [binomial probability calculator](/statistics/binomial-probability/).

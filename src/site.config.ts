@@ -9,6 +9,7 @@ export const SITE = {
     { name: 'LinkedIn', url: 'https://www.linkedin.com/company/zentacalculator/' },
     { name: 'Facebook', url: 'https://www.facebook.com/zentacalculator/' },
     { name: 'Instagram', url: 'https://www.instagram.com/zentacalculator/' },
+    { name: 'YouTube', url: 'https://www.youtube.com/@ZentaCalculator' },
   ],
   locale: 'en-US', // fallback only; visitors get their own region's currency, units and number format
 };

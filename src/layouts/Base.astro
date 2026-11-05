@@ -92,10 +92,6 @@ const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);
         <div class="ftr__social">
           {SITE.social.map((x) => <a href={x.url} target="_blank" rel="noopener me" aria-label={`Zenta Calculator on ${x.name}`} title={x.name}><svg viewBox="0 0 24 24" aria-hidden="true"><path d={ICONS[x.name]} /></svg></a>)}
         </div>
-        <a class="ftr__sister" href="https://zentapdf.com/" title="ZentaPDF: free PDF and image tools">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>
-          <span><b>Free PDF Tools</b><small>Edit, compress and convert PDFs on ZentaPDF</small></span>
-        </a>
       </div>
       <div class="ftr__cats">
         {CATEGORIES.map((c) => <a href={`/${c.slug}/`}>{c.name}</a>)}
@@ -108,7 +104,13 @@ const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);
     <nav class="wrap ftr__links" aria-label="Site">
       <a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/disclaimer/">Disclaimer</a>
     </nav>
-    <p class="wrap muted ftr__copy">© {new Date().getFullYear()} {SITE.name}. Results are for information only.</p>
+    <div class="wrap ftr__bottom">
+      <p class="muted ftr__copy">© {new Date().getFullYear()} {SITE.name}. Results are for information only.</p>
+      <a class="ftr__sister" href="https://zentapdf.com/" title="ZentaPDF: free PDF and image tools">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>
+        <span><b>Free PDF Tools</b><small>Edit, compress and convert PDFs on ZentaPDF</small></span>
+      </a>
+    </div>
   </footer>
 
   <script>

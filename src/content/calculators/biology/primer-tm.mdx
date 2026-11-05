@@ -1,10 +1,10 @@
 ---
-title: "Primer Tm Calculator – Free Primer Melting Temperature (Wallace Rule)"
-description: "Free primer Tm calculator: estimate DNA primer melting temperature from A, T, G and C counts, GC content and a suggested annealing temperature for PCR."
+title: "Primer Tm Calculator – DNA Melting Temperature for PCR"
+description: "Free primer Tm calculator: DNA primer melting temperature by the Wallace rule and the basic GC formula, GC content and a suggested PCR annealing temperature."
 category: biology
-intro: "A primer's melting temperature (Tm) is where half of it is bound to its target DNA. Setting the PCR annealing temperature correctly depends on knowing Tm. This free primer melting temperature calculator solves for whichever value you leave blank and shows the formula and steps."
-keywords: [primer tm, melting temperature, wallace rule, annealing temperature, pcr primer, oligo tm]
-updated: 2026-11-03
+intro: "A primer's melting temperature (Tm) is where half of it is bound to its target DNA, and the PCR annealing temperature is set from it. This primer Tm calculator gives two estimates — the Wallace rule for short primers and the basic GC formula for longer oligos — plus GC content and a starting annealing temperature."
+keywords: [primer tm calculator, tm calculator, melting temperature calculator, primer melting temperature, wallace rule, annealing temperature calculator, pcr primer tm, oligo tm]
+updated: 2026-11-06
 variables:
   - { id: a, label: Number of A, default: 5, min: 0 }
   - { id: t, label: Number of T, default: 5, min: 0 }
@@ -13,10 +13,12 @@ variables:
   - { id: tm, label: Melting temperature (Wallace rule), suffix: °C, decimals: 1 }
   - { id: ta, label: Suggested annealing temperature, suffix: °C, decimals: 1 }
   - { id: gc, label: GC content, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: tmb, label: Melting temperature (basic GC formula), suffix: °C, decimals: 1 }
 equations:
   - tm = 2 * (a + t) + 4 * (g + c)
   - ta = tm - 5
   - gc = (g + c) / (a + t + g + c)
+  - tmb = 64.9 + 41 * (g + c - 16.4) / (a + t + g + c)
 faq:
   - q: What is the Wallace rule?
     a: Tm = 2 °C × (A + T) + 4 °C × (G + C). It is a quick estimate for short primers (about 14–20 bases).
@@ -24,8 +26,6 @@ faq:
     a: Start about 3–5 °C below the lower primer Tm, then optimise with a gradient PCR.
   - q: What is an ideal primer?
     a: Typically 18–25 bases, 40–60% GC, Tm of 55–65 °C, and primer pairs within about 5 °C of each other.
-  - q: "What is the Wallace rule?"
-    a: "Tm = 2 × (A + T) + 4 × (G + C) °C, a quick estimate for short primers."
   - q: "How far below Tm should I anneal?"
     a: "Usually 3–5 °C below the lower of the two primer Tms."
   - q: "Which primer Tm calculator is most accurate?"
@@ -34,7 +34,7 @@ faq:
     a: "They use different formulas (Wallace, GC%, nearest-neighbor) and different assumptions about salt, magnesium and primer concentrations."
   - q: "What is a PCR gradient?"
     a: "A run where each column of the block uses a different annealing temperature, so you can find the best temperature for a new primer pair in one experiment."
-related: [biology/gc-content, biology/pcr-amplification]
+related: [biology/gc-content, biology/pcr-amplification, biology/dna-concentration, biology/dna-copy-number]
 ---
 
 ## How to use the primer melting temperature calculator
@@ -43,7 +43,7 @@ Count the **A, T, G and C** bases in your primer and enter them. The melting tem
 
 ## Formula (Wallace rule)
 
-<p class="formula">Tm = 2(A + T) + 4(G + C)</p>
+<p class="formula">Tm = 2(A + T) + 4(G + C) &nbsp;·&nbsp; Tm = 64.9 + 41 × (G + C − 16.4) ÷ N</p>
 
 ## Example
 
@@ -52,6 +52,9 @@ A 20-mer with 5 of each base:
 - Tm = 2 × 10 + 4 × 10 = **60 °C**
 - Annealing ≈ **55 °C**
 - GC = **50%**
+- Basic GC formula: 64.9 + 41 × (10 − 16.4) ÷ 20 = **51.8 °C**
+
+The two estimates differ by about 8 °C — the Wallace rule runs high for 20-mers, which is why a gradient PCR is the safest way to set the annealing temperature.
 
 For longer primers or exact work, nearest-neighbour methods that account for salt concentration are more accurate.
 
@@ -71,7 +74,7 @@ For longer primers or exact work, nearest-neighbour methods that account for sal
 | Method | Best for |
 |---|---|
 | Wallace rule (this calculator) | Primers under about 14–20 nt, quick estimates |
-| Basic GC formula: 64.9 + 41(GC − 16.4)/N | Longer oligos |
+| Basic GC formula: 64.9 + 41(GC − 16.4)/N (this calculator) | Longer oligos |
 | Nearest-neighbour thermodynamics | Most accurate; accounts for salt and primer concentration |
 
 The Wallace rule tends to overestimate Tm for longer primers. Many polymerase suppliers provide nearest-neighbour Tm calculators tuned to their buffers.
@@ -82,7 +85,7 @@ Start about 3–5 °C below the lower primer Tm. If you see non-specific bands, 
 
 ## How accurate is this Tm calculator?
 
-This calculator uses the Wallace rule, which gives a quick, reliable estimate for primers of about 14–25 bases at standard PCR salt conditions. Commercial and polymerase-specific Tm calculators usually use the **nearest-neighbor** method with corrections for salt, Mg²⁺ and primer concentration, so their results can differ by 2–5 °C.
+This calculator shows the Wallace rule and the basic GC formula. The Wallace rule gives a quick, reliable estimate for primers of about 14–25 bases at standard PCR salt conditions. Commercial and polymerase-specific Tm calculators usually use the **nearest-neighbor** method with corrections for salt, Mg²⁺ and primer concentration, so their results can differ by 2–5 °C.
 
 For the best results:
 

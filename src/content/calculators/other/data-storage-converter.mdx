@@ -1,10 +1,10 @@
 ---
-title: Data Storage Converter (KB, MB, GB, TB)
+title: "Data Storage Converter – Bytes, KB, MB, GB, TB (Decimal & Binary)"
 description: "Convert data sizes between bytes, KB, MB, GB, TB and binary units (KiB, MiB, GiB). Free online data storage converter with formula and examples."
 category: other
-intro: "Data storage is measured in kilobytes, megabytes, gigabytes and terabytes — in both decimal (1,000) and binary (1,024) units."
-keywords: [data storage converter, mb to gb, gb to tb, bytes converter, gib vs gb, file size converter]
-updated: 2026-10-27
+intro: "Data storage is measured in kilobytes, megabytes, gigabytes and terabytes, in both decimal (1,000) and binary (1,024) steps — which is why a 1 TB drive shows as 931 GB. This data storage converter (GB calculator) converts between bytes, MB, GB, TB, MiB and GiB in both systems at once."
+keywords: [data storage converter, data storage calculator, gb calculator, mb to gb, gb to tb, bytes converter, gib vs gb, file size converter]
+updated: 2026-11-06
 featured: true
 variables:
   - { id: u0, label: Gigabytes (GB), family: data, unit: GB, default: 1, min: 0 }
@@ -28,9 +28,7 @@ faq:
     a: 1,000 MB in decimal units, or 1,024 MiB in a GiB.
   - q: "How many GB is 1 TB?"
     a: "1,000 GB in decimal units, or 1,024 GiB in binary units."
-  - q: "Why does my 1 TB drive show 931 GB?"
-    a: "The drive uses decimal units (10¹² bytes), while Windows shows binary gibibytes labelled as GB."
-related: [other/download-time, other/video-file-size]
+related: [other/download-time, other/video-file-size, other/print-size-dpi]
 ---
 
 ## How to use the data storage converter
@@ -51,6 +49,18 @@ A drive sold as **1 TB** holds 1,000,000,000,000 bytes. Windows reports sizes in
 | 4 TB | 4,000,000,000,000 | 3,725 GB |
 
 macOS and many Linux tools use decimal units, so they match the advertised size.
+
+## Decimal to binary sizes
+
+| Decimal size | Bytes | In MiB | In GiB |
+|---|---|---|---|
+| 1 KB | 1,000 | 0.00 MiB | 0.000 GiB |
+| 1 MB | 1,000,000 | 0.95 MiB | 0.001 GiB |
+| 1 GB | 1,000,000,000 | 953.67 MiB | 0.931 GiB |
+| 500 GB | 500,000,000,000 | 476,837.16 MiB | 465.661 GiB |
+| 1 TB | 1,000,000,000,000 | 953,674.32 MiB | 931.323 GiB |
+| 2 TB | 2,000,000,000,000 | 1,907,348.63 MiB | 1,862.645 GiB |
+| 4 TB | 4,000,000,000,000 | 3,814,697.27 MiB | 3,725.290 GiB |
 
 ## Bits vs bytes
 

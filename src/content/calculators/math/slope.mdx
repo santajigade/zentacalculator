@@ -1,10 +1,10 @@
 ---
-title: "Slope Calculator – Find the Slope of a Line from Two Points"
-description: "Free slope calculator: find the slope m = (y₂ − y₁) ÷ (x₂ − x₁) of a line through two points, plus distance, angle and the line equation, step by step."
+title: "Slope Calculator – Slope, Y-Intercept & Line Equation (2 Points)"
+description: "Free slope calculator: find the slope m = (y₂ − y₁) ÷ (x₂ − x₁) from two points, plus the y-intercept, line equation, percent grade, angle and distance."
 category: math
-intro: "Slope measures how steep a line is — the rise divided by the run between two points. It is used for graphs, roads, roofs and ramps."
-keywords: [slope calculator, gradient, rise over run, two points, distance formula, line angle, slope formula]
-updated: 2026-10-27
+intro: "Slope measures how steep a line is — the rise divided by the run between two points. This slope calculator finds the slope from two points and also gives the y-intercept, the equation y = mx + b, the percent grade, the angle and the distance, with every step shown."
+keywords: [slope calculator, slope from two points, slope intercept form, y-intercept calculator, rise over run, gradient calculator, slope formula, percent grade]
+updated: 2026-11-06
 variables:
   - { id: x1, label: x₁, default: 1 }
   - { id: y1, label: y₁, default: 2 }
@@ -13,10 +13,14 @@ variables:
   - { id: m, label: Slope (m) }
   - { id: d, label: Distance between points, min: 0 }
   - { id: th, label: Angle of the line, family: angle, unit: deg }
+  - { id: b, label: Y-intercept b (line y = mx + b) }
+  - { id: gr, label: 'Percent grade (slope × 100)', family: percent, unit: '%' }
 equations:
   - m = (y2 - y1) / (x2 - x1)
   - d = sqrt((x2 - x1)^2 + (y2 - y1)^2)
   - th = atan(m)
+  - b = y1 - m * x1
+  - gr = m
 faq:
   - q: What is the slope formula?
     a: m = (y₂ − y₁) ÷ (x₂ − x₁) — the change in y (rise) divided by the change in x (run).
@@ -28,7 +32,9 @@ faq:
     a: The line is horizontal — y does not change as x changes.
   - q: How do I find the y-intercept?
     a: b = y₁ − m × x₁. For slope 4/3 through (1, 2), b = 2 − 4/3 = 2/3.
-related: [math/pythagorean-theorem, math/right-triangle-trig]
+  - q: "How do I write the equation of a line from two points?"
+    a: "Find the slope m = (y₂ − y₁) ÷ (x₂ − x₁), then the intercept b = y₁ − m x₁. The line is y = mx + b. For (1, 2) and (4, 6) it is y = 1.333x + 0.667."
+related: [math/distance-midpoint, math/linear-interpolation, construction/roof-pitch, math/right-triangle-trig, math/pythagorean-theorem]
 ---
 
 ## How to use the slope calculator
@@ -47,6 +53,8 @@ Points (1, 2) and (4, 6):
 - Slope m = 4 ÷ 3 = **1.333**
 - Distance = √(3² + 4²) = **5**
 - Angle = tan⁻¹(1.333) = **53.13°**
+- Y-intercept b = 2 − 1.333 × 1 = **0.667**, so the line is **y = 1.333x + 0.667**
+- Percent grade = 1.333 × 100 = **133.3%**
 
 ## Equation of the line
 
@@ -83,13 +91,8 @@ The midpoint between (x₁, y₁) and (x₂, y₂) is ((x₁ + x₂) ÷ 2, (y₁
 - **Wheelchair ramps**: maximum 1 : 12 (8.33%) in many building codes.
 - **Graphs**: slope shows a rate of change, such as speed on a distance-time graph.
 
-## Slope as grade and angle
+## Related calculators
 
-| Grade | Slope | Angle |
-|---|---|---|
-| 1% | 0.01 | 0.57° |
-| 5% | 0.05 | 2.86° |
-| 10% | 0.1 | 5.71° |
-| 100% | 1 | 45° |
-
-Wheelchair ramps are commonly limited to about 1:12 (8.3%), or about 4.8°.
+- [Distance and midpoint calculator](/math/distance-midpoint/) — the distance and midpoint between the same two points.
+- [Linear interpolation calculator](/math/linear-interpolation/) — find y at any x on the line through two points.
+- [Roof pitch calculator](/construction/roof-pitch/) — slope expressed as rise per 12 inches of run.

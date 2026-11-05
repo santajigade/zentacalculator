@@ -2,6 +2,12 @@ name: Publish website
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
 
 permissions:
   contents: write

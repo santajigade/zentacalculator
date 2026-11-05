@@ -1,0 +1,59 @@
+---
+title: Absolute to Gauge Pressure Calculator (and Vacuum)
+description: Convert gauge pressure to absolute pressure and back, including vacuum readings, with atmospheric pressure set directly or estimated from altitude.
+category: engineering
+intro: "Gauge pressure is measured relative to the surrounding atmosphere, absolute pressure relative to a perfect vacuum, and the difference is the local atmospheric pressure. This absolute to gauge pressure calculator converts between them — and handles vacuum as negative gauge pressure — as explained in [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/) and [how to calculate vacuum pressure](https://www.instrumentationblog.in/how-to-calculate-vacuum-pressure/)."
+keywords: [absolute to gauge pressure calculator, gauge to absolute pressure, psia to psig, bar g to bar a, vacuum pressure calculator, atmospheric pressure altitude, absolute pressure formula]
+updated: 2026-11-05
+variables:
+  - { id: pg, label: Gauge pressure (negative = vacuum), family: pressure, unit: bar, imperialUnit: psi, default: 2, min: -1e7 }
+  - { id: z, label: Altitude above sea level, family: length, unit: m, imperialUnit: ft, default: 0, min: -500, max: 11000 }
+  - { id: pa, label: Atmospheric pressure, family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+  - { id: pabs, label: Absolute pressure, family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+equations:
+  - pa = 101325 * (1 - 2.25577e-5 * z)^5.25588
+  - pabs = pg + pa
+faq:
+  - q: How do I convert gauge pressure to absolute pressure?
+    a: Add atmospheric pressure — p_abs = p_gauge + p_atm. At sea level 2 bar(g) is 3.013 bar(a), and 100 psig is 114.7 psia.
+  - q: How is vacuum related to gauge pressure?
+    a: Vacuum is negative gauge pressure. A vacuum of 0.6 bar at sea level is −0.6 bar(g), or 1.013 − 0.6 = 0.413 bar(a).
+  - q: Why does altitude matter?
+    a: Atmospheric pressure falls about 12% per 1,000 m near sea level, so the same absolute pressure reads differently on a gauge at altitude. Enter the altitude or override atmospheric pressure with a barometer reading.
+  - q: Can absolute pressure be negative?
+    a: No — zero absolute is a perfect vacuum, so the most negative gauge reading possible is minus the atmospheric pressure.
+related: [engineering/hydrostatic-pressure, engineering/gas-flow-correction, engineering/manometer, engineering/compressor-power]
+---
+
+## How to use the absolute to gauge pressure calculator
+
+Enter the **gauge pressure** (use a negative value for vacuum) and the **altitude**. The calculator estimates atmospheric pressure with the standard-atmosphere formula and returns the absolute pressure. To convert absolute to gauge, clear the gauge pressure and enter the absolute value. If you have a barometer reading, clear the altitude and enter the atmospheric pressure directly.
+
+## Absolute pressure formulas
+
+<p class="formula">p<sub>abs</sub> = p<sub>gauge</sub> + p<sub>atm</sub> &nbsp;·&nbsp; p<sub>atm</sub> = 101,325 × (1 − 2.25577×10⁻⁵ z)<sup>5.25588</sup> Pa</p>
+
+## Worked example
+
+2 bar(g) at sea level:
+
+- p<sub>atm</sub> = **1.01325 bar**
+- p<sub>abs</sub> = 2 + 1.01325 = **3.01325 bar(a)**
+
+## Standard atmospheric pressure by altitude
+
+| Altitude | kPa | bar | psi |
+|---|---|---|---|
+| 0 m | 101.33 kPa | 1.0132 bar | 14.70 psi |
+| 500 m | 95.46 kPa | 0.9546 bar | 13.85 psi |
+| 1,000 m | 89.87 kPa | 0.8987 bar | 13.04 psi |
+| 1,500 m | 84.56 kPa | 0.8456 bar | 12.26 psi |
+| 2,000 m | 79.50 kPa | 0.7950 bar | 11.53 psi |
+| 3,000 m | 70.11 kPa | 0.7011 bar | 10.17 psi |
+| 4,000 m | 61.64 kPa | 0.6164 bar | 8.94 psi |
+| 5,000 m | 54.02 kPa | 0.5402 bar | 7.83 psi |
+
+## Notes
+
+- Weather changes atmospheric pressure by about ±3% around the standard value.
+- Gas flow corrections and compressor calculations always need absolute pressure.

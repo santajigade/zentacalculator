@@ -1,0 +1,67 @@
+---
+title: UART Baud Rate Error Calculator (Divisor & Actual Baud)
+description: Calculate the UART baud rate divisor, actual baud rate and percentage error for any clock frequency and oversampling, with an error table for common crystals.
+category: electronics
+intro: "A UART makes its bit clock by dividing the system clock by an integer, so the actual baud rate is rarely exactly what you asked for. This UART baud rate error calculator finds the nearest divisor, the real baud rate and the error — keep it within about ±2% for reliable links, as explained in [UART frame format and baud rate](https://www.instrumentationblog.in/uart-communication-frame-baud-rate/)."
+keywords: [uart baud rate error calculator, baud rate calculator, ubrr calculator, uart divisor calculator, baud rate error percentage, serial baud rate clock, avr baud rate]
+updated: 2026-11-05
+variables:
+  - { id: f, label: Peripheral clock frequency, family: frequency, unit: MHz, default: 16, min: 0 }
+  - { id: b, label: Desired baud rate, suffix: bit/s, default: 115200, min: 1 }
+  - id: os
+    label: Oversampling
+    default: 16
+    options:
+      - { label: 16× (normal mode), value: 16 }
+      - { label: 8× (double speed), value: 8 }
+  - { id: N, label: Divisor (UBRR / BRR = N − 1 on AVR), min: 0 }
+  - { id: ba, label: Actual baud rate, suffix: bit/s, min: 0 }
+  - { id: err, label: Baud rate error, family: percent, unit: '%', decimals: 2 }
+equations:
+  - N = max(1, round(f / (os * b)))
+  - ba = f / (os * N)
+  - err = (ba - b) / b
+faq:
+  - q: How is the UART baud rate divisor calculated?
+    a: N = f_clk ÷ (oversampling × baud), rounded to the nearest integer. The actual baud rate is then f_clk ÷ (oversampling × N). On AVR the register value is UBRR = N − 1.
+  - q: What baud rate error is acceptable?
+    a: Keep each end within about ±2% (the total mismatch between the two ends must stay under roughly 4–5% for 8-N-1 frames). Below ±1% is good practice.
+  - q: Why do 11.0592 MHz and 18.432 MHz crystals exist?
+    a: They divide exactly into standard baud rates, giving 0% error at 9,600, 19,200, 57,600 and 115,200 baud.
+  - q: Does fractional baud rate generation help?
+    a: Yes — many STM32, NXP and ESP32 UARTs have a fractional divider, which reduces the error to a small fraction of a percent. This calculator assumes an integer divider.
+related: [electronics/adc-resolution, electronics/pwm-duty-cycle, electronics/crystal-load-capacitance, electronics/555-timer]
+---
+
+## How to use the UART baud rate error calculator
+
+Enter the UART's **clock frequency**, the **baud rate** you want and the **oversampling** mode. The calculator rounds to the nearest integer divisor and shows the actual baud rate and the percentage error.
+
+## UART baud rate formulas
+
+<p class="formula">N = round(f<sub>clk</sub> ÷ (OS × baud)) &nbsp;·&nbsp; baud<sub>actual</sub> = f<sub>clk</sub> ÷ (OS × N) &nbsp;·&nbsp; error = (baud<sub>actual</sub> − baud) ÷ baud</p>
+
+## Worked example
+
+16 MHz clock, 115,200 baud, 16× oversampling:
+
+- f ÷ (16 × 115,200) = 8.681 → N = **9** (UBRR = 8)
+- Actual baud = 16,000,000 ÷ (16 × 9) = **111,111 bit/s**
+- Error = **-3.55%** — too large; use 8× mode or a 11.0592 / 18.432 MHz crystal
+
+## Baud rate error, 16× oversampling
+
+| Baud rate | 8 MHz | 16 MHz | 11.0592 MHz | 48 MHz |
+|---|---|---|---|---|
+| 9,600 | +0.16% | +0.16% | +0.00% | +0.16% |
+| 19,200 | +0.16% | +0.16% | +0.00% | +0.16% |
+| 38,400 | +0.16% | +0.16% | +0.00% | +0.16% |
+| 57,600 | -3.55% | +2.12% | +0.00% | +0.16% |
+| 115,200 | +8.51% | -3.55% | +0.00% | +0.16% |
+| 230,400 | +8.51% | +8.51% | +0.00% | +0.16% |
+| 250,000 | +0.00% | +0.00% | -7.84% | +0.00% |
+
+## Notes
+
+- Both ends contribute error — a ±2% error on each side can add up to 4%.
+- RC oscillators (internal clocks) can themselves be ±1–2% off; use a crystal for high baud rates.

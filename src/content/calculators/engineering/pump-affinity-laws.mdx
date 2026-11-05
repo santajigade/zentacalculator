@@ -1,0 +1,66 @@
+---
+title: Pump Affinity Laws Calculator (Speed & Impeller Diameter)
+description: Apply the pump affinity laws — find new flow, head and power of a centrifugal pump after a change in speed (VFD) or impeller diameter (trimming).
+category: engineering
+intro: "The affinity laws predict how a centrifugal pump's flow, head and power change with speed or impeller diameter: flow scales with the ratio, head with its square and power with its cube. This pump affinity laws calculator applies them for a VFD speed change or an impeller trim — useful when comparing [centrifugal vs positive displacement pumps](https://www.instrumentationblog.in/centrifugal-vs-positive-displacement-pump/) or sizing a [VFD](https://www.instrumentationblog.in/vfd-sizing-selection-guide/)."
+keywords: [pump affinity laws calculator, affinity laws, pump speed change calculator, impeller trimming calculator, vfd pump energy savings, pump flow head power speed, centrifugal pump laws]
+updated: 2026-11-05
+variables:
+  - { id: Q1, label: Original flow rate Q₁, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
+  - { id: H1, label: Original head H₁, family: length, unit: m, imperialUnit: ft, default: 50, min: 0 }
+  - { id: P1, label: Original shaft power P₁, family: power, unit: kW, imperialUnit: hp, default: 18.5, min: 0 }
+  - { id: N1, label: Original speed N₁, suffix: rpm, default: 1450, min: 0 }
+  - { id: N2, label: New speed N₂, suffix: rpm, default: 1160, min: 0 }
+  - { id: D1, label: Original impeller diameter D₁, family: length, unit: mm, imperialUnit: in, default: 250, min: 0 }
+  - { id: D2, label: New impeller diameter D₂, family: length, unit: mm, imperialUnit: in, default: 250, min: 0 }
+  - { id: Q2, label: New flow rate Q₂, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+  - { id: H2, label: New head H₂, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: P2, label: New shaft power P₂, family: power, unit: kW, imperialUnit: hp, min: 0 }
+equations:
+  - Q2 = Q1 * (N2 / N1) * (D2 / D1)
+  - H2 = H1 * (N2 / N1)^2 * (D2 / D1)^2
+  - P2 = P1 * (N2 / N1)^3 * (D2 / D1)^3
+faq:
+  - q: What are the pump affinity laws?
+    a: Q₂/Q₁ = N₂/N₁, H₂/H₁ = (N₂/N₁)² and P₂/P₁ = (N₂/N₁)³. The same relations hold approximately for a change in impeller diameter D at constant speed.
+  - q: How much energy does slowing a pump save?
+    a: Power falls with the cube of speed, so running at 80% speed needs about 51% of the power — a 49% saving — if the system has little static head.
+  - q: Do the affinity laws work with high static head?
+    a: Not directly. They move the pump along curves of constant efficiency, but a system with large static head does not follow those curves — find the new duty point on the system curve instead.
+  - q: How accurate are they for impeller trimming?
+    a: Reasonably for trims up to about 10–15% of diameter. Beyond that efficiency drops and the actual head and flow fall below the predicted values.
+related: [engineering/pump-power, engineering/fan-affinity-laws, engineering/pressure-to-head, engineering/torque-power-speed]
+---
+
+## How to use the pump affinity laws calculator
+
+Enter the pump's known duty point — **flow, head and shaft power** — at the original speed and impeller diameter, then enter the **new speed** and/or **new diameter**. Keep D₂ = D₁ for a pure speed change, or N₂ = N₁ for an impeller trim.
+
+## Pump affinity laws
+
+<p class="formula">Q₂ = Q₁ (N₂/N₁)(D₂/D₁) &nbsp;·&nbsp; H₂ = H₁ (N₂/N₁)²(D₂/D₁)² &nbsp;·&nbsp; P₂ = P₁ (N₂/N₁)³(D₂/D₁)³</p>
+
+## Worked example
+
+A pump delivers 100 m³/h at 50 m head and absorbs 18.5 kW at 1,450 rpm. A VFD slows it to 1,160 rpm (ratio 0.80):
+
+- Q₂ = 100 × 0.80 = **80.0 m³/h**
+- H₂ = 50 × 0.80² = **32.0 m**
+- P₂ = 18.5 × 0.80³ = **9.47 kW** — a 49% power reduction
+
+## Speed reduction table (100 m³/h, 50 m, 18.5 kW at 1,450 rpm)
+
+| Speed | Flow | Head | Power | Power saving |
+|---|---|---|---|---|
+| 100% (1450 rpm) | 100.0 m³/h | 50.0 m | 18.50 kW | 0% |
+| 90% (1305 rpm) | 90.0 m³/h | 40.5 m | 13.49 kW | 27% |
+| 80% (1160 rpm) | 80.0 m³/h | 32.0 m | 9.47 kW | 49% |
+| 70% (1015 rpm) | 70.0 m³/h | 24.5 m | 6.35 kW | 66% |
+| 60% (870 rpm) | 60.0 m³/h | 18.0 m | 4.00 kW | 78% |
+| 50% (725 rpm) | 50.0 m³/h | 12.5 m | 2.31 kW | 88% |
+
+## Notes
+
+- Efficiency is assumed constant — real savings are slightly lower because motor and VFD losses rise at low load.
+- Check that the reduced head still overcomes the static head of the system.
+- For fans and blowers the same laws apply; see the [fan affinity laws calculator](/engineering/fan-affinity-laws/).

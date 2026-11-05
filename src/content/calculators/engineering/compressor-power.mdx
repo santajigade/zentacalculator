@@ -1,0 +1,65 @@
+---
+title: Compressor Power Calculator (Isentropic, Single Stage)
+description: Estimate air or gas compressor power from inlet flow, suction and discharge pressure and isentropic efficiency, plus the ideal discharge temperature.
+category: engineering
+intro: "The ideal work to compress a gas follows the isentropic (adiabatic) relation, and real compressors need more by the inverse of their isentropic efficiency. This compressor power calculator gives the shaft power and ideal discharge temperature for a single stage — staging, explained in [single-stage vs multi-stage compressors](https://www.instrumentationblog.in/single-stage-and-multi-stage-compressor/), cuts power at high pressure ratios."
+keywords: [compressor power calculator, isentropic compressor power, air compressor kw calculator, adiabatic compression power, compressor discharge temperature, gas compressor power formula, compressor sizing]
+updated: 2026-11-05
+variables:
+  - { id: V, label: Inlet volumetric flow (actual), family: flow, unit: m3h, imperialUnit: cfm, default: 600, min: 0 }
+  - { id: p1, label: Suction pressure (absolute), family: pressure, unit: bar, imperialUnit: psi, default: 1.01325, min: 0 }
+  - { id: p2, label: Discharge pressure (absolute), family: pressure, unit: bar, imperialUnit: psi, default: 8, min: 0 }
+  - { id: T1, label: Suction temperature, family: temperature, unit: C, imperialUnit: F, default: 20, min: 0 }
+  - { id: k, label: Ratio of specific heats k (cp/cv), default: 1.4, min: 1.0001, help: 'Air and N₂ 1.40, natural gas ≈ 1.3, CO₂ 1.29, H₂ 1.41.' }
+  - { id: eta, label: Isentropic efficiency, family: percent, unit: '%', default: 75, min: 0.01, max: 1 }
+  - { id: Pis, label: Ideal (isentropic) power, family: power, unit: kW, imperialUnit: hp, min: 0 }
+  - { id: Ps, label: Compressor shaft power, family: power, unit: kW, imperialUnit: hp, min: 0 }
+  - { id: T2, label: Ideal discharge temperature, family: temperature, unit: C, imperialUnit: F }
+equations:
+  - Pis = k / (k - 1) * p1 * V * ((p2 / p1)^((k - 1) / k) - 1)
+  - Ps = Pis / eta
+  - T2 = T1 * (p2 / p1)^((k - 1) / k)
+faq:
+  - q: What is the isentropic compressor power formula?
+    a: P = (k ÷ (k − 1)) × p₁ × V₁ × [(p₂ ÷ p₁)^((k−1)/k) − 1] ÷ η, with absolute pressures, actual inlet flow V₁ in m³/s and isentropic efficiency η.
+  - q: How much power does an air compressor need per m³/min?
+    a: Roughly 6–7 kW per m³/min of free air at 7–8 bar(g) for a typical two-stage or oil-injected screw compressor. A single stage to 8 bar(a) at 75% isentropic efficiency needs about 6.3 kW per m³/min of shaft power.
+  - q: Why must pressures be absolute?
+    a: The compression ratio p₂/p₁ only has physical meaning in absolute pressure. Add atmospheric pressure (about 1.013 bar) to gauge readings.
+  - q: When should I use multiple stages?
+    a: Above a pressure ratio of about 4–5 per stage the discharge temperature gets too high. Intercooled stages with equal pressure ratios approach isothermal compression and use less power.
+related: [engineering/gas-flow-correction, physics/ideal-gas-law, engineering/fan-affinity-laws, engineering/absolute-gauge-pressure]
+---
+
+## How to use the compressor power calculator
+
+Enter the **actual inlet flow**, the **suction and discharge pressures in absolute units**, the **suction temperature**, the gas's **ratio of specific heats k** and the compressor's **isentropic efficiency**. The calculator returns the ideal power, the shaft power and the ideal (isentropic) discharge temperature.
+
+## Isentropic compression formulas
+
+<p class="formula">P = k/(k−1) × p₁ V₁ × [(p₂/p₁)<sup>(k−1)/k</sup> − 1] ÷ η &nbsp;·&nbsp; T₂ = T₁ (p₂/p₁)<sup>(k−1)/k</sup></p>
+
+## Worked example
+
+600 m³/h (0.1667 m³/s) of air at 1.01325 bar(a) and 20 °C compressed to 8 bar(a), k = 1.4, η = 75%:
+
+- Pressure ratio = 8 ÷ 1.01325 = 7.895; exponent (k−1)/k = 0.2857
+- Ideal power = 3.5 × 101,325 × 0.1667 × (1.8046 − 1) = **47.6 kW**
+- Shaft power = 47.6 ÷ 0.75 = **63.4 kW**
+- Ideal discharge temperature = 293.15 × 1.8046 − 273.15 = **256 °C**
+
+## Single-stage power vs discharge pressure (600 m³/h air, η = 75%)
+
+| Discharge | Ratio | Shaft power | Specific power | Ideal T₂ |
+|---|---|---|---|---|
+| 3 bar(a) | 2.96 | 28.7 kW | 2.87 kW per m³/min | 127 °C |
+| 5 bar(a) | 4.93 | 45.5 kW | 4.55 kW per m³/min | 189 °C |
+| 7 bar(a) | 6.91 | 58.1 kW | 5.81 kW per m³/min | 236 °C |
+| 8 bar(a) | 7.90 | 63.4 kW | 6.34 kW per m³/min | 256 °C |
+| 10 bar(a) | 9.87 | 72.8 kW | 7.28 kW per m³/min | 291 °C |
+| 13 bar(a) | 12.83 | 84.6 kW | 8.46 kW per m³/min | 335 °C |
+
+## Notes
+
+- Real discharge temperature is higher than the ideal value, roughly T₁ + (T₂ − T₁) ÷ η.
+- Add motor efficiency and transmission losses to size the driver.

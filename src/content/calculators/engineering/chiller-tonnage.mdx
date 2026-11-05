@@ -1,0 +1,60 @@
+---
+title: Chiller Tonnage Calculator (TR from Flow & ΔT)
+description: Calculate chiller capacity in tons of refrigeration (TR) and kW from chilled water flow and temperature difference, Q = m·cp·ΔT, with a sizing table.
+category: engineering
+intro: "A chiller's cooling load is the heat the chilled water picks up: mass flow × specific heat × temperature rise. This chiller tonnage calculator turns flow and ΔT into kW and tons of refrigeration (1 TR = 3.517 kW) — see the step-by-step guide to [calculating industrial chiller capacity](https://www.instrumentationblog.in/calculate-industrial-chiller-capacity/)."
+keywords: [chiller tonnage calculator, chiller capacity calculator, tons of refrigeration calculator, tr calculation formula, chilled water flow calculator, chiller sizing, kw to tr]
+updated: 2026-11-05
+variables:
+  - { id: V, label: Chilled water flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
+  - { id: dT, label: Temperature difference (return − supply), family: tempdiff, unit: K, imperialUnit: F, default: 5, min: 0 }
+  - { id: cp, label: Specific heat of the fluid, suffix: J/kg·K, default: 4186, min: 0 }
+  - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
+  - { id: Q, label: Cooling load, family: power, unit: kW, imperialUnit: BTUh, min: 0 }
+  - { id: TR, label: Chiller capacity, family: power, unit: TR, min: 0 }
+equations:
+  - Q = rho * V * cp * dT
+  - TR = Q
+faq:
+  - q: How do I calculate chiller tonnage?
+    a: Cooling load Q = ρ × flow × cp × ΔT. Divide the result in kW by 3.517 to get tons of refrigeration. 50 m³/h of water with a 5 K rise is about 290 kW or 82.5 TR.
+  - q: What is the GPM formula for chiller tons?
+    a: Tons = GPM × ΔT(°F) ÷ 24 for water. It comes from 500 × GPM × ΔT BTU/h divided by 12,000 BTU/h per ton.
+  - q: How much is 1 ton of refrigeration?
+    a: 12,000 BTU/h = 3.517 kW — the heat needed to melt one short ton of ice in 24 hours.
+  - q: What about glycol?
+    a: Use the glycol mixture's specific heat and density. 30% ethylene glycol has cp ≈ 3,700 J/kg·K, so it carries about 10% less heat than water at the same flow and ΔT.
+related: [engineering/heat-duty, engineering/lmtd, engineering/pump-power, chemistry/specific-heat]
+---
+
+## How to use the chiller tonnage calculator
+
+Enter the **chilled water flow**, the **temperature difference** between return and supply water, and the fluid's **specific heat** and **density** (defaults are water). The calculator gives the cooling load in kW and in tons of refrigeration. To size the flow for a known load, clear the flow and enter the tonnage.
+
+## Chiller capacity formula
+
+<p class="formula">Q = ρ × V̇ × c<sub>p</sub> × ΔT &nbsp;·&nbsp; TR = Q (kW) ÷ 3.517</p>
+
+## Worked example
+
+50 m³/h of water returning at 12 °C and supplied at 7 °C (ΔT = 5 K):
+
+- Mass flow = 998 × 50 ÷ 3,600 = 13.86 kg/s
+- Q = 13.86 × 4,186 × 5 = **290.1 kW**
+- Capacity = 290.1 ÷ 3.517 = **82.5 TR**
+
+## Chiller capacity (TR) by flow and ΔT (water)
+
+| Flow | ΔT 4 K | ΔT 5 K | ΔT 6 K | ΔT 8 K |
+|---|---|---|---|---|
+| 10 m³/h | 13.2 | 16.5 | 19.8 | 26.4 |
+| 25 m³/h | 33.0 | 41.2 | 49.5 | 66.0 |
+| 50 m³/h | 66.0 | 82.5 | 99.0 | 132.0 |
+| 100 m³/h | 132.0 | 165.0 | 198.0 | 264.0 |
+| 200 m³/h | 264.0 | 330.0 | 396.0 | 528.0 |
+| 500 m³/h | 659.9 | 824.9 | 989.9 | 1319.9 |
+
+## Notes
+
+- Add a design margin of 10–20% and allow for pump heat and pipe heat gains.
+- Comfort cooling usually uses 7 °C supply / 12 °C return (ΔT 5 K); process chillers vary.

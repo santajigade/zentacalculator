@@ -1,0 +1,60 @@
+---
+title: Crystal Load Capacitance Calculator (Pierce Oscillator Caps)
+description: Calculate crystal load capacitance from the two Pierce oscillator capacitors and stray capacitance, CL = C1·C2 ÷ (C1 + C2) + Cstray, and pick the right caps.
+category: electronics
+intro: "A quartz crystal only oscillates at its marked frequency when the circuit presents the load capacitance it was cut for. This crystal load capacitance calculator finds the effective load from the two capacitors of a Pierce oscillator plus board stray capacitance — see how a [crystal oscillator works](https://www.instrumentationblog.in/crystal-oscillator-working-principle/)."
+keywords: [crystal load capacitance calculator, crystal capacitor calculator, pierce oscillator capacitors, load capacitance formula, crystal cl calculation, microcontroller crystal capacitors, stray capacitance crystal]
+updated: 2026-11-05
+variables:
+  - { id: C1, label: Capacitor C1 (XIN to ground), family: capacitance, unit: pF, default: 22, min: 0 }
+  - { id: C2, label: Capacitor C2 (XOUT to ground), family: capacitance, unit: pF, default: 22, min: 0 }
+  - { id: Cs, label: Stray capacitance (pins + PCB), family: capacitance, unit: pF, default: 5, min: 0, help: 'Typically 2–5 pF; check the microcontroller datasheet for pin capacitance.' }
+  - { id: CL, label: Effective load capacitance CL, family: capacitance, unit: pF, min: 0 }
+equations:
+  - CL = C1 * C2 / (C1 + C2) + Cs
+faq:
+  - q: What is the crystal load capacitance formula?
+    a: CL = (C1 × C2) ÷ (C1 + C2) + Cstray. The two capacitors are effectively in series across the crystal, plus the stray capacitance of the pins and traces.
+  - q: How do I choose the capacitors for a crystal?
+    a: With equal capacitors, C1 = C2 = 2 × (CL − Cstray). A 12.5 pF crystal with 3 pF stray needs two 19 pF capacitors — use 18 pF or 20 pF standard values.
+  - q: What happens if the load capacitance is wrong?
+    a: The frequency shifts — usually by a few to a few tens of ppm. Too much capacitance lowers the frequency and can stop a weak oscillator from starting; too little raises it.
+  - q: Why not just use 22 pF?
+    a: 22 pF suits 18–20 pF crystals. Low-power 32.768 kHz crystals rated 6–12.5 pF need much smaller capacitors, and 22 pF can make them run slow or fail to start.
+related: [electronics/555-timer, electronics/resonant-frequency, electronics/capacitors-series-parallel, electronics/rc-phase-shift-oscillator]
+---
+
+## How to use the crystal load capacitance calculator
+
+Enter the two **load capacitors** of the Pierce oscillator and an estimate of the **stray capacitance** of the pins and PCB traces. The calculator returns the effective load capacitance seen by the crystal — compare it with the CL on the crystal datasheet.
+
+## Crystal load capacitance formula
+
+<p class="formula">C<sub>L</sub> = C₁C₂ ÷ (C₁ + C₂) + C<sub>stray</sub> &nbsp;·&nbsp; equal caps: C₁ = C₂ = 2 (C<sub>L</sub> − C<sub>stray</sub>)</p>
+
+## Worked example
+
+C1 = C2 = 22 pF with 5 pF stray:
+
+- Series value = 22 × 22 ÷ 44 = 11 pF
+- C<sub>L</sub> = 11 + 5 = **16 pF** — matches a 16 pF crystal
+
+## Capacitor value needed (C1 = C2) for each crystal CL
+
+| Crystal CL | Stray 2 pF | Stray 3 pF | Stray 5 pF |
+|---|---|---|---|
+| 6 pF | 8 pF | 6 pF | 2 pF |
+| 7 pF | 10 pF | 8 pF | 4 pF |
+| 8 pF | 12 pF | 10 pF | 6 pF |
+| 9 pF | 14 pF | 12 pF | 8 pF |
+| 10 pF | 16 pF | 14 pF | 10 pF |
+| 12 pF | 20 pF | 18 pF | 14 pF |
+| 12.5 pF | 21 pF | 19 pF | 15 pF |
+| 16 pF | 28 pF | 26 pF | 22 pF |
+| 18 pF | 32 pF | 30 pF | 26 pF |
+| 20 pF | 36 pF | 34 pF | 30 pF |
+
+## Notes
+
+- Round to the nearest standard E12 value (10, 12, 15, 18, 22, 27 pF) and verify the frequency with a counter if accuracy matters.
+- Keep crystal traces short and guard them with ground to keep stray capacitance low and predictable.

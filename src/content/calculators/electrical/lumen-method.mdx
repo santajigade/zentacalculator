@@ -1,0 +1,63 @@
+---
+title: Lumen Method Calculator (Number of Light Fixtures & Lux)
+description: Calculate how many light fixtures a room needs for a target lux level with the lumen method, N = E·A ÷ (Φ·UF·MF), and the illuminance actually achieved.
+category: electrical
+intro: "The lumen method is the standard hand calculation for general lighting: the lumens needed equal target illuminance × area, corrected for how much light reaches the work plane and for ageing and dirt. This lumen method calculator gives the number of fixtures and the resulting lux — the same steps as in this [lighting design calculation](https://www.instrumentationblog.in/lighting-design-calculation/)."
+keywords: [lumen method calculator, number of light fixtures calculator, lux calculator room, lighting calculation formula, how many lights do i need, lumens to lux room, utilization factor maintenance factor]
+updated: 2026-11-05
+variables:
+  - { id: E, label: Required illuminance, suffix: lux, default: 500, min: 0 }
+  - { id: Lr, label: Room length, family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
+  - { id: Wr, label: Room width, family: length, unit: m, imperialUnit: ft, default: 8, min: 0 }
+  - { id: F, label: Lumen output per fixture, suffix: lm, default: 4000, min: 0 }
+  - { id: UF, label: Utilisation factor (UF), default: 0.6, min: 0.01, max: 1, help: 'Fraction of lamp lumens reaching the work plane — 0.4–0.7 depending on room shape, reflectances and fitting.' }
+  - { id: MF, label: Maintenance factor (MF), default: 0.8, min: 0.01, max: 1, help: 'Allowance for lumen depreciation and dirt — 0.7–0.9 for LED in clean rooms.' }
+  - { id: N, label: Number of fixtures (exact), min: 0 }
+  - { id: Nr, label: Number of fixtures (rounded up), min: 0 }
+  - { id: Ea, label: Illuminance with rounded-up fixtures, suffix: lux, min: 0 }
+equations:
+  - N = E * Lr * Wr / (F * UF * MF)
+  - Nr = ceil(N)
+  - Ea = Nr * F * UF * MF / (Lr * Wr)
+faq:
+  - q: What is the lumen method formula?
+    a: N = (E × A) ÷ (Φ × UF × MF), where E is the required illuminance in lux, A the area in m², Φ the lumens per fixture, UF the utilisation factor and MF the maintenance factor.
+  - q: How many lux does an office need?
+    a: EN 12464-1 recommends 500 lux on the task area for offices and control rooms, 300 lux for classrooms and 100–200 lux for corridors and warehouses.
+  - q: What is the utilisation factor?
+    a: The fraction of the lamps' light that reaches the working plane. It depends on the room index, surface reflectances and the fitting's light distribution and comes from the manufacturer's UF table.
+  - q: How should I arrange the fixtures?
+    a: In a regular grid with spacing no more than the fitting's maximum spacing-to-height ratio (often 1.0–1.5 × mounting height above the work plane), so the lighting is uniform.
+related: [electrical/kw-to-amps, electrical/load-factor, electronics/led-resistor, physics/inverse-square-law]
+---
+
+## How to use the lumen method calculator
+
+Enter the **target illuminance**, the **room length and width**, the **lumens per fixture** and the **utilisation and maintenance factors**. The calculator returns the exact number of fixtures, the number rounded up and the illuminance you will actually get.
+
+## Lumen method formula
+
+<p class="formula">N = E × A ÷ (Φ × UF × MF) &nbsp;·&nbsp; E<sub>achieved</sub> = N × Φ × UF × MF ÷ A</p>
+
+## Worked example
+
+An office 10 m × 8 m (80 m²) needs 500 lux, using 4,000 lm LED panels with UF = 0.6 and MF = 0.8:
+
+- N = 500 × 80 ÷ (4,000 × 0.6 × 0.8) = 40,000 ÷ 1,920 = **20.83** → **21 fixtures**
+- Achieved = 21 × 1,920 ÷ 80 = **504 lux**
+
+## Fixtures for an 80 m² room by application (4,000 lm, UF 0.6, MF 0.8)
+
+| Application | Target | Exact N | Fixtures |
+|---|---|---|---|
+| Corridors, stores | 100 lux | 4.2 | 5 |
+| Warehouse | 200 lux | 8.3 | 9 |
+| Classroom | 300 lux | 12.5 | 13 |
+| Office, control room | 500 lux | 20.8 | 21 |
+| Workshop — fine work | 750 lux | 31.2 | 32 |
+| Inspection, drawing office | 1000 lux | 41.7 | 42 |
+
+## Notes
+
+- In practice round to a number that fits a neat grid (for example 21 → 4 × 5 = 20 or 4 × 6 = 24) and recheck the lux.
+- The lumen method gives the average illuminance; use lighting software to check uniformity and glare.

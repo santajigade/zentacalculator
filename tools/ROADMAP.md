@@ -44,18 +44,18 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Gas line sizing (velocity limit)
 
 ## Engineering — Pressure, level & tanks
-- [ ] Manometer (U-tube, inclined) (ib)
-- [ ] Absolute ↔ gauge ↔ vacuum pressure (ib)
+- [x] Manometer (U-tube, inclined) (ib)
+- [x] Absolute ↔ gauge ↔ vacuum pressure (ib)
 - [ ] Bubbler (purge) level (ib)
 - [ ] Interface level by DP (ib)
 - [ ] Capacitance level probe
 - [ ] Radar level: dielectric constant & reflection
-- [ ] Spherical tank volume (ib)
+- [x] Spherical tank volume (ib)
 - [ ] Horizontal tank with dished/hemispherical heads
 - [ ] Cone-bottom tank volume
 - [ ] Tank fill / drain time
 - [ ] Pressure vessel wall thickness (ASME, simplified)
-- [ ] Pipe wall thickness (Barlow)
+- [x] Pipe wall thickness (Barlow)
 - [ ] Hydrostatic test pressure (ib)
 - [ ] Pressure gauge range selection (ib)
 - [ ] Bourdon gauge accuracy class error (ib)
@@ -63,29 +63,29 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 ## Engineering — Valves, pumps & compressors
 - [ ] Control valve sizing for gas (Cg / Cv)
 - [ ] Control valve sizing for steam
-- [ ] Valve authority
+- [x] Valve authority
 - [ ] Cavitation index (σ) / choked flow
 - [ ] Actuator thrust / torque sizing (ib)
 - [ ] Pump NPSH available (ib)
-- [ ] Pump affinity laws
-- [ ] Pump head from pressure
+- [x] Pump affinity laws
+- [x] Pump head from pressure
 - [ ] System curve & duty point
-- [ ] Compressor power (isentropic)
+- [x] Compressor power (isentropic)
 - [ ] Air compressor receiver size
 - [ ] Compressed air leak cost
-- [ ] Fan affinity laws & fan power
+- [x] Fan affinity laws & fan power
 - [ ] Safety relief valve sizing (API 520 liquid, simplified)
 
 ## Engineering — Heat transfer & HVAC
-- [ ] LMTD heat exchanger
-- [ ] Heat exchanger area (Q = U·A·LMTD) (ib)
+- [x] LMTD heat exchanger
+- [x] Heat exchanger area (Q = U·A·LMTD) (ib)
 - [ ] Steam consumption for heating
 - [ ] Pipe heat loss (insulated)
 - [ ] Insulation thickness
-- [ ] Convection heat transfer (Q = hAΔT)
+- [x] Convection heat transfer (Q = hAΔT)
 - [x] Radiation heat transfer (Stefan–Boltzmann)
 - [ ] Cooling tower range/approach & evaporation
-- [ ] Chiller tonnage (TR) from flow & ΔT
+- [x] Chiller tonnage (TR) from flow & ΔT
 - [ ] Air conditioner BTU / room size
 - [ ] Duct size (equal friction)
 - [ ] CFM air changes per hour
@@ -112,13 +112,13 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 
 ## Engineering — Process & chemical
 - [ ] Mass balance (mixing two streams)
-- [ ] Residence time
+- [x] Residence time
 - [ ] Reactor space time / conversion
 - [ ] Boiler efficiency (direct method)
 - [ ] Steam table lookup (saturated)
 - [ ] Specific gravity ↔ density ↔ °Brix / °Baumé
 - [ ] Viscosity converter (cP, cSt, SSU)
-- [ ] Kinematic ↔ dynamic viscosity
+- [x] Kinematic ↔ dynamic viscosity
 - [ ] Combustion air requirement
 - [ ] Flue gas O₂ to excess air
 - [ ] Heating value converter (GCV/NCV)
@@ -152,15 +152,15 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Energy consumption kWh (plant) (ib)
 - [x] Maximum demand & load factor
 - [ ] Electricity bill with demand charges (India HT tariff)
-- [ ] Lighting: lumens & lux (room) 
-- [ ] Number of light fixtures (lumen method)
+- [x] Lighting: lumens & lux (room) 
+- [x] Number of light fixtures (lumen method)
 - [ ] Single-phase transformer current
 - [x] Autotransformer power
 - [x] Generator frequency & poles
 - [x] Synchronous generator power angle
-- [ ] Transmission line: Ferranti effect (ib)
+- [x] Transmission line: Ferranti effect (ib)
 - [x] Skin depth (ib)
-- [ ] Insulation resistance / PI (ib)
+- [x] Insulation resistance / PI (ib)
 - [ ] Motor winding resistance unbalance (ib)
 - [x] Watt-hour meter constant (imp/kWh)
 - [ ] Lightning protection: rolling sphere radius
@@ -179,8 +179,8 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Air-core coil inductance (Wheeler)
 - [ ] Ohm's law for AC (power, apparent, reactive)
 - [ ] Decoupling capacitor selection (ib)
-- [ ] Crystal load capacitance
-- [ ] RC oscillator / phase-shift oscillator frequency (ib)
+- [x] Crystal load capacitance
+- [x] RC oscillator / phase-shift oscillator frequency (ib)
 - [ ] Schmitt trigger thresholds
 - [ ] Comparator hysteresis resistors
 - [ ] Photodiode transimpedance amplifier (ib)
@@ -193,7 +193,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Binary / hex / decimal / BCD converter (ib)
 - [ ] Gray code converter (ib)
 - [ ] Logic level / pull-up resistor (I2C)
-- [ ] UART baud rate error
+- [x] UART baud rate error
 - [ ] RS-485 cable length & termination (ib)
 - [ ] Hall-effect current sensor scaling (ib)
 - [x] Shunt resistor current measurement (ib)

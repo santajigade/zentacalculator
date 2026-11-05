@@ -1,0 +1,67 @@
+---
+title: Fan Power & Fan Affinity Laws Calculator (CFM, Pa, kW)
+description: Calculate fan air and shaft power from airflow, pressure rise and efficiency, then use the fan affinity laws to predict flow, pressure and power at a new speed.
+category: engineering
+intro: "A fan's air power is simply airflow times pressure rise, and its shaft power is that divided by the fan efficiency. This fan affinity laws calculator finds both, then scales flow, pressure and power to a new speed — flow with the speed ratio, pressure with its square and power with its cube — which is how [VFD energy savings](https://www.instrumentationblog.in/vfd-sizing-selection-guide/) on fans are estimated."
+keywords: [fan affinity laws calculator, fan power calculator, fan shaft power, blower power calculator, fan laws, cfm static pressure power, fan speed change]
+updated: 2026-11-05
+variables:
+  - { id: Q, label: Airflow, family: flow, unit: m3h, imperialUnit: cfm, default: 10000, min: 0 }
+  - { id: dp, label: Fan total pressure rise, family: pressure, unit: Pa, imperialUnit: inH2O, default: 1000, min: 0 }
+  - { id: eta, label: Fan efficiency (total), family: percent, unit: '%', default: 70, min: 0.01, max: 1 }
+  - { id: N1, label: Present speed N₁, suffix: rpm, default: 1450, min: 0 }
+  - { id: N2, label: New speed N₂, suffix: rpm, default: 1160, min: 0 }
+  - { id: Pa, label: Air power, family: power, unit: kW, imperialUnit: hp, min: 0 }
+  - { id: Ps, label: Fan shaft power, family: power, unit: kW, imperialUnit: hp, min: 0 }
+  - { id: Q2, label: Airflow at new speed, family: flow, unit: m3h, imperialUnit: cfm, min: 0 }
+  - { id: dp2, label: Pressure at new speed, family: pressure, unit: Pa, imperialUnit: inH2O, min: 0 }
+  - { id: Ps2, label: Shaft power at new speed, family: power, unit: kW, imperialUnit: hp, min: 0 }
+equations:
+  - Pa = Q * dp
+  - Ps = Pa / eta
+  - Q2 = Q * N2 / N1
+  - dp2 = dp * (N2 / N1)^2
+  - Ps2 = Ps * (N2 / N1)^3
+faq:
+  - q: How do I calculate fan power?
+    a: Air power = Q × Δp (m³/s × Pa = W). Shaft power = air power ÷ fan efficiency. 10,000 m³/h at 1,000 Pa is 2.78 kW of air power, or about 3.97 kW at the shaft with a 70% efficient fan.
+  - q: What are the fan affinity laws?
+    a: At constant air density, Q₂/Q₁ = N₂/N₁, p₂/p₁ = (N₂/N₁)² and P₂/P₁ = (N₂/N₁)³.
+  - q: What is the fan power formula in imperial units?
+    a: Shaft horsepower = CFM × total pressure (in. w.g.) ÷ (6356 × efficiency).
+  - q: Should I use static or total pressure?
+    a: Use fan total pressure with total efficiency, or fan static pressure with static efficiency — do not mix them. Both give the same shaft power.
+related: [engineering/pump-affinity-laws, engineering/pump-power, engineering/torque-power-speed, electrical/three-phase-motor-power]
+---
+
+## How to use the fan power calculator
+
+Enter the **airflow**, the **pressure rise** across the fan and the **fan efficiency** to get air and shaft power. Then enter the present and new **speeds** to see how flow, pressure and power change — for example when a VFD slows the fan.
+
+## Fan power and fan law formulas
+
+<p class="formula">P<sub>air</sub> = Q × Δp &nbsp;·&nbsp; P<sub>shaft</sub> = Q × Δp ÷ η &nbsp;·&nbsp; Q₂ = Q₁(N₂/N₁) &nbsp;·&nbsp; Δp₂ = Δp₁(N₂/N₁)² &nbsp;·&nbsp; P₂ = P₁(N₂/N₁)³</p>
+
+## Worked example
+
+10,000 m³/h (2.7778 m³/s) against 1,000 Pa, fan efficiency 70%, slowed from 1,450 to 1,160 rpm:
+
+- Air power = 2.7778 × 1,000 = **2.778 kW**
+- Shaft power = 2.778 ÷ 0.70 = **3.968 kW**
+- At 1,160 rpm: Q = **8,000 m³/h**, Δp = **640 Pa**, shaft power = **2.032 kW**
+
+## Fan speed table (10,000 m³/h, 1,000 Pa, 70% efficiency)
+
+| Speed | Airflow | Pressure | Shaft power |
+|---|---|---|---|
+| 100% | 10,000 m³/h | 1000 Pa | 3.97 kW |
+| 90% | 9,000 m³/h | 810 Pa | 2.89 kW |
+| 80% | 8,000 m³/h | 640 Pa | 2.03 kW |
+| 70% | 7,000 m³/h | 490 Pa | 1.36 kW |
+| 60% | 6,000 m³/h | 360 Pa | 0.86 kW |
+| 50% | 5,000 m³/h | 250 Pa | 0.50 kW |
+
+## Notes
+
+- Air density matters: pressure and power scale with density, so a fan handling hot air needs less power for the same volume flow.
+- Add motor and drive losses to the shaft power when sizing the motor.

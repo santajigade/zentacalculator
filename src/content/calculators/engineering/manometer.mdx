@@ -1,0 +1,57 @@
+---
+title: Manometer Calculator (U-Tube & Inclined Manometer)
+description: Calculate differential pressure from a U-tube or inclined manometer reading, Δp = (ρm − ρf)·g·L·sin θ, for water, oil or mercury filled manometers.
+category: engineering
+intro: "A manometer measures pressure difference as the height of a liquid column, and tilting the tube spreads a small height over a longer, easier-to-read scale. This manometer calculator converts a U-tube or inclined manometer reading into pressure, including the effect of the fluid above the manometer liquid — see the [U-tube manometer working principle and formula](https://www.instrumentationblog.in/u-tube-manometer-working-formula/)."
+keywords: [manometer calculator, u tube manometer calculator, inclined manometer calculator, manometer formula, differential pressure manometer, mm water column to pa, manometer reading to pressure]
+updated: 2026-11-05
+variables:
+  - { id: rm, label: Manometer liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
+  - { id: rf, label: Density of the fluid above it (process fluid), family: density, unit: kgm3, imperialUnit: lbft3, default: 1.2, min: 0 }
+  - { id: L, label: Reading along the tube, family: length, unit: mm, imperialUnit: in, default: 150, min: 0 }
+  - { id: th, label: Tube angle from horizontal (90° = U-tube), family: angle, unit: deg, default: 30, min: 0, max: 1.5707964 }
+  - { id: h, label: Vertical height difference, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: dp, label: Differential pressure, family: pressure, unit: Pa, imperialUnit: inH2O, min: 0 }
+equations:
+  - h = L * sin(th)
+  - dp = (rm - rf) * g0 * h
+faq:
+  - q: What is the U-tube manometer formula?
+    a: Δp = (ρm − ρf) × g × h, where ρm is the manometer liquid density, ρf the density of the fluid above it and h the difference in liquid levels. For gases ρf is usually negligible.
+  - q: How does an inclined manometer work?
+    a: The vertical height is h = L × sin θ, so at 30° the scale reading L is twice the vertical height; at about 5.7° it is ten times. This makes small pressures easier to read.
+  - q: What fluid should I use in a manometer?
+    a: Water or light gauge oil for small draft and filter pressures (a few hundred Pa), mercury for pressures of tens of kPa. Mercury is now avoided for safety reasons.
+  - q: What is 1 mm of water column in pascals?
+    a: About 9.81 Pa (9.80665 Pa by definition at standard gravity).
+related: [engineering/hydrostatic-pressure, engineering/absolute-gauge-pressure, engineering/pressure-to-head, engineering/pitot-tube-velocity]
+---
+
+## How to use the manometer calculator
+
+Enter the **manometer liquid density**, the **density of the fluid above it** (air ≈ 1.2 kg/m³, or the process liquid), the **reading along the tube** and the **tube angle** — 90° for a vertical U-tube. The calculator returns the vertical height and the differential pressure.
+
+## Manometer formula
+
+<p class="formula">h = L × sin θ &nbsp;·&nbsp; Δp = (ρ<sub>m</sub> − ρ<sub>f</sub>) × g × h</p>
+
+## Worked example
+
+A water-filled inclined manometer at 30° reads 150 mm along the tube, measuring air:
+
+- h = 150 × sin 30° = **75 mm**
+- Δp = (1,000 − 1.2) × 9.80665 × 0.075 = **734.6 Pa**
+
+## Pressure for a 100 mm scale reading (Pa, measuring air)
+
+| Manometer liquid | Vertical (90°) | Inclined 30° | Inclined 10° |
+|---|---|---|---|
+| Water | 979.5 | 489.7 | 170.1 |
+| Red gauge oil (SG 0.826) | 808.9 | 404.4 | 140.5 |
+| Paraffin (SG 0.80) | 783.4 | 391.7 | 136.0 |
+| Mercury | 13331.0 | 6665.5 | 2314.9 |
+
+## Notes
+
+- For a liquid-over-liquid manometer (for example mercury under water) the fluid density term matters: use ρ<sub>m</sub> − ρ<sub>f</sub>.
+- Level the instrument carefully — an error of 1° at a 10° incline changes the reading by about 10%.

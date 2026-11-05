@@ -1,0 +1,60 @@
+---
+title: Convection Heat Transfer Calculator (Q = h·A·ΔT)
+description: Calculate convective heat transfer rate with Newton's law of cooling, Q = h·A·ΔT, or solve for the heat transfer coefficient, area or temperature difference.
+category: engineering
+intro: "Convection is heat carried away by a moving fluid, and its rate is set by the heat transfer coefficient h, the surface area and the surface-to-fluid temperature difference. This convection heat transfer calculator solves Q = h·A·(Ts − T∞) for any one unknown and lists typical h values — it pairs with [calculating heat loss in piping](https://www.instrumentationblog.in/calculate-heat-loss-in-piping/)."
+keywords: [convection heat transfer calculator, q = h a delta t calculator, heat transfer coefficient calculator, convective heat transfer formula, newton's law of cooling convection, heat flux calculator]
+updated: 2026-11-05
+variables:
+  - { id: h, label: Heat transfer coefficient h, suffix: W/m²·K, default: 25, min: 0 }
+  - { id: A, label: Surface area, family: area, unit: m2, imperialUnit: ft2, default: 2, min: 0 }
+  - { id: Ts, label: Surface temperature, family: temperature, unit: C, imperialUnit: F, default: 80 }
+  - { id: Tf, label: Fluid (bulk) temperature, family: temperature, unit: C, imperialUnit: F, default: 25 }
+  - { id: Q, label: Heat transfer rate, family: power, unit: W, imperialUnit: BTUh }
+  - { id: q, label: Heat flux, suffix: W/m² }
+equations:
+  - Q = h * A * (Ts - Tf)
+  - q = Q / A
+faq:
+  - q: What is the convection heat transfer formula?
+    a: Q = h × A × (Ts − T∞), where h is the convective heat transfer coefficient (W/m²·K), A the surface area and Ts − T∞ the difference between surface and fluid temperature.
+  - q: What is a typical heat transfer coefficient for air?
+    a: About 2–25 W/m²·K in still air (natural convection) and 25–250 W/m²·K with forced air flow.
+  - q: Is this the same as Newton's law of cooling?
+    a: Yes — Q = hAΔT is Newton's law of cooling. The physics version of that law gives the temperature-versus-time curve of a cooling object.
+  - q: What does a negative result mean?
+    a: The fluid is hotter than the surface, so heat flows into the surface instead of out of it.
+related: [physics/newtons-law-of-cooling, physics/heat-conduction, engineering/lmtd, physics/stefan-boltzmann-law]
+---
+
+## How to use the convection heat transfer calculator
+
+Enter the **heat transfer coefficient h**, the **surface area** and the **surface and fluid temperatures**. The calculator returns the heat transfer rate and the heat flux. Clear any input and enter Q to solve for it — for example the h needed to remove a known heat load.
+
+## Convection formula
+
+<p class="formula">Q = h × A × (T<sub>s</sub> − T<sub>∞</sub>) &nbsp;·&nbsp; q = Q ÷ A</p>
+
+## Worked example
+
+A 2 m² surface at 80 °C in air at 25 °C with h = 25 W/m²·K:
+
+- Q = 25 × 2 × (80 − 25) = **2,750 W**
+- Heat flux = 2,750 ÷ 2 = **1,375 W/m²**
+
+## Typical heat transfer coefficients (2 m², ΔT = 55 K)
+
+| Situation | h (W/m²·K) | Heat transfer rate |
+|---|---|---|
+| Free convection — air | 2 – 25 | 220 – 2,750 W |
+| Free convection — water | 50 – 1,000 | 5,500 – 110,000 W |
+| Forced convection — air | 25 – 250 | 2,750 – 27,500 W |
+| Forced convection — water | 100 – 20,000 | 11,000 – 2,200,000 W |
+| Forced convection — oil | 50 – 1,500 | 5,500 – 165,000 W |
+| Boiling water | 2,500 – 100,000 | 275,000 – 11,000,000 W |
+| Condensing steam | 5,000 – 100,000 | 550,000 – 11,000,000 W |
+
+## Notes
+
+- Hot surfaces also lose heat by radiation — at 80 °C in still air it can equal the convective loss; see the [Stefan–Boltzmann calculator](/physics/stefan-boltzmann-law/).
+- For heat transfer between two fluids through a wall, use an overall coefficient U and the [LMTD calculator](/engineering/lmtd/).

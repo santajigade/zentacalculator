@@ -1,0 +1,64 @@
+---
+title: Ferranti Effect Calculator (Receiving-End Voltage Rise)
+description: Calculate the receiving-end voltage rise of a lightly loaded or open transmission line due to the Ferranti effect from line length, inductance and capacitance.
+category: electrical
+intro: "On a long, lightly loaded transmission line the charging current flowing through the line inductance makes the receiving-end voltage rise above the sending-end voltage. This Ferranti effect calculator uses the lossless-line equation Vr = Vs ÷ cos(βl) to find that rise — see the [Ferranti effect in transmission lines](https://www.instrumentationblog.in/ferranti-effect-transmission-line/)."
+keywords: [ferranti effect calculator, receiving end voltage rise, open circuit transmission line voltage, ferranti effect formula, long transmission line voltage, line charging voltage rise, shunt reactor sizing]
+updated: 2026-11-05
+variables:
+  - { id: Vs, label: Sending-end voltage, family: voltage, unit: kV, default: 400, min: 0 }
+  - { id: l, label: Line length, family: length, unit: km, imperialUnit: mi, default: 300, min: 0 }
+  - { id: L, label: Series inductance per km, suffix: mH/km, default: 1, min: 0 }
+  - { id: C, label: Shunt capacitance per km, suffix: nF/km, default: 11.5, min: 0 }
+  - { id: f, label: System frequency, family: frequency, unit: Hz, default: 50, min: 0 }
+  - { id: bl, label: Electrical length βl, family: angle, unit: deg, min: 0 }
+  - { id: Vr, label: Receiving-end voltage (no load), family: voltage, unit: kV, min: 0 }
+  - { id: rise, label: Voltage rise, family: percent, unit: '%', decimals: 2 }
+equations:
+  - bl = 2 * pi * f * sqrt(L * 1e-6 * C * 1e-12) * l
+  - Vr = Vs / cos(bl)
+  - rise = Vr / Vs - 1
+faq:
+  - q: What is the Ferranti effect?
+    a: The rise of receiving-end voltage above sending-end voltage on a long line at light load or no load. The line's shunt capacitance draws a leading charging current, and its flow through the series inductance raises the voltage along the line.
+  - q: What is the Ferranti effect formula?
+    a: For a lossless line on open circuit, Vr = Vs ÷ cos(βl), with β = ω√(LC). A useful approximation is Vr ≈ Vs × (1 + ω²LC·l² ÷ 2).
+  - q: How big is the Ferranti rise?
+    a: For a 50 Hz overhead line it is roughly 0.5% at 100 km, 5% at 300 km and about 15% at 500 km.
+  - q: How is the Ferranti effect controlled?
+    a: With shunt reactors at the line ends (switched in at light load), SVCs or STATCOMs, and by energising long lines from the stronger end.
+related: [electrical/per-unit, electrical/cable-voltage-drop, electrical/capacitor-bank-kvar, electrical/skin-depth]
+---
+
+## How to use the Ferranti effect calculator
+
+Enter the **sending-end voltage**, the **line length**, the line's **inductance and capacitance per km** and the **frequency**. The calculator returns the line's electrical length, the open-circuit receiving-end voltage and the percentage rise. Typical overhead-line values are about 1.0 mH/km and 11–12 nF/km; cables have much higher capacitance.
+
+## Ferranti effect formula
+
+<p class="formula">β = 2πf √(LC) &nbsp;·&nbsp; V<sub>r</sub> = V<sub>s</sub> ÷ cos(βl)</p>
+
+## Worked example
+
+A 400 kV, 300 km, 50 Hz overhead line with L = 1.0 mH/km and C = 11.5 nF/km, open at the far end:
+
+- β = 2π × 50 × √(1.0×10⁻⁶ × 11.5×10⁻¹²) = 1.0654e-03 rad/km
+- βl = 0.3196 rad (18.31°)
+- V<sub>r</sub> = 400 ÷ cos(0.3196) = **421.3 kV** — a **5.33%** rise
+
+## Ferranti rise vs line length (400 kV, 1.0 mH/km, 11.5 nF/km, 50 Hz)
+
+| Length | Vr ÷ Vs | Rise | Vr |
+|---|---|---|---|
+| 50 km | 1.0014 | 0.14% | 400.6 kV |
+| 100 km | 1.0057 | 0.57% | 402.3 kV |
+| 200 km | 1.0231 | 2.31% | 409.3 kV |
+| 300 km | 1.0533 | 5.33% | 421.3 kV |
+| 400 km | 1.0982 | 9.82% | 439.3 kV |
+| 500 km | 1.1608 | 16.08% | 464.3 kV |
+| 800 km | 1.5192 | 51.92% | 607.7 kV |
+
+## Notes
+
+- The lossless model slightly overstates the rise; line resistance and any load reduce it.
+- Underground cables show the effect over much shorter distances because their capacitance is 20–50 times higher.

@@ -1,0 +1,64 @@
+---
+title: Spherical Tank Volume Calculator (Partially Filled Sphere)
+description: Calculate the liquid volume in a partially filled spherical tank from its diameter and liquid level, the full capacity and percent filled, with a level table.
+category: engineering
+intro: "Storage spheres for LPG, ammonia and other pressurised liquids hold far more or less than a simple level percentage suggests, because the cross-section changes with height. This spherical tank volume calculator uses the spherical-cap formula to convert level to volume — the basis of [LPG level measurement in bullets and spheres](https://www.instrumentationblog.in/lpg-level-measurement-bullet-sphere/) and of [tank volume from level](https://www.instrumentationblog.in/tank-volume-from-level-measurement/)."
+keywords: [spherical tank volume calculator, partially filled sphere volume, sphere tank level to volume, spherical cap volume, lpg sphere volume, tank strapping sphere, sphere fill percentage]
+updated: 2026-11-05
+variables:
+  - { id: D, label: Sphere inside diameter, family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
+  - { id: h, label: Liquid level (from bottom), family: length, unit: m, imperialUnit: ft, default: 4, min: 0 }
+  - { id: V, label: Liquid volume, family: volume, unit: m3, imperialUnit: galUS, min: 0 }
+  - { id: Vt, label: Total capacity, family: volume, unit: m3, imperialUnit: galUS, min: 0 }
+  - { id: f, label: Percent filled (by volume), family: percent, unit: '%', min: 0, max: 1 }
+equations:
+  - V = pi * h^2 * (3 * D / 2 - h) / 3
+  - Vt = pi * D^3 / 6
+  - f = V / Vt
+faq:
+  - q: What is the formula for a partially filled sphere?
+    a: V = π h² (3R − h) ÷ 3, where R is the radius and h the liquid depth. It is the volume of a spherical cap and holds for any level from 0 to 2R.
+  - q: Why is 50% level exactly 50% volume?
+    a: A sphere is symmetrical about its equator, so half the height holds half the volume. Below and above the middle, volume changes much more slowly per unit level than in a vertical cylinder.
+  - q: How full should an LPG sphere be filled?
+    a: Typically to no more than 85% of volume to leave vapour space for thermal expansion — check the local regulation and the design.
+  - q: Does the calculator use inside or outside diameter?
+    a: Inside diameter. Subtract twice the wall thickness from the outside diameter for an accurate capacity.
+related: [engineering/horizontal-tank-volume, engineering/vertical-tank-volume, math/sphere, engineering/dp-level-range]
+---
+
+## How to use the spherical tank volume calculator
+
+Enter the **inside diameter** of the sphere and the **liquid level** measured from the bottom. The calculator returns the liquid volume, the full capacity and the percent filled. To find the level for a given volume, clear the level and enter the volume.
+
+## Spherical tank volume formula
+
+<p class="formula">V = π h² (3R − h) ÷ 3 &nbsp;·&nbsp; V<sub>total</sub> = π D³ ÷ 6</p>
+
+## Worked example
+
+A 10 m sphere (R = 5 m) with 4 m of liquid:
+
+- V = π × 4² × (15 − 4) ÷ 3 = **184.31 m³**
+- Capacity = π × 10³ ÷ 6 = **523.60 m³**
+- Filled = 184.31 ÷ 523.60 = **35.2%** — at 40% of the level
+
+## Level-to-volume table for a 10 m sphere
+
+| Level | Volume | % of capacity |
+|---|---|---|
+| 10% (1.0 m) | 14.66 m³ | 2.8% |
+| 20% (2.0 m) | 54.45 m³ | 10.4% |
+| 30% (3.0 m) | 113.10 m³ | 21.6% |
+| 40% (4.0 m) | 184.31 m³ | 35.2% |
+| 50% (5.0 m) | 261.80 m³ | 50.0% |
+| 60% (6.0 m) | 339.29 m³ | 64.8% |
+| 70% (7.0 m) | 410.50 m³ | 78.4% |
+| 80% (8.0 m) | 469.14 m³ | 89.6% |
+| 90% (9.0 m) | 508.94 m³ | 97.2% |
+| 100% (10.0 m) | 523.60 m³ | 100.0% |
+
+## Notes
+
+- Level and volume are only equal (in percent) at 0, 50% and 100%.
+- For mass, multiply the volume by the liquid density at the measured temperature.

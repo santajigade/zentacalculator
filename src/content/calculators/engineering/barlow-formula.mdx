@@ -1,0 +1,60 @@
+---
+title: Barlow's Formula Calculator (Pipe Wall Thickness & Pressure)
+description: Use Barlow's formula P = 2·S·t ÷ D to find the burst or allowable pressure of a pipe, or the wall thickness needed, with a design factor and Sch 40 table.
+category: engineering
+intro: "Barlow's formula relates the internal pressure a pipe can hold to its wall thickness, outside diameter and material strength. This Barlow's formula calculator gives the burst pressure and the design (allowable) pressure with a design factor, or the minimum wall thickness for a given pressure — a quick check before [hydrostatic testing](https://www.instrumentationblog.in/hydrostatic-testing-in-oil-gas-industry/)."
+keywords: [barlow's formula calculator, pipe wall thickness calculator, pipe pressure rating calculator, barlow formula, pipe burst pressure calculator, hoop stress pipe, allowable pipe pressure]
+updated: 2026-11-05
+variables:
+  - { id: S, label: Material strength (SMYS or allowable stress), family: pressure, unit: MPa, imperialUnit: psi, default: 290, min: 0 }
+  - { id: t, label: Wall thickness, family: length, unit: mm, imperialUnit: in, default: 7.11, min: 0 }
+  - { id: D, label: Outside diameter, family: length, unit: mm, imperialUnit: in, default: 168.3, min: 0 }
+  - { id: F, label: Design factor (1 = burst), default: 0.72, min: 0, max: 1, help: 'ASME B31.8 class 1 = 0.72, class 2 = 0.60, class 3 = 0.50, class 4 = 0.40.' }
+  - { id: Pb, label: Pressure at which hoop stress reaches S (F = 1), family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+  - { id: Pd, label: Design (allowable) pressure, family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+equations:
+  - Pb = 2 * S * t / D
+  - Pd = Pb * F
+faq:
+  - q: What is Barlow's formula?
+    a: P = 2 × S × t ÷ D, where S is the allowable or yield stress, t the wall thickness and D the outside diameter. It is the thin-wall hoop stress equation.
+  - q: How do I find the wall thickness for a given pressure?
+    a: Rearrange to t = P × D ÷ (2 × S × F). In the calculator clear the wall thickness and enter the design pressure.
+  - q: Which strength value should I use?
+    a: For gas pipelines (ASME B31.8) use the specified minimum yield strength with a design factor. For burst estimates use tensile strength with F = 1. For process piping use the code allowable stress.
+  - q: Does Barlow's formula include corrosion allowance?
+    a: No. Add corrosion allowance and mill tolerance (often 12.5% of wall) to the thickness — ASME B31.3 uses t = PD ÷ 2(SEW + PY) plus allowances.
+related: [engineering/hydrostatic-pressure, engineering/factor-of-safety, engineering/water-hammer, engineering/pipe-flow-velocity]
+---
+
+## How to use the Barlow's formula calculator
+
+Enter the pipe material **strength**, the **wall thickness** and the **outside diameter**, plus a **design factor**. The calculator returns the pressure at which the hoop stress equals S and the design pressure. Clear the wall thickness and enter a design pressure to find the minimum wall.
+
+## Barlow's formula
+
+<p class="formula">P = 2 S t ÷ D &nbsp;·&nbsp; P<sub>design</sub> = 2 S t F ÷ D &nbsp;·&nbsp; t = P D ÷ (2 S F)</p>
+
+## Worked example
+
+6" API 5L X42 line pipe (SMYS 290 MPa), OD 168.3 mm, wall 7.11 mm, design factor 0.72:
+
+- P at SMYS = 2 × 290 × 7.11 ÷ 168.3 = **24.50 MPa** (245 bar)
+- Design pressure = 24.50 × 0.72 = **17.64 MPa** (176 bar)
+
+## Schedule 40 carbon steel pipe, S = 241 MPa (API 5L Gr B SMYS)
+
+| Size | OD (mm) | Wall (mm) | P at SMYS (MPa) | P with F = 0.72 (MPa) |
+|---|---|---|---|---|
+| 2" Sch 40 | 60.3 | 3.91 | 31.3 | 22.5 |
+| 3" Sch 40 | 88.9 | 5.49 | 29.8 | 21.4 |
+| 4" Sch 40 | 114.3 | 6.02 | 25.4 | 18.3 |
+| 6" Sch 40 | 168.3 | 7.11 | 20.4 | 14.7 |
+| 8" Sch 40 | 219.1 | 8.18 | 18.0 | 13.0 |
+| 10" Sch 40 | 273.0 | 9.27 | 16.4 | 11.8 |
+| 12" Sch 40 | 323.8 | 10.31 | 15.3 | 11.0 |
+
+## Notes
+
+- Barlow's formula is a thin-wall approximation; it is conservative for thick walls (D/t below about 20).
+- Always verify against the governing code (ASME B31.1, B31.3, B31.4, B31.8) before use.

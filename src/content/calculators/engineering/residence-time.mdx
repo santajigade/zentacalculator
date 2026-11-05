@@ -1,0 +1,57 @@
+---
+title: Residence Time Calculator (Hold-Up Time, τ = V ÷ Q)
+description: Calculate residence time (hold-up or hydraulic retention time) of a tank, reactor or pipe from volume and flow rate, plus space velocity in volumes per hour.
+category: engineering
+intro: "Residence time is the average time a fluid spends inside a vessel — the liquid volume divided by the throughput. This residence time calculator works out τ = V ÷ Q for tanks, reactors, settling basins and pipes, and the space velocity (tank turnovers per hour)."
+keywords: [residence time calculator, hold up time calculator, hydraulic retention time calculator, space time reactor, retention time formula, tank residence time, space velocity calculator]
+updated: 2026-11-05
+variables:
+  - { id: V, label: Liquid volume (working volume), family: volume, unit: m3, imperialUnit: galUS, default: 10, min: 0 }
+  - { id: Q, label: Volumetric flow rate (throughput), family: flow, unit: m3h, imperialUnit: gpm, default: 5, min: 0 }
+  - { id: tau, label: Residence time τ, family: seconds, unit: h, min: 0 }
+  - { id: SV, label: Space velocity (volumes per hour), suffix: 1/h, min: 0 }
+equations:
+  - tau = V / Q
+  - SV = 3600 / tau
+faq:
+  - q: What is the residence time formula?
+    a: τ = V ÷ Q — the working volume of the vessel divided by the volumetric flow rate through it. 10 m³ with 5 m³/h flowing through gives 2 hours.
+  - q: Is residence time the same as space time?
+    a: For a reactor, space time τ = V ÷ Q₀ is based on the inlet flow. It equals the mean residence time when the fluid density does not change through the reactor.
+  - q: What is space velocity?
+    a: The reciprocal of space time — how many vessel volumes pass through per hour. A residence time of 2 hours is a space velocity of 0.5 h⁻¹.
+  - q: Do all particles stay for τ?
+    a: Only in ideal plug flow. In a well-mixed tank, residence times follow an exponential distribution — about 63% of the fluid leaves before τ.
+related: [engineering/vertical-tank-volume, engineering/horizontal-tank-volume, engineering/pipe-flow-velocity, engineering/mass-flow-rate]
+---
+
+## How to use the residence time calculator
+
+Enter the **working (liquid) volume** and the **flow rate** through the vessel. The calculator returns the residence time and the space velocity. To size a vessel, clear the volume and enter the residence time you need.
+
+## Residence time formula
+
+<p class="formula">τ = V ÷ Q &nbsp;·&nbsp; SV = 1 ÷ τ</p>
+
+## Worked example
+
+A 10 m³ buffer tank with 5 m³/h flowing through it:
+
+- τ = 10 ÷ 5 = **2 h** (120 min)
+- Space velocity = 1 ÷ 2 h = **0.5 h⁻¹**
+
+## Residence time by volume and flow
+
+| Volume | 2 m³/h | 5 m³/h | 10 m³/h | 20 m³/h | 50 m³/h |
+|---|---|---|---|---|---|
+| 1 m³ | 30 min | 12 min | 6 min | 3 min | 1 min |
+| 5 m³ | 2.5 h | 60 min | 30 min | 15 min | 6 min |
+| 10 m³ | 5.0 h | 2.0 h | 60 min | 30 min | 12 min |
+| 25 m³ | 12.5 h | 5.0 h | 2.5 h | 75 min | 30 min |
+| 50 m³ | 25.0 h | 10.0 h | 5.0 h | 2.5 h | 60 min |
+| 100 m³ | 50.0 h | 20.0 h | 10.0 h | 5.0 h | 2.0 h |
+
+## Notes
+
+- Use the liquid volume at normal operating level, not the vessel's total volume — get it from the [vertical tank](/engineering/vertical-tank-volume/) or [horizontal tank](/engineering/horizontal-tank-volume/) calculator.
+- For a pipe, residence time = length ÷ velocity.

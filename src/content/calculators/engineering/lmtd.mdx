@@ -1,0 +1,79 @@
+---
+title: LMTD Calculator (Log Mean Temperature Difference & HX Area)
+description: Calculate the log mean temperature difference (LMTD) for counterflow or parallel-flow heat exchangers, plus heat duty or area from Q = U·A·LMTD.
+category: engineering
+intro: "The log mean temperature difference is the true average driving force for heat transfer between two fluids in a heat exchanger. This LMTD calculator works out the LMTD from the four terminal temperatures for counterflow or parallel flow, then sizes the exchanger with Q = U·A·LMTD — see the [types of heat exchangers](https://www.instrumentationblog.in/types-of-heat-exchangers/) and how a [plate heat exchanger works](https://www.instrumentationblog.in/plate-heat-exchanger-working-principle/)."
+keywords: [lmtd calculator, log mean temperature difference calculator, heat exchanger area calculator, lmtd formula, counterflow heat exchanger, q = u a lmtd, heat exchanger sizing]
+updated: 2026-11-05
+variables:
+  - id: s
+    label: Flow arrangement
+    default: 1
+    options:
+      - { label: Counterflow, value: 1 }
+      - { label: Parallel flow (co-current), value: 0 }
+  - { id: Thi, label: Hot fluid inlet temperature, family: temperature, unit: C, imperialUnit: F, default: 150 }
+  - { id: Tho, label: Hot fluid outlet temperature, family: temperature, unit: C, imperialUnit: F, default: 90 }
+  - { id: Tci, label: Cold fluid inlet temperature, family: temperature, unit: C, imperialUnit: F, default: 30 }
+  - { id: Tco, label: Cold fluid outlet temperature, family: temperature, unit: C, imperialUnit: F, default: 70 }
+  - { id: U, label: Overall heat transfer coefficient U, suffix: W/m²·K, default: 500, min: 0 }
+  - { id: Q, label: Heat duty, family: power, unit: kW, imperialUnit: BTUh, default: 250, min: 0 }
+  - { id: dT1, label: Temperature difference at end 1 (ΔT₁), family: tempdiff, unit: K }
+  - { id: dT2, label: Temperature difference at end 2 (ΔT₂), family: tempdiff, unit: K }
+  - { id: LM, label: Log mean temperature difference (LMTD), family: tempdiff, unit: K }
+  - { id: A, label: Required heat transfer area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+equations:
+  - dT1 = Thi - s * Tco - (1 - s) * Tci
+  - dT2 = Tho - s * Tci - (1 - s) * Tco
+  - LM = (dT1 - dT2) / ln(dT1 / dT2)
+  - Q = U * A * LM
+faq:
+  - q: What is the LMTD formula?
+    a: LMTD = (ΔT₁ − ΔT₂) ÷ ln(ΔT₁ ÷ ΔT₂), where ΔT₁ and ΔT₂ are the hot-to-cold temperature differences at the two ends of the exchanger.
+  - q: How are ΔT₁ and ΔT₂ defined for counterflow?
+    a: For counterflow, ΔT₁ = hot inlet − cold outlet and ΔT₂ = hot outlet − cold inlet. For parallel flow, ΔT₁ = hot inlet − cold inlet and ΔT₂ = hot outlet − cold outlet.
+  - q: Why is counterflow better than parallel flow?
+    a: With the same terminal temperatures counterflow gives a larger LMTD, so it needs less area, and it lets the cold outlet temperature rise above the hot outlet temperature.
+  - q: What about shell-and-tube exchangers with several passes?
+    a: Multiply the counterflow LMTD by a correction factor F (usually 0.75–1.0 from TEMA charts) — Q = U·A·F·LMTD. Designs with F below about 0.8 are normally avoided.
+related: [engineering/heat-duty, engineering/convection-heat-transfer, engineering/chiller-tonnage, chemistry/specific-heat]
+---
+
+## How to use the LMTD calculator
+
+Choose **counterflow** or **parallel flow** and enter the inlet and outlet temperatures of both fluids. The calculator returns ΔT₁, ΔT₂ and the LMTD. Enter the **overall heat transfer coefficient U** and the **heat duty Q** to get the required area — or clear Q and enter an area to find how much heat an existing exchanger can transfer.
+
+## LMTD formula
+
+<p class="formula">LMTD = (ΔT₁ − ΔT₂) ÷ ln(ΔT₁ ÷ ΔT₂) &nbsp;·&nbsp; Q = U × A × LMTD</p>
+
+## Worked example
+
+Hot oil cools from 150 °C to 90 °C, water heats from 30 °C to 70 °C, counterflow, U = 500 W/m²·K, duty 250 kW:
+
+- ΔT₁ = 150 − 70 = **80 K**, ΔT₂ = 90 − 30 = **60 K**
+- LMTD = (80 − 60) ÷ ln(80 ÷ 60) = **69.52 K**
+- A = 250,000 ÷ (500 × 69.52) = **7.19 m²**
+
+In parallel flow the same temperatures give ΔT₁ = 120 K, ΔT₂ = 20 K and LMTD = 55.81 K, so 8.96 m² would be needed.
+
+## LMTD vs arithmetic mean
+
+| ΔT₁ | ΔT₂ | Arithmetic mean | LMTD |
+|---|---|---|---|
+| 80 K | 60 K | 70 K | 69.52 K |
+| 60 K | 40 K | 50 K | 49.33 K |
+| 50 K | 10 K | 30 K | 24.85 K |
+| 40 K | 20 K | 30 K | 28.85 K |
+| 30 K | 15 K | 22.5 K | 21.64 K |
+| 20 K | 5 K | 12.5 K | 10.82 K |
+| 100 K | 50 K | 75 K | 72.13 K |
+| 10 K | 9 K | 9.5 K | 9.49 K |
+
+The arithmetic mean always overstates the driving force; the error is small only when ΔT₁ and ΔT₂ are close.
+
+## Notes
+
+- If ΔT₁ = ΔT₂ the formula is 0 ÷ 0 — the LMTD then equals that common ΔT.
+- A temperature cross (ΔT ≤ 0 at one end) is impossible for the chosen arrangement — check the temperatures.
+- Typical U values: water–water plate exchanger 2,000–6,000 W/m²·K, shell-and-tube water–water 800–1,500, oil–water 100–400, gas–gas 10–50.

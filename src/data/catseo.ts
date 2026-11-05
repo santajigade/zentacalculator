@@ -20,8 +20,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Process control & PID tuning', ids: ['ziegler-nichols-pid-tuning', 'lambda-tuning', 'fopdt-step-test'] },
       { name: 'Flow measurement', ids: ['orifice-flow', 'venturi-flow', 'pitot-tube-velocity', 'weir-flow', 'mass-flow-rate', 'gas-flow-correction', 'pipe-flow-velocity', 'reynolds-number', 'rotameter-correction', 'vortex-shedding-frequency'] },
       { name: 'Pipe & open-channel hydraulics', ids: ['hazen-williams', 'minor-losses', 'manning-equation'] },
-      { name: 'Pressure, level & tanks', ids: ['hydrostatic-pressure', 'dp-level-range', 'ultrasonic-level', 'vertical-tank-volume', 'horizontal-tank-volume', 'darcy-weisbach-head-loss', 'water-hammer', 'api-gravity'] },
-      { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'pump-power', 'heat-duty', 'thermal-expansion'] },
+      { name: 'Pressure, level & tanks', ids: ['hydrostatic-pressure', 'dp-level-range', 'ultrasonic-level', 'vertical-tank-volume', 'horizontal-tank-volume', 'spherical-tank-volume', 'absolute-gauge-pressure', 'manometer', 'barlow-formula', 'darcy-weisbach-head-loss', 'water-hammer', 'api-gravity'] },
+      { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'valve-authority', 'pump-power', 'pump-affinity-laws', 'pressure-to-head', 'fan-affinity-laws', 'compressor-power', 'heat-duty', 'thermal-expansion'] },
+      { name: 'Heat transfer & HVAC', ids: ['lmtd', 'convection-heat-transfer', 'chiller-tonnage'] },
+      { name: 'Process & fluid properties', ids: ['residence-time', 'kinematic-viscosity'] },
       { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force', 'gear-ratio', 'shaft-diameter', 'bearing-life', 'bolt-torque', 'spring-rate'] },
       { name: 'Strength of materials & structures', ids: ['beam-deflection', 'bending-stress', 'area-moment-of-inertia', 'factor-of-safety', 'weld-size'] },
       { name: 'Safety & reliability', ids: ['pfd-avg', 'availability-mtbf'] },
@@ -48,6 +50,8 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Motors & drives', ids: ['three-phase-motor-power', 'motor-starting-current', 'induction-motor-slip', 'voltage-unbalance', 'braking-resistor'] },
       { name: 'Transformers & fault level', ids: ['transformer-size', 'transformer-current', 'transformer-short-circuit', 'transformer-turns-ratio', 'transformer-efficiency', 'autotransformer', 'per-unit', 'ct-burden'] },
       { name: 'Cables, busbars, earthing & power quality', ids: ['cable-voltage-drop', 'wire-resistance', 'busbar-size', 'skin-depth', 'earth-fault-loop-impedance', 'earth-conductor-size', 'earthing-resistance', 'thd', 'star-delta-transformation'] },
+      { name: 'Transmission lines & insulation testing', ids: ['ferranti-effect', 'polarization-index'] },
+      { name: 'Lighting', ids: ['lumen-method'] },
     ],
     about: [
       { h: 'For LV and MV power systems', p: 'The calculators cover single-phase, three-phase and DC circuits at common Indian, European and North American voltages (230/415 V, 400 V, 120/208/480 V and 11 kV). Formulas follow IEC 60364, IEC 60076, IEEE 519 and NEMA MG 1 where relevant, and each page explains the assumptions.' },
@@ -67,7 +71,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
     groups: [
       { name: 'Resistors & basic circuits', ids: ['led-resistor', 'voltage-divider', 'current-divider', 'resistor-color-code', 'zener-resistor', 'transistor-base-resistor', 'wheatstone-bridge'] },
       { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'capacitor-lifetime', 'air-core-inductor', 'inductor-al-value'] },
-      { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts'] },
+      { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts', 'rc-phase-shift-oscillator', 'crystal-load-capacitance', 'uart-baud-rate-error'] },
       { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'battery-charge-time', 'lm317']
       },
       { name: 'RF & wireless', ids: ['antenna-length', 'free-space-path-loss'] },

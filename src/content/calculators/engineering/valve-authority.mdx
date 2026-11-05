@@ -1,0 +1,63 @@
+---
+title: Valve Authority Calculator (Control Valve Authority N)
+description: Calculate control valve authority from the valve and circuit pressure drops, N = Δp valve ÷ (Δp valve + Δp system), with the recommended range.
+category: engineering
+intro: "Valve authority is the share of the circuit's variable pressure drop taken by the control valve at full flow — too low and the valve loses control at small openings. This valve authority calculator works out N from the valve and system pressure drops and rates the result, a useful check when choosing a [control valve flow coefficient](https://www.instrumentationblog.in/control-valve-flow-coefficient/)."
+keywords: [valve authority calculator, control valve authority, valve authority formula, hvac valve authority, control valve pressure drop, valve sizing authority, n = dp valve]
+updated: 2026-11-05
+variables:
+  - { id: dpv, label: Pressure drop across the fully open valve, family: pressure, unit: bar, imperialUnit: psi, default: 0.5, min: 0 }
+  - { id: dps, label: "Pressure drop of the rest of the circuit (pipes, coil, fittings)", family: pressure, unit: bar, imperialUnit: psi, default: 1, min: 0 }
+  - id: N
+    label: Valve authority N
+    min: 0
+    max: 1
+    decimals: 3
+    bands:
+      - { max: 0.25, label: Poor — valve will hunt at low flow, color: '#dc2626' }
+      - { max: 0.5, label: Acceptable, color: '#eab308' }
+      - { max: 1.01, label: Good control, color: '#16a34a' }
+equations:
+  - N = dpv / (dpv + dps)
+faq:
+  - q: What is valve authority?
+    a: N = Δp across the fully open valve ÷ (that Δp + the pressure drop of the rest of the controlled circuit at design flow). It ranges from 0 to 1.
+  - q: What is a good valve authority?
+    a: Between 0.5 and about 0.7 is the usual design target for HVAC two-way valves; 0.25 is generally the lowest acceptable value.
+  - q: Why not make the authority close to 1?
+    a: Because the valve would then take almost all the available pressure, which wastes pump energy. Authority around 0.5 balances control quality and pumping cost.
+  - q: What pressure drops should be included?
+    a: Only the part of the circuit whose flow the valve varies — the coil, branch piping and fittings — not the constant-pressure parts upstream of a differential pressure controller.
+related: [engineering/control-valve-kv-cv, engineering/minor-losses, engineering/darcy-weisbach-head-loss, engineering/pump-power]
+---
+
+## How to use the valve authority calculator
+
+Enter the **pressure drop across the valve** when fully open at design flow and the **pressure drop of the rest of the circuit** (coil, branch pipe and fittings) at the same flow. The calculator returns the authority N and rates it.
+
+## Valve authority formula
+
+<p class="formula">N = Δp<sub>valve</sub> ÷ (Δp<sub>valve</sub> + Δp<sub>circuit</sub>)</p>
+
+## Worked example
+
+A valve dropping 0.5 bar in a branch whose coil and pipework drop 1.0 bar:
+
+- N = 0.5 ÷ (0.5 + 1.0) = **0.333** — acceptable, but a smaller valve (higher Δp) would control better.
+
+## Authority for different pressure drops
+
+| Valve Δp | Circuit 0.5 bar | Circuit 1 bar | Circuit 2 bar |
+|---|---|---|---|
+| 0.1 bar | 0.17 | 0.09 | 0.05 |
+| 0.25 bar | 0.33 | 0.20 | 0.11 |
+| 0.5 bar | 0.50 | 0.33 | 0.20 |
+| 1 bar | 0.67 | 0.50 | 0.33 |
+| 1.5 bar | 0.75 | 0.60 | 0.43 |
+| 2 bar | 0.80 | 0.67 | 0.50 |
+| 3 bar | 0.86 | 0.75 | 0.60 |
+
+## Notes
+
+- Low authority distorts an equal-percentage characteristic toward quick-opening, so most flow change happens in the first part of the stroke.
+- To raise authority choose a valve with a smaller Kv / Cv — check it with the [control valve Kv/Cv calculator](/engineering/control-valve-kv-cv/).

@@ -1,0 +1,72 @@
+---
+title: Polarization Index Calculator (PI & DAR Insulation Test)
+description: Calculate the polarization index (PI = R10 min ÷ R1 min) and dielectric absorption ratio (DAR = R60 s ÷ R30 s) from megger readings, with IEEE 43 limits.
+category: electrical
+intro: "A healthy insulation's resistance keeps rising during a megger test as the dielectric polarizes, while moist or contaminated insulation levels off quickly. This polarization index calculator turns the 30-second, 1-minute and 10-minute readings into the PI and DAR — follow the [insulation resistance test with a megger](https://www.instrumentationblog.in/insulation-resistance-test-megger/) procedure and compare with [motor insulation classes](https://www.instrumentationblog.in/motor-insulation-classes/)."
+keywords: [polarization index calculator, pi test calculator, dielectric absorption ratio calculator, insulation resistance test, megger pi value, ieee 43 polarization index, motor insulation test]
+updated: 2026-11-05
+variables:
+  - { id: R30, label: Insulation resistance at 30 s, family: resistance, unit: Mohm, default: 800, min: 0 }
+  - { id: R1, label: Insulation resistance at 1 min, family: resistance, unit: Mohm, default: 1000, min: 0 }
+  - { id: R10, label: Insulation resistance at 10 min, family: resistance, unit: Mohm, default: 2500, min: 0 }
+  - id: PI
+    label: Polarization index PI (R10 ÷ R1)
+    min: 0
+    decimals: 2
+    bands:
+      - { max: 1, label: Dangerous, color: '#dc2626' }
+      - { max: 2, label: Questionable, color: '#eab308' }
+      - { max: 4, label: Good, color: '#16a34a' }
+      - { max: 1e12, label: Very good, color: '#15803d' }
+  - id: DAR
+    label: Dielectric absorption ratio DAR (R60s ÷ R30s)
+    min: 0
+    decimals: 2
+    bands:
+      - { max: 1, label: Poor, color: '#dc2626' }
+      - { max: 1.25, label: Questionable, color: '#eab308' }
+      - { max: 1.6, label: Good, color: '#16a34a' }
+      - { max: 1e12, label: Excellent, color: '#15803d' }
+equations:
+  - PI = R10 / R1
+  - DAR = R1 / R30
+faq:
+  - q: How is the polarization index calculated?
+    a: PI = insulation resistance after 10 minutes ÷ insulation resistance after 1 minute, both at the same test voltage. 2,500 MΩ ÷ 1,000 MΩ gives a PI of 2.5.
+  - q: What is a good polarization index?
+    a: IEEE 43 recommends a minimum PI of 2.0 for class B, F and H insulation and 1.5 for class A. Below 1.0 the insulation is likely wet, dirty or damaged.
+  - q: What is the dielectric absorption ratio?
+    a: DAR = 60-second reading ÷ 30-second reading. It is a quicker test; above about 1.25 is acceptable and above 1.6 excellent.
+  - q: When is the PI test not meaningful?
+    a: If the 1-minute insulation resistance is above about 5,000 MΩ, IEEE 43 notes the PI may not be meaningful because the current is too small to measure reliably.
+related: [electrical/three-phase-motor-power, electrical/earthing-resistance, electrical/wire-resistance, electrical/transformer-efficiency]
+---
+
+## How to use the polarization index calculator
+
+Apply the test voltage with an insulation resistance tester and record the readings at **30 seconds**, **1 minute** and **10 minutes**. Enter them and the calculator returns the polarization index and the dielectric absorption ratio, each with a condition rating.
+
+## Polarization index formulas
+
+<p class="formula">PI = R<sub>10 min</sub> ÷ R<sub>1 min</sub> &nbsp;·&nbsp; DAR = R<sub>60 s</sub> ÷ R<sub>30 s</sub></p>
+
+## Worked example
+
+Motor winding readings at 1,000 V DC: 800 MΩ at 30 s, 1,000 MΩ at 1 min, 2,500 MΩ at 10 min:
+
+- PI = 2,500 ÷ 1,000 = **2.50** — good (above the IEEE 43 minimum of 2.0)
+- DAR = 1,000 ÷ 800 = **1.25** — questionable on its own, which is why the 10-minute test is preferred
+
+## Interpreting PI and DAR
+
+| Condition | PI | DAR |
+|---|---|---|
+| Dangerous / poor | below 1.0 | below 1.0 |
+| Questionable | 1.0 – 2.0 | 1.0 – 1.25 |
+| Good | 2.0 – 4.0 | 1.25 – 1.6 |
+| Very good | above 4.0 | above 1.6 |
+
+## Notes
+
+- Insulation resistance roughly halves for every 10 °C rise — correct readings to 40 °C before comparing with past tests; PI is a ratio and is less sensitive to temperature.
+- Discharge the winding fully after the test, for at least four times the test duration.

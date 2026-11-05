@@ -1,0 +1,57 @@
+---
+title: Pressure to Head Calculator (Bar, psi to Metres of Pump Head)
+description: Convert pressure to head and head to pressure for any liquid — pump head from pressure in bar, kPa or psi using H = Δp ÷ (ρ·g), with a density table.
+category: engineering
+intro: "Pump curves are drawn in metres or feet of head, while gauges read in bar or psi, so you often need to convert between them. This pressure to head calculator uses H = Δp ÷ (ρ·g) for any liquid density — the same relation behind [hydrostatic level measurement](https://www.instrumentationblog.in/hydrostatic-level-measurement/)."
+keywords: [pressure to head calculator, head to pressure calculator, bar to metres head, psi to feet of head, pump head from pressure, pressure head formula, metres of water column]
+updated: 2026-11-05
+variables:
+  - { id: dp, label: Pressure (or pressure difference), family: pressure, unit: bar, imperialUnit: psi, default: 5, min: 0 }
+  - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
+  - { id: H, label: Head, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: SG, label: Specific gravity (vs water at 4 °C), min: 0 }
+equations:
+  - H = dp / (rho * g0)
+  - SG = rho / 999.97
+faq:
+  - q: How do I convert pressure to head?
+    a: H = Δp ÷ (ρ × g). For water, 1 bar ≈ 10.2 m of head and 1 psi ≈ 2.31 ft of head.
+  - q: How do I calculate pump head from gauge readings?
+    a: Take discharge pressure minus suction pressure and convert with H = Δp ÷ (ρg). For total head also add the elevation difference between the gauges and any velocity-head difference.
+  - q: Why does pump head not depend on the liquid?
+    a: A pump adds the same head (energy per unit weight) to any liquid of similar viscosity, but the pressure it produces is proportional to density — so a pump makes less pressure on petrol than on water.
+  - q: What is the head of 1 psi of water?
+    a: About 0.703 m or 2.31 ft of water at room temperature.
+related: [engineering/hydrostatic-pressure, engineering/pump-power, engineering/pump-affinity-laws, engineering/darcy-weisbach-head-loss]
+---
+
+## How to use the pressure to head calculator
+
+Enter the **pressure** (or pressure difference across a pump) and the **liquid density**. The calculator returns the equivalent **head** of that liquid. To go the other way, clear the pressure and enter the head.
+
+## Pressure head formula
+
+<p class="formula">H = Δp ÷ (ρ × g) &nbsp;·&nbsp; Δp = ρ × g × H</p>
+
+## Worked example
+
+A pump raises water (ρ = 998 kg/m³) by 5 bar:
+
+- H = 500,000 ÷ (998 × 9.80665) = **51.09 m** of head (167.6 ft)
+
+## Head of 1 bar and 1 psi for common liquids
+
+| Liquid | Density (kg/m³) | Head per bar | Head per psi |
+|---|---|---|---|
+| Water (20 °C) | 998 | 10.218 m | 2.311 ft |
+| Seawater | 1025 | 9.948 m | 2.250 ft |
+| Diesel | 840 | 12.139 m | 2.746 ft |
+| Petrol | 740 | 13.780 m | 3.117 ft |
+| Ethylene glycol | 1110 | 9.187 m | 2.078 ft |
+| Sulphuric acid 98% | 1830 | 5.572 m | 1.260 ft |
+| Mercury | 13534 | 0.753 m | 0.170 ft |
+
+## Notes
+
+- Use the density at the pumping temperature — hot water at 90 °C (965 kg/m³) gives about 3% more head per bar than cold water.
+- Gauge readings must both be gauge or both be absolute; only the difference matters for pump head.

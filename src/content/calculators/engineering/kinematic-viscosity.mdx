@@ -1,0 +1,56 @@
+---
+title: Kinematic Viscosity Calculator (cP to cSt, Dynamic ↔ Kinematic)
+description: Convert dynamic viscosity (cP, mPa·s, Pa·s) to kinematic viscosity (cSt, mm²/s) and back with ν = μ ÷ ρ, with values for water, oils and air.
+category: engineering
+intro: "Dynamic viscosity measures a fluid's resistance to shear, while kinematic viscosity is that resistance divided by density. This kinematic viscosity calculator converts between the two with ν = μ ÷ ρ — so cP becomes cSt — as covered in [viscosity measurement explained](https://www.instrumentationblog.in/viscosity-measurement-explained/)."
+keywords: [kinematic viscosity calculator, cp to cst calculator, dynamic to kinematic viscosity, centipoise to centistokes, viscosity conversion, mm2/s to cp, kinematic viscosity formula]
+updated: 2026-11-05
+variables:
+  - { id: mu, label: Dynamic viscosity μ, family: viscosity, unit: cP, default: 1.002, min: 0 }
+  - { id: rho, label: Density ρ, family: density, unit: kgm3, imperialUnit: lbft3, default: 998.2, min: 0 }
+  - { id: nu, label: Kinematic viscosity ν (cSt = mm²/s), suffix: cSt, min: 0 }
+equations:
+  - nu = mu / rho * 1e6
+faq:
+  - q: How do I convert cP to cSt?
+    a: Divide by the density in g/cm³ — cSt = cP ÷ SG. Water at 20 °C is 1.002 cP ÷ 0.998 = 1.004 cSt.
+  - q: What is the kinematic viscosity formula?
+    a: ν = μ ÷ ρ. In SI, Pa·s ÷ kg/m³ gives m²/s; 1 cSt = 1 mm²/s = 10⁻⁶ m²/s.
+  - q: Which viscosity does the Reynolds number use?
+    a: Either — Re = ρvD ÷ μ = vD ÷ ν. Use kinematic viscosity when the fluid data is given in cSt.
+  - q: Why do lubricating oils use cSt?
+    a: Oil viscosity grades (ISO VG) are measured with gravity-driven capillary viscometers, which directly measure kinematic viscosity in cSt at 40 °C.
+related: [engineering/reynolds-number, engineering/darcy-weisbach-head-loss, physics/stokes-law, physics/density]
+---
+
+## How to use the kinematic viscosity calculator
+
+Enter the **dynamic viscosity** (pick cP, mPa·s, P or Pa·s) and the **density** at the same temperature. The calculator returns the kinematic viscosity in centistokes (mm²/s). To go from cSt to cP, clear the dynamic viscosity and enter the kinematic value.
+
+## Kinematic viscosity formula
+
+<p class="formula">ν = μ ÷ ρ &nbsp;·&nbsp; ν (cSt) = μ (cP) ÷ ρ (g/cm³)</p>
+
+## Worked example
+
+Water at 20 °C, μ = 1.002 cP and ρ = 998.2 kg/m³:
+
+- ν = 0.001002 ÷ 998.2 = 1.004 × 10⁻⁶ m²/s = **1.0038 cSt**
+
+## Dynamic and kinematic viscosity of common fluids
+
+| Fluid | μ (cP) | ρ (kg/m³) | ν (cSt) |
+|---|---|---|---|
+| Water, 20 °C | 1.002 | 998.2 | 1.004 |
+| Water, 80 °C | 0.355 | 971.8 | 0.3653 |
+| Air, 20 °C | 0.0181 | 1.204 | 15.03 |
+| Petrol | 0.6 | 740 | 0.8108 |
+| Diesel | 3 | 840 | 3.571 |
+| Ethylene glycol, 20 °C | 16.1 | 1113 | 14.47 |
+| SAE 30 oil, 40 °C | 90 | 875 | 102.9 |
+| Glycerine, 20 °C | 1412 | 1260 | 1121 |
+
+## Notes
+
+- Viscosity changes strongly with temperature — always use μ and ρ at the same temperature.
+- 1 P (poise) = 100 cP = 0.1 Pa·s; 1 St (stokes) = 100 cSt = 10⁻⁴ m²/s.

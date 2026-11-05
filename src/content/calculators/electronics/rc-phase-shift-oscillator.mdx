@@ -1,0 +1,56 @@
+---
+title: RC Phase Shift Oscillator Calculator (Frequency & Gain)
+description: Calculate the frequency of a three-stage RC phase shift oscillator, f = 1 ÷ (2π·R·C·√6), and the feedback resistor for the required gain of 29.
+category: electronics
+intro: "An RC phase shift oscillator uses three RC sections to shift the signal by 180°, and an inverting amplifier to supply the other 180° and make up the loss. This RC phase shift oscillator calculator gives the oscillation frequency and the gain resistor needed — one of the [types of transistor oscillators](https://www.instrumentationblog.in/types-of-transistor-oscillators/), and a cousin of the [Wien bridge oscillator](https://www.instrumentationblog.in/wien-bridge-oscillator-circuit/)."
+keywords: [rc phase shift oscillator calculator, phase shift oscillator frequency, rc oscillator calculator, phase shift oscillator formula, op amp phase shift oscillator, rc oscillator frequency formula, gain of 29]
+updated: 2026-11-05
+variables:
+  - { id: R, label: Resistance per stage R, family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: C, label: Capacitance per stage C, family: capacitance, unit: nF, default: 10, min: 0 }
+  - { id: f, label: Oscillation frequency, family: frequency, unit: Hz, min: 0 }
+  - { id: Rf, label: Minimum feedback resistor (gain 29), family: resistance, unit: kohm, min: 0 }
+equations:
+  - f = 1 / (2 * pi * R * C * sqrt(6))
+  - Rf = 29 * R
+faq:
+  - q: What is the frequency of an RC phase shift oscillator?
+    a: For three identical RC sections, f = 1 ÷ (2π R C √6) ≈ 0.065 ÷ (RC). With 10 kΩ and 10 nF it oscillates at about 650 Hz.
+  - q: Why must the gain be 29?
+    a: At the frequency where the three-section ladder shifts the phase by 180°, it attenuates the signal to 1/29. The amplifier needs a gain of at least 29 to sustain oscillation.
+  - q: How do I set the gain with an op-amp?
+    a: Use an inverting amplifier whose input resistor is the last R of the ladder, and a feedback resistor Rf ≥ 29R. Use slightly more (about 30–32R) for reliable start-up.
+  - q: Why is the output not a perfect sine wave?
+    a: Excess gain drives the amplifier into clipping. Amplitude stabilisation with diodes or a thermistor in the feedback path keeps distortion low.
+related: [electronics/rc-filter, electronics/op-amp-gain, electronics/555-timer, electronics/crystal-load-capacitance]
+---
+
+## How to use the RC phase shift oscillator calculator
+
+Enter the **resistance** and **capacitance** used in each of the three identical RC sections. The calculator returns the oscillation frequency and the minimum feedback resistor for an inverting op-amp stage. To design for a frequency, clear R or C and enter the frequency.
+
+## RC phase shift oscillator formula
+
+<p class="formula">f = 1 ÷ (2π R C √6) &nbsp;·&nbsp; |A| ≥ 29 → R<sub>f</sub> ≥ 29 R</p>
+
+## Worked example
+
+R = 10 kΩ, C = 10 nF in each section:
+
+- f = 1 ÷ (2π × 10,000 × 10 × 10⁻⁹ × 2.449) = **649.7 Hz**
+- R<sub>f</sub> ≥ 29 × 10 kΩ = **290 kΩ** (use 300–330 kΩ)
+
+## Frequency for common R and C values
+
+| R | 1 nF | 10 nF | 100 nF | 1 µF |
+|---|---|---|---|---|
+| 1 kΩ | 64,974.7 Hz | 6,497.5 Hz | 649.7 Hz | 65.0 Hz |
+| 4.7 kΩ | 13,824.4 Hz | 1,382.4 Hz | 138.2 Hz | 13.8 Hz |
+| 10 kΩ | 6,497.5 Hz | 649.7 Hz | 65.0 Hz | 6.5 Hz |
+| 47 kΩ | 1,382.4 Hz | 138.2 Hz | 13.8 Hz | 1.4 Hz |
+| 100 kΩ | 649.7 Hz | 65.0 Hz | 6.5 Hz | 0.6 Hz |
+
+## Notes
+
+- The formula assumes the ladder is not loaded — drive it from a low impedance and let the last R go to the op-amp virtual ground.
+- For a transistor version the √6 factor changes slightly with the loading of the transistor's input.

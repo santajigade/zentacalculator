@@ -1,0 +1,66 @@
+---
+title: Limiting Reagent Calculator (Limiting Reactant & Excess)
+description: Find the limiting reagent of a reaction from the masses, molar masses and coefficients of two reactants — with the theoretical yield and excess left over.
+category: chemistry
+intro: "In a reaction the limiting reagent is the reactant that runs out first, so it alone fixes how much product can form; the other reactant is left in excess. This limiting reagent calculator converts both masses to moles, divides by the balanced-equation coefficients to find which runs out, and returns the theoretical yield and the mass of excess reactant remaining."
+keywords: [limiting reagent calculator, limiting reactant calculator, how to find limiting reagent, excess reactant calculator, stoichiometry calculator, theoretical yield from limiting reagent, mole ratio calculator]
+updated: 2026-11-06
+variables:
+  - { id: mA, label: Mass of reactant A, family: mass, unit: g, imperialUnit: g, default: 50, min: 0 }
+  - { id: MA, label: Molar mass of A, suffix: g/mol, default: 28.014, min: 0 }
+  - { id: a, label: Coefficient of A in the balanced equation, default: 1, min: 0 }
+  - { id: mB, label: Mass of reactant B, family: mass, unit: g, imperialUnit: g, default: 10, min: 0 }
+  - { id: MB, label: Molar mass of B, suffix: g/mol, default: 2.016, min: 0 }
+  - { id: b, label: Coefficient of B, default: 3, min: 0 }
+  - { id: p, label: Coefficient of the product, default: 2, min: 0 }
+  - { id: MP, label: Molar mass of the product, suffix: g/mol, default: 17.031, min: 0 }
+  - { id: xA, label: Moles of A ÷ coefficient, suffix: mol, min: 0, decimals: 4 }
+  - { id: xB, label: Moles of B ÷ coefficient, suffix: mol, min: 0, decimals: 4 }
+  - { id: mP, label: Theoretical yield of product, family: mass, unit: g, imperialUnit: g, min: 0 }
+  - { id: mAx, label: Excess A left over (0 if A is limiting), family: mass, unit: g, imperialUnit: g, min: 0 }
+  - { id: mBx, label: Excess B left over (0 if B is limiting), family: mass, unit: g, imperialUnit: g, min: 0 }
+equations:
+  - xA = mA * 1000 / MA / a
+  - xB = mB * 1000 / MB / b
+  - mP = min(xA, xB) * p * MP / 1000
+  - mAx = (xA - min(xA, xB)) * a * MA / 1000
+  - mBx = (xB - min(xA, xB)) * b * MB / 1000
+faq:
+  - q: How do you find the limiting reagent?
+    a: Convert each reactant to moles, then divide by its coefficient in the balanced equation. The reactant with the smaller result is the limiting reagent.
+  - q: Is the limiting reagent always the one with the smaller mass?
+    a: No. It depends on moles and on the mole ratio. In N₂ + 3H₂ → 2NH₃, 10 g of hydrogen limits 50 g of nitrogen because each mole of N₂ needs three moles of H₂.
+  - q: How do I calculate the theoretical yield from the limiting reagent?
+    a: Multiply the limiting reagent's moles-per-coefficient by the product's coefficient to get moles of product, then multiply by the product's molar mass.
+  - q: How much excess reactant is left?
+    a: Subtract the moles consumed (coefficient × reaction extent) from the moles present and convert back to grams. The calculator shows this as the excess left over.
+related: [chemistry/theoretical-yield, chemistry/percent-yield, chemistry/moles, chemistry/percent-composition]
+---
+
+## How to use the limiting reagent calculator
+
+Balance the equation first. Enter the **mass**, **molar mass** and **coefficient** for each reactant, then the **coefficient** and **molar mass** of the product you want. The reactant with the smaller "moles ÷ coefficient" is limiting — its excess shows as 0 — and the theoretical yield is calculated from it.
+
+## Limiting reagent method
+
+<p class="formula">n = m / M &nbsp;·&nbsp; ξ = min(n<sub>A</sub>/a, n<sub>B</sub>/b) &nbsp;·&nbsp; m<sub>product</sub> = ξ × p × M<sub>product</sub></p>
+
+ξ (the reaction extent) is the number of times the balanced equation can "run" before the limiting reagent is used up.
+
+## Worked example: N₂ + 3H₂ → 2NH₃
+
+50 g N₂ (28.014 g/mol) and 10 g H₂ (2.016 g/mol):
+
+- N₂: 1.7848 mol ÷ 1 = **1.7848**
+- H₂: 4.9603 mol ÷ 3 = **1.6534** → hydrogen is the limiting reagent
+- NH₃ = 1.6534 × 2 × 17.031 = **56.32 g**
+- N₂ left over = (1.7848 − 1.6534) × 28.014 = **3.68 g**
+
+## Steps by hand
+
+1. Write and balance the chemical equation.
+2. Convert every reactant mass to moles with its molar mass.
+3. Divide each by its coefficient; the smallest value identifies the limiting reagent.
+4. Use that value with the product's coefficient to find moles and grams of product.
+
+Compare the theoretical yield with what you actually recovered using the [percent yield calculator](/chemistry/percent-yield/).

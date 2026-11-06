@@ -1,0 +1,79 @@
+---
+title: I2C Pull-Up Resistor Calculator (Min & Max Rp)
+description: Calculate the minimum and maximum I2C pull-up resistor from supply voltage, sink current, bus capacitance and rise time for 100 kHz, 400 kHz and 1 MHz buses.
+category: electronics
+intro: "I²C lines are open-drain, so pull-up resistors set both the low-level current the devices must sink and the rise time of every edge. This I2C pull-up resistor calculator finds the allowed range from the I²C specification and the rise time of the value you pick — background on [pull-up and pull-down resistor values](https://www.instrumentationblog.in/pull-up-pull-down-resistor-values/) and [SPI vs I²C](https://www.instrumentationblog.in/spi-vs-i2c-protocol-comparison/)."
+keywords: [i2c pull up resistor calculator, i2c pull-up resistor value, i2c rise time calculation, i2c bus capacitance, pull up resistor for i2c 3.3v, 4.7k pull up i2c, i2c rp min max]
+updated: 2026-11-06
+variables:
+  - { id: Vdd, label: Pull-up supply voltage, family: voltage, unit: V, default: 3.3, min: 0 }
+  - id: tr
+    label: Bus speed (maximum rise time)
+    default: 3e-07
+    options:
+      - { label: 'Standard mode 100 kHz (1000 ns)', value: 1e-6 }
+      - { label: 'Fast mode 400 kHz (300 ns)', value: 3e-07 }
+      - { label: 'Fast-mode Plus 1 MHz (120 ns)', value: 1.2e-7 }
+  - { id: Vol, label: Maximum low-level voltage V_OL, family: voltage, unit: V, default: 0.4, min: 0 }
+  - { id: Iol, label: Low-level sink current I_OL, family: current, unit: mA, default: 3, min: 0, help: '3 mA for Standard and Fast mode, 20 mA for Fast-mode Plus.' }
+  - { id: Cb, label: Total bus capacitance, family: capacitance, unit: pF, default: 200, min: 0 }
+  - { id: Rp, label: Chosen pull-up resistor, family: resistance, unit: kohm, default: 2.2, min: 0 }
+  - { id: Rmin, label: Minimum pull-up resistor, family: resistance, unit: kohm, min: 0 }
+  - { id: Rmax, label: Maximum pull-up resistor, family: resistance, unit: kohm, min: 0 }
+  - { id: trp, label: Rise time with chosen resistor, family: seconds, unit: ns, min: 0 }
+  - { id: Is, label: Sink current with chosen resistor, family: current, unit: mA, min: 0 }
+equations:
+  - Rmin = (Vdd - Vol) / Iol
+  - Rmax = tr / (0.8473 * Cb)
+  - trp = 0.8473 * Rp * Cb
+  - Is = (Vdd - Vol) / Rp
+faq:
+  - q: How do I calculate the I2C pull-up resistor value?
+    a: R_min = (V_DD − V_OL) ÷ I_OL and R_max = t_r ÷ (0.8473 × C_b). Any value between the two works; pick a lower value for faster edges and a higher one for lower power.
+  - q: Where does the 0.8473 factor come from?
+    a: I²C rise time is measured from 30% to 70% of V_DD. For an RC charge that takes RC × ln(0.7/0.3) = 0.8473 RC.
+  - q: Is 4.7 kΩ right for I2C?
+    a: For 100 kHz with modest capacitance, yes. At 400 kHz and 200 pF the maximum is about 1.8 kΩ, so 4.7 kΩ gives too slow a rise time — use 1.5–2.2 kΩ.
+  - q: How do I estimate bus capacitance?
+    a: Add about 10 pF per device pin plus roughly 1–2 pF per cm of PCB trace or cable; measure the rise time with an oscilloscope to confirm.
+related: [electronics/voltage-divider, electronics/rc-filter, electronics/uart-baud-rate-error, physics/rc-time-constant]
+---
+
+## How to use the I2C pull-up resistor calculator
+
+Enter the **pull-up supply**, choose the **bus speed** (which sets the maximum rise time from the I²C specification), and enter the **sink current** and **bus capacitance**. The calculator returns the allowed range of pull-up values. Enter the resistor you plan to fit to check its rise time and sink current.
+
+## I2C pull-up formulas
+
+<p class="formula">R<sub>p(min)</sub> = (V<sub>DD</sub> − V<sub>OL(max)</sub>) / I<sub>OL</sub> &nbsp;·&nbsp; R<sub>p(max)</sub> = t<sub>r</sub> / (0.8473 × C<sub>b</sub>)</p>
+
+## Worked example
+
+3.3 V bus, Fast mode (t<sub>r</sub> ≤ 300 ns), V<sub>OL</sub> = 0.4 V at 3 mA, 200 pF:
+
+- R<sub>p(min)</sub> = (3.3 − 0.4) ÷ 3 mA = **967 Ω**
+- R<sub>p(max)</sub> = 300 ns ÷ (0.8473 × 200 pF) = **1,770 Ω**
+- A 2.2 kΩ resistor gives t<sub>r</sub> = **373 ns** — too slow; a 1.5 kΩ gives 254 ns and passes
+
+## Maximum pull-up resistor vs bus capacitance
+
+| Bus capacitance | Standard (1000 ns) | Fast (300 ns) | Fast-mode Plus (120 ns) |
+|---|---|---|---|
+| 50 pF | 23.60 kΩ | 7.08 kΩ | 2.833 kΩ |
+| 100 pF | 11.80 kΩ | 3.54 kΩ | 1.416 kΩ |
+| 200 pF | 5.90 kΩ | 1.77 kΩ | 0.708 kΩ |
+| 300 pF | 3.93 kΩ | 1.18 kΩ | 0.472 kΩ |
+| 400 pF | 2.95 kΩ | 0.89 kΩ | 0.354 kΩ |
+
+## I²C timing limits (NXP UM10204)
+
+| Mode | Clock | Max rise time | Max bus capacitance | I<sub>OL</sub> at V<sub>OL</sub> = 0.4 V |
+|---|---|---|---|---|
+| Standard | 100 kHz | 1000 ns | 400 pF | 3 mA |
+| Fast | 400 kHz | 300 ns | 400 pF | 3 mA |
+| Fast-mode Plus | 1 MHz | 120 ns | 550 pF | 20 mA |
+
+## Notes
+
+- Fit one pull-up per line (SDA and SCL) for the whole bus — module boards often add their own, which appear in parallel.
+- If no value satisfies both limits, reduce capacitance, use a bus buffer, or use an active current-source pull-up.

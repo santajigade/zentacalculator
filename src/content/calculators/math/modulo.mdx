@@ -1,0 +1,62 @@
+---
+title: Modulo Calculator (a mod b, Remainder & Quotient)
+description: Calculate a mod b, the quotient and the remainder for positive and negative numbers — showing the floored modulo and the truncated remainder used in C and Java.
+category: math
+intro: "The modulo operation gives the remainder left after dividing one number by another, the basis of clock arithmetic, check digits and cyclic counters. This modulo calculator returns a mod b, the integer quotient and the remainder, and shows how the result differs for negative numbers between mathematical (floored) modulo and the truncated remainder of C, Java and JavaScript."
+keywords: [modulo calculator, mod calculator, a mod b, remainder calculator, modulus calculator, negative modulo, modular arithmetic calculator]
+updated: 2026-11-06
+variables:
+  - { id: a, label: Dividend a, default: 17 }
+  - { id: b, label: Divisor b (modulus), default: 5 }
+  - { id: q, label: Quotient floor(a ÷ b), decimals: 0 }
+  - { id: m, label: "a mod b (floored, sign of b)", decimals: 6 }
+  - { id: rt, label: Truncated remainder (C / Java / JavaScript %), decimals: 6 }
+equations:
+  - q = floor(a / b)
+  - m = mod(a, b)
+  - rt = a - b * sign(a / b) * floor(abs(a / b))
+faq:
+  - q: What is a mod b?
+    a: The remainder after dividing a by b, so that a = b × q + (a mod b). For example 17 mod 5 = 2, because 17 = 5 × 3 + 2.
+  - q: What is −17 mod 5?
+    a: In mathematics (floored division) it is 3, because −17 = 5 × (−4) + 3. In C, Java and JavaScript, −17 % 5 gives −2, because they truncate the quotient towards zero.
+  - q: Which languages use floored modulo?
+    a: Python's %, Ruby, and spreadsheet MOD() return a result with the sign of the divisor (floored). C, C++, Java, JavaScript and C# return a result with the sign of the dividend (truncated).
+  - q: Can modulo be used with decimals?
+    a: Yes. 5.5 mod 2 = 1.5. Floating-point rounding can make results like 0.3 mod 0.1 come out very slightly off zero.
+related: [math/gcf-lcm, math/fraction-to-decimal, math/factorial, math/exponent]
+---
+
+## How to use the modulo calculator
+
+Enter the **dividend a** and the **divisor b**. The calculator returns the floored quotient, **a mod b** (the mathematical modulo, which always has the sign of b) and the **truncated remainder** that the % operator gives in C-family languages. For positive numbers the two are the same.
+
+## Modulo formula
+
+<p class="formula">a mod b = a − b × ⌊a ÷ b⌋ &nbsp;·&nbsp; truncated remainder = a − b × trunc(a ÷ b)</p>
+
+## Worked example
+
+17 mod 5:
+
+- 17 ÷ 5 = 3.4, so the quotient is **3**
+- 17 − 5 × 3 = **2**, so 17 mod 5 = 2
+
+## Floored vs truncated
+
+| a | b | ⌊a/b⌋ | a mod b (floored) | a % b (truncated) |
+|---|---|---|---|---|
+| 17 | 5 | 3 | 2 | 2 |
+| -17 | 5 | -4 | 3 | -2 |
+| 17 | -5 | -4 | -3 | 2 |
+| -17 | -5 | 3 | -2 | -2 |
+| 100 | 7 | 14 | 2 | 2 |
+| 2026 | 12 | 168 | 10 | 10 |
+| 5.5 | 2 | 2 | 1.5 | 1.5 |
+
+## Uses of modular arithmetic
+
+- **Clock time** — 15:00 + 10 hours = 25 mod 24 = 01:00.
+- **Even and odd** — n mod 2 is 0 for even numbers, 1 for odd.
+- **Check digits** — ISBN-10 uses mod 11, IBAN uses mod 97.
+- **Cyclic counters and ring buffers** — index = (index + 1) mod size.

@@ -1,0 +1,68 @@
+---
+title: Op-Amp Integrator Calculator (Ramp Rate & Unity-Gain Frequency)
+description: Calculate the output ramp rate, output voltage after a time, unity-gain frequency and AC gain of an inverting op-amp integrator from R, C and input voltage.
+category: electronics
+intro: "An op-amp integrator charges a feedback capacitor with a current set by the input resistor, so a constant input produces a linear ramp and a sine input is attenuated by 20 dB per decade. This op-amp integrator calculator gives the ramp rate, the output after a chosen time and the unity-gain frequency — see the [op-amp integrator and differentiator](https://www.instrumentationblog.in/op-amp-integrator-differentiator/) explained."
+keywords: [op amp integrator calculator, integrator circuit formula, op amp integrator output voltage, integrator ramp rate, unity gain frequency integrator, rc integrator op amp, miller integrator]
+updated: 2026-11-06
+variables:
+  - { id: Vin, label: Input voltage (constant), family: voltage, unit: V, default: 1 }
+  - { id: R, label: Input resistor R, family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: C, label: Feedback capacitor C, family: capacitance, unit: nF, default: 100, min: 0 }
+  - { id: t, label: Integration time, family: seconds, unit: ms, default: 1, min: 0 }
+  - { id: V0, label: Initial output voltage, family: voltage, unit: V, default: 0 }
+  - { id: f, label: Signal frequency (for AC gain), family: frequency, unit: Hz, default: 1000, min: 0 }
+  - { id: k, label: Output ramp rate, suffix: V/s }
+  - { id: Vout, label: Output voltage after time t, family: voltage, unit: V }
+  - { id: f0, label: Unity-gain frequency, family: frequency, unit: Hz, min: 0 }
+  - { id: G, label: AC gain magnitude at f, min: 0, decimals: 4 }
+equations:
+  - k = -Vin / (R * C)
+  - Vout = V0 + k * t
+  - f0 = 1 / (2 * pi * R * C)
+  - G = 1 / (2 * pi * f * R * C)
+faq:
+  - q: What is the output of an op-amp integrator?
+    a: Vout(t) = V₀ − (1/RC)∫Vin dt. For a constant input that is a straight ramp of slope −Vin/(RC) volts per second.
+  - q: What is the unity-gain frequency of an integrator?
+    a: f₀ = 1/(2πRC). Below f₀ the gain is greater than one, above it less, falling at 20 dB per decade.
+  - q: Why does a practical integrator need a resistor across the capacitor?
+    a: Without it the DC gain is the op-amp's open-loop gain, so input offset voltage and bias current slowly drive the output into the rail. A resistor R_f in parallel with C limits DC gain to −R_f/R, at the cost of integrating only above 1/(2πR_fC).
+  - q: Where are integrators used?
+    a: In the I term of analogue PID controllers, triangle-wave and ramp generators, dual-slope ADCs, active filters and charge amplifiers.
+related: [electronics/rc-filter, electronics/op-amp-gain, physics/rc-time-constant, electronics/summing-amplifier]
+---
+
+## How to use the op-amp integrator calculator
+
+Enter the **input voltage**, the **input resistor** and the **feedback capacitor**. Add an **integration time** to see where the ramp has reached, and an **initial output voltage** if the capacitor is not discharged. The **signal frequency** gives the AC gain for sine-wave inputs.
+
+## Op-amp integrator formula
+
+<p class="formula">V<sub>out</sub>(t) = V₀ − (1/RC) ∫ V<sub>in</sub> dt &nbsp;·&nbsp; constant input: V<sub>out</sub> = V₀ − V<sub>in</sub> t / RC</p>
+
+<p class="formula">|G| = 1 / (2π f R C) &nbsp;·&nbsp; f₀ = 1 / (2π R C)</p>
+
+## Worked example
+
+1 V input, R = 10 kΩ, C = 100 nF (RC = 1 ms):
+
+- Ramp rate = −1 ÷ 0.001 = **-1,000 V/s**
+- After 1 ms the output has moved to **-1.00 V**
+- Unity-gain frequency f₀ = **159.15 Hz**; at 1 kHz the gain is **0.1592**
+
+## Gain vs frequency (R = 10 kΩ, C = 100 nF)
+
+| Frequency | Gain | Gain (dB) | Phase |
+|---|---|---|---|
+| 10.0 Hz | 15.92 | 24.0 dB | 90° lead (inverted: −90° + 180°) |
+| 100.0 Hz | 1.592 | 4.0 dB | 90° lead (inverted: −90° + 180°) |
+| 159.2 Hz | 1 | 0.0 dB | 90° lead (inverted: −90° + 180°) |
+| 1,000.0 Hz | 0.1592 | -16.0 dB | 90° lead (inverted: −90° + 180°) |
+| 10,000.0 Hz | 0.01592 | -36.0 dB | 90° lead (inverted: −90° + 180°) |
+
+## Design notes
+
+- The output can only ramp until it reaches the op-amp's output swing limit; reset the capacitor with a switch for repeating ramps.
+- Use a low-leakage film (C0G, polypropylene) capacitor — electrolytics leak and drift.
+- For a square-wave input the integrator produces a triangle wave of peak-to-peak amplitude V<sub>in</sub> T/(2RC) for a symmetric ±V<sub>in</sub> square of period T.

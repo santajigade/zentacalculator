@@ -1,0 +1,58 @@
+---
+title: Torus Volume Calculator (Volume & Surface Area)
+description: Calculate the volume and surface area of a torus (doughnut or ring shape) from its major and minor radii, plus the inner and outer diameters of the ring.
+category: math
+intro: "A torus is the doughnut shape made by sweeping a circle of radius r around an axis at distance R from its centre. This torus volume calculator gives the volume and surface area with Pappus's theorem, along with the inner and outer diameters — handy for O-rings, inner tubes and ring-shaped tanks."
+keywords: [torus volume calculator, volume of a torus, torus surface area calculator, doughnut volume formula, ring volume calculator, o-ring volume, pappus theorem torus]
+updated: 2026-11-06
+variables:
+  - { id: R, label: Major radius R (centre of torus to centre of tube), family: length, unit: cm, imperialUnit: in, default: 10, min: 0 }
+  - { id: r, label: Minor radius r (radius of the tube), family: length, unit: cm, imperialUnit: in, default: 3, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: cm3, imperialUnit: in3, min: 0 }
+  - { id: A, label: Surface area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+  - { id: Di, label: Inner diameter, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: Do, label: Outer diameter, family: length, unit: cm, imperialUnit: in, min: 0 }
+equations:
+  - V = 2 * pi^2 * R * r^2
+  - A = 4 * pi^2 * R * r
+  - Di = 2 * (R - r)
+  - Do = 2 * (R + r)
+faq:
+  - q: What is the volume of a torus?
+    a: V = 2π²Rr², where R is the distance from the centre of the torus to the centre of the tube and r is the tube radius. It equals the tube's cross-section area πr² times the path length 2πR.
+  - q: What is the surface area of a torus?
+    a: A = 4π²Rr — the tube circumference 2πr times the path length 2πR.
+  - q: How do I get R and r from inner and outer diameters?
+    a: r = (outer − inner) ÷ 4 and R = (outer + inner) ÷ 4. An O-ring of 90 mm inner diameter and 5 mm section has r = 2.5 mm and R = 47.5 mm.
+  - q: What if r is larger than R?
+    a: The tube overlaps itself (a spindle torus) and the formulas overcount the volume. They are valid for r ≤ R.
+related: [math/sphere, math/cylinder-volume, math/circle, math/frustum-volume]
+---
+
+## How to use the torus volume calculator
+
+Enter the **major radius R** — from the centre of the hole to the centre of the tube — and the **minor radius r** of the tube itself. The calculator returns the volume, the surface area and the inner and outer diameters of the ring. If you have diameters, R = (D<sub>outer</sub> + D<sub>inner</sub>)/4 and r = (D<sub>outer</sub> − D<sub>inner</sub>)/4.
+
+## Torus formulas
+
+<p class="formula">V = 2π² R r² &nbsp;·&nbsp; A = 4π² R r</p>
+
+These follow from Pappus's centroid theorems: the volume is the cross-section area times the distance its centroid travels, and the area is the cross-section perimeter times that distance.
+
+## Worked example
+
+R = 10 cm, r = 3 cm:
+
+- V = 2π² × 10 × 9 = **1,776.53 cm³** (1.777 L)
+- A = 4π² × 10 × 3 = **1,184.35 cm²**
+- Inner diameter = **14 cm**, outer diameter = **26 cm**
+
+## Everyday tori (approximate)
+
+| Object | R | r | Volume | Surface area |
+|---|---|---|---|---|
+| Bagel | 4.5 cm | 2 cm | 355.3 cm³ | 355.3 cm² |
+| Doughnut | 4 cm | 2.5 cm | 493.5 cm³ | 394.8 cm² |
+| O-ring 100 × 5 mm | 5.25 cm | 0.25 cm | 6.5 cm³ | 51.8 cm² |
+| Swim ring | 25 cm | 10 cm | 49,348.0 cm³ | 9,869.6 cm² |
+| Car tyre inner tube | 30 cm | 9 cm | 47,966.3 cm³ | 10,659.2 cm² |

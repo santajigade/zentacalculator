@@ -71,8 +71,9 @@ export const CAT_SEO: Record<string, CatSEO> = {
     groups: [
       { name: 'Resistors & basic circuits', ids: ['led-resistor', 'voltage-divider', 'current-divider', 'resistor-color-code', 'zener-resistor', 'transistor-base-resistor', 'wheatstone-bridge'] },
       { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'capacitor-lifetime', 'air-core-inductor', 'inductor-al-value'] },
-      { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts', 'rc-phase-shift-oscillator', 'crystal-load-capacitance', 'uart-baud-rate-error'] },
-      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'battery-charge-time', 'lm317']
+      { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts', 'rc-phase-shift-oscillator', 'crystal-load-capacitance', 'uart-baud-rate-error', 'i2c-pull-up-resistor'] },
+      { name: 'Op-amp circuits, active filters & comparators', ids: ['summing-amplifier', 'differential-amplifier', 'op-amp-integrator', 'sallen-key-low-pass', 'schmitt-trigger'] },
+      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'microstrip-impedance', 'battery-charge-time', 'lm317']
       },
       { name: 'RF & wireless', ids: ['antenna-length', 'free-space-path-loss'] },
       { name: 'Sensors & current sensing', ids: ['ntc-thermistor', 'strain-gauge', 'shunt-resistor'] },
@@ -115,12 +116,13 @@ export const CAT_SEO: Record<string, CatSEO> = {
     h1: 'Chemistry calculators',
     intro: 'Free online chemistry calculators for students and lab work. Calculate **molarity**, **moles** and **dilutions**, find **pH** and **buffer** pH, apply the **gas laws**, check **percent yield** and **titrations**, and work with **colligative properties** and **electrochemistry** — with formulas and worked examples.',
     groups: [
-      { name: 'Concentration & solutions', ids: ['molarity', 'molality', 'moles', 'dilution', 'mass-percent', 'ppm', 'percent-composition', 'normality'] },
-      { name: 'Vapour pressure, gas solubility & water chemistry', ids: ['raoults-law', 'henrys-law', 'water-hardness'] },
+      { name: 'Concentration & solutions', ids: ['molarity', 'molality', 'moles', 'dilution', 'mass-percent', 'ppm', 'percent-composition', 'normality', 'solution-preparation'] },
+      { name: 'Stoichiometry & reaction yield', ids: ['limiting-reagent', 'theoretical-yield'] },
+      { name: 'Vapour pressure, gas solubility & water chemistry', ids: ['raoults-law', 'henrys-law', 'water-hardness', 'dissolved-oxygen-saturation'] },
       { name: 'Acids, bases & analysis', ids: ['ph', 'pka', 'weak-acid-ph', 'henderson-hasselbalch', 'titration', 'beer-lambert'] },
-      { name: 'Electrochemistry', ids: ['nernst-equation', 'faraday-electrolysis'] },
+      { name: 'Electrochemistry', ids: ['nernst-equation', 'faraday-electrolysis', 'cell-potential'] },
       { name: 'Gas laws', ids: ['boyles-law', 'charles-law', 'combined-gas-law', 'gay-lussacs-law', 'avogadros-law', 'daltons-law', 'grahams-law', 'van-der-waals'] },
-      { name: 'Thermodynamics, kinetics & colligative properties', ids: ['specific-heat', 'gibbs-free-energy', 'arrhenius-equation', 'activation-energy', 'half-life', 'boiling-point-elevation', 'freezing-point-depression', 'osmotic-pressure', 'percent-yield'] },
+      { name: 'Thermodynamics, kinetics & colligative properties', ids: ['specific-heat', 'gibbs-free-energy', 'arrhenius-equation', 'activation-energy', 'half-life', 'boiling-point-elevation', 'freezing-point-depression', 'osmotic-pressure', 'percent-yield', 'equilibrium-constant', 'bomb-calorimeter'] },
     ],
     faq: [
       { q: 'How do I calculate molarity?', a: 'Molarity = moles of solute ÷ litres of solution. The molarity calculator also finds the mass to weigh out.' },
@@ -135,10 +137,11 @@ export const CAT_SEO: Record<string, CatSEO> = {
     groups: [
       { name: 'Percentages & ratios', ids: ['percentage', 'percentage-change', 'percent-error', 'ratio', 'fraction-to-decimal', 'average', 'weighted-average'] },
       { name: 'Geometry: 2D shapes', ids: ['circle', 'rectangle', 'triangle-area', 'trapezoid-area', 'polygon', 'ellipse', 'arc-length'] },
-      { name: 'Geometry: 3D shapes', ids: ['box-volume', 'cylinder-volume', 'cone', 'sphere'] },
+      { name: 'Geometry: 3D shapes', ids: ['box-volume', 'cylinder-volume', 'cone', 'sphere', 'pyramid-volume', 'frustum-volume', 'torus'] },
       { name: 'Triangles & trigonometry', ids: ['pythagorean-theorem', 'right-triangle-trig', 'law-of-cosines', 'law-of-sines', 'slope'] },
       { name: 'Coordinate geometry, vectors & interpolation', ids: ['distance-midpoint', 'vector', 'complex-number', 'linear-interpolation'] },
-      { name: 'Algebra & numbers', ids: ['quadratic-equation', 'exponent', 'square-root', 'logarithm', 'factorial', 'gcf-lcm', 'arithmetic-sequence', 'geometric-sequence'] },
+      { name: 'Algebra & numbers', ids: ['quadratic-equation', 'exponent', 'square-root', 'logarithm', 'factorial', 'gcf-lcm', 'arithmetic-sequence', 'geometric-sequence', 'modulo'] },
+      { name: 'Systems of linear equations', ids: ['system-of-equations', 'system-of-3-equations'] },
     ],
     faq: [
       { q: 'How do I calculate a percentage of a number?', a: 'Multiply the number by the percentage and divide by 100. The percentage calculator also finds what percent one number is of another.' },

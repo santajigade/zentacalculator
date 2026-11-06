@@ -1,0 +1,67 @@
+---
+title: Schmitt Trigger Calculator (Comparator Hysteresis Thresholds)
+description: Calculate the upper and lower switching thresholds and hysteresis of an inverting comparator Schmitt trigger from Vref, R1, R2 and the output levels.
+category: electronics
+intro: "A Schmitt trigger adds positive feedback to a comparator so it switches at two different input levels, which stops noisy, slow signals from causing chatter at the output. This Schmitt trigger calculator gives the upper and lower thresholds and the hysteresis band for an inverting comparator — see [Schmitt trigger hysteresis](https://www.instrumentationblog.in/schmitt-trigger-hysteresis/) and [comparator circuits](https://www.instrumentationblog.in/comparator-circuits-explained/) explained."
+keywords: [schmitt trigger calculator, comparator hysteresis calculator, schmitt trigger threshold voltage, hysteresis resistor calculation, inverting schmitt trigger formula, upper and lower threshold voltage]
+updated: 2026-11-06
+variables:
+  - { id: Vr, label: Reference voltage V_ref, family: voltage, unit: V, default: 2.5 }
+  - { id: R1, label: R₁ (V_ref to non-inverting input), family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: R2, label: R₂ (output to non-inverting input), family: resistance, unit: kohm, default: 100, min: 0 }
+  - { id: Voh, label: Output high level V_OH, family: voltage, unit: V, default: 5 }
+  - { id: Vol, label: Output low level V_OL, family: voltage, unit: V, default: 0 }
+  - { id: VTH, label: Upper threshold (input rising), family: voltage, unit: V }
+  - { id: VTL, label: Lower threshold (input falling), family: voltage, unit: V }
+  - { id: Vh, label: Hysteresis, family: voltage, unit: mV }
+  - { id: Vc, label: Centre of the hysteresis band, family: voltage, unit: V }
+equations:
+  - VTH = (Vr * R2 + Voh * R1) / (R1 + R2)
+  - VTL = (Vr * R2 + Vol * R1) / (R1 + R2)
+  - Vh = VTH - VTL
+  - Vc = (VTH + VTL) / 2
+faq:
+  - q: How do you calculate Schmitt trigger thresholds?
+    a: For an inverting comparator with R₁ from V_ref and R₂ from the output to the + input, V_TH = (V_ref·R₂ + V_OH·R₁)/(R₁ + R₂) and V_TL = (V_ref·R₂ + V_OL·R₁)/(R₁ + R₂).
+  - q: What is the hysteresis of a Schmitt trigger?
+    a: The gap between the thresholds, V_H = (V_OH − V_OL) × R₁/(R₁ + R₂). A larger R₂ gives less hysteresis.
+  - q: How much hysteresis should I use?
+    a: More than the peak-to-peak noise on the input — commonly 1–5% of the signal range, or a few tens of millivolts for a clean signal.
+  - q: Does an open-drain comparator change the calculation?
+    a: Yes. The output high level is set by the pull-up resistor, which also sits in series with R₂, so V_OH is lower than the pull-up supply unless R₂ is much larger than the pull-up.
+related: [electronics/voltage-divider, electronics/op-amp-gain, electronics/555-timer, electronics/ntc-thermistor]
+---
+
+## How to use the Schmitt trigger calculator
+
+Enter the **reference voltage**, the two resistors of the positive-feedback divider and the comparator's **output high and low levels**. The signal drives the inverting input. The calculator returns the two switching points, the hysteresis and the centre of the band. To design, choose the hysteresis you need and adjust R₂/R₁.
+
+## Schmitt trigger formulas
+
+<p class="formula">V<sub>TH</sub> = (V<sub>ref</sub> R₂ + V<sub>OH</sub> R₁) / (R₁ + R₂) &nbsp;·&nbsp; V<sub>TL</sub> = (V<sub>ref</sub> R₂ + V<sub>OL</sub> R₁) / (R₁ + R₂)</p>
+
+<p class="formula">V<sub>H</sub> = V<sub>TH</sub> − V<sub>TL</sub> = (V<sub>OH</sub> − V<sub>OL</sub>) R₁ / (R₁ + R₂)</p>
+
+## Worked example
+
+V<sub>ref</sub> = 2.5 V, R₁ = 10 kΩ, R₂ = 100 kΩ, rail-to-rail output 0–5 V:
+
+- V<sub>TH</sub> = (2.5 × 100k + 5 × 10k) ÷ 110k = **2.7273 V**
+- V<sub>TL</sub> = (2.5 × 100k) ÷ 110k = **2.2727 V**
+- Hysteresis = **454.5 mV**, centred on 2.500 V
+
+## Hysteresis vs R₂/R₁ (V<sub>ref</sub> = 2.5 V, output 0–5 V)
+
+| R₂ / R₁ | Hysteresis | V<sub>TH</sub> | V<sub>TL</sub> |
+|---|---|---|---|
+| 2 | 1,667 mV | 3.333 V | 1.667 V |
+| 5 | 833 mV | 2.917 V | 2.083 V |
+| 10 | 455 mV | 2.727 V | 2.273 V |
+| 20 | 238 mV | 2.619 V | 2.381 V |
+| 50 | 98 mV | 2.549 V | 2.451 V |
+| 100 | 50 mV | 2.525 V | 2.475 V |
+
+## Notes
+
+- The output goes **low** when the input rises above V<sub>TH</sub> and **high** when it falls below V<sub>TL</sub> (inverting action).
+- Positive feedback shifts the band centre above V<sub>ref</sub>; to centre it, lower V<sub>ref</sub> or add a resistor from the + input to ground.

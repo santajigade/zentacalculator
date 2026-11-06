@@ -1,0 +1,64 @@
+---
+title: Frustum Volume Calculator (Truncated Cone)
+description: Calculate the volume, slant height, lateral area and total surface area of a conical frustum (truncated cone) from the two radii and height.
+category: math
+intro: "A frustum is a cone with its top cut off parallel to the base — the shape of buckets, flower pots, lampshades and many hoppers. This frustum volume calculator gives the volume, slant height, lateral area and total surface area of a conical frustum from the bottom and top radii and the height."
+keywords: [frustum volume calculator, truncated cone volume, volume of a frustum, frustum of a cone calculator, bucket volume calculator, frustum surface area, tapered tub volume]
+updated: 2026-11-06
+variables:
+  - { id: R, label: Large (base) radius R, family: length, unit: cm, imperialUnit: in, default: 5, min: 0 }
+  - { id: r, label: Small (top) radius r, family: length, unit: cm, imperialUnit: in, default: 3, min: 0 }
+  - { id: h, label: Height h, family: length, unit: cm, imperialUnit: in, default: 4, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: cm3, imperialUnit: in3, min: 0 }
+  - { id: s, label: Slant height, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: LA, label: Lateral (side) surface area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+  - { id: TA, label: Total surface area (with both ends), family: area, unit: cm2, imperialUnit: in2, min: 0 }
+equations:
+  - V = pi * h / 3 * (R^2 + R * r + r^2)
+  - s = sqrt(h^2 + (R - r)^2)
+  - LA = pi * (R + r) * s
+  - TA = LA + pi * (R^2 + r^2)
+faq:
+  - q: What is the formula for the volume of a frustum?
+    a: V = (πh/3)(R² + Rr + r²), where R and r are the radii of the two circular ends and h is the perpendicular height.
+  - q: How do I find the slant height of a frustum?
+    a: s = √(h² + (R − r)²). The lateral surface area is then π(R + r)s.
+  - q: How do I calculate the volume of a bucket?
+    a: Measure the top and bottom diameters and the depth, halve the diameters to get radii, and use the frustum formula. Divide cm³ by 1,000 for litres.
+  - q: What about a square or rectangular frustum?
+    a: For any frustum with similar parallel ends of areas A₁ and A₂, V = (h/3)(A₁ + A₂ + √(A₁A₂)). For a square frustum with sides a and b that is (h/3)(a² + ab + b²).
+related: [math/cone, math/cylinder-volume, math/pyramid-volume, math/sphere]
+---
+
+## How to use the frustum volume calculator
+
+Enter the **large radius**, the **small radius** and the **height** between the two parallel faces. For a bucket or pot measured by diameter, halve each diameter first. The calculator gives the volume, the slant height and the surface areas.
+
+## Frustum formulas
+
+<p class="formula">V = (π h / 3)(R² + R r + r²) &nbsp;·&nbsp; s = √(h² + (R − r)²)</p>
+
+<p class="formula">Lateral area = π (R + r) s &nbsp;·&nbsp; Total area = π (R + r) s + π R² + π r²</p>
+
+## Worked example
+
+R = 5 cm, r = 3 cm, h = 4 cm:
+
+- V = (π × 4 ÷ 3)(25 + 15 + 9) = **205.25 cm³**
+- Slant height = √(16 + 4) = **4.472 cm**
+- Lateral area = π × 8 × 4.472 = **112.40 cm²**; total area = **219.21 cm²**
+
+## Bucket and tub volumes
+
+| Top diameter | Bottom diameter | Depth | Volume |
+|---|---|---|---|
+| 30 cm | 25 cm | 30 cm | 17.87 L |
+| 28 cm | 24 cm | 26 cm | 13.83 L |
+| 32 cm | 26 cm | 35 cm | 23.20 L |
+| 40 cm | 30 cm | 40 cm | 38.75 L |
+| 60 cm | 45 cm | 70 cm | 152.56 L |
+
+## Notes
+
+- If r = 0 the formula becomes the cone volume πR²h/3; if r = R it becomes the cylinder πR²h.
+- For a partly filled bucket, use the radius at the liquid surface as the top radius and the liquid depth as h.

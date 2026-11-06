@@ -1,0 +1,68 @@
+---
+title: Equilibrium Constant Calculator (Kc and Kp)
+description: Calculate the equilibrium constant Kc from equilibrium concentrations and coefficients, and convert it to Kp with Kp = Kc(RT)^Δn at any temperature.
+category: chemistry
+intro: "The equilibrium constant Kc is the ratio of product to reactant concentrations at equilibrium, each raised to its coefficient in the balanced equation; for gases it is often given as Kp in partial pressures instead. This equilibrium constant calculator works out Kc for aA + bB ⇌ cC + dD and converts it to Kp with Kp = Kc(RT)^Δn."
+keywords: [equilibrium constant calculator, kc calculator, kp calculator, kp to kc, kc to kp conversion, kp = kc(rt)^delta n, equilibrium expression calculator, how to calculate kc]
+updated: 2026-11-06
+variables:
+  - { id: cA, label: "Concentration [A]", suffix: mol/L, default: 0.5, min: 0 }
+  - { id: a, label: Coefficient a, default: 1, min: 0 }
+  - { id: cB, label: "Concentration [B]", suffix: mol/L, default: 1.5, min: 0 }
+  - { id: b, label: Coefficient b, default: 3, min: 0 }
+  - { id: cC, label: "Concentration [C]", suffix: mol/L, default: 0.1, min: 0 }
+  - { id: c, label: Coefficient c, default: 2, min: 0 }
+  - { id: cD, label: "Concentration [D]", suffix: mol/L, default: 1, min: 0 }
+  - { id: d, label: Coefficient d (0 if no D), default: 0, min: 0 }
+  - { id: T, label: Temperature, family: temperature, unit: C, imperialUnit: F, default: 500 }
+  - { id: Kc, label: Equilibrium constant Kc, min: 0 }
+  - { id: dn, label: Change in moles of gas Δn, decimals: 3 }
+  - { id: Kp, label: Equilibrium constant Kp (pressures in atm), min: 0 }
+equations:
+  - Kc = cC^c * cD^d / (cA^a * cB^b)
+  - dn = c + d - a - b
+  - Kp = Kc * (0.0820574 * T)^dn
+faq:
+  - q: How do you calculate Kc?
+    a: For aA + bB ⇌ cC + dD, Kc = [C]^c[D]^d ÷ ([A]^a[B]^b) using equilibrium molar concentrations. Pure solids and liquids are left out.
+  - q: What is the relationship between Kp and Kc?
+    a: Kp = Kc(RT)^Δn, where R = 0.08206 L·atm/(mol·K), T is in kelvin and Δn is moles of gaseous products minus moles of gaseous reactants. When Δn = 0, Kp = Kc.
+  - q: What does a large K mean?
+    a: K much greater than 1 means products dominate at equilibrium; K much less than 1 means reactants dominate. K says nothing about how fast equilibrium is reached.
+  - q: Does K change with concentration or pressure?
+    a: No — only temperature changes K. Changing concentrations or pressure shifts the position of equilibrium, but the ratio returns to the same K.
+related: [chemistry/gibbs-free-energy, chemistry/cell-potential, chemistry/daltons-law, chemistry/molarity]
+---
+
+## How to use the equilibrium constant calculator
+
+Enter the **equilibrium concentrations** and **coefficients** for reaction aA + bB ⇌ cC + dD. For a reaction with fewer species, set the unused coefficient to 0. Enter the **temperature** to convert Kc to Kp — the conversion assumes every species counted in Δn is a gas; set the coefficient of any solid or liquid to 0.
+
+## Equilibrium constant formulas
+
+<p class="formula">K<sub>c</sub> = [C]<sup>c</sup>[D]<sup>d</sup> / ([A]<sup>a</sup>[B]<sup>b</sup>)</p>
+
+<p class="formula">K<sub>p</sub> = K<sub>c</sub>(RT)<sup>Δn</sup> &nbsp;·&nbsp; Δn = (c + d) − (a + b), R = 0.0820574 L·atm/(mol·K)</p>
+
+## Worked example: N₂ + 3H₂ ⇌ 2NH₃
+
+Illustrative equilibrium mixture at 500 °C: [N₂] = 0.50 M, [H₂] = 1.50 M, [NH₃] = 0.10 M:
+
+- K<sub>c</sub> = 0.10² ÷ (0.50 × 1.50³) = **0.005926**
+- Δn = 2 − 4 = **-2**
+- K<sub>p</sub> = 0.005926 × (0.0820574 × 773.15)<sup>−2</sup> = **1.472e-06**
+
+## (RT)<sup>Δn</sup> conversion factors
+
+| Temperature | RT (L·atm/mol) | Δn = −2 | Δn = −1 | Δn = +1 | Δn = +2 |
+|---|---|---|---|---|---|
+| 298.15 K | 24.465 | 0.001671 | 0.04087 | 24.47 | 598.6 |
+| 500 K | 41.029 | 0.0005941 | 0.02437 | 41.03 | 1683 |
+| 773.15 K | 63.443 | 0.0002484 | 0.01576 | 63.44 | 4025 |
+| 1000 K | 82.057 | 0.0001485 | 0.01219 | 82.06 | 6733 |
+
+## Notes
+
+- With pressures in bar use R = 0.0831446 L·bar/(mol·K).
+- The reaction quotient Q uses the same expression with non-equilibrium values: if Q < K the reaction moves forward, if Q > K it moves back.
+- K is linked to the standard Gibbs energy by ΔG° = −RT ln K — see the [Gibbs free energy calculator](/chemistry/gibbs-free-energy/).

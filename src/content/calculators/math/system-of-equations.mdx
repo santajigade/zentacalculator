@@ -1,0 +1,63 @@
+---
+title: System of Equations Calculator (2 Variables, Cramer's Rule)
+description: Solve a system of two linear equations in x and y with Cramer's rule — shows the determinant and tells you when there is no unique solution.
+category: math
+intro: "A system of two linear equations ax + by = c has one solution where the two lines cross, none if they are parallel and infinitely many if they are the same line. This system of equations calculator solves for x and y with Cramer's rule and shows the determinant, which is zero exactly when there is no unique solution."
+keywords: [system of equations calculator, simultaneous equations calculator, solve two equations two unknowns, cramer's rule calculator, linear equations solver 2x2, solve for x and y, elimination method calculator]
+updated: 2026-11-06
+variables:
+  - { id: a1, label: "a₁ (x coefficient, equation 1)", default: 2 }
+  - { id: b1, label: "b₁ (y coefficient, equation 1)", default: 3 }
+  - { id: c1, label: "c₁ (right-hand side, equation 1)", default: 13 }
+  - { id: a2, label: "a₂ (x coefficient, equation 2)", default: 1 }
+  - { id: b2, label: "b₂ (y coefficient, equation 2)", default: -1 }
+  - { id: c2, label: "c₂ (right-hand side, equation 2)", default: -1 }
+  - { id: Dt, label: Determinant D = a₁b₂ − a₂b₁, decimals: 6 }
+  - { id: x, label: x, decimals: 6 }
+  - { id: y, label: y, decimals: 6 }
+equations:
+  - Dt = a1 * b2 - a2 * b1
+  - x = (c1 * b2 - c2 * b1) / Dt
+  - y = (a1 * c2 - a2 * c1) / Dt
+faq:
+  - q: How do you solve two equations with two unknowns?
+    a: By substitution, elimination or Cramer's rule. With Cramer's rule, x = (c₁b₂ − c₂b₁)/D and y = (a₁c₂ − a₂c₁)/D, where D = a₁b₂ − a₂b₁.
+  - q: What does a determinant of zero mean?
+    a: The lines are parallel (no solution) or identical (infinitely many solutions). Check whether one equation is a multiple of the other.
+  - q: How do I enter an equation like y = 2x + 1?
+    a: Rearrange it to the form ax + by = c first, i.e. −2x + y = 1, so a = −2, b = 1 and c = 1.
+  - q: How can I check the answer?
+    a: Substitute x and y back into both original equations — each left-hand side should equal its right-hand side.
+related: [math/system-of-3-equations, math/quadratic-equation, math/slope, math/linear-interpolation]
+---
+
+## How to use the system of equations calculator
+
+Write both equations in the form **a·x + b·y = c** and enter the six coefficients. The calculator returns the determinant and the solution. If the determinant is 0, the equations have no unique solution.
+
+## Cramer's rule for two equations
+
+<p class="formula">D = a₁b₂ − a₂b₁ &nbsp;·&nbsp; x = (c₁b₂ − c₂b₁) / D &nbsp;·&nbsp; y = (a₁c₂ − a₂c₁) / D</p>
+
+## Worked example
+
+Solve 2x + 3y = 13 and x − y = −1:
+
+- D = 2 × (−1) − 1 × 3 = **-5**
+- x = (13 × (−1) − (−1) × 3) ÷ (-5) = **2**
+- y = (2 × (−1) − 1 × 13) ÷ (-5) = **3**
+- Check: 2(2) + 3(3) = 13 ✓ and 2 − 3 = −1 ✓
+
+## Solving by elimination
+
+1. Multiply the equations so one variable has equal and opposite coefficients.
+2. Add the equations to eliminate that variable and solve for the other.
+3. Substitute back to find the first variable.
+
+## Types of solution
+
+| Determinant | Lines | Solutions |
+|---|---|---|
+| D ≠ 0 | Intersect at one point | Exactly one |
+| D = 0, equations proportional | Same line | Infinitely many |
+| D = 0, not proportional | Parallel | None |

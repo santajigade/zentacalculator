@@ -1,0 +1,66 @@
+---
+title: Theoretical Yield Calculator (Grams of Product & % Yield)
+description: Calculate the theoretical yield of a reaction in grams from the mass of the limiting reagent, the mole ratio and molar masses — plus the percent yield.
+category: chemistry
+intro: "The theoretical yield is the maximum mass of product a reaction can give if all of the limiting reagent reacts as the balanced equation says. This theoretical yield calculator turns the mass of the limiting reagent into moles, applies the mole ratio and converts back to grams of product — and, if you enter what you actually obtained, gives the percent yield."
+keywords: [theoretical yield calculator, how to calculate theoretical yield, theoretical yield formula, grams of product calculator, mole ratio yield, percent yield and theoretical yield, stoichiometry yield]
+updated: 2026-11-06
+variables:
+  - { id: m, label: Mass of limiting reagent, family: mass, unit: g, imperialUnit: g, default: 2, min: 0 }
+  - { id: MR, label: Molar mass of limiting reagent, suffix: g/mol, default: 138.12, min: 0 }
+  - { id: r, label: Coefficient of limiting reagent, default: 1, min: 0 }
+  - { id: p, label: Coefficient of product, default: 1, min: 0 }
+  - { id: MP, label: Molar mass of product, suffix: g/mol, default: 180.16, min: 0 }
+  - { id: ma, label: Actual yield (optional), family: mass, unit: g, imperialUnit: g, default: 2.1, min: 0 }
+  - { id: nP, label: Moles of product, suffix: mol, min: 0, decimals: 5 }
+  - { id: mT, label: Theoretical yield, family: mass, unit: g, imperialUnit: g, min: 0 }
+  - { id: Y, label: Percent yield, family: percent, unit: '%', min: 0, decimals: 1 }
+equations:
+  - nP = m * 1000 / MR * p / r
+  - mT = nP * MP / 1000
+  - Y = ma / mT
+faq:
+  - q: How do you calculate theoretical yield?
+    a: Moles of limiting reagent = mass ÷ molar mass; moles of product = that × (product coefficient ÷ reagent coefficient); theoretical yield = moles of product × molar mass of product.
+  - q: What is the difference between theoretical and actual yield?
+    a: Theoretical yield is the calculated maximum; actual yield is what you recover. Percent yield = actual ÷ theoretical × 100%.
+  - q: Can percent yield be over 100%?
+    a: Not for a pure, dry product. A result above 100% usually means the product is wet or contaminated, or the wrong limiting reagent was used.
+  - q: What if I don't know which reactant is limiting?
+    a: Work out moles ÷ coefficient for each reactant first — the smallest is limiting. The limiting reagent calculator does this for two reactants.
+related: [chemistry/limiting-reagent, chemistry/percent-yield, chemistry/moles, chemistry/molarity]
+---
+
+## How to use the theoretical yield calculator
+
+Enter the **mass of the limiting reagent**, its **molar mass**, the **coefficients** of the reagent and the product from the balanced equation, and the **molar mass of the product**. The calculator returns the moles and grams of product. Enter your **actual yield** to see the percent yield.
+
+## Theoretical yield formula
+
+<p class="formula">m<sub>theoretical</sub> = (m<sub>reagent</sub> / M<sub>reagent</sub>) × (p / r) × M<sub>product</sub></p>
+
+<p class="formula">% yield = m<sub>actual</sub> / m<sub>theoretical</sub> × 100%</p>
+
+## Worked example: aspirin synthesis
+
+2.00 g salicylic acid (138.12 g/mol) reacts 1 : 1 to give aspirin (180.16 g/mol); 2.10 g of aspirin is recovered:
+
+- Moles = 2.00 ÷ 138.12 = **0.01448 mol**
+- Theoretical yield = 0.01448 × 180.16 = **2.609 g**
+- Percent yield = 2.10 ÷ 2.609 = **80.5%**
+
+## Theoretical yield from 1 kg of reagent
+
+| Reaction | Product : reagent | Theoretical yield |
+|---|---|---|
+| Salicylic acid → aspirin | 1:1 | 1,304.4 g aspirin |
+| Glucose → ethanol (fermentation) | 2:1 | 511.4 g ethanol |
+| CaCO₃ → CaO (calcination) | 1:1 | 560.3 g CaO |
+| Fe₂O₃ → Fe (reduction) | 2:1 | 699.4 g Fe |
+| CH₄ → CO₂ (combustion) | 1:1 | 2,743.2 g CO₂ |
+
+## Why actual yield is lower
+
+- Incomplete reaction or an equilibrium that does not go to completion
+- Side reactions forming other products
+- Losses in filtration, transfer, washing and recrystallisation

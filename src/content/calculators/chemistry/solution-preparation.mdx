@@ -1,0 +1,64 @@
+---
+title: Solution Preparation Calculator (Mass of Solid Needed)
+description: Calculate how many grams of solid to weigh out to make a solution of a given molarity and volume, corrected for reagent purity, with common reagent masses.
+category: chemistry
+intro: "To make a solution of known molarity you weigh out moles × molar mass of the solid, dissolve it and make up to volume. This solution preparation calculator gives the mass of solid needed for any concentration and volume, corrected for reagent purity, and lists the masses for common lab reagents."
+keywords: [solution preparation calculator, mass needed for molar solution, how many grams to make a solution, grams to make 0.1 m solution, molar solution preparation, reagent purity correction, make a solution from solid]
+updated: 2026-11-06
+variables:
+  - { id: c, label: Target concentration, suffix: mol/L, default: 0.1, min: 0 }
+  - { id: V, label: Final solution volume, family: volume, unit: mL, imperialUnit: mL, default: 500, min: 0 }
+  - { id: M, label: Molar mass of the solid (as weighed), suffix: g/mol, default: 58.44, min: 0, help: 'Use the molar mass of the form you weigh — including water of crystallisation for hydrates.' }
+  - { id: pur, label: Reagent purity (assay), family: percent, unit: '%', default: 99.5, min: 0.01, max: 1 }
+  - { id: n, label: Moles of solute needed, suffix: mol, min: 0, decimals: 5 }
+  - { id: m, label: Mass to weigh out, family: mass, unit: g, imperialUnit: g, min: 0 }
+equations:
+  - n = c * V * 1000
+  - m = n * M / pur / 1000
+faq:
+  - q: How do I calculate the mass needed for a solution?
+    a: Mass (g) = molarity (mol/L) × volume (L) × molar mass (g/mol). Divide by the purity as a fraction if the reagent is not 100% pure.
+  - q: How many grams of NaCl make 1 L of 1 M solution?
+    a: 58.44 g. For 500 mL of 0.1 M you need 0.1 × 0.5 × 58.44 = 2.922 g (2.937 g at 99.5% purity).
+  - q: Should I add the solid to the full volume of water?
+    a: No. Dissolve it in less water, then make up to the mark in a volumetric flask, because the solid itself takes up volume.
+  - q: How do I handle hydrates?
+    a: Use the molar mass of the hydrate you are weighing. CuSO₄·5H₂O is 249.69 g/mol, not 159.61 g/mol for anhydrous CuSO₄.
+related: [chemistry/molarity, chemistry/dilution, chemistry/normality, chemistry/mass-percent]
+---
+
+## How to use the solution preparation calculator
+
+Enter the **concentration** you want, the **final volume** of solution, the **molar mass** of the solid you are weighing and its **purity** from the label or certificate of analysis. The calculator returns the moles needed and the mass to weigh. Clear the mass and enter a mass you have to find the concentration it makes.
+
+## Solution preparation formula
+
+<p class="formula">m = c × V × M ÷ purity</p>
+
+with c in mol/L, V in litres, M in g/mol and purity as a fraction.
+
+## Worked example
+
+500 mL of 0.1 M NaCl (58.44 g/mol) from 99.5% pure salt:
+
+- Moles = 0.1 × 0.500 = **0.050 mol**
+- Mass = 0.05 × 58.44 ÷ 0.995 = **2.9367 g**
+
+## Mass needed for 1 litre of solution
+
+| Reagent | Molar mass (g/mol) | 0.1 M | 1 M |
+|---|---|---|---|
+| Sodium chloride NaCl | 58.44 | 5.844 g | 58.44 g |
+| Potassium chloride KCl | 74.55 | 7.455 g | 74.55 g |
+| Sodium hydroxide NaOH | 40.00 | 4.000 g | 40.00 g |
+| Sodium carbonate Na₂CO₃ | 105.99 | 10.599 g | 105.99 g |
+| Potassium dihydrogen phosphate KH₂PO₄ | 136.09 | 13.609 g | 136.09 g |
+| Copper(II) sulfate pentahydrate CuSO₄·5H₂O | 249.69 | 24.969 g | 249.69 g |
+| Glucose C₆H₁₂O₆ | 180.16 | 18.016 g | 180.16 g |
+| Disodium EDTA dihydrate | 372.24 | 37.224 g | 372.24 g |
+
+## Good practice
+
+- Use an analytical balance and a Class A volumetric flask for standard solutions.
+- Hygroscopic solids such as NaOH absorb water while weighing — standardise those solutions by titration.
+- To prepare a weaker solution from a stock instead, use the [dilution calculator](/chemistry/dilution/).

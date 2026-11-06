@@ -1,0 +1,66 @@
+---
+title: Bomb Calorimeter Calculator (Heat of Combustion ΔU & ΔH)
+description: Calculate the heat of combustion from a bomb calorimeter run — heat released, ΔcU per gram and per mole, and ΔcH — from calorimeter constant, ΔT and mass.
+category: chemistry
+intro: "In a bomb calorimeter a sample burns in oxygen inside a sealed steel vessel, so the heat released raises the temperature of the calorimeter at constant volume. This bomb calorimeter calculator turns the calorimeter constant and temperature rise into the heat released, the energy of combustion ΔcU per gram and per mole, and the enthalpy of combustion ΔcH."
+keywords: [bomb calorimeter calculator, heat of combustion calculator, bomb calorimetry formula, calorimeter constant, q = c delta t, enthalpy of combustion calculator, constant volume calorimetry]
+updated: 2026-11-06
+variables:
+  - { id: C, label: Calorimeter heat capacity (constant), suffix: kJ/K, default: 10, min: 0 }
+  - { id: dT, label: Corrected temperature rise ΔT, family: tempdiff, unit: K, default: 2.648, min: 0 }
+  - { id: qf, label: Fuse wire and other corrections, family: energy, unit: J, default: 50, min: 0 }
+  - { id: m, label: Sample mass, family: mass, unit: g, imperialUnit: g, default: 1, min: 0 }
+  - { id: M, label: Molar mass of sample, suffix: g/mol, default: 122.12, min: 0 }
+  - { id: dn, label: Change in moles of gas Δn(g) per mole, default: -0.5, help: 'Moles of gaseous products minus gaseous reactants (including O₂) per mole of fuel; water is taken as liquid.' }
+  - { id: T, label: Reference temperature, family: temperature, unit: C, imperialUnit: F, default: 25 }
+  - { id: q, label: Heat released by the sample, family: energy, unit: kJ, min: 0 }
+  - { id: Ug, label: Energy of combustion ΔcU per gram, suffix: kJ/g, decimals: 3 }
+  - { id: Um, label: Molar energy of combustion ΔcU, suffix: kJ/mol, decimals: 1 }
+  - { id: Hm, label: Molar enthalpy of combustion ΔcH, suffix: kJ/mol, decimals: 1 }
+equations:
+  - q = C * 1000 * dT - qf
+  - Ug = -q / 1000 / (m * 1000)
+  - Um = -q / 1000 / (m * 1000 / M)
+  - Hm = Um + dn * 8.314462618 * T / 1000
+faq:
+  - q: How do you calculate heat of combustion from a bomb calorimeter?
+    a: q = C_cal × ΔT, minus corrections such as fuse wire. Divide by the sample mass for kJ/g, or by moles for kJ/mol, and make it negative because heat is released.
+  - q: Why does a bomb calorimeter measure ΔU rather than ΔH?
+    a: The bomb is sealed, so combustion happens at constant volume and no expansion work is done; the heat measured is the internal energy change. ΔH = ΔU + Δn(g)RT converts it to constant pressure.
+  - q: How is the calorimeter constant found?
+    a: By burning a known mass of benzoic acid, whose certified energy of combustion is about 26.434 kJ/g, and dividing the heat released by the measured temperature rise.
+  - q: What is the difference between gross and net calorific value?
+    a: The bomb gives the gross (higher) value because the water formed condenses. The net (lower) value subtracts the latent heat of that water.
+related: [chemistry/specific-heat, chemistry/gibbs-free-energy, physics/final-temperature, physics/latent-heat]
+---
+
+## How to use the bomb calorimeter calculator
+
+Enter the **calorimeter constant** (from a benzoic acid calibration), the **corrected temperature rise**, any **fuse wire or acid corrections**, the **sample mass** and its **molar mass**. For ΔH, enter **Δn(g)** from the balanced combustion equation per mole of sample.
+
+## Bomb calorimetry formulas
+
+<p class="formula">q = C<sub>cal</sub> × ΔT − q<sub>corr</sub> &nbsp;·&nbsp; Δ<sub>c</sub>U = −q / n &nbsp;·&nbsp; Δ<sub>c</sub>H = Δ<sub>c</sub>U + Δn<sub>g</sub>RT</p>
+
+## Worked example: benzoic acid
+
+C₆H₅COOH + 7.5 O₂ → 7 CO₂ + 3 H₂O(l), so Δn(g) = 7 − 7.5 = −0.5. A 1.000 g sample raises a 10.0 kJ/K calorimeter by 2.648 K, with a 50 J fuse correction:
+
+- q = 10.0 × 2.648 − 0.050 = **26.43 kJ**
+- Δ<sub>c</sub>U = **-26.43 kJ/g** = -26.43 × 122.12 = **-3,227.6 kJ/mol**
+- Δ<sub>c</sub>H = -3,227.6 + (−0.5)(8.314 × 10⁻³)(298.15) = **-3,228.9 kJ/mol**
+
+## Typical energies of combustion (−Δ<sub>c</sub>U, approximate)
+
+| Substance | Molar mass (g/mol) | Per gram | Per mole |
+|---|---|---|---|
+| Benzoic acid (calibration standard) | 122.12 | 26.43 kJ/g | 3,228 kJ/mol |
+| Sucrose | 342.30 | 16.49 kJ/g | 5,645 kJ/mol |
+| Naphthalene | 128.17 | 40.13 kJ/g | 5,143 kJ/mol |
+| Glucose | 180.16 | 15.56 kJ/g | 2,803 kJ/mol |
+| Ethanol | 46.07 | 29.67 kJ/g | 1,367 kJ/mol |
+
+## Notes
+
+- Correct ΔT for heat exchange with the surroundings (Regnault–Pfaundler or graphical extrapolation).
+- Nitric and sulfuric acid formed from N and S in the sample release extra heat — titrate the bomb washings to correct for it.

@@ -167,8 +167,8 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Voltage drop for DC (solar/battery)
 
 ## Electronics
-- [ ] Op-amp: summing, differential, integrator (ib)
-- [ ] Sallen–Key low-pass filter (ib)
+- [x] Op-amp: summing, differential, integrator (ib)
+- [x] Sallen–Key low-pass filter (ib)
 - [ ] LC filter / pi filter
 - [ ] RC snubber (ib)
 - [x] Linear regulator power (LM317 resistors)
@@ -181,18 +181,18 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Decoupling capacitor selection (ib)
 - [x] Crystal load capacitance
 - [x] RC oscillator / phase-shift oscillator frequency (ib)
-- [ ] Schmitt trigger thresholds
+- [x] Schmitt trigger thresholds
 - [ ] Comparator hysteresis resistors
 - [ ] Photodiode transimpedance amplifier (ib)
 - [ ] Thermocouple amplifier gain
 - [ ] Battery internal resistance & runtime (Peukert)
 - [x] Antenna length (λ/2, λ/4 dipole)
 - [x] Free-space path loss
-- [ ] Microstrip impedance (ib)
+- [x] Microstrip impedance (ib)
 - [x] Skin effect in PCB / wire (ib)
 - [ ] Binary / hex / decimal / BCD converter (ib)
 - [ ] Gray code converter (ib)
-- [ ] Logic level / pull-up resistor (I2C)
+- [x] Logic level / pull-up resistor (I2C)
 - [x] UART baud rate error
 - [ ] RS-485 cable length & termination (ib)
 - [ ] Hall-effect current sensor scaling (ib)
@@ -239,21 +239,21 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Mass ↔ moles ↔ volume (STP)
 - [ ] Molar mass from formula
 - [ ] Empirical formula
-- [ ] Limiting reagent
-- [ ] Theoretical yield
+- [x] Limiting reagent
+- [x] Theoretical yield
 - [x] Normality
-- [ ] Solution preparation from solid (mass needed)
-- [ ] Stock dilution series
+- [x] Solution preparation from solid (mass needed)
+- [x] Stock dilution series (exists: biology/serial-dilution)
 - [x] pOH / [H+] / [OH−]
 - [x] Ka ↔ pKa, Kb ↔ pKb
 - [x] pH of weak acid / weak base
-- [ ] Equilibrium constant (Kc, Kp)
+- [x] Equilibrium constant (Kc, Kp)
 - [ ] Reaction rate & order
 - [x] Activation energy from two rates
 - [ ] Enthalpy of reaction (Hess)
-- [ ] Heat of combustion / calorimetry (bomb)
+- [x] Heat of combustion / calorimetry (bomb)
 - [x] Faraday electrolysis (mass deposited)
-- [ ] Cell potential (E°cell)
+- [x] Cell potential (E°cell)
 - [x] Raoult's law (vapour pressure)
 - [x] Henry's law (gas solubility)
 - [x] Van der Waals equation
@@ -261,13 +261,13 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Avogadro's law
 - [x] Water hardness (ppm CaCO₃)
 - [ ] TDS ↔ conductivity (ib)
-- [ ] Dissolved oxygen saturation
+- [x] Dissolved oxygen saturation
 - [ ] Conductivity cell constant (ib)
 - [ ] ORP / chlorine dose (water treatment)
 
 ## Math
-- [ ] Linear equation solver / two equations
-- [ ] System of 3 equations
+- [x] Linear equation solver / two equations
+- [x] System of 3 equations
 - [ ] Cubic equation
 - [ ] Polynomial roots
 - [ ] Matrix determinant / inverse (2×2, 3×3)
@@ -279,8 +279,8 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Law of sines
 - [ ] Triangle solver (SSS, SAS, ASA)
 - [ ] Hexagon / octagon
-- [ ] Prism / pyramid / frustum volume
-- [ ] Torus / capsule / hemisphere
+- [x] Prism / pyramid / frustum volume
+- [ ] Torus / capsule / hemisphere (torus done)
 - [ ] Surface area of shapes
 - [x] Arithmetic sequence
 - [x] Geometric sequence & series
@@ -293,7 +293,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Scientific notation
 - [ ] Significant figures
 - [ ] Rounding
-- [ ] Modulo
+- [x] Modulo
 - [ ] Roman numerals
 - [ ] Derivative (power rule, numeric)
 - [ ] Definite integral (numeric)
@@ -303,7 +303,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Inverse trig
 - [x] Complex numbers (polar ↔ rectangular)
 - [ ] Log base converter / antilog
-- [ ] Exponential growth & decay
+- [x] Exponential growth & decay (exists: biology/exponential-population-growth)
 - [ ] Percentage increase/decrease of a value
 - [ ] Ratio to percentage
 

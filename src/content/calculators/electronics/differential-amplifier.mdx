@@ -1,0 +1,66 @@
+---
+title: Differential Amplifier Calculator (Op-Amp Subtractor)
+description: Calculate the output voltage, differential gain and common-mode gain of a four-resistor op-amp differential amplifier (subtractor) from V1, V2 and R1–R4.
+category: electronics
+intro: "A differential amplifier amplifies the difference between two voltages while rejecting what they have in common — the classic four-resistor op-amp subtractor. This differential amplifier calculator gives the output voltage, differential gain and common-mode gain for any resistor values, so you can see how resistor mismatch spoils the CMRR described in [differential amplifier basics and CMRR](https://www.instrumentationblog.in/differential-amplifier-explained-basics-and-cmrr/)."
+keywords: [differential amplifier calculator, op amp differential amplifier formula, subtractor circuit calculator, difference amplifier gain, common mode gain, cmrr resistor mismatch, op amp subtractor]
+updated: 2026-11-06
+variables:
+  - { id: V1, label: Voltage at inverting side V₁, family: voltage, unit: V, default: 1 }
+  - { id: V2, label: Voltage at non-inverting side V₂, family: voltage, unit: V, default: 1.2 }
+  - { id: R1, label: R₁ (V₁ to inverting input), family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: R2, label: R₂ (feedback), family: resistance, unit: kohm, default: 100, min: 0 }
+  - { id: R3, label: R₃ (V₂ to non-inverting input), family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: R4, label: R₄ (non-inverting input to ground), family: resistance, unit: kohm, default: 100, min: 0 }
+  - { id: Vout, label: Output voltage, family: voltage, unit: V }
+  - { id: Ad, label: Differential gain, decimals: 4 }
+  - { id: Acm, label: Common-mode gain, decimals: 5 }
+equations:
+  - Vout = R4 / (R3 + R4) * (1 + R2 / R1) * V2 - R2 / R1 * V1
+  - Ad = (R4 / (R3 + R4) * (1 + R2 / R1) + R2 / R1) / 2
+  - Acm = R4 / (R3 + R4) * (1 + R2 / R1) - R2 / R1
+faq:
+  - q: What is the differential amplifier formula?
+    a: In general Vout = V₂·R₄/(R₃+R₄)·(1 + R₂/R₁) − V₁·R₂/R₁. With R₁ = R₃ and R₂ = R₄ it reduces to Vout = (R₂/R₁)(V₂ − V₁).
+  - q: What is common-mode gain?
+    a: The gain for a voltage applied equally to both inputs. It is zero when R₂/R₁ = R₄/R₃ exactly; any resistor mismatch lets some common-mode voltage through.
+  - q: How does resistor tolerance affect CMRR?
+    a: Worst-case CMRR ≈ (1 + G) ÷ (4t), where t is the resistor tolerance. With 1% resistors and a gain of 1 that is only about 34 dB, so precision work uses 0.1% or matched networks.
+  - q: When should I use an instrumentation amplifier instead?
+    a: When the sources have high or unequal impedance (bridges, thermocouples) — the four-resistor circuit loads the inputs with R₁ and R₃+R₄, unlike an in-amp's buffered inputs.
+related: [electronics/instrumentation-amplifier-gain, electronics/op-amp-gain, electronics/summing-amplifier, electronics/wheatstone-bridge]
+---
+
+## How to use the differential amplifier calculator
+
+Enter the two input voltages and the four resistors. **R₁** and **R₂** set the inverting gain; **R₃** and **R₄** form the divider on the non-inverting input. The calculator returns the output, the differential gain and the common-mode gain — try changing R₄ by 1% to see how mismatch creates common-mode error.
+
+## Differential amplifier formula
+
+<p class="formula">V<sub>out</sub> = V₂ · R₄/(R₃ + R₄) · (1 + R₂/R₁) − V₁ · R₂/R₁</p>
+
+<p class="formula">Matched (R₁ = R₃, R₂ = R₄): V<sub>out</sub> = (R₂/R₁)(V₂ − V₁)</p>
+
+Writing V<sub>out</sub> = A<sub>d</sub>(V₂ − V₁) + A<sub>cm</sub>(V₁ + V₂)/2 separates the wanted differential gain from the unwanted common-mode gain.
+
+## Worked example
+
+V₁ = 1 V, V₂ = 1.2 V, R₁ = R₃ = 10 kΩ, R₂ = R₄ = 100 kΩ:
+
+- V<sub>out</sub> = 1.2 × (100/110) × 11 − 1 × 10 = **2.00 V**
+- Differential gain = **10**, common-mode gain = **0**
+
+## Worst-case CMRR from resistor tolerance
+
+| Gain | 5% | 1% | 0.1% | 0.01% |
+|---|---|---|---|---|
+| 1 | 20 dB | 34 dB | 54 dB | 74 dB |
+| 10 | 35 dB | 49 dB | 69 dB | 89 dB |
+| 100 | 54 dB | 68 dB | 88 dB | 108 dB |
+
+Values from CMRR ≈ (1 + G)/(4t); the op-amp's own CMRR sets a further limit.
+
+## Notes
+
+- The input impedance is R₁ at the V₁ input and R₃ + R₄ at the V₂ input — drive it from low-impedance sources.
+- For a reference offset, connect the bottom of R₄ to a reference voltage instead of ground; it adds directly to the output.

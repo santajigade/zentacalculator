@@ -1,0 +1,69 @@
+---
+title: Sallen-Key Low-Pass Filter Calculator (Cutoff Frequency & Q)
+description: Calculate the cutoff frequency, Q factor and attenuation of a unity-gain Sallen-Key second-order active low-pass filter from R1, R2, C1 and C2.
+category: electronics
+intro: "The Sallen-Key topology builds a second-order active filter from one op-amp, two resistors and two capacitors, giving a 40 dB-per-decade roll-off. This Sallen-Key low-pass filter calculator finds the cutoff frequency, the Q factor and the attenuation at any frequency for the unity-gain version — see the [Sallen and Key active filter](https://www.instrumentationblog.in/active-filter-sallen-and-key/) explained and compare it with a simple [RC low-pass filter](https://www.instrumentationblog.in/rc-low-pass-high-pass-filter/)."
+keywords: [sallen key low pass filter calculator, sallen key filter calculator, second order low pass filter, active low pass filter calculator, sallen key cutoff frequency, butterworth filter op amp, sallen key q factor]
+updated: 2026-11-06
+variables:
+  - { id: R1, label: R₁ (input resistor), family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: R2, label: R₂ (second resistor), family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: C1, label: C₁ (feedback capacitor to output), family: capacitance, unit: nF, default: 22, min: 0 }
+  - { id: C2, label: C₂ (capacitor to ground), family: capacitance, unit: nF, default: 10, min: 0 }
+  - { id: f, label: Frequency of interest, family: frequency, unit: Hz, default: 5000, min: 0 }
+  - { id: fc, label: Cutoff (natural) frequency f₀, family: frequency, unit: Hz, min: 0 }
+  - { id: Q, label: Quality factor Q, min: 0, decimals: 4 }
+  - { id: H, label: Gain at frequency f, min: 0, decimals: 4 }
+  - { id: HdB, label: Gain at frequency f (dB), suffix: dB, decimals: 2 }
+equations:
+  - fc = 1 / (2 * pi * sqrt(R1 * R2 * C1 * C2))
+  - Q = sqrt(R1 * R2 * C1 * C2) / (C2 * (R1 + R2))
+  - H = 1 / sqrt((1 - (f / fc)^2)^2 + (f / (fc * Q))^2)
+  - HdB = 20 * log10(H)
+faq:
+  - q: What is the cutoff frequency of a Sallen-Key low-pass filter?
+    a: f₀ = 1 ÷ (2π√(R₁R₂C₁C₂)). For a Butterworth response (Q = 0.707) f₀ is also the −3 dB frequency.
+  - q: How is Q calculated for a unity-gain Sallen-Key filter?
+    a: Q = √(R₁R₂C₁C₂) ÷ [C₂(R₁ + R₂)], where C₁ is the feedback capacitor and C₂ goes to ground. With R₁ = R₂, Q = ½√(C₁/C₂).
+  - q: How do I design a Butterworth Sallen-Key filter?
+    a: Choose R₁ = R₂ = R and C₁ = 2C₂ (so Q = 0.707), then set f₀ = 1/(2πR C₂√2). For example R = 10 kΩ, C₂ = 10 nF and C₁ = 20 nF give about 1.13 kHz.
+  - q: What is the roll-off of a Sallen-Key filter?
+    a: 40 dB per decade (12 dB per octave) above the cutoff. Cascade two stages with the right Q values for a fourth-order, 80 dB/decade filter.
+related: [electronics/rc-filter, electronics/resonant-frequency, electronics/op-amp-gain, electronics/reactance]
+---
+
+## How to use the Sallen-Key low-pass filter calculator
+
+Enter the two resistors and two capacitors of a **unity-gain** Sallen-Key low-pass stage: **R₁** from the input, **R₂** to the op-amp's non-inverting input, **C₁** from the R₁–R₂ junction back to the output, and **C₂** from the non-inverting input to ground. Add a **frequency** to see the gain there.
+
+## Sallen-Key low-pass formulas
+
+<p class="formula">f₀ = 1 / (2π √(R₁R₂C₁C₂)) &nbsp;·&nbsp; Q = √(R₁R₂C₁C₂) / [C₂(R₁ + R₂)]</p>
+
+<p class="formula">|H(f)| = 1 / √[(1 − (f/f₀)²)² + (f / (f₀Q))²]</p>
+
+## Worked example
+
+R₁ = R₂ = 10 kΩ, C₁ = 22 nF, C₂ = 10 nF:
+
+- f₀ = 1 ÷ (2π √(10k × 10k × 22n × 10n)) = **1,073.0 Hz**
+- Q = ½ √(22/10) = **0.7416** — close to Butterworth
+- At 5 kHz the gain is **0.0462** (-26.7 dB)
+
+## Response types for an equal-resistor design (R₁ = R₂)
+
+| Response | Q | C₁ / C₂ = 4Q² | Gain at f₀ |
+|---|---|---|---|
+| Critically damped | 0.5000 | 1.000 | -6.02 dB |
+| Bessel | 0.5774 | 1.333 | -4.77 dB |
+| Butterworth | 0.7071 | 2.000 | -3.01 dB |
+| Q = 1 | 1.0000 | 4.000 | +0.00 dB |
+| Chebyshev 1 dB ripple | 0.9565 | 3.660 | -0.39 dB |
+
+For the Chebyshev case f₀ is the natural frequency, not the −3 dB point.
+
+## Design notes
+
+- Use C0G/NP0 or film capacitors; X7R ceramics change value with voltage and add distortion.
+- The op-amp's gain-bandwidth product should be at least 100 × f₀ × Q for an accurate response.
+- High-frequency feedthrough limits the stop-band depth of Sallen-Key low-pass filters; a multiple-feedback (MFB) topology is better when deep attenuation is needed.

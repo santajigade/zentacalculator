@@ -1,0 +1,73 @@
+---
+title: 3 Variable System of Equations Calculator (Cramer's Rule)
+description: Solve three linear equations in x, y and z with Cramer's rule — enter the coefficients to get the determinant, Dx, Dy, Dz and the unique solution.
+category: math
+intro: "Three linear equations in three unknowns describe three planes, and when they meet at a single point the system has one solution. This 3 variable system of equations calculator finds that point with Cramer's rule, showing the coefficient determinant and the three replacement determinants so you can follow the working."
+keywords: [3 variable system of equations calculator, system of 3 equations calculator, three equations three unknowns, cramer's rule 3x3, solve for x y z, 3x3 determinant calculator, simultaneous equations 3 variables]
+updated: 2026-11-06
+variables:
+  - { id: a1, label: "a₁ (x coefficient, equation 1)", default: 1 }
+  - { id: b1, label: "b₁ (y coefficient, equation 1)", default: 1 }
+  - { id: c1, label: "c₁ (z coefficient, equation 1)", default: 1 }
+  - { id: d1, label: "d₁ (right-hand side, equation 1)", default: 6 }
+  - { id: a2, label: "a₂ (x coefficient, equation 2)", default: 2 }
+  - { id: b2, label: "b₂ (y coefficient, equation 2)", default: -1 }
+  - { id: c2, label: "c₂ (z coefficient, equation 2)", default: 3 }
+  - { id: d2, label: "d₂ (right-hand side, equation 2)", default: 9 }
+  - { id: a3, label: "a₃ (x coefficient, equation 3)", default: 1 }
+  - { id: b3, label: "b₃ (y coefficient, equation 3)", default: 2 }
+  - { id: c3, label: "c₃ (z coefficient, equation 3)", default: -1 }
+  - { id: d3, label: "d₃ (right-hand side, equation 3)", default: 2 }
+  - { id: Dt, label: Determinant D, decimals: 6 }
+  - { id: Dx, label: Dx (x column replaced by d), decimals: 6 }
+  - { id: Dy, label: Dy (y column replaced by d), decimals: 6 }
+  - { id: Dz, label: Dz (z column replaced by d), decimals: 6 }
+  - { id: x, label: x = Dx ÷ D, decimals: 6 }
+  - { id: y, label: y = Dy ÷ D, decimals: 6 }
+  - { id: z, label: z = Dz ÷ D, decimals: 6 }
+equations:
+  - Dt = a1 * (b2 * c3 - c2 * b3) - b1 * (a2 * c3 - c2 * a3) + c1 * (a2 * b3 - b2 * a3)
+  - Dx = d1 * (b2 * c3 - c2 * b3) - b1 * (d2 * c3 - c2 * d3) + c1 * (d2 * b3 - b2 * d3)
+  - Dy = a1 * (d2 * c3 - c2 * d3) - d1 * (a2 * c3 - c2 * a3) + c1 * (a2 * d3 - d2 * a3)
+  - Dz = a1 * (b2 * d3 - d2 * b3) - b1 * (a2 * d3 - d2 * a3) + d1 * (a2 * b3 - b2 * a3)
+  - x = Dx / Dt
+  - y = Dy / Dt
+  - z = Dz / Dt
+faq:
+  - q: How do you solve 3 equations with 3 variables?
+    a: Use elimination to reduce to two equations in two unknowns, or Cramer's rule — x = Dx/D, y = Dy/D, z = Dz/D, where each D is a 3×3 determinant.
+  - q: How is a 3×3 determinant calculated?
+    a: By cofactor expansion along the first row, D = a₁(b₂c₃ − c₂b₃) − b₁(a₂c₃ − c₂a₃) + c₁(a₂b₃ − b₂a₃).
+  - q: What if the determinant is zero?
+    a: There is no unique solution — the planes are parallel or meet in a line, giving no solutions or infinitely many. Gaussian elimination tells you which.
+  - q: Is Cramer's rule efficient?
+    a: For 2×2 and 3×3 systems it is quick and clear. For larger systems Gaussian elimination or matrix methods are far more efficient.
+related: [math/system-of-equations, math/quadratic-equation, math/vector, math/linear-interpolation]
+---
+
+## How to use the 3 variable system of equations calculator
+
+Write each equation as **a·x + b·y + c·z = d** and enter its four numbers. Use 0 for a missing variable. The calculator returns D, Dx, Dy, Dz and the solution; if D = 0 there is no unique solution.
+
+## Cramer's rule for three equations
+
+<p class="formula">D = a₁(b₂c₃ − c₂b₃) − b₁(a₂c₃ − c₂a₃) + c₁(a₂b₃ − b₂a₃)</p>
+
+<p class="formula">x = D<sub>x</sub>/D &nbsp;·&nbsp; y = D<sub>y</sub>/D &nbsp;·&nbsp; z = D<sub>z</sub>/D</p>
+
+D<sub>x</sub>, D<sub>y</sub> and D<sub>z</sub> are the same determinant with the x, y or z column replaced by the right-hand sides d.
+
+## Worked example
+
+Solve x + y + z = 6, 2x − y + 3z = 9 and x + 2y − z = 2:
+
+- D = 1(1 − 6) − 1(−2 − 3) + 1(4 + 1) = **5**
+- D<sub>x</sub> = **5**, D<sub>y</sub> = **10**, D<sub>z</sub> = **15**
+- x = 5/5 = **1**, y = 10/5 = **2**, z = 15/5 = **3**
+- Check: 1 + 2 + 3 = 6 ✓, 2 − 2 + 9 = 9 ✓, 1 + 4 − 3 = 2 ✓
+
+## Solving by elimination
+
+1. Use equation 1 to eliminate x from equations 2 and 3.
+2. Solve the resulting two equations in y and z (see the [two-variable system of equations calculator](/math/system-of-equations/)).
+3. Substitute y and z back into equation 1 to find x.

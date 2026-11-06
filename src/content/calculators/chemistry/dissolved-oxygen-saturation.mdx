@@ -1,0 +1,71 @@
+---
+title: Dissolved Oxygen Saturation Calculator (mg/L vs Temperature)
+description: Calculate the dissolved oxygen saturation concentration of water in mg/L from temperature, salinity and barometric pressure, plus a sample's percent saturation.
+category: chemistry
+intro: "Water in equilibrium with air holds a fixed amount of oxygen that falls as temperature and salinity rise and as barometric pressure drops. This dissolved oxygen saturation calculator uses the Benson–Krause equations adopted in Standard Methods to give the saturation value in mg/L and the percent saturation of a measured sample — the reference an [optical dissolved oxygen sensor](https://www.instrumentationblog.in/how-do-optical-dissolved-oxygen-sensors-work/) is calibrated against."
+keywords: [dissolved oxygen saturation calculator, do saturation calculator, oxygen solubility in water calculator, dissolved oxygen mg/l temperature, percent saturation dissolved oxygen, do saturation table, benson krause equation]
+updated: 2026-11-06
+variables:
+  - { id: T, label: Water temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
+  - { id: S, label: Salinity, suffix: g/kg (ppt), default: 0, min: 0, help: 'Fresh water 0; brackish 1–30; seawater about 35.' }
+  - { id: P, label: Barometric pressure, family: pressure, unit: kPa, imperialUnit: mmHg, default: 101.325, min: 0 }
+  - { id: DOm, label: Measured dissolved oxygen (optional), suffix: mg/L, default: 7.5, min: 0 }
+  - { id: C0, label: Saturation at 1 atm, suffix: mg/L, min: 0, decimals: 3 }
+  - { id: Cs, label: Saturation at the given pressure, suffix: mg/L, min: 0, decimals: 3 }
+  - { id: sat, label: Percent saturation of the sample, family: percent, unit: '%', min: 0, decimals: 1 }
+equations:
+  - C0 = exp(-139.34411 + 1.575701e5 / T - 6.642308e7 / T^2 + 1.2438e10 / T^3 - 8.621949e11 / T^4 - S * (1.7674e-2 - 10.754 / T + 2140.7 / T^2))
+  - Cs = C0 * (P / 101325) * (1 - exp(11.8571 - 3840.7 / T - 216961 / T^2) / (P / 101325)) * (1 - (0.000975 - 1.426e-5 * (T - 273.15) + 6.436e-8 * (T - 273.15)^2) * (P / 101325)) / ((1 - exp(11.8571 - 3840.7 / T - 216961 / T^2)) * (1 - (0.000975 - 1.426e-5 * (T - 273.15) + 6.436e-8 * (T - 273.15)^2)))
+  - sat = DOm / Cs
+faq:
+  - q: What is the dissolved oxygen saturation at 20 °C?
+    a: 9.09 mg/L for fresh water at 1 atm (101.325 kPa). It is 14.62 mg/L at 0 °C, 8.26 mg/L at 25 °C and 7.56 mg/L at 30 °C.
+  - q: How does salinity affect dissolved oxygen?
+    a: Dissolved salts reduce oxygen solubility. Seawater at 35 g/kg holds about 18–20% less oxygen than fresh water — 7.40 mg/L at 20 °C.
+  - q: How do I correct DO saturation for altitude?
+    a: Saturation is roughly proportional to barometric pressure (corrected for water vapour). At about 1,000 m elevation pressure is near 90 kPa, so saturation at 20 °C drops to about 8.05 mg/L.
+  - q: What is percent saturation?
+    a: Measured DO ÷ saturation DO × 100%. Values above 100% (supersaturation) occur with strong algal photosynthesis or aeration; values below about 60% stress fish.
+related: [chemistry/henrys-law, chemistry/water-hardness, chemistry/raoults-law, chemistry/ppm]
+---
+
+## How to use the dissolved oxygen saturation calculator
+
+Enter the **water temperature**, the **salinity** (0 for fresh water) and the local **barometric pressure** — use the actual station pressure, not the sea-level-corrected value from a weather report. The calculator gives the saturation concentration at 1 atm and at your pressure. Enter a **measured DO** to see the percent saturation.
+
+## Dissolved oxygen saturation formula (Benson & Krause)
+
+<p class="formula">ln C* = −139.34411 + 1.575701×10⁵/T − 6.642308×10⁷/T² + 1.2438×10¹⁰/T³ − 8.621949×10¹¹/T⁴ − S(1.7674×10⁻² − 10.754/T + 2140.7/T²)</p>
+
+with C* in mg/L, T in kelvin and S in g/kg. The pressure correction is
+
+<p class="formula">C<sub>P</sub> = C* × P × [(1 − P<sub>wv</sub>/P)(1 − θP)] / [(1 − P<sub>wv</sub>)(1 − θ)]</p>
+
+where P is in atm, ln P<sub>wv</sub> = 11.8571 − 3840.70/T − 216961/T² and θ = 0.000975 − 1.426×10⁻⁵ t + 6.436×10⁻⁸ t² (t in °C).
+
+## Worked example
+
+Fresh water at 20 °C and 101.325 kPa:
+
+- C* = **9.092 mg/L**
+- A sample reading 7.5 mg/L is at **82.5%** saturation
+- At 90 kPa (about 1,000 m elevation) saturation falls to **8.05 mg/L**
+
+## Dissolved oxygen saturation table (mg/L at 1 atm)
+
+| Temperature | Fresh water | 10 g/kg | 20 g/kg | Seawater 35 g/kg |
+|---|---|---|---|---|
+| 0 °C | 14.62 | 13.63 | 12.71 | 11.45 |
+| 5 °C | 12.77 | 11.95 | 11.17 | 10.11 |
+| 10 °C | 11.29 | 10.59 | 9.93 | 9.02 |
+| 15 °C | 10.08 | 9.48 | 8.92 | 8.14 |
+| 20 °C | 9.09 | 8.57 | 8.08 | 7.40 |
+| 25 °C | 8.26 | 7.81 | 7.38 | 6.77 |
+| 30 °C | 7.56 | 7.15 | 6.77 | 6.24 |
+| 35 °C | 6.95 | 6.59 | 6.25 | 5.77 |
+| 40 °C | 6.41 | 6.09 | 5.78 | 5.35 |
+
+## Notes
+
+- DO probes are calibrated in water-saturated air or air-saturated water using these saturation values.
+- Biochemical oxygen demand (BOD) tests and aeration design both start from the saturation concentration.

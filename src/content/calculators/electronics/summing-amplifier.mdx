@@ -1,0 +1,68 @@
+---
+title: Summing Amplifier Calculator (Inverting Op-Amp Adder)
+description: Calculate the output voltage of an inverting op-amp summing amplifier from up to three input voltages, input resistors and the feedback resistor.
+category: electronics
+intro: "An inverting summing amplifier adds several input voltages, each weighted by the ratio of the feedback resistor to its own input resistor, because the inverting input sits at a virtual ground. This summing amplifier calculator gives the output voltage and input current for three inputs — the circuit builds on the [inverting amplifier gain formula](https://www.instrumentationblog.in/inverting-amplifier-gain-formula/) covered in [op-amp basics](https://www.instrumentationblog.in/operational-amplifier-op-amp-basics/)."
+keywords: [summing amplifier calculator, op amp summing amplifier, inverting summing amplifier formula, op amp adder calculator, summing amplifier output voltage, audio mixer op amp]
+updated: 2026-11-06
+variables:
+  - { id: V1, label: Input voltage V₁, family: voltage, unit: V, default: 1 }
+  - { id: R1, label: Input resistor R₁, family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: V2, label: Input voltage V₂, family: voltage, unit: V, default: 0.5 }
+  - { id: R2, label: Input resistor R₂, family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: V3, label: Input voltage V₃, family: voltage, unit: V, default: -0.2 }
+  - { id: R3, label: Input resistor R₃, family: resistance, unit: kohm, default: 20, min: 0 }
+  - { id: Rf, label: Feedback resistor R_f, family: resistance, unit: kohm, default: 10, min: 0 }
+  - { id: Iin, label: Total current into the summing node, family: current, unit: mA }
+  - { id: Vout, label: Output voltage, family: voltage, unit: V }
+equations:
+  - Iin = V1 / R1 + V2 / R2 + V3 / R3
+  - Vout = -Rf * Iin
+faq:
+  - q: What is the formula for an inverting summing amplifier?
+    a: Vout = −R_f × (V₁/R₁ + V₂/R₂ + V₃/R₃). With all resistors equal it is simply −(V₁ + V₂ + V₃).
+  - q: Why is the output negative?
+    a: The inputs drive the inverting terminal, so the sum is inverted. Follow it with a unity-gain inverting stage, or use a non-inverting summing circuit, if you need a positive sum.
+  - q: Do the inputs interact with each other?
+    a: No. The inverting input is held at virtual ground, so each input current depends only on its own voltage and resistor. That isolation is why the circuit is used in audio mixers.
+  - q: What limits the output?
+    a: The op-amp supply rails. The result is only valid while |Vout| stays below the output swing limit — typically 1–2 V inside the rails, or close to the rails for rail-to-rail parts.
+related: [electronics/op-amp-gain, electronics/differential-amplifier, electronics/op-amp-integrator, electronics/voltage-divider]
+---
+
+## How to use the summing amplifier calculator
+
+Enter up to three **input voltages** with their **input resistors**, and the **feedback resistor**. Set an unused input voltage to 0. The calculator returns the current into the summing node and the output voltage. To weight the inputs equally, make all input resistors the same; to scale the sum, change R<sub>f</sub>.
+
+## Summing amplifier formula
+
+<p class="formula">V<sub>out</sub> = −R<sub>f</sub> (V₁/R₁ + V₂/R₂ + V₃/R₃)</p>
+
+Each input contributes a gain of −R<sub>f</sub>/R<sub>n</sub>. Choose the non-inverting input resistor (to ground) ≈ R₁ ∥ R₂ ∥ R₃ ∥ R<sub>f</sub> to cancel bias-current offset in bipolar op-amps.
+
+## Worked example
+
+V₁ = 1 V and V₂ = 0.5 V through 10 kΩ, V₃ = −0.2 V through 20 kΩ, R<sub>f</sub> = 10 kΩ:
+
+- Current = 1/10k + 0.5/10k − 0.2/20k = **0.14 mA**
+- V<sub>out</sub> = −10 kΩ × 0.14 mA = **-1.40 V**
+
+## Binary-weighted 4-bit DAC (5 V logic, R = 10 kΩ, 2R, 4R, 8R, R<sub>f</sub> = 10 kΩ)
+
+| Code | Bits | Output |
+|---|---|---|
+| 1 | 0001 | -0.6250 V |
+| 2 | 0010 | -1.2500 V |
+| 4 | 0100 | -2.5000 V |
+| 8 | 1000 | -5.0000 V |
+| 5 | 0101 | -3.1250 V |
+| 10 | 1010 | -6.2500 V |
+| 15 | 1111 | -9.3750 V |
+
+A summing amplifier with binary-weighted input resistors is the simplest digital-to-analogue converter; practical DACs use an R-2R ladder because it needs only two resistor values.
+
+## Design notes
+
+- Keep input resistors in the 1 kΩ–100 kΩ range: lower values load the sources, higher values add noise and offset.
+- For a **mixer**, use equal input resistors and a potentiometer in series with each input.
+- An **averaging amplifier** uses R<sub>f</sub> = R/N for N equal inputs.

@@ -1,0 +1,67 @@
+---
+title: Pyramid Volume Calculator (Volume, Slant Height & Surface Area)
+description: Calculate the volume, slant heights, edge length, lateral area and total surface area of a right rectangular or square pyramid from its base and height.
+category: math
+intro: "A pyramid holds exactly one third of the volume of a prism with the same base and height. This pyramid volume calculator handles right rectangular and square pyramids, giving the volume together with the slant heights, lateral edge length, lateral area and total surface area."
+keywords: [pyramid volume calculator, volume of a pyramid, square pyramid calculator, pyramid surface area calculator, slant height of pyramid, rectangular pyramid volume, pyramid formula]
+updated: 2026-11-06
+variables:
+  - { id: l, label: Base length, family: length, unit: m, imperialUnit: ft, default: 6, min: 0 }
+  - { id: w, label: Base width, family: length, unit: m, imperialUnit: ft, default: 6, min: 0 }
+  - { id: h, label: Height (apex to base), family: length, unit: m, imperialUnit: ft, default: 4, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: m3, imperialUnit: ft3, min: 0 }
+  - { id: sl, label: Slant height to the length edges, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: sw, label: Slant height to the width edges, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: ed, label: Lateral edge length, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: LA, label: Lateral surface area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+  - { id: TA, label: Total surface area, family: area, unit: m2, imperialUnit: ft2, min: 0 }
+equations:
+  - V = l * w * h / 3
+  - sl = sqrt(h^2 + (w / 2)^2)
+  - sw = sqrt(h^2 + (l / 2)^2)
+  - ed = sqrt(h^2 + (l / 2)^2 + (w / 2)^2)
+  - LA = l * sl + w * sw
+  - TA = LA + l * w
+faq:
+  - q: What is the formula for the volume of a pyramid?
+    a: V = (1/3) × base area × height. For a rectangular base, V = l × w × h ÷ 3; for a square base of side a, V = a²h ÷ 3.
+  - q: How do I find the slant height of a pyramid?
+    a: For a right pyramid, the slant height to an edge of length l is √(h² + (w/2)²) — the hypotenuse of the triangle formed by the height and half the other base side.
+  - q: What is the surface area of a square pyramid?
+    a: Total area = a² + 2a·s, where s = √(h² + (a/2)²) is the slant height. The four triangular faces each have area a·s/2.
+  - q: Does the formula work for any base shape?
+    a: The volume V = Bh/3 works for any base — triangular, hexagonal or circular (a cone) — as long as h is the perpendicular height. The slant and surface formulas here are for rectangular bases.
+related: [math/frustum-volume, math/cone, math/box-volume, math/pythagorean-theorem]
+---
+
+## How to use the pyramid volume calculator
+
+Enter the **base length**, **base width** and perpendicular **height** of a right pyramid (apex directly above the centre of the base). For a square pyramid make length and width equal. The calculator returns the volume, both slant heights, the lateral edge and the surface areas.
+
+## Pyramid formulas
+
+<p class="formula">V = l w h / 3 &nbsp;·&nbsp; s<sub>l</sub> = √(h² + (w/2)²) &nbsp;·&nbsp; s<sub>w</sub> = √(h² + (l/2)²)</p>
+
+<p class="formula">Lateral area = l·s<sub>l</sub> + w·s<sub>w</sub> &nbsp;·&nbsp; Total area = lateral area + l·w &nbsp;·&nbsp; edge = √(h² + (l/2)² + (w/2)²)</p>
+
+## Worked example
+
+A square pyramid with a 6 m × 6 m base and 4 m height:
+
+- V = 6 × 6 × 4 ÷ 3 = **48 m³**
+- Slant height = √(4² + 3²) = **5 m**
+- Lateral area = 6 × 5 + 6 × 5 = **60 m²**; total area = **96 m²**
+- Lateral edge = √(16 + 9 + 9) = **5.831 m**
+
+## Square pyramids
+
+| Base side | Height | Volume | Total surface area |
+|---|---|---|---|
+| 1 m | 1 m | 0.333 m³ | 3.236 m² |
+| 2 m | 1.5 m | 2.000 m³ | 11.211 m² |
+| 3 m | 2 m | 6.000 m³ | 24.000 m² |
+| 5 m | 3 m | 25.000 m³ | 64.051 m² |
+| 10 m | 6 m | 200.000 m³ | 256.205 m² |
+| 230.3 m | 146.6 m | 2,591,794.665 m³ | 138,901.494 m² |
+
+The last row uses the Great Pyramid of Giza's approximate original dimensions (230.3 m base, 146.6 m height).

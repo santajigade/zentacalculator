@@ -1,10 +1,10 @@
 ---
-title: RL Time Constant Calculator
+title: "RL Time Constant Calculator (τ = L/R, Current Rise & Decay)"
 description: Calculate the time constant τ = L/R of an inductor-resistor circuit, plus current rise and decay at any time — for relays, solenoids and filters.
 category: electronics
 intro: "When voltage is applied to an inductor through a resistance, current rises exponentially with a time constant τ = L/R — and decays the same way when switched off. This RL time constant calculator gives τ and the current at any moment — see [RC and RL time constants explained](https://www.instrumentationblog.in/rc-and-rl-time-constant-explained/)."
 keywords: [rl time constant calculator, rl circuit calculator, inductor time constant, l/r time constant, inductor current rise, rl circuit formula]
-updated: 2026-10-28
+updated: 2026-11-07
 variables:
   - { id: L, label: Inductance, family: inductance, unit: mH, default: 100, min: 0 }
   - { id: R, label: Resistance, family: resistance, unit: ohm, default: 50, min: 0 }
@@ -39,6 +39,15 @@ Enter the **inductance**, the total **resistance** in the circuit (coil resistan
 
 <p class="formula">τ = L ÷ R &nbsp;·&nbsp; i(t)<sub>rise</sub> = (V/R)(1 − e<sup>−t/τ</sup>) &nbsp;·&nbsp; i(t)<sub>decay</sub> = (V/R) e<sup>−t/τ</sup></p>
 
+## Worked example
+
+A 100 mH coil with 50 Ω total resistance is switched onto 24 V:
+
+- τ = 0.1 H ÷ 50 Ω = **2 ms**; final current = 24 ÷ 50 = **0.48 A**
+- After t = 2 ms (one time constant) the rising current is 0.48 × (1 − e⁻¹) = **0.3034 A**
+- If the coil is instead discharging from 0.48 A, after 2 ms it is 0.48 × e⁻¹ = **0.1766 A**
+- It takes about 5τ = **10 ms** to reach full current
+
 ## Current vs time constants
 
 | Time | Rising (% of final) | Decaying (% of initial) |
@@ -49,6 +58,19 @@ Enter the **inductance**, the total **resistance** in the circuit (coil resistan
 | 3 τ | 95.0% | 5.0% |
 | 4 τ | 98.2% | 1.8% |
 | 5 τ | 99.3% | 0.7% |
+
+## Time to reach a given percentage
+
+Rising current reaches a fraction x of its final value at t = −τ ln(1 − x):
+
+| Current reached | Time |
+|---|---|
+| 50% | 0.693 τ |
+| 63.2% | 1.000 τ |
+| 90% | 2.303 τ |
+| 95% | 2.996 τ |
+| 99% | 4.605 τ |
+| 99.9% | 6.908 τ |
 
 ## Typical time constants
 
@@ -61,3 +83,9 @@ Enter the **inductance**, the total **resistance** in the circuit (coil resistan
 ## Inductive kick
 
 Interrupting inductor current suddenly creates a voltage spike V = L × di/dt. See the [inductor energy calculator](/electronics/inductor-energy/) for suppression methods.
+
+## Practical notes
+
+- Use the **total** loop resistance — coil resistance plus series resistors and the driver's on-resistance — or τ will be overestimated.
+- Iron-cored coils are not linear: inductance changes with current and with the armature position in relays and solenoids, so treat τ as an estimate and measure if timing matters.
+- To speed up a slow-releasing relay, add a Zener or resistor in series with the flyback diode; the larger voltage across the coil collapses the current faster.

@@ -1,0 +1,69 @@
+---
+title: Hemisphere Volume Calculator (Surface Area & Radius)
+description: Calculate the volume, curved surface area, base area and total surface area of a hemisphere from its radius or diameter — or find the radius from a volume.
+category: math
+intro: "A hemisphere is exactly half of a sphere, cut through its centre — the shape of a bowl, a dome or a tank head. This hemisphere volume calculator gives the volume, curved surface area, flat base area and total surface area from the radius, and works backwards from any of them to the radius."
+keywords: [hemisphere volume calculator, volume of a hemisphere, hemisphere surface area, curved surface area of hemisphere, total surface area hemisphere, dome volume calculator, bowl volume]
+updated: 2026-11-07
+variables:
+  - { id: r, label: Radius, family: length, unit: cm, imperialUnit: in, default: 5, min: 0 }
+  - { id: d, label: Diameter, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: cm3, imperialUnit: in3, min: 0 }
+  - { id: Ac, label: Curved surface area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+  - { id: Ab, label: Base (circle) area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+  - { id: At, label: Total surface area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+equations:
+  - d = 2 * r
+  - V = 2 / 3 * pi * r^3
+  - Ac = 2 * pi * r^2
+  - Ab = pi * r^2
+  - At = 3 * pi * r^2
+faq:
+  - q: What is the formula for the volume of a hemisphere?
+    a: V = (2/3)πr³ — half the volume of a sphere of the same radius. A hemisphere with a 5 cm radius holds about 261.8 cm³.
+  - q: What is the total surface area of a hemisphere?
+    a: 3πr². It is the curved surface 2πr² (half of a sphere's 4πr²) plus the flat circular base πr².
+  - q: How do I find the radius from the volume?
+    a: r = ∛(3V ÷ 2π). Enter the volume in the calculator and it solves for the radius.
+  - q: How much does a hemispherical bowl hold?
+    a: Use the inner radius. A bowl with a 10 cm inner radius holds 2,094 cm³, about 2.1 litres, when filled to the brim.
+related: [math/sphere, math/cylinder-volume, math/cone, math/capsule]
+---
+
+## How to use the hemisphere volume calculator
+
+Enter the **radius** (or the diameter) and choose your units. The calculator returns the volume, the curved surface area, the flat base area and the total surface area. To go backwards — for example the radius of a dome that encloses a given volume — enter the known value and leave the radius blank.
+
+## Hemisphere formulas
+
+<p class="formula">V = ⅔ π r³ &nbsp;·&nbsp; curved area = 2π r² &nbsp;·&nbsp; base = π r² &nbsp;·&nbsp; total area = 3π r²</p>
+
+<p class="formula">r = ∛(3V ÷ 2π)</p>
+
+## Worked example
+
+A hemisphere with radius r = 5 cm:
+
+- Volume = ⅔ × π × 5³ = **261.80 cm³** (0.2618 L)
+- Curved surface area = 2 × π × 5² = **157.08 cm²**
+- Base area = π × 5² = **78.54 cm²**
+- Total surface area = 3 × π × 5² = **235.62 cm²**
+
+## Hemisphere volume and area table
+
+| Radius | Volume | Litres | Curved area | Total area |
+|---|---|---|---|---|
+| 1 cm | 2.09 cm³ | 0.002094 L | 6.28 cm² | 9.42 cm² |
+| 2 cm | 16.76 cm³ | 0.01676 L | 25.13 cm² | 37.70 cm² |
+| 5 cm | 261.80 cm³ | 0.2618 L | 157.08 cm² | 235.62 cm² |
+| 10 cm | 2,094.40 cm³ | 2.094 L | 628.32 cm² | 942.48 cm² |
+| 15 cm | 7,068.58 cm³ | 7.069 L | 1,413.72 cm² | 2,120.58 cm² |
+| 20 cm | 16,755.16 cm³ | 16.76 L | 2,513.27 cm² | 3,769.91 cm² |
+| 30 cm | 56,548.67 cm³ | 56.55 L | 5,654.87 cm² | 8,482.30 cm² |
+| 50 cm | 261,799.39 cm³ | 261.8 L | 15,707.96 cm² | 23,561.94 cm² |
+
+## Practical notes
+
+- **Domes and roofs** — paint or cladding covers only the curved area 2πr²; the base is the floor.
+- **Tank heads** — a hemispherical head adds ⅔πr³ to a cylindrical tank; two heads add a full sphere. See the [capsule calculator](/math/capsule/) for a cylinder with two hemispherical ends.
+- **Partly filled bowls** — the liquid forms a spherical cap of height h with volume πh²(3r − h)/3; at h = r this equals the hemisphere volume.

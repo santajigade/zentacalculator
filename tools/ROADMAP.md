@@ -173,7 +173,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] RC snubber (ib)
 - [x] Linear regulator power (LM317 resistors)
 - [x] LM317 output voltage resistor calculator
-- [ ] Buck-boost / SEPIC (ib)
+- [x] Buck-boost / SEPIC (ib) (buck-boost-converter; SEPIC covered in notes)
 - [ ] Flyback transformer turns ratio (ib)
 - [x] Inductor design (turns for AL value)
 - [x] Air-core coil inductance (Wheeler)
@@ -185,7 +185,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Comparator hysteresis resistors
 - [ ] Photodiode transimpedance amplifier (ib)
 - [ ] Thermocouple amplifier gain
-- [ ] Battery internal resistance & runtime (Peukert)
+- [x] Battery internal resistance & runtime (Peukert) (peukerts-law)
 - [x] Antenna length (λ/2, λ/4 dipole)
 - [x] Free-space path loss
 - [x] Microstrip impedance (ib)
@@ -195,7 +195,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Logic level / pull-up resistor (I2C)
 - [x] UART baud rate error
 - [ ] RS-485 cable length & termination (ib)
-- [ ] Hall-effect current sensor scaling (ib)
+- [x] Hall-effect current sensor scaling (ib)
 - [x] Shunt resistor current measurement (ib)
 
 ## Physics
@@ -273,14 +273,14 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Matrix determinant / inverse (2×2, 3×3)
 - [x] Vector magnitude, dot & cross product
 - [x] Distance & midpoint
-- [ ] Equation of a line (two points)
+- [x] Equation of a line (two points) (exists: slope)
 - [ ] Circle equation from points
-- [ ] Angle converter (deg, rad, grad)
+- [x] Angle converter (deg, rad, grad)
 - [x] Law of sines
 - [ ] Triangle solver (SSS, SAS, ASA)
 - [ ] Hexagon / octagon
 - [x] Prism / pyramid / frustum volume
-- [ ] Torus / capsule / hemisphere (torus done)
+- [x] Torus / capsule / hemisphere (torus done)
 - [ ] Surface area of shapes
 - [x] Arithmetic sequence
 - [x] Geometric sequence & series
@@ -290,7 +290,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Fraction calculator (+ − × ÷)
 - [ ] Mixed number ↔ improper fraction
 - [ ] Decimal to fraction
-- [ ] Scientific notation
+- [x] Scientific notation
 - [ ] Significant figures
 - [ ] Rounding
 - [x] Modulo
@@ -308,7 +308,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Ratio to percentage
 
 ## Statistics
-- [ ] t-test (one sample, two sample)
+- [x] t-test (one sample, two sample)
 - [ ] Chi-square test
 - [ ] Linear regression (least squares)
 - [ ] Correlation coefficient
@@ -324,7 +324,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Uniform distribution
 - [x] Hypergeometric distribution
 - [x] Geometric distribution
-- [ ] P-value from z / t
+- [x] P-value from z / t
 - [ ] Moving average
 - [x] Process capability (Cp, Cpk)
 - [ ] Control chart limits (X-bar, R)

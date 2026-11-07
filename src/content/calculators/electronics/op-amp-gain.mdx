@@ -1,10 +1,10 @@
 ---
 title: Op-Amp Gain Calculator (Inverting and Non-Inverting)
-description: Calculate the voltage gain and output of an inverting or non-inverting op-amp amplifier from Rf and Rin — or the resistor needed for a target gain.
+description: "Calculate the voltage gain, gain in dB and output of an inverting or non-inverting op-amp amplifier from Rf and Rin — or the resistor for a target gain."
 category: electronics
 intro: "Operational amplifiers are the building blocks of analog electronics, and two resistors set their gain. Start with [op-amp basics](https://www.instrumentationblog.in/operational-amplifier-op-amp-basics/), the [voltage follower](https://www.instrumentationblog.in/voltage-follower-unity-gain-buffer-explained/), and how an [instrumentation amplifier differs from an op-amp](https://www.instrumentationblog.in/instrumentation-amplifier-vs-op-amp-key-differences/). This free op-amp gain calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [op amp gain calculator, inverting amplifier calculator, non inverting amplifier gain, opamp gain formula, rf rin, amplifier gain db]
-updated: 2026-10-27
+updated: 2026-11-07
 variables:
   - id: t
     label: Configuration
@@ -48,20 +48,46 @@ Choose **non-inverting** or **inverting**, and enter the **feedback resistor**, 
 
 Input impedance is very high for the non-inverting amplifier and equal to R<sub>in</sub> for the inverting amplifier.
 
+## Worked example
+
+Non-inverting amplifier with R<sub>f</sub> = 100 kΩ, R<sub>in</sub> = 10 kΩ and a 100 mV input:
+
+- Gain = 1 + 100 ÷ 10 = **11**, or 20 log₁₀(11) = **20.83 dB**
+- Output = 11 × 100 mV = **1.1 V**
+
+Switch to **inverting** with the same resistors: gain = −100 ÷ 10 = **-10** (20.00 dB) and the output is **-1 V**.
+
 ## Resistor pairs for common gains
 
-| Target gain | Non-inverting Rf / Rin | Inverting Rf / Rin |
+| Target gain | Non-inverting R<sub>f</sub> / R<sub>in</sub> → actual gain | Inverting R<sub>f</sub> / R<sub>in</sub> → actual gain |
 |---|---|---|
-| 2 | 10 k / 10 k | 20 k / 10 k |
-| 5 | 40.2 k / 10 k | 49.9 k / 10 k |
-| 10 | 90.9 k / 10 k | 100 k / 10 k |
-| 11 | 100 k / 10 k | 110 k / 10 k |
-| 101 | 100 k / 1 k | 100 k / 990 Ω |
+| 2 | 10 k / 10 k → 2 | 20 k / 10 k → −2 |
+| 5 | 40.2 k / 10 k → 5.02 | 49.9 k / 10 k → −4.99 |
+| 10 | 90.9 k / 10 k → 10.09 | 100 k / 10 k → −10 |
+| 11 | 100 k / 10 k → 11 | 110 k / 10 k → −11 |
+| 101 | 100 k / 1 k → 101 | 100 k / 990 Ω → −101 |
+
+Standard E96 (1%) values get within about 1% of most targets; use 0.1% resistors when the gain must be precise.
 
 ## Bandwidth
 
-Every op-amp has a gain-bandwidth product (GBW). An op-amp with 1 MHz GBW at a gain of 100 has a bandwidth of only about 10 kHz.
+Every op-amp has a gain-bandwidth product (GBW): the closed-loop bandwidth is roughly GBW ÷ noise gain, where the noise gain is 1 + R<sub>f</sub>/R<sub>in</sub> for **both** configurations. An inverting amplifier with a gain of −1 therefore has the bandwidth of a gain-of-2 stage.
+
+| Noise gain | Bandwidth, GBW = 1 MHz | Bandwidth, GBW = 10 MHz |
+|---|---|---|
+| 1 | 1,000.0 kHz | 10,000.0 kHz |
+| 2 | 500.0 kHz | 5,000.0 kHz |
+| 10 | 100.0 kHz | 1,000.0 kHz |
+| 11 | 90.9 kHz | 909.1 kHz |
+| 100 | 10.0 kHz | 100.0 kHz |
+| 1000 | 1.0 kHz | 10.0 kHz |
 
 ## Instrumentation amplifiers
 
 For bridge sensors and thermocouples, use an instrumentation amplifier, which rejects common-mode voltage and sets gain with a single resistor.
+
+## Practical notes
+
+- Keep resistors roughly 1 kΩ–1 MΩ: low values load the op-amp output and the source, high values add noise and offset from input bias current.
+- The inverting amplifier's input impedance is only R<sub>in</sub> — buffer high-impedance sensors or use the non-inverting form.
+- Check the output swing against the rails and the slew rate (a 10 V peak at 20 kHz needs about 1.3 V/µs).

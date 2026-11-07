@@ -76,3 +76,11 @@ test('exact combinatorics and tolerant rounding', () => {
   assert.equal(compile('ceil(2.7 / 0.18)').fn({}), 15);
   assert.equal(compile('floor(0.29 * 100)').fn({}), 29);
 });
+
+test('student t cdf matches reference values', () => {
+  const f = compile('tcdf(t, v)').fn;
+  close(f({ t: 2.5, v: 10 }), 0.984276577881702, 1e-9);
+  close(f({ t: -1.3, v: 4.5 }), 0.128098043972017, 1e-9);
+  close(f({ t: 0.5, v: 1 }), 0.647583617650433, 1e-9);
+  close(f({ t: 0, v: 3 }), 0.5, 1e-12);
+});

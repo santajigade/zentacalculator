@@ -1,10 +1,10 @@
 ---
 title: Box Volume Calculator (Rectangular Prism)
-description: Calculate the volume, surface area and diagonal of a box or rectangular prism — in litres, cubic metres, cubic feet or gallons.
+description: "Calculate the volume, surface area and space diagonal of a box or rectangular prism in litres, cubic metres, cubic feet or gallons — plus volumetric weight."
 category: math
 intro: "A box, or rectangular prism, has a volume equal to length × width × height. It is the everyday calculation behind packing, shipping and storage. This free box volume calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [box volume calculator, volume of a box, rectangular prism volume, cuboid volume, cubic feet calculator, surface area of a box, cubic meters calculator]
-updated: 2026-10-27
+updated: 2026-11-07
 variables:
   - { id: l, label: Length, family: length, unit: cm, imperialUnit: in, default: 60, min: 0 }
   - { id: w, label: Width, family: length, unit: cm, imperialUnit: in, default: 40, min: 0 }
@@ -36,16 +36,25 @@ Enter the **length**, **width** and **height**. You get the volume, the total su
 
 <p class="formula">V = l × w × h &nbsp;·&nbsp; S = 2(lw + lh + wh) &nbsp;·&nbsp; d = √(l² + w² + h²)</p>
 
+## Worked example
+
+A box measuring 60 × 40 × 30 cm:
+
+- Volume = 60 × 40 × 30 = 72,000 cm³ = **72 L** (2.543 ft³)
+- Surface area = 2 × (2,400 + 1,800 + 1,200) = 10,800 cm² = **1.08 m²**
+- Space diagonal = √(60² + 40² + 30²) = **78.10 cm** — the longest rod that fits inside
+- Volumetric weight (÷ 5,000) = **14.4 kg**
+
 ## Common box sizes
 
-| Box (cm) | Volume | Cubic feet |
-|---|---|---|
-| 30 × 20 × 15 | 9.0 L | 0.32 ft³ |
-| 40 × 30 × 30 | 36.0 L | 1.27 ft³ |
-| 45 × 45 × 45 | 91.1 L | 3.22 ft³ |
-| 60 × 40 × 40 | 96.0 L | 3.39 ft³ |
-| 60 × 45 × 45 | 121.5 L | 4.29 ft³ |
-| 100 × 100 × 100 | 1000.0 L | 35.31 ft³ |
+| Box (cm) | Volume | Cubic feet | Volumetric weight (÷ 5,000) |
+|---|---|---|---|
+| 30 × 20 × 15 | 9.0 L | 0.32 ft³ | 1.8 kg |
+| 40 × 30 × 30 | 36.0 L | 1.27 ft³ | 7.2 kg |
+| 45 × 45 × 45 | 91.1 L | 3.22 ft³ | 18.2 kg |
+| 60 × 40 × 40 | 96.0 L | 3.39 ft³ | 19.2 kg |
+| 60 × 45 × 45 | 121.5 L | 4.29 ft³ | 24.3 kg |
+| 100 × 100 × 100 | 1,000.0 L | 35.31 ft³ | 200.0 kg |
 
 ## Shipping: volumetric weight
 
@@ -64,3 +73,9 @@ A 60 × 40 × 30 cm box has a volumetric weight of 14.4 kg. Some carriers divide
 ## Cube
 
 For a cube with side s: V = s³, S = 6s², d = s√3.
+
+## Practical notes
+
+- Measure **inside** dimensions for capacity and **outside** dimensions for shipping and shelf space — corrugated board walls are typically 3–7 mm thick.
+- 1 m³ = 1,000 L = 35.31 ft³; 1 ft³ = 28.32 L = 7.48 US gallons.
+- For irregular items, the packed volume is usually 20–30% larger than the sum of the items because of gaps and padding.

@@ -1,0 +1,68 @@
+---
+title: Scientific Notation Calculator (Standard & Engineering Form)
+description: Convert any number to scientific notation (a × 10ⁿ) and engineering notation (exponent a multiple of 3), and back to decimal — with coefficient and exponent.
+category: math
+intro: "Scientific notation writes a number as a coefficient between 1 and 10 multiplied by a power of ten, so 45,600,000 becomes 4.56 × 10⁷. This scientific notation calculator splits any number into its coefficient and exponent, gives the engineering-notation form whose exponent is a multiple of three, and converts back to an ordinary decimal."
+keywords: [scientific notation calculator, convert to scientific notation, standard form calculator, engineering notation calculator, e notation, powers of 10, decimal to scientific notation]
+updated: 2026-11-07
+variables:
+  - { id: x, label: Number (decimal form), default: 4.56e+07 }
+  - { id: ex, label: Exponent n (scientific), decimals: 0 }
+  - { id: m, label: Coefficient a (1 ≤ |a| < 10) }
+  - { id: ee, label: Exponent (engineering — multiple of 3), decimals: 0 }
+  - { id: me, label: Coefficient (engineering — 1 to 999) }
+equations:
+  - ex = floor(log10(abs(x)))
+  - m = x / 10^ex
+  - ee = 3 * floor(ex / 3)
+  - me = x / 10^ee
+faq:
+  - q: How do I write a number in scientific notation?
+    a: Move the decimal point until one non-zero digit is left of it; the number of places moved is the exponent — positive if you moved left, negative if you moved right. 0.00045 becomes 4.5 × 10⁻⁴.
+  - q: What is engineering notation?
+    a: Like scientific notation, but the exponent is always a multiple of 3 so it matches SI prefixes — 45.6 × 10⁶ is 45.6 mega. The coefficient is between 1 and 999.
+  - q: What does 4.56E7 mean on a calculator?
+    a: E notation is scientific notation for screens and spreadsheets — 4.56E7 means 4.56 × 10⁷ = 45,600,000. A negative exponent such as 2E-3 means 0.002.
+  - q: How do I multiply numbers in scientific notation?
+    a: Multiply the coefficients and add the exponents, then renormalise. (3 × 10⁴) × (5 × 10³) = 15 × 10⁷ = 1.5 × 10⁸.
+related: [math/exponent, math/logarithm, conversion/number-to-million, math/square-root]
+---
+
+## How to use the scientific notation calculator
+
+Enter a **number** in ordinary decimal form (you can also type E notation such as 6.02e23). The calculator returns the **exponent** and **coefficient** of its scientific notation and the matching **engineering notation**. To convert back, enter a coefficient and exponent and the decimal number is filled in.
+
+## Scientific notation formula
+
+<p class="formula">x = a × 10ⁿ &nbsp;with&nbsp; n = ⌊log₁₀|x|⌋ &nbsp;and&nbsp; a = x ÷ 10ⁿ</p>
+
+<p class="formula">Engineering: n<sub>eng</sub> = 3 × ⌊n ÷ 3⌋ &nbsp;·&nbsp; a<sub>eng</sub> = x ÷ 10<sup>n<sub>eng</sub></sup></p>
+
+## Worked example
+
+Convert 45,600,000:
+
+- log₁₀(45,600,000) = 7.6590, so the exponent is **7**
+- Coefficient = 45,600,000 ÷ 10⁷ = **4.56** → **4.56 × 10⁷** (E notation 4.56E7)
+- Engineering exponent = 3 × ⌊7 ÷ 3⌋ = **6**, coefficient **45.6** → 45.6 × 10⁶ = 45.6 mega
+
+For a small number, 0.00045 → log₁₀ = −3.35, exponent **−4**, coefficient **4.5** → 4.5 × 10⁻⁴ (engineering 450 × 10⁻⁶ = 450 micro).
+
+## Examples in scientific and engineering notation
+
+| Quantity | Scientific | E notation | Engineering |
+|---|---|---|---|
+| Speed of light (m/s) | 2.99792458 × 10⁸ | 2.99792458e8 | 299.792458 × 10⁶ |
+| Avogadro constant (1/mol) | 6.02214076 × 10²³ | 6.02214076e23 | 602.214076 × 10²¹ |
+| Earth–Sun distance (m) | 1.496 × 10¹¹ | 1.496e11 | 149.6 × 10⁹ |
+| Elementary charge (C) | 1.602176634 × 10⁻¹⁹ | 1.602176634e-19 | 160.2176634 × 10⁻²¹ |
+| 1 µF in farads | 1 × 10⁻⁶ | 1e-6 | 1 × 10⁻⁶ |
+| Hydrogen atom radius (m) | 5.29 × 10⁻¹¹ | 5.29e-11 | 52.9 × 10⁻¹² |
+| World population (approx.) | 8.1 × 10⁹ | 8.1e9 | 8.1 × 10⁹ |
+| 0.00045 | 4.5 × 10⁻⁴ | 4.5e-4 | 450 × 10⁻⁶ |
+
+## Practical notes
+
+- Zero has no scientific-notation exponent; it is written simply as 0.
+- **Significant figures** are the digits in the coefficient: 4.560 × 10⁷ states four, 4.56 × 10⁷ three.
+- Engineering exponents map to SI prefixes: 10³ kilo, 10⁶ mega, 10⁹ giga, 10⁻³ milli, 10⁻⁶ micro, 10⁻⁹ nano, 10⁻¹² pico.

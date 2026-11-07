@@ -34,6 +34,32 @@ function erf(x: number): number {
   return x >= 0 ? 1 - r : r - 1;
 }
 
+// Regularized incomplete beta I_x(a, b) (continued fraction, Numerical Recipes betacf)
+function betacf(a: number, b: number, x: number): number {
+  const TINY = 1e-300; let c = 1, d = 1 - (a + b) * x / (a + 1);
+  if (Math.abs(d) < TINY) d = TINY; d = 1 / d; let h = d;
+  for (let m = 1; m <= 300; m++) {
+    const m2 = 2 * m;
+    let aa = m * (b - m) * x / ((a + m2 - 1) * (a + m2));
+    d = 1 + aa * d; if (Math.abs(d) < TINY) d = TINY; c = 1 + aa / c; if (Math.abs(c) < TINY) c = TINY; d = 1 / d; h *= d * c;
+    aa = -(a + m) * (a + b + m) * x / ((a + m2) * (a + m2 + 1));
+    d = 1 + aa * d; if (Math.abs(d) < TINY) d = TINY; c = 1 + aa / c; if (Math.abs(c) < TINY) c = TINY; d = 1 / d;
+    const del = d * c; h *= del; if (Math.abs(del - 1) < 1e-15) break;
+  }
+  return h;
+}
+function ibeta(a: number, b: number, x: number): number {
+  if (!(x > 0)) return 0; if (x >= 1) return 1;
+  const bt = Math.exp(lnGamma(a + b) - lnGamma(a) - lnGamma(b) + a * Math.log(x) + b * Math.log(1 - x));
+  return x < (a + 1) / (a + b + 2) ? bt * betacf(a, b, x) / a : 1 - bt * betacf(b, a, 1 - x) / b;
+}
+// Student's t cumulative distribution P(T <= t) with v degrees of freedom (v may be non-integer)
+function tcdf(t: number, v: number): number {
+  if (!(v > 0)) return NaN;
+  const p = 0.5 * ibeta(v / 2, 0.5, v / (v + t * t));
+  return t > 0 ? 1 - p : p;
+}
+
 
 // Calendar helpers on day numbers (days since 1970-01-01, UTC)
 const ymd = (d: number) => { const t = new Date(Math.round(d) * 86400000); return [t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate()]; };
@@ -68,7 +94,7 @@ const FUNCS: Record<string, (...a: number[]) => number> = {
   gamma, fact: (n) => gamma(n + 1),
   nCr: (n, k) => (k < 0 || k > n ? 0 : Number.isInteger(n) && Number.isInteger(k) ? exactComb(n, k) : Math.exp(lnGamma(n + 1) - lnGamma(k + 1) - lnGamma(n - k + 1))),
   nPr: (n, k) => (k < 0 || k > n ? 0 : Number.isInteger(n) && Number.isInteger(k) ? exactPerm(n, k) : Math.exp(lnGamma(n + 1) - lnGamma(n - k + 1))),
-  erf, normcdf: (z) => 0.5 * (1 + erf(z / Math.SQRT2)),
+  erf, normcdf: (z) => 0.5 * (1 + erf(z / Math.SQRT2)), tcdf,
   yearsBetween, monthsBetween, workdays,
   weekday: (d) => (((Math.floor(d) + 4) % 7) + 7) % 7, // 0 = Sunday (days since 1970-01-01)
   gcd: (a, b) => { a = Math.abs(Math.round(a)); b = Math.abs(Math.round(b)); while (b) [a, b] = [b, a % b]; return a; },

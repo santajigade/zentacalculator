@@ -1,10 +1,10 @@
 ---
-title: PWM Duty Cycle Calculator
+title: "PWM Duty Cycle Calculator (Average & RMS Voltage)"
 description: Calculate PWM duty cycle, period, on-time and average output voltage from frequency and pulse width — for motor speed control, LEDs and microcontrollers.
 category: electronics
 intro: "Pulse width modulation controls power by switching a supply fully on and off very fast, varying the on-time to set the average. It drives motors, dims LEDs and is at the heart of [VFDs](https://www.instrumentationblog.in/vfd-working-principle-explained/) — see [pulse width modulation and duty cycle](https://www.instrumentationblog.in/pulse-width-modulation-duty-cycle/). This free PWM duty cycle calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [pwm duty cycle calculator, duty cycle formula, pwm average voltage, pulse width modulation, on time off time, pwm frequency, arduino pwm]
-updated: 2026-10-27
+updated: 2026-11-07
 variables:
   - { id: f, label: PWM frequency, family: frequency, unit: kHz, default: 1, min: 0 }
   - { id: ton, label: On time (pulse width), family: seconds, unit: ms, default: 0.25, min: 0 }
@@ -40,7 +40,15 @@ Enter the **PWM frequency**, the **on time** and the signal **amplitude**. You g
 
 <p class="formula">T = 1 ÷ f &nbsp;·&nbsp; D = t<sub>on</sub> ÷ T &nbsp;·&nbsp; V<sub>avg</sub> = D × V &nbsp;·&nbsp; V<sub>rms</sub> = √D × V</p>
 
-## 8-bit PWM values
+## Worked example
+
+A 1 kHz PWM signal with a 0.25 ms pulse from a 12 V supply:
+
+- Period T = 1 ÷ 1000 Hz = **1 ms**, so the off time is 1 − 0.25 = **0.75 ms**
+- Duty cycle = 0.25 ÷ 1 = **25%**
+- Average voltage = 0.25 × 12 = **3 V**; RMS voltage = √0.25 × 12 = **6 V**
+
+## 8-bit and 10-bit PWM values
 
 | Duty cycle | 8-bit value (0–255) | 10-bit value (0–1023) | Average of 12 V |
 |---|---|---|---|
@@ -62,6 +70,25 @@ Enter the **PWM frequency**, the **on time** and the signal **amplitude**. You g
 | Switch-mode power supply | 50 kHz – 2 MHz |
 | VFD output (carrier) | 2–16 kHz |
 
+## PWM resolution vs frequency
+
+A timer counting at f<sub>clk</sub> with N-bit resolution can produce at most f<sub>clk</sub> ÷ 2<sup>N</sup> (fast PWM); phase-correct PWM halves it.
+
+| Resolution | Max. frequency at 16 MHz | Max. frequency at 72 MHz | Duty step |
+|---|---|---|---|
+| 8-bit (256 steps) | 62.500 kHz | 281.250 kHz | 0.3906% |
+| 10-bit (1,024 steps) | 15.625 kHz | 70.312 kHz | 0.0977% |
+| 12-bit (4,096 steps) | 3.906 kHz | 17.578 kHz | 0.0244% |
+| 16-bit (65,536 steps) | 0.244 kHz | 1.099 kHz | 0.0015% |
+
+The Arduino Uno's default analogWrite frequencies come from the 16 MHz clock with a ÷64 prescaler: 16 MHz ÷ 64 ÷ 256 = **976.56 Hz** on pins 5 and 6 (fast PWM) and 16 MHz ÷ 64 ÷ 510 = **490.20 Hz** on the others (phase-correct).
+
 ## Average vs RMS
 
 A resistive heater cares about RMS (its power is V²/R), while a DC motor's speed follows the average voltage. At 25% duty, 12 V gives 3 V average but 6 V RMS — the heater gets 25% of full power.
+
+## Practical notes
+
+- To turn PWM into a steady analogue voltage, add an [RC low-pass filter](/electronics/rc-filter/) with a cutoff at least 10× below the PWM frequency.
+- Inductive loads (motors, solenoids) need a flyback diode across them; the current keeps flowing during the off time.
+- At very low or very high duty cycles, the driver's rise and fall times become a large part of the pulse and the real average differs from D × V.

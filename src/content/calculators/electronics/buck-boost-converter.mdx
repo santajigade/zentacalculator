@@ -1,0 +1,80 @@
+---
+title: Buck-Boost Converter Calculator (Inverting, L & C)
+description: Calculate duty cycle, inductor current, inductance, peak switch current, switch voltage and output capacitance for an inverting buck-boost DC-DC converter.
+category: electronics
+intro: "An inverting buck-boost converter makes a negative output voltage that can be larger or smaller in magnitude than the input — for example −12 V from a +12 V rail for an op-amp or LCD bias. This buck-boost converter calculator gives the duty cycle, average and peak inductor current, required inductance, switch voltage stress and minimum output capacitance; for a positive output use the related [SEPIC converter](https://www.instrumentationblog.in/sepic-converter-working-design/)."
+keywords: [buck boost converter calculator, inverting buck boost calculator, buck boost duty cycle, buck boost inductor calculation, negative voltage converter design, buck boost formula, dc dc converter calculator]
+updated: 2026-11-07
+variables:
+  - { id: Vi, label: Input voltage, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: Vo, label: Output voltage magnitude |Vout|, family: voltage, unit: V, default: 12, min: 0 }
+  - { id: Io, label: Output current, family: current, unit: A, default: 0.5, min: 0 }
+  - { id: eta, label: Efficiency, family: percent, unit: '%', default: 85, min: 0.01, max: 1 }
+  - { id: f, label: Switching frequency, family: frequency, unit: kHz, default: 500, min: 0 }
+  - { id: r, label: Inductor ripple (of inductor current), family: percent, unit: '%', default: 30, min: 0.01 }
+  - { id: dV, label: Allowed output ripple, family: voltage, unit: mV, default: 50, min: 0 }
+  - { id: D, label: Duty cycle, family: percent, unit: '%', min: 0, max: 1 }
+  - { id: Ii, label: Average input current, family: current, unit: A, min: 0 }
+  - { id: IL, label: Average inductor current, family: current, unit: A, min: 0 }
+  - { id: L, label: Inductance required, family: inductance, unit: uH, min: 0 }
+  - { id: Ipk, label: Peak switch / inductor current, family: current, unit: A, min: 0 }
+  - { id: Vsw, label: Switch and diode voltage stress, family: voltage, unit: V, min: 0 }
+  - { id: C, label: Output capacitance (min.), family: capacitance, unit: uF, min: 0 }
+equations:
+  - D = Vo / (Vi * eta + Vo)
+  - Ii = Vo * Io / (Vi * eta)
+  - IL = Io / (1 - D)
+  - L = Vi * D / (f * r * IL)
+  - Ipk = IL * (1 + r / 2)
+  - Vsw = Vi + Vo
+  - C = Io * D / (f * dV)
+faq:
+  - q: What is the duty cycle of a buck-boost converter?
+    a: Ideally D = |Vout| ÷ (Vin + |Vout|), so 50% gives |Vout| = Vin, below 50% steps down and above 50% steps up. Including efficiency, D ≈ |Vout| ÷ (Vin × η + |Vout|).
+  - q: Why is the inductor current higher than the output current?
+    a: The inductor delivers current to the output only during the off-time, so its average current is Iout ÷ (1 − D). At D = 54% a 0.5 A load needs about 1.09 A of inductor current.
+  - q: What voltage rating does the switch need?
+    a: The MOSFET and diode both see Vin + |Vout| when off — 24 V for +12 V to −12 V. Choose parts rated at least 20–30% higher to allow for ringing.
+  - q: How is a SEPIC different from a buck-boost?
+    a: A SEPIC has the same duty-cycle relation but gives a positive output, at the cost of a second inductor and a coupling capacitor. A 4-switch buck-boost also gives a positive output with higher efficiency.
+related: [electronics/buck-converter, electronics/boost-converter, electronics/inductor-energy, electronics/mosfet-power-loss]
+---
+
+## How to use the buck-boost converter calculator
+
+Enter the **input voltage**, the **magnitude** of the negative output voltage, the **output current**, the expected **efficiency**, the **switching frequency**, the inductor **ripple ratio** (20–40% of the inductor current is typical) and the allowed **output ripple**. The calculator returns the duty cycle, the average input and inductor currents, the minimum inductance, the peak current the switch and inductor must handle, the voltage stress on the switch and diode, and the minimum output capacitance.
+
+## Buck-boost converter formulas (continuous conduction)
+
+<p class="formula">D = |V<sub>o</sub>| ÷ (V<sub>i</sub> η + |V<sub>o</sub>|) &nbsp;·&nbsp; I<sub>L</sub> = I<sub>o</sub> ÷ (1 − D) &nbsp;·&nbsp; L = V<sub>i</sub> D ÷ (f · ΔI<sub>L</sub>)</p>
+
+<p class="formula">I<sub>pk</sub> = I<sub>L</sub> (1 + r/2) &nbsp;·&nbsp; V<sub>sw</sub> = V<sub>i</sub> + |V<sub>o</sub>| &nbsp;·&nbsp; C ≥ I<sub>o</sub> D ÷ (f · ΔV)</p>
+
+The output capacitor alone supplies the load while the switch is on, so — as in a [boost converter](/electronics/boost-converter/) — the output current is pulsed and the capacitor's ESR matters as much as its capacitance.
+
+## Worked example
+
++12 V in, −12 V at 0.5 A out, η = 85%, f = 500 kHz, 30% ripple, 50 mV output ripple:
+
+- D = 12 ÷ (12 × 0.85 + 12) = **54.05%**
+- Average input current = **0.588 A**; average inductor current = 0.5 ÷ (1 − 0.5405) = **1.0882 A**
+- L = 12 × 0.5405 ÷ (500 kHz × 0.3 × 1.0882 A) = **39.74 µH** — choose a standard 47 µH
+- Peak current = **1.2515 A**; switch voltage = **24 V**
+- Output capacitance ≥ **10.81 µF** (plus margin for ESR and DC-bias derating)
+
+## Output voltage vs duty cycle and inductor (12 V in, 0.5 A, 500 kHz, 30% ripple, η = 85%)
+
+| Output | Duty cycle | Inductor current | L | Switch voltage |
+|---|---|---|---|---|
+| −3.3 V | 24.4% | 0.662 A | 29.6 µH | 15.3 V |
+| −5 V | 32.9% | 0.745 A | 35.3 µH | 17 V |
+| −9 V | 46.9% | 0.941 A | 39.8 µH | 21 V |
+| −12 V | 54.1% | 1.088 A | 39.7 µH | 24 V |
+| −15 V | 59.5% | 1.235 A | 38.5 µH | 27 V |
+| −24 V | 70.2% | 1.676 A | 33.5 µH | 36 V |
+
+## Design notes
+
+- Rate the inductor's **saturation current** above the peak current, not the average.
+- Use low-ESR ceramic output capacitors; ESR ripple = I<sub>pk</sub> × ESR adds to the capacitive ripple.
+- The control loop has a right-half-plane zero, as in a boost, which limits loop bandwidth — follow the controller datasheet's compensation guide.

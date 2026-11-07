@@ -1,0 +1,68 @@
+---
+title: Peukert's Law Calculator (Battery Runtime at High Current)
+description: Estimate real battery runtime and effective capacity at any discharge current with Peukert's law, from the rated Ah, rated hours and Peukert exponent.
+category: electronics
+intro: "A battery's amp-hour rating is measured at a specific discharge time — usually 20 hours for lead-acid — and it delivers less capacity when discharged faster. This Peukert's law calculator corrects the simple Ah ÷ A estimate for the discharge rate, giving the realistic runtime and effective capacity; for overall [battery backup time](https://www.instrumentationblog.in/calculate-battery-backup-time/) planning, also allow for depth of discharge and inverter losses."
+keywords: [peukert's law calculator, peukert calculator, battery runtime calculator, peukert exponent, battery discharge time, effective battery capacity, lead acid battery runtime]
+updated: 2026-11-07
+variables:
+  - { id: C, label: Rated capacity, suffix: Ah, default: 100, min: 0 }
+  - { id: H, label: Rated discharge time (C-rating hours), family: seconds, unit: h, default: 20, min: 0 }
+  - { id: I, label: Actual discharge current, family: current, unit: A, default: 10, min: 0.000001 }
+  - { id: k, label: Peukert exponent k, default: 1.2, min: 1, decimals: 3 }
+  - { id: Ir, label: Rated discharge current C/H, family: current, unit: A, min: 0 }
+  - { id: t, label: Runtime (Peukert), family: seconds, unit: h, min: 0 }
+  - { id: t0, label: Runtime without Peukert (Ah ÷ A), family: seconds, unit: h, min: 0 }
+  - { id: Ce, label: Effective capacity at this current, suffix: Ah, min: 0 }
+equations:
+  - Ir = C / (H / 3600)
+  - t = H * (C / (I * H / 3600))^k
+  - t0 = C / I * 3600
+  - Ce = I * t / 3600
+faq:
+  - q: What is Peukert's law?
+    a: An empirical rule for lead-acid batteries, t = H × (C ÷ (I × H))^k, where C is the rated capacity at the rated discharge time H and k is the Peukert exponent. With k = 1 the battery would give its full rated Ah at any current.
+  - q: What is a typical Peukert exponent?
+    a: Roughly 1.05–1.15 for AGM, 1.1–1.25 for gel and 1.2–1.4 for flooded lead-acid batteries; lithium-ion cells are close to 1.0–1.05. The battery datasheet's capacity-vs-rate table gives the exact value.
+  - q: How do I calculate the Peukert exponent from a datasheet?
+    a: Take two ratings, for example the 20 h and 5 h capacities. Convert each to a current (I = Ah ÷ h), then k = ln(t₂/t₁) ÷ ln(I₁/I₂).
+  - q: Does Peukert's law apply at low currents?
+    a: Below the rated current it predicts more than the rated capacity, which real batteries do not reliably deliver because of self-discharge. Treat the rated Ah as the ceiling.
+related: [ecology/battery-storage, electrical/battery-bank-size, everyday-life/inverter-battery-backup, other/battery-life]
+---
+
+## How to use the Peukert's law calculator
+
+Enter the **rated capacity** in amp-hours, the **rated discharge time** it was measured at (C20 = 20 h, C10 = 10 h, C5 = 5 h), the **load current** and the **Peukert exponent** from the datasheet. The calculator gives the rated current, the realistic runtime, the naive Ah ÷ A runtime for comparison and the effective capacity at your current. These are times to 100% discharge at a constant current and room temperature.
+
+## Peukert's law formula
+
+<p class="formula">t = H × ( C ÷ (I × H) )<sup>k</sup> &nbsp;·&nbsp; effective capacity = I × t</p>
+
+<p class="formula">k = ln(t₂ ÷ t₁) ÷ ln(I₁ ÷ I₂)</p>
+
+## Worked example
+
+A 100 Ah battery rated at the 20-hour rate (k = 1.2) supplies a 10 A load:
+
+- Rated current = 100 ÷ 20 = **5 A**
+- Runtime = 20 × (100 ÷ (10 × 20))^1.2 = 20 × 0.5^1.2 = **8.71 h**
+- Naive estimate 100 ÷ 10 = 10 h — about 13% too optimistic
+- Effective capacity = 10 × 8.7055 = **87.06 Ah**
+
+## Runtime of a 100 Ah (C20) battery by current and Peukert exponent
+
+| Current | Ah ÷ A | k = 1.05 | k = 1.1 | k = 1.2 | k = 1.3 |
+|---|---|---|---|---|---|
+| 2.5 A | 40.00 h | 41.41 h | 42.87 h | 45.95 h | 49.25 h |
+| 5 A | 20.00 h | 20.00 h | 20.00 h | 20.00 h | 20.00 h |
+| 10 A | 10.00 h | 9.66 h | 9.33 h | 8.71 h | 8.12 h |
+| 20 A | 5.00 h | 4.67 h | 4.35 h | 3.79 h | 3.30 h |
+| 50 A | 2.00 h | 1.78 h | 1.59 h | 1.26 h | 1.00 h |
+| 100 A | 1.00 h | 0.86 h | 0.74 h | 0.55 h | 0.41 h |
+
+## Practical notes
+
+- **Usable depth of discharge** — lead-acid batteries last much longer if discharged only to 50%; multiply the runtime by the depth of discharge you plan to use.
+- **Temperature** — capacity falls by roughly 0.5–1% per °C below 25 °C for lead-acid; allow extra margin in cold locations.
+- **Varying loads** — Peukert's law assumes a constant current. For mixed loads, apply it to each period or use the average current as an approximation.

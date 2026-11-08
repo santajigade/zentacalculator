@@ -1,0 +1,87 @@
+---
+title: P-Value Calculator (from z-Score or t-Score)
+description: Convert a z-score or t-score into a p-value — two-tailed, left-tailed and right-tailed — using the normal or Student t distribution with any df.
+category: statistics
+intro: "A p-value is the probability of getting a test statistic at least as extreme as the one observed if the null hypothesis were true. This p-value calculator converts a z-score (normal distribution) or a t-score with its degrees of freedom (Student t distribution) into two-tailed, left-tailed and right-tailed p-values."
+keywords: [p value calculator, p value from z score, p value from t score, z score to p value, t score to p value, two tailed p value, one tailed p value]
+updated: 2026-11-07
+variables:
+  - id: dist
+    label: Distribution of the test statistic
+    default: 0
+    options:
+      - { label: Standard normal (z-score), value: 0 }
+      - { label: Student t (t-score), value: 1 }
+  - { id: x, label: Test statistic (z or t), default: 1.96 }
+  - { id: df, label: Degrees of freedom (t only), default: 20, min: 0.000001 }
+  - { id: p2, label: p-value (two-tailed) }
+  - { id: pL, label: p-value (left-tailed) }
+  - { id: pR, label: p-value (right-tailed) }
+equations:
+  - pL = (1 - dist) * normcdf(x) + dist * tcdf(x, df)
+  - pR = 1 - pL
+  - p2 = 2 * min(pL, pR)
+faq:
+  - q: How do I get a p-value from a z-score?
+    a: For a right-tailed test p = 1 − Φ(z), for a left-tailed test p = Φ(z), and for a two-tailed test p = 2 × (1 − Φ(|z|)), where Φ is the standard normal cumulative distribution. z = 1.96 gives a two-tailed p of 0.05.
+  - q: Why does the t distribution give a bigger p-value?
+    a: The t distribution has heavier tails than the normal, reflecting the extra uncertainty of estimating the standard deviation from the sample. As degrees of freedom grow, t approaches the normal distribution.
+  - q: What is a significant p-value?
+    a: By convention p < 0.05, but the threshold α should be chosen before the test. Fields such as particle physics use far stricter thresholds (5σ, about p < 3×10⁻⁷).
+  - q: Is the p-value the probability that the null hypothesis is true?
+    a: No. It is the probability of data this extreme assuming the null hypothesis is true. A small p-value says the data are surprising under the null, not how likely the null is.
+related: [statistics/z-score, statistics/one-sample-t-test, statistics/two-sample-t-test, statistics/normal-distribution]
+---
+
+## How to use the p-value calculator
+
+Choose the **distribution** of your test statistic — standard normal for a z-test, Student t for a t-test — then enter the **statistic** and, for t, its **degrees of freedom**. The calculator returns the two-tailed, left-tailed and right-tailed p-values. Use the two-tailed value when the alternative hypothesis is "not equal", the right-tailed value for "greater than" and the left-tailed value for "less than".
+
+## P-value formulas
+
+<p class="formula">left-tailed p = F(x) &nbsp;·&nbsp; right-tailed p = 1 − F(x) &nbsp;·&nbsp; two-tailed p = 2 × min(F(x), 1 − F(x))</p>
+
+F is the cumulative distribution function of the standard normal (Φ) or of Student's t with df degrees of freedom.
+
+## Worked example
+
+A z-test gives z = 1.96:
+
+- Right-tailed p = 1 − Φ(1.96) = **0.0250**
+- Two-tailed p = 2 × 0.0250 = **0.0500** — right on the 5% threshold
+
+If the same value were a t-score with 20 degrees of freedom, the two-tailed p-value would be **0.0641** — not significant at 5%, because the t distribution has heavier tails.
+
+## z-score to p-value table
+
+| z | one-tailed p | two-tailed p |
+|---|---|---|
+| 1 | 0.1587 | 0.3173 |
+| 1.282 | 0.0999 | 0.1998 |
+| 1.645 | 0.0500 | 0.1000 |
+| 1.96 | 0.0250 | 0.0500 |
+| 2 | 0.0228 | 0.0455 |
+| 2.326 | 0.0100 | 0.0200 |
+| 2.576 | 0.0050 | 0.0100 |
+| 3 | 0.0013 | 0.0027 |
+| 3.291 | 0.0005 | 0.0010 |
+| 4 | 3.17e-05 | 6.33e-05 |
+
+## Two-tailed p-value for a t-score by degrees of freedom
+
+| df | t = 2.0 | t = 2.5 | t = 3.0 |
+|---|---|---|---|
+| 2 | 0.1835 | 0.1296 | 0.0955 |
+| 5 | 0.1019 | 0.0545 | 0.0301 |
+| 10 | 0.0734 | 0.0314 | 0.0133 |
+| 20 | 0.0593 | 0.0212 | 0.0071 |
+| 30 | 0.0546 | 0.0181 | 0.0054 |
+| 60 | 0.0500 | 0.0152 | 0.0039 |
+| 120 | 0.0478 | 0.0138 | 0.0033 |
+| ∞ (z) | 0.0455 | 0.0124 | 0.0027 |
+
+## Practical notes
+
+- Report the exact p-value (for example p = 0.031) rather than just "p < 0.05".
+- A two-tailed p-value is twice the smaller one-tailed value — never halve it after seeing which way the result went.
+- Running many tests inflates false positives; with m tests a Bonferroni correction compares each p-value with α ÷ m.

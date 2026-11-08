@@ -1,0 +1,71 @@
+---
+title: Arrhenius Acceleration Factor Calculator (HTOL, FIT & MTTF)
+description: Calculate the Arrhenius acceleration factor between stress and use temperatures, equivalent device-hours, and FIT rate and MTTF from a zero-failure life test.
+category: engineering
+intro: "Accelerated life tests run parts hot so that a few weeks represent years of field use, and the Arrhenius model converts test hours into equivalent use hours. This acceleration factor calculator gives the Arrhenius acceleration factor from the activation energy and the two temperatures, then the upper-bound failure rate in FIT and the MTTF demonstrated by a test with zero failures at your confidence level."
+keywords: [acceleration factor calculator, arrhenius acceleration factor, htol calculator, fit rate calculator, accelerated life test calculator, activation energy reliability, mttf from life test]
+updated: 2026-11-08
+variables:
+  - { id: Ea, label: Activation energy Ea, suffix: eV, default: 0.7, min: 0, help: 'JEDEC and many suppliers use 0.7 eV for general semiconductor failure mechanisms.' }
+  - { id: Tu, label: Use (field) temperature, family: temperature, unit: C, imperialUnit: F, default: 55, min: 0 }
+  - { id: Ts, label: Stress (test) temperature, family: temperature, unit: C, imperialUnit: F, default: 125, min: 0 }
+  - { id: N, label: Number of devices tested, default: 77, min: 0 }
+  - { id: th, label: Test duration, family: seconds, unit: h, default: 1000, min: 0 }
+  - { id: CL, label: Confidence level, family: percent, unit: '%', default: 60, min: 0, max: 0.9999 }
+  - { id: AF, label: Acceleration factor, min: 0, decimals: 2 }
+  - { id: Heq, label: Equivalent device-hours at use temperature, suffix: device-h, min: 0 }
+  - { id: FIT, label: Failure rate upper bound (0 failures), suffix: FIT, min: 0 }
+  - { id: MTTF, label: Demonstrated MTTF (lower bound), family: seconds, unit: h, min: 0 }
+  - { id: MTTFy, label: Demonstrated MTTF in years, suffix: years, min: 0 }
+equations:
+  - AF = exp(Ea / 8.617333262e-5 * (1 / Tu - 1 / Ts))
+  - Heq = N * th * AF / 3600
+  - FIT = -ln(1 - CL) / Heq * 1e9
+  - MTTF = Heq * 3600 / (-ln(1 - CL))
+  - MTTFy = MTTF / 3600 / 8766
+faq:
+  - q: What is the Arrhenius acceleration factor formula?
+    a: AF = exp[(Ea ÷ k) × (1/T_use − 1/T_stress)], with temperatures in kelvin and Boltzmann's constant k = 8.617 × 10⁻⁵ eV/K. It is the ratio of the failure rate at the stress temperature to that at the use temperature.
+  - q: What activation energy should I use?
+    a: Use the value for the failure mechanism if it is known — for example around 0.3–0.5 eV for oxide defects and 0.5–0.9 eV for electromigration. 0.7 eV is the common default for semiconductor HTOL reports; a lower Ea gives a smaller, more conservative AF.
+  - q: How is the FIT rate calculated with zero failures?
+    a: With no failures, the upper confidence bound on the failure rate is λ = −ln(1 − CL) ÷ (device-hours × AF). At 60% confidence −ln(0.4) = 0.916, at 90% it is 2.303. This equals the chi-square method χ²(CL, 2) ÷ (2 × device-hours × AF).
+  - q: Why is MTTF from a life test so large?
+    a: Because it is an MTTF for random failures during the useful life, not a wear-out lifetime. An MTTF of 1,000 years means that in a population of 1,000 devices about one fails per year — not that a single device lasts 1,000 years.
+related: [chemistry/arrhenius-equation, engineering/weibull-reliability, engineering/availability-mtbf, electronics/capacitor-lifetime]
+---
+
+## How to use the acceleration factor calculator
+
+Enter the **activation energy**, the **use temperature** (junction or component temperature in the field) and the **stress temperature** of the test. That gives the acceleration factor. To turn a life test into a failure rate, also enter the **number of devices**, the **test hours** and the **confidence level**; the calculator assumes the test finished with **zero failures** and returns the equivalent device-hours, the upper-bound FIT rate and the lower-bound MTTF.
+
+## Acceleration factor formulas
+
+<p class="formula">AF = exp[(E<sub>a</sub> ÷ k)(1/T<sub>use</sub> − 1/T<sub>stress</sub>)] &nbsp;·&nbsp; k = 8.617 × 10⁻⁵ eV/K</p>
+
+<p class="formula">λ<sub>upper</sub> = −ln(1 − CL) ÷ (N × t × AF) &nbsp;·&nbsp; FIT = λ × 10⁹ h &nbsp;·&nbsp; MTTF = 1/λ</p>
+
+## Worked example
+
+A JEDEC-style HTOL test of 77 devices for 1,000 h at 125 °C with no failures, field use at 55 °C, E<sub>a</sub> = 0.7 eV, 60% confidence:
+
+- AF = exp[(0.7 ÷ 8.617 × 10⁻⁵) × (1/328.15 − 1/398.15)] = **77.65**
+- Equivalent device-hours = 77 × 1,000 × 77.65 = **5,978,694 h**
+- Failure rate ≤ 0.916 ÷ 5,978,694 = **153 FIT**
+- MTTF ≥ **6,524,888 h** (about 744 years)
+
+## Acceleration factor for a 125 °C stress test
+
+| E<sub>a</sub> | Use 25 °C | Use 40 °C | Use 55 °C | Use 85 °C |
+|---|---|---|---|---|
+| 0.3 eV | 18.8 | 10.7 | 6.5 | 2.7 |
+| 0.5 eV | 132.7 | 52.2 | 22.4 | 5.1 |
+| 0.7 eV | 937.3 | 254.1 | 77.6 | 9.8 |
+| 1 eV | 17,599.9 | 2,727.9 | 501.4 | 25.9 |
+
+## Practical notes
+
+- Use the **junction temperature** (ambient + power × θ<sub>JA</sub>) for both test and use, not the oven or room temperature.
+- The Arrhenius model covers temperature-driven mechanisms only. Humidity (Peck model, 85 °C/85% RH), voltage and temperature cycling (Coffin–Manson) need their own acceleration factors.
+- With r failures, replace −ln(1 − CL) by χ²(CL; 2r + 2) ÷ 2 — for example 2.02 at 60% confidence and 1 failure.
+- Don't push the stress temperature past the point where new failure mechanisms appear (package glass transition, solder melting), or the acceleration factor is meaningless.

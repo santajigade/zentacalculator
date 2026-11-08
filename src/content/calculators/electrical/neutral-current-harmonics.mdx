@@ -1,0 +1,81 @@
+---
+title: Neutral Current Calculator with Third Harmonics (Neutral Sizing)
+description: Calculate neutral current in a balanced three-phase four-wire circuit from third-harmonic content, and the IEC 60364-5-52 design current for sizing the cable.
+category: electrical
+intro: "In a balanced three-phase circuit the fundamental currents cancel in the neutral, but third harmonics are in phase and add — so a neutral feeding LED lighting, computers or drives can carry more current than the phases. This neutral current calculator finds the neutral current from the third-harmonic content and applies the IEC 60364-5-52 Annex E reduction factors, as explained in [neutral conductor sizing with harmonics](https://www.instrumentationblog.in/neutral-conductor-sizing-harmonics/) and [power system harmonics](https://www.instrumentationblog.in/power-harmonics-explained/)."
+keywords: [neutral current calculator, neutral current harmonics, third harmonic neutral current, neutral conductor sizing harmonics, triplen harmonics neutral, iec 60364-5-52 annex e, neutral sizing calculator]
+updated: 2026-11-08
+variables:
+  - { id: I, label: Phase current (RMS), family: current, unit: A, default: 100, min: 0 }
+  - { id: h3, label: Third-harmonic current (% of fundamental), family: percent, unit: '%', default: 30, min: 0, help: 'The 3rd-harmonic reading on a power-quality analyser, relative to the 50/60 Hz component.' }
+  - { id: I1, label: Fundamental phase current, family: current, unit: A, min: 0 }
+  - { id: I3, label: Third-harmonic phase current, family: current, unit: A, min: 0 }
+  - { id: In, label: Neutral current, family: current, unit: A, min: 0 }
+  - { id: r, label: Neutral ÷ phase current, min: 0, decimals: 3 }
+  - id: h3r
+    label: Third harmonic as % of phase RMS current (IEC basis)
+    family: percent
+    unit: '%'
+    min: 0
+    bands:
+      - { max: 0.15, label: '0–15%: size on phase current, factor 1.0', color: '#16a34a' }
+      - { max: 0.33, label: '15–33%: size on phase current, factor 0.86', color: '#eab308' }
+      - { max: 0.45, label: '33–45%: size on neutral current, factor 0.86', color: '#f97316' }
+      - { max: 1e9, label: 'Over 45%: size on neutral current, factor 1.0', color: '#dc2626' }
+  - { id: Ides, label: Design current for four-core cable selection, family: current, unit: A, min: 0 }
+equations:
+  - I1 = I / sqrt(1 + h3^2)
+  - I3 = h3 * I1
+  - In = 3 * I3
+  - r = In / I
+  - h3r = I3 / I
+  - Ides = (1 - step(h3r - 0.15)) * I + (step(h3r - 0.15) - step(h3r - 0.33)) * I / 0.86 + (step(h3r - 0.33) - step(h3r - 0.45)) * In / 0.86 + step(h3r - 0.45) * In
+faq:
+  - q: Why does the neutral carry third-harmonic current?
+    a: The 50 Hz currents of the three phases are 120° apart and cancel in the neutral. Third-harmonic currents of the three phases are all in phase (3 × 120° = 360°), so they add, and the neutral carries three times the third-harmonic current of one phase.
+  - q: Can the neutral current be higher than the phase current?
+    a: Yes. With pure third harmonics the neutral current exceeds the phase current once the third harmonic is about 33% of the phase RMS current (about 35% of the fundamental). Circuits feeding many single-phase rectifier loads commonly reach 1.4–1.7 × phase current.
+  - q: What are the IEC 60364-5-52 reduction factors for harmonics?
+    a: For four- and five-core cables, Annex E gives 1.0 (size on phase current) up to 15% third harmonic, 0.86 (phase current) for 15–33%, 0.86 (neutral current) for 33–45%, and 1.0 (neutral current) above 45%, where the harmonic is a percentage of the phase current.
+  - q: Do other harmonics add in the neutral?
+    a: Only triplen harmonics (3rd, 9th, 15th …) add. The 5th, 7th, 11th and 13th cancel in a balanced system, like the fundamental. Load unbalance adds a further fundamental-frequency neutral current.
+related: [electrical/thd, electrical/cable-voltage-drop, electrical/kw-to-amps, electrical/busbar-size]
+---
+
+## How to use the neutral current calculator
+
+Enter the **phase RMS current** and the **third-harmonic current as a percentage of the fundamental** (the value a power-quality analyser shows in its harmonic spectrum). The calculator splits the phase current into its fundamental and third-harmonic parts, gives the neutral current, re-expresses the harmonic as a percentage of the phase RMS current (the basis IEC 60364-5-52 uses) and returns the design current for choosing a four-core or five-core cable.
+
+## Neutral current formulas
+
+<p class="formula">I₁ = I ÷ √(1 + h₃²) &nbsp;·&nbsp; I₃ = h₃ × I₁ &nbsp;·&nbsp; I<sub>N</sub> = 3 × I₃</p>
+
+This assumes balanced phases and that the third harmonic is the only significant triplen harmonic. Other odd harmonics raise the phase RMS slightly but cancel in the neutral.
+
+## Worked example
+
+Phase current 100 A with a third harmonic of 30% of the fundamental:
+
+- Fundamental I₁ = 100 ÷ √(1 + 0.3²) = **95.78 A**, third harmonic I₃ = **28.73 A**
+- Neutral current I<sub>N</sub> = 3 × 28.73 = **86.2 A** (0.862 × phase current)
+- As a share of the phase RMS current the harmonic is **28.7%**, which falls in the 15–33% band
+- Size the cable on the phase current with a factor of 0.86: design current = 100 ÷ 0.86 = **116.3 A**
+
+## Neutral current and design current for 100 A phase current
+
+| 3rd harmonic (% of fundamental) | % of phase current | Neutral current | I<sub>N</sub> ÷ I | Sized on | Design current |
+|---|---|---|---|---|---|
+| 10% | 10.0% | 29.9 A | 0.30 | phase | 100.0 A |
+| 20% | 19.6% | 58.8 A | 0.59 | phase | 116.3 A |
+| 30% | 28.7% | 86.2 A | 0.86 | phase | 116.3 A |
+| 40% | 37.1% | 111.4 A | 1.11 | neutral | 129.6 A |
+| 50% | 44.7% | 134.2 A | 1.34 | neutral | 156.0 A |
+| 60% | 51.4% | 154.3 A | 1.54 | neutral | 154.3 A |
+| 80% | 62.5% | 187.4 A | 1.87 | neutral | 187.4 A |
+
+## Practical notes
+
+- **Do not use a reduced neutral** on circuits feeding LED drivers, IT equipment, UPS or single-phase VFDs; many designers use a full-size or double-size neutral for such loads.
+- The IEC factors apply to four- and five-core cables where the neutral is inside the same cable and adds heat; for single-core cables, check the neutral on its own current.
+- Measure the harmonic spectrum at full load — percentages measured at light load often look high while the actual amps are small.
+- Harmonic filters or 3rd-harmonic blocking transformers (zig-zag, delta windings) reduce the neutral current at the source.

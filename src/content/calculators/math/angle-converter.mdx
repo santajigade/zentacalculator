@@ -1,0 +1,83 @@
+---
+title: Angle Converter (Degrees, Radians, Gradians & DMS)
+description: Convert angles between degrees, radians, gradians, turns, arcminutes, arcseconds, milliradians and mils, and split decimal degrees into degrees-minutes-seconds.
+category: math
+intro: "Angles are measured in degrees in everyday work, in radians in mathematics and physics, in gradians on some surveying instruments and in degrees–minutes–seconds for map coordinates. This angle converter calculator converts between all of them at once and splits decimal degrees into degrees, minutes and seconds."
+keywords: [angle converter, degrees to radians, radians to degrees, degrees to gradians, decimal degrees to dms, degrees minutes seconds converter, arcseconds to degrees, mrad to degrees]
+updated: 2026-11-07
+variables:
+  - { id: deg, label: Degrees, suffix: °, default: 52.3725 }
+  - { id: rad, label: Radians, suffix: rad }
+  - { id: pirad, label: Multiples of π radians, suffix: × π rad }
+  - { id: grad, label: Gradians (gon), suffix: grad }
+  - { id: turn, label: Turns (revolutions), suffix: turns }
+  - { id: amin, label: Arcminutes, suffix: "′" }
+  - { id: asec, label: Arcseconds, suffix: "″" }
+  - { id: mrad, label: Milliradians, suffix: mrad }
+  - { id: mil, label: NATO mils (6400 per turn), suffix: mil }
+  - { id: D, label: DMS — whole degrees, suffix: °, decimals: 0 }
+  - { id: M, label: DMS — minutes, suffix: "′", decimals: 0 }
+  - { id: S, label: DMS — seconds, suffix: "″", decimals: 2 }
+equations:
+  - rad = deg * pi / 180
+  - pirad = deg / 180
+  - grad = deg * 10 / 9
+  - turn = deg / 360
+  - amin = deg * 60
+  - asec = deg * 3600
+  - mrad = rad * 1000
+  - mil = deg * 6400 / 360
+  - D = floor(deg)
+  - M = floor((deg - D) * 60)
+  - S = ((deg - D) * 60 - M) * 60
+faq:
+  - q: How do I convert degrees to radians?
+    a: Multiply by π/180. For example 90° × π/180 = π/2 ≈ 1.5708 rad. To convert radians to degrees, multiply by 180/π ≈ 57.2958.
+  - q: How do I convert decimal degrees to degrees, minutes and seconds?
+    a: The whole number is the degrees. Multiply the decimal part by 60 — the whole number is the minutes. Multiply the remaining decimal by 60 again for the seconds. 52.3725° = 52° 22′ 21″.
+  - q: What is a gradian?
+    a: A gradian (gon) is 1/400 of a turn, so a right angle is exactly 100 grad. It is used in surveying in some European countries. Check that a calculator is not in GRAD mode by mistake.
+  - q: What is the difference between a milliradian and a mil?
+    a: A milliradian is exactly 1/1000 rad, so a full turn is about 6283.2 mrad. The NATO mil rounds this to 6400 per turn so that it divides evenly. Both are used for sights and rangefinding, where 1 mrad subtends about 1 m at 1 km.
+related: [math/right-triangle-trig, math/arc-length, physics/angular-velocity, math/circle]
+---
+
+## How to use the angle converter
+
+Type an angle into **any** field — degrees, radians, gradians, turns, arcminutes, arcseconds, milliradians or mils — and all the others update. The last three fields split the angle into **degrees, minutes and seconds** (DMS), the format used for latitude and longitude. For a negative angle, convert its absolute value to DMS and put the minus sign in front.
+
+## Angle conversion formulas
+
+<p class="formula">rad = deg × π/180 &nbsp;·&nbsp; grad = deg × 10/9 &nbsp;·&nbsp; turns = deg/360 &nbsp;·&nbsp; ′ = deg × 60 &nbsp;·&nbsp; ″ = deg × 3600</p>
+
+<p class="formula">DMS: D = ⌊deg⌋ &nbsp;·&nbsp; M = ⌊(deg − D) × 60⌋ &nbsp;·&nbsp; S = ((deg − D) × 60 − M) × 60</p>
+
+## Worked example
+
+Convert a latitude of 52.3725°:
+
+- Radians = 52.3725 × π/180 = **0.914073 rad** (0.290958 π rad)
+- Gradians = 52.3725 × 10/9 = **58.1917 grad**
+- Milliradians = **914.0726 mrad**
+- DMS: 0.3725 × 60 = 22.35′ → **22′**; 0.35 × 60 = **21″** → **52° 22′ 21″**
+
+## Common angles
+
+| Degrees | Radians (π) | Radians | Gradians | Turns | NATO mils |
+|---|---|---|---|---|---|
+| 0° | 0 | 0.000000 | 0 | 0 | 0 |
+| 30° | π/6 | 0.523599 | 33.3333 | 0.0833333 | 533.333 |
+| 45° | π/4 | 0.785398 | 50 | 0.125 | 800 |
+| 60° | π/3 | 1.047198 | 66.6667 | 0.166667 | 1066.67 |
+| 90° | π/2 | 1.570796 | 100 | 0.25 | 1600 |
+| 120° | 2π/3 | 2.094395 | 133.333 | 0.333333 | 2133.33 |
+| 135° | 3π/4 | 2.356194 | 150 | 0.375 | 2400 |
+| 180° | π | 3.141593 | 200 | 0.5 | 3200 |
+| 270° | 3π/2 | 4.712389 | 300 | 0.75 | 4800 |
+| 360° | 2π | 6.283185 | 400 | 1 | 6400 |
+
+## Practical notes
+
+- Spreadsheet and programming trig functions (SIN, COS, Math.sin) expect **radians** — convert with RADIANS() or × π/180 first.
+- One arcsecond of latitude is about 30.9 m on the ground; 0.0001° is about 11 m.
+- Small-angle rule: for angles under about 10°, sin θ ≈ tan θ ≈ θ in radians — so 1 mrad ≈ 1 m at 1 km.

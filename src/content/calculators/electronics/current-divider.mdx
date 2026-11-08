@@ -1,10 +1,10 @@
 ---
-title: Current Divider Calculator
+title: "Current Divider Calculator (Current Divider Rule & Branch Currents)"
 description: Calculate how a total current splits between two parallel resistors using the current divider rule — with branch currents and equivalent resistance.
 category: electronics
-intro: "When current reaches parallel branches, it splits between them — more through the lower resistance. The [current divider rule](https://www.instrumentationblog.in/current-divider-rule-explained/) follows directly from [Kirchhoff's current law](https://www.instrumentationblog.in/kirchhoffs-current-law-kcl-explained/) and is the basis of [shunt resistors in instrumentation](https://www.instrumentationblog.in/shunt-resistors-in-instrumentation/)."
+intro: "When current reaches parallel branches, it splits between them — more through the lower resistance. The [current divider rule](https://www.instrumentationblog.in/current-divider-rule-explained/) follows directly from [Kirchhoff's current law](https://www.instrumentationblog.in/kirchhoffs-current-law-kcl-explained/) and is the basis of [shunt resistors in instrumentation](https://www.instrumentationblog.in/shunt-resistors-in-instrumentation/). This current divider calculator gives each branch current, the equivalent resistance and the voltage across the pair."
 keywords: [current divider calculator, current divider rule, parallel resistor current, branch current calculator, current division formula]
-updated: 2026-10-27
+updated: 2026-11-07
 variables:
   - { id: It, label: Total current, family: current, unit: A, default: 1, min: 0 }
   - { id: R1, label: R1, family: resistance, unit: ohm, default: 100, min: 0 }
@@ -27,7 +27,7 @@ faq:
     a: "Use conductances: I_n = I_total × G_n ÷ ΣG, where G = 1 ÷ R."
   - q: Where is the current divider used?
     a: In ammeter shunts, current-sharing resistors and in analysing parallel loads.
-related: [electronics/voltage-divider, physics/resistors-series-parallel, physics/ohms-law, electronics/wheatstone-bridge]
+related: [electronics/voltage-divider, physics/resistors-series-parallel, electronics/shunt-resistor, physics/ohms-law]
 ---
 
 ## How to use the current divider calculator
@@ -38,13 +38,32 @@ Enter the **total current** entering the parallel pair and the two **resistances
 
 <p class="formula">I₁ = I<sub>T</sub> × R₂ ÷ (R₁ + R₂) &nbsp;·&nbsp; I₂ = I<sub>T</sub> × R₁ ÷ (R₁ + R₂)</p>
 
-## Example
+## Worked example
 
-1 A into 100 Ω and 300 Ω in parallel:
+A total current of 1 A enters 100 Ω and 300 Ω in parallel:
 
-- I₁ = 1 × 300 ÷ 400 = **0.75 A**
-- I₂ = 1 × 100 ÷ 400 = **0.25 A**
-- R<sub>eq</sub> = 75 Ω, V = 75 V
+- I₁ = 1 × 300 ÷ (100 + 300) = **0.75 A**
+- I₂ = 1 × 100 ÷ (100 + 300) = **0.25 A** (check: 0.75 + 0.25 = 1 A)
+- R<sub>eq</sub> = 100 × 300 ÷ 400 = **75 Ω**, so the voltage across the pair is 1 A × 75 Ω = **75 V**
+
+## Current split by resistance ratio
+
+| R₂ ÷ R₁ | Share through R₁ | Share through R₂ | R<sub>eq</sub> |
+|---|---|---|---|
+| 1 | 50.00% | 50.00% | 0.5 × R₁ |
+| 2 | 66.67% | 33.33% | 0.6667 × R₁ |
+| 3 | 75.00% | 25.00% | 0.75 × R₁ |
+| 4 | 80.00% | 20.00% | 0.8 × R₁ |
+| 9 | 90.00% | 10.00% | 0.9 × R₁ |
+| 10 | 90.91% | 9.09% | 0.9091 × R₁ |
+| 99 | 99.00% | 1.00% | 0.99 × R₁ |
+| 999 | 99.90% | 0.10% | 0.999 × R₁ |
+
+The branch with the **smaller** resistance always takes the larger share; with a 1 : 999 ratio it carries 99.9% of the current, which is how an ammeter shunt works.
+
+## Three or more branches
+
+Use conductances G = 1/R: I<sub>n</sub> = I<sub>T</sub> × G<sub>n</sub> ÷ ΣG. For 1 A into 100 Ω, 200 Ω and 400 Ω: I through 100 Ω = 0.5714 A · I through 200 Ω = 0.2857 A · I through 400 Ω = 0.1429 A.
 
 ## Ammeter shunts
 
@@ -53,3 +72,9 @@ To extend a meter that reads 1 mA full scale with 100 Ω internal resistance to 
 ## 4–20 mA and 250 Ω
 
 A 250 Ω resistor converts a 4–20 mA loop current into 1–5 V for a voltage input — a common trick that relies on Ohm's law rather than division. Keep loop resistance within the transmitter's limits — see the [loop resistance calculator](/engineering/loop-resistance/).
+
+## Practical notes
+
+- Include wire and connector resistance when one branch is a low-value shunt — 10 mΩ of wiring is 10% of a 0.1 Ω shunt.
+- For accurate current sharing between parallel power devices, add small equal ballast resistors; tiny differences in on-resistance otherwise make one device carry most of the current.
+- The rule assumes an ideal current source. If the source has internal resistance, the total current changes with the load — solve with the source voltage and [Ohm's law](/physics/ohms-law/) instead.

@@ -26,7 +26,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Process & fluid properties', ids: ['residence-time', 'kinematic-viscosity'] },
       { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force', 'gear-ratio', 'shaft-diameter', 'bearing-life', 'bolt-torque', 'spring-rate'] },
       { name: 'Strength of materials & structures', ids: ['beam-deflection', 'bending-stress', 'area-moment-of-inertia', 'factor-of-safety', 'weld-size'] },
-      { name: 'Safety & reliability', ids: ['pfd-avg', 'availability-mtbf'] },
+      { name: 'Safety & reliability', ids: ['pfd-avg', 'availability-mtbf', 'safe-failure-fraction', 'weibull-reliability', 'acceleration-factor'] },
     ],
     about: [
       { h: 'Calculators built for the plant floor', p: 'These tools cover the everyday sums of process instrumentation: converting transmitter signals, checking loop power budgets, sizing primary flow elements and turning level into volume. They use the same equations found in ISO 5167, IEC 60751 and standard fluid-mechanics references, with units you can switch between metric and imperial.' },
@@ -47,9 +47,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Power & current', ids: ['kw-to-amps', 'amps-to-watts', 'kva-to-kw', 'line-phase-voltage', 'power-factor-correction', 'capacitor-bank-kvar', 'ups-sizing', 'battery-bank-size', 'generator-size'] },
       { name: 'Generators', ids: ['generator-frequency', 'generator-power-angle'] },
       { name: 'Energy, demand & metering', ids: ['load-factor', 'energy-meter-constant'] },
-      { name: 'Motors & drives', ids: ['three-phase-motor-power', 'motor-starting-current', 'induction-motor-slip', 'voltage-unbalance', 'braking-resistor'] },
+      { name: 'Motors & drives', ids: ['three-phase-motor-power', 'motor-starting-current', 'induction-motor-slip', 'voltage-unbalance', 'braking-resistor', 'motor-starting-voltage-dip'] },
       { name: 'Transformers & fault level', ids: ['transformer-size', 'transformer-current', 'transformer-short-circuit', 'transformer-turns-ratio', 'transformer-efficiency', 'autotransformer', 'per-unit', 'ct-burden'] },
-      { name: 'Cables, busbars, earthing & power quality', ids: ['cable-voltage-drop', 'wire-resistance', 'busbar-size', 'skin-depth', 'earth-fault-loop-impedance', 'earth-conductor-size', 'earthing-resistance', 'thd', 'star-delta-transformation'] },
+      { name: 'Cables, busbars, earthing & power quality', ids: ['cable-voltage-drop', 'wire-resistance', 'busbar-size', 'skin-depth', 'earth-fault-loop-impedance', 'earth-conductor-size', 'earthing-resistance', 'thd', 'neutral-current-harmonics', 'star-delta-transformation'] },
+      { name: 'Solar PV', ids: ['solar-string-sizing'] },
       { name: 'Transmission lines & insulation testing', ids: ['ferranti-effect', 'polarization-index'] },
       { name: 'Lighting', ids: ['lumen-method'] },
     ],
@@ -73,10 +74,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'capacitor-lifetime', 'air-core-inductor', 'inductor-al-value'] },
       { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts', 'rc-phase-shift-oscillator', 'crystal-load-capacitance', 'uart-baud-rate-error', 'i2c-pull-up-resistor'] },
       { name: 'Op-amp circuits, active filters & comparators', ids: ['summing-amplifier', 'differential-amplifier', 'op-amp-integrator', 'sallen-key-low-pass', 'schmitt-trigger'] },
-      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'microstrip-impedance', 'battery-charge-time', 'lm317']
+      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'microstrip-impedance', 'battery-charge-time', 'lm317', 'buck-boost-converter', 'peukerts-law']
       },
       { name: 'RF & wireless', ids: ['antenna-length', 'free-space-path-loss'] },
-      { name: 'Sensors & current sensing', ids: ['ntc-thermistor', 'strain-gauge', 'shunt-resistor'] },
+      { name: 'Sensors & current sensing', ids: ['ntc-thermistor', 'strain-gauge', 'shunt-resistor', 'transimpedance-amplifier', 'hall-effect-current-sensor'] },
     ],
     about: [
       { h: 'Design faster, with fewer mistakes', p: 'Each calculator works in both directions: get the output of a circuit, or enter the output you want and solve for the component value. Results are shown in convenient units — kΩ, µF, mH, kHz — and pages list the nearest standard values.' },
@@ -118,7 +119,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
     groups: [
       { name: 'Concentration & solutions', ids: ['molarity', 'molality', 'moles', 'dilution', 'mass-percent', 'ppm', 'percent-composition', 'normality', 'solution-preparation'] },
       { name: 'Stoichiometry & reaction yield', ids: ['limiting-reagent', 'theoretical-yield'] },
-      { name: 'Vapour pressure, gas solubility & water chemistry', ids: ['raoults-law', 'henrys-law', 'water-hardness', 'dissolved-oxygen-saturation'] },
+      { name: 'Vapour pressure, gas solubility & water chemistry', ids: ['raoults-law', 'henrys-law', 'water-hardness', 'dissolved-oxygen-saturation', 'tds-conductivity'] },
       { name: 'Acids, bases & analysis', ids: ['ph', 'pka', 'weak-acid-ph', 'henderson-hasselbalch', 'titration', 'beer-lambert'] },
       { name: 'Electrochemistry', ids: ['nernst-equation', 'faraday-electrolysis', 'cell-potential'] },
       { name: 'Gas laws', ids: ['boyles-law', 'charles-law', 'combined-gas-law', 'gay-lussacs-law', 'avogadros-law', 'daltons-law', 'grahams-law', 'van-der-waals'] },
@@ -137,10 +138,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
     groups: [
       { name: 'Percentages & ratios', ids: ['percentage', 'percentage-change', 'percent-error', 'ratio', 'fraction-to-decimal', 'average', 'weighted-average'] },
       { name: 'Geometry: 2D shapes', ids: ['circle', 'rectangle', 'triangle-area', 'trapezoid-area', 'polygon', 'ellipse', 'arc-length'] },
-      { name: 'Geometry: 3D shapes', ids: ['box-volume', 'cylinder-volume', 'cone', 'sphere', 'pyramid-volume', 'frustum-volume', 'torus'] },
-      { name: 'Triangles & trigonometry', ids: ['pythagorean-theorem', 'right-triangle-trig', 'law-of-cosines', 'law-of-sines', 'slope'] },
+      { name: 'Geometry: 3D shapes', ids: ['box-volume', 'cylinder-volume', 'cone', 'sphere', 'pyramid-volume', 'frustum-volume', 'torus', 'hemisphere', 'capsule'] },
+      { name: 'Triangles & trigonometry', ids: ['pythagorean-theorem', 'right-triangle-trig', 'law-of-cosines', 'law-of-sines', 'slope', 'angle-converter'] },
       { name: 'Coordinate geometry, vectors & interpolation', ids: ['distance-midpoint', 'vector', 'complex-number', 'linear-interpolation'] },
-      { name: 'Algebra & numbers', ids: ['quadratic-equation', 'exponent', 'square-root', 'logarithm', 'factorial', 'gcf-lcm', 'arithmetic-sequence', 'geometric-sequence', 'modulo'] },
+      { name: 'Algebra & numbers', ids: ['quadratic-equation', 'exponent', 'square-root', 'logarithm', 'factorial', 'gcf-lcm', 'arithmetic-sequence', 'geometric-sequence', 'modulo', 'scientific-notation'] },
       { name: 'Systems of linear equations', ids: ['system-of-equations', 'system-of-3-equations'] },
     ],
     faq: [
@@ -156,6 +157,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
     groups: [
       { name: 'Descriptive statistics', ids: ['mean-median-mode', 'standard-deviation', 'quartiles', 'coefficient-of-variation', 'geometric-mean', 'sum-of-squares', 'standard-error'] },
       { name: 'Distributions', ids: ['z-score', 'normal-distribution', 'empirical-rule', 'binomial-probability', 'poisson-probability', 'exponential-distribution', 'uniform-distribution', 'geometric-distribution', 'hypergeometric-distribution'] },
+      { name: 'Hypothesis tests & p-values', ids: ['one-sample-t-test', 'two-sample-t-test', 'p-value'] },
       { name: 'Inference & surveys', ids: ['confidence-interval', 'margin-of-error', 'sample-size', 'relative-risk'] },
       { name: 'Probability & counting', ids: ['probability', 'odds-probability', 'permutations', 'combinations', 'bayes-theorem', 'expected-value', 'birthday-paradox'] },
       { name: 'Quality & measurement', ids: ['process-capability', 'six-sigma', 'measurement-uncertainty'] },

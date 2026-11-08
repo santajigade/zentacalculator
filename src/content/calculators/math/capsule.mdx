@@ -1,0 +1,67 @@
+---
+title: Capsule Volume Calculator (Cylinder with Hemisphere Ends)
+description: Calculate the volume, surface area and overall length of a capsule (stadium of revolution) — a cylinder with two hemispherical ends — from radius and length.
+category: math
+intro: "A capsule is a cylinder capped with a hemisphere at each end — the shape of a medicine capsule, a propane bullet tank or a pressure vessel with hemispherical heads. This capsule volume calculator gives the volume, surface area and overall length from the radius and the length of the straight cylindrical section."
+keywords: [capsule volume calculator, volume of a capsule, capsule surface area, cylinder with hemispherical ends volume, pill shape volume, tank with hemispherical heads volume, stadium of revolution]
+updated: 2026-11-07
+variables:
+  - { id: r, label: Radius, family: length, unit: cm, imperialUnit: in, default: 3, min: 0 }
+  - { id: a, label: Length of cylindrical section, family: length, unit: cm, imperialUnit: in, default: 10, min: 0 }
+  - { id: L, label: Overall length a + 2r, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: V, label: Volume, family: volume, unit: cm3, imperialUnit: in3, min: 0 }
+  - { id: S, label: Surface area, family: area, unit: cm2, imperialUnit: in2, min: 0 }
+equations:
+  - L = a + 2 * r
+  - V = pi * r^2 * a + 4 / 3 * pi * r^3
+  - S = 2 * pi * r * (2 * r + a)
+faq:
+  - q: What is the formula for the volume of a capsule?
+    a: V = πr²a + (4/3)πr³ — a cylinder of radius r and length a plus one full sphere made by the two hemispherical ends.
+  - q: What is the surface area of a capsule?
+    a: S = 2πr(2r + a) = 4πr² + 2πra — the sphere's surface plus the side of the cylinder. The flat circles of the cylinder are hidden inside the joints.
+  - q: What length should I measure?
+    a: The calculator needs the straight cylindrical length a. If you measured the overall tip-to-tip length L, use a = L − 2r, or enter L and the radius and let it solve for a.
+  - q: Does this work for tanks with dished (torispherical) heads?
+    a: No — dished heads hold much less than hemispherical ones. Use this only for true hemispherical heads; for flat-ended tanks use the cylinder volume calculator.
+related: [math/hemisphere, math/cylinder-volume, math/sphere, engineering/horizontal-tank-volume]
+---
+
+## How to use the capsule volume calculator
+
+Enter the **radius** of the capsule and the **length of the straight cylindrical part** between the two hemispherical ends. The calculator returns the overall length, the volume and the surface area. If you know the overall length instead, enter it with the radius and leave the cylinder length blank.
+
+## Capsule formulas
+
+<p class="formula">V = π r² a + ⁴⁄₃ π r³ &nbsp;·&nbsp; S = 2π r (2r + a) &nbsp;·&nbsp; L = a + 2r</p>
+
+## Worked example
+
+r = 3 cm, cylindrical length a = 10 cm:
+
+- Cylinder part = π × 3² × 10 = 282.74 cm³
+- Two hemispheres = ⁴⁄₃ × π × 3³ = 113.10 cm³
+- Volume = **395.84 cm³** (0.3958 L)
+- Surface area = 2π × 3 × (2 × 3 + 10) = **301.59 cm²**
+- Overall length = **16 cm**
+
+## Capsule volume table
+
+| Radius r | Cylinder length a | Overall length | Volume | Litres | Surface area |
+|---|---|---|---|---|---|
+| 1 cm | 0 cm | 2 cm | 4.19 cm³ | 0.004189 L | 12.57 cm² |
+| 1 cm | 2 cm | 4 cm | 10.47 cm³ | 0.01047 L | 25.13 cm² |
+| 2 cm | 5 cm | 9 cm | 96.34 cm³ | 0.09634 L | 113.10 cm² |
+| 3 cm | 10 cm | 16 cm | 395.84 cm³ | 0.3958 L | 301.59 cm² |
+| 5 cm | 20 cm | 30 cm | 2,094.40 cm³ | 2.094 L | 942.48 cm² |
+| 10 cm | 30 cm | 50 cm | 13,613.57 cm³ | 13.61 L | 3,141.59 cm² |
+| 25 cm | 100 cm | 150 cm | 261,799.39 cm³ | 261.8 L | 23,561.94 cm² |
+| 50 cm | 200 cm | 300 cm | 2,094,395.10 cm³ | 2,094 L | 94,247.78 cm² |
+
+The first row (a = 0) is a sphere of radius 1 cm.
+
+## Practical notes
+
+- Pressure vessels use hemispherical heads because they need only about half the wall thickness of the cylindrical shell for the same pressure.
+- For a horizontal capsule tank that is partly full, the liquid volume is not proportional to depth — use the [horizontal tank volume calculator](/engineering/horizontal-tank-volume/) for the cylindrical part.
+- With a = 0 the capsule becomes a [sphere](/math/sphere/).

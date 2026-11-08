@@ -1,0 +1,77 @@
+---
+title: TDS to Conductivity Calculator (EC µS/cm to ppm, mg/L)
+description: Convert electrical conductivity (EC) in µS/cm to total dissolved solids (TDS) in mg/L or ppm, with temperature compensation to 25 °C and an adjustable factor.
+category: chemistry
+intro: "Conductivity meters measure how well water carries current, and total dissolved solids are estimated from it with a conversion factor of about 0.5–0.7. This TDS to conductivity calculator converts EC in µS/cm to TDS in mg/L (ppm), first correcting the reading to 25 °C, and works in reverse to give the conductivity for a target TDS — see how [electrical conductivity](https://www.instrumentationblog.in/electrical-conductivity-explained/) and a [conductivity sensor](https://www.instrumentationblog.in/conductivity-sensor-working/) work."
+keywords: [tds to conductivity calculator, conductivity to tds, ec to ppm calculator, us/cm to ppm, tds calculator, tds conversion factor, conductivity temperature compensation]
+updated: 2026-11-08
+variables:
+  - { id: EC, label: Measured conductivity, suffix: µS/cm, default: 750, min: 0 }
+  - { id: T, label: Water temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
+  - { id: a, label: Temperature coefficient, suffix: '%/°C', default: 2, min: 0, help: 'About 2 %/°C for most natural waters; set 0 if your meter already compensates to 25 °C.' }
+  - { id: k, label: TDS conversion factor, default: 0.65, min: 0, help: 'NaCl solutions ≈ 0.5; natural waters 0.55–0.75 (often 0.65).' }
+  - { id: EC25, label: Conductivity at 25 °C, suffix: µS/cm, min: 0 }
+  - { id: ECm, label: Conductivity at 25 °C in mS/cm, suffix: mS/cm, min: 0, decimals: 4 }
+  - id: TDS
+    label: Total dissolved solids (TDS)
+    suffix: mg/L (ppm)
+    min: 0
+    bands:
+      - { max: 300, label: Excellent for drinking (WHO taste rating), color: '#16a34a' }
+      - { max: 600, label: Good, color: '#22c55e' }
+      - { max: 900, label: Fair, color: '#eab308' }
+      - { max: 1200, label: Poor, color: '#f97316' }
+      - { max: 1e9, label: Unacceptable taste for drinking, color: '#dc2626' }
+equations:
+  - EC25 = EC / (1 + a / 100 * (T - 298.15))
+  - ECm = EC25 / 1000
+  - TDS = k * EC25
+faq:
+  - q: How do you convert conductivity to TDS?
+    a: TDS (mg/L) = k × EC (µS/cm at 25 °C), with k usually between 0.55 and 0.75 for natural waters. A factor of 0.5 is used for sodium chloride solutions and 0.65–0.7 for typical fresh water.
+  - q: Is TDS in ppm the same as mg/L?
+    a: For dilute water, yes — 1 mg/L ≈ 1 ppm because a litre of water weighs about 1 kg. In sea water and brines the density is higher, so the two differ by a few percent.
+  - q: Why does conductivity need temperature compensation?
+    a: Ions move faster in warm water, so conductivity rises by about 2% per °C. Readings are referred to 25 °C so that samples measured at different temperatures can be compared.
+  - q: What TDS is safe for drinking water?
+    a: The WHO gives no health-based limit, but taste is rated excellent below 300 mg/L, good up to 600 and unacceptable above about 1,200. India's BIS IS 10500 sets 500 mg/L as acceptable and 2,000 mg/L as permissible where no other source exists.
+related: [chemistry/ppm, chemistry/water-hardness, chemistry/dissolved-oxygen-saturation, chemistry/molarity]
+---
+
+## How to use the TDS to conductivity calculator
+
+Enter the **measured conductivity** in µS/cm, the **water temperature** and the **temperature coefficient** (2 %/°C is typical; enter 0 if your meter already shows a 25 °C compensated value), then the **TDS factor**. The calculator gives the conductivity at 25 °C and the TDS in mg/L (ppm). To find the conductivity that corresponds to a target TDS, enter the TDS and press × on the measured conductivity.
+
+## TDS and conductivity formulas
+
+<p class="formula">EC<sub>25</sub> = EC<sub>T</sub> ÷ [1 + α (T − 25 °C)] &nbsp;·&nbsp; TDS = k × EC<sub>25</sub></p>
+
+The factor k depends on which ions are dissolved: about 0.5 for NaCl, 0.55–0.7 for most fresh waters, and up to 0.8 for waters rich in sulphate. For accurate work, calibrate k against a gravimetric TDS test (evaporation at 180 °C) for your water.
+
+## Worked example
+
+A sample reads 750 µS/cm at 20 °C (α = 2 %/°C, k = 0.65):
+
+- EC<sub>25</sub> = 750 ÷ [1 + 0.02 × (20 − 25)] = 750 ÷ 0.9 = **833.3 µS/cm**
+- TDS = 0.65 × 833.3 = **542 mg/L** — rated "good" for taste and just above India's 500 mg/L acceptable limit
+
+## Typical conductivity and TDS
+
+| Water | Conductivity (25 °C) | TDS, k = 0.5 | TDS, k = 0.65 | TDS, k = 0.7 |
+|---|---|---|---|---|
+| Pure (RO / distilled) water | 5 µS/cm | 2 mg/L | 3 mg/L | 4 mg/L |
+| Rain water | 50 µS/cm | 25 mg/L | 32 mg/L | 35 mg/L |
+| Soft tap water | 200 µS/cm | 100 mg/L | 130 mg/L | 140 mg/L |
+| Typical tap water | 500 µS/cm | 250 mg/L | 325 mg/L | 350 mg/L |
+| Hard ground water | 1,000 µS/cm | 500 mg/L | 650 mg/L | 700 mg/L |
+| Brackish water | 5,000 µS/cm | 2,500 mg/L | 3,250 mg/L | 3,500 mg/L |
+| Sea water | 53,000 µS/cm | 26,500 mg/L | 34,450 mg/L | 37,100 mg/L |
+
+Values are typical; real samples vary widely.
+
+## Practical notes
+
+- **1 mS/cm = 1,000 µS/cm**; some meters show EC in mS/cm or dS/m (1 dS/m = 1 mS/cm), and hydroponic "CF" units are EC in mS/cm × 10.
+- Different TDS meters use different built-in factors (0.5 "NaCl", 0.7 "442"), so two meters can show different ppm for the same water — compare EC, not ppm.
+- Conductivity is not a measure of purity against non-ionic contaminants: sugar, oils and many organics do not conduct and are not counted.
+- Keep the conductivity cell clean and calibrated with a standard (e.g. 1,413 µS/cm KCl); the cell constant drifts as electrodes foul.

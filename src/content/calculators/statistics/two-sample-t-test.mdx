@@ -1,0 +1,95 @@
+---
+title: Two-Sample t-Test Calculator (Welch & Pooled)
+description: Compare two means with a two-sample t-test from summary statistics — Welch or pooled — and get the t statistic, degrees of freedom and p-values.
+category: statistics
+intro: "A two-sample t-test asks whether two independent groups have different population means, using each group's mean, standard deviation and size. This two-sample t-test calculator runs Welch's unequal-variance test by default, or the classic pooled Student's t-test, and returns the t statistic, degrees of freedom and two-tailed and one-tailed p-values."
+keywords: [two sample t test calculator, independent t test calculator, welch t test calculator, pooled t test, compare two means, t test from summary statistics, unequal variance t test]
+updated: 2026-11-07
+variables:
+  - id: pool
+    label: Test
+    default: 0
+    options:
+      - { label: "Welch's t-test (unequal variances)", value: 0 }
+      - { label: "Student's pooled t-test (equal variances)", value: 1 }
+  - { id: x1, label: Mean of group 1, default: 78.4 }
+  - { id: s1, label: Standard deviation of group 1, default: 6.2, min: 0 }
+  - { id: n1, label: Size of group 1, default: 30, min: 2, decimals: 0 }
+  - { id: x2, label: Mean of group 2, default: 74.1 }
+  - { id: s2, label: Standard deviation of group 2, default: 8.9, min: 0 }
+  - { id: n2, label: Size of group 2, default: 25, min: 2, decimals: 0 }
+  - { id: dm, label: Difference in means x̄₁ − x̄₂, decimals: 4 }
+  - { id: se, label: Standard error of the difference, min: 0, decimals: 4 }
+  - { id: df, label: Degrees of freedom, decimals: 2 }
+  - { id: t, label: t statistic, decimals: 4 }
+  - { id: p2, label: p-value (two-tailed) }
+  - { id: pR, label: p-value (right-tailed μ₁ > μ₂) }
+  - { id: pL, label: p-value (left-tailed μ₁ < μ₂) }
+equations:
+  - dm = x1 - x2
+  - se = (1 - pool) * sqrt(s1^2 / n1 + s2^2 / n2) + pool * sqrt(((n1 - 1) * s1^2 + (n2 - 1) * s2^2) / (n1 + n2 - 2) * (1 / n1 + 1 / n2))
+  - df = (1 - pool) * (s1^2 / n1 + s2^2 / n2)^2 / ((s1^2 / n1)^2 / (n1 - 1) + (s2^2 / n2)^2 / (n2 - 1)) + pool * (n1 + n2 - 2)
+  - t = dm / se
+  - p2 = 2 * (1 - tcdf(abs(t), df))
+  - pR = 1 - tcdf(t, df)
+  - pL = tcdf(t, df)
+faq:
+  - q: Should I use Welch's t-test or the pooled t-test?
+    a: Welch's test is the safer default. It does not assume equal variances, loses almost no power when the variances are equal, and avoids misleading p-values when they are not — especially with unequal group sizes. Use the pooled test only when equal variances are justified.
+  - q: How are the Welch degrees of freedom calculated?
+    a: With the Welch–Satterthwaite equation, df = (s₁²/n₁ + s₂²/n₂)² ÷ [(s₁²/n₁)²/(n₁ − 1) + (s₂²/n₂)²/(n₂ − 1)]. It is usually not a whole number and lies between the smaller n − 1 and n₁ + n₂ − 2.
+  - q: Can I use this for before-and-after measurements?
+    a: No. Measurements on the same subjects are paired, not independent. Take the difference for each subject and use the one-sample t-test on the differences with a hypothesised mean of 0.
+  - q: What does the p-value mean here?
+    a: It is the probability of seeing a difference in means at least as large as yours if the two population means were actually equal. It is not the probability that the null hypothesis is true.
+related: [statistics/one-sample-t-test, statistics/p-value, statistics/standard-error, statistics/sample-size]
+---
+
+## How to use the two-sample t-test calculator
+
+Choose **Welch** or **pooled**, then enter the mean, standard deviation and size of each group. The calculator returns the difference in means, its standard error, the degrees of freedom, the t statistic and the p-values. If p is below your significance level α (commonly 0.05), the difference between the group means is statistically significant.
+
+## Two-sample t-test formulas
+
+<p class="formula">Welch: t = (x̄₁ − x̄₂) ÷ √(s₁²/n₁ + s₂²/n₂)</p>
+
+<p class="formula">df = (s₁²/n₁ + s₂²/n₂)² ÷ [ (s₁²/n₁)²/(n₁−1) + (s₂²/n₂)²/(n₂−1) ]</p>
+
+<p class="formula">Pooled: s<sub>p</sub>² = [(n₁−1)s₁² + (n₂−1)s₂²] ÷ (n₁+n₂−2) &nbsp;·&nbsp; t = (x̄₁ − x̄₂) ÷ √(s<sub>p</sub>²(1/n₁ + 1/n₂)) &nbsp;·&nbsp; df = n₁+n₂−2</p>
+
+## Worked example
+
+Group 1: n = 30, mean 78.4, SD 6.2. Group 2: n = 25, mean 74.1, SD 8.9. Welch's test:
+
+- Difference in means = 78.4 − 74.1 = **4.3**
+- Standard error = √(6.2²/30 + 8.9²/25) = **2.1094**
+- t = 4.3 ÷ 2.1094 = **2.0385**, df = **41.69**
+- Two-tailed p-value = **0.0479**, so the difference is significant at α = 0.05
+
+## Welch vs pooled for the same data
+
+| Method | SE | df | t | p (two-tailed) |
+|---|---|---|---|---|
+| Welch (unequal variances) | 2.1094 | 41.69 | 2.0385 | 0.0479 |
+| Pooled (equal variances) | 2.0427 | 53.00 | 2.1050 | 0.0400 |
+
+Here group 2 has the larger SD but the smaller n, so the pooled test understates the standard error and gives a smaller p-value than Welch's test.
+
+## Effect of sample size (same means and SDs as the example)
+
+| n₁ | n₂ | t | Welch df | p (two-tailed) |
+|---|---|---|---|---|
+| 5 | 5 | 0.886 | 7.1 | 0.4042 |
+| 10 | 10 | 1.254 | 16.1 | 0.2279 |
+| 20 | 20 | 1.773 | 33.9 | 0.0852 |
+| 30 | 30 | 2.171 | 51.8 | 0.0345 |
+| 50 | 50 | 2.803 | 87.5 | 0.0062 |
+| 100 | 100 | 3.964 | 176.8 | 0.0001 |
+
+The same 4.3-point difference is not significant with 5 per group but highly significant with 100 per group — plan the [sample size](/statistics/sample-size/) before collecting data.
+
+## Practical notes
+
+- Groups must be **independent** — different people, batches or machines in each.
+- Each group should be roughly normal, or large enough (about 30+) for the central limit theorem to help.
+- For more than two groups use ANOVA rather than repeated t-tests, which inflate the false-positive rate.

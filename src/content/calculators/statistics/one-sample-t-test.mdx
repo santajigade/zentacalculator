@@ -1,0 +1,89 @@
+---
+title: One-Sample t-Test Calculator (t Statistic & p-Value)
+description: Run a one-sample t-test from the sample mean, standard deviation and size — get the t statistic, degrees of freedom, p-values and effect size.
+category: statistics
+intro: "A one-sample t-test checks whether the mean of a sample differs from a hypothesised population mean when the population standard deviation is unknown. This one-sample t-test calculator turns the sample mean, standard deviation and sample size into the t statistic, degrees of freedom, two-tailed and one-tailed p-values and Cohen's d."
+keywords: [one sample t test calculator, t test calculator, t statistic calculator, one sample t test p value, t test from mean and standard deviation, student t test, hypothesis test mean]
+updated: 2026-11-07
+variables:
+  - { id: xbar, label: Sample mean x̄, default: 103.2 }
+  - { id: mu0, label: Hypothesised mean μ₀, default: 100 }
+  - { id: s, label: Sample standard deviation s, default: 8.5, min: 0 }
+  - { id: n, label: Sample size n, default: 25, min: 2, decimals: 0 }
+  - { id: se, label: Standard error s/√n, min: 0, decimals: 4 }
+  - { id: t, label: t statistic, decimals: 4 }
+  - { id: df, label: Degrees of freedom, decimals: 0 }
+  - { id: p2, label: p-value (two-tailed) }
+  - { id: pR, label: p-value (right-tailed μ > μ₀) }
+  - { id: pL, label: p-value (left-tailed μ < μ₀) }
+  - { id: d, label: "Effect size (Cohen's d)", decimals: 3 }
+equations:
+  - se = s / sqrt(n)
+  - t = (xbar - mu0) / se
+  - df = n - 1
+  - p2 = 2 * (1 - tcdf(abs(t), df))
+  - pR = 1 - tcdf(t, df)
+  - pL = tcdf(t, df)
+  - d = (xbar - mu0) / s
+faq:
+  - q: What is the formula for a one-sample t-test?
+    a: t = (x̄ − μ₀) ÷ (s ÷ √n), with n − 1 degrees of freedom. The p-value is the probability of a t value at least this extreme if the true mean were μ₀.
+  - q: When should I use a t-test instead of a z-test?
+    a: Use the t-test when the population standard deviation is unknown and you estimate it from the sample — which is almost always. For large samples (n above about 30) the two give nearly the same answer.
+  - q: What are the assumptions of a one-sample t-test?
+    a: The observations are independent and come from a roughly normal population. The test is fairly robust to non-normality for n of 30 or more, but small samples with strong skew or outliers call for a non-parametric test such as the Wilcoxon signed-rank test.
+  - q: Should I use the one-tailed or two-tailed p-value?
+    a: Use the two-tailed p-value unless you decided before seeing the data that only one direction matters. A one-tailed p-value is half the two-tailed one when the effect is in the predicted direction.
+related: [statistics/two-sample-t-test, statistics/p-value, statistics/standard-error, statistics/confidence-interval]
+---
+
+## How to use the one-sample t-test calculator
+
+Enter the **sample mean**, the **hypothesised mean** μ₀ you are testing against, the **sample standard deviation** and the **sample size**. The calculator returns the standard error, the t statistic, the degrees of freedom and three p-values. Compare the p-value with your significance level α (usually 0.05): if p < α, reject the null hypothesis that the population mean equals μ₀. If you have raw data, get the mean and standard deviation first with the [standard deviation calculator](/statistics/standard-deviation/).
+
+## One-sample t-test formula
+
+<p class="formula">t = (x̄ − μ₀) ÷ (s / √n) &nbsp;·&nbsp; df = n − 1</p>
+
+<p class="formula">p (two-tailed) = 2 × P(T<sub>df</sub> ≥ |t|) &nbsp;·&nbsp; Cohen's d = (x̄ − μ₀) ÷ s</p>
+
+## Worked example
+
+A filling machine should deliver 100 g. A sample of n = 25 packs has a mean of 103.2 g and a standard deviation of 8.5 g. Is the mean different from 100 g?
+
+- Standard error = 8.5 ÷ √25 = **1.7000 g**
+- t = (103.2 − 100) ÷ 1.7000 = **1.8824**, with **24** degrees of freedom
+- Two-tailed p-value = **0.0720**; right-tailed p = **0.0360**
+- Cohen's d = 3.2 ÷ 8.5 = **0.376** (a small-to-medium effect)
+
+At α = 0.05 the two-tailed test does **not** reject μ = 100 g (p = 0.072 > 0.05), but a one-tailed test of "mean above 100 g" would (p = 0.036). This is why the direction must be chosen before looking at the data.
+
+## Critical values of t
+
+| df | one-tailed 0.05 / two-tailed 0.10 | two-tailed 0.05 | two-tailed 0.01 |
+|---|---|---|---|
+| 1 | 6.314 | 12.706 | 63.657 |
+| 2 | 2.920 | 4.303 | 9.925 |
+| 3 | 2.353 | 3.182 | 5.841 |
+| 4 | 2.132 | 2.776 | 4.604 |
+| 5 | 2.015 | 2.571 | 4.032 |
+| 6 | 1.943 | 2.447 | 3.707 |
+| 8 | 1.860 | 2.306 | 3.355 |
+| 10 | 1.812 | 2.228 | 3.169 |
+| 12 | 1.782 | 2.179 | 3.055 |
+| 15 | 1.753 | 2.131 | 2.947 |
+| 20 | 1.725 | 2.086 | 2.845 |
+| 24 | 1.711 | 2.064 | 2.797 |
+| 30 | 1.697 | 2.042 | 2.750 |
+| 40 | 1.684 | 2.021 | 2.704 |
+| 60 | 1.671 | 2.000 | 2.660 |
+| 120 | 1.658 | 1.980 | 2.617 |
+| ∞ (normal) | 1.645 | 1.960 | 2.576 |
+
+Reject the null hypothesis when |t| exceeds the critical value for your df and α. Values computed from the Student t distribution.
+
+## Practical notes
+
+- **Statistical vs practical significance** — with a large n even a tiny difference gives a small p-value. Report the effect size (Cohen's d ≈ 0.2 small, 0.5 medium, 0.8 large) and a [confidence interval](/statistics/confidence-interval/) alongside p.
+- **Paired data** — for before/after measurements on the same items, compute the differences and run a one-sample t-test on them with μ₀ = 0. That is exactly a paired t-test.
+- **Outliers** — one extreme value inflates s and can hide a real difference; check the data with a [box-plot or quartiles](/statistics/quartiles/) first.

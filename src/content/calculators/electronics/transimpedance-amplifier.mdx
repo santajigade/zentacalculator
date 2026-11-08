@@ -1,0 +1,68 @@
+---
+title: Transimpedance Amplifier Calculator (Photodiode TIA Rf, Cf, Bandwidth)
+description: "Design a photodiode transimpedance amplifier: output voltage from Rf, maximum bandwidth from op-amp GBW and input capacitance, and the feedback capacitor Cf."
+category: electronics
+intro: "A transimpedance amplifier turns a photodiode's tiny current into a voltage, Vout = I × Rf, but the photodiode's capacitance and the op-amp's gain-bandwidth limit how fast it can be. This transimpedance amplifier calculator gives the output voltage, the achievable −3 dB bandwidth and the feedback capacitor for a flat (Butterworth) or 45° phase-margin response — see how a [transimpedance amplifier works with a photodiode](https://www.instrumentationblog.in/transimpedance-amplifier-photodiode/)."
+keywords: [transimpedance amplifier calculator, tia calculator, photodiode amplifier calculator, transimpedance amplifier bandwidth, feedback capacitor transimpedance, photodiode tia design, current to voltage converter op amp]
+updated: 2026-11-08
+variables:
+  - { id: Ip, label: Photodiode current, family: current, unit: uA, default: 10, min: 0 }
+  - { id: Rf, label: Feedback resistor Rf, family: resistance, unit: kohm, default: 100, min: 0 }
+  - { id: Cin, label: Total input capacitance (photodiode + op-amp), family: capacitance, unit: pF, default: 20, min: 0 }
+  - { id: GBW, label: Op-amp gain-bandwidth product, family: frequency, unit: MHz, default: 10, min: 0 }
+  - { id: Vout, label: Output voltage (magnitude), family: voltage, unit: V, min: 0 }
+  - { id: f3, label: Achievable −3 dB bandwidth, family: frequency, unit: kHz, min: 0 }
+  - { id: Cfb, label: Feedback capacitor for flat (Butterworth) response, family: capacitance, unit: pF, min: 0 }
+  - { id: Cf45, label: Minimum feedback capacitor (45° phase margin), family: capacitance, unit: pF, min: 0 }
+equations:
+  - Vout = Ip * Rf
+  - f3 = sqrt(GBW / (2 * pi * Rf * Cin))
+  - Cfb = sqrt(Cin / (pi * Rf * GBW))
+  - Cf45 = sqrt(Cin / (2 * pi * Rf * GBW))
+faq:
+  - q: What is the gain of a transimpedance amplifier?
+    a: The transimpedance gain is Rf in volts per amp — Vout = I × Rf. A 1 MΩ feedback resistor gives 1 V per µA.
+  - q: What limits transimpedance amplifier bandwidth?
+    a: The input capacitance (photodiode junction plus op-amp input) and the op-amp GBW. With the right feedback capacitor the −3 dB bandwidth is about √(GBW ÷ (2π Rf Cin)), so raising Rf tenfold cuts bandwidth by about √10.
+  - q: Why does a TIA need a feedback capacitor?
+    a: The input capacitance creates a rising noise gain that meets the op-amp's falling open-loop gain at a steep angle, so without Cf the circuit peaks or oscillates. Cf adds a zero that restores phase margin.
+  - q: How do I get more bandwidth from a photodiode amplifier?
+    a: Reverse-bias the photodiode to reduce its capacitance, choose a smaller-area photodiode, use a higher-GBW op-amp with low input capacitance, or use a lower Rf followed by a second gain stage.
+related: [electronics/op-amp-gain, electronics/rc-filter, electronics/snr, electronics/adc-resolution]
+---
+
+## How to use the transimpedance amplifier calculator
+
+Enter the **photodiode current**, the **feedback resistor**, the **total input capacitance** (photodiode junction capacitance at its bias plus the op-amp's common-mode and differential input capacitance) and the op-amp's **gain-bandwidth product**. The calculator returns the output voltage, the achievable bandwidth and two values of feedback capacitor: the larger gives a flat Butterworth response, the smaller is the minimum for a 45° phase margin (faster, with some peaking). To find Rf for a target output, press × on Rf.
+
+## Transimpedance amplifier formulas
+
+<p class="formula">V<sub>out</sub> = I<sub>p</sub> × R<sub>f</sub> &nbsp;·&nbsp; f<sub>−3dB</sub> ≈ √(GBW ÷ (2π R<sub>f</sub> C<sub>in</sub>))</p>
+
+<p class="formula">C<sub>f</sub> (Butterworth) ≈ √(C<sub>in</sub> ÷ (π R<sub>f</sub> GBW)) &nbsp;·&nbsp; C<sub>f</sub> (45°) ≈ √(C<sub>in</sub> ÷ (2π R<sub>f</sub> GBW))</p>
+
+These approximations hold when C<sub>f</sub> is much smaller than C<sub>in</sub>, which is the usual case.
+
+## Worked example
+
+A photodiode with 20 pF total capacitance producing 10 µA, R<sub>f</sub> = 100 kΩ and a 10 MHz op-amp:
+
+- V<sub>out</sub> = 10 µA × 100 kΩ = **1 V**
+- Bandwidth = √(10 MHz ÷ (2π × 100 kΩ × 20 pF)) = **892 kHz**
+- Feedback capacitor: **2.52 pF** for a flat response (minimum **1.78 pF** for 45° phase margin) — use the nearest standard value, e.g. 2.7 pF
+
+## Achievable bandwidth (20 pF input capacitance)
+
+| R<sub>f</sub> | GBW 1 MHz | GBW 10 MHz | GBW 100 MHz | C<sub>f</sub> at 10 MHz |
+|---|---|---|---|---|
+| 10 kΩ | 892.1 kHz | 2.82 MHz | 8.92 MHz | 7.98 pF |
+| 100 kΩ | 282.1 kHz | 892.1 kHz | 2.82 MHz | 2.52 pF |
+| 1,000 kΩ | 89.2 kHz | 282.1 kHz | 892.1 kHz | 0.80 pF |
+| 10,000 kΩ | 28.2 kHz | 89.2 kHz | 282.1 kHz | 0.25 pF |
+
+## Practical notes
+
+- Values of C<sub>f</sub> below about 0.5 pF are swamped by the resistor's own parasitic capacitance (≈ 0.1–0.2 pF for an 0805 part); use a T-network or a lower R<sub>f</sub>.
+- Choose an op-amp with **FET or CMOS inputs** — bias current flows through R<sub>f</sub> and appears directly as an output offset.
+- Photovoltaic mode (zero bias) gives the lowest dark current and noise; photoconductive mode (reverse bias) gives lower capacitance and higher speed.
+- Thermal noise of R<sub>f</sub> is √(4kT/R<sub>f</sub>) in current terms, so a larger R<sub>f</sub> improves signal-to-noise as well as gain.

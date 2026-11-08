@@ -4,7 +4,7 @@ name: Auto-publish daily batch
 # so a missed day never publishes a large pile of pages at once), re-check it and publish.
 on:
   schedule:
-    - cron: '30 3 * * *'   # 03:30 UTC = 09:00 IST
+    - cron: '30 5 * * *'   # 05:30 UTC = 11:00 IST (the daily batch run starts 06:17 IST and can take 2 h)
   workflow_dispatch:
 
 concurrency:

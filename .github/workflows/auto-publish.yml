@@ -1,0 +1,59 @@
+name: Auto-publish daily batch
+
+# Every day, merge the OLDEST unmerged daily/* branch into main (one batch per day,
+# so a missed day never publishes a large pile of pages at once), re-check it and publish.
+on:
+  schedule:
+    - cron: '30 5 * * *'   # 05:30 UTC = 11:00 IST (the daily batch run starts 06:17 IST and can take 2 h)
+  workflow_dispatch:
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  merge-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Allow publishing
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global user.name "Zenta Calculator"
+          git config --global user.email "santaji.gade@gmail.com"
+      - name: Find the oldest unmerged daily batch
+        id: pick
+        run: |
+          B=$(git branch -r --no-merged origin/main --list 'origin/daily/*' | sed 's/^ *//' | sort | head -1)
+          echo "branch=${B#origin/}" >> "$GITHUB_OUTPUT"
+          if [ -z "$B" ]; then echo "Nothing to publish today."; else echo "Publishing $B"; fi
+      - name: Merge into main (stops on conflict)
+        if: steps.pick.outputs.branch != ''
+        run: git merge --no-ff --no-edit "origin/${{ steps.pick.outputs.branch }}"
+      - name: Check the site (tests, content validation, build, links)
+        if: steps.pick.outputs.branch != ''
+        run: |
+          pip install -q pyyaml
+          npm ci --silent
+          npm test
+          python3 tools/gen/validate.py | tee /tmp/validate.txt
+          grep -qx 'bad 0' /tmp/validate.txt && grep -qx 'bad2 0' /tmp/validate.txt
+          npx astro build
+          test "$(python3 tools/gen/linkcheck.py | tail -1)" = "0"
+      - name: Push main and publish
+        if: steps.pick.outputs.branch != ''
+        run: |
+          git push origin main
+          bash deploy.sh

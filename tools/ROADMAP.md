@@ -128,33 +128,33 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 ## Engineering — Safety & reliability
 - [ ] Risk graph / LOPA (simplified) (ib)
 - [ ] 1oo2 / 2oo3 PFDavg (ib)
-- [ ] Safe failure fraction (SFF) (ib)
+- [x] Safe failure fraction (SFF) (ib)
 - [ ] Proof test coverage effect
-- [ ] MTTF ↔ FIT ↔ failure rate converter
-- [ ] Weibull reliability
+- [x] MTTF ↔ FIT ↔ failure rate converter (FIT table in availability-mtbf; life-test FIT: acceleration-factor)
+- [x] Weibull reliability
 - [ ] Hazardous area: temperature class check (ib)
 - [ ] IS loop entity parameters (Uo/Io/Co/Lo) check
 
 ## Electrical
 - [ ] Cable size for load current (with derating) (ib)
-- [ ] Neutral sizing with harmonics (ib)
+- [x] Neutral sizing with harmonics (ib)
 - [ ] MCCB / breaker selection (ib)
 - [ ] Fuse I²t / let-through
-- [ ] Motor starting voltage dip (ib)
+- [x] Motor starting voltage dip (ib)
 - [ ] Soft starter current (ib)
 - [x] Capacitor bank current & kVAr ↔ µF
 - [x] Busbar size (current density)
 - [ ] Arc flash incident energy (simplified) (ib)
 - [x] Battery bank sizing (Ah for backup)
 - [ ] Substation battery sizing (IEEE 485 simplified) (ib)
-- [ ] Solar string sizing (Voc, Vmp vs inverter)
+- [x] Solar string sizing (Voc, Vmp vs inverter)
 - [ ] Solar inverter sizing
 - [ ] Energy consumption kWh (plant) (ib)
 - [x] Maximum demand & load factor
 - [ ] Electricity bill with demand charges (India HT tariff)
 - [x] Lighting: lumens & lux (room) 
 - [x] Number of light fixtures (lumen method)
-- [ ] Single-phase transformer current
+- [x] Single-phase transformer current (exists: transformer-current)
 - [x] Autotransformer power
 - [x] Generator frequency & poles
 - [x] Synchronous generator power angle
@@ -164,7 +164,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Motor winding resistance unbalance (ib)
 - [x] Watt-hour meter constant (imp/kWh)
 - [ ] Lightning protection: rolling sphere radius
-- [ ] Voltage drop for DC (solar/battery)
+- [x] Voltage drop for DC (solar/battery) (exists: cable-voltage-drop)
 
 ## Electronics
 - [x] Op-amp: summing, differential, integrator (ib)
@@ -182,10 +182,10 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Crystal load capacitance
 - [x] RC oscillator / phase-shift oscillator frequency (ib)
 - [x] Schmitt trigger thresholds
-- [ ] Comparator hysteresis resistors
-- [ ] Photodiode transimpedance amplifier (ib)
+- [x] Comparator hysteresis resistors (exists: schmitt-trigger)
+- [x] Photodiode transimpedance amplifier (ib)
 - [ ] Thermocouple amplifier gain
-- [ ] Battery internal resistance & runtime (Peukert)
+- [x] Battery internal resistance & runtime (Peukert)
 - [x] Antenna length (λ/2, λ/4 dipole)
 - [x] Free-space path loss
 - [x] Microstrip impedance (ib)
@@ -260,7 +260,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Gay-Lussac's law
 - [x] Avogadro's law
 - [x] Water hardness (ppm CaCO₃)
-- [ ] TDS ↔ conductivity (ib)
+- [x] TDS ↔ conductivity (ib)
 - [x] Dissolved oxygen saturation
 - [ ] Conductivity cell constant (ib)
 - [ ] ORP / chlorine dose (water treatment)
@@ -312,19 +312,19 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Chi-square test
 - [ ] Linear regression (least squares)
 - [ ] Correlation coefficient
-- [ ] Variance
+- [x] Variance (exists: standard-deviation)
 - [ ] Mean absolute deviation
 - [ ] Percentile / percentile rank
-- [ ] Outlier (IQR / Grubbs)
+- [x] Outlier (IQR / Grubbs) (exists: quartiles)
 - [x] Expected value
 - [x] Bayes' theorem
 - [x] Birthday paradox
-- [ ] Lottery odds
+- [x] Lottery odds (exists: combinations)
 - [x] Exponential distribution
 - [x] Uniform distribution
 - [x] Hypergeometric distribution
 - [x] Geometric distribution
-- [ ] P-value from z / t
+- [x] P-value from z / t (z done: p-value-from-z; t needs a t-CDF)
 - [ ] Moving average
 - [x] Process capability (Cp, Cpk)
 - [ ] Control chart limits (X-bar, R)

@@ -1,0 +1,83 @@
+---
+title: P-Value from Z-Score Calculator (One- and Two-Tailed)
+description: Convert a z-score (z test statistic) into left-tailed, right-tailed and two-tailed p-values, and see if it is significant at the 10%, 5%, 1% and 0.1% levels.
+category: statistics
+intro: "A z test turns your data into a z statistic, and the p-value is the probability of a result at least that extreme if the null hypothesis were true. This p-value from z-score calculator gives the left-tailed, right-tailed and two-tailed p-values from the standard normal distribution and shows which significance levels the result passes."
+keywords: [p value from z score calculator, z score to p value, p value calculator, two tailed p value, one tailed p value, z test p value, z statistic p value]
+updated: 2026-11-08
+variables:
+  - { id: z, label: Z-score (test statistic), default: 2.1 }
+  - { id: pl, label: Left-tailed p-value P(Z ≤ z), min: 0, max: 1, decimals: 6 }
+  - { id: pr, label: Right-tailed p-value P(Z ≥ z), min: 0, max: 1, decimals: 6 }
+  - id: p2
+    label: Two-tailed p-value P(|Z| ≥ |z|)
+    min: 0
+    max: 1
+    decimals: 6
+    bands:
+      - { max: 0.001, label: Significant at the 0.1% level, color: '#15803d' }
+      - { max: 0.01, label: Significant at the 1% level, color: '#16a34a' }
+      - { max: 0.05, label: Significant at the 5% level, color: '#84cc16' }
+      - { max: 0.10, label: Significant at the 10% level only, color: '#eab308' }
+      - { max: 1e9, label: Not significant at the 10% level, color: '#9ca3af' }
+equations:
+  - pl = normcdf(z)
+  - pr = 1 - normcdf(z)
+  - p2 = 2 * (1 - normcdf(abs(z)))
+faq:
+  - q: How do I convert a z-score to a p-value?
+    a: Use the standard normal cumulative distribution Φ. Left-tailed p = Φ(z), right-tailed p = 1 − Φ(z), and two-tailed p = 2 × (1 − Φ(|z|)).
+  - q: What is the p-value for z = 1.96?
+    a: The two-tailed p-value is 0.0500 and the one-tailed (right) p-value is 0.0250 — which is why 1.96 is the critical value for a 5% two-sided test.
+  - q: Should I use a one-tailed or two-tailed p-value?
+    a: Use two-tailed unless, before seeing the data, you had a directional hypothesis (for example "the new process is faster") and a result in the other direction would be treated as no effect. Most published tests are two-tailed.
+  - q: When can I use the z distribution instead of t?
+    a: When the population standard deviation is known, or for large samples (roughly n > 30) and for proportions with enough successes and failures. For small samples with an estimated standard deviation, use the t distribution, which gives slightly larger p-values.
+related: [statistics/z-score, statistics/normal-distribution, statistics/confidence-interval, statistics/sample-size]
+---
+
+## How to use the p-value from z-score calculator
+
+Enter the **z-score** from your test, for example z = (x̄ − μ₀) ÷ (σ/√n) for a one-sample z test or the z statistic for a difference in proportions. The calculator returns the left-tailed, right-tailed and two-tailed p-values and colours the two-tailed result by significance level. To find the z-score for a given p-value, enter the p-value and press × on z.
+
+## P-value formulas
+
+<p class="formula">p<sub>left</sub> = Φ(z) &nbsp;·&nbsp; p<sub>right</sub> = 1 − Φ(z) &nbsp;·&nbsp; p<sub>two</sub> = 2[1 − Φ(|z|)]</p>
+
+Φ is the cumulative distribution function of the standard normal distribution.
+
+## Worked example
+
+A z test gives z = 2.1:
+
+- Left-tailed p = Φ(2.1) = **0.982136**
+- Right-tailed p = 1 − 0.982136 = **0.017864**
+- Two-tailed p = 2 × 0.017864 = **0.035729** — significant at the 5% level (p < 0.05) but not at 1%
+
+## P-values for common z-scores
+
+| z | One-tailed p | Two-tailed p |
+|---|---|---|
+| 1 | 0.15866 | 0.31731 |
+| 1.28 | 0.10027 | 0.20055 |
+| 1.645 | 0.04998 | 0.09997 |
+| 1.96 | 0.02500 | 0.05000 |
+| 2.33 | 0.00990 | 0.01981 |
+| 2.576 | 0.00500 | 0.01000 |
+| 3 | 0.00135 | 0.00270 |
+| 3.29 | 0.00050 | 0.00100 |
+
+## Critical z values
+
+| Significance level α | One-tailed z | Two-tailed z |
+|---|---|---|
+| 0.1 | 1.282 | ±1.645 |
+| 0.05 | 1.645 | ±1.960 |
+| 0.01 | 2.326 | ±2.576 |
+| 0.001 | 3.090 | ±3.291 |
+
+## Interpreting p-values
+
+- A p-value is **not** the probability that the null hypothesis is true; it is the probability of data at least this extreme if it were true.
+- "Not significant" does not prove no effect — the test may simply lack power. Report the effect size and a confidence interval with the p-value.
+- Running many tests inflates false positives; with 20 independent tests at α = 0.05 you expect one "significant" result by chance (consider a Bonferroni correction, α ÷ m).

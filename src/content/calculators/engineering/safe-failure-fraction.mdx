@@ -1,0 +1,76 @@
+---
+title: Safe Failure Fraction Calculator (SFF, Diagnostic Coverage)
+description: Calculate the safe failure fraction (SFF) and diagnostic coverage from λS, λDD and λDU failure rates, with IEC 61508 SIL limits for Type A and Type B devices.
+category: engineering
+intro: "The safe failure fraction is the share of a device's failures that are either safe or dangerous but detected by diagnostics, and together with hardware fault tolerance it caps the SIL a subsystem can claim. This safe failure fraction calculator works out SFF and diagnostic coverage from the FMEDA failure rates and shows the IEC 61508 architectural limits — background in [safe failure fraction in functional safety](https://www.instrumentationblog.in/safe-failure-fraction-functional-safety/) and [hardware fault tolerance and SFF](https://www.instrumentationblog.in/hardware-fault-tolerance-sff-iec-61508/)."
+keywords: [safe failure fraction calculator, sff calculator, sff iec 61508, diagnostic coverage calculator, lambda du lambda dd, hardware fault tolerance sil, sff type a type b]
+updated: 2026-11-08
+variables:
+  - { id: lS, label: Safe failure rate λS, suffix: FIT, default: 300, min: 0, help: '1 FIT = 1 failure per 10⁹ hours. Use the FMEDA or safety-manual values.' }
+  - { id: lDD, label: Dangerous detected failure rate λDD, suffix: FIT, default: 450, min: 0 }
+  - { id: lDU, label: Dangerous undetected failure rate λDU, suffix: FIT, default: 50, min: 0 }
+  - { id: lt, label: Total failure rate, suffix: FIT, min: 0 }
+  - id: SFF
+    label: Safe failure fraction (SFF)
+    family: percent
+    unit: '%'
+    min: 0
+    max: 1
+    bands:
+      - { max: 0.5999999, label: Below 60%, color: '#dc2626' }
+      - { max: 0.8999999, label: 60% to below 90%, color: '#f97316' }
+      - { max: 0.9899999, label: 90% to below 99%, color: '#eab308' }
+      - { max: 1e9, label: 99% or more, color: '#16a34a' }
+  - { id: DC, label: Diagnostic coverage (DC), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: mttf, label: MTTF from the total failure rate, suffix: years, min: 0 }
+equations:
+  - lt = lS + lDD + lDU
+  - SFF = (lS + lDD) / lt
+  - DC = lDD / (lDD + lDU)
+  - mttf = 1e9 / lt / 8766
+faq:
+  - q: How is safe failure fraction calculated?
+    a: SFF = (λS + λDD) ÷ (λS + λDD + λDU) — all safe failures plus dangerous detected failures, divided by the total failure rate. Only the dangerous undetected failures count against it.
+  - q: What SFF is needed for SIL 2?
+    a: Under IEC 61508 Route 1H with no redundancy (HFT 0), a Type A device needs SFF ≥ 60% and a Type B device SFF ≥ 90% for SIL 2. With HFT 1, Type A needs no minimum (below 60% is enough) and Type B needs SFF ≥ 60%.
+  - q: What is the difference between SFF and diagnostic coverage?
+    a: Diagnostic coverage looks only at dangerous failures, DC = λDD ÷ (λDD + λDU). SFF also counts safe failures, so a device with many safe failures can have a high SFF even with modest diagnostics.
+  - q: What are Type A and Type B devices?
+    a: Type A devices are simple, with well-known failure modes and field data (relays, solenoid valves, simple transmitters). Type B devices contain complex components such as microprocessors whose failure modes are not fully known — most smart transmitters and logic solvers.
+related: [engineering/pfd-avg, engineering/availability-mtbf, engineering/weibull-reliability, engineering/instrument-accuracy]
+---
+
+## How to use the safe failure fraction calculator
+
+Enter the **safe**, **dangerous detected** and **dangerous undetected** failure rates in FIT from the device's FMEDA report or safety manual (λS can include λSD + λSU, and λDD includes failures that the diagnostics drive to a safe state). The calculator returns the total failure rate, the SFF with its IEC 61508 band, the diagnostic coverage and the equivalent MTTF.
+
+## Safe failure fraction formula
+
+<p class="formula">SFF = (λ<sub>S</sub> + λ<sub>DD</sub>) ÷ (λ<sub>S</sub> + λ<sub>DD</sub> + λ<sub>DU</sub>) &nbsp;·&nbsp; DC = λ<sub>DD</sub> ÷ (λ<sub>DD</sub> + λ<sub>DU</sub>)</p>
+
+## Worked example
+
+A pressure transmitter with λ<sub>S</sub> = 300 FIT, λ<sub>DD</sub> = 450 FIT and λ<sub>DU</sub> = 50 FIT:
+
+- Total failure rate = **800 FIT** (MTTF ≈ 143 years)
+- SFF = (300 + 450) ÷ 800 = **93.75%**
+- DC = 450 ÷ (450 + 50) = **90%**
+- As a Type B device with HFT 0 it is limited to **SIL 2** (90–99% SFF); in a 1oo2 arrangement (HFT 1) it could be used up to SIL 3
+
+## Maximum SIL by SFF and hardware fault tolerance (IEC 61508-2, Route 1H)
+
+| SFF | Type A, HFT 0 | Type A, HFT 1 | Type A, HFT 2 | Type B, HFT 0 | Type B, HFT 1 | Type B, HFT 2 |
+|---|---|---|---|---|---|---|
+| < 60% | SIL 1 | SIL 2 | SIL 3 | Not allowed | SIL 1 | SIL 2 |
+| 60% – < 90% | SIL 2 | SIL 3 | SIL 4 | SIL 1 | SIL 2 | SIL 3 |
+| 90% – < 99% | SIL 3 | SIL 4 | SIL 4 | SIL 2 | SIL 3 | SIL 4 |
+| ≥ 99% | SIL 3 | SIL 4 | SIL 4 | SIL 3 | SIL 4 | SIL 4 |
+
+HFT N means the subsystem still works after N dangerous faults (1oo1 = 0, 1oo2 = 1, 1oo3 = 2).
+
+## Practical notes
+
+- The architectural limit is separate from the **PFDavg** limit — a SIF must meet both, and the PFDavg depends mainly on λ<sub>DU</sub> and the proof-test interval.
+- IEC 61511 (process sector) allows Route 2H or its own HFT table based on prior use instead of SFF; check which route your project uses.
+- "No effect" and "no part" failures are excluded from the SFF calculation in IEC 61508 Edition 2.
+- Detected failures only count as safe if the diagnostic response actually takes the process to a safe state (or alarms and the repair is done within the MTTR assumed).

@@ -1,0 +1,85 @@
+---
+title: Solar String Sizing Calculator (Modules per String, Voc & Vmp)
+description: Work out the maximum and minimum number of PV modules per string from Voc, Vmp, temperature coefficients and the inverter's max DC and MPPT voltages.
+category: electrical
+intro: "A PV string must stay below the inverter's maximum DC voltage on the coldest morning and above the MPPT minimum on the hottest afternoon. This solar string sizing calculator corrects the module Voc and Vmp for temperature and gives the maximum and minimum number of modules per string, plus the string voltages for your chosen string length — the voltage check step in [solar PV system sizing](https://www.instrumentationblog.in/solar-pv-system-sizing-calculation/)."
+keywords: [solar string sizing calculator, pv string sizing, modules per string calculator, solar string voltage calculator, voc temperature correction, inverter string size, mppt voltage range]
+updated: 2026-11-08
+variables:
+  - { id: Voc, label: Module open-circuit voltage Voc (STC), family: voltage, unit: V, default: 49.5, min: 0 }
+  - { id: Vmp, label: Module max-power voltage Vmp (STC), family: voltage, unit: V, default: 41.6, min: 0 }
+  - { id: bv, label: Temperature coefficient of Voc, suffix: '%/°C', default: -0.27, help: 'From the module datasheet, usually −0.25 to −0.35 %/°C.' }
+  - { id: bm, label: Temperature coefficient of Vmp (or Pmax), suffix: '%/°C', default: -0.35 }
+  - { id: Tmin, label: Lowest expected ambient temperature, family: temperature, unit: C, imperialUnit: F, default: 0, help: 'Record low for the site — at dawn the cells are at ambient temperature.' }
+  - { id: Thot, label: Highest cell temperature, family: temperature, unit: C, imperialUnit: F, default: 70, help: 'Roughly ambient + 25–35 °C on a hot sunny day.' }
+  - { id: N, label: Modules per string (your design), default: 16, min: 1 }
+  - { id: Vmax, label: Inverter maximum DC input voltage, family: voltage, unit: V, default: 1000, min: 0 }
+  - { id: Vlo, label: Inverter MPPT minimum voltage, family: voltage, unit: V, default: 200, min: 0 }
+  - { id: Vhi, label: Inverter MPPT maximum voltage, family: voltage, unit: V, default: 850, min: 0 }
+  - { id: Vocc, label: Module Voc at the lowest temperature, family: voltage, unit: V }
+  - { id: Vmph, label: Module Vmp at the highest cell temperature, family: voltage, unit: V }
+  - { id: Vmpc, label: Module Vmp at the lowest temperature, family: voltage, unit: V }
+  - { id: Nmax, label: Maximum modules per string (max DC voltage), decimals: 0 }
+  - { id: Nmppt, label: Maximum modules to stay inside MPPT range, decimals: 0 }
+  - { id: Nmin, label: Minimum modules per string (MPPT minimum), decimals: 0 }
+  - { id: SVoc, label: String Voc on the coldest morning, family: voltage, unit: V }
+  - { id: SVmp, label: String Vmp on the hottest afternoon, family: voltage, unit: V }
+equations:
+  - Vocc = Voc * (1 + bv / 100 * (Tmin - 298.15))
+  - Vmph = Vmp * (1 + bm / 100 * (Thot - 298.15))
+  - Vmpc = Vmp * (1 + bm / 100 * (Tmin - 298.15))
+  - Nmax = floor(Vmax / Vocc)
+  - Nmppt = floor(Vhi / Vmpc)
+  - Nmin = ceil(Vlo / Vmph)
+  - SVoc = N * Vocc
+  - SVmp = N * Vmph
+faq:
+  - q: How do I calculate the maximum number of solar panels in a string?
+    a: Correct the module Voc to the lowest expected temperature, Voc_cold = Voc × (1 + β_Voc × (T_min − 25)), then divide the inverter's maximum DC voltage by it and round down.
+  - q: Why does Voc rise in cold weather?
+    a: Silicon cell voltage has a negative temperature coefficient of about −0.3 %/°C, so on a −10 °C morning Voc is about 10% above its 25 °C datasheet value. That is the condition that can exceed the inverter's voltage limit.
+  - q: What sets the minimum string length?
+    a: On a hot afternoon Vmp falls; the string Vmp must stay above the inverter's MPPT minimum (and its start-up voltage), otherwise the inverter cannot track the maximum power point or clips power.
+  - q: Which temperature should I use for the cold case?
+    a: The record or design low ambient temperature for the site. The US NEC 690.7 allows the datasheet coefficient method used here; some codes give a fixed table of correction factors instead.
+related: [ecology/solar-system-size, ecology/solar-output, electrical/cable-voltage-drop, electrical/battery-bank-size]
+---
+
+## How to use the solar string sizing calculator
+
+Enter the module **Voc** and **Vmp** at STC and their **temperature coefficients** from the datasheet, the site's **lowest ambient temperature** and the **highest cell temperature**, then the inverter's **maximum DC voltage** and **MPPT range**. The calculator gives the temperature-corrected module voltages, the maximum and minimum modules per string, and the string voltages for the length you enter in **Modules per string**.
+
+## Solar string sizing formulas
+
+<p class="formula">V<sub>oc,cold</sub> = V<sub>oc</sub> × [1 + β<sub>Voc</sub> × (T<sub>min</sub> − 25 °C)] &nbsp;·&nbsp; N<sub>max</sub> = ⌊V<sub>max,inv</sub> ÷ V<sub>oc,cold</sub>⌋</p>
+
+<p class="formula">V<sub>mp,hot</sub> = V<sub>mp</sub> × [1 + β<sub>Vmp</sub> × (T<sub>cell,max</sub> − 25 °C)] &nbsp;·&nbsp; N<sub>min</sub> = ⌈V<sub>MPPT,min</sub> ÷ V<sub>mp,hot</sub>⌉</p>
+
+A string length is acceptable when N<sub>min</sub> ≤ N ≤ N<sub>max</sub>. For best energy yield, also keep N ≤ the MPPT-range limit so the cold-weather Vmp stays inside the tracking window.
+
+## Worked example
+
+A 49.5 V Voc / 41.6 V Vmp module (β<sub>Voc</sub> = -0.27 %/°C, β<sub>Vmp</sub> = -0.35 %/°C), site low 0 °C, hot cell temperature 70 °C, inverter 1,000 V max, MPPT 200–850 V:
+
+- V<sub>oc,cold</sub> = 49.5 × (1 + 0.0027 × 25) = **52.84 V** → N<sub>max</sub> = ⌊1000 ÷ 52.84⌋ = **18**
+- V<sub>mp,hot</sub> = 41.6 × (1 − 0.0035 × 45) = **35.05 V** → N<sub>min</sub> = ⌈200 ÷ 35.05⌉ = **6**
+- Cold Vmp = **45.24 V** → at most **18** modules stay inside the 850 V MPPT limit
+- A 16-module string: Voc on the coldest morning = **845.5 V**, Vmp on the hottest afternoon = **560.8 V** — both within limits
+
+## Cold-weather Voc and maximum string length (49.5 V module, -0.27 %/°C)
+
+| Lowest temperature | Module Voc | Max modules (600 V) | Max modules (1,000 V) | Max modules (1,500 V) |
+|---|---|---|---|---|
+| 25 °C | 49.50 V | 12 | 20 | 30 |
+| 10 °C | 51.50 V | 11 | 19 | 29 |
+| 0 °C | 52.84 V | 11 | 18 | 28 |
+| -10 °C | 54.18 V | 11 | 18 | 27 |
+| -20 °C | 55.51 V | 10 | 18 | 27 |
+| -30 °C | 56.85 V | 10 | 17 | 26 |
+
+## Practical notes
+
+- Check **current** too: the string Isc × 1.25 (and parallel strings per MPPT) must not exceed the inverter's maximum input current.
+- Use the inverter's **start-up voltage** if it is higher than the MPPT minimum.
+- Bifacial and high-efficiency modules may have different coefficients — always take β from the exact datasheet.
+- Shading, soiling and mismatch lower Vmp further; leave a margin above the MPPT minimum rather than designing exactly to it.

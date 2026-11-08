@@ -1,0 +1,68 @@
+---
+title: Weibull Reliability Calculator (R(t), Failure Rate, MTTF, B10)
+description: Calculate Weibull reliability, probability of failure, hazard rate, mean life (MTTF) and B10 life from the shape parameter β and characteristic life η.
+category: engineering
+intro: "The Weibull distribution is the standard model for component life because its shape parameter β covers early failures (β < 1), random failures (β = 1) and wear-out (β > 1). This Weibull reliability calculator gives the reliability and probability of failure at a chosen time, the instantaneous failure rate, the mean time to failure and the B10 life from β and the characteristic life η."
+keywords: [weibull reliability calculator, weibull distribution calculator, weibull failure rate, weibull mttf, b10 life calculator, weibull shape parameter beta, characteristic life eta]
+updated: 2026-11-08
+variables:
+  - { id: beta, label: Shape parameter β, default: 1.5, min: 0.01 }
+  - { id: eta, label: Characteristic life η (scale), family: seconds, unit: h, default: 10000, min: 0 }
+  - { id: t, label: Operating time t, family: seconds, unit: h, default: 5000, min: 0 }
+  - { id: R, label: Reliability R(t), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: F, label: Probability of failure F(t), family: percent, unit: '%', min: 0, max: 1 }
+  - { id: hz, label: Hazard (failure) rate at t, suffix: per 10⁶ h, min: 0 }
+  - { id: MTTF, label: Mean life (MTTF), family: seconds, unit: h, min: 0 }
+  - { id: B10, label: B10 life (10% failed), family: seconds, unit: h, min: 0 }
+equations:
+  - R = exp(-(t / eta)^beta)
+  - F = 1 - R
+  - hz = 3.6e9 * beta / eta * (t / eta)^(beta - 1)
+  - MTTF = eta * gamma(1 + 1 / beta)
+  - B10 = eta * (-ln(0.9))^(1 / beta)
+faq:
+  - q: What is the Weibull reliability function?
+    a: R(t) = exp(−(t/η)^β). At t = η the reliability is always e⁻¹ ≈ 36.8%, whatever β is — so η is the time by which 63.2% of units have failed.
+  - q: What does the shape parameter β mean?
+    a: β < 1 means a falling failure rate (infant mortality), β = 1 a constant failure rate (the exponential distribution, random failures) and β > 1 a rising failure rate (wear-out). Bearings are typically around 1.1–1.5 and fatigue or corrosion failures 2–4.
+  - q: How is MTTF calculated for a Weibull distribution?
+    a: MTTF = η × Γ(1 + 1/β), where Γ is the gamma function. For β = 1 it equals η; for β = 2 it is 0.886 η; for β = 3.5 it is about 0.9 η.
+  - q: What is B10 life?
+    a: The time by which 10% of the population has failed (90% reliability), B10 = η × (−ln 0.9)^(1/β). It is the usual rating life for rolling bearings.
+related: [engineering/availability-mtbf, engineering/bearing-life, statistics/exponential-distribution, engineering/pfd-avg]
+---
+
+## How to use the Weibull reliability calculator
+
+Enter the **shape parameter β** and the **characteristic life η** (from a Weibull plot of failure data or a supplier's life test) and the **operating time t**. The calculator returns the reliability and probability of failure at t, the hazard rate at t in failures per million hours, the mean life and the B10 life. To find the time for a target reliability, enter R and press × on t.
+
+## Weibull reliability formulas
+
+<p class="formula">R(t) = e<sup>−(t/η)<sup>β</sup></sup> &nbsp;·&nbsp; F(t) = 1 − R(t)</p>
+
+<p class="formula">h(t) = (β/η)(t/η)<sup>β−1</sup> &nbsp;·&nbsp; MTTF = η Γ(1 + 1/β) &nbsp;·&nbsp; B10 = η (−ln 0.9)<sup>1/β</sup></p>
+
+## Worked example
+
+A pump seal with β = 1.5 and η = 10,000 h, after t = 5,000 h:
+
+- (t/η)<sup>β</sup> = 0.5<sup>1.5</sup> = 0.3536, so R = e<sup>−0.3536</sup> = **70.22%** and F = **29.78%**
+- Hazard rate = (1.5 ÷ 10,000) × 0.5<sup>0.5</sup> = **106.1 per 10⁶ h** — and rising, because β > 1
+- MTTF = 10,000 × Γ(1.667) = **9,027 h**; B10 life = **2,231 h**
+
+## Weibull reliability at multiples of η
+
+| β | t = 0.1η | t = 0.5η | t = η | t = 2η | MTTF ÷ η | B10 ÷ η |
+|---|---|---|---|---|---|---|
+| 0.5 | 72.9% | 49.3% | 36.8% | 24.3% | 2.0000 | 0.0111 |
+| 1 | 90.5% | 60.7% | 36.8% | 13.5% | 1.0000 | 0.1054 |
+| 1.5 | 96.9% | 70.2% | 36.8% | 5.9% | 0.9027 | 0.2231 |
+| 2 | 99.0% | 77.9% | 36.8% | 1.8% | 0.8862 | 0.3246 |
+| 3.5 | 100.0% | 91.5% | 36.8% | 0.0% | 0.8997 | 0.5257 |
+
+## Practical notes
+
+- With β > 1, **preventive replacement** before wear-out makes sense; with β ≤ 1 it does not — replacing a part early only resets the infant-mortality period.
+- Fit β and η from field data with a Weibull probability plot (median ranks) or maximum likelihood; at least 5–10 failures give a usable β.
+- A three-parameter Weibull adds a failure-free time γ: replace t with (t − γ) when no failures can occur before γ.
+- For β = 1 the result equals the exponential model used for MTBF and SIL calculations, with η = MTBF.

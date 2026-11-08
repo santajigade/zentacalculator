@@ -1,0 +1,91 @@
+---
+title: Motor Starting Voltage Dip Calculator (Transformer kVA & Z%)
+description: Estimate the voltage dip when a motor starts on a transformer, from motor kW, starting current, transformer kVA and Z% — for DOL, star-delta and soft starts.
+category: electrical
+intro: "When an induction motor starts it draws five to seven times its full-load current at a low power factor, and that current through the supply impedance pulls the bus voltage down. This motor starting voltage dip calculator estimates the dip from the motor's starting kVA and the transformer's short-circuit kVA, using the simplified method in [motor starting voltage dip calculation](https://www.instrumentationblog.in/motor-starting-voltage-dip-calculation/), and compares the [motor starting methods](https://www.instrumentationblog.in/motor-starting-methods-compared/)."
+keywords: [motor starting voltage dip calculator, voltage dip calculation motor starting, motor starting voltage drop, transformer voltage dip, dol starting voltage dip, motor starting kva, voltage sag motor start]
+updated: 2026-11-08
+variables:
+  - { id: St, label: Transformer rating, suffix: kVA, default: 1000, min: 0 }
+  - { id: z, label: Transformer impedance (Z%), family: percent, unit: '%', default: 6, min: 0 }
+  - { id: P, label: Motor rated output, family: power, unit: kW, imperialUnit: hp, default: 110, min: 0 }
+  - { id: eta, label: Motor efficiency, family: percent, unit: '%', default: 95, min: 0, max: 1 }
+  - { id: pf, label: Motor full-load power factor, default: 0.87, min: 0.01, max: 1 }
+  - { id: k, label: Starting current (× full-load current), default: 6, min: 0, help: 'DOL 6–7, star–delta ≈ 2, soft starter 2.5–4, VFD ≈ 1–1.5.' }
+  - { id: Ssc, label: Transformer short-circuit capacity, suffix: kVA, min: 0 }
+  - { id: Sst, label: Motor starting kVA, suffix: kVA, min: 0 }
+  - id: dip
+    label: Voltage dip during starting
+    family: percent
+    unit: '%'
+    min: 0
+    bands:
+      - { max: 0.05, label: Small — fine for most loads, color: '#16a34a' }
+      - { max: 0.10, label: Moderate — may cause visible lighting flicker, color: '#eab308' }
+      - { max: 0.15, label: High — check contactor drop-out and other motors, color: '#f97316' }
+      - { max: 1e9, label: Too high — use reduced-voltage starting or a bigger supply, color: '#dc2626' }
+  - { id: Vr, label: Remaining voltage during start, family: percent, unit: '%', min: 0 }
+equations:
+  - Ssc = St / z
+  - Sst = k * P / (eta * pf) / 1000
+  - dip = Sst / (Ssc + Sst)
+  - Vr = 1 - dip
+faq:
+  - q: How do you calculate the voltage dip when a motor starts?
+    a: A simple estimate is ΔV = S_start ÷ (S_sc + S_start), where S_start is the motor's starting kVA (starting current multiple × rated kVA) and S_sc the short-circuit kVA of the supply (transformer kVA ÷ Z%).
+  - q: What voltage dip is acceptable during motor starting?
+    a: Common design limits are around 10–15% at the motor terminals so the motor still develops enough torque and contactors do not drop out, and lower — about 3–5% — at buses feeding lighting or sensitive electronics, where flicker is noticed.
+  - q: Why is the result conservative?
+    a: The formula adds impedance magnitudes as if they were in phase. In reality the motor's starting power factor (0.2–0.4) and the transformer's X/R ratio differ slightly, so the true dip is usually a little smaller. Upstream source impedance and cable impedance make it larger, so include them for long feeders.
+  - q: How do I reduce motor starting voltage dip?
+    a: Use star–delta, autotransformer or soft starting, or a VFD; start large motors one at a time; or supply them from a larger or lower-impedance transformer.
+related: [electrical/motor-starting-current, electrical/transformer-short-circuit, electrical/three-phase-motor-power, electrical/transformer-size]
+---
+
+## How to use the motor starting voltage dip calculator
+
+Enter the **transformer kVA** and **impedance**, the **motor output**, **efficiency**, **power factor** and the **starting current** as a multiple of full-load current. The calculator returns the transformer short-circuit capacity, the motor starting kVA and the voltage dip on the transformer secondary. Change the starting-current multiple to compare starting methods.
+
+## Motor starting voltage dip formula
+
+<p class="formula">S<sub>sc</sub> = S<sub>T</sub> ÷ Z% &nbsp;·&nbsp; S<sub>start</sub> = k × P ÷ (η × PF)</p>
+
+<p class="formula">ΔV = S<sub>start</sub> ÷ (S<sub>sc</sub> + S<sub>start</sub>)</p>
+
+This is the impedance-divider method: the motor's locked-rotor impedance and the supply impedance form a voltage divider. It assumes an infinite upstream grid; add the utility fault level for weak supplies.
+
+## Worked example
+
+A 110 kW motor (η = 95%, PF = 0.87) started direct-on-line at 6 × FLC on a 1,000 kVA, 6% transformer:
+
+- Short-circuit capacity S<sub>sc</sub> = 1,000 ÷ 0.06 = **16,667 kVA**
+- Starting kVA = 6 × 110 ÷ (0.95 × 0.87) = **799 kVA**
+- Voltage dip = 799 ÷ (16,667 + 799) = **4.57%**, leaving **95.4%** voltage during the start
+
+## Effect of starting method (same motor and transformer)
+
+| Starting method | Line current | Starting kVA | Voltage dip |
+|---|---|---|---|
+| Direct-on-line (DOL) | 6.00 × FLC | 799 kVA | 4.57% |
+| Autotransformer, 80% tap | 3.84 × FLC | 511 kVA | 2.98% |
+| Soft starter (≈3.5 × FLC) | 3.50 × FLC | 466 kVA | 2.72% |
+| Star–delta | 2.00 × FLC | 266 kVA | 1.57% |
+| VFD (≈1.2 × FLC) | 1.20 × FLC | 160 kVA | 0.95% |
+
+## DOL voltage dip by motor and transformer size
+
+| Motor | 500 kVA (4.5%) | 1,000 kVA (6%) | 2,000 kVA (6%) |
+|---|---|---|---|
+| 37 kW | 2.4% | 1.6% | 0.8% |
+| 75 kW | 4.7% | 3.2% | 1.6% |
+| 110 kW | 6.7% | 4.6% | 2.3% |
+| 160 kW | 9.5% | 6.5% | 3.4% |
+| 250 kW | 14.0% | 9.8% | 5.2% |
+
+Assumes η = 95%, PF = 0.87 and 6 × FLC starting current.
+
+## Practical notes
+
+- The motor's torque falls with the square of voltage: a 15% dip leaves only about 72% of the rated starting torque.
+- Long cables add impedance between the transformer and the motor; the dip at the motor terminals is then larger than the bus dip shown here.
+- On generator supplies the dip is much larger because a generator's transient reactance (typically 15–30%) is far higher than a transformer's impedance.

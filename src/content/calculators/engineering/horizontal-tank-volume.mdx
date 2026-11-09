@@ -4,7 +4,7 @@ description: Calculate liquid volume in a partially filled horizontal cylindrica
 category: engineering
 intro: "In a horizontal cylindrical tank, the liquid volume does not rise in step with level, because the tank is widest in the middle. Converting a level reading into volume needs the circular-segment formula — see [tank volume from level measurement](https://www.instrumentationblog.in/tank-volume-from-level-measurement/). This free horizontal tank volume calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [horizontal tank volume, tank level to volume, partially filled cylinder, tank strapping, cylindrical tank, tank calibration]
-updated: 2026-10-27
+updated: 2026-11-09
 featured: true
 variables:
   - { id: D, label: Tank inner diameter, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
@@ -29,6 +29,12 @@ faq:
     a: "No. At 25% of the diameter, a horizontal cylinder holds about 19.6% of its volume, because the bottom is narrower."
   - q: "How do I include dished heads?"
     a: "Add the head volumes from the table above when full. For partial levels, use the vendor strapping table or a detailed head-volume formula."
+  - q: "How full is a horizontal tank at 50% level?"
+    a: "Exactly 50% full. Above and below the middle, volume and level are not proportional."
+  - q: "What volume is in a horizontal tank at 25% level?"
+    a: "About 19.6% of the full volume, because the rounded bottom holds less liquid."
+  - q: "How much does a 2 m diameter, 6 m long tank hold?"
+    a: "About 18,850 litres with flat ends. Dished ends add extra volume."
 related: [engineering/hydrostatic-pressure, engineering/4-20ma-scaling, math/cylinder-volume]
 ---
 
@@ -93,3 +99,44 @@ In a vertical cylinder, volume is proportional to level. A horizontal tank uses 
 ## Using it with a level transmitter
 
 A pressure or radar transmitter measures **level**. To display **volume**, the control system needs this non-linear curve (a strapping table). Combine with the [hydrostatic pressure calculator](/engineering/hydrostatic-pressure/) to go from pressure to level first.
+
+## Tank level to volume chart (every 5%)
+
+| Level (% of diameter) | Volume (% full) |
+|---|---|
+| 5% | 1.9% |
+| 10% | 5.2% |
+| 15% | 9.4% |
+| 20% | 14.2% |
+| 25% | 19.6% |
+| 30% | 25.2% |
+| 35% | 31.2% |
+| 40% | 37.4% |
+| 45% | 43.6% |
+| 50% | 50% |
+| 55% | 56.4% |
+| 60% | 62.6% |
+| 65% | 68.8% |
+| 70% | 74.8% |
+| 75% | 80.4% |
+| 80% | 85.8% |
+| 85% | 90.6% |
+| 90% | 94.8% |
+| 95% | 98.1% |
+
+Use it with any flat-ended horizontal cylinder: multiply the % full by the full tank volume.
+
+## Full capacity of common horizontal tanks
+
+| Diameter | Length | Capacity | US gallons |
+|---|---|---|---|
+| 1 m | 2 m | 1,571 L | 415 US gal |
+| 1.2 m | 3 m | 3,393 L | 896 US gal |
+| 1.5 m | 4 m | 7,069 L | 1,867 US gal |
+| 2 m | 5 m | 15,708 L | 4,150 US gal |
+| 2 m | 6 m | 18,850 L | 4,980 US gal |
+| 2.5 m | 6 m | 29,452 L | 7,781 US gal |
+| 2.5 m | 8 m | 39,270 L | 10,374 US gal |
+| 3 m | 8 m | 56,549 L | 14,939 US gal |
+| 3 m | 10 m | 70,686 L | 18,673 US gal |
+| 3.5 m | 12 m | 115,454 L | 30,500 US gal |

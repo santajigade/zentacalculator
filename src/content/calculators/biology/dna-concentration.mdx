@@ -4,7 +4,7 @@ description: Calculate nucleic acid concentration from A260 absorbance for dsDNA
 category: biology
 intro: "DNA and RNA absorb ultraviolet light at 260 nm, so a spectrophotometer reading gives their concentration directly. The A260/A280 ratio also tells you how pure the sample is. This free DNA / RNA concentration calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [dna concentration, a260, rna concentration, nanodrop, 260/280 ratio, nucleic acid quantification]
-updated: 2026-10-27
+updated: 2026-11-09
 featured: true
 variables:
   - id: f
@@ -33,6 +33,12 @@ faq:
     a: "About 1.8 for DNA and 2.0 for RNA."
   - q: "Is ng/µL the same as µg/mL?"
     a: "Yes, they are numerically identical."
+  - q: "What concentration is an A260 of 1.0?"
+    a: "About 50 ng/µL for dsDNA, 33 ng/µL for ssDNA and 40 ng/µL for RNA."
+  - q: "What is a good 260/230 ratio?"
+    a: "Between 2.0 and 2.2 for pure nucleic acid. Lower values suggest salt, phenol or carbohydrate carry-over."
+  - q: "Why does my NanoDrop concentration differ from Qubit?"
+    a: "Absorbance measures all nucleic acid and some contaminants, while dye-based Qubit assays measure only the target type, so Qubit is often lower."
 related: [biology/dna-copy-number, biology/protein-concentration-a280, chemistry/beer-lambert]
 ---
 
@@ -88,3 +94,24 @@ Instruments that measure 1–2 µL drops use short path lengths and automaticall
 ## Reliable readings
 
 Spectrophotometers are most accurate for A260 between about 0.1 and 1.0. Dilute concentrated samples and multiply back with the dilution factor.
+
+## A260 to concentration table (undiluted, 1 cm path)
+
+| A260 | dsDNA (ng/µL) | ssDNA (ng/µL) | RNA (ng/µL) |
+|---|---|---|---|
+| 0.05 | 2.5 | 1.7 | 2 |
+| 0.10 | 5 | 3.3 | 4 |
+| 0.20 | 10 | 6.6 | 8 |
+| 0.25 | 12.5 | 8.2 | 10 |
+| 0.50 | 25 | 16.5 | 20 |
+| 0.75 | 37.5 | 24.8 | 30 |
+| 1.00 | 50 | 33 | 40 |
+| 1.25 | 62.5 | 41.2 | 50 |
+| 1.50 | 75 | 49.5 | 60 |
+| 2.00 | 100 | 66 | 80 |
+
+If you diluted the sample before reading, multiply by the dilution factor. A 1:10 dilution reading A260 = 0.5 means dsDNA at 25 × 10 = **250 ng/µL**.
+
+## How much DNA do you have?
+
+Total yield = concentration × volume. 120 ng/µL in 50 µL is **6 µg** of DNA.

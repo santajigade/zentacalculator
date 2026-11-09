@@ -4,7 +4,7 @@ description: Calculate how much stock solution and solvent you need to make a di
 category: chemistry
 intro: "Diluting a solution lowers its concentration while the amount of solute stays the same. C₁V₁ = C₂V₂ tells you how much stock solution and solvent to mix. This free dilution calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [dilution calculator, c1v1 = c2v2, stock solution, dilute, serial dilution, concentration]
-updated: 2026-10-27
+updated: 2026-11-09
 featured: true
 variables:
   - { id: C1, label: Stock concentration (C₁), default: 10, min: 0 }
@@ -26,6 +26,12 @@ faq:
     a: "Mix 1 part stock with 9 parts solvent, for example 1 mL stock plus 9 mL water for 10 mL total."
   - q: "What is C1V1 = C2V2?"
     a: "The dilution equation: the amount of solute before (C₁ × V₁) equals the amount after (C₂ × V₂)."
+  - q: "How do I make 70% ethanol from 95% ethanol?"
+    a: "Use C₁V₁ = C₂V₂: 70 × 100 ÷ 95 = 73.7 mL of 95% ethanol, made up to 100 mL with water."
+  - q: "What does a 1:10 dilution mean?"
+    a: "One part of stock in a total of ten parts, for example 1 mL stock plus 9 mL diluent."
+  - q: "Is a 1:10 dilution the same as 1+10?"
+    a: "No. 1+10 means 1 part stock plus 10 parts diluent, which is a 1:11 dilution."
 related: [chemistry/molarity, chemistry/ppm]
 ---
 
@@ -76,3 +82,33 @@ Mixing ethanol and water gives slightly less volume than the sum of the parts. F
 ## Serial dilutions
 
 For very large dilutions, dilute in steps (for example 1:10 four times for 1:10,000). Each step is more accurate than one huge dilution.
+
+## Dilution chart: stock and diluent volumes
+
+| Dilution | Stock for 100 mL | Diluent for 100 mL | Stock for 1 L | Diluent for 1 L |
+|---|---|---|---|---|
+| 1:2 | 50 mL | 50 mL | 500 mL | 500 mL |
+| 1:4 | 25 mL | 75 mL | 250 mL | 750 mL |
+| 1:5 | 20 mL | 80 mL | 200 mL | 800 mL |
+| 1:10 | 10 mL | 90 mL | 100 mL | 900 mL |
+| 1:20 | 5 mL | 95 mL | 50 mL | 950 mL |
+| 1:25 | 4 mL | 96 mL | 40 mL | 960 mL |
+| 1:50 | 2 mL | 98 mL | 20 mL | 980 mL |
+| 1:100 | 1 mL | 99 mL | 10 mL | 990 mL |
+| 1:200 | 0.5 mL | 99.5 mL | 5 mL | 995 mL |
+| 1:500 | 0.2 mL | 99.8 mL | 2 mL | 998 mL |
+| 1:1000 | 0.1 mL | 99.9 mL | 1 mL | 999 mL |
+
+A 1:10 dilution means 1 part stock in 10 parts **total**, so 10 mL stock plus 90 mL diluent.
+
+## Percent dilutions for 100 mL
+
+| Stock | Target | Stock volume | Water |
+|---|---|---|---|
+| 95% | 70% | 73.7 mL | 26.3 mL |
+| 99.9% | 70% | 70.1 mL | 29.9 mL |
+| 100% | 10% | 10 mL | 90 mL |
+| 37% | 10% | 27 mL | 73 mL |
+| 30% | 3% | 10 mL | 90 mL |
+| 50% | 25% | 50 mL | 50 mL |
+| 10% | 1% | 10 mL | 90 mL |

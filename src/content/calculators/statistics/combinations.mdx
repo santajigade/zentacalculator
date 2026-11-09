@@ -4,7 +4,7 @@ description: Calculate the number of combinations — ways to choose r items fro
 category: statistics
 intro: "A combination counts the ways to choose items when order does not matter — like lottery numbers or team selections."
 keywords: [combination calculator, ncr, n choose r, binomial coefficient, lottery odds, combinatorics]
-updated: 2026-10-27
+updated: 2026-11-09
 featured: true
 variables:
   - { id: n, label: Total items (n), default: 49, min: 0 }
@@ -25,6 +25,12 @@ faq:
     a: "120."
   - q: "How many 5-card poker hands are there?"
     a: "2,598,960."
+  - q: "What is 5 choose 2?"
+    a: "10. There are 10 ways to choose 2 items from 5."
+  - q: "How many combinations of 2 cards from a 52-card deck?"
+    a: "1,326."
+  - q: "How many combinations does a 4-digit code have?"
+    a: "10,000 (0000 to 9999). Order matters and digits repeat, so it is 10⁴, not a combination."
 related: [statistics/permutations, statistics/binomial-probability, statistics/probability]
 ---
 
@@ -84,3 +90,32 @@ C(n, r) = C(n, n − r). Choosing 3 items to include from 10 is the same as choo
 ## Pascal's triangle
 
 nCr values form Pascal's triangle — each number is the sum of the two above it. They are also the coefficients in (a + b)ⁿ.
+
+## nCr table (n up to 10)
+
+| n \ r | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 0 | 1 |  |  |  |  |  |  |  |  |  |  |
+| 1 | 1 | 1 |  |  |  |  |  |  |  |  |  |
+| 2 | 1 | 2 | 1 |  |  |  |  |  |  |  |  |
+| 3 | 1 | 3 | 3 | 1 |  |  |  |  |  |  |  |
+| 4 | 1 | 4 | 6 | 4 | 1 |  |  |  |  |  |  |
+| 5 | 1 | 5 | 10 | 10 | 5 | 1 |  |  |  |  |  |
+| 6 | 1 | 6 | 15 | 20 | 15 | 6 | 1 |  |  |  |  |
+| 7 | 1 | 7 | 21 | 35 | 35 | 21 | 7 | 1 |  |  |  |
+| 8 | 1 | 8 | 28 | 56 | 70 | 56 | 28 | 8 | 1 |  |  |
+| 9 | 1 | 9 | 36 | 84 | 126 | 126 | 84 | 36 | 9 | 1 |  |
+| 10 | 1 | 10 | 45 | 120 | 210 | 252 | 210 | 120 | 45 | 10 | 1 |
+
+## Lottery combinations
+
+| Game format | n | r | Combinations |
+|---|---|---|---|
+| Pick 3 from 10 | 10 | 3 | 120 |
+| 5 from 35 | 35 | 5 | 324,632 |
+| 5 from 50 | 50 | 5 | 2,118,760 |
+| 6 from 45 | 45 | 6 | 8,145,060 |
+| 6 from 49 | 49 | 6 | 13,983,816 |
+| 5 from 69 (main numbers) | 69 | 5 | 11,238,513 |
+| 5 from 70 (main numbers) | 70 | 5 | 12,103,014 |
+| Keno 10 from 80 | 80 | 10 | 1,646,492,110,120 |

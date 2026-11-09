@@ -4,7 +4,7 @@ description: Convert angles between degrees, radians, gradians, turns, arcminute
 category: math
 intro: "Angles are measured in degrees in everyday work, in radians in mathematics and physics, in gradians on some surveying instruments and in degrees–minutes–seconds for map coordinates. This angle converter calculator converts between all of them at once and splits decimal degrees into degrees, minutes and seconds."
 keywords: [angle converter, degrees to radians, radians to degrees, degrees to gradians, decimal degrees to dms, degrees minutes seconds converter, arcseconds to degrees, mrad to degrees]
-updated: 2026-11-07
+updated: 2026-11-09
 variables:
   - { id: deg, label: Degrees, suffix: °, default: 52.3725 }
   - { id: rad, label: Radians, suffix: rad }
@@ -39,6 +39,12 @@ faq:
     a: A gradian (gon) is 1/400 of a turn, so a right angle is exactly 100 grad. It is used in surveying in some European countries. Check that a calculator is not in GRAD mode by mistake.
   - q: What is the difference between a milliradian and a mil?
     a: A milliradian is exactly 1/1000 rad, so a full turn is about 6283.2 mrad. The NATO mil rounds this to 6400 per turn so that it divides evenly. Both are used for sights and rangefinding, where 1 mrad subtends about 1 m at 1 km.
+  - q: "How many degrees is 1 radian?"
+    a: "1 radian is 57.2958°, because 180° equals π radians."
+  - q: "How do I convert 45.5° to degrees, minutes and seconds?"
+    a: "45.5° is 45° 30′ 0″. The decimal 0.5 × 60 gives 30 minutes."
+  - q: "How many mils are in a circle?"
+    a: "NATO uses 6,400 mils in a full circle, so 1° is about 17.78 mils. Some other armies use 6,000 or 6,300."
 related: [math/right-triangle-trig, math/arc-length, physics/angular-velocity, math/circle]
 ---
 
@@ -81,3 +87,41 @@ Convert a latitude of 52.3725°:
 - Spreadsheet and programming trig functions (SIN, COS, Math.sin) expect **radians** — convert with RADIANS() or × π/180 first.
 - One arcsecond of latitude is about 30.9 m on the ground; 0.0001° is about 11 m.
 - Small-angle rule: for angles under about 10°, sin θ ≈ tan θ ≈ θ in radians — so 1 mrad ≈ 1 m at 1 km.
+
+## Degrees to radians, gradians, mils and turns
+
+| Degrees | Radians | Gradians | Mils | Turns |
+|---|---|---|---|---|
+| 0° | 0 rad | 0 gon | 0 NATO mil | 0 turn |
+| 1° | 0.0175 rad | 1.11 gon | 17.8 NATO mil | 0.0028 turn |
+| 5° | 0.0873 rad | 5.56 gon | 88.9 NATO mil | 0.0139 turn |
+| 10° | 0.1745 rad | 11.11 gon | 177.8 NATO mil | 0.0278 turn |
+| 15° | 0.2618 rad | 16.67 gon | 266.7 NATO mil | 0.0417 turn |
+| 30° | 0.5236 rad | 33.33 gon | 533.3 NATO mil | 0.0833 turn |
+| 45° | 0.7854 rad | 50 gon | 800 NATO mil | 0.125 turn |
+| 60° | 1.0472 rad | 66.67 gon | 1,066.7 NATO mil | 0.1667 turn |
+| 90° | 1.5708 rad | 100 gon | 1,600 NATO mil | 0.25 turn |
+| 120° | 2.0944 rad | 133.33 gon | 2,133.3 NATO mil | 0.3333 turn |
+| 135° | 2.3562 rad | 150 gon | 2,400 NATO mil | 0.375 turn |
+| 150° | 2.618 rad | 166.67 gon | 2,666.7 NATO mil | 0.4167 turn |
+| 180° | 3.1416 rad | 200 gon | 3,200 NATO mil | 0.5 turn |
+| 210° | 3.6652 rad | 233.33 gon | 3,733.3 NATO mil | 0.5833 turn |
+| 225° | 3.927 rad | 250 gon | 4,000 NATO mil | 0.625 turn |
+| 270° | 4.7124 rad | 300 gon | 4,800 NATO mil | 0.75 turn |
+| 300° | 5.236 rad | 333.33 gon | 5,333.3 NATO mil | 0.8333 turn |
+| 315° | 5.4978 rad | 350 gon | 5,600 NATO mil | 0.875 turn |
+| 360° | 6.2832 rad | 400 gon | 6,400 NATO mil | 1 turn |
+
+## Decimal degrees to degrees, minutes and seconds
+
+| Decimal degrees | DMS |
+|---|---|
+| 12.5° | 12° 30′ 0.0″ |
+| 18.75° | 18° 45′ 0.0″ |
+| 33.333° | 33° 19′ 58.8″ |
+| 45.5° | 45° 30′ 0.0″ |
+| 51.4778° | 51° 28′ 40.1″ |
+| 73.9857° | 73° 59′ 8.5″ |
+| 90.125° | 90° 7′ 30.0″ |
+
+To convert, keep the whole degrees, multiply the decimal part by 60 for minutes, then multiply the remaining decimal by 60 for seconds.

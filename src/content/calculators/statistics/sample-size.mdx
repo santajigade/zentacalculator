@@ -4,7 +4,7 @@ description: Find how many survey responses you need for a given margin of error
 category: statistics
 intro: "Sample size decides how many people you need to survey to get results within a chosen margin of error and confidence level."
 keywords: [sample size calculator, survey sample size, margin of error, confidence level, population size, how many respondents]
-updated: 2026-10-27
+updated: 2026-11-09
 featured: true
 variables:
   - id: zc
@@ -33,6 +33,12 @@ faq:
     a: "It gives a ±5% margin of error at 95% confidence for a large population with p = 50%."
   - q: "Does population size matter?"
     a: "Only when the sample is a sizeable fraction of the population. Above about 20,000 people, the required sample barely changes."
+  - q: "What sample size do I need for a population of 1,000?"
+    a: "278 responses for a ±5% margin of error at 95% confidence."
+  - q: "Why does sample size stop growing for large populations?"
+    a: "Above about 20,000 people the population barely matters. You need about 385 responses at ±5% whether the population is 100,000 or 10 million."
+  - q: "Is 100 responses enough for a survey?"
+    a: "For a large population, 100 responses gives a margin of error of about ±10% at 95% confidence, which is fine for a rough estimate only."
 related: [statistics/margin-of-error, statistics/confidence-interval]
 ---
 
@@ -95,3 +101,32 @@ Comparing two groups needs a power calculation, which accounts for the smallest 
 | ±1% | 9604 |
 
 Account for non-responses: if you expect a 20% response rate, invite five times as many people.
+
+## Sample size table by population (95% confidence)
+
+| Population | ±10% | ±5% | ±3% | ±1% |
+|---|---|---|---|---|
+| 100 | 50 | 80 | 92 | 99 |
+| 200 | 66 | 132 | 169 | 196 |
+| 500 | 81 | 218 | 341 | 476 |
+| 1,000 | 88 | 278 | 517 | 906 |
+| 2,000 | 92 | 323 | 697 | 1,656 |
+| 5,000 | 95 | 357 | 880 | 3,289 |
+| 10,000 | 96 | 370 | 965 | 4,900 |
+| 50,000 | 96 | 382 | 1,045 | 8,057 |
+| 100,000 | 96 | 383 | 1,056 | 8,763 |
+| 1,000,000 | 97 | 385 | 1,066 | 9,513 |
+| Unlimited | 97 | 385 | 1,068 | 9,604 |
+
+Based on p = 50% (the most conservative case) with the finite population correction.
+
+## Sample size at 99% confidence
+
+| Population | ±5% | ±3% |
+|---|---|---|
+| 500 | 286 | 394 |
+| 1,000 | 400 | 649 |
+| 5,000 | 586 | 1,347 |
+| 10,000 | 623 | 1,557 |
+| 100,000 | 660 | 1,810 |
+| Unlimited | 664 | 1,843 |

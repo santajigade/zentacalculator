@@ -4,7 +4,7 @@ description: Convert a 4–20 mA loop current to a process value (and back) for 
 category: engineering
 intro: "The 4–20 mA current loop is the standard analog signal in process instrumentation: 4 mA means 0% of the range and 20 mA means 100%. Converting between current and process value is daily work for instrument engineers — see the [4 to 20 mA current loop explained](https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/) and [PLC analog scaling from raw counts](https://www.instrumentationblog.in/plc-analog-scaling-raw-count/). This free 4–20 mA scaling calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [4-20 mA, 4 20 ma calculator, current loop, scaling, transmitter, mA to pressure, mA to temperature, percent span, plc scaling]
-updated: 2026-10-27
+updated: 2026-11-09
 featured: true
 variables:
   - { id: I, label: Loop current, family: current, unit: mA, default: 12, min: 0, max: 0.03 }
@@ -29,6 +29,12 @@ faq:
     a: "50% of span. 4 mA is 0% and 20 mA is 100%, so each 1.6 mA is 10%."
   - q: "What does a reading below 3.8 mA mean?"
     a: "Under NAMUR NE 43, values below 3.8 mA indicate a fault or a reading below range, and below 3.6 mA a failure signal."
+  - q: "What is 12 mA in a 4 to 20 mA loop?"
+    a: "12 mA is exactly 50% of span. On a 0 to 10 bar transmitter that is 5 bar."
+  - q: "What does each mA represent in 4 to 20 mA?"
+    a: "Each 1 mA is 6.25% of the measuring span, because the 16 mA span covers 100%."
+  - q: "How do I convert 4 to 20 mA to 1 to 5 V?"
+    a: "Pass the loop current through a 250 Ω resistor. 4 mA gives 1 V and 20 mA gives 5 V."
 related: [engineering/hydrostatic-pressure, engineering/pt100-resistance, physics/ohms-law]
 ---
 
@@ -112,3 +118,27 @@ HART adds a digital signal on top of the analog current, letting you read the ta
 ## Converting mA to volts
 
 Many PLC inputs read the loop as a voltage across a 250 Ω resistor, giving 1–5 V. Use the [Ohm's law calculator](/physics/ohms-law/) to check other resistor values.
+
+## 4 to 20 mA conversion chart for common ranges
+
+| Current | % of span | 0 to 10 bar | 0 to 100 °C | −50 to 150 °C | 0 to 250 m³/h |
+|---|---|---|---|---|---|
+| 4 mA | 0% | 0 bar | 0 °C | -50 °C | 0 m³/h |
+| 5 mA | 6.25% | 0.625 bar | 6.25 °C | -37.5 °C | 15.62 m³/h |
+| 6 mA | 12.5% | 1.25 bar | 12.5 °C | -25 °C | 31.25 m³/h |
+| 7 mA | 18.75% | 1.875 bar | 18.75 °C | -12.5 °C | 46.88 m³/h |
+| 8 mA | 25% | 2.5 bar | 25 °C | 0 °C | 62.5 m³/h |
+| 9 mA | 31.25% | 3.125 bar | 31.25 °C | 12.5 °C | 78.12 m³/h |
+| 10 mA | 37.5% | 3.75 bar | 37.5 °C | 25 °C | 93.75 m³/h |
+| 11 mA | 43.75% | 4.375 bar | 43.75 °C | 37.5 °C | 109.38 m³/h |
+| 12 mA | 50% | 5 bar | 50 °C | 50 °C | 125 m³/h |
+| 13 mA | 56.25% | 5.625 bar | 56.25 °C | 62.5 °C | 140.62 m³/h |
+| 14 mA | 62.5% | 6.25 bar | 62.5 °C | 75 °C | 156.25 m³/h |
+| 15 mA | 68.75% | 6.875 bar | 68.75 °C | 87.5 °C | 171.88 m³/h |
+| 16 mA | 75% | 7.5 bar | 75 °C | 100 °C | 187.5 m³/h |
+| 17 mA | 81.25% | 8.125 bar | 81.25 °C | 112.5 °C | 203.12 m³/h |
+| 18 mA | 87.5% | 8.75 bar | 87.5 °C | 125 °C | 218.75 m³/h |
+| 19 mA | 93.75% | 9.375 bar | 93.75 °C | 137.5 °C | 234.38 m³/h |
+| 20 mA | 100% | 10 bar | 100 °C | 150 °C | 250 m³/h |
+
+Each 1 mA is 6.25% of span. For any other range, multiply the % of span by the span and add the lower range value.

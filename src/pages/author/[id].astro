@@ -3,12 +3,15 @@ import Base from '../../layouts/Base.astro';
 import { SITE } from '../../site.config.ts';
 import { AUTHORS, authorUrl, type Author } from '../../data/authors.ts';
 import { allCalcs, urlOf } from '../../lib/calcs.ts';
+import { CATEGORIES } from '../../data/categories.ts';
 
 export function getStaticPaths() {
   return AUTHORS.map((a) => ({ params: { id: a.id }, props: { a } }));
 }
 const { a } = Astro.props as { a: Author };
 const calcs = (await allCalcs()).filter((c) => c.data.author === a.id || c.data.reviewer === a.id);
+const byCat = CATEGORIES.map((k) => ({ id: k.slug, name: k.name, n: calcs.filter((c) => c.data.category === k.slug).length })).filter((g) => g.n);
+const recent = [...calcs].sort((x, y) => +new Date(y.data.updated) - +new Date(x.data.updated)).slice(0, 24);
 const schema = [{
   '@context': 'https://schema.org', '@type': 'ProfilePage',
   mainEntity: {
@@ -35,7 +38,11 @@ const schema = [{
     </div>
     <h2 class="section-title">Areas of expertise</h2>
     <ul class="chips">{a.expertise.map((e) => <li>{e}</li>)}</ul>
+    {a.about?.map((s) => <><h2 class="section-title">{s.h}</h2><p>{s.p}</p></>)}
     <h2 class="section-title">Calculators by {a.name.split(' ')[0]} ({calcs.length})</h2>
-    <ul class="calc-list">{calcs.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}</ul>
+    <p>Browse by category:</p>
+    <ul class="chips">{byCat.map((g) => <li><a href={`/${g.id}/`}>{g.name} ({g.n})</a></li>)}</ul>
+    <h3 class="section-title">Recently updated</h3>
+    <ul class="calc-list">{recent.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}</ul>
   </div>
 </Base>

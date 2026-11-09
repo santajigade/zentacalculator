@@ -4,7 +4,7 @@ description: Calculate population doubling time and growth rate from starting an
 category: biology
 intro: "Doubling time is how long a cell population takes to double in number. It is the standard way to compare how fast cultured cells, bacteria or tumours grow. This free cell doubling time calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [doubling time, cell doubling time, population doubling, cell culture growth, generation time]
-updated: 2026-10-27
+updated: 2026-11-09
 featured: true
 variables:
   - { id: N0, label: Initial cell count, default: 100000, min: 0 }
@@ -26,6 +26,12 @@ faq:
     a: "Doubling time = time × ln 2 ÷ ln(final ÷ initial). From 100,000 to 800,000 in 72 hours is 3 doublings, so 24 hours."
   - q: "Why is my doubling time longer than expected?"
     a: "Common causes are over-confluence, old medium, high passage number, contamination or a long lag phase after passaging."
+  - q: "What is the doubling time if cells grow 10-fold in 72 hours?"
+    a: "About 21.7 hours. 10-fold is 3.32 doublings."
+  - q: "How many cells will I have after 3 days?"
+    a: "Multiply the starting count by 2 to the power of (hours ÷ doubling time). With a 24 hour doubling time, 1 × 10⁵ cells become 8 × 10⁵."
+  - q: "Is doubling time the same as generation time?"
+    a: "For cultures where every cell divides, yes. Generation time usually refers to bacteria, doubling time to mammalian cell lines."
 related: [biology/bacterial-growth, biology/specific-growth-rate, biology/hemocytometer]
 ---
 
@@ -82,3 +88,20 @@ To have 5 million cells from 500,000 with a 24-hour doubling time: log₂(10) = 
 - Count in the exponential phase, not when cells are confluent.
 - Use the same counting method each time — see the [hemocytometer calculator](/biology/hemocytometer/).
 - Exclude dead cells with trypan blue.
+
+## Fold increase to doubling time chart
+
+| Fold increase | Doublings | Over 24 h | Over 48 h | Over 72 h |
+|---|---|---|---|---|
+| 1.5× | 0.58 | 41 h | 82.1 h | 123.1 h |
+| 2× | 1 | 24 h | 48 h | 72 h |
+| 3× | 1.58 | 15.1 h | 30.3 h | 45.4 h |
+| 4× | 2 | 12 h | 24 h | 36 h |
+| 5× | 2.32 | 10.3 h | 20.7 h | 31 h |
+| 8× | 3 | 8 h | 16 h | 24 h |
+| 10× | 3.32 | 7.2 h | 14.4 h | 21.7 h |
+| 16× | 4 | 6 h | 12 h | 18 h |
+| 20× | 4.32 | 5.6 h | 11.1 h | 16.7 h |
+| 32× | 5 | 4.8 h | 9.6 h | 14.4 h |
+
+Read across: cells that grew 4× in 48 hours went through 2 doublings, so the doubling time is **24 hours**.

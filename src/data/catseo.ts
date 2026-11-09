@@ -230,6 +230,24 @@ export const CAT_SEO: Record<string, CatSEO> = {
     description: 'Free ecology calculators: carbon footprint of cars, flights and electricity, solar system size and output, EV charging and running cost, rainwater harvesting and water savings.',
     h1: 'Ecology & energy calculators',
     intro: 'Free online calculators for a lighter footprint. Measure the **carbon footprint** of driving, flying and electricity, size a **solar system** and **battery**, compare **EV vs petrol** costs, and work out **rainwater harvesting** and **water savings**.',
+    groups: [
+      { name: 'Solar, wind & storage', ids: ['solar-system-size', 'solar-output', 'battery-storage', 'wind-turbine-power'] },
+      { name: 'Electric vehicles & transport', ids: ['ev-vs-petrol', 'ev-charging-time', 'bike-vs-car', 'car-carbon-footprint', 'flight-emissions'] },
+      { name: 'Carbon footprint & offsets', ids: ['electricity-co2', 'carbon-offset-cost', 'tree-offset', 'led-savings'] },
+      { name: 'Water saving', ids: ['rainwater-harvesting', 'shower-water', 'water-leak', 'garden-irrigation'] },
+      { name: 'Garden & field ecology', ids: ['compost-ratio', 'pond-liner', 'mark-recapture', 'population-density'] },
+    ],
+    about: [
+      { h: 'Turn green choices into numbers', p: 'Saving energy, water and carbon is easier when you can see the figures. These calculators show how many kWh a rooftop solar system will make, how much CO₂ your car or flight emits, what an EV really costs per kilometre compared with petrol, and how much water a leaking tap or long shower wastes in a year.' },
+      { h: 'How the figures are calculated', p: 'Carbon results use published emission factors per kWh, litre of fuel and passenger kilometre, which you can change to match your country or supplier. Solar estimates use peak sun hours and a system loss factor; EV costs use your own tariff and fuel price. Every result shows the formula so you can check it.' },
+      { h: 'For homes, schools and field work', p: 'Use them to size a home solar and battery system, plan rainwater storage, compare commuting options, or set class projects on energy saving. The field ecology tools (mark and recapture, population density) help students and researchers estimate wildlife populations.' },
+    ],
+    faq: [
+      { q: 'How much CO₂ does 1 kWh of electricity produce?', a: 'It depends on the grid. India averages about 0.7 kg CO₂ per kWh, the UK about 0.2 kg and France under 0.1 kg. Enter your own factor in the electricity CO₂ calculator.' },
+      { q: 'What size solar system do I need for my home?', a: 'Divide your daily kWh use by the local peak sun hours and allow about 20% for losses. 10 kWh a day with 5 sun hours needs roughly a 2.5 kW system.' },
+      { q: 'Is an EV cheaper to run than a petrol car?', a: 'Usually yes. At typical Indian prices an EV costs about ₹1 to ₹2 per km against ₹6 to ₹8 per km for petrol. Try the EV vs petrol calculator with your own numbers.' },
+      { q: 'How many trees offset one tonne of CO₂?', a: 'A mature tree absorbs about 20 to 25 kg of CO₂ a year, so roughly 40 to 50 trees offset one tonne each year.' },
+    ],
   },
   'everyday-life': {
     title: 'Everyday Calculators – Age, Dates, Time, Fuel Cost, Tips & More',

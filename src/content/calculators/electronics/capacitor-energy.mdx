@@ -1,60 +1,79 @@
 ---
-title: Capacitor Energy and Charge Calculator
-description: Calculate the energy stored in a capacitor and its charge from capacitance and voltage — for supercapacitors, DC links and flash circuits.
+title: Capacitor Energy Calculator (Stored Energy ½CV² & Charge)
+description: Calculate the energy stored in a capacitor (½CV²), its charge (Q = CV) and the usable energy when it discharges to a lower voltage — for DC links and supercaps.
 category: electronics
-intro: "A capacitor stores energy in the electric field between its plates, and the amount rises with the square of the voltage. Read about the [capacitor working principle](https://www.instrumentationblog.in/capacitor-working-principle/) and how [supercapacitors](https://www.instrumentationblog.in/supercapacitor-working-principle/) store far more. This free capacitor energy and charge calculator solves for whichever value you leave blank and shows the formula and steps."
-keywords: [capacitor energy calculator, energy stored in capacitor, 1/2 cv2, capacitor charge calculator, q = cv, supercapacitor energy, capacitor joules]
-updated: 2026-10-27
+intro: "A capacitor stores energy in the electric field between its plates, and the amount rises with the square of the voltage — see the [capacitor working principle](https://www.instrumentationblog.in/capacitor-working-principle/) and how [supercapacitors](https://www.instrumentationblog.in/supercapacitor-working-principle/) store far more. This capacitor energy calculator gives the stored energy in joules, the charge in coulombs and the usable energy delivered when the capacitor discharges to a lower voltage."
+keywords: [capacitor energy calculator, energy stored in capacitor, 1/2 cv2, capacitor charge calculator, q = cv, supercapacitor energy, capacitor joules, usable capacitor energy]
+updated: 2026-11-09
 variables:
   - { id: C, label: Capacitance, family: capacitance, unit: uF, default: 1000, min: 0 }
-  - { id: V, label: Voltage, family: voltage, unit: V, default: 50, min: 0 }
+  - { id: V, label: Voltage (charged to), family: voltage, unit: V, default: 50, min: 0 }
   - { id: E, label: Stored energy, family: energy, unit: J, min: 0 }
   - { id: Q, label: Charge, suffix: C (coulombs), min: 0, decimals: 6 }
+  - { id: V2, label: Voltage it discharges down to, family: voltage, unit: V, default: 25, min: 0, help: 'For example the minimum input voltage of the regulator it feeds. Enter 0 for a full discharge.' }
+  - { id: Eu, label: Usable energy between the two voltages, family: energy, unit: J, min: 0 }
+  - { id: fu, label: Share of stored energy that is usable, family: percent, unit: '%', min: 0 }
 equations:
   - E = 0.5 * C * V^2
   - Q = C * V
+  - Eu = 0.5 * C * (V^2 - V2^2)
+  - fu = Eu / E
 faq:
   - q: How much energy does a capacitor store?
-    a: E = ½ × C × V². A 1,000 µF capacitor at 50 V stores 1.25 J.
+    a: E = ½ × C × V², with C in farads and V in volts, giving joules. A 1,000 µF capacitor at 50 V stores 1.25 J.
   - q: How much usable energy is there between two voltages?
-    a: E = ½ C (V₁² − V₂²). A supercapacitor discharged from full voltage to half voltage delivers 75% of its stored energy.
+    a: E = ½ C (V₁² − V₂²). Discharging from full voltage to half voltage delivers 75% of the stored energy, which is why supercapacitor backup circuits use a converter that works down to a low input voltage.
   - q: Why are charged capacitors dangerous?
-    a: Large capacitors in power supplies, VFDs and microwave ovens can hold lethal energy for minutes after switch-off. Always discharge and verify with a meter before working.
-  - q: What is the charge on a capacitor?
-    a: Q = C × V, in coulombs.
-related: [physics/rc-time-constant, electronics/inductor-energy, electronics/reactance, electronics/capacitor-lifetime]
+    a: Large capacitors in power supplies, VFDs and microwave ovens can hold a lethal charge for minutes after switch-off. Safety standards treat a capacitor above about 60 V DC as a shock hazard once its stored charge exceeds a few tens of microcoulombs — a 10 µF capacitor at 100 V already holds 1,000 µC. Always discharge it and verify 0 V with a meter.
+  - q: How do I convert capacitor energy to watt-hours?
+    a: Divide joules by 3,600. A 3,000 F, 2.7 V supercapacitor stores 10,935 J, or about 3.04 Wh.
+related: [electronics/capacitors-series-parallel, physics/rc-time-constant, electronics/inductor-energy, electronics/capacitor-lifetime]
 ---
 
-## How to use the capacitor energy and charge calculator
+## How to use the capacitor energy calculator
 
-Enter the **capacitance** and the **voltage**. The calculator gives the stored energy and the charge. Press × on Voltage to find the voltage needed to store a given energy.
-
-For more background, read [Capacitor Types Explained](https://www.instrumentationblog.in/capacitor-types-explained/) and [How to Test a Capacitor](https://www.instrumentationblog.in/how-to-test-a-capacitor/).
+Enter the **capacitance** and the **voltage** it is charged to. The calculator gives the stored energy and the charge. To see how much of that energy a circuit can actually use, enter the **voltage it discharges down to** — the usable energy and its share of the total appear below. Press × on Voltage to find the voltage needed to store a given energy.
 
 ## Capacitor energy and charge formulas
 
-<p class="formula">E = ½ × C × V² &nbsp;·&nbsp; Q = C × V</p>
+<p class="formula">E = ½ C V² &nbsp;·&nbsp; Q = C V &nbsp;·&nbsp; E<sub>usable</sub> = ½ C (V₁² − V₂²)</p>
 
-## Stored energy examples
+Because energy grows with V², doubling the voltage stores four times the energy, while doubling the capacitance only doubles it.
 
-| Capacitor | Voltage | Energy |
+## Worked example
+
+A 1,000 µF capacitor charged to 50 V that feeds a circuit which stops working below 25 V:
+
+- Stored energy E = ½ × 0.001 F × 50² = **1.25 J**
+- Charge Q = 0.001 × 50 = **0.05 C**
+- Usable energy = ½ × 0.001 × (50² − 25²) = **0.9375 J**, or **75%** of the stored energy
+
+## Stored energy of common capacitors
+
+| Capacitor | Voltage | Charge | Energy | Energy (Wh) |
+|---|---|---|---|---|
+| 100 µF electrolytic | 25 V | 0.0025 C | 0.03125 J | 8.681e-06 Wh |
+| 1,000 µF electrolytic | 50 V | 0.05 C | 1.25 J | 0.0003472 Wh |
+| Camera flash, 200 µF | 330 V | 0.066 C | 10.89 J | 0.003025 Wh |
+| 4,700 µF DC bus | 400 V | 1.88 C | 376 J | 0.1044 Wh |
+| VFD DC link, 2 × 2,200 µF | 650 V | 2.86 C | 929.5 J | 0.2582 Wh |
+| Supercapacitor 10 F | 2.7 V | 27 C | 36.45 J | 0.01013 Wh |
+| Supercapacitor 3,000 F | 2.7 V | 8,100 C | 1.094e+04 J | 3.038 Wh |
+
+## How much energy is usable?
+
+| Discharged to (% of full voltage) | Energy delivered | Energy left |
 |---|---|---|
-| 100 µF electrolytic | 25 V | 0.031 J |
-| 1,000 µF electrolytic | 50 V | 1.25 J |
-| 4,700 µF DC bus | 400 V | 376 J |
-| Camera flash, 200 µF | 330 V | 10.9 J |
-| Supercapacitor 10 F | 2.7 V | 36.5 J |
-| Supercapacitor 3,000 F | 2.7 V | 10,935 J (3.04 Wh) |
+| 90% | 19% | 81% |
+| 75% | 44% | 56% |
+| 50% | 75% | 25% |
+| 25% | 94% | 6% |
+| 10% | 99% | 1% |
+| 0% | 100% | 0% |
 
-## Supercapacitors vs batteries
+## Practical notes
 
-A 3,000 F, 2.7 V supercapacitor stores about 3 Wh — roughly what a few AA batteries hold — but can deliver it in seconds and survive hundreds of thousands of cycles. They suit short backup, regenerative braking and burst power.
-
-## Safety
-
-Energy above about 0.25 J at voltages over 50 V can give a dangerous shock. Discharge large capacitors through a suitable resistor (not a screwdriver), then confirm 0 V with a meter.
-
-## Series and parallel
-
-- Parallel: C = C₁ + C₂ (same voltage rating).
-- Series: 1/C = 1/C₁ + 1/C₂ — higher voltage, lower capacitance; use balancing resistors.
+- **Supercapacitors vs batteries:** a 3,000 F, 2.7 V supercapacitor stores about 3 Wh — roughly what a few AA batteries hold — but can deliver it in seconds and survive hundreds of thousands of cycles, which suits short backup, regenerative braking and burst power.
+- **Series strings:** capacitors in series share the voltage, so the bank voltage rises but the capacitance falls (1/C = 1/C₁ + 1/C₂); use balancing resistors or active balancing for supercapacitors.
+- **Derating:** electrolytic capacitance has a −20% tolerance and falls with age and cold; ceramic capacitors lose capacitance under DC bias. Use the worst-case value for hold-up time.
+- **Safe discharge:** use a resistor sized for the energy (not a screwdriver), and allow for dielectric absorption — a large capacitor can recover a few percent of its voltage after being shorted.

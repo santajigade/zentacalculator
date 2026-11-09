@@ -1,0 +1,98 @@
+---
+title: LC Filter Calculator (Low-Pass Cutoff, Q & Attenuation)
+description: Calculate the cutoff frequency, characteristic impedance, Q factor and attenuation of a second-order LC low-pass filter driving a resistive load.
+category: electronics
+intro: "A series inductor followed by a shunt capacitor makes a second-order low-pass filter that falls at 40 dB per decade above its cutoff — the output filter of every [buck converter](https://www.instrumentationblog.in/buck-converter-working-principle/), and a common supply and audio filter. This LC filter calculator gives the cutoff frequency, the characteristic impedance √(L/C), the Q factor set by the load and the attenuation at any frequency, so you can check both ripple rejection and resonant peaking."
+keywords: [lc filter calculator, lc low pass filter calculator, lc filter cutoff frequency, lc filter design, second order low pass filter, lc filter q factor, output filter attenuation]
+updated: 2026-11-09
+variables:
+  - { id: L, label: Inductance L (series), family: inductance, unit: uH, default: 33, min: 0 }
+  - { id: C, label: Capacitance C (shunt), family: capacitance, unit: uF, default: 22, min: 0 }
+  - { id: R, label: Load resistance R, family: resistance, unit: ohm, default: 1.2, min: 0, help: 'The resistance across the capacitor — e.g. output voltage ÷ load current.' }
+  - { id: f, label: Frequency to check, family: frequency, unit: kHz, default: 100, min: 0, help: 'For a switching supply, the switching frequency (ripple frequency).' }
+  - { id: f0, label: Cutoff (resonant) frequency f₀, family: frequency, unit: Hz, min: 0 }
+  - { id: Z0, label: Characteristic impedance √(L/C), family: resistance, unit: ohm, min: 0 }
+  - id: Q
+    label: Q factor with this load
+    min: 0
+    decimals: 3
+    bands:
+      - { max: 0.5, label: Over-damped — slow roll-off near f₀, color: '#eab308' }
+      - { max: 1.0, label: Well damped (0.5–1) — little or no peaking, color: '#16a34a' }
+      - { max: 2.0, label: Some peaking at f₀, color: '#f97316' }
+      - { max: 1e9, label: High peaking — add damping, color: '#dc2626' }
+  - { id: x, label: Frequency ratio f ÷ f₀, min: 0, decimals: 3 }
+  - { id: H, label: Gain at the chosen frequency (Vout ÷ Vin), min: 0, decimals: 6 }
+  - { id: AdB, label: Gain at the chosen frequency, suffix: dB, decimals: 1 }
+  - { id: G0, label: Gain at f₀ (peaking), suffix: dB, decimals: 2 }
+equations:
+  - f0 = 1 / (2 * pi * sqrt(L * C))
+  - Z0 = sqrt(L / C)
+  - Q = R / Z0
+  - x = f / f0
+  - H = 1 / sqrt((1 - x^2)^2 + (x / Q)^2)
+  - AdB = 20 * log10(H)
+  - G0 = 20 * log10(Q)
+faq:
+  - q: What is the cutoff frequency of an LC filter?
+    a: f₀ = 1 ÷ (2π√(LC)), with L in henries and C in farads. Above f₀ the output falls at 40 dB per decade (12 dB per octave), twice as fast as an RC filter.
+  - q: What does the load resistance do to an LC filter?
+    a: It sets the damping. Q = R ÷ √(L/C). A light load (high R) gives a high Q and a resonant peak at f₀; a load near √(L/C) gives Q ≈ 1 and a flat response. At Q = 0.707 the response is maximally flat (Butterworth).
+  - q: How much does an LC filter attenuate ripple?
+    a: Well above f₀ the gain is about (f₀ ÷ f)². A filter with f₀ = 1 kHz reduces 100 kHz ripple by about 10,000 times (−80 dB), before capacitor ESR and ESL limit it.
+  - q: How do I damp an LC filter?
+    a: Add resistance in series with an extra capacitor across C (an RC damper), use a capacitor with suitable ESR, or put a resistor in parallel with the inductor. The damper should give an effective Q of about 0.5–1.
+related: [electronics/resonant-frequency, electronics/rc-filter, electronics/buck-converter, electronics/reactance]
+---
+
+## How to use the LC filter calculator
+
+Enter the series **inductance**, the shunt **capacitance**, the **load resistance** across the capacitor and a **frequency to check** (for a switching regulator, the switching frequency). The calculator gives the cutoff frequency, the characteristic impedance, the Q factor and the gain at your frequency as a ratio and in dB, plus the gain at f₀, which shows how much the filter peaks. To design for a target cutoff, enter f₀ and the inductance and press × on Capacitance.
+
+## LC low-pass filter formulas
+
+<p class="formula">f₀ = 1 ÷ (2π√(LC)) &nbsp;·&nbsp; Z₀ = √(L ÷ C) &nbsp;·&nbsp; Q = R ÷ Z₀</p>
+
+<p class="formula">|H(f)| = 1 ÷ √[(1 − x²)² + (x ÷ Q)²], &nbsp; x = f ÷ f₀</p>
+
+At f = f₀ the gain equals Q. Far above f₀ it approaches 1 ÷ x², i.e. −40 dB per decade. The formula is for ideal parts — the ESR of the capacitor adds damping but also a zero that flattens the roll-off at high frequency.
+
+## Worked example
+
+A buck converter output filter with L = 33 µH, C = 22 µF and a 1.2 Ω load, switching at 100 kHz:
+
+- f₀ = 1 ÷ (2π√(33 µH × 22 µF)) = **5,907 Hz**
+- Z₀ = √(33 µH ÷ 22 µF) = **1.2247 Ω**, so Q = 1.2 ÷ 1.2247 = **0.980** — well damped
+- At 100 kHz, x = 16.930 and the gain is **0.003495** = **−49.1 dB**, so the ripple is reduced about 286 times
+- Gain at f₀ = 20 log₁₀(0.980) = **−0.18 dB** — no significant peaking
+
+## Cutoff frequency and characteristic impedance
+
+| L | C | f₀ | Z₀ = √(L/C) |
+|---|---|---|---|
+| 10 µH | 10 µF | 15.9 kHz | 1 Ω |
+| 22 µH | 47 µF | 4.95 kHz | 0.684 Ω |
+| 33 µH | 22 µF | 5.91 kHz | 1.22 Ω |
+| 47 µH | 100 µF | 2.32 kHz | 0.686 Ω |
+| 100 µH | 100 µF | 1.59 kHz | 1 Ω |
+| 1 mH | 10 µF | 1.59 kHz | 10 Ω |
+| 10 mH | 1 µF | 1.59 kHz | 100 Ω |
+
+## Gain versus frequency and Q
+
+| Frequency | Q = 0.5 | Q = 0.707 | Q = 1 | Q = 2 | Q = 5 |
+|---|---|---|---|---|---|
+| 0.5 × f₀ | −1.9 dB | −0.3 dB | +0.9 dB | +2.0 dB | +2.4 dB |
+| 1 × f₀ | −6.0 dB | −3.0 dB | +0.0 dB | +6.0 dB | +14.0 dB |
+| 2 × f₀ | −14.0 dB | −12.3 dB | −11.1 dB | −10.0 dB | −9.6 dB |
+| 5 × f₀ | −28.3 dB | −28.0 dB | −27.8 dB | −27.7 dB | −27.6 dB |
+| 10 × f₀ | −40.1 dB | −40.0 dB | −40.0 dB | −39.9 dB | −39.9 dB |
+| 100 × f₀ | −80.0 dB | −80.0 dB | −80.0 dB | −80.0 dB | −80.0 dB |
+
+## Practical notes
+
+- **Light load = high Q.** A converter filter that is well damped at full load can ring at no load; check Q at the minimum load too.
+- Place f₀ at least a decade below the switching frequency, and well away from the control-loop crossover frequency of the regulator.
+- Use the capacitance **at the working voltage** — ceramic X5R/X7R capacitors can lose 50% or more of their value under DC bias.
+- The inductor must not saturate at the peak load current, and its self-resonant frequency limits attenuation at very high frequencies.
+- An LC input filter in front of a switching regulator can make it oscillate (negative input impedance); its output impedance Z₀ should be well below the regulator's input impedance.

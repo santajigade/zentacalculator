@@ -1,0 +1,107 @@
+---
+title: Control Chart Calculator (X-bar & R Chart Limits)
+description: Calculate X-bar and R control chart limits — UCL, centre line and LCL — from the grand mean, average range and subgroup size, with A2, D3 and D4 constants.
+category: statistics
+intro: "An X-bar and R chart tracks the average and the range of small subgroups taken from a process, and flags points outside limits set three standard errors from the centre line. This control chart calculator takes the grand mean, the average range and the subgroup size, looks up the A₂, D₃, D₄ and d₂ constants and gives the upper and lower control limits for both charts, plus the estimated process standard deviation."
+keywords: [control chart calculator, x bar r chart calculator, ucl lcl calculator, control limits calculator, x bar chart limits, range chart limits, a2 d3 d4 constants, spc calculator]
+updated: 2026-11-09
+variables:
+  - { id: X, label: Grand mean X̿ (average of subgroup means), default: 50 }
+  - { id: Rb, label: Average range R̄, default: 2, min: 0 }
+  - id: n
+    label: Subgroup size n
+    default: 5
+    options:
+      - { label: '2', value: 2 }
+      - { label: '3', value: 3 }
+      - { label: '4', value: 4 }
+      - { label: '5', value: 5 }
+      - { label: '6', value: 6 }
+      - { label: '7', value: 7 }
+      - { label: '8', value: 8 }
+      - { label: '9', value: 9 }
+      - { label: '10', value: 10 }
+  - { id: A2, label: A₂ constant, decimals: 3 }
+  - { id: D3, label: D₃ constant, decimals: 3 }
+  - { id: D4, label: D₄ constant, decimals: 3 }
+  - { id: d2, label: d₂ constant, decimals: 3 }
+  - { id: UCLx, label: X-bar chart upper control limit (UCL), decimals: 4 }
+  - { id: LCLx, label: X-bar chart lower control limit (LCL), decimals: 4 }
+  - { id: UCLr, label: R chart upper control limit, decimals: 4 }
+  - { id: LCLr, label: R chart lower control limit, decimals: 4 }
+  - { id: s, label: Estimated process standard deviation σ = R̄ ÷ d₂, decimals: 4 }
+equations:
+  - A2 = (step(n - 1.5) - step(n - 2.5)) * 1.88 + (step(n - 2.5) - step(n - 3.5)) * 1.023 + (step(n - 3.5) - step(n - 4.5)) * 0.729 + (step(n - 4.5) - step(n - 5.5)) * 0.577 + (step(n - 5.5) - step(n - 6.5)) * 0.483 + (step(n - 6.5) - step(n - 7.5)) * 0.419 + (step(n - 7.5) - step(n - 8.5)) * 0.373 + (step(n - 8.5) - step(n - 9.5)) * 0.337 + (step(n - 9.5) - step(n - 10.5)) * 0.308
+  - D3 = (step(n - 6.5) - step(n - 7.5)) * 0.076 + (step(n - 7.5) - step(n - 8.5)) * 0.136 + (step(n - 8.5) - step(n - 9.5)) * 0.184 + (step(n - 9.5) - step(n - 10.5)) * 0.223
+  - D4 = (step(n - 1.5) - step(n - 2.5)) * 3.267 + (step(n - 2.5) - step(n - 3.5)) * 2.574 + (step(n - 3.5) - step(n - 4.5)) * 2.282 + (step(n - 4.5) - step(n - 5.5)) * 2.114 + (step(n - 5.5) - step(n - 6.5)) * 2.004 + (step(n - 6.5) - step(n - 7.5)) * 1.924 + (step(n - 7.5) - step(n - 8.5)) * 1.864 + (step(n - 8.5) - step(n - 9.5)) * 1.816 + (step(n - 9.5) - step(n - 10.5)) * 1.777
+  - d2 = (step(n - 1.5) - step(n - 2.5)) * 1.128 + (step(n - 2.5) - step(n - 3.5)) * 1.693 + (step(n - 3.5) - step(n - 4.5)) * 2.059 + (step(n - 4.5) - step(n - 5.5)) * 2.326 + (step(n - 5.5) - step(n - 6.5)) * 2.534 + (step(n - 6.5) - step(n - 7.5)) * 2.704 + (step(n - 7.5) - step(n - 8.5)) * 2.847 + (step(n - 8.5) - step(n - 9.5)) * 2.97 + (step(n - 9.5) - step(n - 10.5)) * 3.078
+  - UCLx = X + A2 * Rb
+  - LCLx = X - A2 * Rb
+  - UCLr = D4 * Rb
+  - LCLr = D3 * Rb
+  - s = Rb / d2
+faq:
+  - q: How do you calculate X-bar chart control limits?
+    a: UCL = X̿ + A₂R̄ and LCL = X̿ − A₂R̄, where X̿ is the average of the subgroup means, R̄ the average subgroup range and A₂ a constant that depends on the subgroup size (0.577 for n = 5).
+  - q: How do you calculate R chart control limits?
+    a: UCL = D₄R̄ and LCL = D₃R̄. For subgroups of 6 or fewer D₃ = 0, so the lower limit of the range chart is zero.
+  - q: Where do the A₂, D₃ and D₄ constants come from?
+    a: They come from the distribution of the range of n normal values. d₂ is the mean of that range in standard-deviation units, so σ ≈ R̄ ÷ d₂, and A₂ = 3 ÷ (d₂√n) puts the X-bar limits at ±3 standard errors.
+  - q: Are control limits the same as specification limits?
+    a: No. Control limits come from the process data and show what the process actually does; specification limits come from the customer or design. Use the process capability calculator to compare the two.
+related: [statistics/process-capability, statistics/six-sigma, statistics/standard-deviation, statistics/normal-distribution]
+---
+
+## How to use the control chart calculator
+
+Collect at least 20–25 subgroups of the same size (typically 4 or 5 consecutive parts). Work out the mean and the range (max − min) of each subgroup, then enter the **average of the subgroup means** (X̿), the **average range** (R̄) and the **subgroup size**. The calculator shows the control chart constants and the control limits for the X-bar chart and the R chart, and estimates the short-term process standard deviation.
+
+## X-bar and R chart formulas
+
+<p class="formula">X-bar chart: UCL = X̿ + A₂R̄ &nbsp;·&nbsp; CL = X̿ &nbsp;·&nbsp; LCL = X̿ − A₂R̄</p>
+
+<p class="formula">R chart: UCL = D₄R̄ &nbsp;·&nbsp; CL = R̄ &nbsp;·&nbsp; LCL = D₃R̄ &nbsp;·&nbsp; σ̂ = R̄ ÷ d₂</p>
+
+## Worked example
+
+A filling line is sampled in subgroups of 5 bottles. Over 25 subgroups the grand mean is 50 g and the average range is 2 g:
+
+- For n = 5: A₂ = 0.577, D₃ = 0, D₄ = 2.114, d₂ = 2.326
+- X-bar chart: UCL = 50 + 0.577 × 2 = **51.154 g**, LCL = **48.846 g**
+- R chart: UCL = 2.114 × 2 = **4.228 g**, LCL = **0 g**
+- Estimated process standard deviation σ = 2 ÷ 2.326 = **0.8598 g**
+
+## Control chart constants
+
+| n | A₂ | D₃ | D₄ | d₂ |
+|---|---|---|---|---|
+| 2 | 1.880 | 0.000 | 3.267 | 1.128 |
+| 3 | 1.023 | 0.000 | 2.574 | 1.693 |
+| 4 | 0.729 | 0.000 | 2.282 | 2.059 |
+| 5 | 0.577 | 0.000 | 2.114 | 2.326 |
+| 6 | 0.483 | 0.000 | 2.004 | 2.534 |
+| 7 | 0.419 | 0.076 | 1.924 | 2.704 |
+| 8 | 0.373 | 0.136 | 1.864 | 2.847 |
+| 9 | 0.337 | 0.184 | 1.816 | 2.970 |
+| 10 | 0.308 | 0.223 | 1.777 | 3.078 |
+
+## Limits for X̿ = 50 and R̄ = 2 at each subgroup size
+
+| n | X-bar chart LCL – UCL | R chart LCL – UCL | σ̂ = R̄ ÷ d₂ |
+|---|---|---|---|
+| 2 | 46.240 – 53.760 | 0.000 – 6.534 | 1.7730 |
+| 3 | 47.954 – 52.046 | 0.000 – 5.148 | 1.1813 |
+| 4 | 48.542 – 51.458 | 0.000 – 4.564 | 0.9713 |
+| 5 | 48.846 – 51.154 | 0.000 – 4.228 | 0.8598 |
+| 6 | 49.034 – 50.966 | 0.000 – 4.008 | 0.7893 |
+| 7 | 49.162 – 50.838 | 0.152 – 3.848 | 0.7396 |
+| 8 | 49.254 – 50.746 | 0.272 – 3.728 | 0.7025 |
+| 9 | 49.326 – 50.674 | 0.368 – 3.632 | 0.6734 |
+| 10 | 49.384 – 50.616 | 0.446 – 3.554 | 0.6498 |
+
+## Practical notes
+
+- **Plot the R chart first.** If the range is out of control, the X-bar limits (which depend on R̄) are not reliable.
+- Common out-of-control signals besides a point outside the limits: 7–8 points in a row on one side of the centre line, 6 points steadily rising or falling, and 2 of 3 points beyond 2σ (Western Electric rules).
+- Remove points with a known, corrected special cause and recalculate the limits; do not remove points just because they are outside.
+- For subgroups larger than about 10, use an X-bar and S chart; for single readings, use an individuals (I-MR) chart.

@@ -21,8 +21,8 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Flow measurement', ids: ['orifice-flow', 'venturi-flow', 'pitot-tube-velocity', 'weir-flow', 'mass-flow-rate', 'gas-flow-correction', 'pipe-flow-velocity', 'reynolds-number', 'rotameter-correction', 'vortex-shedding-frequency'] },
       { name: 'Pipe & open-channel hydraulics', ids: ['hazen-williams', 'minor-losses', 'manning-equation'] },
       { name: 'Pressure, level & tanks', ids: ['hydrostatic-pressure', 'dp-level-range', 'ultrasonic-level', 'vertical-tank-volume', 'horizontal-tank-volume', 'spherical-tank-volume', 'absolute-gauge-pressure', 'manometer', 'barlow-formula', 'darcy-weisbach-head-loss', 'water-hammer', 'api-gravity'] },
-      { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'valve-authority', 'pump-power', 'pump-affinity-laws', 'pressure-to-head', 'fan-affinity-laws', 'compressor-power', 'heat-duty', 'thermal-expansion'] },
-      { name: 'Heat transfer & HVAC', ids: ['lmtd', 'convection-heat-transfer', 'chiller-tonnage'] },
+      { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'valve-authority', 'pump-power', 'npsh-available', 'pump-affinity-laws', 'pressure-to-head', 'fan-affinity-laws', 'compressor-power', 'heat-duty', 'thermal-expansion'] },
+      { name: 'Heat transfer & HVAC', ids: ['lmtd', 'convection-heat-transfer', 'chiller-tonnage', 'dew-point'] },
       { name: 'Process & fluid properties', ids: ['residence-time', 'kinematic-viscosity'] },
       { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force', 'gear-ratio', 'shaft-diameter', 'bearing-life', 'bolt-torque', 'spring-rate'] },
       { name: 'Strength of materials & structures', ids: ['beam-deflection', 'bending-stress', 'area-moment-of-inertia', 'factor-of-safety', 'weld-size'] },
@@ -71,10 +71,10 @@ export const CAT_SEO: Record<string, CatSEO> = {
     intro: 'Free online electronics calculators for hobbyists, students and circuit designers. Find the right **LED resistor**, design a **voltage divider**, read a **resistor colour code**, set a **555 timer** frequency, choose an **RC filter** cut-off, size a **buck or boost converter** and check **PCB trace width** — each with formulas, standard values and design tips.',
     groups: [
       { name: 'Resistors & basic circuits', ids: ['led-resistor', 'voltage-divider', 'current-divider', 'resistor-color-code', 'zener-resistor', 'transistor-base-resistor', 'wheatstone-bridge'] },
-      { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'capacitor-lifetime', 'air-core-inductor', 'inductor-al-value'] },
+      { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'lc-filter', 'capacitor-lifetime', 'air-core-inductor', 'inductor-al-value'] },
       { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts', 'rc-phase-shift-oscillator', 'crystal-load-capacitance', 'uart-baud-rate-error', 'i2c-pull-up-resistor'] },
       { name: 'Op-amp circuits, active filters & comparators', ids: ['summing-amplifier', 'differential-amplifier', 'op-amp-integrator', 'sallen-key-low-pass', 'schmitt-trigger'] },
-      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'microstrip-impedance', 'battery-charge-time', 'lm317', 'buck-boost-converter', 'peukerts-law']
+      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'microstrip-impedance', 'battery-charge-time', 'lm317', 'buck-boost-converter', 'flyback-transformer', 'peukerts-law']
       },
       { name: 'RF & wireless', ids: ['antenna-length', 'free-space-path-loss'] },
       { name: 'Sensors & current sensing', ids: ['ntc-thermistor', 'strain-gauge', 'shunt-resistor', 'transimpedance-amplifier', 'hall-effect-current-sensor'] },
@@ -141,7 +141,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Geometry: 3D shapes', ids: ['box-volume', 'cylinder-volume', 'cone', 'sphere', 'pyramid-volume', 'frustum-volume', 'torus', 'hemisphere', 'capsule'] },
       { name: 'Triangles & trigonometry', ids: ['pythagorean-theorem', 'right-triangle-trig', 'law-of-cosines', 'law-of-sines', 'slope', 'angle-converter'] },
       { name: 'Coordinate geometry, vectors & interpolation', ids: ['distance-midpoint', 'vector', 'complex-number', 'linear-interpolation'] },
-      { name: 'Algebra & numbers', ids: ['quadratic-equation', 'exponent', 'square-root', 'logarithm', 'factorial', 'gcf-lcm', 'arithmetic-sequence', 'geometric-sequence', 'modulo', 'scientific-notation'] },
+      { name: 'Algebra & numbers', ids: ['quadratic-equation', 'cubic-equation', 'exponent', 'square-root', 'logarithm', 'factorial', 'gcf-lcm', 'arithmetic-sequence', 'geometric-sequence', 'modulo', 'scientific-notation'] },
       { name: 'Systems of linear equations', ids: ['system-of-equations', 'system-of-3-equations'] },
     ],
     faq: [
@@ -160,7 +160,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Hypothesis tests & p-values', ids: ['one-sample-t-test', 'two-sample-t-test', 'p-value'] },
       { name: 'Inference & surveys', ids: ['confidence-interval', 'margin-of-error', 'sample-size', 'relative-risk'] },
       { name: 'Probability & counting', ids: ['probability', 'odds-probability', 'permutations', 'combinations', 'bayes-theorem', 'expected-value', 'birthday-paradox'] },
-      { name: 'Quality & measurement', ids: ['process-capability', 'six-sigma', 'measurement-uncertainty'] },
+      { name: 'Quality & measurement', ids: ['process-capability', 'control-chart', 'six-sigma', 'measurement-uncertainty'] },
     ],
     faq: [
       { q: 'Can I paste a list of numbers?', a: 'Yes. Data-set calculators accept numbers separated by commas, spaces or new lines.' },

@@ -1,0 +1,83 @@
+---
+title: Dew Point Calculator (Temperature & Relative Humidity)
+description: Calculate the dew point from air temperature and relative humidity with the Magnus formula, plus vapour pressure, absolute humidity and dew point spread.
+category: engineering
+intro: "The dew point is the temperature at which air becomes saturated and water starts to condense on a surface. This dew point calculator finds it from the dry-bulb temperature and relative humidity using the Magnus formula, and also gives the vapour pressure, absolute humidity and the temperature margin to condensation — useful for HVAC, coating work and [dew point in instrument air](https://www.instrumentationblog.in/dew-point-in-instrument-air-risks/). It works in reverse too: enter a dew point to get the relative humidity, as a [capacitive RH sensor](https://www.instrumentationblog.in/humidity-sensor-capacitive-rh/) transmitter would report."
+keywords: [dew point calculator, dew point from relative humidity, calculate dew point, dew point temperature calculator, magnus formula dew point, relative humidity to dew point, absolute humidity calculator]
+updated: 2026-11-09
+variables:
+  - { id: T, label: Air (dry-bulb) temperature, family: temperature, unit: C, imperialUnit: F, default: 25 }
+  - { id: RH, label: Relative humidity, family: percent, unit: '%', default: 60, min: 0.000001, max: 1 }
+  - { id: gam, label: "Magnus function γ(T, RH)", decimals: 5 }
+  - { id: Td, label: Dew point temperature, family: temperature, unit: C, imperialUnit: F }
+  - id: dTd
+    label: Dew point spread (T − Td)
+    family: tempdiff
+    unit: K
+    imperialUnit: F
+    bands:
+      - { max: 2, label: Under 2 °C — condensation likely on cool surfaces, color: '#dc2626' }
+      - { max: 3, label: 2–3 °C — too close for painting or coating (needs ≥ 3 °C), color: '#f97316' }
+      - { max: 1e9, label: 3 °C or more above the dew point, color: '#16a34a' }
+  - { id: es, label: Saturation vapour pressure, family: pressure, unit: kPa, min: 0, decimals: 4 }
+  - { id: ea, label: Actual vapour pressure, family: pressure, unit: kPa, min: 0, decimals: 4 }
+  - { id: AH, label: Absolute humidity, suffix: g/m³, min: 0, decimals: 2 }
+equations:
+  - gam = ln(RH) + 17.625 * (T - 273.15) / (243.04 + T - 273.15)
+  - Td = 273.15 + 243.04 * gam / (17.625 - gam)
+  - dTd = T - Td
+  - es = 610.94 * exp(17.625 * (T - 273.15) / (T - 273.15 + 243.04))
+  - ea = RH * es
+  - AH = ea / (461.5 * T) * 1000
+faq:
+  - q: How do you calculate dew point from temperature and humidity?
+    a: With the Magnus formula, γ = ln(RH) + bT ÷ (c + T) and T_d = c γ ÷ (b − γ), where T is in °C, RH is a fraction, b = 17.625 and c = 243.04 °C. It is accurate to about ±0.35 °C between −40 and 50 °C.
+  - q: Is there a quick rule of thumb for dew point?
+    a: Above about 50% RH, the dew point is roughly T − (100 − RH%) ÷ 5. At 25 °C and 60% RH that gives 17 °C; the Magnus formula gives 16.7 °C.
+  - q: What dew point feels comfortable?
+    a: Dew points below about 13 °C feel dry and comfortable, 16–18 °C starts to feel humid, and above 21 °C feels oppressive, because sweat cannot evaporate easily.
+  - q: Why does instrument air need a low dew point?
+    a: Compressed air that cools below its dew point condenses water in lines and instruments, causing corrosion and freezing. ISA-7.0.01 asks for a pressure dew point at least 10 °C below the lowest temperature the air lines will see.
+related: [conversion/temperature-converter, chemistry/daltons-law, physics/latent-heat, engineering/chiller-tonnage]
+---
+
+## How to use the dew point calculator
+
+Enter the **air temperature** and the **relative humidity**. The calculator gives the dew point, the spread between air temperature and dew point, the saturation and actual vapour pressures and the absolute humidity (grams of water per cubic metre of air). To find the **relative humidity from a dew point**, enter the dew point and the air temperature and press × on Relative humidity.
+
+## Dew point formula (Magnus)
+
+<p class="formula">γ = ln(RH) + b T ÷ (c + T) &nbsp;·&nbsp; T<sub>d</sub> = c γ ÷ (b − γ)</p>
+
+<p class="formula">e<sub>s</sub> = 610.94 × exp[b T ÷ (T + c)] Pa &nbsp;·&nbsp; AH = RH × e<sub>s</sub> ÷ (R<sub>v</sub> × T<sub>K</sub>)</p>
+
+with T in °C, b = 17.625, c = 243.04 °C (Alduchov & Eskridge) and R<sub>v</sub> = 461.5 J/(kg·K), the gas constant of water vapour. The formula is for saturation over liquid water; below 0 °C the frost point is slightly higher than the dew point it gives.
+
+## Worked example
+
+Air at 25 °C and 60% relative humidity:
+
+- γ = ln(0.6) + 17.625 × 25 ÷ (243.04 + 25) = **1.13305**
+- T<sub>d</sub> = 243.04 × 1.13305 ÷ (17.625 − 1.13305) = **16.70 °C**, a spread of **8.30 °C**
+- Saturation vapour pressure = **3.1617 kPa**, actual vapour pressure = **1.8970 kPa**
+- Absolute humidity = 1897.0 ÷ (461.5 × 298.15) = **13.79 g/m³**
+
+## Dew point table
+
+| Air temperature | 30% RH | 40% RH | 50% RH | 60% RH | 70% RH | 80% RH | 90% RH |
+|---|---|---|---|---|---|---|---|
+| 0 °C | −15.5 °C | −12.0 °C | −9.2 °C | −6.8 °C | −4.8 °C | −3.0 °C | −1.4 °C |
+| 10 °C | −6.8 °C | −3.0 °C | 0.0 °C | 2.6 °C | 4.8 °C | 6.7 °C | 8.4 °C |
+| 15 °C | −2.4 °C | 1.5 °C | 4.7 °C | 7.3 °C | 9.6 °C | 11.6 °C | 13.4 °C |
+| 20 °C | 1.9 °C | 6.0 °C | 9.3 °C | 12.0 °C | 14.4 °C | 16.4 °C | 18.3 °C |
+| 25 °C | 6.2 °C | 10.5 °C | 13.9 °C | 16.7 °C | 19.1 °C | 21.3 °C | 23.2 °C |
+| 30 °C | 10.5 °C | 14.9 °C | 18.4 °C | 21.4 °C | 23.9 °C | 26.2 °C | 28.2 °C |
+| 35 °C | 14.8 °C | 19.4 °C | 23.0 °C | 26.1 °C | 28.7 °C | 31.0 °C | 33.1 °C |
+| 40 °C | 19.1 °C | 23.8 °C | 27.6 °C | 30.8 °C | 33.5 °C | 35.9 °C | 38.0 °C |
+
+## Practical notes
+
+- **Coatings and painting:** most paint specifications (ISO 8502-4) require the steel surface to be at least 3 °C above the dew point.
+- **Pipes and ducts sweat** when their surface is below the dew point of the surrounding air — insulate chilled-water lines with a vapour barrier.
+- **Compressed air:** the pressure dew point is higher than the atmospheric dew point of the same air, because compression raises the vapour pressure. Use the dryer manufacturer's data or a pressure dew point meter for instrument air.
+- RH sensors are usually accurate to ±2–3% RH; near saturation, that alone moves the dew point by about 0.5 °C.

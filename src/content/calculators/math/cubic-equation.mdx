@@ -1,0 +1,91 @@
+---
+title: Cubic Equation Calculator (Solve ax³ + bx² + cx + d = 0)
+description: Solve any cubic equation ax³ + bx² + cx + d = 0 — real and complex roots, the discriminant and the depressed-cubic working with Cardano's formula.
+category: math
+intro: "Every cubic equation has three roots: either three real roots or one real root and a pair of complex conjugates. This cubic equation calculator finds all three from the coefficients a, b, c and d, using Cardano's formula when there is one real root and the trigonometric method when there are three, and shows the discriminant that tells you which case you have."
+keywords: [cubic equation calculator, cubic equation solver, solve cubic equation, cubic formula calculator, roots of cubic equation, cardano formula calculator, cubic discriminant]
+updated: 2026-11-09
+variables:
+  - { id: a, label: a (x³ coefficient — not zero), default: 1 }
+  - { id: b, label: b (x² coefficient), default: -6 }
+  - { id: c, label: c (x coefficient), default: 11 }
+  - { id: d, label: d (constant), default: -6 }
+  - { id: p, label: Depressed cubic p, decimals: 6 }
+  - { id: q, label: Depressed cubic q, decimals: 6 }
+  - { id: Dc, label: Cardano test value (q/2)² + (p/3)³, decimals: 6 }
+  - id: Dl
+    label: Discriminant Δ
+    decimals: 4
+    bands:
+      - { max: -1e-9, label: Δ < 0 — one real root and two complex roots, color: '#2563eb' }
+      - { max: 1e-9, label: Δ = 0 — a repeated real root, color: '#eab308' }
+      - { max: 1e300, label: Δ > 0 — three distinct real roots, color: '#16a34a' }
+  - { id: x1, label: Root x₁ (always real), decimals: 6 }
+  - { id: x2, label: Root x₂ (real part), decimals: 6 }
+  - { id: x3, label: Root x₃ (real part), decimals: 6 }
+  - { id: im, label: Imaginary part of x₂ and x₃ (±), decimals: 6, help: '0 when all three roots are real; otherwise x₂ = real part + i·this, x₃ = real part − i·this.' }
+equations:
+  - p = (3 * a * c - b^2) / (3 * a^2)
+  - q = (2 * b^3 - 9 * a * b * c + 27 * a^2 * d) / (27 * a^3)
+  - Dc = (q / 2)^2 + (p / 3)^3
+  - Dl = 18 * a * b * c * d - 4 * b^3 * d + b^2 * c^2 - 4 * a * c^3 - 27 * a^2 * d^2
+  - x1 = step(Dc) * (cbrt(-q / 2 + sqrt(max(Dc, 0))) + cbrt(-q / 2 - sqrt(max(Dc, 0))) - b / (3 * a)) + (1 - step(Dc)) * (2 * sqrt(max(-p / 3, 0)) * cos(acos(min(max(-q / 2 / sqrt(max(-(p / 3)^3, 1e-300)), -1), 1)) / 3) - b / (3 * a))
+  - x2 = step(Dc) * (-(cbrt(-q / 2 + sqrt(max(Dc, 0))) + cbrt(-q / 2 - sqrt(max(Dc, 0)))) / 2 - b / (3 * a)) + (1 - step(Dc)) * (2 * sqrt(max(-p / 3, 0)) * cos(acos(min(max(-q / 2 / sqrt(max(-(p / 3)^3, 1e-300)), -1), 1)) / 3 - 2 * pi / 3) - b / (3 * a))
+  - x3 = step(Dc) * (-(cbrt(-q / 2 + sqrt(max(Dc, 0))) + cbrt(-q / 2 - sqrt(max(Dc, 0)))) / 2 - b / (3 * a)) + (1 - step(Dc)) * (2 * sqrt(max(-p / 3, 0)) * cos(acos(min(max(-q / 2 / sqrt(max(-(p / 3)^3, 1e-300)), -1), 1)) / 3 + 2 * pi / 3) - b / (3 * a))
+  - im = step(Dc) * sqrt(3) / 2 * abs(cbrt(-q / 2 + sqrt(max(Dc, 0))) - cbrt(-q / 2 - sqrt(max(Dc, 0))))
+faq:
+  - q: How do you solve a cubic equation?
+    a: Divide by a and substitute x = t − b/(3a) to get the depressed cubic t³ + pt + q = 0. If (q/2)² + (p/3)³ > 0, Cardano's formula t = ∛(−q/2 + √…) + ∛(−q/2 − √…) gives the one real root; otherwise the three real roots are t = 2√(−p/3) cos[(1/3) arccos((−q/2)/√(−(p/3)³)) − 2πk/3], k = 0, 1, 2.
+  - q: What does the discriminant of a cubic tell you?
+    a: Δ = 18abcd − 4b³d + b²c² − 4ac³ − 27a²d². If Δ > 0 there are three distinct real roots, if Δ = 0 at least two roots are equal, and if Δ < 0 there is one real root and two complex conjugate roots.
+  - q: Does every cubic have a real root?
+    a: Yes. A cubic goes to +∞ at one end and −∞ at the other, so its graph must cross the x-axis at least once. Complex roots of a real cubic always come in conjugate pairs.
+  - q: Can I check the roots?
+    a: The roots satisfy x₁ + x₂ + x₃ = −b/a, x₁x₂ + x₁x₃ + x₂x₃ = c/a and x₁x₂x₃ = −d/a (Vieta's formulas). For x³ − 6x² + 11x − 6 the roots 1, 2 and 3 add to 6 and multiply to 6.
+related: [math/quadratic-equation, math/system-of-3-equations, math/complex-number, math/exponent]
+---
+
+## How to use the cubic equation calculator
+
+Write your equation in the form **ax³ + bx² + cx + d = 0** and enter the four coefficients (use 0 for a missing term — for x³ − 2x − 5 = 0 enter a = 1, b = 0, c = −2, d = −5). The calculator gives the depressed-cubic values p and q, the discriminant, and the three roots. When there is only one real root, x₂ and x₃ show the real part of the complex pair and the last result shows its imaginary part. The coefficient a must not be zero — with a = 0 the equation is a quadratic.
+
+## Cubic formula
+
+<p class="formula">x = t − b ÷ 3a &nbsp;·&nbsp; t³ + pt + q = 0 &nbsp;·&nbsp; p = (3ac − b²) ÷ 3a² &nbsp;·&nbsp; q = (2b³ − 9abc + 27a²d) ÷ 27a³</p>
+
+<p class="formula">One real root (Cardano): t = ∛(−q/2 + √D) + ∛(−q/2 − √D), &nbsp; D = (q/2)² + (p/3)³ &gt; 0</p>
+
+<p class="formula">Three real roots: t<sub>k</sub> = 2√(−p/3) · cos[⅓ arccos((−q/2) ÷ √(−(p/3)³)) − 2πk/3], &nbsp; k = 0, 1, 2</p>
+
+The trigonometric form avoids the cube roots of complex numbers that Cardano's formula needs when all three roots are real (the "casus irreducibilis").
+
+## Worked examples
+
+**x³ − 6x² + 11x − 6 = 0** (a = 1, b = −6, c = 11, d = −6):
+
+- p = (3 × 11 − 36) ÷ 3 = **−1**, q = (2 × (−216) − 9 × (−66) + 27 × (−6)) ÷ 27 = **0**
+- D = (q/2)² + (p/3)³ = **−0.037037** (negative), discriminant Δ = **4** — three distinct real roots
+- Roots: x₁ = **3**, x₂ = **2**, x₃ = **1** — so the equation factors as (x − 1)(x − 2)(x − 3)
+
+**x³ − 2x − 5 = 0** (the equation Newton used to demonstrate his method):
+
+- p = −2, q = −5, D = 5.953704 (positive), Δ = −643 — one real root
+- x₁ = **2.094551**, x₂, x₃ = **−1.047276 ± 1.135940i**
+
+## Example cubic equations
+
+| Equation | Discriminant Δ | Roots | Values |
+|---|---|---|---|
+| x³ − 6x² + 11x − 6 = 0 | 4 | three distinct real | 3, 2, 1 |
+| x³ − 2x − 5 = 0 | −643 | one real, two complex | 2.095; −1.047 ± 1.136i |
+| x³ − 3x + 2 = 0 | 0 | repeated real root | 1, −2 |
+| x³ − 1 = 0 | −27 | one real, two complex | 1; −0.5 ± 0.866i |
+| 2x³ − 4x² − 22x + 24 = 0 | 1.129e+05 | three distinct real | 4, 1, −3 |
+| x³ + x + 1 = 0 | −31 | one real, two complex | −0.6823; 0.3412 ± 1.162i |
+| x³ − 15x − 4 = 0 | 1.307e+04 | three distinct real | 4, −0.2679, −3.732 |
+
+## Practical notes
+
+- Results are rounded; a repeated root may show tiny differences such as 0.999999 and 1.000001 because of floating-point arithmetic.
+- To **factor** a cubic with an integer root r, divide by (x − r) to leave a quadratic — the rational root theorem says any rational root is a factor of d divided by a factor of a.
+- Cubic equations appear in the van der Waals and Peng–Robinson equations of state, beam deflection, box-volume optimisation and interest-rate problems.

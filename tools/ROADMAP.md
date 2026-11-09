@@ -66,7 +66,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Valve authority
 - [ ] Cavitation index (σ) / choked flow
 - [ ] Actuator thrust / torque sizing (ib)
-- [ ] Pump NPSH available (ib)
+- [x] Pump NPSH available (ib)
 - [x] Pump affinity laws
 - [x] Pump head from pressure
 - [ ] System curve & duty point
@@ -89,7 +89,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Air conditioner BTU / room size
 - [ ] Duct size (equal friction)
 - [ ] CFM air changes per hour
-- [ ] Psychrometric: dew point from RH (ib)
+- [x] Psychrometric: dew point from RH (ib)
 - [ ] Relative humidity ↔ absolute humidity
 - [ ] Heater kW for tank heating
 
@@ -169,12 +169,12 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 ## Electronics
 - [x] Op-amp: summing, differential, integrator (ib)
 - [x] Sallen–Key low-pass filter (ib)
-- [ ] LC filter / pi filter
+- [x] LC filter / pi filter
 - [ ] RC snubber (ib)
 - [x] Linear regulator power (LM317 resistors)
 - [x] LM317 output voltage resistor calculator
 - [x] Buck-boost / SEPIC (ib) (buck-boost-converter; SEPIC covered in notes)
-- [ ] Flyback transformer turns ratio (ib)
+- [x] Flyback transformer turns ratio (ib)
 - [x] Inductor design (turns for AL value)
 - [x] Air-core coil inductance (Wheeler)
 - [ ] Ohm's law for AC (power, apparent, reactive)
@@ -268,7 +268,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 ## Math
 - [x] Linear equation solver / two equations
 - [x] System of 3 equations
-- [ ] Cubic equation
+- [x] Cubic equation
 - [ ] Polynomial roots
 - [ ] Matrix determinant / inverse (2×2, 3×3)
 - [x] Vector magnitude, dot & cross product
@@ -327,6 +327,6 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] P-value from z / t
 - [ ] Moving average
 - [x] Process capability (Cp, Cpk)
-- [ ] Control chart limits (X-bar, R)
+- [x] Control chart limits (X-bar, R)
 - [x] Six sigma DPMO / sigma level
 - [x] Measurement uncertainty (RSS combination)

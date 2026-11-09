@@ -1,64 +1,89 @@
 ---
-title: LC Resonant Frequency Calculator
-description: Calculate the resonant frequency of an LC circuit — or the inductance or capacitance needed to tune to a frequency — for filters, oscillators and radios.
+title: LC Resonant Frequency Calculator (f = 1/2π√LC, Q & Bandwidth)
+description: Calculate the resonant frequency of an LC circuit, the L or C needed to tune to a frequency, and the Q factor and bandwidth of a series RLC circuit.
 category: electronics
-intro: "An inductor and a capacitor together resonate at one frequency, where their reactances cancel. This is how radios tune to a station and how many oscillators and filters work — see the [LC resonant circuit frequency](https://www.instrumentationblog.in/lc-resonant-circuit-frequency/) explained. This free LC resonant frequency calculator solves for whichever value you leave blank and shows the formula and steps."
-keywords: [resonant frequency calculator, lc resonance, lc circuit, tank circuit, resonance frequency formula, tuning circuit, 1/2pi sqrt lc]
-updated: 2026-10-27
+intro: "An inductor and a capacitor together resonate at one frequency, where their reactances are equal and cancel — the principle behind radio tuning, oscillators and tuned filters, explained in [LC resonant circuit frequency](https://www.instrumentationblog.in/lc-resonant-circuit-frequency/). This LC resonant frequency calculator gives the resonant frequency from L and C (or the component needed for a target frequency), plus the reactance at resonance, the Q factor and the bandwidth when you add the circuit's series resistance."
+keywords: [resonant frequency calculator, lc resonant frequency calculator, lc resonance, tank circuit, resonance frequency formula, rlc q factor, resonance bandwidth, 1/2pi sqrt lc]
+updated: 2026-11-09
 variables:
   - { id: L, label: Inductance, suffix: µH, default: 10, min: 0 }
   - { id: C, label: Capacitance, family: capacitance, unit: nF, default: 100, min: 0 }
   - { id: f, label: Resonant frequency, suffix: Hz, min: 0 }
   - { id: w, label: Angular frequency, suffix: rad/s, min: 0 }
+  - { id: R, label: Series resistance (coil + capacitor ESR), family: resistance, unit: ohm, default: 1, min: 0 }
+  - { id: X, label: Reactance of L (and of C) at resonance, family: resistance, unit: ohm, min: 0 }
+  - { id: Q, label: Quality factor Q (series RLC), min: 0, decimals: 2 }
+  - { id: BW, label: −3 dB bandwidth, suffix: Hz, min: 0 }
 equations:
   - f = 1 / (2 * pi * sqrt(L * 1e-6 * C))
   - w = 2 * pi * f
+  - X = w * L * 1e-6
+  - Q = X / R
+  - BW = f / Q
 faq:
   - q: What is the resonant frequency formula?
-    a: f = 1 ÷ (2π√(LC)), with L in henries and C in farads.
+    a: f₀ = 1 ÷ (2π√(LC)), with L in henries and C in farads. 10 µH with 100 nF resonates at 159.15 kHz.
   - q: What happens at resonance?
-    a: Inductive and capacitive reactances are equal and cancel. A series LC circuit has minimum impedance; a parallel LC circuit has maximum impedance.
+    a: The inductive and capacitive reactances are equal (X_L = X_C = √(L/C)) and cancel. A series LC circuit then has its minimum impedance (just R); a parallel LC circuit has its maximum impedance.
   - q: How do I find the capacitor for a frequency?
-    a: Enter the target frequency and inductance, then press × on Capacitance. C = 1 ÷ ((2πf)² L).
-  - q: What limits real LC circuits?
-    a: Resistance in the coil and capacitor losses, described by the quality factor Q. Higher Q gives a sharper resonance.
-related: [electronics/reactance, physics/rc-time-constant, physics/wavelength-frequency, physics/ohms-law]
+    a: Enter the target frequency and the inductance, then press × on Capacitance. C = 1 ÷ ((2πf)² L) — for example 240 µH needs about 105 pF to tune to 1 MHz.
+  - q: What sets the bandwidth of a resonant circuit?
+    a: Resistance. For a series RLC circuit Q = X ÷ R = (1/R)√(L/C) and the −3 dB bandwidth is f₀ ÷ Q, so halving R halves the bandwidth and makes the resonance twice as sharp.
+related: [electronics/lc-filter, electronics/reactance, electronics/air-core-inductor, electronics/crystal-load-capacitance]
 ---
 
 ## How to use the LC resonant frequency calculator
 
-Enter the **inductance** in microhenries and the **capacitance**. The calculator gives the resonant frequency and angular frequency. To design a circuit for a target frequency, enter the frequency and one component and press × on the other.
+Enter the **inductance** in microhenries and the **capacitance**. The calculator gives the resonant frequency and the angular frequency. Add the **series resistance** of the coil and capacitor to get the reactance at resonance, the Q factor and the bandwidth. To design for a target frequency, enter the frequency and one component and press × on the other.
 
-## LC resonant frequency formula
+## LC resonant frequency formulas
 
-<p class="formula">f₀ = 1 ÷ (2π√(LC))</p>
+<p class="formula">f₀ = 1 ÷ (2π√(LC)) &nbsp;·&nbsp; ω₀ = 2πf₀</p>
+
+<p class="formula">X<sub>L</sub> = X<sub>C</sub> = ω₀L = √(L/C) &nbsp;·&nbsp; Q = X ÷ R &nbsp;·&nbsp; BW = f₀ ÷ Q</p>
+
+## Worked example
+
+L = 10 µH, C = 100 nF and a total series resistance of 1 Ω:
+
+- f₀ = 1 ÷ (2π√(10 × 10⁻⁶ × 1e-07)) = **159,155 Hz** (159.15 kHz), ω₀ = **1,000,000 rad/s**
+- Reactance at resonance X = ω₀L = **10.000 Ω** (equal to √(L/C))
+- Q = 10.000 ÷ 1 = **10.00**, bandwidth = 159,155 ÷ 10.00 = **15,915 Hz**
 
 ## Resonant frequencies
 
-| L | C | f₀ |
-|---|---|---|
-| 1 µH | 100 pF | 15.915 MHz |
-| 10 µH | 100 pF | 5.033 MHz |
-| 100 µH | 1 nF | 503.29 kHz |
-| 10 µH | 100 nF | 159.15 kHz |
-| 1 mH | 1 µF | 5.03 kHz |
-| 100 mH | 100 µF | 50.3 Hz |
+| L | C | f₀ | √(L/C) |
+|---|---|---|---|
+| 1 µH | 100 pF | 15.92 MHz | 100 Ω |
+| 10 µH | 100 pF | 5.033 MHz | 316.2 Ω |
+| 100 µH | 1 nF | 503.3 kHz | 316.2 Ω |
+| 10 µH | 100 nF | 159.2 kHz | 10 Ω |
+| 1 mH | 1 µF | 5.033 kHz | 31.62 Ω |
+| 100 mH | 100 µF | 50.33 Hz | 31.62 Ω |
+| 240 µH | 105.5 pF | 1 MHz | 1,508 Ω |
+
+## Capacitance needed to resonate at a frequency
+
+| Target frequency | with 1 µH | with 100 µH | with 10 mH |
+|---|---|---|---|
+| 50 Hz (mains harmonic filter) | 10.13 F | 101.3 mF | 1.013 mF |
+| 1 kHz (audio) | 25.33 mF | 253.3 µF | 2.533 µF |
+| 455 kHz (AM IF) | 122.4 nF | 1.224 nF | 12.24 pF |
+| 1 MHz (AM broadcast) | 25.33 nF | 253.3 pF | 2.533 pF |
+| 10.7 MHz (FM IF) | 221.2 pF | 2.212 pF | 2.21e-14 F |
+| 100 MHz (FM broadcast) | 2.533 pF | 2.53e-14 F | 2.53e-16 F |
 
 ## Series vs parallel resonance
 
 | | Series LC | Parallel LC (tank) |
 |---|---|---|
-| Impedance at f₀ | Minimum (≈ R) | Maximum |
+| Impedance at f₀ | Minimum (≈ R) | Maximum (≈ Q × X) |
 | Current at f₀ | Maximum | Minimum from source |
 | Use | Band-pass in series path, notch filters | Oscillators, tuned amplifiers |
 
-## Quality factor
+## Practical notes
 
-For a series RLC circuit, Q = (1 ÷ R)√(L ÷ C), and bandwidth = f₀ ÷ Q. A higher Q gives a narrower, sharper response — important in radio tuning.
-
-## Applications
-
-- **AM/FM radio tuning**: a variable capacitor changes f₀ to select stations.
-- **Oscillators**: LC tanks set the frequency in many RF circuits.
-- **Harmonic filters**: tuned LC filters remove specific harmonics in power systems.
-- **Wireless charging**: transmitter and receiver coils are tuned to the same resonant frequency.
+- **Stray capacitance** of the coil, PCB and transistor adds to C, so real circuits resonate lower than calculated — at high frequencies leave room to trim.
+- Coil resistance rises with frequency (skin effect), so Q measured at the working frequency is lower than a DC-resistance estimate suggests.
+- Capacitors for tuned circuits should be stable types: C0G/NP0 ceramic, silver mica or polypropylene. X7R and Y5V ceramics drift with temperature and voltage.
+- For a second-order low-pass filter (inductor in series, capacitor across a load), use the [LC filter calculator](/electronics/lc-filter/) to see the attenuation and peaking.

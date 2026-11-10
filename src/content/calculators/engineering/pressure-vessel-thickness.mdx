@@ -1,0 +1,112 @@
+---
+title: Pressure Vessel Thickness Calculator (ASME VIII Shell & Head)
+description: Calculate pressure vessel shell and head thickness with ASME VIII Div 1 UG-27 and UG-32 formulas, including joint efficiency, corrosion allowance and MAWP.
+category: engineering
+intro: "The wall of a cylindrical pressure vessel must resist the hoop stress from internal pressure, which is twice the longitudinal stress, so the circumferential formula almost always sets the thickness. This pressure vessel thickness calculator applies the ASME Section VIII Division 1 thin-wall formulas (UG-27 for the shell, UG-32 for hemispherical, 2:1 ellipsoidal and torispherical heads) with weld joint efficiency and corrosion allowance, and back-calculates the MAWP of the plate you choose."
+keywords: [pressure vessel thickness calculator, asme pressure vessel thickness calculation, shell thickness calculation, ug-27 thickness, pressure vessel head thickness, ellipsoidal head thickness, mawp calculator]
+updated: 2026-11-10
+variables:
+  - { id: P, label: Internal design pressure (gauge), family: pressure, unit: MPa, imperialUnit: psi, default: 1, min: 0, help: 'Include the static head of liquid at the point considered if it is significant.' }
+  - { id: Di, label: Inside diameter (new), family: length, unit: mm, imperialUnit: in, default: 1500, min: 0 }
+  - { id: S, label: Allowable stress at design temperature, family: pressure, unit: MPa, imperialUnit: psi, default: 138, min: 0, help: 'From ASME Section II Part D — e.g. SA-516 Gr 70 is 138 MPa (20 ksi) at moderate temperatures.' }
+  - id: E
+    label: Weld joint efficiency E
+    default: 0.85
+    options:
+      - { label: '1.00 — Type 1 butt weld, full radiography (or seamless)', value: 1.0 }
+      - { label: '0.85 — Type 1 butt weld, spot radiography', value: 0.85 }
+      - { label: '0.70 — Type 1 butt weld, no radiography', value: 0.7 }
+      - { label: '0.80 — Type 2 butt weld (backing strip), spot RT', value: 0.8 }
+      - { label: '0.65 — Type 2 butt weld, no radiography', value: 0.65 }
+  - { id: CA, label: Corrosion allowance, family: length, unit: mm, imperialUnit: in, default: 3, min: 0 }
+  - { id: tn, label: Nominal plate thickness chosen (for MAWP), family: length, unit: mm, imperialUnit: in, default: 10, min: 0 }
+  - { id: R, label: "Inside radius, corroded", family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: tc, label: Shell thickness — circumferential stress (no CA), family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: tl, label: Shell thickness — longitudinal stress (no CA), family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: treq, label: Minimum shell thickness incl. corrosion allowance, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: th, label: Hemispherical head thickness incl. CA, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: te, label: "2:1 ellipsoidal head thickness incl. CA", family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: tt, label: Torispherical head thickness incl. CA, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: MAWP, label: Shell MAWP with the chosen plate (corroded), family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+  - id: chk
+    label: Pressure ratio P ÷ (S E)
+    min: 0
+    decimals: 4
+    bands:
+      - { max: 0.385, label: Within the UG-27 thin-wall limit (≤ 0.385), color: '#16a34a' }
+      - { max: 1e9, label: Above 0.385 — use the thick-wall formulas of Appendix 1-2, color: '#dc2626' }
+equations:
+  - R = Di / 2 + CA
+  - tc = P * R / (S * E - 0.6 * P)
+  - tl = P * R / (2 * S * E + 0.4 * P)
+  - treq = max(tc, tl) + CA
+  - th = P * R / (2 * S * E - 0.2 * P) + CA
+  - te = P * 2 * R / (2 * S * E - 0.2 * P) + CA
+  - tt = 0.885 * P * 2 * R / (S * E - 0.1 * P) + CA
+  - MAWP = S * E * (tn - CA) / (R + 0.6 * (tn - CA))
+  - chk = P / (S * E)
+faq:
+  - q: How do you calculate the thickness of a pressure vessel shell?
+    a: For a cylindrical shell under internal pressure, ASME VIII-1 UG-27 gives t = P R ÷ (S E − 0.6 P) for the circumferential (hoop) stress and t = P R ÷ (2 S E + 0.4 P) for the longitudinal stress, where R is the inside radius in the corroded condition. Use the larger value and add the corrosion allowance.
+  - q: What is weld joint efficiency?
+    a: A factor E from ASME Table UW-12 that reduces the allowable stress to reflect the quality of weld inspection. A double-welded butt joint is 1.0 with full radiography, 0.85 with spot radiography and 0.70 with none. Seamless parts use E = 1.
+  - q: Why is a 2:1 ellipsoidal head about as thick as the shell?
+    a: Its formula t = P D ÷ (2 S E − 0.2 P) uses the diameter instead of the radius, so the result is almost the same as the shell's hoop-stress thickness. A hemispherical head needs only about half the shell thickness, and a standard torispherical head about 1.77 times.
+  - q: What is MAWP?
+    a: The maximum allowable working pressure is the highest gauge pressure the weakest part of the vessel can take at its design temperature, in the corroded condition. For the shell it is MAWP = S E t ÷ (R + 0.6 t), with t the nominal thickness minus corrosion allowance (and minus any mill under-tolerance).
+related: [engineering/hydrostatic-test-pressure, engineering/barlow-formula, engineering/factor-of-safety, engineering/horizontal-tank-volume]
+---
+
+## How to use the pressure vessel thickness calculator
+
+Enter the **design pressure** (gauge), the **inside diameter** of the new vessel, the **allowable stress** of the plate material at the design temperature, the **weld joint efficiency** and the **corrosion allowance**. The calculator gives the shell thickness for the hoop and longitudinal stresses, the minimum shell thickness including corrosion allowance, and the thickness of hemispherical, 2:1 ellipsoidal and torispherical heads. Enter the **plate thickness you intend to use** to see its MAWP. All formulas use the corroded inside radius, R = D/2 + CA.
+
+## Pressure vessel thickness formulas (ASME VIII Div 1)
+
+<p class="formula">Shell, hoop stress (UG-27): t = P R ÷ (S E − 0.6 P) &nbsp;·&nbsp; longitudinal: t = P R ÷ (2 S E + 0.4 P)</p>
+
+<p class="formula">Hemispherical head (UG-32): t = P R ÷ (2 S E − 0.2 P) &nbsp;·&nbsp; 2:1 ellipsoidal: t = P D ÷ (2 S E − 0.2 P)</p>
+
+<p class="formula">Torispherical head (crown radius = D, knuckle 6%): t = 0.885 P D ÷ (S E − 0.1 P) &nbsp;·&nbsp; MAWP = S E t ÷ (R + 0.6 t)</p>
+
+The shell formulas are valid when t ≤ R/2 and P ≤ 0.385 S E. The head formulas give the thickness after forming — order heads with extra thickness for thinning in the knuckle.
+
+## Worked example
+
+A vessel with a 1,500 mm inside diameter for 1 MPa (10 bar g), SA-516 Gr 70 plate (S = 138 MPa), spot-radiographed joints (E = 0.85) and 3 mm corrosion allowance:
+
+- Corroded inside radius R = 750 + 3 = **753 mm**
+- Hoop stress: t = 1 × 753 ÷ (138 × 0.85 − 0.6 × 1) = **6.45 mm**
+- Longitudinal stress: t = 1 × 753 ÷ (2 × 138 × 0.85 + 0.4 × 1) = **3.20 mm**
+- Minimum shell thickness = 6.45 + 3 = **9.45 mm**, so a 10 mm plate is chosen
+- MAWP of the 10 mm plate (corroded, 7 mm) = 138 × 0.85 × 7 ÷ (753 + 0.6 × 7) = **1.0844 MPa** (10.84 bar g)
+- Pressure ratio P ÷ (S E) = **0.0085** — well within the thin-wall limit
+
+Heads for the same vessel (including the 3 mm corrosion allowance):
+
+| Component | Minimum thickness |
+|---|---|
+| Cylindrical shell | 9.45 mm |
+| Hemispherical head | 6.21 mm |
+| 2:1 ellipsoidal head | 9.42 mm |
+| Torispherical head (6% knuckle) | 14.37 mm |
+
+## Shell thickness for common sizes
+
+Hoop-stress thickness for S = 138 MPa, E = 1.0, no corrosion allowance:
+
+| Inside diameter | 5 bar g | 10 bar g | 20 bar g | 40 bar g |
+|---|---|---|---|---|
+| 500 mm | 0.91 mm | 1.82 mm | 3.65 mm | 7.37 mm |
+| 1,000 mm | 1.82 mm | 3.64 mm | 7.31 mm | 14.75 mm |
+| 1,500 mm | 2.72 mm | 5.46 mm | 10.96 mm | 22.12 mm |
+| 2,000 mm | 3.63 mm | 7.28 mm | 14.62 mm | 29.50 mm |
+| 3,000 mm | 5.45 mm | 10.92 mm | 21.93 mm | 44.25 mm |
+
+## Practical notes
+
+- **Mill tolerance:** plate is usually ordered to the nominal thickness, but pipe used as a shell can be 12.5% thinner — subtract the under-tolerance before checking MAWP.
+- **Minimum thickness:** UG-16 sets an absolute minimum of 1.5 mm (1/16 in) for shells and heads, excluding corrosion allowance; many owners specify 6 mm or more for fabrication and handling.
+- External pressure (vacuum), wind, seismic, nozzle loads and supports often need more thickness than internal pressure — check them separately (UG-28 for vacuum).
+- After fabrication the vessel is proved with a [hydrostatic test](/engineering/hydrostatic-test-pressure/) at about 1.3 × MAWP.
+- This calculator is a design aid for preliminary sizing; a code vessel must be designed and stamped by a qualified engineer using the current edition of the code.

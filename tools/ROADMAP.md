@@ -54,9 +54,9 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Horizontal tank with dished/hemispherical heads
 - [ ] Cone-bottom tank volume
 - [ ] Tank fill / drain time
-- [ ] Pressure vessel wall thickness (ASME, simplified)
+- [x] Pressure vessel wall thickness (ASME, simplified)
 - [x] Pipe wall thickness (Barlow)
-- [ ] Hydrostatic test pressure (ib)
+- [x] Hydrostatic test pressure (ib)
 - [ ] Pressure gauge range selection (ib)
 - [ ] Bourdon gauge accuracy class error (ib)
 
@@ -71,7 +71,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Pump head from pressure
 - [ ] System curve & duty point
 - [x] Compressor power (isentropic)
-- [ ] Air compressor receiver size
+- [x] Air compressor receiver size
 - [ ] Compressed air leak cost
 - [x] Fan affinity laws & fan power
 - [ ] Safety relief valve sizing (API 520 liquid, simplified)
@@ -262,7 +262,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Water hardness (ppm CaCO₃)
 - [x] TDS ↔ conductivity (ib)
 - [x] Dissolved oxygen saturation
-- [ ] Conductivity cell constant (ib)
+- [x] Conductivity cell constant (ib)
 - [ ] ORP / chlorine dose (water treatment)
 
 ## Math
@@ -270,11 +270,11 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] System of 3 equations
 - [x] Cubic equation
 - [ ] Polynomial roots
-- [ ] Matrix determinant / inverse (2×2, 3×3)
+- [x] Matrix determinant / inverse (2×2, 3×3)
 - [x] Vector magnitude, dot & cross product
 - [x] Distance & midpoint
 - [x] Equation of a line (two points) (exists: slope)
-- [ ] Circle equation from points
+- [x] Circle equation from points
 - [x] Angle converter (deg, rad, grad)
 - [x] Law of sines
 - [ ] Triangle solver (SSS, SAS, ASA)

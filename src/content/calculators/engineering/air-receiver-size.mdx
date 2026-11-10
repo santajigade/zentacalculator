@@ -1,0 +1,87 @@
+---
+title: Air Receiver Size Calculator (Compressed Air Tank Volume)
+description: Calculate compressed air receiver tank size for a peak demand event and for compressor load/unload cycling, from flow, pressure band and time.
+category: engineering
+intro: "A compressed air receiver stores air between the compressor's cut-out and cut-in pressures, covering short demand peaks and stopping the compressor from cycling too often. This air receiver size calculator works out the tank volume needed to ride through a demand event from the pressure drop you can accept, and the volume needed to keep a load/unload compressor within its maximum cycle rate, then gives the larger of the two."
+keywords: [air receiver size calculator, air receiver tank sizing, compressed air receiver calculation, air tank size calculator, receiver volume formula, compressor tank size, air receiver capacity]
+updated: 2026-11-10
+variables:
+  - { id: Qc, label: Compressor capacity (free air delivery), family: flow, unit: Ls, imperialUnit: cfm, default: 100, min: 0 }
+  - { id: Qd, label: Peak air demand during the event (free air), family: flow, unit: Ls, imperialUnit: cfm, default: 150, min: 0 }
+  - { id: t, label: Duration of the peak demand, family: seconds, unit: s, default: 120, min: 0 }
+  - { id: Pa, label: Atmospheric pressure (absolute), family: pressure, unit: kPa, imperialUnit: psi, default: 101.325, min: 0 }
+  - { id: P1, label: Receiver pressure at start (cut-out / unload), family: pressure, unit: bar, imperialUnit: psi, default: 7.5, min: 0 }
+  - { id: P2, label: Minimum acceptable pressure (cut-in / load), family: pressure, unit: bar, imperialUnit: psi, default: 6, min: 0, help: 'Same reference as P1 (both gauge or both absolute) — only the difference matters.' }
+  - { id: f, label: Maximum compressor load cycles per hour, suffix: per h, default: 60, min: 0, help: 'From the compressor maker; often 30–120 per hour for load/unload screw compressors.' }
+  - { id: dP, label: Usable pressure band P1 − P2, family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+  - { id: Vs, label: Volume for the demand event, family: volume, unit: m3, imperialUnit: galUS, min: 0 }
+  - { id: Vc, label: Volume for compressor cycling, family: volume, unit: m3, imperialUnit: galUS, min: 0 }
+  - { id: V, label: Recommended receiver volume (larger of the two), family: volume, unit: m3, imperialUnit: galUS, min: 0 }
+equations:
+  - dP = P1 - P2
+  - Vs = t * max(Qd - Qc, 0) * Pa / dP
+  - Vc = 0.25 * Qc * Pa / ((f / 3600) * dP)
+  - V = max(Vs, Vc)
+faq:
+  - q: How do you calculate air receiver size?
+    a: For a demand event, V = t × (Q_demand − Q_compressor) × P_atm ÷ (P₁ − P₂), with flows as free air. For load/unload control, V = Q_c × P_atm ÷ (4 × f_max × ΔP), where f_max is the maximum number of load cycles per unit time. Use consistent units and pick the larger volume.
+  - q: Why is the compressor flow multiplied by 0.25 in the cycling formula?
+    a: The time between load cycles is shortest when the demand is exactly half of the compressor capacity. At that point the receiver fills and empties at the same rate, and the cycle time is 4V ΔP ÷ (Q_c P_atm), which gives the factor 1/4.
+  - q: Is the pressure band in gauge or absolute pressure?
+    a: Either, as long as both pressures use the same reference — only the difference P₁ − P₂ appears. Atmospheric pressure must be absolute, because it converts free air into compressed volume.
+  - q: Should I use a wet or a dry receiver?
+    a: A wet receiver before the dryer cools the air and drops out condensate, and smooths the compressor's flow. A dry receiver after the dryer stores clean air close to large intermittent users. Many systems use both, and the volumes add.
+related: [engineering/compressor-power, engineering/absolute-gauge-pressure, engineering/gas-flow-correction, physics/ideal-gas-law]
+---
+
+## How to use the air receiver size calculator
+
+Enter the **compressor capacity** and the **peak demand** as free air delivery, the **duration** of the peak, the local **atmospheric pressure**, the **receiver pressure at the start** of the event (the compressor unload or cut-out pressure) and the **lowest pressure** your equipment can accept. Add the compressor's **maximum load cycles per hour**. The calculator gives the volume needed for each case and recommends the larger one. If the compressor is off during the event (for example, a backup tank), enter 0 for its capacity in the demand-event case.
+
+## Air receiver sizing formulas
+
+<p class="formula">Demand event: V = t × (Q<sub>d</sub> − Q<sub>c</sub>) × P<sub>atm</sub> ÷ (P<sub>1</sub> − P<sub>2</sub>)</p>
+
+<p class="formula">Load/unload cycling: V = 0.25 × Q<sub>c</sub> × P<sub>atm</sub> ÷ (f<sub>max</sub> × (P<sub>1</sub> − P<sub>2</sub>))</p>
+
+Both assume the air in the receiver stays at about the same temperature as the intake air. The cycling formula is the one used in compressor manufacturers' sizing guides; the worst case is a demand equal to half the compressor capacity.
+
+## Worked example
+
+A compressor delivering 100 L/s (6 m³/min) between 7.5 and 6 bar g, with a 120 s peak demand of 150 L/s and a limit of 60 load cycles per hour, at sea level:
+
+- Pressure band = 7.5 − 6 = **1.5 bar**
+- Demand event: V = 120 × (0.15 − 0.1) × 101,325 ÷ 150,000 = **4.053 m³**
+- Cycling: V = 0.25 × 0.1 × 101,325 ÷ (60/3600 × 150,000) = **1.013 m³**
+- Recommended receiver: **4.053 m³** (1,071 US gal) — the next standard size is a 5 m³ tank
+
+## Receiver volume for compressor cycling
+
+At 60 load cycles per hour and sea-level intake:
+
+| Compressor capacity | ΔP = 0.5 bar | ΔP = 1.0 bar | ΔP = 1.5 bar | ΔP = 2.0 bar |
+|---|---|---|---|---|
+| 10 L/s (0.6 m³/min, 21 cfm) | 304 L | 152 L | 101 L | 76 L |
+| 25 L/s (1.5 m³/min, 53 cfm) | 760 L | 380 L | 253 L | 190 L |
+| 50 L/s (3.0 m³/min, 106 cfm) | 1,520 L | 760 L | 507 L | 380 L |
+| 100 L/s (6.0 m³/min, 212 cfm) | 3,040 L | 1,520 L | 1,013 L | 760 L |
+| 200 L/s (12.0 m³/min, 424 cfm) | 6,079 L | 3,040 L | 2,026 L | 1,520 L |
+| 400 L/s (24.0 m³/min, 848 cfm) | 12,159 L | 6,079 L | 4,053 L | 3,040 L |
+
+## Receiver volume for a demand event
+
+Net shortfall (demand − compressor) and a 1.5 bar usable band:
+
+| Event duration | 10 L/s shortfall | 50 L/s shortfall | 100 L/s shortfall |
+|---|---|---|---|
+| 30 s | 0.20 m³ | 1.01 m³ | 2.03 m³ |
+| 60 s | 0.41 m³ | 2.03 m³ | 4.05 m³ |
+| 120 s | 0.81 m³ | 4.05 m³ | 8.11 m³ |
+| 300 s | 2.03 m³ | 10.13 m³ | 20.27 m³ |
+
+## Practical notes
+
+- **Doubling the pressure band halves the receiver**, but every 1 bar of extra discharge pressure costs about 7% more compressor energy — a pressure/flow controller downstream of a large receiver is often cheaper.
+- Variable-speed compressors need much less storage than load/unload machines; follow the maker's minimum system volume.
+- Receivers are pressure vessels: they need a relief valve sized for the full compressor capacity, a pressure gauge, an automatic drain and periodic inspection — see the [pressure vessel thickness calculator](/engineering/pressure-vessel-thickness/).
+- Include the volume of large distribution headers when they are close to the users; piping volume acts as storage too.

@@ -1,69 +1,81 @@
 ---
-title: Coulomb's Law Calculator (Electric Force)
-description: Calculate the electrostatic force between two point charges, or the distance or charge needed for a given force, using Coulomb's law.
+title: Coulomb's Law Calculator (Electric Force Between Charges)
+description: Calculate the electrostatic force between two point charges with Coulomb's law, plus the electric field and potential energy, and solve for charge or distance.
 category: physics
-intro: "Electric charges push or pull on each other with a force that grows with the charges and falls with the square of the distance between them. Coulomb's law describes this force, the foundation of electrostatics."
-keywords: [coulombs law calculator, electric force calculator, electrostatic force, point charges, coulomb constant, force between charges]
-updated: 2026-10-27
+intro: "Electric charges push or pull on each other with a force that grows with the product of the charges and falls with the square of the distance between them. This Coulomb's law calculator gives that force for two point charges in vacuum or air, shows whether it is attractive or repulsive, and also returns the electric field of the first charge and the potential energy of the pair — or solves for the charge or distance needed for a given force."
+keywords: [coulombs law calculator, coulomb's law calculator, electric force calculator, electrostatic force calculator, force between two charges, coulomb constant, point charge force]
+updated: 2026-11-10
 variables:
-  - { id: q1, label: Charge 1, suffix: µC, default: 2 }
-  - { id: q2, label: Charge 2, suffix: µC, default: -3 }
+  - { id: q1, label: Charge 1 (q₁), suffix: µC, default: 2, help: 'Use a minus sign for a negative charge. 1 µC = 10⁻⁶ C; 1 nC = 0.001 µC.' }
+  - { id: q2, label: Charge 2 (q₂), suffix: µC, default: -3 }
   - { id: r, label: Distance between charges, family: length, unit: cm, imperialUnit: in, default: 10, min: 0 }
   - { id: F, label: Force (negative = attraction), family: force, unit: N, imperialUnit: lbf }
+  - { id: E1, label: Electric field of charge 1 at distance r, suffix: N/C (V/m) }
+  - { id: U, label: Electric potential energy of the pair, family: energy, unit: J }
 equations:
-  - F = 8.9875517923e9 * q1 * 1e-6 * q2 * 1e-6 / r^2
+  - F = 8.9875517862e9 * q1 * 1e-6 * q2 * 1e-6 / r^2
+  - E1 = 8.9875517862e9 * q1 * 1e-6 / r^2
+  - U = 8.9875517862e9 * q1 * 1e-6 * q2 * 1e-6 / r
 faq:
   - q: What is Coulomb's law?
-    a: F = k q₁q₂ ÷ r², where k ≈ 8.99 × 10⁹ N·m²/C². Like charges repel and opposite charges attract.
+    a: The force between two point charges is F = k q₁ q₂ ÷ r², where k = 1 ÷ (4π ε₀) ≈ 8.988 × 10⁹ N·m²/C². Like charges repel and opposite charges attract, and the force acts along the line joining them.
   - q: What does a negative force mean?
-    a: The charges have opposite signs, so the force is attractive.
-  - q: How does distance affect the force?
-    a: Force falls with the square of distance. Doubling the distance cuts the force to a quarter.
-  - q: How big is one coulomb?
-    a: Very large for static charges — about 6.24 × 10¹⁸ electrons. Everyday static charges are usually nanocoulombs to microcoulombs.
-related: [physics/orbital-period, physics/gravitational-force, physics/ohms-law, physics/force, physics/rc-time-constant]
+    a: The charges have opposite signs, so the force is attractive. A positive result means the charges have the same sign and repel each other.
+  - q: How does distance affect the electric force?
+    a: The force falls with the square of the distance. Doubling the distance cuts the force to a quarter, and ten times the distance cuts it to one hundredth.
+  - q: Does Coulomb's law work in water or oil?
+    a: In a uniform insulating medium, divide the vacuum force by the relative permittivity εᵣ. Water (εᵣ ≈ 80) weakens the force between ions about 80 times, which is why salts dissolve in it. Air (εᵣ ≈ 1.0006) is practically the same as vacuum.
+related: [physics/electric-field, physics/parallel-plate-capacitor, physics/gravitational-force, physics/force]
 ---
 
 ## How to use the Coulomb's law calculator
 
-Enter the two **charges** in microcoulombs (use a minus sign for negative charges) and the **distance** between them. The calculator gives the force in newtons. A negative result means attraction; positive means repulsion.
+Enter the two **charges** in microcoulombs (use a minus sign for a negative charge) and the **distance** between their centres. The calculator gives the **force** in newtons — negative for attraction, positive for repulsion — the **electric field** that charge 1 produces at the position of charge 2, and the **potential energy** of the pair. To find the distance for a given force, enter the force and press × on Distance; the same works for either charge.
 
 ## Coulomb's law formula
 
-<p class="formula">F = k × q₁ × q₂ ÷ r²</p>
+<p class="formula">F = k q₁ q₂ ÷ r² &nbsp;·&nbsp; E = k q₁ ÷ r² &nbsp;·&nbsp; U = k q₁ q₂ ÷ r</p>
 
-with k = 8.9875 × 10⁹ N·m²/C² (1 ÷ 4πε₀).
+with k = 1 ÷ (4π ε₀) = 8.9875517862 × 10⁹ N·m²/C², charges in coulombs and r in metres. The formula is exact for point charges and for spheres with a uniform charge, measured between centres.
 
-## Example
+## Worked example
 
 +2 µC and −3 µC, 10 cm apart:
 
-F = 8.99 × 10⁹ × (2 × 10⁻⁶) × (−3 × 10⁻⁶) ÷ 0.1² = **-5.39 N** (attractive)
+- F = 8.988 × 10⁹ × (2 × 10⁻⁶) × (−3 × 10⁻⁶) ÷ 0.1² = **−5.3925 N** — attractive, about the weight of a 0.55 kg mass
+- Field of charge 1 at 10 cm: E = 8.988 × 10⁹ × 2 × 10⁻⁶ ÷ 0.1² = **1.798 × 10⁶ N/C**
+- Potential energy: U = 8.988 × 10⁹ × (2 × 10⁻⁶) × (−3 × 10⁻⁶) ÷ 0.1 = **−0.5393 J** (negative: work is needed to pull them apart)
 
-## Force vs distance (+1 µC and +1 µC)
+## Force versus distance
 
-| Distance | Force |
-|---|---|
-| 1 cm | 89.9 N |
-| 2 cm | 22.5 N |
-| 5 cm | 3.6 N |
-| 10 cm | 0.899 N |
-| 20 cm | 0.225 N |
-| 50 cm | 0.036 N |
-| 100 cm | 0.00899 N |
+| Distance | Two 1 µC charges | Two 1 nC charges |
+|---|---|---|
+| 1 cm | 89.88 N | 8.988 × 10⁻⁵ N |
+| 2 cm | 22.47 N | 2.247 × 10⁻⁵ N |
+| 5 cm | 3.595 N | 3.595 × 10⁻⁶ N |
+| 10 cm | 0.8988 N | 8.988 × 10⁻⁷ N |
+| 20 cm | 0.2247 N | 2.247 × 10⁻⁷ N |
+| 50 cm | 0.03595 N | 3.595 × 10⁻⁸ N |
+| 100 cm | 0.008988 N | 8.988 × 10⁻⁹ N |
 
-## Electric vs gravitational force
+## Force in different materials
 
-Between a proton and an electron, the electric force is about **10³⁹ times** stronger than gravity. Gravity dominates on large scales only because matter is usually electrically neutral.
+Two 1 µC charges 1 cm apart, surrounded by the material:
 
-## In a material
+| Medium | Relative permittivity εᵣ | Force |
+|---|---|---|
+| Vacuum | 1 | 89.88 N |
+| Air (dry, 20 °C) | 1.00059 | 89.82 N |
+| Transformer oil | 2.2 | 40.85 N |
+| Ethanol (25 °C) | 24.3 | 3.699 N |
+| Water (20 °C) | 80.1 | 1.122 N |
 
-In a medium other than vacuum, divide by the relative permittivity εᵣ. In water (εᵣ ≈ 80) the force between ions is about 80 times weaker, which is why salts dissolve.
+## Electric force versus gravity
 
-## Practical charges
+In a hydrogen atom the electron and proton, 52.9 pm apart, attract each other with **8.24 × 10⁻⁸ N**. The electric force between them is about **2.3 × 10³⁹** times their gravitational attraction — gravity dominates on large scales only because matter is almost exactly neutral.
 
-| Situation | Typical charge |
-|---|---|
-| Rubbed balloon | 0.1–1 µC |
-| Van de Graaff dome | 1–10 µC |
-| Lightning strike | 5–20 C |
+## Practical notes
+
+- **1 coulomb is a huge static charge** — about 6.24 × 10¹⁸ electrons. Charges from rubbing or static build-up are usually nanocoulombs to a few microcoulombs.
+- For charges spread over large or close conductors, the point-charge formula is only approximate; use the [electric field calculator](/physics/electric-field/) or a capacitance model instead.
+- Electrostatic forces drive dust precipitators, laser printers, powder coating and the ESD that damages electronic parts.

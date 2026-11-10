@@ -1,0 +1,87 @@
+---
+title: Circle Through 3 Points Calculator (Centre, Radius, Equation)
+description: Find the circle through three points — its centre, radius, standard and general equations, circumference and area — with the circumcircle formulas.
+category: math
+intro: "Any three points that are not on one straight line lie on exactly one circle, the circumcircle of the triangle they form. This circle through 3 points calculator finds the centre (h, k) and radius r of that circle, writes its standard equation (x − h)² + (y − k)² = r² and its general form x² + y² + Dx + Ey + F = 0, and gives the circumference and area — handy for fitting an arc to three measured points."
+keywords: [circle through 3 points calculator, circle from three points, find center and radius of circle, equation of a circle calculator, circumcircle calculator, circle equation from points, three point circle]
+updated: 2026-11-10
+variables:
+  - { id: x1, label: Point 1 — x₁, default: 1 }
+  - { id: y1, label: Point 1 — y₁, default: 1 }
+  - { id: x2, label: Point 2 — x₂, default: 2 }
+  - { id: y2, label: Point 2 — y₂, default: 4 }
+  - { id: x3, label: Point 3 — x₃, default: 5 }
+  - { id: y3, label: Point 3 — y₃, default: 3 }
+  - { id: Dd, label: 'Determinant term d (0 = points are collinear)', decimals: 6 }
+  - { id: h, label: Centre x-coordinate h, decimals: 6 }
+  - { id: k, label: Centre y-coordinate k, decimals: 6 }
+  - { id: r, label: Radius r, min: 0, decimals: 6 }
+  - { id: Dg, label: 'General form coefficient D (= −2h)', decimals: 6 }
+  - { id: Eg, label: 'General form coefficient E (= −2k)', decimals: 6 }
+  - { id: Fg, label: 'General form coefficient F (= h² + k² − r²)', decimals: 6 }
+  - { id: C, label: Circumference 2πr, min: 0, decimals: 6 }
+  - { id: A, label: Area πr², min: 0, decimals: 6 }
+equations:
+  - Dd = 2 * (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2))
+  - h = ((x1^2 + y1^2) * (y2 - y3) + (x2^2 + y2^2) * (y3 - y1) + (x3^2 + y3^2) * (y1 - y2)) / Dd
+  - k = ((x1^2 + y1^2) * (x3 - x2) + (x2^2 + y2^2) * (x1 - x3) + (x3^2 + y3^2) * (x2 - x1)) / Dd
+  - r = sqrt((x1 - h)^2 + (y1 - k)^2)
+  - Dg = -2 * h
+  - Eg = -2 * k
+  - Fg = h^2 + k^2 - r^2
+  - C = 2 * pi * r
+  - A = pi * r^2
+faq:
+  - q: How do you find the equation of a circle through three points?
+    a: The centre is equally far from all three points, so it lies where the perpendicular bisectors of two chords meet. Solving those two linear equations gives h = [s₁(y₂ − y₃) + s₂(y₃ − y₁) + s₃(y₁ − y₂)] ÷ d and k = [s₁(x₃ − x₂) + s₂(x₁ − x₃) + s₃(x₂ − x₁)] ÷ d, where sᵢ = xᵢ² + yᵢ² and d = 2[x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)]. The radius is the distance from the centre to any of the points.
+  - q: What if the three points are on a straight line?
+    a: Then d = 0 and no circle passes through them — the perpendicular bisectors are parallel. The calculator shows an infinite or undefined centre and radius.
+  - q: What is the general form of the equation of a circle?
+    a: x² + y² + Dx + Ey + F = 0, with D = −2h, E = −2k and F = h² + k² − r². You can also find D, E and F directly by substituting the three points and solving the three linear equations.
+  - q: How do I find the radius of an arc from three measured points?
+    a: Measure the coordinates of three points on the arc — for example both ends and the middle — and enter them. For a chord of length c and height (sagitta) s the radius is also r = c² ÷ (8s) + s ÷ 2.
+related: [math/circle, math/distance-midpoint, math/arc-length, math/system-of-3-equations]
+---
+
+## How to use the circle through 3 points calculator
+
+Enter the coordinates of **three points** that are not on a straight line. The calculator gives the **centre (h, k)**, the **radius r**, the coefficients of the **general equation** x² + y² + Dx + Ey + F = 0, and the **circumference** and **area** of the circle. The determinant term d is zero when the points are collinear — then no circle exists.
+
+## Circle through three points formulas
+
+<p class="formula">d = 2[x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)] &nbsp;·&nbsp; sᵢ = xᵢ² + yᵢ²</p>
+
+<p class="formula">h = [s₁(y₂ − y₃) + s₂(y₃ − y₁) + s₃(y₁ − y₂)] ÷ d &nbsp;·&nbsp; k = [s₁(x₃ − x₂) + s₂(x₁ − x₃) + s₃(x₂ − x₁)] ÷ d</p>
+
+<p class="formula">r = √[(x₁ − h)² + (y₁ − k)²] &nbsp;·&nbsp; (x − h)² + (y − k)² = r²</p>
+
+## Worked example
+
+Points (1, 1), (2, 4) and (5, 3):
+
+- s₁ = 2, s₂ = 20, s₃ = 34
+- d = 2[1 × (4 − 3) + 2 × (3 − 1) + 5 × (1 − 4)] = **−20**
+- h = [2 × 1 + 20 × 2 + 34 × (−3)] ÷ (−20) = **3**, k = [2 × 3 + 20 × (−4) + 34 × 1] ÷ (−20) = **2**
+- r = √[(1 − 3)² + (1 − 2)²] = √5 = **2.236068**
+- Equation: **(x − 3)² + (y − 2)² = 5**, or x² + y² − 6x − 4y + 8 = 0
+- Circumference = **14.049629**, area = **15.707963**
+
+## Example point sets
+
+| Points | Centre (h, k) | Radius |
+|---|---|---|
+| (0, 0), (4, 0), (0, 3) | (2, 1.5) | 2.5 |
+| (1, 0), (0, 1), (−1, 0) | (0, 0) | 1 |
+| (0, 0), (2, 2), (4, 0) | (2, 0) | 2 |
+| (−3, 4), (4, 3), (5, 0) | (0, 0) | 5 |
+| (1, 1), (2, 4), (5, 3) | (3, 2) | 2.236 |
+| (0, 0), (1, 1), (2, 2) | collinear — no circle | — |
+
+For a right triangle the centre is the midpoint of the hypotenuse — the first row is the 3-4-5 triangle with radius 2.5.
+
+## Practical notes
+
+- **Measuring an arc or a pipe bend:** pick the three points as far apart as possible along the arc; points close together make the radius very sensitive to measurement errors.
+- The centre is the **circumcentre** of the triangle formed by the points — inside the triangle if it is acute, on the hypotenuse if it is right-angled and outside if it is obtuse.
+- To check a result, the distance from the centre to each point should equal r — use the [distance and midpoint calculator](/math/distance-midpoint/).
+- For more than three noisy points, a least-squares circle fit gives a better estimate than any single set of three.

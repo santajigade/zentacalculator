@@ -1,0 +1,98 @@
+---
+title: Matrix Determinant Calculator 3×3 (with Inverse Matrix)
+description: Calculate the determinant, trace and inverse of a 3×3 matrix by cofactor expansion, with step-by-step working — also works for 2×2 matrices.
+category: math
+intro: "The determinant of a square matrix is a single number that tells you whether the matrix can be inverted, how it scales areas and volumes, and whether a system of linear equations has a unique solution. This matrix determinant calculator expands a 3×3 matrix by cofactors, gives its trace and, when the determinant is not zero, the full inverse matrix from the adjugate."
+keywords: [matrix determinant calculator, determinant calculator 3x3, inverse matrix calculator, 3x3 matrix inverse, determinant of a matrix, cofactor expansion, adjugate matrix]
+updated: 2026-11-10
+variables:
+  - { id: a11, label: 'Row 1, column 1 (a11)', default: 2 }
+  - { id: a12, label: 'Row 1, column 2 (a12)', default: 1 }
+  - { id: a13, label: 'Row 1, column 3 (a13)', default: 1 }
+  - { id: a21, label: 'Row 2, column 1 (a21)', default: 1 }
+  - { id: a22, label: 'Row 2, column 2 (a22)', default: 3 }
+  - { id: a23, label: 'Row 2, column 3 (a23)', default: 2 }
+  - { id: a31, label: 'Row 3, column 1 (a31)', default: 1 }
+  - { id: a32, label: 'Row 3, column 2 (a32)', default: 0 }
+  - { id: a33, label: 'Row 3, column 3 (a33)', default: 0 }
+  - { id: det, label: Determinant det(A), decimals: 6 }
+  - { id: tr, label: Trace (sum of the diagonal), decimals: 6 }
+  - { id: i11, label: 'Inverse, row 1 column 1', decimals: 6 }
+  - { id: i12, label: 'Inverse, row 1 column 2', decimals: 6 }
+  - { id: i13, label: 'Inverse, row 1 column 3', decimals: 6 }
+  - { id: i21, label: 'Inverse, row 2 column 1', decimals: 6 }
+  - { id: i22, label: 'Inverse, row 2 column 2', decimals: 6 }
+  - { id: i23, label: 'Inverse, row 2 column 3', decimals: 6 }
+  - { id: i31, label: 'Inverse, row 3 column 1', decimals: 6 }
+  - { id: i32, label: 'Inverse, row 3 column 2', decimals: 6 }
+  - { id: i33, label: 'Inverse, row 3 column 3', decimals: 6 }
+equations:
+  - det = a11 * (a22 * a33 - a23 * a32) - a12 * (a21 * a33 - a23 * a31) + a13 * (a21 * a32 - a22 * a31)
+  - tr = a11 + a22 + a33
+  - i11 = (a22 * a33 - a23 * a32) / det
+  - i12 = (-(a12 * a33 - a13 * a32)) / det
+  - i13 = (a12 * a23 - a13 * a22) / det
+  - i21 = (-(a21 * a33 - a23 * a31)) / det
+  - i22 = (a11 * a33 - a13 * a31) / det
+  - i23 = (-(a11 * a23 - a13 * a21)) / det
+  - i31 = (a21 * a32 - a22 * a31) / det
+  - i32 = (-(a11 * a32 - a12 * a31)) / det
+  - i33 = (a11 * a22 - a12 * a21) / det
+faq:
+  - q: How do you find the determinant of a 3×3 matrix?
+    a: Expand along the first row, det = a₁₁(a₂₂a₃₃ − a₂₃a₃₂) − a₁₂(a₂₁a₃₃ − a₂₃a₃₁) + a₁₃(a₂₁a₃₂ − a₂₂a₃₁). Each bracket is the determinant of the 2×2 minor left after deleting that element's row and column, and the signs alternate +, −, +.
+  - q: How do you find the inverse of a 3×3 matrix?
+    a: Replace every element by its cofactor, transpose the result to get the adjugate, and divide by the determinant, A⁻¹ = adj(A) ÷ det(A). Check it by multiplying, A × A⁻¹ = I.
+  - q: What does a determinant of zero mean?
+    a: The matrix is singular — its rows (and columns) are linearly dependent, it squashes space into a plane or line, and it has no inverse. A system of equations with that coefficient matrix has either no solution or infinitely many.
+  - q: How do I use this for a 2×2 matrix?
+    a: Enter the 2×2 matrix in the top-left corner, set a₃₃ = 1 and the other entries of row 3 and column 3 to 0. The determinant is then ad − bc and the top-left block of the inverse is the 2×2 inverse.
+related: [math/system-of-3-equations, math/system-of-equations, math/vector, math/cubic-equation]
+---
+
+## How to use the matrix determinant calculator
+
+Enter the nine elements of the 3×3 matrix row by row — a₁₂ is row 1, column 2. The calculator gives the **determinant**, the **trace** and the nine elements of the **inverse matrix**. If the determinant is zero the matrix is singular and the inverse elements show as infinite or undefined. Fractions such as 1/3 can be typed as decimals.
+
+## Determinant and inverse formulas
+
+<p class="formula">det A = a<sub>11</sub>(a<sub>22</sub>a<sub>33</sub> − a<sub>23</sub>a<sub>32</sub>) − a<sub>12</sub>(a<sub>21</sub>a<sub>33</sub> − a<sub>23</sub>a<sub>31</sub>) + a<sub>13</sub>(a<sub>21</sub>a<sub>32</sub> − a<sub>22</sub>a<sub>31</sub>)</p>
+
+<p class="formula">C<sub>ij</sub> = (−1)<sup>i+j</sup> M<sub>ij</sub> &nbsp;·&nbsp; A⁻¹ = adj(A) ÷ det A = C<sup>T</sup> ÷ det A</p>
+
+M<sub>ij</sub> is the minor — the determinant of the 2×2 matrix left after deleting row i and column j. For a 2×2 matrix the determinant is ad − bc and the inverse is [d −b ; −c a] ÷ (ad − bc).
+
+## Worked example
+
+A = [2 1 1 ; 1 3 2 ; 1 0 0] (rows separated by semicolons):
+
+- det A = 2 × (3 × 0 − 2 × 0) − 1 × (1 × 0 − 2 × 1) + 1 × (1 × 0 − 3 × 1) = 0 + 2 − 3 = **−1**
+- Trace = 2 + 3 + 0 = **5**
+- Cofactor matrix C = [0 2 −3 ; 0 −1 1 ; −1 −3 5]
+- Inverse A⁻¹ = Cᵀ ÷ (−1) = **[0 0 1 ; −2 1 3 ; 3 −1 −5]**
+- Check: A × A⁻¹ gives the identity matrix
+
+## Determinants of common matrices
+
+| Matrix | Elements (rows) | Determinant | Inverse |
+|---|---|---|---|
+| Identity | 1 0 0 ; 0 1 0 ; 0 0 1 | 1 | invertible |
+| Diagonal 2, 3, 4 | 2 0 0 ; 0 3 0 ; 0 0 4 | 24 | invertible |
+| Rotation 90° about z | 0 −1 0 ; 1 0 0 ; 0 0 1 | 1 | invertible |
+| Upper triangular | 1 2 3 ; 0 4 5 ; 0 0 6 | 24 | invertible |
+| Rows 1 2 3 / 4 5 6 / 7 8 9 | 1 2 3 ; 4 5 6 ; 7 8 9 | 0 | singular — no inverse |
+| This page's example | 2 1 1 ; 1 3 2 ; 1 0 0 | −1 | invertible |
+
+## Properties of determinants
+
+- Swapping two rows changes the sign of the determinant; multiplying a row by k multiplies it by k.
+- Adding a multiple of one row to another leaves the determinant unchanged — the basis of Gaussian elimination.
+- det(AB) = det A × det B, det(Aᵀ) = det A and det(A⁻¹) = 1 ÷ det A.
+- The determinant of a triangular matrix is the product of its diagonal elements.
+- |det A| is the volume of the parallelepiped spanned by the rows; its sign tells you whether the orientation is flipped.
+
+## Practical notes
+
+- A determinant that is tiny compared with the size of the elements means the matrix is **ill-conditioned**: small changes in the data cause large changes in the inverse or in the solution of the equations.
+- To solve **A x = b** for three unknowns, use the [system of 3 equations calculator](/math/system-of-3-equations/) — it applies Cramer's rule, which is det-based too.
+- In engineering, 3×3 determinants appear in vector cross products, rotation matrices, stress tensors and the Clarke and Park transformations.

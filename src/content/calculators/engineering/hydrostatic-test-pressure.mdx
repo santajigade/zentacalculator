@@ -1,0 +1,98 @@
+---
+title: Hydrostatic Test Pressure Calculator (ASME VIII & B31.3)
+description: Calculate hydrostatic or pneumatic test pressure for vessels and piping to ASME VIII Div 1 and B31.3, with stress ratio, static head and gauge range.
+category: engineering
+intro: "A hydrostatic test proves a new pressure vessel or piping system by filling it with water and holding it above its design pressure, as described in [hydrostatic testing in the oil and gas industry](https://www.instrumentationblog.in/hydrostatic-testing-in-oil-gas-industry/). This hydrostatic test pressure calculator applies the ASME Section VIII Division 1 (1.3 × MAWP) and ASME B31.3 (1.5 × design pressure) factors with the temperature stress ratio, adds the static head at the lowest point and suggests a test gauge range."
+keywords: [hydrostatic test pressure calculator, hydrotest pressure calculation, hydro test pressure formula, asme b31.3 test pressure, pressure vessel test pressure, pneumatic test pressure, 1.5 times design pressure]
+updated: 2026-11-10
+variables:
+  - { id: P, label: Design pressure or MAWP (gauge), family: pressure, unit: bar, imperialUnit: psi, default: 10, min: 0 }
+  - id: k
+    label: Code and test type
+    default: 1.3
+    options:
+      - { label: 'ASME VIII Div 1 hydrostatic (UG-99) — 1.3', value: 1.3 }
+      - { label: 'ASME B31.3 piping hydrostatic (345.4) — 1.5', value: 1.5 }
+      - { label: 'Pneumatic test, ASME VIII-1 UG-100 or B31.3 — 1.1', value: 1.1 }
+  - { id: St, label: Allowable stress at test temperature, family: pressure, unit: MPa, imperialUnit: psi, default: 138, min: 0 }
+  - { id: Sd, label: Allowable stress at design temperature, family: pressure, unit: MPa, imperialUnit: psi, default: 125, min: 0, help: 'Equal to the test-temperature value for services at or near ambient temperature.' }
+  - { id: h, label: Height of the lowest point below the test gauge, family: length, unit: m, imperialUnit: ft, default: 6, min: 0 }
+  - { id: rho, label: Test fluid density, family: density, unit: kgm3, default: 1000, min: 0, help: 'Water ≈ 1000 kg/m³. Use 0 for a pneumatic test.' }
+  - { id: r, label: Stress ratio St ÷ Sd, min: 0, decimals: 4 }
+  - { id: Pt, label: Test pressure at the top (gauge), family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+  - { id: Pb, label: Pressure at the lowest point, family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+  - { id: G1, label: Test gauge range — minimum (1.5 × test), family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+  - { id: G2, label: Test gauge range — preferred (2 × test), family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+  - { id: G4, label: Test gauge range — maximum (4 × test), family: pressure, unit: bar, imperialUnit: psi, min: 0 }
+equations:
+  - r = St / Sd
+  - Pt = k * P * r
+  - Pb = Pt + rho * g0 * h
+  - G1 = 1.5 * Pt
+  - G2 = 2 * Pt
+  - G4 = 4 * Pt
+faq:
+  - q: How is hydrostatic test pressure calculated?
+    a: For a pressure vessel to ASME VIII Div 1 (UG-99), test pressure = 1.3 × MAWP × (stress at test temperature ÷ stress at design temperature), using the lowest ratio of the materials in the vessel. For process piping to ASME B31.3, P_T = 1.5 × P × S_T ÷ S, with the ratio not taken above 6.5.
+  - q: Why is the test pressure 1.5 times the design pressure?
+    a: The margin proves the strength and leak-tightness of the welds and joints with a safety allowance over normal operation. ASME VIII-1 used 1.5 until the 1999 addenda lowered it to 1.3 when the design margin on tensile strength was reduced; B31.3 piping still uses 1.5.
+  - q: Where is the test pressure measured?
+    a: ASME VIII-1 specifies the test pressure at the top of the vessel in its test position. The bottom sees the test pressure plus the water head, about 0.098 bar per metre, which must not over-stress any part.
+  - q: What range should the test pressure gauge have?
+    a: ASME VIII-1 UG-102 says the dial range should preferably be about double the test pressure, and never less than 1.5 times or more than 4 times it. Gauges must be calibrated, and a recorder or second gauge is common practice.
+related: [engineering/pressure-vessel-thickness, engineering/barlow-formula, engineering/hydrostatic-pressure, engineering/absolute-gauge-pressure]
+---
+
+## How to use the hydrostatic test pressure calculator
+
+Enter the **design pressure or MAWP**, choose the **code and test type**, and enter the **allowable stress** of the material at the test temperature and at the design temperature (the same value for ambient services). Add the **height of the lowest point** below the test gauge and the **test fluid density** to see the pressure at the bottom of the system. The calculator also gives the test gauge ranges allowed by UG-102.
+
+## Hydrostatic test pressure formulas
+
+<p class="formula">ASME VIII-1 UG-99: P<sub>T</sub> = 1.3 × MAWP × (S<sub>T</sub> ÷ S) &nbsp;·&nbsp; ASME B31.3: P<sub>T</sub> = 1.5 × P × (S<sub>T</sub> ÷ S)</p>
+
+<p class="formula">Pneumatic: P<sub>T</sub> = 1.1 × P × (S<sub>T</sub> ÷ S) &nbsp;·&nbsp; P<sub>bottom</sub> = P<sub>T</sub> + ρ g h</p>
+
+In B31.3 the stress ratio is capped at 6.5, and the test pressure is reduced if it would make the hoop stress exceed the yield strength at test temperature. Under the European PED (2014/68/EU) the vessel test pressure is at least the greater of 1.25 × the maximum allowable pressure (corrected for temperature) and 1.43 × PS.
+
+## Worked example
+
+A vessel with MAWP 10 bar g at a design temperature where S = 125 MPa, tested with water at ambient (S<sub>T</sub> = 138 MPa) to ASME VIII-1; the bottom is 6 m below the gauge:
+
+- Stress ratio = 138 ÷ 125 = **1.1040**
+- Test pressure = 1.3 × 10 × 1.1040 = **14.35 bar g** at the top
+- At the bottom: 14.35 + 1000 × 9.807 × 6 ÷ 10⁵ = **14.94 bar g**
+- Test gauge: at least **21.5 bar**, preferably about **28.7 bar** (a 0–25 or 0–40 bar gauge), and not more than **57.4 bar**
+
+## Test pressure without temperature correction
+
+For ambient-temperature services (S<sub>T</sub> = S). The last column is the preferred gauge range for an ASME VIII-1 test.
+
+| Design pressure | ASME VIII-1 hydro (1.3×) | B31.3 hydro (1.5×) | Pneumatic (1.1×) | Gauge range for 1.3× |
+|---|---|---|---|---|
+| 3.5 bar g | 4.55 bar g | 5.25 bar g | 3.85 bar g | 9.1 bar |
+| 5 bar g | 6.50 bar g | 7.50 bar g | 5.50 bar g | 13.0 bar |
+| 10 bar g | 13.00 bar g | 15.00 bar g | 11.00 bar g | 26.0 bar |
+| 16 bar g | 20.80 bar g | 24.00 bar g | 17.60 bar g | 41.6 bar |
+| 25 bar g | 32.50 bar g | 37.50 bar g | 27.50 bar g | 65.0 bar |
+| 40 bar g | 52.00 bar g | 60.00 bar g | 44.00 bar g | 104.0 bar |
+| 100 bar g | 130.00 bar g | 150.00 bar g | 110.00 bar g | 260.0 bar |
+
+## Static head of water added at the lowest point
+
+| Height below gauge | Extra pressure | Extra pressure |
+|---|---|---|
+| 2 m | 0.196 bar | 2.84 psi |
+| 5 m | 0.490 bar | 7.11 psi |
+| 10 m | 0.981 bar | 14.22 psi |
+| 20 m | 1.961 bar | 28.45 psi |
+| 30 m | 2.942 bar | 42.67 psi |
+| 50 m | 4.903 bar | 71.12 psi |
+
+## Practical notes
+
+- **Hold time:** B31.3 requires at least 10 minutes at test pressure; ASME VIII-1 then lowers the pressure to at least test pressure ÷ 1.3 for the visual inspection of all joints.
+- **Metal temperature:** keep it at least 17 °C (30 °F) above the minimum design metal temperature during a VIII-1 test, but not over 48 °C (120 °F) for close inspection, to avoid brittle fracture.
+- **Vent the high points** before pressurising — trapped air makes a hydrotest store energy like a pneumatic test.
+- **Isolate instruments**, relief valves and anything with a lower rating, following a written [hydrotest procedure for piping](ib:hydrotest-procedure-for-piping-system), and [select a calibrated test gauge](ib:pressure-gauge-selection-7-factors) with the right range.
+- A pneumatic test stores far more energy than a hydrotest; use it only when water cannot be used, with an exclusion zone and a staged pressure increase.

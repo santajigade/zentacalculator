@@ -1,0 +1,98 @@
+---
+title: Cone Bottom Tank Volume Calculator (Level to Volume)
+description: Calculate the liquid volume in a vertical tank with a conical bottom from its level, with total capacity, percent full, cone volume and cone angle.
+category: engineering
+intro: "Many process tanks, silos and hoppers have a conical bottom so they drain completely, which makes the level-to-volume relationship non-linear near the outlet. This cone bottom tank volume calculator works out the liquid volume for any level measured from the outlet, the total capacity, the percentage full, the volume held in the cone and the cone angle — the same strapping calculation used to set up [automatic tank gauging](https://www.instrumentationblog.in/automatic-tank-gauging-explained/) or a level transmitter."
+keywords: [cone bottom tank volume calculator, conical bottom tank volume, cone tank volume calculator, hopper volume calculator, silo volume calculator, conical tank level to volume, tank with cone bottom capacity]
+updated: 2026-11-11
+variables:
+  - { id: D, label: Tank inside diameter, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
+  - { id: H, label: Height of the cylindrical part (straight side), family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: hc, label: Height of the cone, family: length, unit: m, imperialUnit: ft, default: 1, min: 0 }
+  - { id: d, label: Outlet diameter at the bottom of the cone, family: length, unit: m, imperialUnit: ft, default: 0.1, min: 0, help: 'Enter 0 for a cone that comes to a point.' }
+  - { id: h, label: Liquid level measured from the outlet, family: length, unit: m, imperialUnit: ft, default: 2.5, min: 0 }
+  - { id: V, label: Liquid volume, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: Vt, label: Total tank capacity, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: pc, label: Percent full, family: percent, unit: '%', min: 0 }
+  - { id: Vcone, label: Volume of the cone section, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: Ds, label: Diameter of the liquid surface, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: ang, label: Included cone angle, family: angle, unit: deg, min: 0 }
+  - { id: wa, label: Cone wall angle from horizontal, family: angle, unit: deg, min: 0 }
+equations:
+  - Vcone = pi * hc / 12 * (d^2 + d * D + D^2)
+  - Vt = Vcone + pi * D^2 / 4 * H
+  - Ds = d + (D - d) * min(h, hc) / hc
+  - V = pi * min(h, hc) / 12 * (d^2 + d * Ds + Ds^2) + pi * D^2 / 4 * min(max(h - hc, 0), H)
+  - pc = V / Vt
+  - ang = 2 * atan((D - d) / (2 * hc))
+  - wa = atan(2 * hc / (D - d))
+faq:
+  - q: How do you calculate the volume of a cone bottom tank?
+    a: Add the volume of the cone (a frustum if the outlet has a diameter) to the volume of the cylinder above it. The cone holds V = π h (d² + d D + D²) ÷ 12, where h is the cone height, D the tank diameter and d the outlet diameter; the cylinder holds π D² H ÷ 4. For d = 0 the cone formula becomes π D² h ÷ 12, one third of a cylinder of the same height.
+  - q: How do you find the volume at a level inside the cone?
+    a: The liquid forms a smaller cone (or frustum). Its surface diameter grows linearly from the outlet diameter at the bottom to the tank diameter at the top of the cone, so at level h it is d + (D − d) h ÷ h_cone, and the volume is π h (d² + d Dₛ + Dₛ²) ÷ 12.
+  - q: Why is the volume not proportional to the level in a cone bottom tank?
+    a: In the cone the cross-section grows with the square of the height, so the first 10% of the cone height holds only about 0.1% of the cone volume for a pointed cone. Above the cone the tank is a straight cylinder and every metre of level adds the same volume.
+  - q: What cone angle should a hopper or tank bottom have?
+    a: Liquid tanks often use a 60°–90° included angle (walls 45°–60° from horizontal). Hoppers for powders and granular solids usually need steeper walls, often 60°–70° from horizontal, for reliable mass flow — the exact angle depends on the wall friction of the material.
+related: [engineering/vertical-tank-volume, engineering/horizontal-tank-volume, math/frustum-volume, engineering/tank-drain-time]
+---
+
+## How to use the cone bottom tank volume calculator
+
+Enter the **inside diameter** of the tank, the **height of the straight cylindrical side**, the **height of the cone** and the **outlet diameter** at the bottom of the cone (0 for a pointed cone). Then enter the **liquid level measured from the outlet**. The calculator gives the liquid volume, the total capacity, the percentage full, the volume of the cone section, the diameter of the liquid surface and the cone angle. To find the level for a given volume, enter the volume and press × on the level.
+
+## Cone bottom tank volume formulas
+
+<p class="formula">V<sub>cone</sub> = π h<sub>c</sub> (d² + d D + D²) ÷ 12 &nbsp;·&nbsp; V<sub>total</sub> = V<sub>cone</sub> + π D² H ÷ 4</p>
+
+<p class="formula">Level h ≤ h<sub>c</sub>: D<sub>s</sub> = d + (D − d) h ÷ h<sub>c</sub>, V = π h (d² + d D<sub>s</sub> + D<sub>s</sub>²) ÷ 12</p>
+
+<p class="formula">Level h &gt; h<sub>c</sub>: V = V<sub>cone</sub> + π D² (h − h<sub>c</sub>) ÷ 4 &nbsp;·&nbsp; included angle = 2 atan[(D − d) ÷ (2 h<sub>c</sub>)]</p>
+
+## Worked example
+
+A tank 2 m in diameter with a 3 m straight side, a 1 m deep cone and a 100 mm outlet, filled to 2.5 m above the outlet:
+
+- Cone volume = π × 1 × (0.1² + 0.1 × 2 + 2²) ÷ 12 = **1,102.2 L**
+- Total capacity = 1,102.2 + π × 2² × 3 ÷ 4 × 1000 = **10,527.0 L**
+- The level is above the cone, so the liquid surface is the full **2 m** diameter
+- Liquid volume = 1,102.2 + π × 2² × (2.5 − 1) ÷ 4 × 1000 = **5,814.6 L**
+- Percent full = 5,814.6 ÷ 10,527.0 = **55.24%**
+- Included cone angle = 2 atan(1.9 ÷ 2) = **87.06°**, so the walls slope at **46.47°** from horizontal
+
+## Level to volume table for the example tank
+
+| Level from outlet | Surface diameter | Volume | Percent full |
+|---|---|---|---|
+| 0.25 m | 0.575 m | 26 L | 0.2% |
+| 0.5 m | 1.050 m | 159 L | 1.5% |
+| 0.75 m | 1.525 m | 489 L | 4.6% |
+| 1 m | 2.000 m | 1,102 L | 10.5% |
+| 1.5 m | 2.000 m | 2,673 L | 25.4% |
+| 2 m | 2.000 m | 4,244 L | 40.3% |
+| 2.5 m | 2.000 m | 5,815 L | 55.2% |
+| 3 m | 2.000 m | 7,385 L | 70.2% |
+| 3.5 m | 2.000 m | 8,956 L | 85.1% |
+| 4 m | 2.000 m | 10,527 L | 100.0% |
+
+The first quarter of the cone height holds very little liquid — which is why level transmitters on cone bottom tanks need a strapping table rather than a linear scale.
+
+## Cone height and volume for common cone angles
+
+Pointed cones (outlet diameter 0); each cell gives the cone height and the volume it holds.
+
+| Tank diameter | 60° included angle | 90° included angle | 120° included angle |
+|---|---|---|---|
+| 1 m | 0.866 m / 227 L | 0.500 m / 131 L | 0.289 m / 76 L |
+| 1.5 m | 1.299 m / 765 L | 0.750 m / 442 L | 0.433 m / 255 L |
+| 2 m | 1.732 m / 1,814 L | 1.000 m / 1,047 L | 0.577 m / 605 L |
+| 3 m | 2.598 m / 6,122 L | 1.500 m / 3,534 L | 0.866 m / 2,041 L |
+| 4 m | 3.464 m / 14,510 L | 2.000 m / 8,378 L | 1.155 m / 4,837 L |
+
+## Practical notes
+
+- **Measure the level from the true bottom:** a level transmitter mounted on the cone or the straight side has a zero offset — add the height of its tapping above the outlet before using this calculator.
+- **Dead volume:** liquid in the outlet nozzle and pipe below the cone is not included.
+- For a flat-bottomed vertical tank use the [vertical tank volume calculator](/engineering/vertical-tank-volume/); for a horizontal drum use the [horizontal tank volume calculator](/engineering/horizontal-tank-volume/).
+- **Solids:** for powders in a silo, the top surface forms a heap at the angle of repose instead of a flat surface, and the bulk density varies with compaction, so treat the result as an estimate.

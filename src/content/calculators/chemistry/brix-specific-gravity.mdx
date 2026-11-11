@@ -1,0 +1,89 @@
+---
+title: Brix to Specific Gravity Calculator (°Bx, °Bé, °Tw)
+description: Convert degrees Brix to specific gravity and density and back, with Baumé, Twaddell and sugar content in g/L, for juices, wort, syrups and sugar solutions.
+category: chemistry
+intro: "Degrees Brix is the sugar content of a solution as percent sucrose by mass, and it is linked to the solution's density, which is why refractometers and hydrometers read in °Bx. This Brix to specific gravity calculator converts °Bx to specific gravity, density, degrees Baumé and degrees Twaddell, and gives the sugar content in grams per litre — or works backwards from a measured [specific gravity](https://www.instrumentationblog.in/what-is-specific-gravity/) or a density reading from an inline [Coriolis density meter](https://www.instrumentationblog.in/coriolis-density-measurement/)."
+keywords: [brix to specific gravity calculator, specific gravity to brix, brix to density, brix calculator, baume to specific gravity, degrees brix conversion, twaddell to specific gravity]
+updated: 2026-11-11
+variables:
+  - { id: Bx, label: Degrees Brix, suffix: °Bx, default: 12, min: 0, max: 85, decimals: 2 }
+  - { id: SG, label: Specific gravity (20/20 °C), min: 0, decimals: 5 }
+  - { id: rhow, label: Density of water at the reference temperature, family: density, unit: kgm3, imperialUnit: lbft3, default: 998.2, min: 0, help: '998.2 kg/m³ at 20 °C; 999.0 kg/m³ at 15.6 °C (60 °F).' }
+  - { id: rho, label: Solution density, family: density, unit: kgm3, imperialUnit: lbft3, min: 0 }
+  - { id: Be, label: 'Degrees Baumé (heavy liquids, 145 scale)', suffix: °Bé, decimals: 2 }
+  - { id: Tw, label: Degrees Twaddell, suffix: °Tw, decimals: 2 }
+  - { id: sug, label: Sugar (sucrose) content, suffix: g/L, min: 0, decimals: 1 }
+equations:
+  - SG = 1 + Bx / (258.6 - Bx / 258.2 * 227.1)
+  - rho = SG * rhow
+  - Be = 145 - 145 / SG
+  - Tw = 200 * (SG - 1)
+  - sug = Bx / 100 * rho
+faq:
+  - q: How do you convert Brix to specific gravity?
+    a: A widely used fit to the sucrose tables is SG = 1 + °Bx ÷ (258.6 − °Bx ÷ 258.2 × 227.1), for specific gravity at 20 °C relative to water at 20 °C. It agrees with the standard sucrose tables to within about 0.001 in specific gravity (roughly 0.2 °Bx) over the usual 0–60 °Bx range. A quick rule of thumb is SG ≈ 1 + °Bx ÷ 250.
+  - q: What is the difference between Brix, Plato and Baumé?
+    a: Brix and Plato are both percent sucrose by mass and differ only in the fourth decimal place, so brewers use them interchangeably. Baumé is a hydrometer scale — SG = 145 ÷ (145 − °Bé) for liquids heavier than water — and 1 °Bé is roughly 1.8 °Bx for sugar solutions.
+  - q: How do I convert specific gravity to Brix?
+    a: Enter the specific gravity and press × on the Brix field — the calculator solves the same equation backwards. For example, SG 1.040 is about 10.0 °Bx and SG 1.080 about 19.3 °Bx.
+  - q: Does Brix measure sugar in fruit juice exactly?
+    a: Only for pure sucrose solutions. In juices, wine must and syrups the other dissolved solids — acids, minerals and other sugars — also raise the density and refractive index, so °Bx is an estimate of total soluble solids rather than an exact sugar content.
+related: [engineering/api-gravity, physics/density, chemistry/mass-percent, chemistry/dilution]
+---
+
+## How to use the Brix to specific gravity calculator
+
+Enter the **degrees Brix** from a refractometer or a Brix hydrometer. The calculator gives the **specific gravity** at 20/20 °C, the **density** of the solution, the equivalent **degrees Baumé** and **degrees Twaddell**, and the **sugar content** in grams per litre. To convert the other way, enter a specific gravity, density, Baumé or Twaddell value and press × on the Brix field. Change the water density only if your specific gravity uses a different reference temperature.
+
+## Brix, specific gravity, Baumé and Twaddell formulas
+
+<p class="formula">SG = 1 + °Bx ÷ (258.6 − °Bx ÷ 258.2 × 227.1) &nbsp;·&nbsp; ρ = SG × ρ<sub>water</sub></p>
+
+<p class="formula">°Bé = 145 − 145 ÷ SG &nbsp;·&nbsp; °Tw = 200 (SG − 1) &nbsp;·&nbsp; sugar (g/L) = °Bx ÷ 100 × ρ (kg/m³)</p>
+
+For liquids lighter than water the Baumé scale is SG = 140 ÷ (130 + °Bé), and petroleum products use [API gravity](/engineering/api-gravity/) instead.
+
+## Worked example
+
+A juice reads **12 °Bx** on a refractometer:
+
+- SG = 1 + 12 ÷ (258.6 − 12 ÷ 258.2 × 227.1) = 1 + 12 ÷ 248.045 = **1.04838**
+- Density = 1.04838 × 998.2 = **1,046.5 kg/m³**
+- Baumé = 145 − 145 ÷ 1.04838 = **6.69 °Bé**; Twaddell = 200 × (1.04838 − 1) = **9.68 °Tw**
+- Sugar content = 12 ÷ 100 × 1,046.5 = **125.6 g/L**
+
+## Brix to specific gravity table
+
+| Brix | Specific gravity (20/20 °C) | Density | Baumé | Twaddell | Sugar |
+|---|---|---|---|---|---|
+| 0 °Bx | 1.0000 | 998.2 kg/m³ | 0.00 °Bé | 0.0 °Tw | 0.0 g/L |
+| 2 °Bx | 1.0078 | 1,006.0 kg/m³ | 1.12 °Bé | 1.6 °Tw | 20.1 g/L |
+| 5 °Bx | 1.0197 | 1,017.8 kg/m³ | 2.80 °Bé | 3.9 °Tw | 50.9 g/L |
+| 8 °Bx | 1.0318 | 1,029.9 kg/m³ | 4.47 °Bé | 6.4 °Tw | 82.4 g/L |
+| 10 °Bx | 1.0400 | 1,038.2 kg/m³ | 5.58 °Bé | 8.0 °Tw | 103.8 g/L |
+| 12 °Bx | 1.0484 | 1,046.5 kg/m³ | 6.69 °Bé | 9.7 °Tw | 125.6 g/L |
+| 15 °Bx | 1.0611 | 1,059.2 kg/m³ | 8.35 °Bé | 12.2 °Tw | 158.9 g/L |
+| 20 °Bx | 1.0830 | 1,081.0 kg/m³ | 11.11 °Bé | 16.6 °Tw | 216.2 g/L |
+| 25 °Bx | 1.1057 | 1,103.7 kg/m³ | 13.86 °Bé | 21.1 °Tw | 275.9 g/L |
+| 30 °Bx | 1.1292 | 1,127.2 kg/m³ | 16.59 °Bé | 25.8 °Tw | 338.1 g/L |
+| 40 °Bx | 1.1790 | 1,176.9 kg/m³ | 22.02 °Bé | 35.8 °Tw | 470.8 g/L |
+| 50 °Bx | 1.2330 | 1,230.7 kg/m³ | 27.40 °Bé | 46.6 °Tw | 615.4 g/L |
+
+## Typical Brix values
+
+| Product | Typical Brix |
+|---|---|
+| Sugarcane juice (raw) | 16–22 °Bx |
+| Grape must for wine | 20–25 °Bx |
+| Orange juice | 10–13 °Bx |
+| Apple juice | 10–13 °Bx |
+| Beer wort (original gravity) | 10–18 °Bx |
+| Cola soft drink | 10–11 °Bx |
+| Honey | 79–83 °Bx |
+
+## Practical notes
+
+- **Temperature:** refractometers and hydrometers are calibrated at 20 °C; a reading taken warmer reads low (roughly 0.05–0.08 °Bx per °C near room temperature for sugar solutions). Use automatic temperature compensation or correct the reading.
+- **Fermenting liquids:** alcohol lowers both density and refractive index, so a refractometer reading on fermenting wort or wine must be corrected before converting it.
+- **Inline measurement:** in sugar mills, dairies and juice plants Brix is measured continuously with density meters or process refractometers, and the density is converted to Brix with the same sucrose tables.
+- To dilute a concentrate to a target Brix, use mass balance: m₁ × Bx₁ = m₂ × Bx₂ — or the [dilution calculator](/chemistry/dilution/) for a quick estimate.

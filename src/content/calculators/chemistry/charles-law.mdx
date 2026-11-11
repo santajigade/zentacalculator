@@ -1,74 +1,78 @@
 ---
 title: Charles's Law Calculator (V₁/T₁ = V₂/T₂)
-description: Calculate new volume or temperature of a gas at constant pressure using Charles's law.
+description: Calculate the new volume or temperature of a gas at constant pressure with Charles's law V₁/T₁ = V₂/T₂, with °C and °F converted to kelvin for you.
 category: chemistry
-intro: "At constant pressure, a gas expands in proportion to its absolute temperature. Charles's law explains why hot-air balloons rise and why tyres lose pressure in cold weather."
-keywords: [charles law, v1/t1 = v2/t2, gas volume temperature, constant pressure, gas law calculator]
-updated: 2026-10-27
+intro: "At constant pressure, the volume of a fixed amount of gas is directly proportional to its absolute temperature, so heating a gas makes it expand and cooling it makes it shrink. This Charles's law calculator solves V₁/T₁ = V₂/T₂ for whichever volume or temperature you leave blank, converts Celsius and Fahrenheit to kelvin automatically and shows the change in volume."
+keywords: [charles law calculator, charles's law calculator, v1/t1 = v2/t2 calculator, gas volume and temperature, constant pressure gas law, volume temperature relationship, charles law formula]
+updated: 2026-11-11
 variables:
-  - { id: V1, label: Initial volume, family: volume, unit: L, default: 2, min: 0 }
+  - { id: V1, label: Initial volume, family: volume, unit: L, imperialUnit: ft3, default: 2, min: 0 }
   - { id: T1, label: Initial temperature, family: temperature, unit: C, imperialUnit: F, default: 20, min: 0 }
-  - { id: V2, label: Final volume, family: volume, unit: L, min: 0 }
+  - { id: V2, label: Final volume, family: volume, unit: L, imperialUnit: ft3, min: 0 }
   - { id: T2, label: Final temperature, family: temperature, unit: C, imperialUnit: F, default: 80, min: 0 }
+  - { id: dV, label: Change in volume (V₂ − V₁), family: volume, unit: L, imperialUnit: ft3 }
 equations:
   - V1 / T1 = V2 / T2
+  - dV = V2 - V1
 faq:
   - q: What is Charles's law?
-    a: At constant pressure, a gas's volume is proportional to its absolute temperature — V₁/T₁ = V₂/T₂.
-  - q: Why must temperatures be in kelvin?
-    a: The law is based on absolute zero. The calculator converts °C and °F to kelvin for you.
-  - q: Where is it seen in daily life?
-    a: Hot-air balloons rising, balloons shrinking in a freezer, and tyre pressure warnings in cold weather.
-  - q: "What is Charles’s law?"
-    a: "At constant pressure, the volume of a gas is directly proportional to its absolute temperature: V₁ ÷ T₁ = V₂ ÷ T₂."
-  - q: "Why must temperature be in kelvin?"
-    a: "Because volume is proportional to absolute temperature. Using °C gives wrong results, and fails completely below 0 °C."
-related: [chemistry/boyles-law, chemistry/combined-gas-law, physics/ideal-gas-law]
+    a: At constant pressure, the volume of a fixed amount of an ideal gas is directly proportional to its absolute temperature, V ∝ T, so V₁ ÷ T₁ = V₂ ÷ T₂. Doubling the absolute temperature doubles the volume.
+  - q: Why must the temperature be in kelvin?
+    a: Volume is proportional to absolute temperature, measured from absolute zero. Using °C would wrongly suggest that going from 20 °C to 80 °C quadruples the volume, and would give zero or negative volumes at and below 0 °C. The calculator converts °C and °F to kelvin before solving.
+  - q: What is an example of Charles's law in everyday life?
+    a: A hot-air balloon rises because the heated air inside expands and becomes less dense; a party balloon shrinks when taken out into the cold; and bread rises in the oven as gas bubbles in the dough expand.
+  - q: Does Charles's law work for real gases?
+    a: Very well for gases such as air, nitrogen and helium at ordinary pressures and temperatures well above their boiling points. It breaks down near condensation and at high pressures, where the van der Waals or other real-gas equations are needed.
+related: [chemistry/gay-lussacs-law, chemistry/boyles-law, chemistry/combined-gas-law, physics/ideal-gas-law]
 ---
 
 ## How to use the Charles's law calculator
 
-Enter **any three** of the initial and final volume and temperature. The fourth is calculated. Pressure and amount of gas stay constant.
+Enter **any three** of the initial volume, initial temperature, final volume and final temperature, in the units you prefer. The calculator converts the temperatures to kelvin, solves for the fourth value and shows the **change in volume**. The pressure and the amount of gas are assumed constant — if the pressure changes too, use the [combined gas law calculator](/chemistry/combined-gas-law/).
 
 ## Charles's law formula
 
-<p class="formula">V₁ ÷ T₁ = V₂ ÷ T₂   (T in kelvin)</p>
+<p class="formula">V₁ ÷ T₁ = V₂ ÷ T₂ &nbsp;·&nbsp; V₂ = V₁ × T₂ ÷ T₁ &nbsp;·&nbsp; T₂ = T₁ × V₂ ÷ V₁ &nbsp;(T in kelvin)</p>
+
+T(K) = T(°C) + 273.15 and T(K) = (T(°F) + 459.67) × 5/9.
 
 ## Worked example
 
-A 2 L balloon is warmed from 20 °C (293.15 K) to 80 °C (353.15 K):
+A 2 L balloon is warmed from 20 °C to 80 °C at constant pressure:
 
-V₂ = 2 × 353.15 ÷ 293.15 = **2.41 L**
+- T₁ = 20 + 273.15 = **293.15 K**, T₂ = 80 + 273.15 = **353.15 K**
+- V₂ = 2 × 353.15 ÷ 293.15 = **2.4093 L**
+- Change in volume = 2.4093 − 2 = **0.4093 L**, an increase of 20.5%
 
-## Volume–temperature table
+## Volume against temperature
 
-Starting at 2 L and 25 °C, at constant pressure:
+A gas that fills 2 L at 25 °C, at constant pressure:
 
-| Temperature | Volume |
-|---|---|
-| -50 °C | 1.497 L |
-| -20 °C | 1.698 L |
-| 0 °C | 1.832 L |
-| 25 °C | 2.000 L |
-| 50 °C | 2.168 L |
-| 100 °C | 2.503 L |
-| 200 °C | 3.174 L |
+| Temperature | Absolute temperature | Volume | Change from 25 °C |
+|---|---|---|---|
+| −50 °C | 223.15 K | 1.497 L | −25.2% |
+| −20 °C | 253.15 K | 1.698 L | −15.1% |
+| 0 °C | 273.15 K | 1.832 L | −8.4% |
+| 25 °C | 298.15 K | 2.000 L | +0.0% |
+| 50 °C | 323.15 K | 2.168 L | +8.4% |
+| 100 °C | 373.15 K | 2.503 L | +25.2% |
+| 200 °C | 473.15 K | 3.174 L | +58.7% |
+| 500 °C | 773.15 K | 5.186 L | +159.3% |
+
+Each 1 °C change alters the volume by 1/298.15 of its value at 25 °C — about 0.34%.
 
 ## Absolute zero
 
-Extend the volume–temperature line backwards and it reaches zero volume at **−273.15 °C** (0 K). This was one of the first clues to the existence of absolute zero.
+Extend the straight volume–temperature line backwards and it reaches zero volume at **−273.15 °C** (0 K). Charles's and Gay-Lussac's measurements were among the first clues that such an absolute zero of temperature exists.
 
-## Everyday examples
+## Related gas laws
 
-- **Hot-air balloons**: heating the air inside expands it, lowering its density so the balloon rises.
-- **Balloons in the cold**: a party balloon shrinks when taken outside on a cold day.
-- **Tyres**: on a hot day tyre pressure rises (pressure and temperature together — see [Gay-Lussac's law](/chemistry/combined-gas-law/)).
-- **Baking**: gas bubbles in dough expand in the oven, helping bread rise.
+- **Gay-Lussac's law** (constant volume): P₁ ÷ T₁ = P₂ ÷ T₂. A sealed can at 1 atm and 20 °C reaches about 1.27 atm at 100 °C — see the [Gay-Lussac's law calculator](/chemistry/gay-lussacs-law/).
+- **Boyle's law** (constant temperature): P₁V₁ = P₂V₂ — see the [Boyle's law calculator](/chemistry/boyles-law/).
+- All of them are special cases of the [ideal gas law](/physics/ideal-gas-law/) PV = nRT.
 
-## Gay-Lussac's law
+## Practical notes
 
-At constant volume, pressure is proportional to absolute temperature: P₁ ÷ T₁ = P₂ ÷ T₂. A sealed can at 1 atm and 20 °C reaches about 1.27 atm at 100 °C.
-
-## A common mistake
-
-Using °C directly would suggest the volume quadruples (80 ÷ 20) — completely wrong. Always use absolute temperature.
+- **Constant pressure in practice** means a gas free to expand: a balloon, a piston that moves freely, or a gas holder. In a rigid vessel the pressure rises instead.
+- **Thermal expansion of gas in a pipe:** a 1% change in absolute temperature changes the actual volume flow by 1%, which is why gas flow meters correct to standard conditions.
+- Humid air contains water vapour that can condense when it cools, so the dry-gas law slightly overestimates the shrinkage of moist air near its dew point.

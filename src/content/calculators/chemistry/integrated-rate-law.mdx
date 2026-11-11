@@ -1,0 +1,100 @@
+---
+title: Integrated Rate Law Calculator (Zero, First & Second Order)
+description: Calculate reactant concentration after a time for zero, first and second order reactions, with half-life, conversion, rate and time to reach a target.
+category: chemistry
+intro: "The integrated rate law tells you how the concentration of a reactant falls with time, and its form depends on the reaction order: linear for zero order, exponential for first order and hyperbolic for second order. This integrated rate law calculator gives the remaining concentration, the fraction converted, the half-life and the rate at any time for all three orders, and can solve for the time, rate constant or starting concentration instead."
+keywords: [integrated rate law calculator, rate law calculator, first order reaction calculator, second order reaction calculator, zero order reaction, reaction half life calculator, concentration after time]
+updated: 2026-11-11
+variables:
+  - id: n
+    label: Reaction order
+    default: 1
+    options:
+      - { label: 'Zero order — rate = k', value: 0 }
+      - { label: 'First order — rate = k[A]', value: 1 }
+      - { label: 'Second order — rate = k[A]²', value: 2 }
+  - { id: A0, label: "Initial concentration [A]₀", suffix: mol/L, default: 0.5, min: 0 }
+  - { id: k, label: 'Rate constant k (per second: M/s, 1/s or 1/(M·s))', default: 0.001, min: 0, help: 'Zero order: mol L⁻¹ s⁻¹; first order: s⁻¹; second order: L mol⁻¹ s⁻¹. Convert a per-minute constant by dividing by 60.' }
+  - { id: t, label: Time elapsed, family: seconds, unit: min, default: 10, min: 0 }
+  - { id: A, label: 'Concentration remaining [A]', suffix: mol/L, min: 0, decimals: 5 }
+  - { id: f, label: "Fraction remaining [A] ÷ [A]₀", family: percent, unit: '%', min: 0 }
+  - { id: X, label: Conversion (fraction reacted), family: percent, unit: '%', min: 0 }
+  - { id: th, label: "Half-life (from [A]₀)", family: seconds, unit: min, min: 0 }
+  - { id: r, label: 'Rate at time t, −d[A]/dt', suffix: mol/(L·s), min: 0, decimals: 7 }
+equations:
+  - A = (1 - n) * (2 - n) / 2 * max(A0 - k * t, 0) + n * (2 - n) * A0 * exp(-k * t) + n * (n - 1) / 2 * A0 / (1 + k * t * A0)
+  - f = A / A0
+  - X = 1 - A / A0
+  - th = (1 - n) * (2 - n) / 2 * A0 / (2 * k) + n * (2 - n) * ln(2) / k + n * (n - 1) / 2 / (k * A0)
+  - r = k * A^n
+faq:
+  - q: What are the integrated rate laws?
+    a: Zero order [A] = [A]₀ − k t; first order ln[A] = ln[A]₀ − k t, so [A] = [A]₀ e^(−kt); second order 1/[A] = 1/[A]₀ + k t. Plotting [A], ln[A] or 1/[A] against time gives a straight line of slope −k, −k or +k respectively, which is how the order is found from experimental data.
+  - q: How do you calculate the half-life of a reaction?
+    a: For first order t½ = ln 2 ÷ k = 0.693 ÷ k, independent of concentration. For zero order t½ = [A]₀ ÷ (2k), and for second order t½ = 1 ÷ (k [A]₀) — both depend on the starting concentration, so successive half-lives get shorter (zero order) or longer (second order).
+  - q: How do I find the time to reach a certain concentration?
+    a: Enter the target concentration in the [A] field and press × on the time — the calculator solves the rate law for t. For first order, t = ln([A]₀ ÷ [A]) ÷ k; for second order t = (1/[A] − 1/[A]₀) ÷ k.
+  - q: What are the units of the rate constant?
+    a: They depend on the order so that the rate always comes out in mol L⁻¹ s⁻¹ — mol L⁻¹ s⁻¹ for zero order, s⁻¹ for first order and L mol⁻¹ s⁻¹ for second order. In general the units are (mol/L)^(1−n) s⁻¹.
+related: [chemistry/half-life, chemistry/arrhenius-equation, chemistry/activation-energy, chemistry/equilibrium-constant]
+---
+
+## How to use the integrated rate law calculator
+
+Choose the **reaction order**, then enter the **initial concentration**, the **rate constant** (always per second) and the **time elapsed**. The calculator gives the **concentration remaining**, the fraction remaining and converted, the **half-life** measured from the starting concentration and the **rate** at that moment. To find the time to reach a given concentration, enter it in the [A] field and press × on the time; the same works for the rate constant or the starting concentration.
+
+## Integrated rate law equations
+
+| Order | Rate law | Integrated form | Straight-line plot | Half-life |
+|---|---|---|---|---|
+| Zero | rate = k | [A] = [A]₀ − k t | [A] vs t, slope −k | [A]₀ ÷ 2k |
+| First | rate = k[A] | [A] = [A]₀ e<sup>−kt</sup> | ln[A] vs t, slope −k | ln 2 ÷ k |
+| Second | rate = k[A]² | 1/[A] = 1/[A]₀ + k t | 1/[A] vs t, slope +k | 1 ÷ (k[A]₀) |
+
+The second-order form is for a single reactant (2A → products) or for A + B with equal starting concentrations.
+
+## Worked example
+
+A first-order decomposition with k = 0.001 s⁻¹ starts at [A]₀ = 0.5 mol/L. After 10 min (600 s):
+
+- [A] = 0.5 × e<sup>−0.001 × 600</sup> = 0.5 × e<sup>−0.6</sup> = **0.27441 mol/L**
+- Fraction remaining = **54.88%**, so **45.12%** has reacted
+- Half-life = 0.6931 ÷ 0.001 = 693.1 s = **11.55 min**
+- Rate at 10 min = 0.001 × 0.27441 = **2.7441 × 10⁻⁴ mol/(L·s)**
+
+For comparison, a zero-order reaction with k = 1 × 10⁻⁴ M/s would have [A] = 0.5 − 10⁻⁴ × 600 = **0.44 mol/L** after the same time, and a second-order reaction with k = 2 × 10⁻³ M⁻¹s⁻¹ would have [A] = 1 ÷ (1/0.5 + 0.002 × 600) = **0.3125 mol/L**.
+
+## First-order decay by half-lives
+
+| Half-lives elapsed | Remaining | Reacted |
+|---|---|---|
+| 0.5 | 70.7% | 29.3% |
+| 1 | 50% | 50% |
+| 2 | 25% | 75% |
+| 3 | 12.5% | 87.5% |
+| 4 | 6.25% | 93.8% |
+| 5 | 3.12% | 96.9% |
+| 7 | 0.781% | 99.2% |
+| 10 | 0.0977% | 99.9% |
+
+## How the three orders differ
+
+All three start at 1 mol/L with a first half-life of 10 minutes:
+
+| Time | Zero order | First order | Second order |
+|---|---|---|---|
+| 0 min | 1.000 M | 1.000 M | 1.000 M |
+| 5 min | 0.750 M | 0.707 M | 0.667 M |
+| 10 min | 0.500 M | 0.500 M | 0.500 M |
+| 20 min | 0.000 M | 0.250 M | 0.333 M |
+| 30 min | 0.000 M | 0.125 M | 0.250 M |
+| 40 min | 0.000 M | 0.062 M | 0.200 M |
+
+A zero-order reaction runs at a constant rate and stops abruptly when the reactant is used up; a second-order reaction slows down most as the concentration falls.
+
+## Practical notes
+
+- **Rate constants depend on temperature** — often roughly doubling for every 10 °C rise. Use the [Arrhenius equation calculator](/chemistry/arrhenius-equation/) to correct k to another temperature.
+- **Pseudo-first-order:** when one reactant is in large excess, its concentration hardly changes and a second-order reaction behaves as first order with k′ = k [B]₀.
+- Radioactive decay, drug elimination and many decompositions are first order; reactions on a saturated catalyst surface or limited by an enzyme at high substrate concentration are approximately zero order.
+- For radioactive decay with a known half-life, the [half-life calculator](/chemistry/half-life/) works directly in years.

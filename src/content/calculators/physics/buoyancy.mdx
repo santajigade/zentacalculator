@@ -1,64 +1,87 @@
 ---
 title: Buoyancy Calculator (Archimedes' Principle)
-description: Calculate the buoyant force on an object in water or another fluid, its apparent weight and whether it will float — using Archimedes' principle.
+description: Calculate the buoyant force on an object in water or another fluid, its apparent weight and density, and whether and how deep it will float.
 category: physics
-intro: "Any object in a fluid is pushed upward by a force equal to the weight of fluid it displaces — Archimedes' principle. It explains why ships float, why balloons rise and why things feel lighter underwater. This free buoyancy calculator solves for whichever value you leave blank and shows the formula and steps."
-keywords: [buoyancy calculator, buoyant force, archimedes principle, will it float, apparent weight, displacement calculator, upthrust]
-updated: 2026-10-27
+intro: "An object in a fluid is pushed upward by a force equal to the weight of the fluid it displaces — Archimedes' principle. It explains why ships float, why balloons rise and why things feel lighter underwater. This buoyancy calculator gives the buoyant force, the object's weight and apparent weight, its average density and, if it floats, how much of it sits below the surface."
+keywords: [buoyancy calculator, buoyant force calculator, archimedes principle calculator, will it float calculator, apparent weight in water, upthrust calculator, displacement calculator]
+updated: 2026-11-11
 variables:
-  - { id: V, label: Volume submerged, family: volume, unit: L, imperialUnit: ft3, default: 10, min: 0 }
-  - { id: rf, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
+  - { id: V, label: Volume of the object (fully submerged), family: volume, unit: L, imperialUnit: ft3, default: 10, min: 0, help: 'For a partly submerged object, enter only the volume below the surface to get the buoyant force on it.' }
+  - { id: rf, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0, help: 'Fresh water 1000, seawater 1025, air 1.2 kg/m³.' }
   - { id: m, label: Object mass, family: mass, unit: kg, imperialUnit: lb, default: 8, min: 0 }
   - { id: Fb, label: Buoyant force, family: force, unit: N, imperialUnit: lbf, min: 0 }
-  - { id: W, label: Weight, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: W, label: Weight in air, family: force, unit: N, imperialUnit: lbf, min: 0 }
   - { id: Wa, label: Apparent weight (negative = floats up), family: force, unit: N, imperialUnit: lbf }
+  - { id: ro, label: Average density of the object, family: density, unit: kgm3, imperialUnit: lbft3, min: 0 }
+  - { id: fs, label: Fraction submerged when floating (100% = sinks), family: percent, unit: '%', min: 0 }
 equations:
   - Fb = rf * g0 * V
   - W = m * g0
   - Wa = W - Fb
+  - ro = m / V
+  - fs = min(ro / rf, 1)
 faq:
   - q: What is Archimedes' principle?
-    a: An object immersed in a fluid is pushed up by a force equal to the weight of fluid it displaces.
+    a: A body wholly or partly immersed in a fluid is pushed upward by a force equal to the weight of the fluid it displaces, F_b = ρ_fluid × g × V_displaced. It applies to liquids and gases alike.
   - q: How do I know if something will float?
-    a: If its average density is less than the fluid’s, it floats. In the calculator, a negative apparent weight when fully submerged means it will float up.
+    a: Compare its average density with the fluid's. If the object is less dense it floats; if it is denser it sinks. In the calculator a negative apparent weight means the fully submerged object is pushed up and will rise to the surface.
   - q: How much of a floating object is underwater?
-    a: The fraction submerged equals object density ÷ fluid density. Ice (917 kg/m³) floats with about 90% underwater in seawater.
-  - q: Why do ships made of steel float?
-    a: Their hollow hulls displace a large volume of water, so their average density is less than water.
+    a: The fraction submerged equals the object's density divided by the fluid's density. Ice at 917 kg/m³ floats with about 89% of its volume below the surface in seawater and about 92% in fresh water.
+  - q: Why do steel ships float?
+    a: The hull encloses a large volume of air, so the average density of the ship — steel, air and cargo together — is less than that of water. Loading the ship lowers it in the water until the displaced water again equals its total weight.
 related: [physics/density, physics/pressure, engineering/hydrostatic-pressure, physics/weight]
 ---
 
 ## How to use the buoyancy calculator
 
-Enter the **volume** of the object under the fluid, the **fluid density** and the object's **mass**. You get the buoyant force, the object's weight and its apparent weight while submerged. A negative apparent weight means the object would rise and float.
+Enter the **volume** of the object, the **density of the fluid** and the object's **mass**. The calculator gives the **buoyant force** when the object is fully submerged, its **weight**, its **apparent weight** underwater, its **average density** and, if it floats, the **fraction of its volume below the surface**. A negative apparent weight means the object floats up. To find the volume of an irregular object from a weighing in water, enter the apparent weight and press × on the volume.
 
-## Buoyancy formula
+## Buoyancy formulas
 
-<p class="formula">F<sub>b</sub> = ρ<sub>fluid</sub> × g × V<sub>submerged</sub></p>
+<p class="formula">F<sub>b</sub> = ρ<sub>fluid</sub> g V &nbsp;·&nbsp; W = m g &nbsp;·&nbsp; W<sub>apparent</sub> = W − F<sub>b</sub></p>
 
-## Fluid densities
+<p class="formula">ρ<sub>object</sub> = m ÷ V &nbsp;·&nbsp; fraction submerged = ρ<sub>object</sub> ÷ ρ<sub>fluid</sub> (if less than 1)</p>
 
-| Fluid | Density (kg/m³) |
-|---|---|
-| Fresh water | 1,000 |
-| Seawater | 1,025 |
-| Dead Sea water | about 1,240 |
-| Olive oil | 910 |
-| Mercury | 13,534 |
-| Air (20 °C) | 1.2 |
+## Worked example
 
-## Example
+A 10 L object with a mass of 8 kg, held fully under fresh water (1000 kg/m³):
 
-A 10 L object weighing 8 kg, fully submerged in fresh water:
+- Buoyant force = 1000 × 9.80665 × 0.01 = **98.07 N**
+- Weight = 8 × 9.80665 = **78.45 N**
+- Apparent weight = 78.45 − 98.07 = **−19.61 N** — the object is pushed up and will float
+- Average density = 8 ÷ 0.01 = **800 kg/m³**, so it floats with **80%** of its volume underwater
 
-- Buoyant force = 1,000 × 9.81 × 0.01 = **98.1 N**
-- Weight = 8 × 9.81 = **78.5 N**
-- Apparent weight = **−19.6 N** → it floats, with 80% of its volume underwater.
+## Buoyant force per litre in common fluids
+
+| Fluid | Density | Buoyant force per litre | Mass displaced per litre |
+|---|---|---|---|
+| Fresh water (4 °C) | 1,000 kg/m³ | 9.807 N | 1 kg |
+| Fresh water (20 °C) | 998.2 kg/m³ | 9.789 N | 0.9982 kg |
+| Seawater | 1,025 kg/m³ | 10.05 N | 1.025 kg |
+| Dead Sea water | 1,240 kg/m³ | 12.16 N | 1.24 kg |
+| Olive oil | 915 kg/m³ | 8.973 N | 0.915 kg |
+| Petrol (gasoline) | 740 kg/m³ | 7.257 N | 0.74 kg |
+| Mercury (20 °C) | 13,546 kg/m³ | 132.8 N | 13.55 kg |
+| Air (20 °C, 1 atm) | 1.204 kg/m³ | 0.01181 N | 0.001204 kg |
+
+## Will it float?
+
+| Material | Density | In fresh water | In seawater |
+|---|---|---|---|
+| Balsa wood | 160 kg/m³ | floats, 16% submerged | floats, 16% submerged |
+| Pine wood | 500 kg/m³ | floats, 50% submerged | floats, 49% submerged |
+| Ice | 917 kg/m³ | floats, 92% submerged | floats, 89% submerged |
+| Human body (lungs full) | 985 kg/m³ | floats, 98% submerged | floats, 96% submerged |
+| Polyethylene (HDPE) | 950 kg/m³ | floats, 95% submerged | floats, 93% submerged |
+| Aluminium | 2,700 kg/m³ | sinks | sinks |
+| Steel | 7,850 kg/m³ | sinks | sinks |
 
 ## Weighing in water
 
-Apparent weight lets you find density without measuring volume: density = ρ<sub>water</sub> × weight in air ÷ (weight in air − weight in water). Archimedes is said to have used this to test whether a crown was pure gold.
+Weighing an object in air and then fully under water gives its density without measuring the volume: ρ<sub>object</sub> = ρ<sub>water</sub> × W<sub>air</sub> ÷ (W<sub>air</sub> − W<sub>water</sub>). Archimedes is said to have used this to test whether a crown was pure gold, and it is still used to measure body fat and the density of minerals.
 
-## Hot-air balloons
+## Practical notes
 
-Balloons float in air for the same reason. Heating the air inside lowers its density; the difference in density times the balloon volume gives the lift.
+- **Balloons and airships** float in air for the same reason: the lift is (ρ<sub>air</sub> − ρ<sub>gas</sub>) × g × V, about 10.2 N (a lift of roughly 1 kg) per cubic metre of helium at 20 °C and sea-level pressure.
+- **Level measurement:** displacer level transmitters work on buoyancy — the apparent weight of a long float falls as the liquid rises around it.
+- Water density changes with temperature and salinity, so a ship floats a little higher in cold seawater than in warm fresh water; load lines on the hull mark the allowed draught for each.

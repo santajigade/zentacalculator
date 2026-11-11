@@ -1,77 +1,92 @@
 ---
-title: Molality Calculator
-description: Calculate molality (mol/kg) from the mass of solute, its molar mass and the mass of solvent.
+title: Molality Calculator (mol/kg) with Freezing Point Drop
+description: Calculate molality in mol/kg from the mass of solute, its molar mass and the mass of solvent, with mass percent and freezing and boiling point change in water.
 category: chemistry
-intro: "Molality is moles of solute per kilogram of solvent. Unlike molarity, it does not change with temperature, so it is used for colligative property calculations."
-keywords: [molality calculator, mol/kg, molal concentration, solute solvent, colligative properties]
-updated: 2026-10-27
+intro: "Molality is the number of moles of solute per kilogram of solvent, so unlike molarity it does not change when the solution warms up or cools down. This molality calculator works out the moles of solute and the molality from the masses you weigh out, gives the mass percent of the solution, and estimates the freezing point depression and boiling point elevation for a water solution."
+keywords: [molality calculator, how to calculate molality, mol/kg calculator, molal concentration, molality formula, molality to freezing point, molality vs molarity]
+updated: 2026-11-11
 variables:
   - { id: ms, label: Mass of solute, family: mass, unit: g, default: 11.69, min: 0 }
-  - { id: M, label: Molar mass of solute, suffix: g/mol, default: 58.44, min: 0 }
-  - { id: mw, label: Mass of solvent, family: mass, unit: kg, default: 0.5, min: 0 }
+  - { id: M, label: Molar mass of solute, suffix: g/mol, default: 58.44, min: 0, help: 'NaCl 58.44, glucose 180.16, sucrose 342.30, urea 60.06 g/mol.' }
+  - { id: mw, label: Mass of solvent, family: mass, unit: kg, imperialUnit: lb, default: 0.5, min: 0 }
+  - { id: i, label: "Van 't Hoff factor i (particles per formula unit)", default: 2, min: 0, help: '1 for sugars and urea, about 2 for NaCl, 3 for CaCl₂ (ideal values).' }
   - { id: n, label: Moles of solute, suffix: mol, min: 0 }
   - { id: b, label: Molality, suffix: mol/kg, min: 0 }
+  - { id: w, label: Mass percent of solute in the solution, family: percent, unit: '%', min: 0 }
+  - { id: dTf, label: Freezing point depression if the solvent is water, family: tempdiff, unit: K, imperialUnit: F, min: 0 }
+  - { id: dTb, label: Boiling point elevation if the solvent is water, family: tempdiff, unit: K, imperialUnit: F, min: 0 }
 equations:
   - n = ms * 1000 / M
   - b = n / mw
+  - w = ms / (ms + mw)
+  - dTf = i * 1.86 * b
+  - dTb = i * 0.512 * b
 faq:
-  - q: What is molality?
-    a: Moles of solute per kilogram of solvent (mol/kg), written m.
-  - q: How is molality different from molarity?
-    a: Molarity uses litres of solution; molality uses kilograms of solvent. Molality does not change with temperature, because mass does not.
-  - q: Where is molality used?
-    a: In colligative properties — boiling point elevation, freezing point depression and osmotic pressure.
-  - q: "What is molality used for?"
-    a: "Calculating freezing point depression, boiling point elevation and other colligative properties, because it does not change with temperature."
-  - q: "Is molality the same as molarity?"
-    a: "No. Molality uses kilograms of solvent; molarity uses litres of solution. They are close for dilute water solutions."
-related: [chemistry/molarity, chemistry/moles]
+  - q: How do you calculate molality?
+    a: Divide the moles of solute by the mass of solvent in kilograms, b = n ÷ m_solvent. The moles come from the mass of solute divided by its molar mass. For 11.69 g of NaCl (0.2 mol) in 0.5 kg of water, b = 0.2 ÷ 0.5 = 0.4 mol/kg.
+  - q: What is the difference between molality and molarity?
+    a: Molality is moles per kilogram of solvent; molarity is moles per litre of solution. Molality does not change with temperature because masses do not, while the volume of a solution, and so its molarity, does. For dilute water solutions the two are nearly equal.
+  - q: Why is molality used for freezing point depression?
+    a: Colligative properties depend on the ratio of solute particles to solvent molecules, which molality expresses directly and independently of temperature. ΔT_f = i K_f b and ΔT_b = i K_b b, with K_f = 1.86 and K_b = 0.512 K·kg/mol for water.
+  - q: How do you convert molarity to molality?
+    a: b = c ÷ (ρ − c M ÷ 1000), with c in mol/L, the solution density ρ in kg/L and M in g/mol. The bracket is the mass of solvent in one litre of solution.
+related: [chemistry/molarity, chemistry/freezing-point-depression, chemistry/boiling-point-elevation, chemistry/mass-percent]
 ---
 
 ## How to use the molality calculator
 
-Enter the **mass of solute**, its **molar mass** and the **mass of solvent** (not solution). The moles of solute and molality are calculated.
+Enter the **mass of solute**, its **molar mass** and the **mass of solvent** — the solvent alone, not the whole solution. The calculator gives the **moles of solute**, the **molality** and the **mass percent**. Enter the **van 't Hoff factor** to estimate how much the solution's freezing point falls and boiling point rises if the solvent is water. To find how much solute to weigh for a target molality, enter the molality and press × on the mass of solute.
 
 ## Molality formula
 
-<p class="formula">b = n<sub>solute</sub> ÷ m<sub>solvent</sub> (kg)</p>
+<p class="formula">n = m<sub>solute</sub> ÷ M &nbsp;·&nbsp; b = n ÷ m<sub>solvent</sub> (kg) &nbsp;·&nbsp; w = m<sub>solute</sub> ÷ (m<sub>solute</sub> + m<sub>solvent</sub>)</p>
+
+<p class="formula">ΔT<sub>f</sub> = i K<sub>f</sub> b &nbsp;·&nbsp; ΔT<sub>b</sub> = i K<sub>b</sub> b &nbsp;(water: K<sub>f</sub> = 1.86, K<sub>b</sub> = 0.512 K·kg/mol)</p>
 
 ## Worked example
 
-11.69 g of NaCl (58.44 g/mol) in 0.5 kg of water:
+11.69 g of sodium chloride (M = 58.44 g/mol, i ≈ 2) dissolved in 0.5 kg of water:
 
-- n = 11.69 ÷ 58.44 = 0.2 mol
-- b = 0.2 ÷ 0.5 = **0.4 mol/kg**
+- Moles of NaCl = 11.69 ÷ 58.44 = **0.2000 mol**
+- Molality = 0.2000 ÷ 0.5 = **0.4001 mol/kg**
+- Mass percent = 11.69 ÷ (11.69 + 500) = **2.285%**
+- Freezing point depression = 2 × 1.86 × 0.4001 = **1.488 °C**, so the solution freezes at about −1.49 °C
+- Boiling point elevation = 2 × 0.512 × 0.4001 = **0.4097 °C**, so it boils at about 100.41 °C at 1 atm
+
+## 10 g of common solutes in 1 kg of water
+
+| Solute | Molar mass | i | Molality | Freezing point drop |
+|---|---|---|---|---|
+| Sodium chloride, NaCl | 58.44 g/mol | 2 | 0.1711 mol/kg | 0.637 °C |
+| Calcium chloride, CaCl₂ | 110.98 g/mol | 3 | 0.0901 mol/kg | 0.503 °C |
+| Glucose, C₆H₁₂O₆ | 180.16 g/mol | 1 | 0.0555 mol/kg | 0.103 °C |
+| Sucrose, C₁₂H₂₂O₁₁ | 342.3 g/mol | 1 | 0.0292 mol/kg | 0.054 °C |
+| Urea, CH₄N₂O | 60.06 g/mol | 1 | 0.1665 mol/kg | 0.310 °C |
+| Ethylene glycol, C₂H₆O₂ | 62.07 g/mol | 1 | 0.1611 mol/kg | 0.300 °C |
+
+On a mass basis, salts and small molecules lower the freezing point far more than sugar — which is why salt, not sugar, is used on icy roads.
+
+## Freezing and boiling point constants
+
+| Solvent | K<sub>f</sub> | K<sub>b</sub> |
+|---|---|---|
+| Water | 1.86 K·kg/mol | 0.512 K·kg/mol |
+| Benzene | 5.12 K·kg/mol | 2.53 K·kg/mol |
+| Acetic acid | 3.9 K·kg/mol | 3.07 K·kg/mol |
+| Cyclohexane | 20 K·kg/mol | 2.79 K·kg/mol |
+| Camphor | 37.7 K·kg/mol | 5.95 K·kg/mol |
 
 ## Molality vs molarity
 
 | | Molality (b) | Molarity (c) |
 |---|---|---|
-| Definition | mol solute per kg solvent | mol solute per L solution |
-| Changes with temperature? | No | Yes (volume changes) |
-| Used for | Colligative properties | Everyday lab work |
+| Definition | mol of solute per kg of solvent | mol of solute per L of solution |
+| Changes with temperature? | No | Yes — the volume changes |
+| Measured by | Weighing only | Weighing and a volumetric flask |
+| Used for | Colligative properties, physical chemistry | Titrations and everyday lab work |
 
-For dilute aqueous solutions, molality and molarity are nearly equal.
+## Practical notes
 
-## Colligative properties
-
-| Property | Formula | Constant for water |
-|---|---|---|
-| Freezing point depression | ΔT = i × K<sub>f</sub> × b | K<sub>f</sub> = 1.86 K·kg/mol |
-| Boiling point elevation | ΔT = i × K<sub>b</sub> × b | K<sub>b</sub> = 0.512 K·kg/mol |
-
-A 1 mol/kg NaCl solution (i ≈ 2) freezes at about −3.7 °C and boils at about 101.0 °C.
-
-## Road salt and antifreeze
-
-Salt lowers the freezing point of water on roads. Ethylene glycol in car antifreeze works the same way; a 50% mixture protects down to about −37 °C, far below what the simple dilute formula predicts, because the solution is very concentrated.
-
-## Converting molarity to molality
-
-<p class="formula">b = c ÷ (ρ − c × M ÷ 1,000)</p>
-
-with ρ the solution density in kg/L and M in g/mol.
-
-## Freezing point depression
-
-ΔT<sub>f</sub> = i × K<sub>f</sub> × b. For water, K<sub>f</sub> = 1.86 K·kg/mol; NaCl gives i ≈ 2. This solution freezes about 2 × 1.86 × 0.4 = **1.5 °C** below 0 °C — the principle behind salting roads.
+- **Real salt solutions** have an effective van 't Hoff factor below the ideal value — about 1.8–1.9 for NaCl at 0.1–1 mol/kg — so the freezing point drop is a little smaller than calculated.
+- The simple formulas are for **dilute** solutions. A 50% ethylene glycol antifreeze protects to about −37 °C, which the dilute formula cannot predict.
+- To make a solution of a given molarity instead, use the [molarity calculator](/chemistry/molarity/); for freezing points of other solvents use the [freezing point depression calculator](/chemistry/freezing-point-depression/).

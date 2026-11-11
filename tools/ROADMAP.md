@@ -52,8 +52,8 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Radar level: dielectric constant & reflection
 - [x] Spherical tank volume (ib)
 - [ ] Horizontal tank with dished/hemispherical heads
-- [ ] Cone-bottom tank volume
-- [ ] Tank fill / drain time
+- [x] Cone-bottom tank volume
+- [x] Tank fill / drain time
 - [x] Pressure vessel wall thickness (ASME, simplified)
 - [x] Pipe wall thickness (Barlow)
 - [x] Hydrostatic test pressure (ib)
@@ -91,7 +91,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] CFM air changes per hour
 - [x] Psychrometric: dew point from RH (ib)
 - [ ] Relative humidity ↔ absolute humidity
-- [ ] Heater kW for tank heating
+- [x] Heater kW for tank heating
 
 ## Engineering — Mechanical design
 - [x] Bolt torque (T = K·D·F)
@@ -116,7 +116,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Reactor space time / conversion
 - [ ] Boiler efficiency (direct method)
 - [ ] Steam table lookup (saturated)
-- [ ] Specific gravity ↔ density ↔ °Brix / °Baumé
+- [x] Specific gravity ↔ density ↔ °Brix / °Baumé
 - [ ] Viscosity converter (cP, cSt, SSU)
 - [x] Kinematic ↔ dynamic viscosity
 - [ ] Combustion air requirement
@@ -248,7 +248,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Ka ↔ pKa, Kb ↔ pKb
 - [x] pH of weak acid / weak base
 - [x] Equilibrium constant (Kc, Kp)
-- [ ] Reaction rate & order
+- [x] Reaction rate & order
 - [x] Activation energy from two rates
 - [ ] Enthalpy of reaction (Hess)
 - [x] Heat of combustion / calorimetry (bomb)
@@ -277,7 +277,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Circle equation from points
 - [x] Angle converter (deg, rad, grad)
 - [x] Law of sines
-- [ ] Triangle solver (SSS, SAS, ASA)
+- [x] Triangle solver (SSS, SAS, ASA) — SSS: sss-triangle; SAS exists: law-of-cosines; ASA exists: law-of-sines
 - [ ] Hexagon / octagon
 - [x] Prism / pyramid / frustum volume
 - [x] Torus / capsule / hemisphere (torus done)

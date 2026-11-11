@@ -1,0 +1,104 @@
+---
+title: Tank Drain Time Calculator (Fill & Empty Time)
+description: Calculate how long a tank takes to drain by gravity through a bottom outlet (Torricelli's law), the outflow rate, and the time to fill it at a set flow.
+category: engineering
+intro: "A tank emptying through a hole or short nozzle in its bottom slows down as it drains, because the outflow velocity depends on the square root of the liquid head. This tank drain time calculator integrates Torricelli's law to give the time to drop from one level to another, the starting and final outflow and the volume drained, and also the time needed to fill the same volume at a constant inflow."
+keywords: [tank drain time calculator, tank draining time, time to empty a tank, torricelli law calculator, tank fill time calculator, gravity drain time, orifice discharge time]
+updated: 2026-11-11
+variables:
+  - { id: D, label: Tank inside diameter (vertical cylinder), family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
+  - { id: d, label: Outlet (orifice) diameter, family: length, unit: mm, imperialUnit: in, default: 50, min: 0 }
+  - id: Cd
+    label: Discharge coefficient of the outlet
+    default: 0.61
+    options:
+      - { label: '0.61 — sharp-edged hole in a thin bottom plate', value: 0.61 }
+      - { label: '0.82 — short tube or nozzle (2–3 diameters long)', value: 0.82 }
+      - { label: '0.97 — well-rounded (bell-mouth) outlet', value: 0.97 }
+      - { label: '0.50 — re-entrant tube projecting into the tank', value: 0.5 }
+  - { id: h1, label: Starting liquid level above the outlet, family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: h2, label: Final liquid level above the outlet, family: length, unit: m, imperialUnit: ft, default: 0.2, min: 0, help: 'Enter 0 to empty the tank completely.' }
+  - { id: Qf, label: Fill flow rate (for the fill time), family: flow, unit: m3h, imperialUnit: gpm, default: 10, min: 0 }
+  - { id: t, label: Drain time from h1 to h2, family: seconds, unit: min, min: 0 }
+  - { id: Q1, label: Outflow at the start, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+  - { id: Q2, label: Outflow at the end, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+  - { id: Vd, label: Volume drained, family: volume, unit: L, imperialUnit: galUS, min: 0 }
+  - { id: Qa, label: Average outflow, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+  - { id: tf, label: Time to fill from h2 to h1 (outlet closed), family: seconds, unit: min, min: 0 }
+equations:
+  - t = (pi * D^2 / 4) / (Cd * pi * d^2 / 4) * sqrt(2 / g0) * (sqrt(h1) - sqrt(h2))
+  - Q1 = Cd * pi * d^2 / 4 * sqrt(2 * g0 * h1)
+  - Q2 = Cd * pi * d^2 / 4 * sqrt(2 * g0 * h2)
+  - Vd = pi * D^2 / 4 * (h1 - h2)
+  - Qa = Vd / t
+  - tf = Vd / Qf
+faq:
+  - q: How do you calculate the time to drain a tank?
+    a: For a vertical cylindrical tank open to the atmosphere and emptying through a bottom outlet, Torricelli's law gives the outflow Q = C_d a √(2 g h). Integrating as the level falls gives t = (A ÷ (C_d a)) × √(2 ÷ g) × (√h₁ − √h₂), where A is the tank cross-section and a the outlet area.
+  - q: Why does a tank drain more slowly as it empties?
+    a: The outflow velocity is √(2 g h), so it falls as the head h drops. Draining the bottom quarter of the height takes as long as draining the top three quarters, and emptying a tank from full takes twice as long as it would at the starting flow rate.
+  - q: What discharge coefficient should I use?
+    a: About 0.61 for a sharp-edged hole in a thin plate, 0.8–0.82 for a short tube or nozzle, 0.95–0.98 for a smooth bell-mouthed outlet and about 0.5 for a tube projecting into the tank. If the tank drains through a long pipe or a valve, the pipe friction controls the flow and the coefficient is much lower.
+  - q: How is the fill time calculated?
+    a: With a constant inflow and the outlet closed, the fill time is simply the volume between the two levels divided by the flow rate. If the outlet stays open, the level rises only until the outflow √(2 g h) term equals the inflow.
+related: [engineering/orifice-flow, engineering/vertical-tank-volume, engineering/cone-bottom-tank-volume, engineering/residence-time]
+---
+
+## How to use the tank drain time calculator
+
+Enter the **inside diameter** of the vertical tank, the **diameter of the outlet** and its type (which sets the **discharge coefficient**), and the **starting and final levels** measured above the outlet. The calculator gives the **drain time**, the outflow at the start and the end, the volume drained and the average flow. Enter a **fill flow rate** to see how long it takes to fill the same volume back up with the outlet closed. To find the outlet size for a required drain time, enter the time and press × on the outlet diameter.
+
+## Tank drain time formula (Torricelli's law)
+
+<p class="formula">Q = C<sub>d</sub> a √(2 g h) &nbsp;·&nbsp; t = (A ÷ C<sub>d</sub> a) × √(2 ÷ g) × (√h<sub>1</sub> − √h<sub>2</sub>)</p>
+
+<p class="formula">Fill time = A (h<sub>1</sub> − h<sub>2</sub>) ÷ Q<sub>fill</sub></p>
+
+A = π D² ÷ 4 is the tank cross-section, a = π d² ÷ 4 the outlet area and g = 9.80665 m/s². The formula assumes a constant cross-section, a tank open to the atmosphere (or vented) and an outlet discharging freely to atmosphere.
+
+## Worked example
+
+A 2 m diameter tank with a 50 mm sharp-edged bottom outlet (C<sub>d</sub> = 0.61) drains from 3 m to 0.2 m:
+
+- Tank area A = π × 2² ÷ 4 = 3.1416 m²; outlet area a = π × 0.05² ÷ 4 = 19.635 cm²
+- Drain time = (3.1416 ÷ (0.61 × 0.0019635)) × √(2 ÷ 9.80665) × (√3 − √0.2) = 1,522 s = **25.37 min**
+- Outflow at the start = 0.61 × 0.0019635 × √(2 × 9.80665 × 3) × 3600 = **33.07 m³/h**, falling to **8.54 m³/h** at 0.2 m
+- Volume drained = 3.1416 × (3 − 0.2) = **8,796 L**, an average of **20.81 m³/h**
+- Filling it back at 10 m³/h takes 8.7965 ÷ 10 = **52.78 min**
+
+## Level against time for the example tank
+
+Time from 3 m to each level, and the outflow at that level (50 mm sharp-edged outlet):
+
+| Level | Time from 3 m | Outflow |
+|---|---|---|
+| 3 m | 0.0 min | 33.07 m³/h |
+| 2.5 m | 3.0 min | 30.19 m³/h |
+| 2 m | 6.3 min | 27.01 m³/h |
+| 1.5 m | 10.0 min | 23.39 m³/h |
+| 1 m | 14.5 min | 19.10 m³/h |
+| 0.5 m | 20.2 min | 13.50 m³/h |
+| 0.2 m | 25.4 min | 8.54 m³/h |
+| 0 m | 34.2 min | 0.00 m³/h |
+
+Emptying completely takes 34.2 min — the last 0.2 m alone takes 8.8 min.
+
+## Time to empty a tank from 3 m
+
+Sharp-edged outlet (C<sub>d</sub> = 0.61), starting 3 m above the outlet:
+
+| Tank diameter | 25 mm outlet | 50 mm outlet | 100 mm outlet | 150 mm outlet |
+|---|---|---|---|---|
+| 1 m | 34.2 min | 8.5 min | 2.1 min | 0.9 min |
+| 2 m | 136.8 min | 34.2 min | 8.5 min | 3.8 min |
+| 3 m | 307.7 min | 76.9 min | 19.2 min | 8.5 min |
+| 5 m | 854.9 min | 213.7 min | 53.4 min | 23.7 min |
+
+Doubling the outlet diameter cuts the time by four; doubling the tank diameter multiplies it by four.
+
+## Practical notes
+
+- **Drain lines and valves:** if the tank empties through a pipe, the friction and fittings reduce the flow. Use the [orifice flow calculator](/engineering/orifice-flow/) or a pipe pressure-drop calculation for the real outflow; a pipe that drops below the tank adds head and can speed up draining.
+- **Closed tanks** need a vent sized for the outflow, otherwise the vacuum above the liquid slows or stops draining.
+- **Cone or dished bottoms** hold extra liquid below the straight side; for a [cone bottom tank](/engineering/cone-bottom-tank-volume/) the last part drains faster than this formula predicts because the area shrinks.
+- Vortexing near the end of draining can draw air into the outlet and reduce the flow further.

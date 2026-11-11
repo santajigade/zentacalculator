@@ -1,0 +1,108 @@
+---
+title: Tank Heater Sizing Calculator (kW to Heat a Tank)
+description: Calculate the heater kW needed to heat a tank of liquid in a set time, including heat loss, holding power, energy in kWh and the supply current.
+category: engineering
+intro: "The heater for a process tank, hot-water cylinder or oil heating tank must supply the sensible heat of the liquid in the heat-up time and make up the heat lost through the walls while it warms. This tank heater sizing calculator works out the energy needed, the heat-up power, the average heat loss, the total heater kW, the power needed to hold the temperature and the current drawn on a single- or three-phase supply."
+keywords: [tank heater sizing calculator, heater kw calculation for tank, immersion heater sizing, tank heating calculation, kw required to heat water, heating time calculator, water heating power calculator]
+updated: 2026-11-11
+variables:
+  - { id: V, label: Liquid volume, family: volume, unit: L, imperialUnit: galUS, default: 2000, min: 0 }
+  - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
+  - { id: cp, label: Specific heat of the liquid, suffix: kJ/kg·K, default: 4.186, min: 0, help: 'Water 4.186, oils about 1.9–2.1, 50% glycol about 3.3.' }
+  - { id: T1, label: Starting temperature, family: temperature, unit: C, imperialUnit: F, default: 15 }
+  - { id: T2, label: Final temperature, family: temperature, unit: C, imperialUnit: F, default: 60 }
+  - { id: th, label: Heat-up time, family: seconds, unit: h, default: 3, min: 0 }
+  - { id: U, label: Heat loss coefficient of the tank wall, suffix: W/m²·K, default: 0.8, min: 0, help: 'About 0.5–1 for an insulated tank, 5–12 for bare steel in still air.' }
+  - { id: A, label: Outside surface area of the tank, family: area, unit: m2, imperialUnit: ft2, default: 10, min: 0 }
+  - { id: Ta, label: Ambient temperature, family: temperature, unit: C, imperialUnit: F, default: 15 }
+  - { id: eff, label: Heater efficiency, family: percent, unit: '%', default: 100, min: 0, help: 'Electric immersion heaters put practically all their power into the liquid.' }
+  - { id: Vs, label: Supply voltage (line-to-line for three-phase), family: voltage, unit: V, default: 415, min: 0 }
+  - id: ph
+    label: Supply
+    default: 1.7320508075688772
+    options:
+      - { label: Three-phase, value: 1.7320508075688772 }
+      - { label: Single-phase, value: 1 }
+  - { id: m, label: Mass of liquid, family: mass, unit: kg, imperialUnit: lb, min: 0 }
+  - { id: E, label: Heat to raise the temperature, family: energy, unit: kWh, min: 0 }
+  - { id: Ph, label: Heat-up power (no losses), family: power, unit: kW, imperialUnit: BTUh, min: 0 }
+  - { id: Pl, label: Average heat loss during heat-up, family: power, unit: kW, imperialUnit: BTUh }
+  - { id: Pr, label: Required heater power, family: power, unit: kW, imperialUnit: BTUh, min: 0 }
+  - { id: Phold, label: Power to hold the final temperature, family: power, unit: kW, imperialUnit: BTUh }
+  - { id: I, label: Heater current at full power, family: current, unit: A, min: 0 }
+equations:
+  - m = V * rho
+  - E = m * cp * 1000 * (T2 - T1)
+  - Ph = E / th
+  - Pl = U * A * ((T1 + T2) / 2 - Ta)
+  - Pr = (Ph + Pl) / eff
+  - Phold = U * A * (T2 - Ta) / eff
+  - I = Pr / (Vs * ph)
+faq:
+  - q: How do you calculate the heater kW needed to heat a tank?
+    a: Heater power = m × cp × ΔT ÷ t plus the heat lost while heating, divided by the heater efficiency. For water, heating 1,000 L by 1 °C takes 1.163 kWh, so 1,000 L from 15 °C to 60 °C needs about 52 kWh — 26 kW for a two-hour heat-up before losses.
+  - q: How long will a heater take to heat a tank?
+    a: Time = m × cp × ΔT ÷ (heater power − heat loss). Enter your heater power in the required-power field and press × on the heat-up time to have the calculator solve for it.
+  - q: How much heat does a tank lose?
+    a: Heat loss = U × A × (liquid temperature − ambient). An insulated tank with U ≈ 0.8 W/m²·K loses very little, but a bare steel tank at 60 °C in still air (U ≈ 8–10 W/m²·K) can lose about 0.4 kW per square metre of surface, and wind or an outdoor location increases this further.
+  - q: Should I add a safety margin to the heater size?
+    a: Yes — a margin of 10–20% is common to cover low supply voltage (heater output falls with the square of the voltage), scaling of the element, uncertain losses and an open tank surface. Open tanks lose a lot of heat by evaporation, which this calculator does not include.
+related: [engineering/heat-duty, chemistry/specific-heat, engineering/convection-heat-transfer, electrical/kw-to-amps]
+---
+
+## How to use the tank heater sizing calculator
+
+Enter the **volume**, **density** and **specific heat** of the liquid, the **starting and final temperatures** and the **heat-up time** you need. Add the tank's **heat loss coefficient**, **outside surface area** and the **ambient temperature** to include losses, the **heater efficiency**, and the **supply voltage and phases** to get the current. The calculator gives the heat energy, the heat-up power, the average heat loss, the **required heater power**, the power needed to hold the tank at temperature and the current. To find the heat-up time for a heater you already have, enter its kW in the required-power field and press × on the heat-up time.
+
+## Tank heating formulas
+
+<p class="formula">E = m c<sub>p</sub> (T<sub>2</sub> − T<sub>1</sub>) &nbsp;·&nbsp; P<sub>heat-up</sub> = E ÷ t</p>
+
+<p class="formula">P<sub>loss</sub> = U A [(T<sub>1</sub> + T<sub>2</sub>) ÷ 2 − T<sub>a</sub>] &nbsp;·&nbsp; P = (P<sub>heat-up</sub> + P<sub>loss</sub>) ÷ η</p>
+
+<p class="formula">P<sub>hold</sub> = U A (T<sub>2</sub> − T<sub>a</sub>) ÷ η &nbsp;·&nbsp; I = P ÷ (√3 V) three-phase, I = P ÷ V single-phase</p>
+
+The loss during heat-up uses the average liquid temperature, a good approximation when the losses are small compared with the heater power.
+
+## Worked example
+
+A 2,000 L insulated water tank (U = 0.8 W/m²·K, 10 m² of surface) is heated from 15 °C to 60 °C in 3 hours by an immersion heater on a 415 V three-phase supply; the room is at 15 °C:
+
+- Mass = 2 m³ × 1000 kg/m³ = **2,000 kg**
+- Heat = 2,000 × 4.186 × (60 − 15) = 376.74 MJ = **104.65 kWh**
+- Heat-up power = 104.65 kWh ÷ 3 h = **34.88 kW**
+- Average loss = 0.8 × 10 × (37.5 − 15) = **0.180 kW**
+- Required heater power = (34.88 + 0.180) ÷ 1 = **35.06 kW** — choose a 36 or 40 kW heater with a margin
+- Holding power at 60 °C = 0.8 × 10 × (60 − 15) = **0.360 kW**
+- Current = 35,063 ÷ (√3 × 415) = **48.78 A**
+
+## Heater kW to heat water by 40 °C
+
+Water (4.186 kJ/kg·K), no heat losses:
+
+| Volume | 30 min | 1 hour | 2 hours | 4 hours |
+|---|---|---|---|---|
+| 100 L | 9.3 kW | 4.7 kW | 2.3 kW | 1.2 kW |
+| 200 L | 18.6 kW | 9.3 kW | 4.7 kW | 2.3 kW |
+| 500 L | 46.5 kW | 23.3 kW | 11.6 kW | 5.8 kW |
+| 1,000 L | 93.0 kW | 46.5 kW | 23.3 kW | 11.6 kW |
+| 2,000 L | 186.0 kW | 93.0 kW | 46.5 kW | 23.3 kW |
+| 5,000 L | 465.1 kW | 232.6 kW | 116.3 kW | 58.1 kW |
+
+## Energy to heat 1,000 L by 1 °C
+
+| Liquid | Density | Specific heat | Energy per 1,000 L per °C |
+|---|---|---|---|
+| Water | 1,000 kg/m³ | 4.186 kJ/kg·K | 1.163 kWh |
+| Seawater | 1,025 kg/m³ | 3.99 kJ/kg·K | 1.136 kWh |
+| Ethylene glycol 50% (v/v) | 1,070 kg/m³ | 3.35 kJ/kg·K | 0.996 kWh |
+| Light fuel oil | 870 kg/m³ | 1.9 kJ/kg·K | 0.459 kWh |
+| Vegetable oil | 920 kg/m³ | 2 kJ/kg·K | 0.511 kWh |
+| Milk | 1,030 kg/m³ | 3.93 kJ/kg·K | 1.124 kWh |
+
+## Practical notes
+
+- **Element watt density:** keep the surface loading of immersion elements low for viscous oils and sugar solutions (often below 2–3 W/cm²) to avoid coking or scorching; water heaters can run at about 8–10 W/cm².
+- **Thermostat and over-temperature cut-out:** the heater should be controlled by a thermostat or a temperature controller and protected by an independent high-limit cut-out and a low-level interlock, so it never runs dry.
+- **Voltage:** a resistive heater's power falls with the square of the voltage — a heater rated at 415 V gives only about 90% of its kW at 394 V.
+- For flowing liquids (heat exchangers, inline heaters) use the [heat duty calculator](/engineering/heat-duty/) with the mass flow rate instead of a volume and time.

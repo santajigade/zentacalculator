@@ -1,0 +1,94 @@
+---
+title: SSS Triangle Calculator (Angles, Area from 3 Sides)
+description: Solve a triangle from its three sides (SSS) — all three angles, area by Heron's formula, perimeter, heights, medians, inradius and circumradius.
+category: math
+intro: "When you know the lengths of all three sides of a triangle, everything else about it is fixed: the law of cosines gives the angles and Heron's formula gives the area. This SSS triangle calculator solves the whole triangle from three sides — the three angles, the area, the perimeter and semi-perimeter, the three heights and medians, and the radii of the inscribed and circumscribed circles."
+keywords: [sss triangle calculator, triangle calculator 3 sides, find angles of a triangle given 3 sides, herons formula calculator, triangle area from three sides, triangle solver, sss calculator]
+updated: 2026-11-11
+variables:
+  - { id: a, label: Side a, family: length, unit: cm, imperialUnit: in, default: 7, min: 0 }
+  - { id: b, label: Side b, family: length, unit: cm, imperialUnit: in, default: 8, min: 0 }
+  - { id: c, label: Side c, family: length, unit: cm, imperialUnit: in, default: 9, min: 0 }
+  - { id: A, label: Angle A (opposite side a), family: angle, unit: deg, min: 0 }
+  - { id: B, label: Angle B (opposite side b), family: angle, unit: deg, min: 0 }
+  - { id: C, label: Angle C (opposite side c), family: angle, unit: deg, min: 0 }
+  - { id: P, label: Perimeter, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: K, label: Area (Heron's formula), family: area, unit: cm2, imperialUnit: in2, min: 0 }
+  - { id: ha, label: Height to side a, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: hb, label: Height to side b, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: hc, label: Height to side c, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: ma, label: Median to side a, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: mb, label: Median to side b, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: mc, label: Median to side c, family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: r, label: Inradius (inscribed circle), family: length, unit: cm, imperialUnit: in, min: 0 }
+  - { id: R, label: Circumradius (circumscribed circle), family: length, unit: cm, imperialUnit: in, min: 0 }
+equations:
+  - A = acos((b^2 + c^2 - a^2) / (2 * b * c))
+  - B = acos((a^2 + c^2 - b^2) / (2 * a * c))
+  - C = acos((a^2 + b^2 - c^2) / (2 * a * b))
+  - P = a + b + c
+  - K = sqrt((a + b + c) * (-a + b + c) * (a - b + c) * (a + b - c)) / 4
+  - ha = 2 * K / a
+  - hb = 2 * K / b
+  - hc = 2 * K / c
+  - ma = sqrt(2 * b^2 + 2 * c^2 - a^2) / 2
+  - mb = sqrt(2 * a^2 + 2 * c^2 - b^2) / 2
+  - mc = sqrt(2 * a^2 + 2 * b^2 - c^2) / 2
+  - r = 2 * K / P
+  - R = a * b * c / (4 * K)
+faq:
+  - q: How do you find the angles of a triangle from three sides?
+    a: Use the law of cosines rearranged for the angle — cos A = (b² + c² − a²) ÷ (2bc), and the same pattern for B and C. Take the inverse cosine of each. The three angles always add up to 180°, which is a useful check.
+  - q: What is Heron's formula?
+    a: The area of a triangle with sides a, b and c is √[s(s − a)(s − b)(s − c)], where s = (a + b + c) ÷ 2 is the semi-perimeter. For sides 3, 4 and 5, s = 6 and the area is √(6 × 3 × 2 × 1) = 6.
+  - q: Can any three lengths make a triangle?
+    a: No — each side must be shorter than the sum of the other two (the triangle inequality). For 2, 3 and 6 the two short sides add up to only 5, so no triangle exists and the calculator shows no valid angles or area.
+  - q: How do I tell if a triangle is right, acute or obtuse from its sides?
+    a: Compare the square of the longest side c with a² + b². If c² = a² + b² the triangle is right-angled, if c² is smaller it is acute and if c² is larger it is obtuse. The largest angle is always opposite the longest side.
+related: [math/law-of-cosines, math/law-of-sines, math/triangle-area, math/pythagorean-theorem]
+---
+
+## How to use the SSS triangle calculator
+
+Enter the lengths of the **three sides** a, b and c in any unit. The calculator gives the three **angles** (angle A is opposite side a), the **perimeter**, the **area** from Heron's formula, the **heights** (altitudes) and **medians** to each side and the radii of the **inscribed** and **circumscribed** circles. If the sides break the triangle inequality, no triangle exists and the angles and area cannot be calculated. For two sides and the included angle, use the [law of cosines calculator](/math/law-of-cosines/) instead.
+
+## SSS triangle formulas
+
+<p class="formula">cos A = (b² + c² − a²) ÷ 2bc &nbsp;·&nbsp; cos B = (a² + c² − b²) ÷ 2ac &nbsp;·&nbsp; cos C = (a² + b² − c²) ÷ 2ab</p>
+
+<p class="formula">s = (a + b + c) ÷ 2 &nbsp;·&nbsp; Area = √[s(s − a)(s − b)(s − c)]</p>
+
+<p class="formula">h<sub>a</sub> = 2 Area ÷ a &nbsp;·&nbsp; m<sub>a</sub> = ½ √(2b² + 2c² − a²) &nbsp;·&nbsp; r = Area ÷ s &nbsp;·&nbsp; R = abc ÷ (4 Area)</p>
+
+## Worked example
+
+A triangle with sides a = 7 cm, b = 8 cm and c = 9 cm:
+
+- cos A = (8² + 9² − 7²) ÷ (2 × 8 × 9) = 96 ÷ 144 = 0.6667, so **A = 48.19°**
+- cos B = (7² + 9² − 8²) ÷ (2 × 7 × 9) = 0.5238, so **B = 58.41°**
+- C = 180° − 48.19° − 58.41° = **73.40°**
+- Perimeter = **24 cm**, semi-perimeter s = 12 cm
+- Area = √(12 × 5 × 4 × 3) = √720 = **26.8328 cm²**
+- Heights: h<sub>a</sub> = **7.6665 cm**, h<sub>b</sub> = **6.7082 cm**, h<sub>c</sub> = **5.9628 cm**
+- Medians: m<sub>a</sub> = **7.7621 cm**, m<sub>b</sub> = **7.0000 cm**, m<sub>c</sub> = **6.0208 cm**
+- Inradius r = 26.8328 ÷ 12 = **2.2361 cm**; circumradius R = 504 ÷ (4 × 26.8328) = **4.6957 cm**
+
+## Solved triangles
+
+| Sides | Angles A, B, C | Area | Inradius | Circumradius | Type |
+|---|---|---|---|---|---|
+| 3, 4, 5 | 36.87°, 53.13°, 90.00° | 6 | 1 | 2.5 | scalene, right |
+| 5, 12, 13 | 22.62°, 67.38°, 90.00° | 30 | 2 | 6.5 | scalene, right |
+| 1, 1, 1 | 60.00°, 60.00°, 60.00° | 0.433 | 0.2887 | 0.5774 | equilateral, acute |
+| 5, 5, 8 | 36.87°, 36.87°, 106.26° | 12 | 1.333 | 4.167 | isosceles, obtuse |
+| 6, 7, 8 | 46.57°, 57.91°, 75.52° | 20.33 | 1.936 | 4.131 | scalene, acute |
+| 2, 3, 4 | 28.96°, 46.57°, 104.48° | 2.905 | 0.6455 | 2.066 | scalene, obtuse |
+| 10, 10, 10 | 60.00°, 60.00°, 60.00° | 43.3 | 2.887 | 5.774 | equilateral, acute |
+| 7, 8, 9 | 48.19°, 58.41°, 73.40° | 26.83 | 2.236 | 4.696 | scalene, acute |
+
+## Practical notes
+
+- **Rounding:** when two sides are nearly equal to the third side added up (a very flat triangle), the angles and area become very sensitive to small measurement errors.
+- **Setting out on site:** builders use three measured sides — a 3-4-5 or 6-8-10 triangle — to set out a right angle, and surveyors solve plots of land by dividing them into triangles measured on all three sides.
+- The medians meet at the centroid, two thirds of the way from each corner; the inscribed circle touches all three sides and the circumscribed circle passes through all three corners.
+- For a right triangle with two known sides, the [Pythagorean theorem calculator](/math/pythagorean-theorem/) gives the third side directly.

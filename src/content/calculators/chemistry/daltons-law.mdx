@@ -1,68 +1,104 @@
 ---
-title: Dalton's Law Calculator (Partial Pressure)
-description: Calculate the partial pressure of a gas in a mixture from mole fraction and total pressure — for air, diving gases and gas mixtures.
+title: Dalton's Law Calculator (Partial Pressure & Mole Fraction)
+description: Calculate the partial pressure of a gas in a mixture from its mole fraction or percentage and the total pressure — for air, diving gases and gas analysis.
 category: chemistry
-intro: "In a gas mixture, each gas exerts its own partial pressure, and together they add up to the total. Dalton's law is essential in diving, anaesthesia and gas analysis."
-keywords: [daltons law calculator, partial pressure calculator, mole fraction, total pressure, oxygen partial pressure, gas mixture, ppo2]
-updated: 2026-10-27
+intro: "In a mixture of gases each gas exerts its own partial pressure, as if it filled the container alone, and the partial pressures add up to the total pressure. This Dalton's law calculator gives the mole fraction and partial pressure of a gas from its moles or volume percentage and the total pressure, along with the combined partial pressure of the other gases — used in diving, anaesthesia, combustion and gas analysis."
+keywords: [daltons law calculator, partial pressure calculator, mole fraction calculator, dalton's law of partial pressures, oxygen partial pressure calculator, gas mixture pressure, ppo2 calculator]
+updated: 2026-11-12
 variables:
   - { id: nA, label: Moles (or %) of gas A, default: 21, min: 0 }
   - { id: nT, label: Total moles (or 100%), default: 100, min: 0.0001 }
-  - { id: P, label: Total pressure, family: pressure, unit: atm, imperialUnit: psi, default: 1, min: 0 }
+  - { id: P, label: Total pressure (absolute), family: pressure, unit: atm, imperialUnit: psi, default: 1, min: 0 }
   - { id: x, label: Mole fraction of A, min: 0, max: 1, decimals: 4 }
   - { id: pA, label: Partial pressure of A, family: pressure, unit: atm, imperialUnit: psi, min: 0 }
+  - { id: pR, label: Partial pressure of all the other gases, family: pressure, unit: atm, imperialUnit: psi, min: 0 }
 equations:
   - x = nA / nT
   - pA = x * P
+  - pR = P - pA
 faq:
   - q: What is Dalton's law of partial pressures?
-    a: The total pressure of a gas mixture equals the sum of the partial pressures of each gas. Each partial pressure = mole fraction × total pressure.
+    a: The total pressure of a mixture of non-reacting gases equals the sum of the partial pressures of the individual gases, P = p₁ + p₂ + p₃ + … Each partial pressure equals the gas's mole fraction times the total pressure, pᵢ = xᵢ P.
   - q: What is the partial pressure of oxygen in air?
-    a: About 0.21 atm (21 kPa) at sea level, since oxygen is about 21% of dry air.
+    a: Dry air is 20.95% oxygen by volume, so at sea level (101.325 kPa) the oxygen partial pressure is about 21.2 kPa or 0.21 atm. It falls in proportion to the total pressure at altitude and rises with depth under water.
   - q: Why does partial pressure matter in diving?
-    a: Breathing oxygen at a partial pressure above about 1.4–1.6 atm risks oxygen toxicity. At 30 m depth (4 atm), air has an oxygen partial pressure of 0.84 atm.
+    a: Oxygen becomes toxic to the nervous system at partial pressures above about 1.4–1.6 atm. Every 10 m of seawater adds about 1 atm, so air reaches 1.4 atm of oxygen at about 57 m, and oxygen-enriched nitrox mixes reach it at shallower depths — their maximum operating depth.
   - q: Can I use percentages instead of moles?
-    a: Yes. For gases, volume percent equals mole percent, so enter the percentage and 100 as the total.
-related: [physics/ideal-gas-law, chemistry/combined-gas-law, chemistry/grahams-law, chemistry/boyles-law]
+    a: Yes. For ideal gases the volume percentage equals the mole percentage, so enter the percentage and 100 as the total. Mass percentages must first be converted to moles using the molar masses.
+related: [physics/ideal-gas-law, chemistry/combined-gas-law, chemistry/henrys-law, chemistry/gas-density]
 ---
 
 ## How to use the Dalton's law calculator
 
-Enter the **moles** (or volume percent) of the gas you are interested in, the **total moles** (or 100) and the **total pressure**. You get the mole fraction and the partial pressure.
+Enter the **moles** (or volume percent) of the gas you are interested in, the **total moles** (or 100) and the **total absolute pressure** of the mixture. You get the **mole fraction**, the **partial pressure** of the gas and the partial pressure of the remaining gases. To find the total pressure at which a gas reaches a given partial pressure, enter that partial pressure and press × on the total pressure.
 
 ## Dalton's law formulas
 
 <p class="formula">x<sub>A</sub> = n<sub>A</sub> ÷ n<sub>total</sub> &nbsp;·&nbsp; p<sub>A</sub> = x<sub>A</sub> × P<sub>total</sub></p>
 
-<p class="formula">P<sub>total</sub> = p₁ + p₂ + p₃ + …</p>
+<p class="formula">P<sub>total</sub> = p₁ + p₂ + p₃ + … &nbsp;·&nbsp; p<sub>others</sub> = P<sub>total</sub> − p<sub>A</sub></p>
 
-## Composition of dry air (sea level)
+## Worked example
 
-| Gas | Volume % | Partial pressure |
+Oxygen at 21% in air at 1 atm:
+
+- Mole fraction x = 21 ÷ 100 = **0.21**
+- Oxygen partial pressure = 0.21 × 1 = **0.21 atm** (21.28 kPa)
+- The other gases contribute 1 − 0.21 = **0.79 atm**
+
+## Composition of dry air at sea level
+
+| Gas | Volume % | Partial pressure | In kPa |
+|---|---|---|---|
+| Nitrogen, N₂ | 78.084% | 0.78084 atm | 79.119 kPa |
+| Oxygen, O₂ | 20.946% | 0.20946 atm | 21.224 kPa |
+| Argon, Ar | 0.934% | 0.00934 atm | 0.946 kPa |
+| Carbon dioxide, CO₂ | 0.042% | 0.00042 atm | 0.043 kPa |
+
+## Oxygen partial pressure with depth
+
+Seawater, about 1 atm per 10 m:
+
+| Depth | Absolute pressure | Air (21% O₂) | Nitrox 32 | Nitrox 36 |
+|---|---|---|---|---|
+| 0 m | 1.0 atm | 0.21 atm | 0.32 atm | 0.36 atm |
+| 10 m | 2.0 atm | 0.42 atm | 0.64 atm | 0.72 atm |
+| 20 m | 3.0 atm | 0.63 atm | 0.96 atm | 1.08 atm |
+| 30 m | 4.0 atm | 0.84 atm | 1.28 atm | 1.44 atm |
+| 40 m | 5.0 atm | 1.05 atm | 1.60 atm | 1.80 atm |
+| 50 m | 6.0 atm | 1.26 atm | 1.92 atm | 2.16 atm |
+
+## Maximum operating depth by oxygen fraction
+
+Depth at which the oxygen partial pressure reaches the limit, MOD = 10 × (pO₂ ÷ F<sub>O₂</sub> − 1):
+
+| Oxygen in the mix | MOD at pO₂ 1.4 atm | MOD at pO₂ 1.6 atm |
 |---|---|---|
-| Nitrogen | 78.08 | 0.781 atm (79.1 kPa) |
-| Oxygen | 20.95 | 0.210 atm (21.2 kPa) |
-| Argon | 0.93 | 0.0093 atm |
-| Carbon dioxide | about 0.042 | 0.00042 atm |
+| 21% | 56.7 m | 66.2 m |
+| 28% | 40.0 m | 47.1 m |
+| 32% | 33.8 m | 40.0 m |
+| 36% | 28.9 m | 34.4 m |
+| 40% | 25.0 m | 30.0 m |
+| 50% | 18.0 m | 22.0 m |
 
-## Oxygen partial pressure with depth (air)
+## Oxygen partial pressure at altitude
 
-| Depth in seawater | Absolute pressure | pO₂ |
-|---|---|---|
-| 0 m | 1.0 atm | 0.21 atm |
-| 10 m | 2.0 atm | 0.42 atm |
-| 20 m | 3.0 atm | 0.63 atm |
-| 30 m | 4.0 atm | 0.84 atm |
-| 40 m | 5.0 atm | 1.05 atm |
-| 56 m | 6.6 atm | 1.39 atm |
-| 66 m | 7.6 atm | 1.60 atm |
+International Standard Atmosphere:
 
-Recreational dive limits on air keep pO₂ below 1.4 atm, which is around 56 m — well beyond typical recreational depth limits for other reasons such as narcosis.
+| Altitude | Air pressure | O₂ partial pressure | Of sea-level value |
+|---|---|---|---|
+| 0 m | 101.3 kPa | 21.2 kPa | 100% |
+| 1,000 m | 89.9 kPa | 18.8 kPa | 89% |
+| 2,000 m | 79.5 kPa | 16.7 kPa | 78% |
+| 3,000 m | 70.1 kPa | 14.7 kPa | 69% |
+| 4,000 m | 61.6 kPa | 12.9 kPa | 61% |
+| 5,000 m | 54.0 kPa | 11.3 kPa | 53% |
+| 6,000 m | 47.2 kPa | 9.9 kPa | 47% |
+| 8,848 m | 31.4 kPa | 6.6 kPa | 31% |
 
-## Altitude
+## Practical notes
 
-At 5,000 m, total air pressure is about 0.53 atm, so oxygen partial pressure drops to about 0.11 atm — roughly half its sea-level value, which is why altitude sickness occurs.
-
-## Collecting gas over water
-
-When gas is collected over water, subtract the water vapour pressure: p<sub>gas</sub> = P<sub>atm</sub> − p<sub>H₂O</sub>. At 25 °C, water vapour pressure is about 3.17 kPa.
+- **Gas collected over water** is saturated with water vapour, so p<sub>gas</sub> = P<sub>atm</sub> − p<sub>H₂O</sub>; the water vapour pressure is about 2.34 kPa at 20 °C, 3.17 kPa at 25 °C and 4.25 kPa at 30 °C.
+- **Real gases:** Dalton's law is exact for ideal gases and very close for air and most gases near atmospheric pressure; at high pressure molecular interactions cause small deviations.
+- **Gas analysers** measure concentration as a fraction; to get the partial pressure that drives dissolution or reaction, multiply by the absolute pressure — see the [Henry's law calculator](/chemistry/henrys-law/) for gas solubility.
+- Diving tables round to 10 m per atm and use absolute pressure; always follow your training agency's limits.

@@ -1,0 +1,89 @@
+---
+title: Fraction Calculator (Add, Subtract, Multiply, Divide)
+description: Add, subtract, multiply and divide two fractions at once — every answer simplified to lowest terms and shown as a decimal, with the steps explained.
+category: math
+intro: "Working with fractions means finding common denominators, multiplying across and simplifying the result — easy to get wrong by hand. This fraction calculator takes two fractions and gives their sum, difference, product and quotient at the same time, each reduced to lowest terms with the greatest common factor and also shown as a decimal."
+keywords: [fraction calculator, adding fractions calculator, subtracting fractions, multiplying fractions calculator, dividing fractions calculator, simplify fractions, fractions with different denominators]
+updated: 2026-11-12
+variables:
+  - { id: a, label: Numerator of the first fraction, default: 3, decimals: 0 }
+  - { id: b, label: Denominator of the first fraction, default: 4, min: 1, decimals: 0 }
+  - { id: c, label: Numerator of the second fraction, default: 5, decimals: 0 }
+  - { id: d, label: Denominator of the second fraction, default: 6, min: 1, decimals: 0 }
+  - { id: sN, label: Sum a/b + c/d — numerator, decimals: 0 }
+  - { id: sD, label: Sum — denominator, decimals: 0 }
+  - { id: sv, label: Sum as a decimal, decimals: 6 }
+  - { id: dN, label: Difference a/b − c/d — numerator, decimals: 0 }
+  - { id: dD, label: Difference — denominator, decimals: 0 }
+  - { id: dv, label: Difference as a decimal, decimals: 6 }
+  - { id: pN, label: Product a/b × c/d — numerator, decimals: 0 }
+  - { id: pD, label: Product — denominator, decimals: 0 }
+  - { id: pv, label: Product as a decimal, decimals: 6 }
+  - { id: qN, label: Quotient a/b ÷ c/d — numerator, decimals: 0 }
+  - { id: qD, label: Quotient — denominator, decimals: 0 }
+  - { id: qv, label: Quotient as a decimal, decimals: 6 }
+equations:
+  - sN = sign(b * d) * (a * d + c * b) / gcd(a * d + c * b, b * d)
+  - sD = abs(b * d) / gcd(a * d + c * b, b * d)
+  - sv = (a * d + c * b) / (b * d)
+  - dN = sign(b * d) * (a * d - c * b) / gcd(a * d - c * b, b * d)
+  - dD = abs(b * d) / gcd(a * d - c * b, b * d)
+  - dv = (a * d - c * b) / (b * d)
+  - pN = sign(b * d) * a * c / gcd(a * c, b * d)
+  - pD = abs(b * d) / gcd(a * c, b * d)
+  - pv = a * c / (b * d)
+  - qN = sign(b * c) * a * d / gcd(a * d, b * c)
+  - qD = abs(b * c) / gcd(a * d, b * c)
+  - qv = a * d / (b * c)
+freedom: 4
+faq:
+  - q: How do you add fractions with different denominators?
+    a: Rewrite both fractions over a common denominator, add the numerators and simplify. For 3/4 + 5/6 the lowest common denominator is 12, so 9/12 + 10/12 = 19/12, which is 1 7/12 as a mixed number. Multiplying the denominators (24) also works — you just have more simplifying to do at the end.
+  - q: How do you multiply and divide fractions?
+    a: To multiply, multiply the numerators together and the denominators together — 3/4 × 5/6 = 15/24 = 5/8. To divide, multiply by the reciprocal of the second fraction — 3/4 ÷ 5/6 = 3/4 × 6/5 = 18/20 = 9/10.
+  - q: How do you simplify a fraction?
+    a: Divide the numerator and the denominator by their greatest common factor. For 38/24 the GCF is 2, giving 19/12. A fraction is in lowest terms when the GCF of the numerator and denominator is 1.
+  - q: How do I enter a mixed number or a negative fraction?
+    a: Convert a mixed number to an improper fraction first — 2 1/3 becomes (2 × 3 + 1)/3 = 7/3. For a negative fraction, put the minus sign on the numerator, for example −3 over 4.
+related: [math/fraction-to-decimal, math/gcf-lcm, math/ratio, math/percentage]
+---
+
+## How to use the fraction calculator
+
+Enter the **numerator and denominator** of each fraction as whole numbers (put a minus sign on the numerator for a negative fraction). The calculator gives the **sum, difference, product and quotient** of the two fractions together, each simplified to lowest terms, plus the decimal value of each answer. Convert mixed numbers to improper fractions before entering them.
+
+## Fraction formulas
+
+<p class="formula">a/b + c/d = (ad + bc) ÷ bd &nbsp;·&nbsp; a/b − c/d = (ad − bc) ÷ bd</p>
+
+<p class="formula">a/b × c/d = ac ÷ bd &nbsp;·&nbsp; a/b ÷ c/d = ad ÷ bc</p>
+
+Each result is then divided top and bottom by the greatest common factor (GCF) of its numerator and denominator.
+
+## Worked example: 3/4 and 5/6
+
+- **Sum:** (3 × 6 + 5 × 4) ÷ (4 × 6) = 38/24; GCF 2 → **19/12** = 1 7/12 = 1.583333
+- **Difference:** (3 × 6 − 5 × 4) ÷ (4 × 6) = −2/24; GCF 2 → **−1/12** = −0.083333
+- **Product:** (3 × 5) ÷ (4 × 6) = 15/24; GCF 3 → **5/8** = 0.625000
+- **Quotient:** (3 × 6) ÷ (4 × 5) = 18/20; GCF 2 → **9/10** = 0.900000
+
+With the lowest common denominator (12) the sum is 9/12 + 10/12 = 19/12 — the same answer with less simplifying.
+
+## Solved examples
+
+| Fractions | Sum | Difference | Product | Quotient |
+|---|---|---|---|---|
+| 1/2 and 1/3 | 5/6 | 1/6 | 1/6 | 3/2 |
+| 2/3 and 3/4 | 17/12 | −1/12 | 1/2 | 8/9 |
+| 5/8 and 3/8 | 1 | 1/4 | 15/64 | 5/3 |
+| 7/10 and 2/5 | 11/10 | 3/10 | 7/25 | 7/4 |
+| 1/6 and 4/9 | 11/18 | −5/18 | 2/27 | 3/8 |
+| 11/12 and 5/18 | 43/36 | 23/36 | 55/216 | 33/10 |
+| −3/4 and 1/2 | −1/4 | −5/4 | −3/8 | −3/2 |
+
+## Practical notes
+
+- **Mixed numbers:** an improper fraction such as 19/12 is 1 whole and 7/12 left over — divide the numerator by the denominator; the quotient is the whole number and the remainder is the new numerator.
+- **Dividing by zero:** a fraction with a denominator of 0 is undefined, and you cannot divide by a fraction whose numerator is 0.
+- **Cancel first:** when multiplying, cancelling common factors across before multiplying keeps the numbers small — 4/9 × 3/8 = (1 × 1)/(3 × 2) = 1/6.
+- To turn a fraction into a decimal or percentage, use the [fraction to decimal calculator](/math/fraction-to-decimal/); to find the GCF or LCM of two numbers, use the [GCF and LCM calculator](/math/gcf-lcm/).

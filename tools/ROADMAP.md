@@ -80,7 +80,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] LMTD heat exchanger
 - [x] Heat exchanger area (Q = U·A·LMTD) (ib)
 - [ ] Steam consumption for heating
-- [ ] Pipe heat loss (insulated)
+- [x] Pipe heat loss (insulated)
 - [ ] Insulation thickness
 - [x] Convection heat transfer (Q = hAΔT)
 - [x] Radiation heat transfer (Stefan–Boltzmann)
@@ -88,9 +88,9 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Chiller tonnage (TR) from flow & ΔT
 - [ ] Air conditioner BTU / room size
 - [ ] Duct size (equal friction)
-- [ ] CFM air changes per hour
+- [x] CFM air changes per hour — air-changes-per-hour
 - [x] Psychrometric: dew point from RH (ib)
-- [ ] Relative humidity ↔ absolute humidity
+- [x] Relative humidity ↔ absolute humidity (exists: engineering/dew-point)
 - [x] Heater kW for tank heating
 
 ## Engineering — Mechanical design
@@ -101,7 +101,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Moment of inertia (rectangle, circle, I-beam) — area-moment-of-inertia (rectangle, circle, tube; I-beam not yet)
 - [x] Spring rate (helical compression)
 - [x] Gear ratio & speed
-- [ ] Chain / sprocket speed & length
+- [x] Chain / sprocket speed & length — chain-length
 - [ ] Belt tension
 - [x] Bearing L10 life
 - [ ] Press fit interference
@@ -122,7 +122,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Combustion air requirement
 - [ ] Flue gas O₂ to excess air
 - [ ] Heating value converter (GCV/NCV)
-- [ ] Gas density (ideal + Z)
+- [x] Gas density (ideal + Z) — gas-density (chemistry)
 - [ ] Molar flow ↔ mass flow ↔ volume flow
 
 ## Engineering — Safety & reliability
@@ -250,7 +250,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Equilibrium constant (Kc, Kp)
 - [x] Reaction rate & order
 - [x] Activation energy from two rates
-- [ ] Enthalpy of reaction (Hess)
+- [x] Enthalpy of reaction (Hess)
 - [x] Heat of combustion / calorimetry (bomb)
 - [x] Faraday electrolysis (mass deposited)
 - [x] Cell potential (E°cell)
@@ -287,7 +287,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Prime factorization
 - [ ] Prime number checker
 - [ ] LCM of many numbers
-- [ ] Fraction calculator (+ − × ÷)
+- [x] Fraction calculator (+ − × ÷) — fraction-calculator
 - [ ] Mixed number ↔ improper fraction
 - [ ] Decimal to fraction
 - [x] Scientific notation

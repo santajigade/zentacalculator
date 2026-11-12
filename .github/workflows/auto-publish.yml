@@ -42,6 +42,13 @@ jobs:
       - name: Merge into main (stops on conflict)
         if: steps.pick.outputs.branch != ''
         run: git merge --no-ff --no-edit "origin/${{ steps.pick.outputs.branch }}"
+      - name: Reuse share images from earlier builds
+        if: steps.pick.outputs.branch != ''
+        uses: actions/cache@v4
+        with:
+          path: .og-cache
+          key: og-${{ github.run_id }}
+          restore-keys: og-
       - name: Check the site (tests, content validation, build, links)
         if: steps.pick.outputs.branch != ''
         run: |

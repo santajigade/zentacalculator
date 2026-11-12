@@ -22,6 +22,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Reuse share images from earlier builds
+        uses: actions/cache@v4
+        with:
+          path: .og-cache
+          key: og-${{ github.run_id }}
+          restore-keys: og-
       - name: Allow publishing
         run: git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
       - name: Build and publish

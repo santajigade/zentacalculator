@@ -54,7 +54,7 @@ const schema: object[] = [
 if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map((f) => (
   { '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
 ---
-<Base title={d.title} description={d.description} schema={schema} activeCat={cat.slug}>
+<Base title={d.title} description={d.description} schema={schema} activeCat={cat.slug} image={`/og/${d.category}/${slugOf(calc)}.jpg`}>
   <div class="wrap" style={`--accent:${cat.color}`}>
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/">Home</a><span>/</span><a href={`/${cat.slug}/`}>{cat.name}</a><span>/</span><span>{d.title}</span>

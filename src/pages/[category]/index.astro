@@ -40,7 +40,7 @@ if (seo?.faq?.length) schema.push({ '@context': 'https://schema.org', '@type': '
 const title = seo?.title ?? `${cat.name} Calculators`;
 const description = seo?.description ?? `${calcs.length} free ${cat.name.toLowerCase()} calculators. ${cat.blurb}`;
 ---
-<Base title={title} description={description} schema={schema} activeCat={cat.slug} noindex={calcs.length === 0}>
+<Base title={title} description={description} schema={schema} activeCat={cat.slug} noindex={calcs.length === 0} image={`/og/${cat.slug}.jpg`}>
   <div class="wrap" style={`--accent:${cat.color}`}>
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>{cat.name}</span></nav>
     <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.03em;margin:6px 0 8px">{cat.icon} {seo?.h1 ?? `${cat.name} calculators`}</h1>

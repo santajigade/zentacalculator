@@ -13,8 +13,9 @@ const total = (await allCalcs()).length;
 const _all = await allCalcs();
 const catCount = (slug: string) => _all.filter((c) => c.data.category === slug).length;
 
-interface Props { title: string; description: string; schema?: object[]; activeCat?: string; noindex?: boolean; }
-const { title, description, schema = [], activeCat, noindex = false } = Astro.props;
+interface Props { title: string; description: string; schema?: object[]; activeCat?: string; noindex?: boolean; image?: string; }
+const { title, description, schema = [], activeCat, noindex = false, image = '/og-image.jpg' } = Astro.props;
+const ogImage = new URL(image, SITE.url).href;
 const canonical = new URL(Astro.url.pathname.endsWith('/') ? Astro.url.pathname : Astro.url.pathname + '/', SITE.url).href;
 const fullTitle = title === SITE.name ? title : (title.length + SITE.name.length + 3 <= 65 ? `${title} | ${SITE.name}` : title);
 import { POPULAR } from '../data/popular.ts';
@@ -46,7 +47,15 @@ const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <meta property="og:image" content={`${SITE.url}/og-image.png`} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:secure_url" content={ogImage} />
+  <meta property="og:image:type" content={ogImage.endsWith('.jpg') ? 'image/jpeg' : 'image/png'} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={fullTitle} />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
   <meta name="theme-color" content="#4f5bff" />
   {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   <script is:inline>

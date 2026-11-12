@@ -5,7 +5,7 @@ old_site_tree.txt = output of `git ls-tree -r <previous site commit>` (may be em
 Only URLs listed in the sitemap are sent, and only when their HTML changed or is new.
 Never fails the publish: any error is printed and the script exits 0.
 """
-import sys, os, re, json, glob, hashlib, subprocess, urllib.request
+import sys, os, re, json, glob, hashlib, urllib.request, urllib.error
 
 HOST = 'zentacalculator.com'
 KEY = next((os.path.basename(p)[:-4] for p in glob.glob('public/*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', os.path.basename(p))), None)
@@ -35,4 +35,5 @@ def main():
     with urllib.request.urlopen(req, timeout=30) as r: print('IndexNow response:', r.status)
 
 try: main()
+except urllib.error.HTTPError as e: print('IndexNow skipped:', e, e.read()[:300])
 except Exception as e: print('IndexNow skipped:', e)

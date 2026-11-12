@@ -1,0 +1,114 @@
+---
+title: Pipe Heat Loss Calculator (Insulated & Bare Pipe)
+description: Calculate heat loss per metre from an insulated or bare pipe, the insulation surface temperature, the total loss for a pipe run and the yearly energy wasted.
+category: engineering
+intro: "Hot pipes for steam, hot water, thermal oil and process fluids lose heat continuously to the surrounding air, and insulation is the cheapest way to cut that loss. This pipe heat loss calculator works out the loss per metre through cylindrical insulation and the outer air film, the insulation surface temperature, the total loss for the pipe run, the yearly energy and how much the insulation saves compared with a bare pipe — the same calculation explained in this guide to [calculating heat loss in piping](https://www.instrumentationblog.in/calculate-heat-loss-in-piping/)."
+keywords: [pipe heat loss calculator, insulated pipe heat loss, heat loss from pipe per meter, pipe insulation heat loss calculation, bare pipe heat loss, steam pipe heat loss, insulation surface temperature calculator]
+updated: 2026-11-12
+variables:
+  - { id: D1, label: Pipe outside diameter, family: length, unit: mm, imperialUnit: in, default: 114.3, min: 0 }
+  - { id: t, label: Insulation thickness, family: length, unit: mm, imperialUnit: in, default: 50, min: 0.000001 }
+  - { id: k, label: Thermal conductivity of the insulation, suffix: W/m·K, default: 0.045, min: 0, help: 'At the mean insulation temperature. Mineral wool about 0.04–0.05, calcium silicate 0.06, PIR foam 0.025.' }
+  - { id: Tp, label: Pipe (fluid) temperature, family: temperature, unit: C, imperialUnit: F, default: 150 }
+  - { id: Ta, label: Ambient air temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
+  - { id: h, label: Outer surface heat transfer coefficient (insulated), suffix: W/m²·K, default: 10, min: 0, help: 'Convection plus radiation. About 8–10 indoors in still air with a metal jacket or painted surface, 20–30 outdoors in wind.' }
+  - { id: hb, label: Surface coefficient of the bare pipe, suffix: W/m²·K, default: 15, min: 0, help: 'Bare steel radiates strongly: about 12–20 indoors at 100–250 °C.' }
+  - { id: L, label: Length of the pipe run, family: length, unit: m, imperialUnit: ft, default: 100, min: 0 }
+  - { id: D2, label: Outside diameter over the insulation, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: Ri, label: Thermal resistance of the insulation per metre, suffix: m·K/W, min: 0, decimals: 4 }
+  - { id: Rs, label: Thermal resistance of the outer air film per metre, suffix: m·K/W, min: 0, decimals: 4 }
+  - { id: qL, label: Heat loss per metre of insulated pipe, suffix: W/m, min: 0, decimals: 2 }
+  - { id: Q, label: Total heat loss of the run, family: power, unit: kW, imperialUnit: BTUh, min: 0 }
+  - { id: Ts, label: Insulation surface temperature, family: temperature, unit: C, imperialUnit: F }
+  - { id: qb, label: Heat loss per metre of bare pipe, suffix: W/m, min: 0, decimals: 1 }
+  - { id: sv, label: Heat loss saved by the insulation, family: percent, unit: '%' }
+  - { id: Ey, label: "Energy lost per year (8,760 h)", family: energy, unit: kWh, min: 0 }
+equations:
+  - D2 = D1 + 2 * t
+  - Ri = ln(D2 / D1) / (2 * pi * k)
+  - Rs = 1 / (h * pi * D2)
+  - qL = (Tp - Ta) / (Ri + Rs)
+  - Q = qL * L
+  - Ts = Ta + qL * Rs
+  - qb = hb * pi * D1 * (Tp - Ta)
+  - sv = 1 - qL / qb
+  - Ey = Q * 8760 * 3600
+faq:
+  - q: How do you calculate heat loss from an insulated pipe?
+    a: Add the thermal resistance of the insulation, ln(D₂ ÷ D₁) ÷ (2πk), to the resistance of the outer air film, 1 ÷ (h π D₂), both per metre of pipe. The heat loss per metre is the temperature difference divided by the total, q = (T_pipe − T_air) ÷ (R_ins + R_surface). The pipe wall and the inside film add very little resistance and are usually ignored.
+  - q: How much heat does a bare pipe lose?
+    a: A bare steel pipe loses q = h π D (T_pipe − T_air) per metre, with h around 12–20 W/m²·K indoors once radiation is included. A bare 4-inch (DN100) pipe at 150 °C in a 20 °C room loses roughly 450–750 W per metre — ten or more times as much as the same pipe with 50 mm of mineral wool.
+  - q: Why does doubling the insulation thickness not halve the heat loss?
+    a: The insulation resistance grows with the logarithm of the diameter ratio, and the outer surface gets larger as the insulation gets thicker. Each extra 25 mm therefore saves less than the one before — which is why economic insulation thickness is found by balancing insulation cost against the value of the heat saved.
+  - q: What surface temperature should pipe insulation have?
+    a: Personnel protection limits are commonly set around 50–60 °C for surfaces people can touch, depending on the standard and the jacket material. Use the surface temperature from this calculator to check the insulation thickness, remembering that a shiny aluminium jacket runs hotter than a painted one because it radiates less.
+related: [physics/heat-conduction, engineering/convection-heat-transfer, physics/stefan-boltzmann-law, engineering/heat-duty]
+---
+
+## How to use the pipe heat loss calculator
+
+Enter the **pipe outside diameter**, the **insulation thickness** and its **thermal conductivity**, the **pipe and ambient temperatures** and the **outer surface coefficient**. The calculator gives the heat loss per metre, the total for the **pipe run length**, the **insulation surface temperature**, the yearly energy lost if the pipe runs continuously, and — using the **bare pipe coefficient** — how much the insulation saves compared with leaving the pipe bare. To find the insulation thickness for a target loss per metre or surface temperature, enter that value and press × on the insulation thickness.
+
+## Pipe heat loss formula
+
+<p class="formula">R<sub>ins</sub> = ln(D<sub>2</sub> ÷ D<sub>1</sub>) ÷ (2π k) &nbsp;·&nbsp; R<sub>s</sub> = 1 ÷ (h π D<sub>2</sub>)</p>
+
+<p class="formula">q = (T<sub>pipe</sub> − T<sub>air</sub>) ÷ (R<sub>ins</sub> + R<sub>s</sub>) &nbsp;·&nbsp; T<sub>surface</sub> = T<sub>air</sub> + q R<sub>s</sub> &nbsp;·&nbsp; q<sub>bare</sub> = h<sub>b</sub> π D<sub>1</sub> (T<sub>pipe</sub> − T<sub>air</sub>)</p>
+
+D<sub>1</sub> is the pipe outside diameter, D<sub>2</sub> = D<sub>1</sub> + 2 × thickness, k the insulation conductivity and h the combined convection and radiation coefficient at the outer surface. The steel wall and the inside film are neglected — they add well under 1% to the resistance of an insulated pipe.
+
+## Worked example
+
+A DN100 steam line (114.3 mm OD) at 150 °C, insulated with 50 mm of mineral wool (k = 0.045 W/m·K), runs 100 m through a 20 °C plant room (h = 10 W/m²·K):
+
+- Outside diameter over the insulation D<sub>2</sub> = 114.3 + 2 × 50 = **214.3 mm**
+- R<sub>ins</sub> = ln(0.2143 ÷ 0.1143) ÷ (2π × 0.045) = **2.2230 m·K/W**
+- R<sub>s</sub> = 1 ÷ (10 × π × 0.2143) = **0.1485 m·K/W**
+- Heat loss q = (150 − 20) ÷ (2.2230 + 0.1485) = **54.82 W/m**, so the 100 m run loses **5.48 kW**
+- Surface temperature = 20 + 54.82 × 0.1485 = **28.14 °C**
+- Bare, the same pipe would lose 15 × π × 0.1143 × 130 = **700.2 W/m**, so the insulation saves **92.2%**
+- Running all year, the insulated run loses 5.48 × 8,760 = **48,019 kWh**
+
+## Heat loss per metre by pipe size and insulation thickness
+
+Pipe at 150 °C, air at 20 °C, k = 0.045 W/m·K, h = 10 W/m²·K; bare pipe with h = 15 W/m²·K. Values in W/m.
+
+| Pipe | Bare | 25 mm | 50 mm | 75 mm | 100 mm |
+|---|---|---|---|---|---|
+| DN25 (1"), 33.4 mm OD | 205 | 35.9 | 25.3 | 21.0 | 18.5 |
+| DN50 (2"), 60.3 mm OD | 369 | 53.6 | 35.6 | 28.4 | 24.6 |
+| DN80 (3"), 88.9 mm OD | 545 | 71.9 | 45.9 | 35.8 | 30.4 |
+| DN100 (4"), 114.3 mm OD | 700 | 88.0 | 54.8 | 42.1 | 35.3 |
+| DN150 (6"), 168.3 mm OD | 1,031 | 122.0 | 73.5 | 55.2 | 45.5 |
+| DN200 (8"), 219.1 mm OD | 1,342 | 153.8 | 90.9 | 67.3 | 54.9 |
+
+## Heat loss and surface temperature by pipe temperature
+
+DN100 pipe, same conditions; each cell gives the loss per metre and the surface temperature. (In practice k rises with temperature, so check the manufacturer's k at the mean insulation temperature for hot lines.)
+
+| Pipe temperature | 25 mm insulation | 50 mm insulation | 100 mm insulation |
+|---|---|---|---|
+| 60 °C | 27.1 W/m, 25.2 °C | 16.9 W/m, 22.5 °C | 10.9 W/m, 21.1 °C |
+| 100 °C | 54.2 W/m, 30.5 °C | 33.7 W/m, 25.0 °C | 21.7 W/m, 22.2 °C |
+| 150 °C | 88.0 W/m, 37.1 °C | 54.8 W/m, 28.1 °C | 35.3 W/m, 23.6 °C |
+| 200 °C | 121.9 W/m, 43.6 °C | 75.9 W/m, 31.3 °C | 48.9 W/m, 25.0 °C |
+| 250 °C | 155.7 W/m, 50.2 °C | 97.0 W/m, 34.4 °C | 62.5 W/m, 26.3 °C |
+
+## Typical insulation conductivity
+
+| Insulation | k at about 50–100 °C mean (W/m·K) | Usual service range |
+|---|---|---|
+| Mineral (rock) wool | 0.037–0.050 | to about 650 °C |
+| Glass wool | 0.035–0.045 | to about 250–450 °C |
+| Calcium silicate | 0.055–0.065 | to about 650 °C |
+| Cellular glass | 0.042–0.050 | cryogenic to about 430 °C |
+| Polyurethane / PIR foam | 0.022–0.028 | about −180 to 120 °C |
+| Flexible elastomeric foam | 0.033–0.040 | about −50 to 105 °C |
+
+## Practical notes
+
+- **Wet insulation** conducts heat many times better than dry insulation — damaged cladding that lets rain in can make the real loss far higher than calculated.
+- **Valves, flanges and supports** left bare can add the equivalent of several metres of bare pipe each; removable insulation jackets pay back quickly on steam systems.
+- **Small tubes and cables:** below the critical radius r = k ÷ h (a few millimetres for typical values) adding insulation can increase the heat loss — this never applies to normal process pipes.
+- The heat lost by a steam line turns into condensate; divide the loss in kW by the latent heat (about 2,100 kJ/kg at low pressure) to estimate the condensate load for steam traps. For [heat tracing](ib:heat-tracing-in-piping-systems), the tracer must supply at least this loss at the minimum ambient temperature.
+- For flat walls and layers, use the [heat conduction calculator](/physics/heat-conduction/); for the surface film alone, use the [convection heat transfer calculator](/engineering/convection-heat-transfer/).

@@ -1,0 +1,110 @@
+---
+title: Enthalpy of Reaction Calculator (ΔH from Heats of Formation)
+description: Calculate the enthalpy change of a reaction (ΔH°rxn) from standard enthalpies of formation using Hess's law, with heat released per mole and per gram.
+category: chemistry
+intro: "The heat released or absorbed by a chemical reaction can be worked out without doing the experiment: by Hess's law, the enthalpy change equals the total enthalpy of formation of the products minus that of the reactants. This enthalpy of reaction calculator takes up to two reactants and two products with their coefficients and standard enthalpies of formation, and gives ΔH°rxn, whether the reaction is exothermic or endothermic, and the heat for a chosen amount of reactant per mole and per gram."
+keywords: [enthalpy of reaction calculator, delta h calculator, heat of reaction calculator, enthalpy change calculator, hess's law calculator, standard enthalpy of formation calculator, enthalpy of combustion calculator]
+updated: 2026-11-12
+variables:
+  - { id: nr1, label: Coefficient of reactant 1, default: 1, min: 0 }
+  - { id: Hr1, label: ΔHf° of reactant 1, suffix: kJ/mol, default: -74.8 }
+  - { id: nr2, label: Coefficient of reactant 2 (0 if none), default: 2, min: 0 }
+  - { id: Hr2, label: ΔHf° of reactant 2, suffix: kJ/mol, default: 0, help: 'Elements in their standard state (O₂, H₂, N₂, C graphite, metals) are 0.' }
+  - { id: np1, label: Coefficient of product 1, default: 1, min: 0 }
+  - { id: Hp1, label: ΔHf° of product 1, suffix: kJ/mol, default: -393.5 }
+  - { id: np2, label: Coefficient of product 2 (0 if none), default: 2, min: 0 }
+  - { id: Hp2, label: ΔHf° of product 2, suffix: kJ/mol, default: -285.8 }
+  - { id: M1, label: Molar mass of reactant 1, suffix: g/mol, default: 16.04, min: 0 }
+  - { id: n, label: Amount of reactant 1 that reacts, suffix: mol, default: 1, min: 0 }
+  - { id: Hp, label: Total enthalpy of formation of the products, suffix: kJ, decimals: 2 }
+  - { id: Hr, label: Total enthalpy of formation of the reactants, suffix: kJ, decimals: 2 }
+  - { id: dH, label: Enthalpy of reaction ΔH°rxn (as written), suffix: kJ, decimals: 2 }
+  - { id: q, label: Enthalpy change for this amount of reactant 1, suffix: kJ, decimals: 2 }
+  - { id: qm, label: Enthalpy change per gram of reactant 1, suffix: kJ/g, decimals: 3 }
+equations:
+  - Hp = np1 * Hp1 + np2 * Hp2
+  - Hr = nr1 * Hr1 + nr2 * Hr2
+  - dH = Hp - Hr
+  - q = dH * n / nr1
+  - qm = dH / (nr1 * M1)
+faq:
+  - q: How do you calculate the enthalpy of reaction from enthalpies of formation?
+    a: ΔH°rxn = Σ n ΔHf°(products) − Σ n ΔHf°(reactants), where n are the coefficients in the balanced equation. For CH₄ + 2 O₂ → CO₂ + 2 H₂O(l), ΔH = [−393.5 + 2 × (−285.8)] − [−74.8 + 0] = −890.3 kJ per mole of methane.
+  - q: What does a negative enthalpy of reaction mean?
+    a: A negative ΔH means the products hold less enthalpy than the reactants, so the reaction releases heat to the surroundings (exothermic) — all combustion reactions are like this. A positive ΔH means heat must be supplied (endothermic), as in decomposing limestone into lime and carbon dioxide.
+  - q: What is Hess's law?
+    a: The enthalpy change of a reaction is the same whatever route the reaction takes, because enthalpy is a state function. You can therefore add or subtract known reaction equations — and their ΔH values — to get the ΔH of a reaction that is hard to measure. Using enthalpies of formation is the most common application.
+  - q: Why is the ΔHf° of oxygen zero?
+    a: The standard enthalpy of formation of an element in its most stable form at 1 bar and 25 °C is defined as zero — this applies to O₂(g), H₂(g), N₂(g), graphite and solid metals. Ozone and diamond are not the most stable forms, so their values are not zero.
+related: [chemistry/bomb-calorimeter, chemistry/gibbs-free-energy, chemistry/specific-heat, chemistry/limiting-reagent]
+---
+
+## How to use the enthalpy of reaction calculator
+
+Write the **balanced equation** first. Enter the **coefficient** and the **standard enthalpy of formation** (ΔHf°, kJ/mol) of each reactant and product — the table below lists common values, and elements in their standard state are 0. For a reaction with only one reactant or product, set the second coefficient to 0. The calculator gives ΔH°rxn for the equation as written. Add the **molar mass** of reactant 1 and the **amount** that reacts to get the heat for that amount and per gram.
+
+## Enthalpy of reaction formula (Hess's law)
+
+<p class="formula">ΔH°<sub>rxn</sub> = Σ n ΔH<sub>f</sub>°(products) − Σ n ΔH<sub>f</sub>°(reactants)</p>
+
+<p class="formula">q = ΔH°<sub>rxn</sub> × n<sub>reacting</sub> ÷ coefficient &nbsp;·&nbsp; q per gram = ΔH°<sub>rxn</sub> ÷ (coefficient × M)</p>
+
+Watch the physical state: liquid water (−285.8 kJ/mol) gives the higher heating value of a fuel, water vapour (−241.8 kJ/mol) the lower heating value.
+
+## Worked example: combustion of methane
+
+CH₄(g) + 2 O₂(g) → CO₂(g) + 2 H₂O(l)
+
+- Products: 1 × (−393.5) + 2 × (−285.8) = **−965.1 kJ**
+- Reactants: 1 × (−74.8) + 2 × 0 = **−74.8 kJ**
+- ΔH°rxn = −965.1 − (−74.8) = **−890.3 kJ** per mole of methane — exothermic
+- Per gram of methane (M = 16.04 g/mol): −890.3 ÷ 16.04 = **−55.505 kJ/g**, i.e. about 55.5 MJ/kg, the higher heating value of methane
+
+## Enthalpy of reaction for common reactions
+
+Calculated from the formation enthalpies below (kJ for the equation as written, products' water as liquid):
+
+| Reaction | Equation | ΔH°rxn | Type |
+|---|---|---|---|
+| Methane combustion | CH₄ + 2 O₂ → CO₂ + 2 H₂O(l) | −890.3 kJ | exothermic |
+| Propane combustion | C₃H₈ + 5 O₂ → 3 CO₂ + 4 H₂O(l) | −2,219.9 kJ | exothermic |
+| Ethanol combustion | C₂H₅OH + 3 O₂ → 2 CO₂ + 3 H₂O(l) | −1,366.8 kJ | exothermic |
+| Glucose oxidation | C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O(l) | −2,802.5 kJ | exothermic |
+| Hydrogen combustion | 2 H₂ + O₂ → 2 H₂O(l) | −571.6 kJ | exothermic |
+| Carbon monoxide combustion | 2 CO + O₂ → 2 CO₂ | −566.0 kJ | exothermic |
+| Haber process | N₂ + 3 H₂ → 2 NH₃ | −91.8 kJ | exothermic |
+| Limestone calcination | CaCO₃ → CaO + CO₂ | +178.5 kJ | endothermic |
+| Thermite reaction | 2 Al + Fe₂O₃ → Al₂O₃ + 2 Fe | −851.5 kJ | exothermic |
+| Nitric oxide oxidation | 2 NO + O₂ → 2 NO₂ | −116.2 kJ | exothermic |
+
+## Standard enthalpies of formation at 25 °C
+
+| Substance | ΔHf° (kJ/mol) |
+|---|---|
+| Water, liquid — H₂O(l) | −285.8 |
+| Water vapour — H₂O(g) | −241.8 |
+| Carbon dioxide — CO₂(g) | −393.5 |
+| Carbon monoxide — CO(g) | −110.5 |
+| Methane — CH₄(g) | −74.8 |
+| Propane — C₃H₈(g) | −103.8 |
+| Ethanol — C₂H₅OH(l) | −277.6 |
+| Glucose — C₆H₁₂O₆(s) | −1273.3 |
+| Ammonia — NH₃(g) | −45.9 |
+| Nitric oxide — NO(g) | +91.3 |
+| Nitrogen dioxide — NO₂(g) | +33.2 |
+| Sulfur dioxide — SO₂(g) | −296.8 |
+| Hydrogen chloride — HCl(g) | −92.3 |
+| Sodium chloride — NaCl(s) | −411.2 |
+| Calcium carbonate — CaCO₃(s) | −1206.9 |
+| Calcium oxide — CaO(s) | −634.9 |
+| Iron(III) oxide — Fe₂O₃(s) | −824.2 |
+| Aluminium oxide — Al₂O₃(s) | −1675.7 |
+
+Values from standard thermochemical tables (NIST, CRC Handbook), rounded to 0.1 kJ/mol; different tables can differ by a few tenths.
+
+## Practical notes
+
+- **Scale with the equation:** doubling all coefficients doubles ΔH, and reversing the reaction changes its sign.
+- **Standard conditions:** ΔH° is for 1 bar and 25 °C. At other temperatures the value changes a little, by the difference in heat capacity of products and reactants (Kirchhoff's law).
+- **Bond enthalpies** give only rough estimates (often within 5–10%) because they are averages; formation enthalpies give much better values.
+- To measure a heat of combustion directly, use the [bomb calorimeter calculator](/chemistry/bomb-calorimeter/); to decide whether a reaction is spontaneous, combine ΔH with entropy in the [Gibbs free energy calculator](/chemistry/gibbs-free-energy/).

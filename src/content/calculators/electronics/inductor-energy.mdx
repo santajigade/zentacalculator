@@ -1,51 +1,78 @@
 ---
-title: Inductor Energy Calculator
-description: Calculate the energy stored in an inductor's magnetic field from inductance and current with E = ½LI² — for chokes, relays and SMPS design.
+title: Inductor Energy Calculator (E = ½LI²)
+description: Calculate the energy stored in an inductor from inductance and current with E = ½LI², plus the switch-off voltage and the average power released.
 category: electronics
-intro: "An inductor stores energy in its magnetic field while current flows, and releases it when the current changes — which is why switching off a coil can cause a voltage spike. Learn the [inductor working principle](https://www.instrumentationblog.in/inductor-working-principle/) and the limits set by [inductor saturation current](https://www.instrumentationblog.in/inductor-saturation-current/). This free inductor energy calculator solves for whichever value you leave blank and shows the formula and steps."
-keywords: [inductor energy calculator, energy stored in inductor, 1/2 li2, magnetic energy, inductor current energy, choke energy]
-updated: 2026-10-27
+intro: "An inductor stores energy in its magnetic field while current flows, and releases it when the current changes — which is why switching off a coil can cause a voltage spike. Learn the [inductor working principle](https://www.instrumentationblog.in/inductor-working-principle/) and the limits set by [inductor saturation current](https://www.instrumentationblog.in/inductor-saturation-current/). This inductor energy calculator gives the stored energy, the voltage induced if the current is switched off in a given time and the average power released, and solves for the inductance or current when you know the energy."
+keywords: [inductor energy calculator, energy stored in inductor, 1/2 li2 calculator, magnetic energy calculator, inductor current energy, choke energy, inductive kickback voltage]
+updated: 2026-11-12
 variables:
   - { id: L, label: Inductance, family: inductance, unit: mH, default: 10, min: 0 }
   - { id: I, label: Current, family: current, unit: A, default: 2, min: 0 }
   - { id: E, label: Stored energy, family: energy, unit: J, min: 0 }
   - { id: dt, label: Switch-off time, family: seconds, unit: ms, default: 1, min: 0 }
   - { id: V, label: Induced voltage at switch-off (L·di/dt), family: voltage, unit: V, min: 0 }
+  - { id: Pav, label: Average power released during switch-off, family: power, unit: W, min: 0 }
 equations:
   - E = 0.5 * L * I^2
   - V = L * I / dt
+  - Pav = E / dt
 faq:
   - q: How much energy does an inductor store?
-    a: E = ½ × L × I². A 10 mH inductor carrying 2 A stores 20 mJ.
+    a: E = ½ × L × I², with L in henries and I in amperes giving joules. A 10 mH inductor carrying 2 A stores ½ × 0.01 × 2² = 0.02 J (20 mJ). Doubling the current stores four times the energy.
   - q: Why do relay coils need flyback diodes?
-    a: When the current is interrupted quickly, the coil tries to keep it flowing, producing a voltage spike of L × di/dt that can reach hundreds of volts and damage transistors. A diode gives the current a safe path.
+    a: When the current is interrupted quickly, the coil tries to keep it flowing, producing a voltage of L × di/dt that can reach hundreds of volts and damage the switching transistor or burn relay contacts. A diode across the coil gives the current a path so the stored energy dies away in the coil resistance.
   - q: What is inductor saturation?
-    a: Above a certain current the core can hold no more magnetic flux, so inductance falls sharply. Always stay below the saturation current in the datasheet.
+    a: Above a certain current the core can hold no more magnetic flux, so the inductance falls sharply and the current rises quickly. Ferrite cores saturate at roughly 0.3–0.5 T; always keep the peak current below the saturation current given in the datasheet.
   - q: Where is inductor energy used?
-    a: Switch-mode power supplies store energy in inductors each cycle and release it to the output; ignition coils use it to create high-voltage sparks.
-related: [electronics/rl-time-constant, electronics/capacitor-energy, electronics/reactance, electronics/buck-converter, physics/rc-time-constant]
+    a: Switch-mode power supplies store energy in an inductor or transformer each switching cycle and release it to the output; ignition coils use it to create the high-voltage spark, and superconducting magnets store megajoules in their field.
+related: [electronics/rl-time-constant, electronics/capacitor-energy, electronics/flyback-transformer, electronics/buck-converter]
 ---
 
 ## How to use the inductor energy calculator
 
-Enter the **inductance** and the **current** to get the stored energy. Add a **switch-off time** to estimate the voltage spike if the current is interrupted that quickly without suppression.
+Enter the **inductance** and the **current** to get the stored energy. Add a **switch-off time** to estimate the average voltage induced if the current falls to zero in that time without suppression, and the average power the stored energy is released at. To find the current that stores a given energy, enter the energy and press × on the current.
 
 For more background, read [Lenz’s Law and Electromagnetic Induction](https://www.instrumentationblog.in/lenzs-law-electromagnetic-induction/).
 
 ## Inductor energy formulas
 
-<p class="formula">E = ½ × L × I² &nbsp;·&nbsp; V = L × di/dt</p>
+<p class="formula">E = ½ × L × I² &nbsp;·&nbsp; V = L × di/dt ≈ L × I ÷ Δt &nbsp;·&nbsp; P<sub>avg</sub> = E ÷ Δt</p>
 
-## Energy examples
+The voltage is the average over a linear fall in current; an abrupt interruption is faster still, so the real spike is limited only by the coil's stray capacitance or by arcing across the switch.
+
+## Worked example
+
+A 10 mH choke carrying 2 A is switched off in 1 ms:
+
+- Stored energy E = ½ × 0.01 × 2² = **0.02 J** (20 mJ)
+- Induced voltage V = 0.01 × 2 ÷ 0.001 = **20 V**
+- Average power released = 0.02 ÷ 0.001 = **20 W**
+
+Interrupting the same current in 10 µs would induce about 2,000 V — why a suppression diode is essential.
+
+## Energy stored in common inductors
 
 | Inductor | Current | Energy |
 |---|---|---|
-| 10 µH SMPS inductor | 5 A | 0.125 mJ |
-| 100 µH choke | 3 A | 0.45 mJ |
+| 10 µH SMPS inductor | 5 A | 125 µJ |
+| 100 µH power choke | 3 A | 450 µJ |
+| 1 mH filter inductor | 1 A | 500 µJ |
 | 10 mH filter choke | 2 A | 20 mJ |
-| Relay coil, 1 H | 30 mA | 0.45 mJ |
+| Relay coil, 1 H | 0.03 A | 450 µJ |
 | Contactor coil, 5 H | 0.2 A | 100 mJ |
 | Motor winding, 50 mH | 20 A | 10 J |
+| Ignition coil primary, 7 mH | 7 A | 171.5 mJ |
+
+## Stored energy by inductance and current
+
+| Inductance | 0.1 A | 1 A | 5 A | 10 A | 20 A |
+|---|---|---|---|---|---|
+| 1 µH | 0.005 µJ | 0.5 µJ | 12.5 µJ | 50 µJ | 200 µJ |
+| 10 µH | 0.05 µJ | 5 µJ | 125 µJ | 500 µJ | 2 mJ |
+| 100 µH | 0.5 µJ | 50 µJ | 1.25 mJ | 5 mJ | 20 mJ |
+| 1 mH | 5 µJ | 500 µJ | 12.5 mJ | 50 mJ | 200 mJ |
+| 10 mH | 50 µJ | 5 mJ | 125 mJ | 500 mJ | 2 J |
+| 100 mH | 500 µJ | 50 mJ | 1.25 J | 5 J | 20 J |
 
 ## Suppressing inductive kick
 
@@ -56,6 +83,9 @@ For more background, read [Lenz’s Law and Electromagnetic Induction](https://w
 | RC snubber | Medium | Works on AC and DC |
 | Varistor (MOV) | Fast | Common on AC contactor coils |
 
-## Saturation and core choice
+## Practical notes
 
-Ferrite cores saturate at about 0.3–0.4 T, iron powder and silicon steel at higher flux. Gapped cores store most of the energy in the air gap, which is why SMPS inductors use them.
+- **Saturation and core choice:** ferrite cores saturate at about 0.3–0.5 T, iron powder and silicon steel at higher flux. Gapped cores store most of their energy in the air gap, which is why SMPS inductors and flyback transformers use them.
+- **Energy per cycle:** a converter that stores E each switching period at frequency f transfers up to P = E × f — 20 µJ at 100 kHz is 2 W.
+- **Decay time:** with a flyback diode the current dies away with the coil's L/R time constant; see the [RL time constant calculator](/electronics/rl-time-constant/).
+- To compare with energy stored in an electric field, use the [capacitor energy calculator](/electronics/capacitor-energy/).

@@ -1,0 +1,101 @@
+---
+title: Chain Length Calculator (Roller Chain & Sprocket)
+description: Calculate roller chain length in links from sprocket teeth and centre distance, the exact centre distance, speed ratio, chain speed and pitch diameters.
+category: engineering
+intro: "A roller chain drive is defined by the chain pitch, the number of teeth on each sprocket and the distance between the shaft centres. This chain length calculator works out the chain length in pitches, rounds it up to a whole even number of links, gives the exact centre distance that number of links needs, and also calculates the speed ratio, the driven shaft speed, the chain speed and the pitch diameter of both sprockets."
+keywords: [chain length calculator, roller chain length calculator, sprocket calculator, chain links calculator, sprocket pitch diameter calculator, chain drive calculator, chain centre distance calculator, chain speed calculator]
+updated: 2026-11-12
+variables:
+  - { id: p, label: Chain pitch, family: length, unit: mm, imperialUnit: in, default: 12.7, min: 0, help: 'ANSI 25 = 6.35 mm, 35 = 9.525 mm, 40 = 12.7 mm, 50 = 15.875 mm, 60 = 19.05 mm, 80 = 25.4 mm.' }
+  - { id: N1, label: Teeth on the driving (small) sprocket, default: 17, min: 1, decimals: 0 }
+  - { id: N2, label: Teeth on the driven (large) sprocket, default: 34, min: 1, decimals: 0 }
+  - { id: C, label: Centre distance between the shafts, family: length, unit: mm, imperialUnit: in, default: 500, min: 0 }
+  - { id: n1, label: Speed of the driving sprocket, suffix: rpm, default: 500, min: 0 }
+  - { id: Lp, label: Chain length for this centre distance, suffix: pitches, min: 0, decimals: 2 }
+  - { id: Lr, label: Chain length rounded up to an even number of links, suffix: links, min: 0, decimals: 0 }
+  - { id: Lm, label: Length of the chain, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: Ca, label: Exact centre distance for the rounded chain, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: i, label: Speed ratio (N2 ÷ N1), min: 0, decimals: 3 }
+  - { id: n2, label: Speed of the driven sprocket, suffix: rpm, min: 0, decimals: 1 }
+  - { id: v, label: Chain speed, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+  - { id: Dp1, label: Pitch diameter of the driving sprocket, family: length, unit: mm, imperialUnit: in, min: 0 }
+  - { id: Dp2, label: Pitch diameter of the driven sprocket, family: length, unit: mm, imperialUnit: in, min: 0 }
+equations:
+  - Lp = 2 * C / p + (N1 + N2) / 2 + ((N2 - N1) / (2 * pi))^2 * p / C
+  - Lr = 2 * ceil(Lp / 2)
+  - Lm = Lr * p
+  - Ca = p / 4 * (Lr - (N1 + N2) / 2 + sqrt((Lr - (N1 + N2) / 2)^2 - 8 * ((N2 - N1) / (2 * pi))^2))
+  - i = N2 / N1
+  - n2 = n1 * N1 / N2
+  - v = N1 * p * n1 / 60
+  - Dp1 = p / sin(pi / N1)
+  - Dp2 = p / sin(pi / N2)
+faq:
+  - q: How do you calculate roller chain length?
+    a: In pitches, L = 2C ÷ p + (N₁ + N₂) ÷ 2 + [(N₂ − N₁) ÷ 2π]² × p ÷ C, where C is the centre distance, p the pitch and N₁ and N₂ the tooth counts. Round the result up to the next even whole number of links and multiply by the pitch for the length. For 17 and 34 teeth on ANSI 40 chain at 500 mm centres, L = 104.43 pitches, so use 106 links.
+  - q: Why should a chain have an even number of links?
+    a: A chain with an odd number of pitches needs an offset (cranked) link to join it, which is weaker than standard links — often derated by about 20–35%. Choosing an even number of links and adjusting the centre distance or using a tensioner avoids it.
+  - q: How do you find the pitch diameter of a sprocket?
+    a: Pitch diameter = p ÷ sin(180° ÷ N). A 17-tooth sprocket for 12.7 mm (ANSI 40) chain has a pitch diameter of 12.7 ÷ sin(10.59°) = 69.1 mm. The outside diameter is a little larger and depends on the tooth form.
+  - q: What centre distance is best for a chain drive?
+    a: Manufacturers usually recommend 30–50 pitches, with a maximum of about 80 pitches without a guide or idler. The chain should wrap at least 120° around the small sprocket, which is easier with ratios below about 7:1.
+related: [engineering/gear-ratio, engineering/pulley-speed, engineering/torque-power-speed, sports/cycling-gear-speed]
+---
+
+## How to use the chain length calculator
+
+Enter the **chain pitch**, the **number of teeth** on the driving and driven sprockets and the planned **centre distance** between the shafts. The calculator gives the chain length in pitches, the length **rounded up to an even number of links**, the chain length in mm or inches and the **exact centre distance** that whole chain needs (so you know how far to set the shafts or the tensioner). Enter the **driving speed** to get the driven speed and the chain speed; the sprocket **pitch diameters** are given as well.
+
+## Chain length formula
+
+<p class="formula">L<sub>p</sub> = 2C ÷ p + (N<sub>1</sub> + N<sub>2</sub>) ÷ 2 + [(N<sub>2</sub> − N<sub>1</sub>) ÷ 2π]² × p ÷ C</p>
+
+<p class="formula">C = (p ÷ 4) × [L − (N<sub>1</sub> + N<sub>2</sub>) ÷ 2 + √( (L − (N<sub>1</sub> + N<sub>2</sub>) ÷ 2)² − 8 [(N<sub>2</sub> − N<sub>1</sub>) ÷ 2π]² )]</p>
+
+<p class="formula">v = N<sub>1</sub> p n<sub>1</sub> ÷ 60 &nbsp;·&nbsp; n<sub>2</sub> = n<sub>1</sub> N<sub>1</sub> ÷ N<sub>2</sub> &nbsp;·&nbsp; D<sub>p</sub> = p ÷ sin(180° ÷ N)</p>
+
+The second formula is the first one solved for the centre distance, used once the chain length has been rounded to whole links.
+
+## Worked example
+
+An ANSI 40 (12.7 mm pitch) chain drive with a 17-tooth driving sprocket at 500 rpm and a 34-tooth driven sprocket, shafts 500 mm apart:
+
+- Chain length = 2 × 500 ÷ 12.7 + (17 + 34) ÷ 2 + [(34 − 17) ÷ 2π]² × 12.7 ÷ 500 = 78.740 + 25.5 + 0.186 = **104.43 pitches**
+- Rounded up to an even number: **106 links**, a chain **1,346.2 mm** long
+- With 106 links the centre distance becomes **510.0 mm** — set the shafts there or take up the slack with a tensioner
+- Speed ratio = 34 ÷ 17 = **2**, so the driven sprocket turns at **250 rpm**
+- Chain speed = 17 × 0.0127 × 500 ÷ 60 = **1.799 m/s**
+- Pitch diameters: **69.12 mm** and **137.64 mm**
+
+## Sprocket pitch diameter (mm)
+
+| Chain | Pitch | 9 T | 12 T | 15 T | 17 T | 19 T | 21 T | 25 T |
+|---|---|---|---|---|---|---|---|---|
+| ANSI 25 / 04C | 6.35 mm (0.25 in) | 18.6 | 24.5 | 30.5 | 34.6 | 38.6 | 42.6 | 50.7 |
+| ANSI 35 / 06C | 9.525 mm (0.375 in) | 27.8 | 36.8 | 45.8 | 51.8 | 57.9 | 63.9 | 76.0 |
+| ANSI 40 / 08A | 12.7 mm (0.5 in) | 37.1 | 49.1 | 61.1 | 69.1 | 77.2 | 85.2 | 101.3 |
+| ANSI 50 / 10A | 15.875 mm (0.625 in) | 46.4 | 61.3 | 76.4 | 86.4 | 96.4 | 106.5 | 126.7 |
+| ANSI 60 / 12A | 19.05 mm (0.75 in) | 55.7 | 73.6 | 91.6 | 103.7 | 115.7 | 127.8 | 152.0 |
+| ANSI 80 / 16A | 25.4 mm (1 in) | 74.3 | 98.1 | 122.2 | 138.2 | 154.3 | 170.4 | 202.7 |
+| ANSI 100 / 20A | 31.75 mm (1.25 in) | 92.8 | 122.7 | 152.7 | 172.8 | 192.9 | 213.0 | 253.3 |
+| ANSI 120 / 24A | 38.1 mm (1.5 in) | 111.4 | 147.2 | 183.3 | 207.3 | 231.5 | 255.6 | 304.0 |
+
+## Chain length against centre distance
+
+17-tooth and 34-tooth sprockets, centre distance in pitches (multiply by the pitch for mm):
+
+| Centre distance | Exact length (pitches) | Links to use | Centre distance for those links |
+|---|---|---|---|
+| 30 pitches | 85.74 | 86 | 30.13 pitches |
+| 40 pitches | 105.68 | 106 | 40.16 pitches |
+| 50 pitches | 125.65 | 126 | 50.18 pitches |
+| 60 pitches | 145.62 | 146 | 60.19 pitches |
+| 80 pitches | 185.59 | 186 | 80.20 pitches |
+
+## Practical notes
+
+- **Sprocket size:** small sprockets cause chordal speed variation and faster wear — 17 teeth or more is usual for moderate and high speeds, and an odd tooth count on the small sprocket with an even number of links spreads the wear.
+- **Slack:** allow about 2% of the centre distance as sag on the slack side of a horizontal drive, and provide adjustment of at least two pitches for chain wear.
+- **Lubrication:** chain speed and pitch decide whether manual, drip, bath or forced lubrication is needed — check the manufacturer's power rating tables, which also give the kW capacity of each chain size.
+- **Wear:** a roller chain is normally replaced when it has stretched by about 1.5–3% of its length; measure over several pitches with the chain under tension.
+- To check shaft speeds and torque for a drive, use the [gear ratio calculator](/engineering/gear-ratio/) or the [torque, power and speed calculator](/engineering/torque-power-speed/).

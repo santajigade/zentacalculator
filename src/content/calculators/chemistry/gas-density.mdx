@@ -1,0 +1,97 @@
+---
+title: Gas Density Calculator (from Pressure, Temperature & Molar Mass)
+description: Calculate the density of any gas from absolute pressure, temperature and molar mass with ρ = PM/ZRT, plus specific gravity, specific volume and molar volume.
+category: chemistry
+intro: "The density of a gas changes with pressure and temperature, so it has to be calculated at the actual operating conditions for flow measurement, compressor and vessel sizing or buoyancy checks. This gas density calculator uses the ideal gas law with an optional compressibility factor Z to give the density from the absolute pressure, temperature and molar mass, along with the specific gravity relative to air, the specific volume, the molar volume and the density at normal conditions — the values needed for [pressure and temperature compensation](https://www.instrumentationblog.in/temperature-and-pressure-compensation/) of gas flow meters."
+keywords: [gas density calculator, density of gas formula, ideal gas density calculator, gas density at pressure and temperature, air density calculator, specific gravity of gas, compressibility factor density, rho pm rt]
+updated: 2026-11-12
+variables:
+  - { id: P, label: Absolute pressure, family: pressure, unit: kPa, imperialUnit: psi, default: 101.325, min: 0, help: 'Absolute = gauge + atmospheric (101.325 kPa at sea level).' }
+  - { id: T, label: Gas temperature, family: temperature, unit: C, imperialUnit: F, default: 20, min: 0 }
+  - { id: M, label: Molar mass of the gas, suffix: g/mol, default: 28.9647, min: 0, help: 'Air 28.96, N₂ 28.01, O₂ 32.00, CO₂ 44.01, CH₄ 16.04, H₂ 2.016.' }
+  - { id: Z, label: Compressibility factor Z, default: 1, min: 0, decimals: 4, help: '1 for an ideal gas; close to 1 for air and N₂ near ambient conditions.' }
+  - { id: rho, label: Gas density, family: density, unit: kgm3, imperialUnit: lbft3, min: 0, decimals: 4 }
+  - { id: SG, label: Specific gravity relative to air, min: 0, decimals: 4 }
+  - { id: sv, label: Specific volume, suffix: m³/kg, min: 0, decimals: 4 }
+  - { id: Vm, label: Molar volume, suffix: L/mol, min: 0, decimals: 3 }
+  - { id: rhoN, label: Ideal density at normal conditions (0 °C and 101.325 kPa), family: density, unit: kgm3, imperialUnit: lbft3, min: 0, decimals: 4 }
+equations:
+  - rho = P * M / 1000 / (Z * 8.314462618 * T)
+  - SG = M / 28.9647
+  - sv = 1 / rho
+  - Vm = Z * 8.314462618 * T / P * 1000
+  - rhoN = 101325 * M / 1000 / (8.314462618 * 273.15)
+faq:
+  - q: How do you calculate the density of a gas?
+    a: ρ = P M ÷ (Z R T), with P the absolute pressure in Pa, M the molar mass in kg/mol, R = 8.314 J/(mol·K), T the absolute temperature in kelvin and Z the compressibility factor (1 for an ideal gas). Dry air at 101.325 kPa and 20 °C has a density of 101,325 × 0.028965 ÷ (8.314 × 293.15) = 1.204 kg/m³.
+  - q: How does gas density change with pressure and temperature?
+    a: Density is proportional to absolute pressure and inversely proportional to absolute temperature. Doubling the absolute pressure doubles the density; heating a gas from 20 °C to 60 °C (293 K to 333 K) lowers its density by about 12%.
+  - q: What is the specific gravity of a gas?
+    a: It is the gas density divided by the density of air at the same pressure and temperature, which for ideal gases equals M ÷ 28.96. Gases with a specific gravity below 1, such as methane (0.55) and hydrogen (0.07), rise in air; propane (1.52) and CO₂ (1.52) collect in low places.
+  - q: When do I need the compressibility factor Z?
+    a: Near room temperature and up to a few bar, air, nitrogen, oxygen and methane have Z within about 1% of 1, so the ideal gas law is fine. At high pressure (natural gas pipelines, gas cylinders) or near condensation (CO₂, propane, steam), Z can be well below 1 — use a value from an equation of state, AGA-8 or a Z chart.
+related: [physics/ideal-gas-law, engineering/gas-flow-correction, physics/density, chemistry/combined-gas-law]
+---
+
+## How to use the gas density calculator
+
+Enter the **absolute pressure** (gauge pressure plus atmospheric), the **gas temperature**, the **molar mass** of the gas and, for real gases at high pressure, its **compressibility factor Z**. The calculator gives the **density** at those conditions, the specific gravity relative to air, the specific volume, the molar volume and the ideal density at normal conditions (0 °C, 1 atm). For a gas mixture, use the mole-fraction-weighted molar mass, M = Σ x<sub>i</sub> M<sub>i</sub>.
+
+## Gas density formula
+
+<p class="formula">ρ = P M ÷ (Z R T) &nbsp;·&nbsp; SG = M ÷ M<sub>air</sub> &nbsp;·&nbsp; v = 1 ÷ ρ &nbsp;·&nbsp; V<sub>m</sub> = Z R T ÷ P</p>
+
+R = 8.314462618 J/(mol·K), M<sub>air</sub> = 28.9647 g/mol, P in Pa absolute, T in K and M in kg/mol (g/mol ÷ 1,000).
+
+## Worked example: air at 20 °C
+
+Dry air (M = 28.9647 g/mol) at 101.325 kPa absolute and 20 °C, treated as ideal (Z = 1):
+
+- ρ = 101,325 × 0.0289647 ÷ (1 × 8.314462618 × 293.15) = **1.2041 kg/m³**
+- Specific gravity = 28.9647 ÷ 28.9647 = **1.0000**
+- Specific volume = 1 ÷ 1.2041 = **0.8305 m³/kg**
+- Molar volume = 8.314462618 × 293.15 ÷ 101,325 × 1000 = **24.055 L/mol**
+- At 0 °C and 101.325 kPa the same air would have a density of **1.2923 kg/m³**
+
+## Density of common gases at 1 atm (ideal gas)
+
+| Gas | M (g/mol) | ρ at 0 °C (kg/m³) | ρ at 15 °C | ρ at 20 °C | SG (air = 1) |
+|---|---|---|---|---|---|
+| Hydrogen, H₂ | 2.016 | 0.0899 | 0.0853 | 0.0838 | 0.070 |
+| Helium, He | 4.0026 | 0.1786 | 0.1693 | 0.1664 | 0.138 |
+| Methane, CH₄ | 16.043 | 0.7158 | 0.6785 | 0.6669 | 0.554 |
+| Ammonia, NH₃ | 17.031 | 0.7598 | 0.7203 | 0.7080 | 0.588 |
+| Nitrogen, N₂ | 28.014 | 1.2498 | 1.1848 | 1.1646 | 0.967 |
+| Carbon monoxide, CO | 28.01 | 1.2497 | 1.1846 | 1.1644 | 0.967 |
+| Air (dry) | 28.9647 | 1.2923 | 1.2250 | 1.2041 | 1.000 |
+| Oxygen, O₂ | 31.999 | 1.4276 | 1.3533 | 1.3302 | 1.105 |
+| Hydrogen sulfide, H₂S | 34.08 | 1.5205 | 1.4413 | 1.4167 | 1.177 |
+| Argon, Ar | 39.948 | 1.7823 | 1.6895 | 1.6607 | 1.379 |
+| Carbon dioxide, CO₂ | 44.01 | 1.9635 | 1.8613 | 1.8295 | 1.519 |
+| Propane, C₃H₈ | 44.097 | 1.9674 | 1.8650 | 1.8332 | 1.522 |
+| Butane, C₄H₁₀ | 58.122 | 2.5931 | 2.4581 | 2.4162 | 2.007 |
+| Chlorine, Cl₂ | 70.9 | 3.1632 | 2.9985 | 2.9474 | 2.448 |
+
+Real-gas values at 1 atm differ from these by less than 1% for most gases; CO₂, H₂S, NH₃, Cl₂ and butane are a little denser because Z is below 1.
+
+## Compressed air density (kg/m³)
+
+Dry air, ideal gas, atmospheric pressure 1.01325 bar:
+
+| Gauge pressure | Absolute pressure | 0 °C | 20 °C | 40 °C | 60 °C |
+|---|---|---|---|---|---|
+| 0 bar(g) | 1.013 bar(a) | 1.292 | 1.204 | 1.127 | 1.060 |
+| 1 bar(g) | 2.013 bar(a) | 2.568 | 2.392 | 2.240 | 2.105 |
+| 2 bar(g) | 3.013 bar(a) | 3.843 | 3.581 | 3.352 | 3.151 |
+| 4 bar(g) | 5.013 bar(a) | 6.394 | 5.958 | 5.577 | 5.242 |
+| 6 bar(g) | 7.013 bar(a) | 8.944 | 8.334 | 7.802 | 7.334 |
+| 8 bar(g) | 9.013 bar(a) | 11.495 | 10.711 | 10.027 | 9.425 |
+| 10 bar(g) | 11.013 bar(a) | 14.046 | 13.088 | 12.252 | 11.516 |
+| 16 bar(g) | 17.013 bar(a) | 21.698 | 20.218 | 18.926 | 17.790 |
+
+## Practical notes
+
+- **Always use absolute pressure and temperature** — using gauge pressure or °C directly is the most common mistake.
+- **Humid air** is slightly less dense than dry air because water vapour (18.02 g/mol) is lighter than air; at 30 °C and high humidity the difference is around 1–2%.
+- **Standard conditions differ:** "normal" (0 °C, 1.01325 bar) is common in Europe and Asia, while "standard" may mean 15 °C or 60 °F and 1 atm. State which one you use when converting volumes — see the [gas flow correction calculator](/engineering/gas-flow-correction/).
+- For the full ideal gas law with volume and moles, use the [ideal gas law calculator](/physics/ideal-gas-law/).

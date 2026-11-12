@@ -502,3 +502,4 @@ body:has(.hx__search) header .search { visibility: hidden; } @media (max-width: 
   .cx-group ul { grid-template-columns: 1fr; }
   .cx-pop { grid-template-columns: 1fr 1fr; gap: 10px; } .cx-pop__d { display: none; } .cx-pop a { padding: 12px 12px 12px 16px; } .cx-pop b { font-size: .9rem; }
 }
+.wz + .ftr { margin-top: 0; }

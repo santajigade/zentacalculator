@@ -1,0 +1,85 @@
+---
+// Sitewide "Why Zenta" section shown above the footer. Animates in when scrolled into view.
+const steps = [
+  { n: '01', h: 'Enter what you know', p: 'Type any values you have, in the units you use. Leave the unknown blank and the calculator solves for it.',
+    icon: '<path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3z"/><path d="M13.5 6.5l3 3"/>' },
+  { n: '02', h: 'See the formula and steps', p: 'Every result shows the equation, a worked example and a chart, so you understand the answer and not just the number.',
+    icon: '<path d="M4 5h16M4 12h10M4 19h7"/><path d="M17 15l2 2 3-4"/>' },
+  { n: '03', h: 'Get answers you can trust', p: 'Formulas follow published standards and textbooks, and every worked example is checked before a page goes live.',
+    icon: '<path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>' },
+];
+const badges = [
+  { t: 'Checked against standards', i: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>' },
+  { t: 'Formula and steps shown', i: '<path d="M4 5h16M4 12h10M4 19h7"/>' },
+  { t: 'Metric and imperial units', i: '<path d="M3 17l6-10 4 6 3-4 5 8z"/>' },
+  { t: 'Free, no sign-up needed', i: '<path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>' },
+];
+---
+<section class="wz" aria-labelledby="wz-h">
+  <div class="wrap">
+    <span class="wz__kick">Why Zenta Calculator</span>
+    <h2 id="wz-h">From formula to answer in seconds</h2>
+    <p class="wz__sub">One clear path from the numbers you have to a result you can use, for students, engineers and everyday users.</p>
+    <ol class="wz__steps">
+      {steps.map((s, i) => (
+        <li style={`--d:${i * 0.25}s`}>
+          <span class="wz__dot"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={s.icon} /></span>
+          {i < steps.length - 1 && <span class="wz__line" aria-hidden="true" />}
+          <span class="wz__n">{s.n}</span>
+          <h3>{s.h}</h3>
+          <p>{s.p}</p>
+        </li>
+      ))}
+    </ol>
+    <ul class="wz__badges">
+      {badges.map((b, i) => <li style={`--d:${0.8 + i * 0.1}s`}><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={b.i} />{b.t}</li>)}
+    </ul>
+  </div>
+</section>
+<script>
+  const el = document.querySelector('.wz');
+  if (el) {
+    if (!('IntersectionObserver' in window)) el.classList.add('is-in');
+    else new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { el.classList.add('is-in'); o.disconnect(); } }), { threshold: 0.25 }).observe(el);
+  }
+</script>
+<style>
+  .wz { position: relative; margin-top: 56px; padding: 64px 0 56px; text-align: center; overflow: hidden; background: var(--surface); border-top: 1px solid var(--line);
+    background-image: linear-gradient(color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px; }
+  .wz::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 30%, var(--surface) 78%); pointer-events: none; }
+  .wz .wrap { position: relative; }
+  .wz__kick { display: inline-flex; align-items: center; gap: 12px; font-size: .78rem; font-weight: 800; letter-spacing: 2.2px; text-transform: uppercase; color: var(--text); }
+  .wz__kick::before, .wz__kick::after { content: ''; width: 26px; height: 3px; border-radius: 2px; background: #ffb547; }
+  .wz h2 { margin: 12px 0 8px; font-size: clamp(1.6rem, 3.6vw, 2.3rem); letter-spacing: -.02em; }
+  .wz__sub { margin: 0 auto; max-width: 620px; color: var(--muted); font-size: 1.02rem; }
+  .wz__steps { list-style: none; padding: 0; margin: 44px auto 0; max-width: 1080px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .wz__steps li { position: relative; padding: 0 12px; opacity: 0; transform: translateY(18px); transition: opacity .6s ease var(--d), transform .6s ease var(--d); }
+  .wz__dot { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 50%; color: #fff;
+    background: linear-gradient(135deg, #4f5bff, #8b5cf6); box-shadow: 0 0 0 4px var(--surface), 0 0 0 7px #ffb547, 0 12px 26px rgba(79, 91, 255, .35); transform: scale(.6); transition: transform .5s cubic-bezier(.34, 1.56, .64, 1) var(--d); }
+  .wz__line { position: absolute; top: 36px; left: calc(50% + 52px); width: calc(100% - 80px); height: 3px; border-radius: 2px; overflow: hidden;
+    background: color-mix(in srgb, var(--line) 80%, transparent); transform: scaleX(0); transform-origin: left; transition: transform .7s ease calc(var(--d) + .3s); }
+  .wz__line::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, #8b5cf6 0 14px, transparent 14px 30px); animation: wz-flow 1.2s linear infinite; }
+  @keyframes wz-flow { from { background-position: 0 0; } to { background-position: 30px 0; } }
+  .wz__n { display: block; margin-top: 18px; font-size: .8rem; font-weight: 800; letter-spacing: 1.5px; color: var(--brand); }
+  .wz__steps h3 { margin: 8px 0 8px; font-size: 1.2rem; }
+  .wz__steps li:last-child h3 { background: linear-gradient(90deg, #4f5bff, #8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .wz__steps p { margin: 0 auto; max-width: 320px; color: var(--muted); font-size: .95rem; line-height: 1.6; }
+  .wz__badges { list-style: none; padding: 0; margin: 40px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  .wz__badges li { display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: .9rem; font-weight: 600;
+    opacity: 0; transform: translateY(10px); transition: opacity .5s ease var(--d), transform .5s ease var(--d), border-color .2s; }
+  .wz__badges li svg { color: var(--brand); }
+  .wz__badges li:hover { border-color: var(--brand); }
+  .wz.is-in .wz__steps li, .wz.is-in .wz__badges li { opacity: 1; transform: none; }
+  .wz.is-in .wz__dot { transform: scale(1); }
+  .wz.is-in .wz__line { transform: scaleX(1); }
+  @media (max-width: 760px) {
+    .wz { padding: 48px 0 40px; }
+    .wz__steps { grid-template-columns: 1fr; gap: 34px; }
+    .wz__line { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wz__steps li, .wz__badges li, .wz__dot, .wz__line { transition: none; opacity: 1; transform: none; }
+    .wz__line::after { animation: none; }
+  }
+</style>

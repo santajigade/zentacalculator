@@ -1,6 +1,10 @@
 // Pinterest pin schedule: which calculators have been released to the pin feed so far.
 import { allCalcs, type Calc } from './calcs.ts';
 import SCHEDULE from '../data/pins.json';
+import MANUAL from '../data/pins-manual.json';
+
+/** Pins uploaded by hand (.csv); they get images but stay out of the RSS feed so Pinterest does not pin them twice. */
+export const manualPins = new Set(MANUAL as string[]);
 
 const DAY = 864e5;
 const today = () => new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10); // IST date

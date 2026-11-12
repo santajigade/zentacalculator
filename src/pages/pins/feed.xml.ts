@@ -2,13 +2,13 @@ import type { APIRoute } from 'astro';
 import { SITE } from '../../site.config.ts';
 import { slugOf, urlOf } from '../../lib/calcs.ts';
 import { catBySlug } from '../../data/categories.ts';
-import { pinQueue } from '../../lib/pins.ts';
+import { pinQueue, manualPins } from '../../lib/pins.ts';
 
 // RSS feed for Pinterest "Auto-publish from RSS": a few new calculator pins every day.
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const clean = (s: string) => s.replace(/\s*[–—]\s*/g, ', ');
 export const GET: APIRoute = async () => {
-  const items = (await pinQueue()).slice(0, 60).map(({ calc: c, date }) => {
+  const items = (await pinQueue()).filter((p) => !manualPins.has(p.calc.id)).slice(0, 60).map(({ calc: c, date }) => {
     const cat = catBySlug(c.data.category)!;
     const link = `${SITE.url}${urlOf(c)}?utm_source=pinterest&utm_medium=social&utm_campaign=pins`;
     const img = `${SITE.url}/pins/${c.data.category}/${slugOf(c)}.jpg`;

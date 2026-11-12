@@ -1,0 +1,14 @@
+name: IndexNow (submit all pages)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          git fetch -q origin site
+          mkdir site && git archive FETCH_HEAD | tar -x -C site
+          python3 tools/indexnow.py /dev/null site

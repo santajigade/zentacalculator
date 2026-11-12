@@ -58,6 +58,7 @@ const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
   <meta name="theme-color" content="#4f5bff" />
+  <meta name="p:domain_verify" content="90a0381f8917449b3796704818c14f3d" />
   {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   <script is:inline>
     try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch {}

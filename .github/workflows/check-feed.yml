@@ -1,0 +1,16 @@
+name: Check pin feed
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for ua in "Pinterestbot/1.0 (+http://www.pinterest.com/bot.html)" "Mozilla/5.0 (compatible; Pinterestbot/1.0; +http://www.pinterest.com/bot.html)" "curl/8"; do
+            echo "== $ua"
+            curl -s -A "$ua" -D - -o /tmp/f.xml -w 'time %{time_total}s size %{size_download}\n' https://zentacalculator.com/pins/feed.xml | grep -iE '^HTTP|content-type|server|cache|time '
+            head -c 300 /tmp/f.xml; echo
+          done
+          curl -s -o /dev/null -w 'pin image HTTP %{http_code} %{content_type} %{time_total}s\n' -A "Pinterestbot/1.0" https://zentacalculator.com/pins/finance/emi.jpg

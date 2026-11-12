@@ -14,8 +14,8 @@ const total = (await allCalcs()).length;
 const _all = await allCalcs();
 const catCount = (slug: string) => _all.filter((c) => c.data.category === slug).length;
 
-interface Props { title: string; description: string; schema?: object[]; activeCat?: string; noindex?: boolean; image?: string; }
-const { title, description, schema = [], activeCat, noindex = false, image = '/og-image.jpg' } = Astro.props;
+interface Props { title: string; description: string; schema?: object[]; activeCat?: string; noindex?: boolean; image?: string; why?: boolean; }
+const { title, description, schema = [], activeCat, noindex = false, image = '/og-image.jpg', why = true } = Astro.props;
 const ogImage = new URL(image, SITE.url).href;
 const canonical = new URL(Astro.url.pathname.endsWith('/') ? Astro.url.pathname : Astro.url.pathname + '/', SITE.url).href;
 const fullTitle = title === SITE.name ? title : (title.length + SITE.name.length + 3 <= 65 ? `${title} | ${SITE.name}` : title);
@@ -94,7 +94,7 @@ const popular = POPULAR.map((id) => findCalc(popAll, id)).filter(Boolean);
 
   <main id="main"><slot /></main>
 
-  <WhyZenta />
+  {why && <WhyZenta />}
 
   <footer class="ftr">
     <div class="wrap ftr__grid">

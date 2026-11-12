@@ -1,4 +1,5 @@
 ---
+import WhyZenta from '../components/WhyZenta.astro';
 import Base from '../layouts/Base.astro';
 import Calculator from '../components/Calculator.tsx';
 import { SITE } from '../site.config.ts';
@@ -38,7 +39,7 @@ const schema = [{
 }];
 const total = Math.floor(calcs.length / 10) * 10;
 ---
-<Base title="Free Online Calculators for Engineering, Science, Math & Finance" description={`${calcs.length}+ free online calculators: electrical, electronics, engineering, physics, chemistry, math, statistics, unit conversion, finance and health. Solve for any value with steps and charts.`} schema={schema}>
+<Base title="Free Online Calculators for Engineering, Science, Math & Finance" description={`${calcs.length}+ free online calculators: electrical, electronics, engineering, physics, chemistry, math, statistics, unit conversion, finance and health. Solve for any value with steps and charts.`} schema={schema} why={false}>
   <section class="hx wrap">
     <div class="hx__text">
       <h1>Calculators that solve <em>for any value</em></h1>
@@ -89,6 +90,9 @@ const total = Math.floor(calcs.length / 10) * 10;
       </div>
     </section>
 
+  </div>
+  <WhyZenta home />
+  <div class="wrap">
     <section class="hcard">
       <div class="hs__head"><h2 class="hs__title">New this week</h2><span class="muted">Fresh calculators added every day</span></div>
       <p class="newchips">
@@ -96,12 +100,6 @@ const total = Math.floor(calcs.length / 10) * 10;
       </p>
     </section>
 
-    <section class="why">
-      <div><span aria-hidden="true">🔄</span><b>Solve for any value</b><p>Every field can be an input or the answer — enter what you know.</p></div>
-      <div><span aria-hidden="true">🧮</span><b>See the working</b><p>Formulas, steps and worked examples on every page.</p></div>
-      <div><span aria-hidden="true">🌍</span><b>Any units</b><p>Metric and imperial, with your local currency and number format.</p></div>
-      <div><span aria-hidden="true">✅</span><b>Free, no sign-up</b><p>Works on any phone or computer, instantly.</p></div>
-    </section>
 
     <section class="hseo">
       <h2>Free online calculators for engineering, science, math and everyday life</h2>

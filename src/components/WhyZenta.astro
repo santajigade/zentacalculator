@@ -1,4 +1,6 @@
 ---
+interface Props { home?: boolean }
+const { home = false } = Astro.props;
 // Sitewide "Why Zenta" section shown above the footer. Animates in when scrolled into view.
 const steps = [
   { n: '01', h: 'Enter what you know', p: 'Type any values you have, in the units you use. Leave the unknown blank and the calculator solves for it.',
@@ -15,7 +17,7 @@ const badges = [
   { t: 'Free, no sign-up needed', i: '<path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/>' },
 ];
 ---
-<section class="wz" aria-labelledby="wz-h">
+<section class:list={["wz", { "wz--home": home }]} aria-labelledby="wz-h">
   <div class="wrap">
     <span class="wz__kick">Why Zenta Calculator</span>
     <h2 id="wz-h">From formula to answer in seconds</h2>
@@ -73,6 +75,7 @@ const badges = [
   .wz.is-in .wz__steps li, .wz.is-in .wz__badges li { opacity: 1; transform: none; }
   .wz.is-in .wz__dot { transform: scale(1); }
   .wz.is-in .wz__line { transform: scaleX(1); }
+  .wz--home { margin: 22px 0; border-bottom: 1px solid var(--line); }
   @media (max-width: 760px) {
     .wz { padding: 48px 0 40px; }
     .wz__steps { grid-template-columns: 1fr; gap: 34px; }

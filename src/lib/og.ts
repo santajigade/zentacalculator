@@ -57,7 +57,8 @@ function card(o: OgInput) {
   ]);
 }
 
-// Tall Pinterest pin (1000x1500)
+// Tall Pinterest pin (1000x1500), coloured by category
+const shade = (hex: string, f: number) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * f).toString(16).padStart(2, '0')).join('');
 function pin(o: OgInput) {
   const t = o.title.replace(/\s*\([^)]*\)/g, '').replace(/\s+[–—-]\s+.*$/, '');
   const size = t.length > 40 ? 76 : t.length > 26 ? 88 : 100;
@@ -65,7 +66,7 @@ function pin(o: OgInput) {
     h('div', { width: 44, height: 44, borderRadius: 999, background: '#ffb547', display: 'flex', alignItems: 'center', justifyContent: 'center' },
       h('div', { width: 12, height: 22, borderRight: '5px solid #11163a', borderBottom: '5px solid #11163a', transform: 'rotate(45deg) translate(-2px,-3px)' })), x]);
   return h('div', { width: '100%', height: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', padding: '80px 76px 76px', fontFamily: 'Jakarta', color: '#fff',
-    backgroundColor: '#11163a', backgroundImage: 'radial-gradient(circle at 95% 0%, #8b5cf6cc 0%, #8b5cf633 35%, transparent 60%), radial-gradient(circle at 0% 100%, #4f5bffaa 0%, transparent 55%)' }, [
+    backgroundColor: shade(o.color, 0.22), backgroundImage: `radial-gradient(circle at 100% 0%, ${o.color} 0%, ${o.color}66 38%, transparent 68%), radial-gradient(circle at 0% 100%, ${shade(o.color, 0.6)}cc 0%, transparent 60%)` }, [
     h('div', { display: 'flex', alignItems: 'center', gap: 20 }, [
       h('div', { width: 76, height: 76, borderRadius: 20, background: 'linear-gradient(135deg,#4f5bff,#8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 50, fontWeight: 800 }, 'Z'),
       h('div', { fontSize: 42, fontWeight: 800, display: 'flex' }, ['Zenta', h('span', { fontWeight: 500, marginLeft: 10, opacity: 0.85 }, 'Calculator')]),
@@ -83,7 +84,7 @@ function pin(o: OgInput) {
 
 const CACHE = join(process.cwd(), '.og-cache');
 export async function ogPng(o: OgInput, tall = false): Promise<Buffer> {
-  const key = createHash('sha1').update(JSON.stringify(o) + (tall ? 'pin3' : 'v4')).digest('hex');
+  const key = createHash('sha1').update(JSON.stringify(o) + (tall ? 'pin4' : 'v4')).digest('hex');
   const f = join(CACHE, key + '.jpg');
   if (existsSync(f)) return readFileSync(f);
   const [w, hh] = tall ? [1000, 1500] : [1200, 630];

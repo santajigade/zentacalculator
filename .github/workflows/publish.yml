@@ -2,6 +2,8 @@ name: Publish website
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '30 3 * * *'   # 09:00 IST daily rebuild so the Pinterest feed releases the day's pins
   push:
     branches: [main]
 

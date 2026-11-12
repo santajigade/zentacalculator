@@ -142,7 +142,7 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
         </div>
         {more.length > 0 && (
           <div class="panel side-more"><h2>More in {cat.name}</h2>
-            <ul>{more.slice(0, 6).map((c) => <li><a href={urlOf(c)}>{shortTitle(c.data.title)}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>)}</ul></div>
+            <ul style={`--c:${cat.color}`}>{more.slice(0, 6).map((c) => <li><a href={urlOf(c)}><span class="side-more__ic" aria-hidden="true">{cat.icon}</span><span class="side-more__t">{shortTitle(c.data.title)}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></li>)}</ul></div>
         )}
         <div class="ad-slot">Ad slot (300×250)</div>
       </aside>

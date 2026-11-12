@@ -32,7 +32,7 @@ const h = (type: string, style: any, children?: any) => ({ type, props: { style,
 export interface OgInput { title: string; kicker: string; color: string; formula?: string; sub?: string; }
 
 function card(o: OgInput) {
-  const t = o.title.replace(/\s*\(.*\)\s*$/, '').replace(/\s+[–—-]\s+.*$/, '');
+  const t = o.title.replace(/\s*\([^)]*\)/g, '').replace(/\s+[–—-]\s+.*$/, '');
   const size = t.length > 38 ? 60 : t.length > 24 ? 70 : 82;
   return h('div', { width: '100%', height: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '64px 72px', fontFamily: 'Jakarta', color: '#fff',
     backgroundColor: '#0b1022', backgroundImage: `radial-gradient(circle at 92% 8%, ${o.color}cc 0%, ${o.color}33 34%, transparent 62%), radial-gradient(circle at 0% 100%, #4f5bff55 0%, transparent 50%)` }, [

@@ -75,7 +75,8 @@ const badges = [
   .wz.is-in .wz__steps li, .wz.is-in .wz__badges li { opacity: 1; transform: none; }
   .wz.is-in .wz__dot { transform: scale(1); }
   .wz.is-in .wz__line { transform: scaleX(1); }
-  .wz--home { margin: 22px 0; border-bottom: 1px solid var(--line); }
+  .wz--home { margin: 22px 0; border: 1px solid var(--line); border-radius: 18px; padding-left: 22px; padding-right: 22px; }
+  .wz--home .wrap { padding: 0; max-width: none; }
   @media (max-width: 760px) {
     .wz { padding: 48px 0 40px; }
     .wz__steps { grid-template-columns: 1fr; gap: 34px; }

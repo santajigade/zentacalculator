@@ -24,10 +24,12 @@ export function prettyEq(e?: string): string | undefined {
   let s = e.replace(/\bsqrt\(/g, '√(').replace(/\bpi\b/g, 'π').replace(/\s*\*\s*/g, ' × ').replace(/\s*\/\s*/g, ' ÷ ')
     .replace(/\^(\d)\b/g, (_, d) => SUP[d]).replace(/\^\((\d)\)/g, (_, d) => SUP[d]);
   if (/[a-z_]{4,}\(|\^|\?|<|>|==|\d\.\d/.test(s) || s.length > 46) return;
+  const ids = s.match(/[A-Za-z]+\w*/g) ?? [];
+  if (ids.some((w) => /^[a-z]{2,}$/.test(w)) || ids.every((w) => /^[a-z]/.test(w))) return; // internal names like ph, pf, bmi, y = p × x
   return s;
 }
 
-const rs = (t: string) => t.replace(/₹\s?/g, 'Rs ').replace(/\s*[–—]\s*/g, ', ');
+const rs = (t: string) => t.replace(/₹\s?/g, 'Rs ').replace(/\s+[–—]\s+/g, ', ');
 const h = (type: string, style: any, children?: any) => ({ type, props: { style, children } });
 
 export interface OgInput { title: string; kicker: string; color: string; formula?: string; sub?: string; }
@@ -81,7 +83,7 @@ function pin(o: OgInput) {
 
 const CACHE = join(process.cwd(), '.og-cache');
 export async function ogPng(o: OgInput, tall = false): Promise<Buffer> {
-  const key = createHash('sha1').update(JSON.stringify(o) + (tall ? 'pin2' : 'v3')).digest('hex');
+  const key = createHash('sha1').update(JSON.stringify(o) + (tall ? 'pin3' : 'v4')).digest('hex');
   const f = join(CACHE, key + '.jpg');
   if (existsSync(f)) return readFileSync(f);
   const [w, hh] = tall ? [1000, 1500] : [1200, 630];

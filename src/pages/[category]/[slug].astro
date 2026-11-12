@@ -31,6 +31,10 @@ const popular = POPULAR.map((id) => findCalc(all, id)).filter((c): c is Calc => 
 const url = urlOf(calc);
 const spec = { title: d.title, variables: d.variables, equations: d.equations, freedom: d.freedom, chart: d.chart, dataset: d.dataset };
 const embedCode = embedSnippet(SITE.url, SITE.name, d.title, url);
+const escH = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const embedHtml = embedCode.replace(/(<\/?[a-z]+|\/?>)|([a-z-]+)=("[^"]*")|([^<>]+?(?=<|>|[a-z-]+="|$))|([\s\S])/gs, (m, tag, attr, val) =>
+  tag ? `<span class="hl-t">${escH(tag)}</span>` : attr ? `<span class="hl-a">${attr}</span>=<span class="hl-s">${escH(val)}</span>` : escH(m));
+const shortTitle = (t: string) => t.replace(/\s*\([^)]*\)/g, '').replace(/\s+[–—]\s+.*$/, '');
 const author = authorById(d.author);
 if (!author) throw new Error(`${calc.id}: unknown author "${d.author}"`);
 const reviewer = authorById(d.reviewer);
@@ -88,15 +92,39 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
           )}
 
           <h2 id="related">Related calculators</h2>
-          <ul class="calc-list related-grid">
-            {related.map((c) => <li><a href={urlOf(c)}><b>{c.data.title}</b><span>{c.data.description}</span></a></li>)}
+          <ul class="rel-cards">
+            {related.map((c) => { const k = catBySlug(c.data.category)!; return (
+              <li style={`--c:${k.color}`}><a href={urlOf(c)}>
+                <span class="rel-cards__cat"><span class="rel-cards__ic" aria-hidden="true">{k.icon}</span>{k.name}</span>
+                <b>{shortTitle(c.data.title)}</b>
+                <span class="rel-cards__d">{c.data.description.replace(/\s+[–—]\s+/g, ', ')}</span>
+                <span class="rel-cards__go">Open calculator <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </a></li>); })}
           </ul>
 
-          <h2 id="embed">Embed this calculator</h2>
-          <div class="embed-box">
-            <p class="muted">Free to use on your website or blog. Copy this code:</p>
-            <textarea rows="5" readonly onclick="this.select()">{embedCode}</textarea>
-          </div>
+          <section class="embed-cta" aria-labelledby="embed">
+            <div class="embed-cta__top">
+              <div>
+                <span class="embed-cta__kick">Free widget</span>
+                <h2 id="embed">Put this calculator on your website</h2>
+                <p>Copy one snippet. It resizes itself and works on any site or blog.</p>
+              </div>
+              <button type="button" class="embed-cta__btn" data-copy-embed>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copy embed code</span>
+              </button>
+            </div>
+            <pre class="embed-cta__code"><code set:html={embedHtml} /></pre>
+            <textarea class="embed-cta__raw" hidden readonly>{embedCode}</textarea>
+          </section>
+          <script>
+            document.querySelectorAll<HTMLButtonElement>('[data-copy-embed]').forEach((b) => b.addEventListener('click', async () => {
+              const box = b.closest('.embed-cta')!; const raw = box.querySelector<HTMLTextAreaElement>('.embed-cta__raw')!.value;
+              try { await navigator.clipboard.writeText(raw); } catch { const t = document.createElement('textarea'); t.value = raw; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+              const l = b.querySelector('span')!; l.textContent = 'Copied!'; b.classList.add('is-done');
+              setTimeout(() => { l.textContent = 'Copy embed code'; b.classList.remove('is-done'); }, 2000);
+            }));
+          </script>
         </div>
       </article>
 

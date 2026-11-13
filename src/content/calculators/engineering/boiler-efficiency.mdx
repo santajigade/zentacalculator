@@ -1,0 +1,115 @@
+---
+title: Boiler Efficiency Calculator (Direct Method)
+description: Calculate boiler efficiency by the direct method from steam flow, steam and feedwater enthalpy, fuel flow and GCV, with the evaporation ratio and heat output.
+category: engineering
+intro: "The direct method (input–output method) measures boiler efficiency as the useful heat carried away by the steam divided by the heat released by the fuel. This boiler efficiency calculator uses the steam flow, the steam enthalpy, the feedwater temperature, the fuel consumption and its gross calorific value to give the efficiency, the heat output in kW, the fuel heat input and the evaporation ratio — and solves backwards for the fuel a boiler will need at a given efficiency."
+keywords: [boiler efficiency calculator, boiler efficiency direct method, boiler efficiency formula, evaporation ratio calculator, boiler fuel consumption calculation, steam boiler efficiency calculation, input output method boiler efficiency]
+updated: 2026-11-13
+variables:
+  - { id: ms, label: Steam generation rate, family: massflow, unit: kgh, imperialUnit: lbh, default: 10000, min: 0 }
+  - { id: hs, label: Enthalpy of the steam, suffix: kJ/kg, default: 2781, min: 0, help: 'From steam tables at the boiler outlet pressure (and temperature if superheated). Saturated steam at 10 bar g is about 2,781 kJ/kg.' }
+  - { id: Tfw, label: Feedwater temperature, family: temperature, unit: C, imperialUnit: F, default: 85 }
+  - { id: mf, label: Fuel consumption, family: massflow, unit: kgh, imperialUnit: lbh, default: 700, min: 0, help: 'For gas, convert the volume flow to kg/h with the gas density, or enter the GCV per Nm³ and the flow in Nm³/h as if it were kg/h.' }
+  - { id: gcv, label: Gross calorific value of the fuel (GCV), suffix: kJ/kg, default: 42700, min: 0, help: '1 kcal/kg = 4.1868 kJ/kg. Furnace oil about 10,200 kcal/kg (42,700 kJ/kg).' }
+  - { id: hfw, label: Feedwater enthalpy (≈ 4.19 × T in °C), suffix: kJ/kg, decimals: 1 }
+  - { id: Qs, label: Heat output to the steam, family: power, unit: kW, imperialUnit: BTUh, min: 0 }
+  - { id: Qf, label: Heat input from the fuel, family: power, unit: kW, imperialUnit: BTUh, min: 0 }
+  - { id: eta, label: Boiler efficiency (GCV basis), family: percent, unit: '%' }
+  - { id: er, label: Evaporation ratio (kg steam per kg fuel), min: 0, decimals: 2 }
+equations:
+  - hfw = 4.19 * (Tfw - 273.15)
+  - Qs = ms * (hs - hfw) * 1000
+  - Qf = mf * gcv * 1000
+  - eta = Qs / Qf
+  - er = ms / mf
+faq:
+  - q: What is the formula for boiler efficiency by the direct method?
+    a: Efficiency = steam flow × (steam enthalpy − feedwater enthalpy) ÷ (fuel flow × GCV) × 100. For 10,000 kg/h of 10 bar g saturated steam (2,781 kJ/kg) from 85 °C feedwater (356 kJ/kg), burning 700 kg/h of furnace oil at 42,700 kJ/kg, η = 10,000 × 2,425 ÷ (700 × 42,700) = 81.1%.
+  - q: What is the difference between the direct and indirect methods?
+    a: The direct method compares the heat in the steam with the heat in the fuel, so it needs accurate steam and fuel flow measurements but gives no detail about where heat is lost. The indirect (heat loss) method of BS 845 and ASME PTC 4 subtracts the individual losses — dry flue gas, moisture, unburnt fuel, radiation and blowdown — from 100%, which shows what to fix. Both should agree within a couple of percent.
+  - q: What is a good boiler efficiency?
+    a: On a GCV basis, well-run gas-fired boilers reach about 80–85% (over 90% when condensing), oil-fired 80–85%, and coal and biomass boilers 70–80%. Efficiencies quoted on the net (NCV) basis are higher by roughly 5% for oil and 10% for natural gas, so always check which basis is used.
+  - q: What is the evaporation ratio of a boiler?
+    a: The evaporation ratio is the kilograms of steam generated per kilogram of fuel burnt. It is a quick daily check of performance — around 13–14 for furnace oil and 4–6 for Indian coal — but it depends on the steam pressure and feedwater temperature, so compare it only at similar operating conditions.
+related: [engineering/heat-duty, chemistry/excess-air, engineering/pipe-heat-loss, engineering/tank-heater-sizing, engineering/mass-flow-rate]
+---
+
+## How to use the boiler efficiency calculator
+
+Enter the **steam generation rate**, the **enthalpy of the steam** from steam tables (see the table below), the **feedwater temperature**, the **fuel consumption** over the same period and the fuel's **gross calorific value**. The calculator gives the feedwater enthalpy, the heat output to the steam, the fuel heat input, the **boiler efficiency** and the **evaporation ratio**. To estimate fuel consumption, enter the expected efficiency and leave the fuel flow blank.
+
+## Boiler efficiency formula (direct method)
+
+<p class="formula">η = Q<sub>steam</sub> ÷ Q<sub>fuel</sub> = m<sub>s</sub> (h<sub>s</sub> − h<sub>fw</sub>) ÷ (m<sub>f</sub> × GCV) &nbsp;·&nbsp; evaporation ratio = m<sub>s</sub> ÷ m<sub>f</sub></p>
+
+The feedwater enthalpy is taken as h<sub>fw</sub> ≈ 4.19 × T (kJ/kg, T in °C), which is within 1% of the steam tables up to 150 °C. Measure steam and fuel over at least an hour of steady load; blowdown water and steam used inside the plant (for oil heating or atomising) are not counted as output.
+
+## Worked example
+
+A boiler generates 10,000 kg/h of saturated steam at 10 bar g (2,781 kJ/kg) from 85 °C feedwater, burning 700 kg/h of furnace oil with a GCV of 42,700 kJ/kg (10,199 kcal/kg):
+
+- Feedwater enthalpy h<sub>fw</sub> = 4.19 × 85 = **356.15 kJ/kg**
+- Heat output = 10,000 ÷ 3,600 × (2,781 − 356.15) = **6,736 kW**
+- Heat input = 700 ÷ 3,600 × 42,700 = **8,303 kW**
+- Efficiency η = 6,735.7 ÷ 8,302.8 = **81.13%**
+- Evaporation ratio = 10,000 ÷ 700 = **14.29 kg of steam per kg of oil**
+
+## Enthalpy of saturated steam
+
+Computed from the IAPWS-IF97 steam tables (gauge pressure on 1.01325 bar atmosphere):
+
+| Pressure | Saturation temperature | Enthalpy h<sub>g</sub> | Enthalpy (kcal/kg) |
+|---|---|---|---|
+| 3 bar g (44 psig) | 143.7 °C | 2,738.2 kJ/kg (1,177 Btu/lb) | 654.0 kcal/kg |
+| 5 bar g (73 psig) | 158.9 °C | 2,756.2 kJ/kg (1,185 Btu/lb) | 658.3 kcal/kg |
+| 7 bar g (102 psig) | 170.5 °C | 2,768.4 kJ/kg (1,190 Btu/lb) | 661.2 kcal/kg |
+| 10 bar g (145 psig) | 184.1 °C | 2,780.7 kJ/kg (1,195 Btu/lb) | 664.2 kcal/kg |
+| 12 bar g (174 psig) | 191.7 °C | 2,786.5 kJ/kg (1,198 Btu/lb) | 665.6 kcal/kg |
+| 15 bar g (218 psig) | 201.4 °C | 2,792.9 kJ/kg (1,201 Btu/lb) | 667.1 kcal/kg |
+| 17.5 bar g (254 psig) | 208.5 °C | 2,796.7 kJ/kg (1,202 Btu/lb) | 668.0 kcal/kg |
+| 20 bar g (290 psig) | 214.9 °C | 2,799.4 kJ/kg (1,204 Btu/lb) | 668.6 kcal/kg |
+| 25 bar g (363 psig) | 226.1 °C | 2,802.5 kJ/kg (1,205 Btu/lb) | 669.4 kcal/kg |
+| 30 bar g (435 psig) | 235.7 °C | 2,803.3 kJ/kg (1,205 Btu/lb) | 669.6 kcal/kg |
+
+For superheated steam use the enthalpy at the actual outlet temperature:
+
+| Steam conditions | Enthalpy |
+|---|---|
+| 10 bar g, 250 °C | 2,939.4 kJ/kg |
+| 10 bar g, 300 °C | 3,049.0 kJ/kg |
+| 20 bar g, 300 °C | 3,021.3 kJ/kg |
+| 40 bar g, 400 °C | 3,212.6 kJ/kg |
+| 65 bar g, 480 °C | 3,367.6 kJ/kg |
+| 100 bar g, 540 °C | 3,475.8 kJ/kg |
+
+## Feedwater enthalpy: steam tables vs the 4.19 × T approximation
+
+| Feedwater temperature | Steam tables | 4.19 × T |
+|---|---|---|
+| 30 °C | 127.1 kJ/kg | 125.7 kJ/kg |
+| 60 °C | 252.4 kJ/kg | 251.4 kJ/kg |
+| 85 °C | 357.1 kJ/kg | 356.2 kJ/kg |
+| 105 °C | 441.2 kJ/kg | 440.0 kJ/kg |
+| 120 °C | 505.1 kJ/kg | 502.8 kJ/kg |
+| 150 °C | 635.1 kJ/kg | 628.5 kJ/kg |
+
+## Fuel needed for the example boiler at different efficiencies
+
+10,000 kg/h of 10 bar g saturated steam from 85 °C feedwater (6,736 kW output). GCV in kJ/kg:
+
+| Fuel | 70% | 80% | 85% | 90% |
+|---|---|---|---|---|
+| Natural gas (about 52,000) | 666 kg/h | 583 kg/h | 549 kg/h | 518 kg/h |
+| Furnace oil / LSHS (about 42,700) | 811 kg/h | 710 kg/h | 668 kg/h | 631 kg/h |
+| Diesel (about 45,500) | 761 kg/h | 666 kg/h | 627 kg/h | 592 kg/h |
+| Bituminous coal (about 25,000) | 1,386 kg/h | 1,212 kg/h | 1,141 kg/h | 1,078 kg/h |
+| Indian coal (about 16,700) | 2,074 kg/h | 1,815 kg/h | 1,708 kg/h | 1,613 kg/h |
+| Rice husk / wood (about 14,000) | 2,474 kg/h | 2,165 kg/h | 2,038 kg/h | 1,924 kg/h |
+
+## Practical notes
+
+- **Excess air** is the biggest controllable loss: too much air carries heat up the stack, too little leaves unburnt fuel. Check it from the flue gas oxygen with the [excess air calculator](/chemistry/excess-air/).
+- **Feedwater temperature:** every 6 °C rise in feedwater temperature (from an economiser or condensate return) saves roughly 1% of fuel.
+- **Wet steam:** if the steam has a dryness fraction x below 1, use h = h<sub>f</sub> + x h<sub>fg</sub>; ignoring carry-over overstates the efficiency.
+- **GCV or NCV:** Indian (BEE) practice and most boiler tests use the gross value; European boiler ratings often use the net value and can exceed 100% for condensing boilers.
+- For the heat needed by a process stream, use the [heat duty calculator](/engineering/heat-duty/); for distribution losses after the boiler, use the [pipe heat loss calculator](/engineering/pipe-heat-loss/).

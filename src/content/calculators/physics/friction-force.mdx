@@ -1,57 +1,89 @@
 ---
-title: Friction Force Calculator (Coefficient of Friction)
-description: Calculate friction force from the coefficient of friction and normal force or mass, or find the coefficient — with a table of static and kinetic values.
+title: Friction Force Calculator (F = μN, Coefficient of Friction)
+description: Calculate friction force from the coefficient of friction and the normal force or mass, find μ from a measured force, and get the angle of repose.
 category: physics
-intro: "Friction opposes sliding between two surfaces and is proportional to how hard they are pressed together. This friction force calculator uses F = μN to find the friction force, the normal force or the coefficient of friction, for an object resting on a level surface or any known normal force."
-keywords: [friction force calculator, coefficient of friction calculator, static friction calculator, kinetic friction formula, normal force friction, friction coefficient table]
-updated: 2026-10-29
+intro: "Friction opposes sliding between two surfaces and is proportional to how hard they are pressed together. This friction force calculator uses F = μN to find the friction force, the normal force or the coefficient of friction for an object on a level surface or under any known normal force, and also gives the angle of repose and the deceleration of an object sliding to a stop."
+keywords: [friction force calculator, coefficient of friction calculator, static friction calculator, kinetic friction formula, normal force friction, friction coefficient table, angle of repose calculator, how to calculate friction force]
+updated: 2026-11-13
 variables:
   - { id: mu, label: Coefficient of friction (μ), default: 0.4, min: 0 }
   - { id: m, label: Mass (on a level surface), family: mass, unit: kg, imperialUnit: lb, default: 10, min: 0 }
   - { id: N, label: Normal force, family: force, unit: N, imperialUnit: lbf, min: 0 }
   - { id: Ff, label: Friction force, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: th, label: Angle of repose (slope at which sliding starts), family: angle, unit: deg, min: 0 }
+  - { id: ad, label: Deceleration when sliding on a level surface (μ × g), suffix: m/s², min: 0, decimals: 3 }
 equations:
   - N = m * g0
   - Ff = mu * N
+  - th = atan(mu)
+  - ad = mu * g0
 faq:
   - q: What is the formula for friction force?
-    a: F = μ × N, where μ is the coefficient of friction and N the normal force pressing the surfaces together. On a level surface N = m × g.
+    a: F = μ × N, where μ is the coefficient of friction and N the normal force pressing the surfaces together. On a level surface N = m × g, so a 10 kg crate with μ = 0.4 needs 39.23 N to slide.
   - q: What is the difference between static and kinetic friction?
-    a: Static friction is the maximum force before an object starts to slide; kinetic friction acts while it is sliding and is usually lower. That is why it takes more force to start pushing a box than to keep it moving.
+    a: Static friction is the maximum force the contact can resist before an object starts to slide; kinetic friction acts while it is sliding and is usually 20–50% lower. That is why it takes more force to start pushing a box than to keep it moving.
   - q: Does friction depend on contact area?
-    a: For dry, rigid surfaces, no — the classical (Amontons) law says friction depends only on μ and the normal force. Tyres and soft materials deviate from this.
+    a: For dry, rigid surfaces, no — the classical (Amontons–Coulomb) law says friction depends only on μ and the normal force. Tyres, rubber seals and soft materials deviate from this, and lubricated contacts also depend on speed and viscosity.
   - q: How do I find the coefficient of friction?
-    a: Measure the force needed to slide the object and its normal force, enter both and clear μ — μ = F ÷ N.
-related: [physics/inclined-plane, physics/force, physics/weight, physics/work-and-power]
+    a: Pull the object at a steady speed with a spring balance or force gauge and divide the force by the normal force, μ = F ÷ N — or tilt the surface until the object just starts to slide; then μ_s = tan θ. Enter the force and mass and clear μ to let the calculator do it.
+related: [physics/inclined-plane, physics/force, physics/weight, physics/work-and-power, engineering/bolt-torque]
 ---
 
 ## How to use the friction force calculator
 
-Enter the **coefficient of friction** and the **mass** of an object on a level surface — the normal force N = mg is calculated for you — and you get the friction force. For a sloped surface or an extra pressing force, clear the mass and enter the **normal force** directly, or use the [inclined plane calculator](/physics/inclined-plane/).
+Enter the **coefficient of friction** and the **mass** of an object on a level surface — the normal force N = mg is calculated for you — and you get the friction force, the angle of repose and the deceleration of the object if it slides freely to a stop. For a sloped surface or an extra pressing force, clear the mass and enter the **normal force** directly, or use the [inclined plane calculator](/physics/inclined-plane/). To find μ, enter the measured friction force and the mass and clear the coefficient.
 
 ## Friction formula
 
-<p class="formula">F<sub>f</sub> = μ × N &nbsp;·&nbsp; N = m × g (level surface)</p>
+<p class="formula">F<sub>f</sub> = μ × N &nbsp;·&nbsp; N = m × g (level surface) &nbsp;·&nbsp; θ<sub>repose</sub> = arctan μ<sub>s</sub> &nbsp;·&nbsp; a = μ<sub>k</sub> × g</p>
 
-## Example
+Use the static coefficient μ<sub>s</sub> for the force needed to start an object moving and the kinetic coefficient μ<sub>k</sub> for the force needed to keep it moving. g = 9.80665 m/s².
+
+## Worked example
 
 A 10 kg crate on a floor with μ = 0.4:
 
-- N = 10 × 9.807 = **98.07 N**
-- F<sub>f</sub> = 0.4 × 98.07 = **39.23 N** — the force needed to keep it sliding
+- Normal force N = 10 × 9.80665 = **98.07 N**
+- Friction force F<sub>f</sub> = 0.4 × 98.07 = **39.23 N** — the force needed to keep it sliding
+- Angle of repose θ = arctan 0.4 = **21.80°** — a ramp steeper than this lets the crate slide on its own
+- If pushed and released, it decelerates at 0.4 × 9.80665 = **3.923 m/s²**
 
-## Typical coefficients of friction (dry, approximate)
+**Finding μ:** a force gauge reads 147.1 N while dragging a 25 kg box at a steady speed, so μ<sub>k</sub> = 147.1 ÷ (25 × 9.80665) = **0.600**.
 
-| Surfaces | Static μ<sub>s</sub> | Kinetic μ<sub>k</sub> |
-|---|---|---|
-| Steel on steel | 0.74 | 0.57 |
-| Aluminium on steel | 0.61 | 0.47 |
-| Copper on steel | 0.53 | 0.36 |
-| Rubber on dry concrete | 1.0 | 0.8 |
-| Wood on wood | 0.25–0.5 | 0.2 |
-| Glass on glass | 0.94 | 0.4 |
-| Waxed ski on snow | 0.14 | 0.1 |
-| PTFE on PTFE | 0.04 | 0.04 |
-| Ice on ice | 0.1 | 0.03 |
+## Typical coefficients of friction (approximate)
+
+| Surfaces | Static μ<sub>s</sub> | Kinetic μ<sub>k</sub> | Angle of repose |
+|---|---|---|---|
+| Steel on steel (dry) | 0.74 | 0.57 | 36.5° |
+| Aluminium on steel | 0.61 | 0.47 | 31.4° |
+| Copper on steel | 0.53 | 0.36 | 27.9° |
+| Rubber tyre on dry concrete | 1 | 0.8 | 45.0° |
+| Rubber tyre on wet concrete | 0.7 | 0.5 | 35.0° |
+| Wood on wood | 0.4 | 0.2 | 21.8° |
+| Glass on glass | 0.94 | 0.4 | 43.2° |
+| Steel on steel (lubricated) | 0.16 | 0.08 | 9.1° |
+| Waxed ski on snow | 0.14 | 0.1 | 8.0° |
+| PTFE on steel | 0.04 | 0.04 | 2.3° |
+| Ice on ice | 0.1 | 0.03 | 5.7° |
 
 Values vary widely with surface finish, contamination and lubrication — use measured values for design.
+
+## Friction force by mass and coefficient (level surface)
+
+| Mass (weight) | μ = 0.05 | μ = 0.1 | μ = 0.2 | μ = 0.4 | μ = 0.6 | μ = 0.8 |
+|---|---|---|---|---|---|---|
+| 1 kg (9.8 N) | 0.5 N | 1.0 N | 2.0 N | 3.9 N | 5.9 N | 7.8 N |
+| 5 kg (49.0 N) | 2.5 N | 4.9 N | 9.8 N | 19.6 N | 29.4 N | 39.2 N |
+| 10 kg (98.1 N) | 4.9 N | 9.8 N | 19.6 N | 39.2 N | 58.8 N | 78.5 N |
+| 25 kg (245.2 N) | 12.3 N | 24.5 N | 49.0 N | 98.1 N | 147.1 N | 196.1 N |
+| 50 kg (490.3 N) | 24.5 N | 49.0 N | 98.1 N | 196.1 N | 294.2 N | 392.3 N |
+| 100 kg (980.7 N) | 49.0 N | 98.1 N | 196.1 N | 392.3 N | 588.4 N | 784.5 N |
+| 500 kg (4,903.3 N) | 245.2 N | 490.3 N | 980.7 N | 1,961.3 N | 2,942.0 N | 3,922.7 N |
+| 1,000 kg (9,806.6 N) | 490.3 N | 980.7 N | 1,961.3 N | 3,922.7 N | 5,884.0 N | 7,845.3 N |
+
+## Practical notes
+
+- **Rolling is much easier than sliding:** the rolling resistance coefficient of a steel wheel on a rail is about 0.001 and a car tyre on asphalt about 0.01, compared with 0.3–0.8 for sliding.
+- **Stopping distance:** an object sliding at speed v stops in v² ÷ (2 μ g) — a car at 50 km/h (13.9 m/s) with locked wheels on dry concrete (μ ≈ 0.8) needs about 12.3 m.
+- **Bolted joints:** friction under the nut and in the threads absorbs about 90% of the tightening torque, which is why the friction factor matters so much in the [bolt torque calculator](/engineering/bolt-torque/).
+- To include the work done against friction over a distance, use the [work and power calculator](/physics/work-and-power/).

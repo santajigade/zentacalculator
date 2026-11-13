@@ -1,59 +1,81 @@
 ---
 title: Impulse Calculator (Impulse–Momentum Theorem)
-description: Calculate impulse from force and time, and the resulting change in velocity or momentum — J = F·Δt = m·Δv — with worked examples.
+description: Calculate impulse from force and contact time, and the change in velocity or momentum it causes, with J = F·Δt = m·Δv, average force and deceleration in g.
 category: physics
-intro: "Impulse is the product of force and the time it acts, and it equals the change in an object's momentum. This impulse calculator applies the impulse–momentum theorem to find impulse, change in velocity, force or contact time — useful for collisions, kicks, airbags and rocket burns."
-keywords: [impulse calculator, impulse momentum theorem, impulse formula, change in momentum calculator, force time calculator, impulse physics]
-updated: 2026-10-29
+intro: "Impulse is the product of a force and the time it acts, and it equals the change in an object's momentum. This impulse calculator applies the impulse–momentum theorem to find the impulse, the change in velocity, the average force or the contact time, and shows the average acceleration in g — useful for collisions, kicks, drops, airbags and rocket burns."
+keywords: [impulse calculator, impulse momentum theorem, impulse formula, change in momentum calculator, force time calculator, impulse physics, average force calculator, impulse equation]
+updated: 2026-11-13
 variables:
   - { id: F, label: Average force, family: force, unit: N, imperialUnit: lbf, default: 500 }
   - { id: t, label: Contact time, family: seconds, unit: s, default: 0.1, min: 0 }
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 2, min: 0 }
   - { id: J, label: Impulse (= change in momentum), suffix: N·s }
   - { id: dv, label: Change in velocity, family: velocity, unit: ms, imperialUnit: fts }
+  - { id: ag, label: Average acceleration during the impact, suffix: g, decimals: 2 }
 equations:
   - J = F * t
   - dv = J / m
+  - ag = dv / t / g0
 faq:
   - q: What is the formula for impulse?
-    a: J = F × Δt, the average force multiplied by the time it acts. By the impulse–momentum theorem it also equals m × Δv.
+    a: J = F × Δt, the average force multiplied by the time it acts. By the impulse–momentum theorem it also equals the change in momentum, m × Δv. A 500 N force acting for 0.1 s gives an impulse of 50 N·s.
   - q: What are the units of impulse?
-    a: Newton-seconds (N·s), which are the same as kg·m/s — the units of momentum.
+    a: Newton-seconds (N·s), which are the same as kg·m/s — the units of momentum. In US units impulse is given in lbf·s; 1 lbf·s = 4.448 N·s.
   - q: Why do airbags and crumple zones reduce injury?
-    a: The change in momentum in a crash is fixed, so stretching the stopping time lowers the average force by the same factor.
+    a: The change in momentum in a crash is fixed by the mass and speed, so stretching the stopping time lowers the average force by the same factor. Stopping a 70 kg person from 15 m/s in 0.1 s instead of 0.01 s cuts the average force from 105,000 N to 10,500 N.
   - q: How do I find the force from a change in velocity?
-    a: Enter the mass, the change in velocity and the contact time, and clear the force — F = m × Δv ÷ Δt.
-related: [physics/momentum, physics/force, physics/elastic-collision, physics/acceleration]
+    a: "Enter the mass, the change in velocity and the contact time, and clear the force — F = m × Δv ÷ Δt. Remember that Δv is a vector change: a ball arriving at 20 m/s and leaving at 20 m/s in the opposite direction has Δv = 40 m/s."
+related: [physics/momentum, physics/force, physics/elastic-collision, physics/acceleration, physics/kinetic-energy, physics/free-fall]
 ---
 
 ## How to use the impulse calculator
 
-Enter the **average force**, the **contact time** and the **mass** of the object. You get the impulse and the change in velocity it produces. Any field can be the unknown: enter mass, change in velocity and time to find the average force.
+Enter the **average force**, the **contact time** and the **mass** of the object. You get the impulse, the change in velocity it produces and the average acceleration in g. Any field can be the unknown: enter the mass, the change in velocity and the time to find the average force, or the impulse and force to find the contact time.
 
 ## Impulse formula
 
-<p class="formula">J = F × Δt = m × Δv = Δp</p>
+<p class="formula">J = F × Δt = m × Δv = Δp &nbsp;·&nbsp; F<sub>avg</sub> = m Δv ÷ Δt &nbsp;·&nbsp; a = Δv ÷ Δt</p>
 
-## Example
+F is the average force over the contact time; the peak force in a real impact is usually 1.5–2 times higher. For a force that varies with time, impulse is the area under the force–time graph.
+
+## Worked example
 
 A 500 N average force acts on a 2 kg ball for 0.1 s:
 
-- J = 500 × 0.1 = **50 N·s**
-- Δv = 50 ÷ 2 = **25 m/s**
+- Impulse J = 500 × 0.1 = **50 N·s**
+- Change in velocity Δv = 50 ÷ 2 = **25 m/s**
+- Average acceleration = 25 ÷ 0.1 = 250 m/s² = **25.49 g**
 
 ## Same impulse, different stopping times
 
 Stopping a 70 kg person moving at 15 m/s (Δp = 1,050 N·s):
 
-| Stopping time | Average force |
-|---|---|
-| 0.01 s | 105,000 N (153.0 g) |
-| 0.05 s | 21,000 N (30.6 g) |
-| 0.1 s | 10,500 N (15.3 g) |
-| 0.2 s | 5,250 N (7.6 g) |
-| 0.5 s | 2,100 N (3.1 g) |
+| Stopping time | Average force | Average deceleration |
+|---|---|---|
+| 0.005 s | 210,000 N | 305.9 g |
+| 0.01 s | 105,000 N | 153.0 g |
+| 0.02 s | 52,500 N | 76.5 g |
+| 0.05 s | 21,000 N | 30.6 g |
+| 0.1 s | 10,500 N | 15.3 g |
+| 0.2 s | 5,250 N | 7.6 g |
+| 0.5 s | 2,100 N | 3.1 g |
+| 1 s | 1,050 N | 1.5 g |
 
-## Notes
+## Impulse in sport (typical values)
 
-- Impulse and momentum are **vectors** — a ball that bounces back has a change in velocity of up to twice its speed.
-- For a force that varies with time, impulse is the area under the force–time graph.
+Ball starting from rest (or with the incoming speed neglected); force is the average over the contact:
+
+| Impact | Ball mass | Speed after impact | Contact time | Impulse | Average force |
+|---|---|---|---|---|---|
+| Golf ball struck by a driver | 45.9 g | 70 m/s | 0.5 ms | 3.21 N·s | 6,426 N |
+| Football (soccer) kick | 430 g | 25 m/s | 9 ms | 10.75 N·s | 1,194 N |
+| Tennis serve | 58 g | 50 m/s | 5 ms | 2.90 N·s | 580 N |
+| Baseball hit by a bat | 145 g | 45 m/s | 0.7 ms | 6.52 N·s | 9,321 N |
+| Cricket ball hit by a bat | 160 g | 40 m/s | 1 ms | 6.40 N·s | 6,400 N |
+
+## Practical notes
+
+- **Bounces double the impulse:** impulse and momentum are vectors, so a ball that rebounds at the same speed has a change in velocity of twice its speed.
+- **Drop tests:** an object dropped from height h hits the ground at √(2gh) — use the [free fall calculator](/physics/free-fall/) for the speed, then this calculator with the measured stopping time for the force.
+- **Rockets:** total impulse (N·s) is the standard rating of a rocket motor; the change in velocity is the total impulse divided by the mass, ignoring gravity and the mass of propellant burnt.
+- For the momentum of a moving object, use the [momentum calculator](/physics/momentum/); for collisions between two bodies, use the [elastic collision calculator](/physics/elastic-collision/).

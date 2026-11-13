@@ -72,7 +72,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] System curve & duty point
 - [x] Compressor power (isentropic)
 - [x] Air compressor receiver size
-- [ ] Compressed air leak cost
+- [x] Compressed air leak cost
 - [x] Fan affinity laws & fan power
 - [ ] Safety relief valve sizing (API 520 liquid, simplified)
 
@@ -84,7 +84,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Insulation thickness
 - [x] Convection heat transfer (Q = hAΔT)
 - [x] Radiation heat transfer (Stefan–Boltzmann)
-- [ ] Cooling tower range/approach & evaporation
+- [x] Cooling tower range/approach & evaporation
 - [x] Chiller tonnage (TR) from flow & ΔT
 - [ ] Air conditioner BTU / room size
 - [ ] Duct size (equal friction)
@@ -114,13 +114,13 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Mass balance (mixing two streams)
 - [x] Residence time
 - [ ] Reactor space time / conversion
-- [ ] Boiler efficiency (direct method)
+- [x] Boiler efficiency (direct method)
 - [ ] Steam table lookup (saturated)
 - [x] Specific gravity ↔ density ↔ °Brix / °Baumé
 - [ ] Viscosity converter (cP, cSt, SSU)
 - [x] Kinematic ↔ dynamic viscosity
 - [ ] Combustion air requirement
-- [ ] Flue gas O₂ to excess air
+- [x] Flue gas O₂ to excess air
 - [ ] Heating value converter (GCV/NCV)
 - [x] Gas density (ideal + Z) — gas-density (chemistry)
 - [ ] Molar flow ↔ mass flow ↔ volume flow
@@ -163,14 +163,14 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Insulation resistance / PI (ib)
 - [ ] Motor winding resistance unbalance (ib)
 - [x] Watt-hour meter constant (imp/kWh)
-- [ ] Lightning protection: rolling sphere radius
+- [x] Lightning protection: rolling sphere radius
 - [x] Voltage drop for DC (solar/battery) (exists: cable-voltage-drop)
 
 ## Electronics
 - [x] Op-amp: summing, differential, integrator (ib)
 - [x] Sallen–Key low-pass filter (ib)
 - [x] LC filter / pi filter
-- [ ] RC snubber (ib)
+- [x] RC snubber (ib)
 - [x] Linear regulator power (LM317 resistors)
 - [x] LM317 output voltage resistor calculator
 - [x] Buck-boost / SEPIC (ib) (buck-boost-converter; SEPIC covered in notes)
@@ -236,7 +236,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Carnot efficiency
 
 ## Chemistry
-- [ ] Mass ↔ moles ↔ volume (STP)
+- [x] Mass ↔ moles ↔ volume (STP) (exists: chemistry/moles)
 - [ ] Molar mass from formula
 - [ ] Empirical formula
 - [x] Limiting reagent
@@ -278,7 +278,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Angle converter (deg, rad, grad)
 - [x] Law of sines
 - [x] Triangle solver (SSS, SAS, ASA) — SSS: sss-triangle; SAS exists: law-of-cosines; ASA exists: law-of-sines
-- [ ] Hexagon / octagon
+- [x] Hexagon / octagon (exists: math/polygon)
 - [x] Prism / pyramid / frustum volume
 - [x] Torus / capsule / hemisphere (torus done)
 - [ ] Surface area of shapes

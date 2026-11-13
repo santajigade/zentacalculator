@@ -1,0 +1,100 @@
+---
+title: Cooling Tower Calculator (Range, Approach, Evaporation)
+description: Calculate cooling tower range, approach and efficiency, heat rejected in kW and tons, and the evaporation, blowdown and makeup water for a given flow.
+category: engineering
+intro: "A cooling tower rejects heat from condenser or process water by evaporating a small part of it into the air. This cooling tower calculator works out the range, approach and effectiveness from the hot water, cold water and wet bulb temperatures, the heat rejected in kW and refrigeration tons, and the evaporation, drift, blowdown and makeup water flows for the cycles of concentration you run."
+keywords: [cooling tower calculator, cooling tower range and approach, cooling tower efficiency calculation, cooling tower evaporation loss, cooling tower makeup water calculation, cooling tower blowdown calculation, cycles of concentration calculator]
+updated: 2026-11-13
+variables:
+  - { id: Th, label: Hot water temperature (tower inlet), family: temperature, unit: C, imperialUnit: F, default: 37 }
+  - { id: Tc, label: Cold water temperature (tower outlet), family: temperature, unit: C, imperialUnit: F, default: 32 }
+  - { id: Twb, label: Ambient wet bulb temperature, family: temperature, unit: C, imperialUnit: F, default: 28 }
+  - { id: Q, label: Circulating water flow, family: flow, unit: m3h, imperialUnit: gpm, default: 500, min: 0 }
+  - { id: coc, label: Cycles of concentration, default: 4, min: 1.000001, help: 'Ratio of dissolved solids (or chloride, or conductivity) in the circulating water to that in the makeup water. Typically 3–7.' }
+  - { id: dr, label: Drift loss (% of circulating flow), family: percent, unit: '%', default: 0.02, min: 0, help: 'Modern drift eliminators: 0.001–0.005%. Older towers: 0.02–0.2%.' }
+  - { id: R, label: Range (hot − cold), family: tempdiff, unit: K, imperialUnit: F }
+  - { id: A, label: Approach (cold − wet bulb), family: tempdiff, unit: K, imperialUnit: F }
+  - { id: eff, label: Cooling tower effectiveness, family: percent, unit: '%' }
+  - { id: H, label: Heat rejected, family: power, unit: kW, imperialUnit: TR, min: 0 }
+  - { id: E, label: Evaporation loss, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+  - { id: Dr, label: Drift loss, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+  - { id: B, label: Blowdown, family: flow, unit: m3h, imperialUnit: gpm }
+  - { id: M, label: Makeup water, family: flow, unit: m3h, imperialUnit: gpm, min: 0 }
+equations:
+  - R = Th - Tc
+  - A = Tc - Twb
+  - eff = R / (R + A)
+  - H = 1000 * 4186 * Q * R
+  - E = 0.00153 * Q * R
+  - Dr = dr * Q
+  - B = E / (coc - 1) - Dr
+  - M = E + B + Dr
+faq:
+  - q: What are range and approach in a cooling tower?
+    a: The range is the drop in water temperature across the tower (hot water in minus cold water out); it is set by the heat load and the flow. The approach is how close the cold water gets to the ambient wet bulb temperature (cold water minus wet bulb); it depends on the tower size and fill. A tower cooling water from 37 °C to 32 °C at a 28 °C wet bulb has a 5 °C range and a 4 °C approach.
+  - q: How do you calculate cooling tower efficiency?
+    a: Effectiveness = range ÷ (range + approach) = (T_hot − T_cold) ÷ (T_hot − T_wet bulb). It is the fraction of the maximum possible cooling actually achieved — 5 ÷ (5 + 4) = 55.6% in the example. Typical towers run at 55–75%; the water can never be cooled below the wet bulb temperature.
+  - q: How much water does a cooling tower evaporate?
+    a: About 0.153% of the circulating flow for every 1 °C of range (the rule E = 0.00085 × flow × range in °F from Perry's handbook), so roughly 1% of the flow for every 6.5 °C (12 °F). A 500 m³/h tower with a 5 °C range evaporates about 3.8 m³/h. The rule assumes nearly all heat leaves as latent heat; the real figure is a little lower in cold weather.
+  - q: How do you calculate blowdown and makeup water?
+    a: Blowdown B = E ÷ (COC − 1) − drift, and makeup M = evaporation + blowdown + drift = E × COC ÷ (COC − 1). Raising the cycles of concentration from 2 to 5 cuts the makeup by over a third, but the water treatment must then cope with higher scaling and corrosion potential.
+related: [engineering/chiller-tonnage, engineering/heat-duty, engineering/lmtd, engineering/dew-point, engineering/pump-power]
+---
+
+## How to use the cooling tower calculator
+
+Enter the **hot water temperature** returning to the tower, the **cold water temperature** leaving the basin, the **ambient wet bulb temperature**, the **circulating water flow**, the **cycles of concentration** and the **drift loss**. The calculator gives the range, the approach, the tower effectiveness, the heat rejected (in kW or refrigeration tons) and the evaporation, drift, blowdown and makeup flows. Leave any one input blank to solve for it — for example enter the makeup you can afford and find the cycles of concentration you must reach.
+
+## Cooling tower formulas
+
+<p class="formula">Range = T<sub>hot</sub> − T<sub>cold</sub> &nbsp;·&nbsp; Approach = T<sub>cold</sub> − T<sub>wb</sub> &nbsp;·&nbsp; Effectiveness = Range ÷ (Range + Approach)</p>
+
+<p class="formula">Heat rejected = ρ c<sub>p</sub> Q × Range &nbsp;·&nbsp; E = 0.00153 × Q × Range(°C) &nbsp;·&nbsp; B = E ÷ (COC − 1) − D &nbsp;·&nbsp; M = E + B + D</p>
+
+Water is taken as 1,000 kg/m³ with c<sub>p</sub> = 4.186 kJ/kg·K. E is evaporation, D drift, B blowdown and M makeup, all in the same flow units as Q.
+
+## Worked example
+
+A 500 m³/h condenser water circuit returns at 37 °C and leaves the tower at 32 °C on a day with a 28 °C wet bulb; the tower runs at 4 cycles with 0.02% drift:
+
+- Range = 37 − 32 = **5 °C**; approach = 32 − 28 = **4 °C**
+- Effectiveness = 5 ÷ (5 + 4) = **55.6%**
+- Heat rejected = 1,000 × 4.186 × 500 ÷ 3,600 × 5 = **2,907 kW** (827 TR)
+- Evaporation E = 0.00153 × 500 × 5 = **3.825 m³/h**
+- Drift D = 0.02% × 500 = **0.10 m³/h**
+- Blowdown B = 3.825 ÷ (4 − 1) − 0.10 = **1.175 m³/h**
+- Makeup M = 3.825 + 1.175 + 0.10 = **5.10 m³/h** (about 122 m³ per day)
+
+## Evaporation loss by range and flow
+
+| Range | 100 m³/h | 500 m³/h | 1,000 m³/h | 5,000 m³/h | % of flow |
+|---|---|---|---|---|---|
+| 3 °C (5.4 °F) | 0.46 m³/h | 2.29 m³/h | 4.59 m³/h | 22.95 m³/h | 0.46% |
+| 4 °C (7.2 °F) | 0.61 m³/h | 3.06 m³/h | 6.12 m³/h | 30.60 m³/h | 0.61% |
+| 5 °C (9 °F) | 0.77 m³/h | 3.82 m³/h | 7.65 m³/h | 38.25 m³/h | 0.77% |
+| 6 °C (10.8 °F) | 0.92 m³/h | 4.59 m³/h | 9.18 m³/h | 45.90 m³/h | 0.92% |
+| 8 °C (14.4 °F) | 1.22 m³/h | 6.12 m³/h | 12.24 m³/h | 61.20 m³/h | 1.22% |
+| 10 °C (18 °F) | 1.53 m³/h | 7.65 m³/h | 15.30 m³/h | 76.50 m³/h | 1.53% |
+| 12 °C (21.6 °F) | 1.84 m³/h | 9.18 m³/h | 18.36 m³/h | 91.80 m³/h | 1.84% |
+
+## Blowdown and makeup by cycles of concentration
+
+Per 1,000 m³/h of circulating water with a 5 °C range (evaporation 7.65 m³/h), drift neglected:
+
+| Cycles (COC) | Evaporation (m³/h) | Blowdown (m³/h) | Makeup (m³/h) | Makeup per day |
+|---|---|---|---|---|
+| 1.5 | 7.65 | 15.30 | 22.95 | 551 m³ |
+| 2 | 7.65 | 7.65 | 15.30 | 367 m³ |
+| 3 | 7.65 | 3.82 | 11.47 | 275 m³ |
+| 4 | 7.65 | 2.55 | 10.20 | 245 m³ |
+| 5 | 7.65 | 1.91 | 9.56 | 229 m³ |
+| 6 | 7.65 | 1.53 | 9.18 | 220 m³ |
+| 8 | 7.65 | 1.09 | 8.74 | 210 m³ |
+| 10 | 7.65 | 0.85 | 8.50 | 204 m³ |
+
+## Practical notes
+
+- **Approach sets the tower size:** halving the approach roughly doubles the fill and air required, so designs rarely go below 3 °C (5 °F). A rising approach at the same load and wet bulb points to fouled fill, blocked nozzles or a fan problem.
+- **Range follows the load:** for a fixed flow the range rises and falls with the heat load; the approach stays fairly constant.
+- **Cycles of concentration** are usually measured as the ratio of conductivity or chloride in the basin to that in the makeup water. Gains above about 6–8 cycles are small, while scaling risk keeps rising.
+- **Design wet bulb:** size the tower on the local summer design wet bulb (often the 1% or 0.4% value), not the dry bulb temperature. Use the [dew point calculator](/engineering/dew-point/) for humidity checks and the [chiller tonnage calculator](/engineering/chiller-tonnage/) to size the chiller the tower serves.

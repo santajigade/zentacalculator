@@ -1,0 +1,112 @@
+---
+title: Rolling Sphere Calculator (Lightning Protection Radius)
+description: Calculate the radius protected by a lightning rod or mast with the IEC 62305 rolling sphere method for LPL I–IV, at ground level and at the object height.
+category: electrical
+intro: "The rolling sphere method places air terminals so that an imaginary sphere rolled over the structure touches only the lightning protection system, never the parts being protected. This rolling sphere calculator gives the horizontal protection distance of a vertical lightning rod or mast at ground level and at the height of the object, for the sphere radius of each lightning protection level (LPL I–IV) in IEC 62305-3. For the background to the method, see this explanation of the [rolling sphere lightning protection](https://www.instrumentationblog.in/lightning-protection-system-rolling-sphere/) concept."
+keywords: [rolling sphere calculator, rolling sphere method lightning protection, lightning protection radius calculator, lightning rod protection area, iec 62305 rolling sphere radius, lightning mast protection zone, air terminal protection radius]
+updated: 2026-11-13
+variables:
+  - id: R
+    label: Lightning protection level (sphere radius)
+    default: 45
+    options:
+      - { label: 'LPL I — 20 m sphere', value: 20 }
+      - { label: 'LPL II — 30 m sphere', value: 30 }
+      - { label: 'LPL III — 45 m sphere', value: 45 }
+      - { label: 'LPL IV — 60 m sphere', value: 60 }
+  - { id: H, label: Height of the rod or mast tip above ground, family: length, unit: m, imperialUnit: ft, default: 15, min: 0 }
+  - { id: h, label: Height of the object to protect, family: length, unit: m, imperialUnit: ft, default: 6, min: 0 }
+  - { id: d0, label: Protected radius at ground level, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: d, label: Protected radius at the object height, family: length, unit: m, imperialUnit: ft }
+  - { id: Imin, label: Smallest lightning current intercepted, family: current, unit: kA, min: 0 }
+equations:
+  - d0 = sqrt(min(H, R) * (2 * R - min(H, R)))
+  - d = d0 - sqrt(h * (2 * R - h))
+  - Imin = (R / 10)^(1 / 0.65) * 1000
+faq:
+  - q: What is the rolling sphere radius for each lightning protection level?
+    a: IEC 62305-3 uses a sphere radius of 20 m for LPL I, 30 m for LPL II, 45 m for LPL III and 60 m for LPL IV. The matching mesh sizes are 5 × 5 m, 10 × 10 m, 15 × 15 m and 20 × 20 m. NFPA 780 uses a 46 m (150 ft) sphere for ordinary structures.
+  - q: How do you calculate the protection radius of a lightning rod?
+    a: For a rod of height H no taller than the sphere radius R, the protected distance at the height h of an object is d = √(H(2R − H)) − √(h(2R − h)). A 15 m mast with a 45 m sphere (LPL III) protects a radius of 33.5 m at ground level and 11.1 m at a height of 6 m.
+  - q: Why does a mast taller than the sphere radius not protect more?
+    a: Once the rod is taller than R the sphere can touch its side, and the zone below is the same as for a rod of height R — the protected radius at ground can never exceed R. Tall structures above 60 m can also be struck on the side, so IEC 62305 requires side air terminations on their upper part.
+  - q: How is the sphere radius related to lightning current?
+    a: The striking distance follows the electrogeometric model R = 10 × I^0.65 (R in m, I in kA). A smaller sphere catches weaker strokes as well — the 20 m sphere of LPL I intercepts strokes down to 3 kA, which covers about 99% of flashes, while the 60 m sphere of LPL IV only guarantees interception of strokes above 16 kA (84%).
+related: [electrical/earthing-resistance, electrical/earth-conductor-size, math/right-triangle-trig, math/circle]
+---
+
+## How to use the rolling sphere calculator
+
+Pick the **lightning protection level** from your IEC 62305-2 risk assessment — it sets the rolling sphere radius — and enter the **height of the rod or mast tip** and the **height of the object** to be protected. The calculator gives the protected radius at ground level, the protected radius at the object's height and the smallest lightning current the system intercepts. The object is protected if every point of it lies within the protected radius at its height. Enter a required radius to find the mast height needed.
+
+## Rolling sphere formula
+
+<p class="formula">d<sub>0</sub> = √(H (2R − H)) &nbsp;·&nbsp; d(h) = √(H (2R − H)) − √(h (2R − h)) &nbsp;(H ≤ R)</p>
+
+<p class="formula">R = 10 × I<sup>0.65</sup> &nbsp;(R in m, I in kA)</p>
+
+R is the sphere radius, H the rod height and h the height of the point being checked. The formula comes from the geometry of a sphere resting on the ground and touching the rod tip. For H > R, use H = R. The calculation is for a single vertical rod on flat ground; between two or more masts the sphere sags less and the protected zone is larger.
+
+## Worked example
+
+A 15 m mast protects equipment 6 m tall at LPL III (45 m sphere):
+
+- At ground level d<sub>0</sub> = √(15 × (2 × 45 − 15)) = √1125 = **33.54 m**
+- At the object height √(6 × (2 × 45 − 6)) = √504 = 22.45 m
+- Protected radius at 6 m d = 33.54 − 22.45 = **11.09 m**
+- Smallest stroke intercepted I = (45 ÷ 10)^(1 ÷ 0.65) = **10.11 kA**
+
+Any part of the equipment more than 11.1 m from the mast at a height of 6 m needs another air terminal.
+
+## Lightning protection levels (IEC 62305)
+
+| Level | Sphere radius R | Minimum peak current | R from 10 × I<sup>0.65</sup> | Mesh size | Interception probability |
+|---|---|---|---|---|---|
+| LPL I | 20 m | 3 kA | 20.4 m | 5 × 5 m | 99% |
+| LPL II | 30 m | 5 kA | 28.5 m | 10 × 10 m | 97% |
+| LPL III | 45 m | 10 kA | 44.7 m | 15 × 15 m | 91% |
+| LPL IV | 60 m | 16 kA | 60.6 m | 20 × 20 m | 84% |
+
+## Protected radius at ground level by mast height
+
+| Mast height | LPL I (20 m) | LPL II (30 m) | LPL III (45 m) | LPL IV (60 m) |
+|---|---|---|---|---|
+| 3 m | 10.5 m | 13.1 m | 16.2 m | 18.7 m |
+| 5 m | 13.2 m | 16.6 m | 20.6 m | 24.0 m |
+| 10 m | 17.3 m | 22.4 m | 28.3 m | 33.2 m |
+| 15 m | 19.4 m | 26.0 m | 33.5 m | 39.7 m |
+| 20 m | 20.0 m | 28.3 m | 37.4 m | 44.7 m |
+| 30 m | 20.0 m | 30.0 m | 42.4 m | 52.0 m |
+| 45 m | 20.0 m | 30.0 m | 45.0 m | 58.1 m |
+| 60 m | 20.0 m | 30.0 m | 45.0 m | 60.0 m |
+
+## Protected radius at the object height
+
+| Object height | 10 m mast, LPL I | 15 m mast, LPL II | 15 m mast, LPL III | 20 m mast, LPL III | 25 m mast, LPL IV |
+|---|---|---|---|---|---|
+| 0 m | 17.3 m | 26.0 m | 33.5 m | 37.4 m | 48.7 m |
+| 2 m | 8.6 m | 15.2 m | 20.3 m | 24.2 m | 33.4 m |
+| 4 m | 5.3 m | 11.0 m | 15.0 m | 18.9 m | 27.2 m |
+| 6 m | 3.0 m | 8.0 m | 11.1 m | 15.0 m | 22.6 m |
+| 8 m | 1.3 m | 5.6 m | 7.9 m | 11.8 m | 18.8 m |
+| 10 m | 0.0 m | 3.6 m | 5.3 m | 9.1 m | 15.6 m |
+| 12 m | −1.0 m | 2.0 m | 2.9 m | 6.8 m | 12.7 m |
+
+## Sphere sag between two air terminals
+
+Depth the sphere dips below the line joining two conductors at the same height, p = R − √(R² − (w ÷ 2)²):
+
+| Spacing w | LPL I | LPL II | LPL III | LPL IV |
+|---|---|---|---|---|
+| 5 m | 16 cm | 10 cm | 7 cm | 5 cm |
+| 10 m | 64 cm | 42 cm | 28 cm | 21 cm |
+| 15 m | 146 cm | 95 cm | 63 cm | 47 cm |
+| 20 m | 268 cm | 172 cm | 113 cm | 84 cm |
+| 30 m | 677 cm | 402 cm | 257 cm | 191 cm |
+
+## Practical notes
+
+- **Roofs:** air termination rods on a flat roof must project far enough above the roof for the sphere not to touch the roof between them — check the sag table against the rod height above the roof.
+- **Protection angle method:** IEC 62305-3 also allows a protection-angle method for simple structures; it gives similar results for short rods but becomes conservative for tall masts. The rolling sphere method works for any shape.
+- **Earthing:** an air termination is only effective with low-impedance down conductors and a good earth termination — check it with the [earthing resistance calculator](/electrical/earthing-resistance/) and size conductors with the [earth conductor size calculator](/electrical/earth-conductor-size/).
+- This calculator is a design aid; the final layout must be checked by a competent designer against IEC 62305, NFPA 780 or your local standard.

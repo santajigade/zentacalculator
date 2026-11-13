@@ -1,0 +1,102 @@
+---
+title: Excess Air Calculator (Flue Gas O₂ to Excess Air)
+description: Calculate excess combustion air and the air ratio (lambda) from the oxygen in dry flue gas, estimate CO₂ and the actual air flow for natural gas, oil or coal.
+category: chemistry
+intro: "Burners need some air beyond the stoichiometric amount to burn fuel completely, but every extra kilogram of air heats up and leaves through the stack. This excess air calculator converts the oxygen measured in dry flue gas — usually by a [zirconia oxygen analyzer](https://www.instrumentationblog.in/zirconia-oxygen-analyzer-working-principle/) in the flue — into percent excess air and the air ratio λ, and estimates the CO₂ in the flue gas and the combustion air flow for the fuel you burn."
+keywords: [excess air calculator, flue gas o2 to excess air, excess air formula, combustion air calculation, lambda air ratio calculator, excess oxygen to excess air, combustion efficiency excess air]
+updated: 2026-11-13
+variables:
+  - { id: O2, label: Oxygen in dry flue gas, family: percent, unit: '%', default: 3, min: 0, max: 0.2089, help: 'By volume, dry basis (as read by an extractive analyser or a portable combustion analyser).' }
+  - id: CO2max
+    label: Fuel (maximum CO₂ at zero excess air)
+    default: 11.7
+    options:
+      - { label: 'Natural gas (CO₂ max 11.7%)', value: 11.7 }
+      - { label: 'Propane (LPG) (CO₂ max 13.7%)', value: 13.7 }
+      - { label: 'Light fuel oil / diesel (CO₂ max 15.4%)', value: 15.4 }
+      - { label: 'Heavy fuel oil (CO₂ max 15.8%)', value: 15.8 }
+      - { label: 'Bituminous coal (CO₂ max 18.5%)', value: 18.5 }
+      - { label: 'Wood (dry) (CO₂ max 20.3%)', value: 20.3 }
+  - { id: afr, label: Stoichiometric air–fuel ratio, suffix: kg air/kg fuel, default: 17.2, min: 0, help: 'Natural gas about 17.2, propane 15.7, diesel 14.5, heavy oil 13.8, coal 9–11, dry wood about 6.' }
+  - { id: mf, label: Fuel flow, family: massflow, unit: kgh, imperialUnit: lbh, default: 100, min: 0 }
+  - { id: EA, label: Excess air, family: percent, unit: '%', min: 0 }
+  - { id: lam, label: Air ratio λ (actual ÷ stoichiometric air), min: 0, decimals: 3 }
+  - { id: CO2, label: Estimated CO₂ in dry flue gas, family: percent, unit: '%', min: 0 }
+  - { id: ma0, label: Stoichiometric air flow, family: massflow, unit: kgh, imperialUnit: lbh, min: 0 }
+  - { id: ma, label: Actual combustion air flow, family: massflow, unit: kgh, imperialUnit: lbh, min: 0 }
+equations:
+  - EA = O2 / (0.209 - O2)
+  - lam = 1 + EA
+  - CO2 = CO2max / 100 * (0.209 - O2) / 0.209
+  - ma0 = mf * afr
+  - ma = ma0 * lam
+faq:
+  - q: How do you calculate excess air from O₂?
+    a: Excess air (%) = O₂ ÷ (20.9 − O₂) × 100, with O₂ the percent oxygen in the dry flue gas and 20.9% the oxygen in air. 3% O₂ gives 3 ÷ 17.9 = 16.8% excess air, so the burner is supplied with 1.168 times the stoichiometric air.
+  - q: What is a good excess air level?
+    a: Typical targets are 10–20% excess air (about 2–3.5% O₂) for natural gas, 15–25% (3–4% O₂) for oil and 20–40% (3.5–6% O₂) for coal and biomass. Lower is more efficient as long as carbon monoxide stays low — trim the air until CO starts to rise, then back off a little.
+  - q: How do you estimate CO₂ from O₂ in flue gas?
+    a: CO₂ = CO₂max × (20.9 − O₂) ÷ 20.9, where CO₂max is the CO₂ the fuel produces with exactly stoichiometric air (about 11.7% for natural gas, 15.4% for light oil, 18.5% for bituminous coal). The relation holds for complete combustion on a dry basis.
+  - q: Why is the formula only approximate?
+    a: It assumes complete combustion on a dry basis and that the extra air simply dilutes the flue gas. The exact excess air depends a little on the fuel's hydrogen, carbon and nitrogen content, and any CO in the flue gas or air leaking into the duct ahead of the analyser makes the reading unrepresentative. For most boilers and furnaces the simple formula is within a few percent of excess air.
+related: [engineering/boiler-efficiency, chemistry/enthalpy-of-reaction, chemistry/bomb-calorimeter, chemistry/gas-density, engineering/mass-flow-rate]
+---
+
+## How to use the excess air calculator
+
+Enter the **oxygen in the dry flue gas**, pick the **fuel** (it sets the maximum CO₂), enter its **stoichiometric air–fuel ratio** and the **fuel flow**. The calculator gives the percent **excess air**, the **air ratio λ**, the expected **CO₂** in the flue gas and the stoichiometric and actual **combustion air flows**. To find the O₂ setpoint for a target excess air, enter the excess air and leave the O₂ blank.
+
+## Excess air formula
+
+<p class="formula">Excess air = O<sub>2</sub> ÷ (20.9 − O<sub>2</sub>) &nbsp;·&nbsp; λ = 20.9 ÷ (20.9 − O<sub>2</sub>) &nbsp;·&nbsp; CO<sub>2</sub> = CO<sub>2,max</sub> × (20.9 − O<sub>2</sub>) ÷ 20.9</p>
+
+<p class="formula">Actual air = fuel flow × stoichiometric air–fuel ratio × λ</p>
+
+O<sub>2</sub> and CO<sub>2</sub> are percentages by volume on a dry basis. An in-situ zirconia probe measures on a wet basis and reads about 10–20% lower than a dry analyser on gas-fired plant, so convert the reading or use the dry value from a portable analyser.
+
+## Worked example
+
+A natural gas boiler burns 100 kg/h of gas (stoichiometric air–fuel ratio 17.2) and the analyser reads 3% O₂ in the dry flue gas:
+
+- Excess air = 3 ÷ (20.9 − 3) = 3 ÷ 17.9 = **16.76%**
+- Air ratio λ = 1 + 0.1676 = **1.1676**
+- Expected CO₂ = 11.7 × (17.9 ÷ 20.9) = **10.02%**
+- Stoichiometric air = 100 × 17.2 = **1,720 kg/h**; actual air = 1,720 × 1.1676 = **2,008 kg/h**
+
+## Flue gas O₂ to excess air and CO₂
+
+| O₂ (dry) | Excess air | λ | CO₂, natural gas | CO₂, light oil | CO₂, coal |
+|---|---|---|---|---|---|
+| 0.5% | 2.5% | 1.025 | 11.4% | 15.0% | 18.1% |
+| 1% | 5.0% | 1.050 | 11.1% | 14.7% | 17.6% |
+| 1.5% | 7.7% | 1.077 | 10.9% | 14.3% | 17.2% |
+| 2% | 10.6% | 1.106 | 10.6% | 13.9% | 16.7% |
+| 3% | 16.8% | 1.168 | 10.0% | 13.2% | 15.8% |
+| 4% | 23.7% | 1.237 | 9.5% | 12.5% | 15.0% |
+| 5% | 31.4% | 1.314 | 8.9% | 11.7% | 14.1% |
+| 6% | 40.3% | 1.403 | 8.3% | 11.0% | 13.2% |
+| 8% | 62.0% | 1.620 | 7.2% | 9.5% | 11.4% |
+| 10% | 91.7% | 1.917 | 6.1% | 8.0% | 9.6% |
+| 12% | 134.8% | 2.348 | 5.0% | 6.6% | 7.9% |
+
+## Typical fuel data
+
+At 3% O₂ in the dry flue gas:
+
+| Fuel | CO₂ max | Stoichiometric air (kg/kg) | CO₂ at 3% O₂ | Actual air at 3% O₂ (kg/kg fuel) |
+|---|---|---|---|---|
+| Natural gas | 11.7% | 17.2 | 10.0% | 20.08 |
+| Propane (LPG) | 13.7% | 15.7 | 11.7% | 18.33 |
+| Light fuel oil / diesel | 15.4% | 14.5 | 13.2% | 16.93 |
+| Heavy fuel oil | 15.8% | 13.8 | 13.5% | 16.11 |
+| Bituminous coal | 18.5% | 10.5 | 15.8% | 12.26 |
+| Wood (dry) | 20.3% | 6 | 17.4% | 7.01 |
+
+Values are typical; the exact figures depend on the fuel analysis.
+
+## Practical notes
+
+- **Why it matters:** cutting excess air on a gas boiler from 50% to 15% typically improves efficiency by 1.5–2.5 percentage points, because less air is heated to stack temperature.
+- **Air in-leakage:** air leaking into the furnace or duct upstream of the analyser makes the O₂ read high; compare readings at the furnace exit and the stack to find leaks.
+- **O₂ trim:** many burners use a flue gas oxygen analyser to trim the air damper automatically, holding O₂ on a setpoint that varies with firing rate — see how [paramagnetic oxygen analyzers](ib:paramagnetic-oxygen-analyzer-working) and zirconia probes compare.
+- To see what the air setting means for fuel use, combine the result with the [boiler efficiency calculator](/engineering/boiler-efficiency/); to convert gas volumes and densities, use the [gas density calculator](/chemistry/gas-density/).

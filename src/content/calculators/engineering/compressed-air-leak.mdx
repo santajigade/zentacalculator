@@ -1,0 +1,100 @@
+---
+title: Compressed Air Leak Calculator (Flow, kW & Cost)
+description: Calculate the air flow lost through a compressed air leak from hole size and pressure, the compressor power it wastes and the yearly energy and cost.
+category: engineering
+intro: "Leaks are the biggest single waste in most compressed air systems — a typical plant loses 20–30% of its compressor output through fittings, hoses, drains and worn seals. This compressed air leak calculator estimates the free-air flow through a leak from the hole diameter and line pressure using choked-flow equations, then converts it into the compressor power it wastes and the energy and money lost per year — the numbers you need to justify a leak survey or a repair."
+keywords: [compressed air leak calculator, compressed air leak cost, air leak flow rate calculation, cost of compressed air leaks, compressed air leak cfm, air leakage calculation formula, leak hole size flow calculator]
+updated: 2026-11-13
+variables:
+  - { id: d, label: Leak hole diameter (equivalent), family: length, unit: mm, imperialUnit: in, default: 3, min: 0 }
+  - { id: p, label: Line pressure (gauge), family: pressure, unit: bar, imperialUnit: psi, default: 7, min: 0, help: 'The formula assumes choked flow, valid above about 0.9 bar g (13 psig).' }
+  - { id: T, label: Air temperature in the line, family: temperature, unit: C, imperialUnit: F, default: 20 }
+  - { id: Cd, label: Discharge coefficient, default: 0.65, min: 0, max: 1, help: '1.0 for a smooth rounded hole, about 0.61 for a sharp-edged hole. 0.65 is a common value for real leaks.' }
+  - { id: n, label: Number of similar leaks, default: 1, min: 0 }
+  - { id: SP, label: Compressor specific power, suffix: kW per m³/min, default: 6.5, min: 0, help: 'Electrical input per m³/min of free air delivered. About 6–7 for a loaded screw compressor at 7 bar; higher for part-load or older machines.' }
+  - { id: H, label: Hours the system is pressurised per year, suffix: h/year, default: 8000, min: 0 }
+  - { id: price, label: Electricity price per kWh, family: currency, default: 8, min: 0, decimals: 2 }
+  - { id: Ah, label: Leak hole area, family: area, unit: mm2, imperialUnit: in2, min: 0 }
+  - { id: m, label: Mass flow through each leak, family: massflow, unit: kgh, imperialUnit: lbh, min: 0 }
+  - { id: Qf, label: Free air lost per leak, family: flow, unit: Lmin, imperialUnit: cfm, min: 0 }
+  - { id: Pw, label: Compressor power wasted per leak, family: power, unit: kW, imperialUnit: hp, min: 0 }
+  - { id: E, label: Energy wasted per year (all leaks), family: energy, unit: kWh, min: 0 }
+  - { id: cost, label: Cost of the leaks per year, family: currency, min: 0, decimals: 0 }
+equations:
+  - Ah = pi / 4 * d^2
+  - m = Cd * Ah * (p + 101325) * sqrt(1.4 / (287.05 * T)) * 0.578704
+  - Qf = m / 1.20412
+  - Pw = SP * 1000 * Qf * 60
+  - E = Pw * n * H * 3600
+  - cost = E / 3600000 * price
+faq:
+  - q: How much air does a compressed air leak waste?
+    a: A 3 mm hole at 7 bar g loses about 433 litres of free air per minute (15.3 cfm) with a discharge coefficient of 0.65. The flow rises with the square of the hole diameter and roughly in proportion to the absolute pressure, so a 6 mm hole wastes four times as much.
+  - q: How is the flow through a leak calculated?
+    a: Above about 0.9 bar g the air reaches sonic speed in the hole (choked flow), so the mass flow is ṁ = C_d A P₀ √(γ ÷ (R T)) × (2 ÷ (γ + 1))^((γ+1)/(2(γ−1))), with P₀ the absolute line pressure, γ = 1.4 and R = 287 J/kg·K for air. Dividing by the density of free air (1.204 kg/m³ at 20 °C and 1.013 bar) gives the free air delivery the compressor must make up.
+  - q: How much does a compressed air leak cost?
+    a: Multiply the free air lost by the compressor's specific power to get the kW wasted, then by the operating hours and the electricity price. A 3 mm leak at 7 bar wastes about 2.8 kW — around 22,518 kWh in 8,000 hours, or 180,147 a year at a price of 8 per kWh.
+  - q: How do you measure the total leakage in a plant?
+    a: With all air-using equipment off, run the compressor and time its load and unload cycles — leakage (%) = load time ÷ (load + unload time) × 100. Alternatively, isolate a receiver of known volume and time the pressure decay. Ultrasonic leak detectors then locate the individual leaks.
+related: [engineering/compressor-power, engineering/air-receiver-size, engineering/orifice-flow, engineering/gas-flow-correction, electrical/load-factor]
+---
+
+## How to use the compressed air leak calculator
+
+Enter the **equivalent hole diameter** of the leak, the **line pressure**, the **air temperature** and a **discharge coefficient**, then the **number of similar leaks**, your compressor's **specific power**, the **hours per year** the system is pressurised and the **electricity price**. The calculator gives the mass flow and free air lost per leak, the compressor power wasted, and the yearly energy and cost for all the leaks. The price field takes any currency — enter ₹ per kWh, $ per kWh or € per kWh and the cost comes out in the same currency.
+
+## Compressed air leak formula
+
+<p class="formula">ṁ = C<sub>d</sub> A P<sub>0</sub> √(γ ÷ (R T)) × (2 ÷ (γ + 1))<sup>(γ+1)/(2(γ−1))</sup> = 0.5787 C<sub>d</sub> A P<sub>0</sub> √(1.4 ÷ (287.05 T))</p>
+
+<p class="formula">Q<sub>free air</sub> = ṁ ÷ 1.204 kg/m³ &nbsp;·&nbsp; P<sub>wasted</sub> = specific power × Q &nbsp;·&nbsp; cost = P × n × hours × price</p>
+
+P<sub>0</sub> is the absolute line pressure (gauge + 1.01325 bar), T the absolute air temperature and A the hole area. Free air is referred to 20 °C and 1.01325 bar. The equation applies to choked (sonic) flow, which holds for any line pressure above about 0.9 bar g. With C<sub>d</sub> = 1 it reproduces the US Department of Energy leak table (a 1/16 in hole at 100 psig loses 6.5 cfm).
+
+## Worked example
+
+One 3 mm leak on a 7 bar g line at 20 °C, C<sub>d</sub> = 0.65, compressor specific power 6.5 kW per m³/min, 8,000 hours a year, electricity at 8 per kWh:
+
+- Hole area A = π ÷ 4 × 3² = **7.069 mm²**
+- Absolute pressure P<sub>0</sub> = 7 + 1.01325 = 8.01325 bar; T = 293.15 K
+- Mass flow ṁ = 0.5787 × 0.65 × 7.0686 × 10⁻⁶ × 801,325 × √(1.4 ÷ (287.05 × 293.15)) = **31.29 kg/h**
+- Free air lost = 0.00869 ÷ 1.20412 = **433 L/min** (0.433 m³/min, 15.3 cfm)
+- Power wasted = 6.5 × 0.4330 = **2.81 kW**
+- Energy per year = 2.815 × 8,000 = **22,518 kWh**, costing **180,147** a year
+
+## Air lost through a leak by hole size and pressure
+
+Free air lost in L/min per leak, C<sub>d</sub> = 0.65, air at 20 °C (multiply by 0.0353 for cfm):
+
+| Hole diameter | 4 bar g | 6 bar g | 7 bar g | 8 bar g | 10 bar g |
+|---|---|---|---|---|---|
+| 0.5 mm (0.020 in) | 7.5 | 10.5 | 12.0 | 13.5 | 16.5 |
+| 1 mm (0.039 in) | 30.1 | 42.1 | 48.1 | 54.1 | 66.1 |
+| 1.5 mm (0.059 in) | 67.7 | 94.8 | 108 | 122 | 149 |
+| 2 mm (0.079 in) | 120 | 168 | 192 | 216 | 265 |
+| 3 mm (0.118 in) | 271 | 379 | 433 | 487 | 595 |
+| 4 mm (0.157 in) | 482 | 674 | 770 | 866 | 1,058 |
+| 5 mm (0.197 in) | 753 | 1,053 | 1,203 | 1,353 | 1,653 |
+| 6 mm (0.236 in) | 1,084 | 1,516 | 1,732 | 1,948 | 2,381 |
+| 8 mm (0.315 in) | 1,927 | 2,695 | 3,079 | 3,464 | 4,232 |
+| 10 mm (0.394 in) | 3,010 | 4,211 | 4,812 | 5,412 | 6,613 |
+
+## Yearly cost of a single leak at 7 bar g
+
+6.5 kW per m³/min, 8,000 hours a year, 8 per kWh (scale the cost column for your own tariff):
+
+| Hole | Air lost | Power wasted | Energy per year | Cost per year |
+|---|---|---|---|---|
+| 1 mm | 48 L/min (1.7 cfm) | 0.31 kW | 2,502 kWh | 20,016 |
+| 2 mm | 192 L/min (6.8 cfm) | 1.25 kW | 10,008 kWh | 80,065 |
+| 3 mm | 433 L/min (15.3 cfm) | 2.81 kW | 22,518 kWh | 180,147 |
+| 5 mm | 1,203 L/min (42.5 cfm) | 7.82 kW | 62,551 kWh | 500,408 |
+| 6 mm | 1,732 L/min (61.2 cfm) | 11.26 kW | 90,073 kWh | 720,587 |
+| 10 mm | 4,812 L/min (169.9 cfm) | 31.28 kW | 250,204 kWh | 2,001,630 |
+
+## Practical notes
+
+- **Lower the pressure:** every 1 bar reduction in header pressure cuts leakage by roughly 1/8 at 7 bar and saves about 6–7% of compressor energy as well.
+- **Where leaks hide:** quick couplings, hose connections, filter–regulator–lubricator units, condensate drains stuck open, pipe joints and cylinder rod seals account for most of the losses.
+- **Leak tags:** a survey with an ultrasonic detector, tagging each leak and estimating its size, then using a table like the one above to rank repairs, usually pays back in weeks.
+- **Part-load compressors** use more energy per m³ than the full-load specific power, so the true saving from fixing leaks can be higher. Use the [compressor power calculator](/engineering/compressor-power/) to estimate the specific power from the pressure ratio and the [air receiver size calculator](/engineering/air-receiver-size/) for pressure-decay leak tests.

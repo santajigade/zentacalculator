@@ -1,0 +1,90 @@
+---
+title: RC Snubber Calculator (Ringing Frequency Method)
+description: "Design an RC snubber from the measured ringing frequency: find parasitic capacitance and inductance, snubber resistor and capacitor values and resistor power."
+category: electronics
+intro: "Fast switching edges in MOSFET, diode and transformer circuits excite the stray inductance and capacitance of the layout into high-frequency ringing that raises voltage stress and EMI. This RC snubber calculator uses the proven measure-and-add-capacitance method: from the ringing frequency before and after adding a known test capacitor it finds the parasitic capacitance and inductance, the characteristic impedance, and a resistor and capacitor that damp the ringing — plus the power the snubber resistor must dissipate. The design steps follow this guide to [RC snubber circuit design](https://www.instrumentationblog.in/snubber-circuit-rc-design/)."
+keywords: [rc snubber calculator, snubber circuit design, snubber capacitor calculation, snubber resistor calculation, mosfet snubber design, rc snubber formula, ringing frequency snubber]
+updated: 2026-11-13
+variables:
+  - { id: f0, label: Ringing frequency (as measured), family: frequency, unit: MHz, default: 80, min: 0 }
+  - { id: Ca, label: Test capacitor added across the switch, family: capacitance, unit: pF, default: 220, min: 0, help: 'Add capacitors until the ringing frequency drops by about half; a 2:1 drop gives the most accurate result.' }
+  - { id: f1, label: Ringing frequency with the test capacitor, family: frequency, unit: MHz, default: 40, min: 0 }
+  - { id: k, label: Snubber capacitor multiplier (Cs ÷ Cp), default: 4, min: 1, help: 'Usually 3–4. Larger values damp better but raise the resistor loss.' }
+  - { id: V, label: Voltage switched, family: voltage, unit: V, default: 48, min: 0 }
+  - { id: fsw, label: Switching frequency, family: frequency, unit: kHz, default: 200, min: 0 }
+  - { id: Cp, label: Parasitic capacitance, family: capacitance, unit: pF, min: 0 }
+  - { id: Lp, label: Parasitic (loop) inductance, family: inductance, unit: nH, min: 0 }
+  - { id: Z0, label: Characteristic impedance √(Lp ÷ Cp), family: resistance, unit: ohm, min: 0 }
+  - { id: Rs, label: Snubber resistor, family: resistance, unit: ohm, min: 0 }
+  - { id: Cs, label: Snubber capacitor, family: capacitance, unit: pF, min: 0 }
+  - { id: Ps, label: Power dissipated in the snubber resistor, family: power, unit: W, min: 0 }
+  - { id: tau, label: Snubber time constant Rs × Cs, family: seconds, unit: ns, min: 0 }
+equations:
+  - Cp = Ca / ((f0 / f1)^2 - 1)
+  - Lp = 1 / ((2 * pi * f0)^2 * Cp)
+  - Z0 = sqrt(Lp / Cp)
+  - Rs = Z0
+  - Cs = k * Cp
+  - Ps = Cs * V^2 * fsw
+  - tau = Rs * Cs
+faq:
+  - q: How do you calculate an RC snubber?
+    a: Measure the ringing frequency f₀, add a known capacitor C_add across the switch and measure the new frequency f₁. The parasitic capacitance is C_p = C_add ÷ ((f₀ ÷ f₁)² − 1), the inductance L_p = 1 ÷ ((2πf₀)² C_p) and the snubber resistor R = √(L_p ÷ C_p). Choose the snubber capacitor 3–4 times C_p so that R, not the capacitor, sets the damping.
+  - q: How much power does a snubber resistor dissipate?
+    a: P = C_s × V² × f_sw — the capacitor's stored energy ½C V² is dissipated in the resistor once when it charges and once when it discharges, every switching cycle. A 293 pF snubber switching 48 V at 200 kHz dissipates about 0.13 W, so a 0.25 W or larger pulse-rated resistor is used.
+  - q: Why add a capacitor until the frequency halves?
+    a: When f₁ = f₀ ÷ 2 the added capacitor is exactly three times the parasitic capacitance, so the measurement is well above the scope probe and fixture capacitance and the result is not sensitive to small reading errors. Any ratio works with the formula, but ratios close to 1 give poor accuracy.
+  - q: What type of resistor and capacitor should a snubber use?
+    a: Use a low-inductance resistor (thick-film or carbon composition, not wirewound) and a capacitor with low ESL rated well above the peak voltage — C0G/NP0 ceramic or polypropylene film. Keep the snubber loop as short as possible, directly across the device that rings.
+related: [electronics/mosfet-power-loss, electronics/resonant-frequency, electronics/reactance, electronics/rc-filter, electronics/buck-converter]
+---
+
+## How to use the RC snubber calculator
+
+Measure the **ringing frequency** at the switch node with the circuit running and a short ground lead on the scope probe. Solder a **test capacitor** across the device (start with a few hundred pF) and measure the **new ringing frequency** — aim for about half the original. Enter both frequencies and the test capacitor, the **capacitor multiplier**, the **voltage switched** and the **switching frequency**. The calculator gives the parasitic capacitance and inductance, the characteristic impedance, the snubber resistor and capacitor and the resistor's power dissipation.
+
+## RC snubber formulas
+
+<p class="formula">C<sub>p</sub> = C<sub>add</sub> ÷ [(f<sub>0</sub> ÷ f<sub>1</sub>)² − 1] &nbsp;·&nbsp; L<sub>p</sub> = 1 ÷ [(2π f<sub>0</sub>)² C<sub>p</sub>]</p>
+
+<p class="formula">R<sub>s</sub> = Z<sub>0</sub> = √(L<sub>p</sub> ÷ C<sub>p</sub>) &nbsp;·&nbsp; C<sub>s</sub> = k × C<sub>p</sub> (k ≈ 3–4) &nbsp;·&nbsp; P<sub>R</sub> = C<sub>s</sub> V² f<sub>sw</sub></p>
+
+The ringing is the resonance of the loop inductance with the parasitic capacitance, f = 1 ÷ (2π√(LC)). A resistor equal to the characteristic impedance gives close to critical damping; the series capacitor blocks DC so the resistor only conducts during the edges.
+
+## Worked example
+
+A 48 V synchronous buck switching at 200 kHz rings at 80 MHz on the switch node. Adding 220 pF across the low-side MOSFET drops the ringing to 40 MHz:
+
+- Frequency ratio squared (f<sub>0</sub> ÷ f<sub>1</sub>)² = (80 ÷ 40)² = 4
+- Parasitic capacitance C<sub>p</sub> = 220 ÷ (4 − 1) = **73.33 pF**
+- Parasitic inductance L<sub>p</sub> = 1 ÷ ((2π × 80 MHz)² × 73.33 pF) = **53.97 nH**
+- Snubber resistor R<sub>s</sub> = √(53.97 nH ÷ 73.33 pF) = **27.13 Ω** — use 27 Ω
+- Snubber capacitor C<sub>s</sub> = 4 × 73.33 = **293.3 pF** — use 330 pF (or 270 pF)
+- Resistor power P = 293.3 pF × 48² × 200 kHz = **0.135 W**; time constant R<sub>s</sub>C<sub>s</sub> = **7.96 ns**
+
+## Parasitic capacitance from the frequency drop
+
+| f<sub>0</sub> ÷ f<sub>1</sub> | C<sub>p</sub> | C<sub>add</sub> = 100 pF | 220 pF | 470 pF | 1 nF |
+|---|---|---|---|---|---|
+| 1.2 | 2.273 × C<sub>add</sub> | 227 pF | 500 pF | 1068 pF | 2273 pF |
+| 1.5 | 0.800 × C<sub>add</sub> | 80 pF | 176 pF | 376 pF | 800 pF |
+| 2 | 0.333 × C<sub>add</sub> | 33 pF | 73 pF | 157 pF | 333 pF |
+| 2.5 | 0.190 × C<sub>add</sub> | 19 pF | 42 pF | 90 pF | 190 pF |
+| 3 | 0.125 × C<sub>add</sub> | 12 pF | 28 pF | 59 pF | 125 pF |
+
+## Snubber resistor power P = C V² f
+
+| Voltage | 100 pF at 100 kHz | 470 pF at 100 kHz | 1 nF at 100 kHz | 1 nF at 500 kHz | 4.7 nF at 100 kHz |
+|---|---|---|---|---|---|
+| 12 V | 1.4 mW | 6.8 mW | 14.4 mW | 72.0 mW | 67.7 mW |
+| 24 V | 5.8 mW | 27.1 mW | 57.6 mW | 288.0 mW | 270.7 mW |
+| 48 V | 23.0 mW | 108.3 mW | 230.4 mW | 1.15 W | 1.08 W |
+| 100 V | 100.0 mW | 470.0 mW | 1.00 W | 5.00 W | 4.70 W |
+| 400 V | 1.60 W | 7.52 W | 16.00 W | 80.00 W | 75.20 W |
+
+## Practical notes
+
+- **Fix the layout first:** a shorter hot loop and a closer input capacitor reduce L<sub>p</sub>, raise the ringing frequency and reduce the energy the snubber has to absorb.
+- **Check the result:** fit the calculated R and C, then confirm on the scope that the overshoot is damped within one or two cycles. Adjust R ±50% to fine-tune; if the loss is too high, reduce k towards 2.
+- **Rating:** the resistor sees pulses of up to V ÷ R at every edge — choose a pulse-rated part and allow at least twice the calculated average power.
+- **Snubber loss counts as switching loss** — include it in the converter efficiency with the [MOSFET power loss calculator](/electronics/mosfet-power-loss/). To check the ringing frequency from L and C, use the [resonant frequency calculator](/electronics/resonant-frequency/).

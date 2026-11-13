@@ -22,8 +22,9 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Pipe & open-channel hydraulics', ids: ['hazen-williams', 'minor-losses', 'manning-equation'] },
       { name: 'Pressure, level & tanks', ids: ['hydrostatic-pressure', 'dp-level-range', 'ultrasonic-level', 'vertical-tank-volume', 'horizontal-tank-volume', 'spherical-tank-volume', 'absolute-gauge-pressure', 'manometer', 'barlow-formula', 'darcy-weisbach-head-loss', 'water-hammer', 'api-gravity', 'cone-bottom-tank-volume', 'tank-drain-time'] },
       { name: 'Pressure vessels & testing', ids: ['pressure-vessel-thickness', 'hydrostatic-test-pressure'] },
-      { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'valve-authority', 'pump-power', 'npsh-available', 'pump-affinity-laws', 'pressure-to-head', 'fan-affinity-laws', 'compressor-power', 'heat-duty', 'thermal-expansion', 'air-receiver-size'] },
-      { name: 'Heat transfer & HVAC', ids: ['lmtd', 'convection-heat-transfer', 'chiller-tonnage', 'dew-point', 'tank-heater-sizing', 'pipe-heat-loss', 'air-changes-per-hour'] },
+      { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'valve-authority', 'pump-power', 'npsh-available', 'pump-affinity-laws', 'pressure-to-head', 'fan-affinity-laws', 'compressor-power', 'heat-duty', 'thermal-expansion', 'air-receiver-size', 'compressed-air-leak'] },
+      { name: 'Boilers & combustion', ids: ['boiler-efficiency'] },
+      { name: 'Heat transfer & HVAC', ids: ['lmtd', 'convection-heat-transfer', 'chiller-tonnage', 'dew-point', 'tank-heater-sizing', 'pipe-heat-loss', 'air-changes-per-hour', 'cooling-tower'] },
       { name: 'Process & fluid properties', ids: ['residence-time', 'kinematic-viscosity'] },
       { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force', 'gear-ratio', 'shaft-diameter', 'bearing-life', 'bolt-torque', 'spring-rate', 'chain-length'] },
       { name: 'Strength of materials & structures', ids: ['beam-deflection', 'bending-stress', 'area-moment-of-inertia', 'factor-of-safety', 'weld-size'] },
@@ -54,6 +55,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Solar PV', ids: ['solar-string-sizing'] },
       { name: 'Transmission lines & insulation testing', ids: ['ferranti-effect', 'polarization-index'] },
       { name: 'Lighting', ids: ['lumen-method'] },
+      { name: 'Lightning protection', ids: ['rolling-sphere'] },
     ],
     about: [
       { h: 'For LV and MV power systems', p: 'The calculators cover single-phase, three-phase and DC circuits at common Indian, European and North American voltages (230/415 V, 400 V, 120/208/480 V and 11 kV). Formulas follow IEC 60364, IEC 60076, IEEE 519 and NEMA MG 1 where relevant, and each page explains the assumptions.' },
@@ -75,7 +77,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'lc-filter', 'capacitor-lifetime', 'air-core-inductor', 'inductor-al-value'] },
       { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts', 'rc-phase-shift-oscillator', 'crystal-load-capacitance', 'uart-baud-rate-error', 'i2c-pull-up-resistor'] },
       { name: 'Op-amp circuits, active filters & comparators', ids: ['summing-amplifier', 'differential-amplifier', 'op-amp-integrator', 'sallen-key-low-pass', 'schmitt-trigger'] },
-      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'microstrip-impedance', 'battery-charge-time', 'lm317', 'buck-boost-converter', 'flyback-transformer', 'peukerts-law']
+      { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'microstrip-impedance', 'battery-charge-time', 'lm317', 'buck-boost-converter', 'flyback-transformer', 'peukerts-law', 'rc-snubber']
       },
       { name: 'RF & wireless', ids: ['antenna-length', 'free-space-path-loss'] },
       { name: 'Sensors & current sensing', ids: ['ntc-thermistor', 'strain-gauge', 'shunt-resistor', 'transimpedance-amplifier', 'hall-effect-current-sensor'] },
@@ -125,6 +127,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Electrochemistry', ids: ['nernst-equation', 'faraday-electrolysis', 'cell-potential'] },
       { name: 'Gas laws', ids: ['boyles-law', 'charles-law', 'combined-gas-law', 'gay-lussacs-law', 'avogadros-law', 'daltons-law', 'grahams-law', 'van-der-waals', 'gas-density'] },
       { name: 'Thermodynamics, kinetics & colligative properties', ids: ['specific-heat', 'gibbs-free-energy', 'arrhenius-equation', 'activation-energy', 'half-life', 'boiling-point-elevation', 'freezing-point-depression', 'osmotic-pressure', 'percent-yield', 'equilibrium-constant', 'bomb-calorimeter', 'integrated-rate-law', 'enthalpy-of-reaction'] },
+      { name: 'Combustion & flue gas', ids: ['excess-air'] },
     ],
     faq: [
       { q: 'How do I calculate molarity?', a: 'Molarity = moles of solute ÷ litres of solution. The molarity calculator also finds the mass to weigh out.' },

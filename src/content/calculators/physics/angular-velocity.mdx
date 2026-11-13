@@ -1,10 +1,10 @@
 ---
-title: Angular Velocity Calculator (rpm to rad/s & Linear Speed)
-description: Convert rpm to rad/s and Hz, and calculate the linear (tangential) speed at any radius — for motors, wheels, pulleys and rotating shafts.
+title: Angular Velocity Calculator (rpm to rad/s & Rim Speed)
+description: Convert rpm to rad/s, Hz and degrees per second, and calculate the tangential (rim) speed at any radius for motors, wheels, pulleys and rotating shafts.
 category: physics
-intro: "Rotating machines are rated in revolutions per minute, but physics formulas use angular velocity in radians per second. This angular velocity calculator converts between rpm, rad/s and Hz and gives the tangential speed at any radius, v = ωr — handy for motor shafts, wheels, grinding discs and fans."
-keywords: [angular velocity calculator, rpm to rad/s, rad/s to rpm, tangential velocity calculator, rpm to linear speed, rotational speed converter]
-updated: 2026-10-29
+intro: "Rotating machines are rated in revolutions per minute, but physics and engineering formulas use angular velocity in radians per second. This angular velocity calculator converts between rpm, rad/s and Hz, gives the time per revolution and works out the tangential speed at any radius, v = ωr — handy for motor shafts, wheels, grinding discs, fans and pulleys."
+keywords: [angular velocity calculator, rpm to rad/s, rad/s to rpm, tangential velocity calculator, rpm to linear speed, rotational speed converter, angular speed formula, rim speed calculator]
+updated: 2026-11-13
 variables:
   - { id: N, label: Rotational speed, suffix: rpm, default: 1450, min: 0 }
   - { id: r, label: Radius, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
@@ -12,48 +12,88 @@ variables:
   - { id: f, label: Rotational frequency, family: frequency, unit: Hz, min: 0 }
   - { id: v, label: Tangential (rim) speed, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
   - { id: T, label: Time per revolution, family: seconds, unit: ms, min: 0 }
+  - { id: wd, label: Angular velocity in degrees per second, suffix: °/s, min: 0, decimals: 1 }
 equations:
   - w = 2 * pi * N / 60
   - f = N / 60
   - v = w * r
   - T = 1 / f
+  - wd = 360 * N / 60
 faq:
   - q: How do I convert rpm to rad/s?
-    a: Multiply by 2π and divide by 60, so ω = rpm × 0.10472. 1,450 rpm is about 151.8 rad/s.
+    a: Multiply by 2π and divide by 60, so ω = rpm × 0.10472. 1,450 rpm is 151.84 rad/s. To go back, rpm = rad/s × 60 ÷ 2π = rad/s × 9.549.
   - q: How do I find linear speed from rpm?
-    a: v = ω × r = 2π r × rpm ÷ 60. A 200 mm diameter disc at 1,450 rpm has a rim speed of about 15.2 m/s.
+    a: v = ω × r = π × D × rpm ÷ 60. A 200 mm diameter disc at 1,450 rpm has a rim speed of π × 0.2 × 1,450 ÷ 60 = 15.18 m/s.
   - q: What is the difference between angular velocity and frequency?
-    a: Frequency counts revolutions per second (Hz); angular velocity counts radians per second. One revolution is 2π radians, so ω = 2πf.
+    a: Frequency counts revolutions per second (Hz); angular velocity counts radians per second. One revolution is 2π radians, so ω = 2πf — 50 revolutions per second is 314.16 rad/s.
   - q: Why does rim speed matter?
-    a: Grinding wheels, saw blades and fans have a maximum safe peripheral speed, and belt and conveyor speeds are set by pulley rim speed.
-related: [physics/escape-velocity, physics/orbital-period, engineering/pulley-speed, physics/centripetal-force, physics/rotational-kinetic-energy, engineering/torque-power-speed]
+    a: Grinding wheels, saw blades and fans have a maximum safe peripheral speed marked on them, belt and conveyor speeds are set by the pulley rim speed, and cutting speeds in machining are specified as surface speed at the tool or workpiece diameter.
+related: [engineering/pulley-speed, physics/centripetal-force, physics/rotational-kinetic-energy, engineering/torque-power-speed, engineering/gear-ratio, electrical/induction-motor-slip]
 ---
 
 ## How to use the angular velocity calculator
 
-Enter the **speed in rpm** and a **radius**. You get the angular velocity in rad/s, the rotational frequency in Hz, the tangential speed at that radius and the time for one revolution. Enter rad/s or a rim speed instead and clear rpm to convert the other way.
+Enter the **speed in rpm** and a **radius**. You get the angular velocity in rad/s and degrees per second, the rotational frequency in Hz, the tangential speed at that radius and the time for one revolution. Every field can be the unknown — enter rad/s or a rim speed instead and clear rpm to convert the other way, or enter a rim speed and rpm to find the radius.
 
 ## Angular velocity formulas
 
-<p class="formula">ω = 2π × N ÷ 60 &nbsp;·&nbsp; f = N ÷ 60 &nbsp;·&nbsp; v = ω × r</p>
+<p class="formula">ω = 2π × N ÷ 60 &nbsp;·&nbsp; f = N ÷ 60 &nbsp;·&nbsp; v = ω × r = π D N ÷ 60 &nbsp;·&nbsp; T = 1 ÷ f</p>
 
-## Example
+N is the speed in rpm, ω the angular velocity in rad/s, r the radius and D the diameter. Angular velocity is the same everywhere on a rigid rotating body; the tangential speed grows in proportion to the distance from the axis.
+
+## Worked example
 
 A 4-pole motor at 1,450 rpm driving a 200 mm diameter disc (r = 100 mm):
 
-- ω = 2π × 1450 ÷ 60 = **151.84 rad/s**
-- f = **24.17 Hz** (one turn every 41.4 ms)
-- Rim speed = 151.84 × 0.1 = **15.18 m/s**
+- ω = 2π × 1,450 ÷ 60 = **151.84 rad/s** (8,700 °/s)
+- f = 1,450 ÷ 60 = **24.17 Hz**, so one turn takes **41.38 ms**
+- Rim speed v = 151.84 × 0.1 = **15.18 m/s** (54.7 km/h)
 
-## rpm conversion table
+## rpm to rad/s conversion table
 
-| Speed | Angular velocity | Frequency |
+| Speed | Angular velocity | Frequency | Degrees per second | Time per revolution |
+|---|---|---|---|---|
+| 1 rpm | 0.10 rad/s | 0.02 Hz | 6 °/s | 60,000.00 ms |
+| 10 rpm | 1.05 rad/s | 0.17 Hz | 60 °/s | 6,000.00 ms |
+| 60 rpm | 6.28 rad/s | 1.00 Hz | 360 °/s | 1,000.00 ms |
+| 100 rpm | 10.47 rad/s | 1.67 Hz | 600 °/s | 600.00 ms |
+| 500 rpm | 52.36 rad/s | 8.33 Hz | 3,000 °/s | 120.00 ms |
+| 750 rpm | 78.54 rad/s | 12.50 Hz | 4,500 °/s | 80.00 ms |
+| 1,000 rpm | 104.72 rad/s | 16.67 Hz | 6,000 °/s | 60.00 ms |
+| 1,450 rpm | 151.84 rad/s | 24.17 Hz | 8,700 °/s | 41.38 ms |
+| 1,500 rpm | 157.08 rad/s | 25.00 Hz | 9,000 °/s | 40.00 ms |
+| 2,900 rpm | 303.69 rad/s | 48.33 Hz | 17,400 °/s | 20.69 ms |
+| 3,000 rpm | 314.16 rad/s | 50.00 Hz | 18,000 °/s | 20.00 ms |
+| 3,600 rpm | 376.99 rad/s | 60.00 Hz | 21,600 °/s | 16.67 ms |
+| 10,000 rpm | 1,047.20 rad/s | 166.67 Hz | 60,000 °/s | 6.00 ms |
+
+## Rim speed by diameter and rpm (m/s)
+
+| Diameter | 500 rpm | 1,000 rpm | 1,450 rpm | 1,500 rpm | 2,900 rpm | 3,000 rpm |
+|---|---|---|---|---|---|---|
+| 50 mm | 1.31 | 2.62 | 3.80 | 3.93 | 7.59 | 7.85 |
+| 100 mm | 2.62 | 5.24 | 7.59 | 7.85 | 15.18 | 15.71 |
+| 150 mm | 3.93 | 7.85 | 11.39 | 11.78 | 22.78 | 23.56 |
+| 200 mm | 5.24 | 10.47 | 15.18 | 15.71 | 30.37 | 31.42 |
+| 300 mm | 7.85 | 15.71 | 22.78 | 23.56 | 45.55 | 47.12 |
+| 500 mm | 13.09 | 26.18 | 37.96 | 39.27 | 75.92 | 78.54 |
+| 1000 mm | 26.18 | 52.36 | 75.92 | 78.54 | 151.84 | 157.08 |
+
+## Synchronous speed of AC motors
+
+N<sub>s</sub> = 120 f ÷ poles; induction motors run a few percent slower (for example 1,450 rpm instead of 1,500 rpm):
+
+| Poles | 50 Hz | 60 Hz |
 |---|---|---|
-| 1 rpm | 0.10 rad/s | 0.02 Hz |
-| 60 rpm | 6.28 rad/s | 1.00 Hz |
-| 750 rpm | 78.54 rad/s | 12.50 Hz |
-| 1,000 rpm | 104.72 rad/s | 16.67 Hz |
-| 1,500 rpm | 157.08 rad/s | 25.00 Hz |
-| 3,000 rpm | 314.16 rad/s | 50.00 Hz |
-| 3,600 rpm | 376.99 rad/s | 60.00 Hz |
-| 10,000 rpm | 1047.20 rad/s | 166.67 Hz |
+| 2 | 3,000 rpm (314.2 rad/s) | 3,600 rpm (377.0 rad/s) |
+| 4 | 1,500 rpm (157.1 rad/s) | 1,800 rpm (188.5 rad/s) |
+| 6 | 1,000 rpm (104.7 rad/s) | 1,200 rpm (125.7 rad/s) |
+| 8 | 750 rpm (78.5 rad/s) | 900 rpm (94.2 rad/s) |
+| 10 | 600 rpm (62.8 rad/s) | 720 rpm (75.4 rad/s) |
+| 12 | 500 rpm (52.4 rad/s) | 600 rpm (62.8 rad/s) |
+
+## Practical notes
+
+- **Gears and belts** keep the rim speed equal on both sides of a belt or at the pitch circle of a gear mesh, so the angular velocities are in the inverse ratio of the diameters — see the [pulley speed calculator](/engineering/pulley-speed/) and the [gear ratio calculator](/engineering/gear-ratio/).
+- **Power and torque:** P = T × ω, so a 15 kW motor at 151.84 rad/s delivers 98.8 N·m — use the [torque, power and speed calculator](/engineering/torque-power-speed/).
+- **Centripetal acceleration** at the rim is a = ω² r (2,306 m/s², about 235 g, in the example), which sets the stress in rotating discs and the force on any unbalance; see the [centripetal force calculator](/physics/centripetal-force/).

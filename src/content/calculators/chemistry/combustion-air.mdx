@@ -1,0 +1,98 @@
+---
+title: Combustion Air Calculator (Stoichiometric Air from Fuel Analysis)
+description: Calculate the theoretical (stoichiometric) air needed to burn a fuel from its C, H, O and S content, plus actual air with excess air in kg and Nm³.
+category: chemistry
+intro: "Every kilogram of fuel needs a fixed amount of oxygen to burn completely, set by how much carbon, hydrogen and sulphur it contains. This combustion air calculator works out the theoretical (stoichiometric) oxygen and air from the fuel's ultimate analysis, then adds your excess air to give the actual air–fuel ratio, the air volume in Nm³ per kg and the air flow a burner or boiler fan must supply."
+keywords: [combustion air calculator, stoichiometric air calculation, theoretical air required for combustion, air fuel ratio from ultimate analysis, combustion air requirement, excess air combustion calculation, air required to burn fuel]
+published: 2026-11-14
+updated: 2026-11-14
+variables:
+  - { id: C, label: Carbon in the fuel (mass), family: percent, unit: '%', default: 85.9, min: 0, max: 1 }
+  - { id: H, label: Hydrogen in the fuel (mass), family: percent, unit: '%', default: 12, min: 0, max: 1 }
+  - { id: O, label: Oxygen in the fuel (mass), family: percent, unit: '%', default: 0.7, min: 0, max: 1 }
+  - { id: S, label: Sulphur in the fuel (mass), family: percent, unit: '%', default: 0.5, min: 0, max: 1, help: 'Use the ultimate analysis on the same basis as the fuel flow (usually as fired). Nitrogen, moisture and ash need no oxygen.' }
+  - { id: EA, label: Excess air, family: percent, unit: '%', default: 15, min: 0, help: 'Typical: natural gas 5–15%, fuel oil 10–20%, pulverised coal 15–25%, stoker coal and biomass 30–60%.' }
+  - { id: mf, label: Fuel flow, family: massflow, unit: kgh, imperialUnit: lbh, default: 100, min: 0 }
+  - { id: O2r, label: Theoretical oxygen, suffix: kg O₂/kg fuel, min: 0, decimals: 3 }
+  - { id: A0, label: Stoichiometric air–fuel ratio, suffix: kg air/kg fuel, min: 0, decimals: 2 }
+  - { id: A, label: Actual air–fuel ratio (with excess air), suffix: kg air/kg fuel, min: 0, decimals: 2 }
+  - { id: Vn, label: Actual air volume, suffix: Nm³/kg fuel, min: 0, decimals: 2 }
+  - { id: ma, label: Combustion air flow, family: massflow, unit: kgh, imperialUnit: lbh, min: 0 }
+  - { id: Qn, label: Combustion air flow (normal volume), suffix: Nm³/h, min: 0, decimals: 0 }
+equations:
+  - O2r = 2.6641 * C + 7.9360 * H + 0.9981 * S - O
+  - A0 = O2r / 0.2314
+  - A = A0 * (1 + EA)
+  - Vn = A / 1.2922
+  - ma = A * mf
+  - Qn = ma * 3600 / 1.2922
+faq:
+  - q: How do you calculate the air required for combustion?
+    a: "Find the oxygen needed per kg of fuel: O₂ = 2.664 C + 7.936 H + 0.998 S − O (mass fractions), then divide by 0.2314, the mass fraction of oxygen in air. This is the familiar 11.5 C + 34.3 (H − O/8) + 4.3 S. For heavy fuel oil with 85.9% C, 12% H, 0.7% O and 0.5% S the stoichiometric air is about 14.0 kg per kg of fuel."
+  - q: Where do the factors 2.664 and 7.936 come from?
+    a: "From the reactions C + O₂ → CO₂ and 2H₂ + O₂ → 2H₂O: 12.011 kg of carbon needs 31.998 kg of oxygen (2.664 kg/kg) and 2.016 kg of hydrogen needs 15.999 kg (7.936 kg/kg). Sulphur burns to SO₂ and needs 0.998 kg/kg. Oxygen already in the fuel reduces what the air must supply."
+  - q: What is a typical air–fuel ratio?
+    a: About 17.2 kg/kg for natural gas, 15.7 for propane, 14.5 for diesel, 14 for heavy fuel oil, 8–9 for good bituminous coal and about 6 for dry wood. Real burners run 5–50% above these to make sure every fuel particle meets enough oxygen.
+  - q: How do I convert air mass to volume?
+    a: Divide by the density of air at normal conditions, 1.2922 kg/Nm³ at 0 °C and 1.01325 bar. 14 kg of air is about 10.8 Nm³. For fan sizing, convert normal m³ to actual m³ at the fan inlet temperature and pressure.
+related: [chemistry/excess-air, engineering/boiler-efficiency, chemistry/gcv-to-ncv, chemistry/percent-composition, chemistry/limiting-reagent, engineering/gas-flow-correction]
+---
+
+## How to use the combustion air calculator
+
+Enter the fuel's **carbon, hydrogen, oxygen and sulphur** content by mass (the ultimate analysis, as fired), the **excess air** you run and the **fuel flow**. The calculator gives the theoretical oxygen and stoichiometric air–fuel ratio, the actual air–fuel ratio with excess air, the air volume in normal cubic metres per kg of fuel and the total combustion air flow in kg/h and Nm³/h. If you know the flue-gas oxygen instead of the excess air, find the excess air first with the [excess air calculator](/chemistry/excess-air/).
+
+## Combustion air formula
+
+<p class="formula">O<sub>2,th</sub> = 2.664 C + 7.936 H + 0.998 S − O &nbsp;(kg O<sub>2</sub> per kg fuel)</p>
+
+<p class="formula">A<sub>0</sub> = O<sub>2,th</sub> ÷ 0.2314 &nbsp;·&nbsp; A = A<sub>0</sub> (1 + EA) &nbsp;·&nbsp; V = A ÷ 1.2922 Nm³/kg</p>
+
+C, H, O and S are mass fractions of the fuel; 0.2314 is the mass fraction of oxygen in dry air and 1.2922 kg/Nm³ the density of air at 0 °C and 1 atm.
+
+## Worked example
+
+Heavy fuel oil with C 85.9%, H 12%, O 0.7% and S 0.5%, burned at 15% excess air at 100 kg/h:
+
+- Theoretical oxygen = 2.664 × 0.859 + 7.936 × 0.12 + 0.998 × 0.005 − 0.007 = **3.239 kg O₂/kg**
+- Stoichiometric air A<sub>0</sub> = 3.239 ÷ 0.2314 = **14.00 kg air/kg fuel**
+- Actual air A = 14.00 × 1.15 = **16.10 kg/kg** = 12.46 Nm³/kg
+- Air flow = 16.10 × 100 = **1,610 kg/h** ≈ 1,246 Nm³/h
+
+## Stoichiometric air for common fuels
+
+Typical ultimate analyses (mass %); the air figures are computed from the formula above:
+
+| Fuel | C | H | O | S | O₂ (kg/kg) | Air (kg/kg) | Air (Nm³/kg) |
+|---|---|---|---|---|---|---|---|
+| Methane / natural gas (CH₄) | 74.87 | 25.13 | 0 | 0 | 3.989 | 17.24 | 13.34 |
+| Propane / LPG (C₃H₈) | 81.71 | 18.29 | 0 | 0 | 3.628 | 15.68 | 12.13 |
+| Diesel (typical) | 86.4 | 13.3 | 0 | 0.3 | 3.360 | 14.52 | 11.24 |
+| Heavy fuel oil (typical) | 85.9 | 12 | 0.7 | 0.5 | 3.239 | 14.00 | 10.83 |
+| Bituminous coal (typical, as fired) | 66 | 4.5 | 7.5 | 1 | 2.050 | 8.86 | 6.86 |
+| Indian coal (typical, as fired) | 41.1 | 2.8 | 9.9 | 0.4 | 1.222 | 5.28 | 4.09 |
+| Wood, oven dry | 50 | 6 | 43 | 0 | 1.378 | 5.96 | 4.61 |
+| Ethanol (C₂H₅OH) | 52.14 | 13.13 | 34.73 | 0 | 2.084 | 9.00 | 6.97 |
+| Hydrogen (H₂) | 0 | 100 | 0 | 0 | 7.936 | 34.30 | 26.54 |
+
+## Actual air by excess air
+
+For the heavy fuel oil in the example at 100 kg/h:
+
+| Excess air | Air ratio λ | Air (kg/kg) | Air (Nm³/kg) | Air flow |
+|---|---|---|---|---|
+| 0% | 1.00 | 14.00 | 10.83 | 1,400 kg/h |
+| 5% | 1.05 | 14.70 | 11.37 | 1,470 kg/h |
+| 10% | 1.10 | 15.40 | 11.91 | 1,540 kg/h |
+| 15% | 1.15 | 16.10 | 12.46 | 1,610 kg/h |
+| 20% | 1.20 | 16.80 | 13.00 | 1,680 kg/h |
+| 30% | 1.30 | 18.20 | 14.08 | 1,820 kg/h |
+| 50% | 1.50 | 20.99 | 16.25 | 2,099 kg/h |
+| 100% | 2.00 | 27.99 | 21.66 | 2,799 kg/h |
+
+## Practical notes
+
+- **Basis matters:** the ultimate analysis must be on the same basis (as fired, air dried or dry) as the fuel flow. Coal analyses are often reported dry; correct them for the moisture you actually burn.
+- **Gaseous fuels:** for natural gas you can enter the mass composition of the gas (methane is 74.9% C and 25.1% H), or work in volume: 1 Nm³ of methane needs 2 Nm³ of O₂, that is 9.52 Nm³ of air.
+- **Humid air:** the formula is for dry air. Humid air carries a little less oxygen per kg, so fans move about 1–2% more mass on a hot, humid day.
+- **Too little or too much air:** below stoichiometric the fuel burns incompletely and forms CO and soot; every 10% of unnecessary excess air costs roughly 0.5–1% of boiler efficiency in extra stack loss. Check overall efficiency with the [boiler efficiency calculator](/engineering/boiler-efficiency/).

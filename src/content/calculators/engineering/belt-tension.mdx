@@ -1,0 +1,123 @@
+---
+title: Belt Tension Calculator (Tight & Slack Side, V & Flat Belts)
+description: Calculate tight-side and slack-side belt tension, the tension ratio, centrifugal tension and shaft load for flat and V-belt drives from power and speed.
+category: engineering
+intro: "A belt transmits power through the difference between the tension on its tight side and its slack side, and friction around the pulley limits how large that difference can get. This belt tension calculator uses the Euler–Eytelwein (capstan) equation to work out the tension ratio, the tight-side and slack-side tensions, the centrifugal tension, the static installation tension and the load on the shaft bearings for flat and V-belt drives."
+keywords: [belt tension calculator, tight side and slack side tension, v belt tension calculation, belt tension formula, t1/t2 = e^(μθ), capstan equation, belt drive shaft load, centrifugal tension of belt]
+published: 2026-11-14
+updated: 2026-11-14
+variables:
+  - { id: P, label: Power transmitted, family: power, unit: kW, imperialUnit: hp, default: 3, min: 0 }
+  - { id: N, label: Speed of the smaller (driver) pulley, suffix: rpm, default: 1440, min: 0 }
+  - { id: D, label: Pitch diameter of that pulley, family: length, unit: mm, imperialUnit: in, default: 150, min: 0 }
+  - { id: mu, label: Coefficient of friction (belt on pulley), default: 0.25, min: 0, help: 'Rubber or fabric belt on cast iron or steel: about 0.25–0.35 dry. Leather on cast iron: about 0.3. Use a lower value if the drive may get oily or wet.' }
+  - { id: th, label: Angle of wrap on the smaller pulley, suffix: °, default: 170, min: 0, max: 360, help: 'θ ≈ 180° − 2·asin((D − d) ÷ 2C), with C the centre distance. 180° for equal pulleys.' }
+  - id: beta
+    label: Belt type / groove angle
+    default: 38
+    options:
+      - { label: 'Flat belt (no groove)', value: 180 }
+      - { label: 'V-belt in a 34° groove', value: 34 }
+      - { label: 'V-belt in a 36° groove', value: 36 }
+      - { label: 'V-belt in a 38° groove', value: 38 }
+      - { label: 'V-belt, 40° belt angle', value: 40 }
+  - { id: w, label: Belt mass per metre (all belts), suffix: kg/m, default: 0.19, min: 0, help: 'Classical V-belt sections: Z ≈ 0.06, A ≈ 0.12, B ≈ 0.19, C ≈ 0.30, D ≈ 0.66 kg/m. Multiply by the number of belts. Enter 0 to ignore centrifugal tension.' }
+  - { id: v, label: Belt speed, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+  - { id: Te, label: Effective tension (T1 − T2), family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: R, label: Tension ratio T1 ÷ T2 (friction part), min: 0, decimals: 3 }
+  - { id: Tc, label: Centrifugal tension, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: T1, label: Tight-side tension, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: T2, label: Slack-side tension, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: T0, label: Static (installation) tension, family: force, unit: N, imperialUnit: lbf, min: 0 }
+  - { id: Fs, label: Load on the shaft (bearing load), family: force, unit: N, imperialUnit: lbf, min: 0 }
+equations:
+  - v = pi * D * N / 60
+  - Te = P / v
+  - R = exp(mu * th * pi / 180 / sin(beta * pi / 360))
+  - Tc = w * v^2
+  - T1 = Te * R / (R - 1) + Tc
+  - T2 = Te / (R - 1) + Tc
+  - T0 = (T1 + T2) / 2
+  - Fs = sqrt((T1 - Tc)^2 + (T2 - Tc)^2 - 2 * (T1 - Tc) * (T2 - Tc) * cos(th * pi / 180))
+faq:
+  - q: How do you calculate tight side and slack side belt tension?
+    a: First find the effective tension Te = power ÷ belt speed. The capstan equation sets the ratio T1 ÷ T2 = e^(μθ) for a flat belt, or e^(μθ ÷ sin(β/2)) for a V-belt with groove angle β. Then T1 = Te × R ÷ (R − 1) and T2 = Te ÷ (R − 1), plus the centrifugal tension mv² on both sides. For 3 kW at 11.3 m/s, Te = 265 N.
+  - q: Why does a V-belt grip better than a flat belt?
+    a: The wedge action in the groove multiplies the normal force on the belt sides by 1 ÷ sin(β/2). In a 38° groove that is about 3.07, so a friction coefficient of 0.25 behaves like 0.77 on a flat pulley, and the same tension ratio is reached with far less installation tension and shaft load.
+  - q: What is centrifugal tension in a belt?
+    a: The tension needed to keep the belt moving around the pulleys, Tc = m × v², where m is the mass per metre and v the belt speed. It adds equally to both sides, does not help transmit power and is not felt by the bearings. It matters above about 20 m/s, which is why very fast drives need lighter belts.
+  - q: How tight should a belt be?
+    a: The static tension when the drive is stopped should be about (T1 + T2) ÷ 2 at full load, so the belt does not slip on start-up. Manufacturers turn this into a deflection force at the middle of the span. Too much tension overloads bearings and shortens belt life; too little causes slip, squeal and glazing.
+related: [engineering/pulley-speed, engineering/torque-power-speed, engineering/chain-length, engineering/shaft-diameter, engineering/bearing-life, physics/friction-force]
+---
+
+## How to use the belt tension calculator
+
+Enter the **power** the belt must carry, the **speed** and **pitch diameter** of the smaller pulley, the **friction coefficient**, the **angle of wrap** on that pulley, the **belt type** (flat or the V-groove angle) and the **belt mass per metre**. The calculator gives the belt speed, the effective tension, the tension ratio, the centrifugal tension, the tight- and slack-side tensions, the static installation tension and the resultant load on the shaft. The smaller pulley is used because it has the smaller wrap angle, so it is the one that slips first.
+
+## Belt tension formulas
+
+<p class="formula">v = π D N ÷ 60 &nbsp;·&nbsp; T<sub>e</sub> = T<sub>1</sub> − T<sub>2</sub> = P ÷ v</p>
+
+<p class="formula">(T<sub>1</sub> − T<sub>c</sub>) ÷ (T<sub>2</sub> − T<sub>c</sub>) = e<sup>μθ ÷ sin(β/2)</sup> &nbsp;·&nbsp; T<sub>c</sub> = m v²</p>
+
+<p class="formula">F<sub>shaft</sub> = √(T<sub>1</sub>′² + T<sub>2</sub>′² − 2 T<sub>1</sub>′ T<sub>2</sub>′ cos θ), with T′ = T − T<sub>c</sub></p>
+
+θ is the wrap angle in radians and β the groove angle (β = 180° gives sin 90° = 1, the flat-belt case). The static tension T<sub>0</sub> = (T<sub>1</sub> + T<sub>2</sub>) ÷ 2.
+
+## Worked example
+
+A 3 kW motor at 1440 rpm drives through a single B-section V-belt (0.19 kg/m) on a 150 mm pitch-diameter pulley in a 38° groove, with μ = 0.25 and 170° of wrap:
+
+- Belt speed v = π × 0.15 × 1440 ÷ 60 = **11.31 m/s**
+- Effective tension Te = 3,000 ÷ 11.31 = **265.3 N**
+- Tension ratio = e^(0.25 × 2.9671 ÷ sin 19°) = e^2.2784 = **9.761**
+- Centrifugal tension Tc = 0.19 × 11.31² = **24.3 N**
+- Tight side T1 = 265.3 × 9.761 ÷ 8.761 + 24.3 = **319.8 N**
+- Slack side T2 = 265.3 ÷ 8.761 + 24.3 = **54.6 N**
+- Static tension T0 = **187.2 N**; shaft load = **325.4 N**
+
+## Tension ratio T1 ÷ T2 by friction and wrap angle
+
+| μ | Flat, 180° | Flat, 150° | V 38°, 180° | V 38°, 150° | V 34°, 180° |
+|---|---|---|---|---|---|
+| 0.15 | 1.60 | 1.48 | 4.25 | 3.34 | 5.01 |
+| 0.2 | 1.87 | 1.69 | 6.89 | 4.99 | 8.58 |
+| 0.25 | 2.19 | 1.92 | 11.16 | 7.47 | 14.68 |
+| 0.3 | 2.57 | 2.19 | 18.08 | 11.16 | 25.12 |
+| 0.35 | 3.00 | 2.50 | 29.29 | 16.68 | 42.98 |
+| 0.4 | 3.51 | 2.85 | 47.46 | 24.94 | 73.56 |
+
+## Belt tensions by power
+
+Single V-belt in a 38° groove, μ = 0.25, 170° wrap, driver at 1,440 rpm, centrifugal tension neglected:
+
+| Power | Belt speed (150 mm) | Te (150 mm) | T1 (150 mm) | T2 (150 mm) | Te (250 mm) | T1 (250 mm) |
+|---|---|---|---|---|---|---|
+| 0.75 kW | 11.31 m/s | 66 N | 74 N | 8 N | 40 N | 44 N |
+| 1.5 kW | 11.31 m/s | 133 N | 148 N | 15 N | 80 N | 89 N |
+| 3 kW | 11.31 m/s | 265 N | 296 N | 30 N | 159 N | 177 N |
+| 5.5 kW | 11.31 m/s | 486 N | 542 N | 56 N | 292 N | 325 N |
+| 7.5 kW | 11.31 m/s | 663 N | 739 N | 76 N | 398 N | 443 N |
+| 11 kW | 11.31 m/s | 973 N | 1,084 N | 111 N | 584 N | 650 N |
+| 15 kW | 11.31 m/s | 1,326 N | 1,478 N | 151 N | 796 N | 887 N |
+
+A larger pulley raises the belt speed and cuts every tension in proportion — one of the simplest ways to relieve an overloaded belt or bearing.
+
+## Centrifugal tension by belt speed
+
+| Belt speed | Z (0.06 kg/m) | A (0.12 kg/m) | B (0.19 kg/m) | C (0.30 kg/m) | D (0.66 kg/m) |
+|---|---|---|---|---|---|
+| 5 m/s | 1.5 N | 3.0 N | 4.8 N | 7.5 N | 16.5 N |
+| 10 m/s | 6.0 N | 12.0 N | 19.0 N | 30.0 N | 66.0 N |
+| 15 m/s | 13.5 N | 27.0 N | 42.8 N | 67.5 N | 148.5 N |
+| 20 m/s | 24.0 N | 48.0 N | 76.0 N | 120.0 N | 264.0 N |
+| 25 m/s | 37.5 N | 75.0 N | 118.8 N | 187.5 N | 412.5 N |
+| 30 m/s | 54.0 N | 108.0 N | 171.0 N | 270.0 N | 594.0 N |
+
+## Practical notes
+
+- **Design margin on friction:** the capstan equation gives the tension ratio at the point of slip. Belt makers design with an effective ratio of about 5 for V-belts at 180° wrap (Gates uses an effective friction of 0.5123 per radian) and about 2–3 for flat belts, so the belt does not creep when the friction drops with wear, dust or oil.
+- **Wrap angle:** the wrap on the small pulley is about 180° − 57.3° × (D − d) ÷ C, with C the centre distance. Below about 120° add an idler or increase the centre distance.
+- **Speed:** most V-belts run best at 10–30 m/s. Below 5 m/s the tensions get large; above 30 m/s centrifugal tension eats into the capacity. Find pulley speeds and ratios with the [pulley speed calculator](/engineering/pulley-speed/) and the torque at each shaft with the [torque, power and speed calculator](/engineering/torque-power-speed/).
+- **Bearing loads:** the shaft load is close to T1 + T2 for wraps near 180°. Use it to check the shaft with the [shaft diameter calculator](/engineering/shaft-diameter/) and the bearing life with the [bearing life calculator](/engineering/bearing-life/).

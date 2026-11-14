@@ -1,84 +1,86 @@
 ---
-title: Permutation Calculator (nPr)
-description: Calculate the number of permutations — ordered arrangements of r items chosen from n.
+title: Permutation Calculator (nPr, Order Matters)
+description: Calculate permutations nPr = n!/(n − r)! — ordered arrangements of r items from n — plus permutations with repetition and the matching combinations.
 category: statistics
-intro: "A permutation counts the ways to arrange items when order matters — like race finishing positions or PIN codes."
-keywords: [permutation calculator, npr, arrangements, order matters, factorial, combinatorics]
+intro: "A permutation counts the ways to arrange items when the order matters — race finishing positions, PIN codes or the order of songs in a playlist. This permutation calculator works out nPr = n! ÷ (n − r)! for any n and r, and also gives the count when items may repeat (n to the power r) and the number of combinations nCr, so you can see how much the order adds."
+keywords: [permutation calculator, npr calculator, permutation formula, permutations with repetition, number of arrangements, order matters, npr vs ncr, how many ways to arrange]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-14
 variables:
   - { id: n, label: Total items (n), default: 10, min: 0 }
-  - { id: r, label: Items chosen (r), default: 3, min: 0 }
-  - { id: P, label: Permutations (nPr), min: 0 }
+  - { id: r, label: Items chosen and arranged (r), default: 3, min: 0 }
+  - { id: P, label: Permutations nPr (no repetition), min: 0 }
+  - { id: Pr, label: Permutations with repetition (nʳ), min: 0 }
+  - { id: C, label: Combinations nCr (order ignored), min: 0 }
 equations:
   - P = nPr(n, r)
+  - Pr = n^r
+  - C = nCr(n, r)
 faq:
-  - q: What is a permutation?
-    a: An arrangement where order matters. Choosing a 1st, 2nd and 3rd place from 10 runners is a permutation.
-  - q: What is the formula?
-    a: nPr = n! ÷ (n − r)!. For 10 and 3, 10 × 9 × 8 = 720.
-  - q: How is it different from combinations?
-    a: Combinations ignore order. nPr = nCr × r!, so there are always more permutations than combinations.
-  - q: "How many ways can 3 people finish first, second and third out of 10?"
-    a: "10 × 9 × 8 = 720."
-  - q: "What is the difference between nPr and nCr?"
-    a: "nPr counts ordered arrangements; nCr counts unordered selections. nPr = nCr × r!."
-related: [statistics/combinations, statistics/probability]
+  - q: What is the permutation formula?
+    a: nPr = n! ÷ (n − r)!, which is the product of r numbers counting down from n. For n = 10 and r = 3 that is 10 × 9 × 8 = 720. When all n items are arranged (r = n) it is simply n!.
+  - q: What is the difference between permutations and combinations?
+    a: Permutations count ordered arrangements; combinations count unordered selections. Each selection of r items can be arranged in r! orders, so nPr = nCr × r!. From 10 people you can form 120 committees of 3 but 720 ordered line-ups of 3.
+  - q: How do you count permutations with repetition?
+    a: When each position can reuse any of the n items, there are nʳ arrangements. A 4-digit PIN with repeats allowed has 10⁴ = 10,000 possibilities, against 10P4 = 5,040 when every digit must be different.
+  - q: How many ways can letters with repeats be arranged?
+    a: Divide n! by the factorial of each repeat count. MISSISSIPPI has 11 letters with 4 S, 4 I and 2 P, so there are 11! ÷ (4! × 4! × 2!) = 34,650 distinct arrangements.
+related: [statistics/combinations, math/factorial, statistics/probability, statistics/binomial-probability, statistics/birthday-paradox, statistics/hypergeometric-distribution]
 ---
 
 ## How to use the permutation calculator
 
-Enter the **total number of items** and how many are **chosen**. The number of ordered arrangements is calculated.
+Enter the **total number of items** n and how many of them are **chosen and arranged**, r. The calculator gives the number of permutations without repetition (nPr), the number with repetition allowed (nʳ) and, for comparison, the number of combinations where order does not matter (nCr). r must not be larger than n for nPr and nCr; with repetition any r works.
 
-## Permutation formula
+## Permutation formulas
 
-<p class="formula">nPr = n! ÷ (n − r)!</p>
+<p class="formula">nPr = n! ÷ (n − r)! = n × (n − 1) × … × (n − r + 1)</p>
+
+<p class="formula">with repetition: nʳ &nbsp;·&nbsp; combinations: nCr = nPr ÷ r!</p>
 
 ## Worked example
 
-Gold, silver and bronze from 10 runners:
+How many ways can gold, silver and bronze be awarded among 10 runners?
 
-10P3 = 10 × 9 × 8 = **720**
+- 10P3 = 10! ÷ (10 − 3)! = 10 × 9 × 8 = **720**
+- If one runner could win more than one medal (repetition allowed): 10<sup>3</sup> = **1,000**
+- If only the group of three medal winners mattered, not who won which medal: 10C3 = 720 ÷ 3! = **120**
 
-## Common permutations
+## Common permutation problems
 
-| Situation | n | r | Permutations |
-|---|---|---|---|
-| Podium: 3 from 8 runners | 8 | 3 | 336 |
-| 4-digit PIN, no repeated digits | 10 | 4 | 5,040 |
-| Arrange 5 books on a shelf | 5 | 5 | 120 |
-| President, VP, secretary from 20 | 20 | 3 | 6,840 |
-| Order of 52 cards | 52 | 52 | 80,658,175,170,943,878,571,660,636,856,403,766,975,289,505,440,883,277,824,000,000,000,000 |
+| Situation | n | r | Permutations nPr | Combinations nCr |
+|---|---|---|---|---|
+| Podium: 3 from 8 runners | 8 | 3 | 336 | 56 |
+| 4-digit PIN, no repeated digits | 10 | 4 | 5,040 | 210 |
+| Arrange 5 books on a shelf | 5 | 5 | 120 | 1 |
+| President, VP and secretary from 20 | 20 | 3 | 6,840 | 1,140 |
+| Batting order of 11 players | 11 | 11 | 39,916,800 | 1 |
+| 3-letter codes, no repeated letters | 26 | 3 | 15,600 | 2,600 |
+| Top 4 of 32 teams in order | 32 | 4 | 863,040 | 35,960 |
 
-52! is about 8.07 × 10<sup>67</sup>: every well-shuffled deck is almost certainly an order never seen before.
+## nPr table
 
-## Permutations with repetition
+| n | r = 1 | r = 2 | r = 3 | r = 4 | r = 5 | r = 6 |
+|---|---|---|---|---|---|---|
+| 4 | 4 | 12 | 24 | 24 | — | — |
+| 5 | 5 | 20 | 60 | 120 | 120 | — |
+| 6 | 6 | 30 | 120 | 360 | 720 | 720 |
+| 8 | 8 | 56 | 336 | 1,680 | 6,720 | 20,160 |
+| 10 | 10 | 90 | 720 | 5,040 | 30,240 | 151,200 |
+| 12 | 12 | 132 | 1,320 | 11,880 | 95,040 | 665,280 |
 
-If items can repeat, there are n<sup>r</sup> arrangements. A 4-digit PIN with repeats allowed has 10<sup>4</sup> = **10,000** possibilities, compared with 5,040 without repeats.
+## With and without repetition
 
-## Arranging letters with duplicates
+| Situation | n | r | With repetition (nʳ) | Without repetition (nPr) |
+|---|---|---|---|---|
+| 4-digit PIN | 10 | 4 | 10,000 | 5,040 |
+| 6-digit OTP | 10 | 6 | 1,000,000 | 151,200 |
+| 3-letter code | 26 | 3 | 17,576 | 15,600 |
+| Coin tossed 10 times | 2 | 10 | 1,024 | 0 |
+| Byte (8 bits) | 2 | 8 | 256 | 0 |
 
-For words with repeated letters, divide by the factorial of each repeat count. MISSISSIPPI has 11 letters (4 S, 4 I, 2 P):
+## Practical notes
 
-<p class="formula">11! ÷ (4! × 4! × 2!) = 34,650</p>
-
-## Circular arrangements
-
-Seating n people around a round table, where rotations are the same, gives (n − 1)! arrangements. Six people can sit in 5! = **120** distinct ways.
-
-## Factorials grow fast
-
-| n | n! |
-|---|---|
-| 5 | 120 |
-| 10 | 3,628,800 |
-| 15 | 1,307,674,368,000 |
-| 20 | 2,432,902,008,176,640,000 |
-
-## More examples
-
-| Situation | Calculation | Result |
-|---|---|---|
-| 4-digit PIN, no repeated digits | 10P4 | 5,040 |
-| Arrange 5 books on a shelf | 5P5 | 120 |
-| President, VP, secretary from 20 | 20P3 | 6,840 |
+- **Circular arrangements:** seating n people around a round table, where rotations count as the same, gives (n − 1)! arrangements — 6 people can sit in 5! = 120 distinct ways.
+- **Huge numbers:** a deck of 52 cards can be ordered in 52! ≈ 8.07 × 10<sup>67</sup> ways, so every well-shuffled deck is almost certainly in an order never seen before. Use the [factorial calculator](/math/factorial/) for large factorials.
+- **Probability:** the chance of guessing an ordered outcome at random is 1 ÷ nPr — 1 in 720 for the podium example. Unordered outcomes use the [combinations calculator](/statistics/combinations/).

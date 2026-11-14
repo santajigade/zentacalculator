@@ -1,11 +1,11 @@
 ---
-title: Pressure Calculator (P = F/A)
-description: Calculate pressure from force and area — or the force or area — in Pa, kPa, bar or psi.
+title: Pressure Calculator (P = F/A, Force and Area)
+description: Calculate pressure from force and area with P = F/A, or the force or area from a pressure — in Pa, kPa, bar, psi or MPa, with examples and unit tables.
 category: physics
-intro: "Pressure is force spread over an area. It explains why sharp knives cut and why wide tyres don't sink, and it is one of the most measured quantities in industry — see [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/), [Pascal's law in pressure instruments](https://www.instrumentationblog.in/understanding-pascals-law-pressure-instruments/) and the [U-tube manometer](https://www.instrumentationblog.in/u-tube-manometer-working-formula/)."
-keywords: [pressure calculator, p = f/a, force over area, pascal, psi, stress]
+intro: "Pressure is force spread over an area, P = F ÷ A. It explains why sharp knives cut and why wide tyres do not sink, and it is one of the most measured quantities in industry — see [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/) and [Pascal's law in pressure instruments](https://www.instrumentationblog.in/understanding-pascals-law-pressure-instruments/). This pressure calculator finds the pressure from any force and area, or the force or area you need for a target pressure, in Pa, kPa, bar, psi or MPa."
+keywords: [pressure calculator, p = f/a, pressure formula, force and area to pressure, calculate pressure from force, pressure in pascals, force over area calculator, psi calculator]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-14
 variables:
   - { id: F, label: Force, family: force, unit: N, imperialUnit: lbf, default: 700, min: 0 }
   - { id: A, label: Area, family: area, unit: cm2, imperialUnit: in2, default: 400, min: 0 }
@@ -14,62 +14,75 @@ equations:
   - P = F / A
 faq:
   - q: What is the pressure formula?
-    a: Pressure = force ÷ area. One pascal is one newton per square metre.
+    a: Pressure = force ÷ area, P = F/A. With the force in newtons and the area in square metres the pressure is in pascals (1 Pa = 1 N/m²). 700 N on 400 cm² (0.04 m²) is 17,500 Pa = 17.5 kPa.
+  - q: How do I find force from pressure and area?
+    a: Rearrange to F = P × A. A pressure of 6 bar (600,000 Pa) on a 50 mm diameter piston (0.001963 m²) gives 1,178 N. Clear the force box, enter the pressure and the area, and the calculator does this for you.
   - q: Why do sharp knives cut better?
-    a: The same force on a much smaller area creates much higher pressure.
-  - q: Why do snowshoes work?
-    a: They spread your weight over a larger area, lowering the pressure so you don't sink.
-  - q: "What is the SI unit of pressure?"
-    a: "The pascal (Pa), equal to one newton per square metre."
-  - q: "How do I convert kPa to psi?"
-    a: "Divide by 6.895. 200 kPa is about 29 psi. Use the pressure converter for other units."
-related: [conversion/pressure-converter, physics/force, engineering/hydraulic-cylinder-force]
+    a: The same force on a much smaller area creates a much higher pressure. A knife edge or a pin point concentrates the force on a tiny area so the pressure exceeds the strength of the material; snowshoes do the opposite and spread your weight so you do not sink.
+  - q: How do I convert kPa to psi?
+    a: Divide by 6.895 (1 psi = 6.894757 kPa). 200 kPa is 29.0 psi and 1 bar is 14.5 psi. Use the pressure converter for other units.
+related: [conversion/pressure-converter, engineering/hydrostatic-pressure, engineering/hydraulic-cylinder-force, engineering/absolute-gauge-pressure, physics/force, physics/buoyancy]
 ---
 
 ## How to use the pressure calculator
 
-Enter the **force** and the **area** it acts on. The pressure appears in kPa, bar, psi or any pressure unit. You can also find the area needed to keep pressure below a limit.
+Enter the **force** and the **area** it acts on. The pressure appears in kPa, or any unit you pick — Pa, bar, psi, MPa, atm and more. Clear any one box to solve for it: enter a pressure and an area to get the force, or a force and a pressure limit to get the minimum area. The units of force and area can be changed independently; the calculation is done in newtons and square metres.
 
 ## Pressure formula
 
-<p class="formula">P = F ÷ A</p>
+<p class="formula">P = F ÷ A &nbsp;·&nbsp; F = P × A &nbsp;·&nbsp; A = F ÷ P</p>
+
+P in pascals, F in newtons, A in m². Remember that 1 cm² = 0.0001 m² and 1 mm² = 0.000001 m²; a weight in kg must be multiplied by g = 9.81 m/s² to give a force in newtons.
 
 ## Worked example
 
-A 70 kg person (about 700 N) standing on two feet covering 400 cm²:
+A 71 kg person (weight about 700 N) standing on two feet with a total contact area of 400 cm²:
 
-P = 700 ÷ 0.04 = **17,500 Pa** = 17.5 kPa
+- Area = 400 cm² = 0.04 m²
+- P = 700 ÷ 0.04 = **17,500 Pa** = **17.5 kPa** (2.54 psi)
 
-On stiletto heels with 1 cm² each carrying half the weight, the pressure under each heel is 350 N ÷ 0.0001 m² = **3,500 kPa** — 200 times higher.
+On one stiletto heel of 1 cm² carrying the full weight, the pressure is 700 ÷ 0.0001 = **7,000 kPa** — 400 times higher.
 
 ## Pressure examples
 
-| Situation | Force | Area | Pressure |
-|---|---|---|---|
-| Person standing (two feet) | 700 N | 400 cm² | 17.5 kPa |
-| Person on one stiletto heel | 700 N | 1 cm² | 7,000 kPa |
-| Elephant (four feet) | 50,000 N | 4,000 cm² | 125 kPa |
-| Car tyre contact (each) | 3,000 N | 150 cm² | 200 kPa |
-| Drawing pin point | 20 N | 0.0001 cm² | 2,000,000 kPa |
+| Situation | Force | Area | Pressure | Pressure (psi) |
+|---|---|---|---|---|
+| Person standing (two feet) | 700 N | 400 cm² | 17.5 kPa | 2.54 psi |
+| Person on one foot | 700 N | 200 cm² | 35.0 kPa | 5.08 psi |
+| Person on one stiletto heel | 700 N | 1 cm² | 7,000.0 kPa | 1,015.26 psi |
+| Person on snowshoes | 700 N | 3,000 cm² | 2.3 kPa | 0.34 psi |
+| Elephant (four feet) | 50,000 N | 4,000 cm² | 125.0 kPa | 18.13 psi |
+| Car tyre contact patch (each) | 3,000 N | 150 cm² | 200.0 kPa | 29.01 psi |
+| Drawing pin point | 20 N | 0.0001 cm² | 2,000,000.0 kPa | 290,075.49 psi |
 
-Small areas create huge pressures, which is why knives cut and pins pierce, and why snowshoes stop you sinking.
+## Pressure unit conversions
 
-## Pressure in fluids
+| Unit | Pa | kPa | bar | psi |
+|---|---|---|---|---|
+| 1 Pa | 1 Pa | 0.001 kPa | 1e-05 bar | 0.00014504 psi |
+| 1 kPa | 1,000 Pa | 1 kPa | 0.01 bar | 0.14504 psi |
+| 1 bar | 100,000 Pa | 100 kPa | 1 bar | 14.504 psi |
+| 1 atm | 101,325 Pa | 101.325 kPa | 1.01325 bar | 14.696 psi |
+| 1 psi | 6,894.76 Pa | 6.89476 kPa | 0.0689476 bar | 1 psi |
+| 1 MPa (1 N/mm²) | 1e+06 Pa | 1,000 kPa | 10 bar | 145.04 psi |
+| 1 kgf/cm² | 98,066.5 Pa | 98.0665 kPa | 0.980665 bar | 14.223 psi |
+| 1 mmHg | 133.322 Pa | 0.133322 kPa | 0.00133322 bar | 0.019337 psi |
+| 1 m of water | 9,806.65 Pa | 9.80665 kPa | 0.0980665 bar | 1.4223 psi |
 
-In a liquid, pressure increases with depth:
+## Pressure in liquids and hydraulics
 
-<p class="formula">P = ρ × g × h</p>
+In a liquid at rest, pressure rises with depth, P = ρ g h: every 10 m of water adds about 98 kPa — roughly one atmosphere (see the [hydrostatic pressure calculator](/engineering/hydrostatic-pressure/)). Pressure applied to an enclosed liquid is transmitted equally in all directions (Pascal's principle), so a small force on a small piston creates a large force on a large piston:
 
-10 m of water adds about 98 kPa — roughly one atmosphere. See the [hydrostatic pressure calculator](/engineering/hydrostatic-pressure/).
+| Small piston | Large piston | Force on small piston | Pressure | Force on large piston |
+|---|---|---|---|---|
+| 10 mm | 50 mm | 100 N | 12.73 bar | 2.50 kN |
+| 20 mm | 100 mm | 200 N | 6.37 bar | 5.00 kN |
+| 25 mm | 250 mm | 300 N | 6.11 bar | 30.00 kN |
 
-## Hydraulics
+Car brakes, jacks and presses use this; size real cylinders with the [hydraulic cylinder force calculator](/engineering/hydraulic-cylinder-force/).
 
-Pressure applied to an enclosed liquid is transmitted equally (Pascal's principle). A small force on a small piston creates a large force on a large piston. Car brakes, jacks and excavators use this. See the [hydraulic cylinder force calculator](/engineering/hydraulic-cylinder-force/).
+## Practical notes
 
-## Gauge vs absolute
-
-Most gauges read pressure above atmospheric (gauge pressure). Add about 101.3 kPa to get absolute pressure at sea level.
-
-## Units
-
-1 Pa = 1 N/m² · 1 kPa = 1,000 Pa · 1 bar = 100 kPa · 1 psi = 6.895 kPa
+- **Gauge vs absolute:** most gauges read pressure above atmospheric (gauge pressure). Add about 101.3 kPa to get absolute pressure at sea level — see the [absolute and gauge pressure calculator](/engineering/absolute-gauge-pressure/).
+- **Pressure vs stress:** stress in a solid has the same units (N/m², often given as MPa = N/mm²) and the same formula, but acts in a particular direction, while fluid pressure acts equally in all directions.
+- **Tyres:** a tyre's contact patch grows until patch area × inflation pressure roughly equals the load on the wheel, which is why under-inflated tyres flatten and wear at the edges.

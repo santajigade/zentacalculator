@@ -32,7 +32,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Vortex shedding frequency (Strouhal)
 - [ ] Gas flow through orifice (expansibility factor)
 - [ ] Steam flow (saturated steam density table)
-- [ ] SCFM ↔ ACFM ↔ Nm³/h
+- [x] SCFM ↔ ACFM ↔ Nm³/h (exists: engineering/gas-flow-correction)
 - [ ] MMSCFD natural gas converter (ib)
 - [ ] Open channel: Parshall flume
 - [x] Manning equation (open channel)
@@ -102,9 +102,9 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Spring rate (helical compression)
 - [x] Gear ratio & speed
 - [x] Chain / sprocket speed & length — chain-length
-- [ ] Belt tension
+- [x] Belt tension
 - [x] Bearing L10 life
-- [ ] Press fit interference
+- [x] Press fit interference
 - [x] Factor of safety
 - [x] Young's modulus / stress-strain
 - [x] Weld size (fillet throat)
@@ -119,9 +119,9 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Specific gravity ↔ density ↔ °Brix / °Baumé
 - [ ] Viscosity converter (cP, cSt, SSU)
 - [x] Kinematic ↔ dynamic viscosity
-- [ ] Combustion air requirement
+- [x] Combustion air requirement
 - [x] Flue gas O₂ to excess air
-- [ ] Heating value converter (GCV/NCV)
+- [x] Heating value converter (GCV/NCV)
 - [x] Gas density (ideal + Z) — gas-density (chemistry)
 - [ ] Molar flow ↔ mass flow ↔ volume flow
 
@@ -177,7 +177,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Flyback transformer turns ratio (ib)
 - [x] Inductor design (turns for AL value)
 - [x] Air-core coil inductance (Wheeler)
-- [ ] Ohm's law for AC (power, apparent, reactive)
+- [x] Ohm's law for AC (power, apparent, reactive) (exists: electrical/kva-to-kw)
 - [ ] Decoupling capacitor selection (ib)
 - [x] Crystal load capacitance
 - [x] RC oscillator / phase-shift oscillator frequency (ib)
@@ -291,8 +291,8 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Mixed number ↔ improper fraction
 - [ ] Decimal to fraction
 - [x] Scientific notation
-- [ ] Significant figures
-- [ ] Rounding
+- [x] Significant figures
+- [x] Rounding (in significant-figures)
 - [x] Modulo
 - [ ] Roman numerals
 - [ ] Derivative (power rule, numeric)
@@ -300,7 +300,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Limits / series sums
 - [x] Interpolation (linear) (very useful for engineers)
 - [ ] Unit circle / trig values
-- [ ] Inverse trig
+- [x] Inverse trig
 - [x] Complex numbers (polar ↔ rectangular)
 - [ ] Log base converter / antilog
 - [x] Exponential growth & decay (exists: biology/exponential-population-growth)

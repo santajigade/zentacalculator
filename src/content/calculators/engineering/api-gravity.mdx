@@ -2,9 +2,9 @@
 title: API Gravity Calculator (API to Specific Gravity)
 description: Convert API gravity to specific gravity and density and back — for crude oil, fuels and petroleum products at 60 °F.
 category: engineering
-intro: "API gravity is the petroleum industry's scale for how heavy or light an oil is compared with water: higher API means lighter oil. It converts directly to specific gravity and density at 60 °F. This API gravity calculator works both ways — see [what specific gravity is](https://www.instrumentationblog.in/what-is-specific-gravity/)."
+intro: "API gravity is the petroleum industry's scale for how heavy or light an oil is compared with water. Higher API means lighter oil, and water is exactly 10 °API. This API gravity calculator converts API to specific gravity and density at 60 °F, and back.\n\nTraders use API gravity to price crude, refiners use it to predict product yields, and instrument engineers need it to turn volume into mass in flow and tank measurements. See [what specific gravity is](https://www.instrumentationblog.in/what-is-specific-gravity/) for the basics."
 keywords: [api gravity calculator, api to specific gravity, specific gravity to api, api gravity formula, crude oil density, oil api degree, api to density]
-updated: 2026-10-28
+updated: 2026-11-14
 variables:
   - { id: API, label: API gravity, suffix: °API, default: 35, decimals: 2 }
   - { id: SG, label: Specific gravity (60/60 °F), min: 0.0001, decimals: 4 }
@@ -21,6 +21,10 @@ faq:
     a: Light crude is above about 31.1 °API, medium 22.3–31.1 °API, heavy 10–22.3 °API and extra-heavy below 10 °API.
   - q: Why does API gravity matter?
     a: Lighter crudes yield more petrol and diesel and sell at a higher price; API also feeds volume correction and flow measurement calculations.
+  - q: "How heavy is a barrel of 35 °API oil?"
+    a: "About 135 kg. 35 °API is 849 kg/m³, and one barrel is 158.987 litres."
+  - q: How is API gravity measured?
+    a: With a glass hydrometer (ASTM D1298 or D287) corrected to 60 °F, or with a digital density meter (ASTM D4052). Coriolis flow meters also measure density online.
 related: [physics/density, engineering/mass-flow-rate, engineering/hydrostatic-pressure, engineering/dp-level-range]
 ---
 
@@ -59,3 +63,34 @@ Density uses water at 60 °F (999.016 kg/m³).
 ## Temperature correction
 
 API gravity is defined at 60 °F (15.6 °C). Hydrometer readings at other temperatures are corrected to 60 °F with the API MPMS Chapter 11.1 tables before use.
+
+## Worked example
+
+A diesel sample reads **35 °API**:
+
+- SG = 141.5 ÷ (35 + 131.5) = 141.5 ÷ 166.5 = **0.8498**
+- Density = 0.8498 × 999.016 = **849.0 kg/m³** at 60 °F
+- Mass of one barrel (158.987 L) = 0.849 × 158.987 = **135.0 kg**
+
+Going the other way, a crude with SG 0.876 is 141.5 ÷ 0.876 − 131.5 = **30.0 °API**, a medium crude.
+
+## Why the scale looks inverted
+
+The API scale grew out of the older Baumé hydrometer scale, and it was built so that light oils give large, easy-to-read numbers. Because SG sits in the denominator, API gravity rises as oil gets lighter, and equal steps in °API are not equal steps in density. A change from 10 to 20 °API is a bigger density change than one from 40 to 50 °API.
+
+## How API gravity is measured
+
+- **Glass hydrometer** (ASTM D1298 or D287): the classic method. Read the hydrometer and the sample temperature, then correct to 60 °F.
+- **Digital density meter** (ASTM D4052): an oscillating U-tube gives density to 4 or 5 decimals in a few minutes.
+- **Online measurement:** Coriolis flow meters and inline density meters measure density continuously, so custody transfer systems can report API gravity in real time.
+
+## Using API gravity in measurement
+
+Tank gauging and many flow meters measure **volume**, but oil is bought and sold by standard volume or mass. The density from API gravity converts one into the other (see the [mass flow rate calculator](/engineering/mass-flow-rate/)), and the API volume correction tables use it to correct the volume to 60 °F. For level work, the same density sets the range of a differential pressure transmitter.
+
+## Common mistakes
+
+- **Using API gravity measured at a different temperature.** Always correct the reading to 60 °F first.
+- **Averaging API values for blends.** Blend densities or specific gravities by volume, then convert the result back to API.
+- **Using 1,000 kg/m³ for water.** The standard uses water at 60 °F, which is 999.016 kg/m³.
+- **Confusing 60 °F with 15 °C.** Many countries report density at 15 °C. The two reference temperatures differ slightly, so the numbers are close but not identical.

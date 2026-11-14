@@ -1,0 +1,93 @@
+---
+title: GCV to NCV Calculator (Gross to Net Calorific Value)
+description: Convert gross calorific value (GCV, HHV) to net calorific value (NCV, LHV) from the hydrogen and moisture content of a fuel, in MJ/kg, kcal/kg and BTU/lb.
+category: chemistry
+intro: "The gross calorific value of a fuel counts the heat released when the water formed in combustion condenses; the net value assumes that water leaves as vapour. This GCV to NCV calculator subtracts the latent heat of the water formed from the fuel's hydrogen and the moisture it already contains, so you can quote boiler efficiencies, fuel prices and emission factors on either basis."
+keywords: [gcv to ncv calculator, gross to net calorific value, hhv to lhv calculator, higher heating value to lower heating value, net calorific value formula, ncv from gcv, calorific value conversion kcal/kg]
+updated: 2026-11-14
+variables:
+  - { id: G, label: Gross calorific value (GCV / HHV), suffix: MJ/kg, default: 45.6, min: 0, help: '1 MJ/kg = 238.85 kcal/kg = 429.92 BTU/lb. Enter a kcal/kg figure divided by 238.85.' }
+  - { id: H, label: Hydrogen in the fuel (mass), family: percent, unit: '%', default: 13.5, min: 0, max: 1 }
+  - { id: M, label: Moisture in the fuel (mass), family: percent, unit: '%', default: 0, min: 0, max: 1, help: 'Total moisture on the same basis as the GCV (as received or as fired).' }
+  - { id: W, label: Water vapour formed, suffix: kg/kg fuel, min: 0, decimals: 3 }
+  - { id: N, label: Net calorific value (NCV / LHV), suffix: MJ/kg, decimals: 3 }
+  - { id: r, label: NCV as a share of GCV, family: percent, unit: '%' }
+  - { id: Gk, label: GCV in kcal/kg, suffix: kcal/kg, min: 0, decimals: 0 }
+  - { id: Nk, label: NCV in kcal/kg, suffix: kcal/kg, decimals: 0 }
+  - { id: Nb, label: NCV in BTU/lb, suffix: BTU/lb, decimals: 0 }
+equations:
+  - W = 8.936 * H + M
+  - N = G - 2.442 * W
+  - r = N / G
+  - Gk = G * 1000 / 4.1868
+  - Nk = N * 1000 / 4.1868
+  - Nb = N * 429.923
+faq:
+  - q: What is the difference between GCV and NCV?
+    a: The gross (higher) calorific value includes the latent heat recovered when the water vapour in the flue gas condenses back to liquid at 25 °C. The net (lower) value leaves that water as vapour, which is what happens in most boilers, engines and furnaces. NCV is therefore lower by the latent heat of the water formed — about 6% for diesel and 10% for natural gas.
+  - q: What is the formula to convert GCV to NCV?
+    a: NCV = GCV − 2.442 × (8.936 H + M) MJ/kg, where H is the hydrogen and M the moisture content as mass fractions. 2.442 MJ/kg is the latent heat of water at 25 °C and 8.936 kg of water forms from every kg of hydrogen. For diesel (45.6 MJ/kg, 13.5% H) NCV ≈ 42.65 MJ/kg.
+  - q: Which value is used for boiler efficiency?
+    a: Indian (BEE) and US (ASME PTC 4) practice quote boiler efficiency on GCV; European practice and EN standards usually use NCV, which gives a figure several points higher for the same boiler. Condensing boilers can exceed 100% on an NCV basis because they recover some of the latent heat. Always state the basis.
+  - q: Why does wet fuel have a much lower NCV?
+    a: Moisture adds no heat but must be evaporated, and it also dilutes the dry fuel. Wood with 20 MJ/kg GCV when dry falls to about 8.1 MJ/kg NCV at 50% moisture, which is why biomass is usually priced on a net, as-received basis.
+related: [engineering/boiler-efficiency, chemistry/combustion-air, chemistry/bomb-calorimeter, chemistry/enthalpy-of-reaction, conversion/energy-converter, chemistry/excess-air]
+---
+
+## How to use the GCV to NCV calculator
+
+Enter the **gross calorific value** in MJ/kg, the fuel's **hydrogen content** and its **moisture content** (by mass, on the same basis as the GCV). The calculator gives the water vapour formed per kg of fuel, the **net calorific value** in MJ/kg, kcal/kg and BTU/lb and the NCV as a percentage of the GCV. To go the other way, clear the GCV and enter the NCV. If the GCV is in kcal/kg, divide it by 238.85 first, or read the kcal/kg outputs.
+
+## GCV to NCV formula
+
+<p class="formula">NCV = GCV − 2.442 × (8.936 H + M) &nbsp;MJ/kg</p>
+
+H and M are the hydrogen and moisture mass fractions. 8.936 = 18.015 ÷ 2.016 is the mass of water formed by burning 1 kg of hydrogen, and 2.442 MJ/kg is the latent heat of vaporisation of water at 25 °C, the reference temperature of ISO and ASTM calorific value tests. In kcal/kg the same rule reads NCV = GCV − 583 × (8.936 H + M).
+
+## Worked example
+
+Diesel with a GCV of 45.6 MJ/kg, 13.5% hydrogen and no moisture:
+
+- Water formed = 8.936 × 0.135 + 0 = **1.206 kg/kg**
+- NCV = 45.6 − 2.442 × 1.206 = **42.654 MJ/kg**
+- NCV ÷ GCV = **93.5%**
+- In kcal/kg: GCV = 10,891 kcal/kg, NCV = **10,188 kcal/kg**; in BTU/lb NCV = 18,338
+
+## GCV and NCV of common fuels
+
+Typical gross values; NCV computed from the hydrogen and moisture shown:
+
+| Fuel | GCV (MJ/kg) | Hydrogen | Moisture | NCV (MJ/kg) | NCV ÷ GCV | NCV (kcal/kg) |
+|---|---|---|---|---|---|---|
+| Hydrogen | 141.8 | 100% | 0% | 119.98 | 84.6% | 28,656 |
+| Methane | 55.5 | 25.13% | 0% | 50.02 | 90.1% | 11,946 |
+| Propane | 50.35 | 18.29% | 0% | 46.36 | 92.1% | 11,073 |
+| Butane | 49.5 | 17.34% | 0% | 45.72 | 92.4% | 10,919 |
+| Petrol (gasoline) | 46.5 | 13.5% | 0% | 43.55 | 93.7% | 10,403 |
+| Diesel | 45.6 | 13.5% | 0% | 42.65 | 93.5% | 10,188 |
+| Heavy fuel oil | 42.7 | 11.5% | 0.5% | 40.18 | 94.1% | 9,596 |
+| Ethanol | 29.7 | 13.13% | 0% | 26.83 | 90.4% | 6,409 |
+| Methanol | 22.7 | 12.58% | 0% | 19.95 | 87.9% | 4,766 |
+| Bituminous coal (as fired) | 28 | 4.5% | 8% | 26.82 | 95.8% | 6,406 |
+| Indian coal (as fired) | 16.7 | 2.8% | 6% | 15.94 | 95.5% | 3,808 |
+
+## Wood: effect of moisture
+
+Wood with 20.0 MJ/kg GCV and 6% hydrogen when oven-dry, on an as-received (wet) basis:
+
+| Moisture | GCV (MJ/kg) | NCV (MJ/kg) | NCV ÷ GCV | NCV (kcal/kg) |
+|---|---|---|---|---|
+| 0% | 20.00 | 18.69 | 93.5% | 4,464 |
+| 10% | 18.00 | 16.58 | 92.1% | 3,959 |
+| 20% | 16.00 | 14.46 | 90.4% | 3,455 |
+| 30% | 14.00 | 12.35 | 88.2% | 2,950 |
+| 40% | 12.00 | 10.24 | 85.3% | 2,445 |
+| 50% | 10.00 | 8.12 | 81.2% | 1,940 |
+| 60% | 8.00 | 6.01 | 75.1% | 1,436 |
+
+## Practical notes
+
+- **Same basis for everything:** GCV, hydrogen and moisture must all be as received, as fired, air dried or dry — mixing bases is the most common error. Hydrogen reported "including the hydrogen in moisture" must be corrected first.
+- **Standards:** ISO 1928 and ASTM D5865 give more detailed net-value corrections (constant pressure versus constant volume, oxygen and nitrogen terms) that change the result by well under 1%; the simple formula is what most energy audits use.
+- **Gaseous fuels:** for gases quoted in MJ/Nm³ convert to MJ/kg with the gas density first, or use the published NCV directly (natural gas is typically about 90% of its GCV).
+- Calorific values are measured in a bomb calorimeter — see the [bomb calorimeter calculator](/chemistry/bomb-calorimeter/) — and used in the [boiler efficiency calculator](/engineering/boiler-efficiency/).

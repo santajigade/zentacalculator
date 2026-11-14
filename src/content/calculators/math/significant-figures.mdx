@@ -1,0 +1,82 @@
+---
+title: Significant Figures Calculator (Round to Sig Figs)
+description: Round any number to a chosen number of significant figures or decimal places, with the rules for counting sig figs and worked examples.
+category: math
+intro: "Significant figures show how precisely a number is known: 1,230 to three significant figures is not the same claim as 1,234.5678. This significant figures calculator rounds any number to the number of sig figs you choose, gives its power-of-ten exponent for scientific notation and also rounds to a fixed number of decimal places, using the round-half-away-from-zero rule taught in school."
+keywords: [significant figures calculator, sig fig calculator, round to significant figures, sig figs rounding, rounding calculator, round to decimal places, significant digits calculator]
+updated: 2026-11-14
+variables:
+  - { id: x, label: Number to round, default: 1234.5678 }
+  - { id: n, label: Significant figures, default: 3, min: 1, max: 15 }
+  - { id: dp, label: Decimal places, default: 2, min: 0, max: 10 }
+  - { id: r, label: Rounded to significant figures }
+  - { id: ex, label: Power of ten (scientific notation exponent), decimals: 0 }
+  - { id: m, label: Mantissa (r ÷ 10^exponent) }
+  - { id: rd, label: Rounded to decimal places }
+equations:
+  - ex = floor(log10(abs(x)))
+  - r = sign(x) * floor(abs(x) / 10^(ex - n + 1) + 0.5) * 10^(ex - n + 1)
+  - m = r / 10^ex
+  - rd = sign(x) * floor(abs(x) * 10^dp + 0.5) / 10^dp
+faq:
+  - q: How do you round to significant figures?
+    a: Find the first non-zero digit, count n digits from it, and look at the next digit — if it is 5 or more round up, otherwise round down, then replace the dropped digits in front of the decimal point with zeros. 1,234.5678 to 3 sig figs is 1,230; 0.0045678 to 3 sig figs is 0.00457.
+  - q: How many significant figures does 0.00450 have?
+    a: Three. Leading zeros only locate the decimal point and never count; the 4, the 5 and the trailing zero after the decimal point do. In scientific notation it is 4.50 × 10⁻³, which makes the count obvious.
+  - q: How many significant figures should an answer have?
+    a: For multiplication and division, keep as many significant figures as the least precise input. For addition and subtraction, keep as many decimal places as the input with the fewest decimal places. Round only the final answer, not intermediate steps.
+  - q: What is the difference between significant figures and decimal places?
+    a: Decimal places count digits after the decimal point; significant figures count digits from the first non-zero digit. 0.00457 has 5 decimal places but only 3 significant figures, while 1,234.57 has 2 decimal places and 6 significant figures.
+related: [math/scientific-notation, math/percent-error, math/fraction-to-decimal, math/exponent, math/logarithm, statistics/measurement-uncertainty]
+---
+
+## How to use the significant figures calculator
+
+Enter the **number**, the number of **significant figures** you want and, separately, a number of **decimal places**. The calculator returns the number rounded to that many significant figures, its power-of-ten exponent and mantissa (so r = mantissa × 10<sup>exponent</sup> in scientific notation) and the number rounded to the chosen decimal places. Halves are rounded away from zero (2.5 → 3, −2.5 → −3). Trailing zeros that are significant (such as 2.50) cannot be shown in a number box, so write the result with the number of figures you asked for.
+
+## Rounding formula
+
+<p class="formula">e = ⌊log<sub>10</sub>|x|⌋ &nbsp;·&nbsp; r = sign(x) × ⌊|x| ÷ 10<sup>e − n + 1</sup> + ½⌋ × 10<sup>e − n + 1</sup></p>
+
+<p class="formula">rounded to d decimal places = sign(x) × ⌊|x| × 10<sup>d</sup> + ½⌋ ÷ 10<sup>d</sup></p>
+
+e is the position of the first significant digit (the exponent in scientific notation) and n the number of significant figures.
+
+## Worked example
+
+Round 1234.5678 to 3 significant figures and to 2 decimal places:
+
+- First significant digit: e = ⌊log<sub>10</sub> 1234.5678⌋ = **3** (the number is 1.2345678 × 10<sup>3</sup>)
+- Rounding unit = 10<sup>3 − 3 + 1</sup> = 10; 1234.5678 ÷ 10 = 123.45678 → 123
+- Rounded to 3 sig figs = 123 × 10 = **1,230** = 1.23 × 10<sup>3</sup>
+- Rounded to 2 decimal places = **1,234.57**
+
+## Rounding examples by number of significant figures
+
+| Number | 1 s.f. | 2 s.f. | 3 s.f. | 4 s.f. | 5 s.f. |
+|---|---|---|---|---|---|
+| 123,456.789 | 100,000 | 120,000 | 123,000 | 123,500 | 123,460 |
+| 1,234.5678 | 1,000 | 1,200 | 1,230 | 1,235 | 1,234.6 |
+| 9.87654 | 10 | 9.9 | 9.88 | 9.877 | 9.8765 |
+| 0.0045678 | 0.005 | 0.0046 | 0.00457 | 0.004568 | 0.0045678 |
+| 0.000987654 | 0.001 | 0.00099 | 0.000988 | 0.0009877 | 0.00098765 |
+| 299,792,458 | 300,000,000 | 300,000,000 | 300,000,000 | 299,800,000 | 299,790,000 |
+
+## Rules for counting significant figures
+
+| Number | Significant figures | Rule |
+|---|---|---|
+| 4,508 | 4 | Zeros between non-zero digits count |
+| 0.00450 | 3 | Leading zeros never count; the trailing zero after the decimal point does |
+| 45.00 | 4 | Trailing zeros after a decimal point count |
+| 4500 | 2 (ambiguous) | Trailing zeros in a whole number are ambiguous — write 4.5 × 10³ or 4.500 × 10³ |
+| 4500. | 4 | A decimal point after the number makes the zeros count |
+| 6.022 × 10²³ | 4 | In scientific notation every digit of the mantissa counts |
+| 12 eggs | exact (∞) | Counted numbers and defined constants are exact |
+
+## Practical notes
+
+- **Measurements:** quote a result to the precision of the instrument — a ruler read to 1 mm gives 23.4 cm (3 s.f.), not 23.4000 cm. Combine uncertainties with the [measurement uncertainty calculator](/statistics/measurement-uncertainty/).
+- **Rounding 5s:** this calculator rounds halves away from zero. Some scientific software and IEEE 754 arithmetic use "round half to even" (banker's rounding), where 2.5 → 2 and 3.5 → 4; this avoids a small upward bias when many values are rounded.
+- **Binary floating point:** a decimal like 2.675 is stored as 2.67499999…, so any computer may round it to 2.67 instead of 2.68. If an exact half matters, add a tiny amount or use more figures.
+- Use the [scientific notation calculator](/math/scientific-notation/) to convert the result to and from E-notation.

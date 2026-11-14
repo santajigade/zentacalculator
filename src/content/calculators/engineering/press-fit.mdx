@@ -1,0 +1,116 @@
+---
+title: Press Fit Calculator (Interference Fit Pressure & Force)
+description: Calculate interference fit contact pressure, hub and shaft hoop stresses, press-in force and torque capacity from the interference and diameters.
+category: engineering
+intro: "An interference (press or shrink) fit holds a hub on a shaft by making the shaft slightly larger than the bore, so the parts squeeze each other. This press fit calculator uses Lamé's thick-cylinder equations to find the contact pressure from the diametral interference, the hoop stresses in the hub and shaft, the axial force needed to press the parts together and the torque the joint can carry before it slips."
+keywords: [press fit calculator, interference fit calculator, interference fit pressure, shrink fit calculator, press fit force calculation, lame equation interference fit, hub hoop stress, press fit torque capacity]
+updated: 2026-11-14
+variables:
+  - { id: d, label: Nominal interface diameter, family: length, unit: mm, imperialUnit: in, default: 50, min: 0 }
+  - { id: dl, label: Diametral interference (shaft − bore), family: length, unit: um, default: 40, min: 0, help: 'Shaft diameter minus bore diameter. For a fit like H7/s6 use the mean or the maximum interference from the ISO 286 tolerance tables.' }
+  - { id: Do, label: Hub outer diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: Di, label: Shaft bore diameter (0 = solid shaft), family: length, unit: mm, imperialUnit: in, default: 0, min: 0 }
+  - { id: Eh, label: Hub Young's modulus, suffix: GPa, default: 200, min: 0, help: 'Steel ≈ 200–210 GPa, cast iron ≈ 100–120, aluminium alloy ≈ 70, bronze ≈ 110, titanium ≈ 110.' }
+  - { id: Es, label: Shaft Young's modulus, suffix: GPa, default: 200, min: 0 }
+  - { id: nh, label: Hub Poisson's ratio, default: 0.3, min: 0, max: 0.5 }
+  - { id: ns, label: Shaft Poisson's ratio, default: 0.3, min: 0, max: 0.5 }
+  - { id: mu, label: Coefficient of friction at the interface, default: 0.15, min: 0, help: 'Steel on steel: about 0.1–0.15 for a lubricated press fit, 0.15–0.25 for a dry or shrink fit.' }
+  - { id: L, label: Length of engagement, family: length, unit: mm, imperialUnit: in, default: 50, min: 0 }
+  - { id: p, label: Contact pressure, family: pressure, unit: MPa, imperialUnit: psi, min: 0 }
+  - { id: sh, label: Hub hoop stress at the bore (tension), family: pressure, unit: MPa, imperialUnit: psi }
+  - { id: ss, label: Shaft hoop stress at the surface (compression), family: pressure, unit: MPa, imperialUnit: psi }
+  - { id: F, label: Axial press-in force, family: force, unit: kN, imperialUnit: lbf, min: 0 }
+  - { id: T, label: Torque capacity before slip, family: torque, unit: Nm, imperialUnit: lbft, min: 0 }
+equations:
+  - p = dl / (d / (Eh * 1e9) * ((Do^2 + d^2) / (Do^2 - d^2) + nh) + d / (Es * 1e9) * ((d^2 + Di^2) / (d^2 - Di^2) - ns))
+  - sh = p * (Do^2 + d^2) / (Do^2 - d^2)
+  - ss = -p * (d^2 + Di^2) / (d^2 - Di^2)
+  - F = pi * mu * p * d * L
+  - T = F * d / 2
+faq:
+  - q: How do you calculate interference fit pressure?
+    a: With Lamé's equation p = δ ÷ [d/E_h × ((D_o² + d²)/(D_o² − d²) + ν_h) + d/E_s × ((d² + d_i²)/(d² − d_i²) − ν_s)], where δ is the diametral interference. For a solid steel shaft in a steel hub it simplifies to p = Eδ ÷ 2d × (1 − d²/D_o²). A 40 µm interference on 50 mm with a 100 mm hub gives 60 MPa.
+  - q: How much force is needed to press fit a shaft?
+    a: F = π μ p d L — the contact pressure times the contact area times the friction coefficient. The example joint (60 MPa, 50 mm × 50 mm, μ = 0.15) needs about 70.7 kN, roughly 7.2 tonnes. Add a margin because the friction while pressing can be higher than the static value used for torque.
+  - q: How much torque can a press fit transmit?
+    a: T = F × d ÷ 2 = π μ p d² L ÷ 2. The example carries about 1,770 N·m before it slips. Shrink fits usually have more torque capacity than press fits of the same interference because the surfaces are not smoothed by pressing.
+  - q: How hot should a hub be heated for a shrink fit?
+    a: "Enough to expand the bore by the interference plus an assembly clearance of about 0.001 × d: ΔT = (δ + clearance) ÷ (α × d). For steel (α ≈ 11.5 × 10⁻⁶ /K), a 50 mm bore with 40 µm interference needs about 157 K above the shaft temperature. Bearings are usually limited to about 120 °C."
+related: [engineering/shaft-diameter, engineering/thermal-expansion, engineering/bearing-life, engineering/bolt-torque, engineering/factor-of-safety, physics/youngs-modulus]
+---
+
+## How to use the press fit calculator
+
+Enter the **nominal diameter** at the joint, the **diametral interference** (shaft diameter minus bore diameter), the **hub outer diameter**, the **shaft bore** (0 for a solid shaft), the **elastic modulus and Poisson's ratio** of both parts, the **friction coefficient** and the **length of engagement**. The calculator gives the contact pressure, the hoop stress in the hub at the bore and in the shaft at its surface, the axial force needed to press the parts together and the torque the fit can transmit. Leave the interference blank and enter a pressure to find the interference you need.
+
+## Interference fit formulas (Lamé)
+
+<p class="formula">p = δ ÷ [ (d ÷ E<sub>h</sub>) × ((D<sub>o</sub>² + d²) ÷ (D<sub>o</sub>² − d²) + ν<sub>h</sub>) + (d ÷ E<sub>s</sub>) × ((d² + d<sub>i</sub>²) ÷ (d² − d<sub>i</sub>²) − ν<sub>s</sub>) ]</p>
+
+<p class="formula">σ<sub>hub</sub> = p (D<sub>o</sub>² + d²) ÷ (D<sub>o</sub>² − d²) &nbsp;·&nbsp; σ<sub>shaft</sub> = −p (d² + d<sub>i</sub>²) ÷ (d² − d<sub>i</sub>²)</p>
+
+<p class="formula">F = π μ p d L &nbsp;·&nbsp; T = F d ÷ 2</p>
+
+δ is the diametral interference, d the nominal diameter, D<sub>o</sub> the hub outside diameter and d<sub>i</sub> the shaft bore. The hub hoop stress is the highest stress in the joint and occurs at the bore.
+
+## Worked example
+
+A solid steel shaft is pressed into a steel hub: d = 50 mm, interference 40 µm, hub outside diameter 100 mm, E = 200 GPa, ν = 0.3, μ = 0.15, engagement 50 mm:
+
+- Hub factor (D<sub>o</sub>² + d²) ÷ (D<sub>o</sub>² − d²) = (100² + 50²) ÷ (100² − 50²) = 1.6667
+- Contact pressure p = 4e-05 ÷ [0.05 ÷ 2e+11 × (1.6667 + 0.3 + 1 − 0.3)] = **60.0 MPa**
+- Hub hoop stress = 60.0 × 1.6667 = **100.0 MPa** (tension); shaft hoop stress = **−60.0 MPa** (compression)
+- Press-in force F = π × 0.15 × 60.0 MPa × 0.05 × 0.05 = **70.7 kN**
+- Torque capacity T = 70.7 kN × 0.025 m = **1,767 N·m**
+
+## Contact pressure (MPa) by interference and hub size
+
+Solid steel shaft in a steel hub, d = 50 mm, E = 200 GPa, ν = 0.3; the last column is the torque capacity for a 100 mm hub, 50 mm long, μ = 0.15:
+
+| Interference | Hub OD 65 mm | Hub OD 75 mm | Hub OD 100 mm | Hub OD 150 mm | Torque (100 mm hub) |
+|---|---|---|---|---|---|
+| 10 µm | 8.2 | 11.1 | 15.0 | 17.8 | 442 N·m |
+| 20 µm | 16.3 | 22.2 | 30.0 | 35.6 | 884 N·m |
+| 30 µm | 24.5 | 33.3 | 45.0 | 53.3 | 1,325 N·m |
+| 40 µm | 32.7 | 44.4 | 60.0 | 71.1 | 1,767 N·m |
+| 50 µm | 40.8 | 55.6 | 75.0 | 88.9 | 2,209 N·m |
+| 60 µm | 49.0 | 66.7 | 90.0 | 106.7 | 2,651 N·m |
+| 80 µm | 65.3 | 88.9 | 120.0 | 142.2 | 3,534 N·m |
+
+## Contact pressure (MPa) by size for a given interference per mm
+
+Steel on steel, hub OD = 2d, engagement length L = d; interference given in µm per mm of diameter:
+
+| Diameter | 0.5 µm/mm | 1.0 µm/mm | 1.5 µm/mm |
+|---|---|---|---|
+| 10 mm | 37 | 75 | 112 |
+| 20 mm | 37 | 75 | 112 |
+| 30 mm | 38 | 75 | 113 |
+| 50 mm | 37 | 75 | 112 |
+| 80 mm | 37 | 75 | 112 |
+| 100 mm | 37 | 75 | 112 |
+| 150 mm | 38 | 75 | 113 |
+
+With the hub OD fixed at 2d, the pressure depends only on the interference ratio δ/d, which is why fits are often specified in µm per mm (or ‰ of the diameter).
+
+## Shrink fit heating temperature (steel hub)
+
+Temperature rise ΔT = (δ + clearance) ÷ (α d), with α = 11.5 × 10⁻⁶ /K and an assembly clearance of 0.001 × d:
+
+| Bore | Interference | Clearance | Temperature rise |
+|---|---|---|---|
+| 20 mm | 16 µm | 20 µm | 157 K |
+| 20 mm | 30 µm | 20 µm | 217 K |
+| 50 mm | 40 µm | 50 µm | 157 K |
+| 50 mm | 75 µm | 50 µm | 217 K |
+| 100 mm | 80 µm | 100 µm | 157 K |
+| 100 mm | 150 µm | 100 µm | 217 K |
+| 200 mm | 160 µm | 200 µm | 157 K |
+| 200 mm | 300 µm | 200 µm | 217 K |
+
+## Practical notes
+
+- **Check the hub stress:** the hub hoop stress plus the radial pressure must stay well below the yield strength of the hub; cast-iron hubs are brittle and need a larger margin. Size the shaft separately with the [shaft diameter calculator](/engineering/shaft-diameter/).
+- **Surface finish:** pressing smooths the surface peaks, so some of the measured interference is lost — roughly 0.8 × (Rz shaft + Rz bore) for ground surfaces. Allow for this on small, fine fits.
+- **Temperature and speed:** different expansion coefficients (an aluminium hub on a steel shaft) change the interference with temperature, and at high speed centrifugal growth of the hub reduces the pressure. Check the expansion with the [thermal expansion calculator](/engineering/thermal-expansion/).
+- **Tolerances:** use the minimum interference from the tolerance tables for the torque check and the maximum interference for the stress check and press force.

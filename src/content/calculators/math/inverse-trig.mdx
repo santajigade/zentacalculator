@@ -1,0 +1,104 @@
+---
+title: Inverse Trig Calculator (arcsin, arccos, arctan)
+description: Calculate arcsin, arccos, arctan and arccot of any value in degrees and radians, with tables of exact angles and the principal value ranges of each function.
+category: math
+intro: "The inverse trigonometric functions run sine, cosine and tangent backwards: given a ratio, they return the angle. This inverse trig calculator finds arcsin, arccos, arctan and arccot of any number in degrees or radians, using the standard principal-value ranges, and also works the other way — enter an angle to get back the ratio."
+keywords: [inverse trig calculator, arcsin calculator, arccos calculator, arctan calculator, inverse sine calculator, inverse cosine, inverse tangent calculator, sin⁻¹ cos⁻¹ tan⁻¹]
+updated: 2026-11-14
+variables:
+  - { id: x, label: Value (ratio), default: 0.5, help: 'arcsin and arccos need −1 ≤ x ≤ 1; arctan and arccot accept any number.' }
+  - { id: asn, label: arcsin x (sin⁻¹), family: angle, unit: deg }
+  - { id: ac, label: arccos x (cos⁻¹), family: angle, unit: deg }
+  - { id: at, label: arctan x (tan⁻¹), family: angle, unit: deg }
+  - { id: act, label: arccot x (cot⁻¹), family: angle, unit: deg }
+equations:
+  - asn = asin(x)
+  - ac = acos(x)
+  - at = atan(x)
+  - act = pi / 2 - atan(x)
+faq:
+  - q: What is arcsin of 0.5?
+    a: 30° (π/6 = 0.5236 rad), because sin 30° = 0.5. Sine is also 0.5 at 150°, but arcsin always returns the principal value between −90° and +90°. Likewise arccos 0.5 = 60° and arctan 0.5 = 26.565°.
+  - q: What are the ranges of the inverse trig functions?
+    a: "arcsin: −90° to 90° (−π/2 to π/2); arccos: 0° to 180° (0 to π); arctan: −90° to 90°, never reaching ±90°; arccot (as used here): 0° to 180°. These principal values make each inverse a true function with one answer."
+  - q: Is sin⁻¹ the same as 1/sin?
+    a: No. sin⁻¹ x means arcsin x, the angle whose sine is x. The reciprocal 1/sin x is the cosecant, csc x. Calculators label the inverse function sin⁻¹, which causes this common mix-up.
+  - q: How do I find other angles with the same sine or cosine?
+    a: "For sine, the other solution in 0–360° is 180° − arcsin x; for cosine it is 360° − arccos x; for tangent add 180°. The general solutions are θ = arcsin x + 360°k or 180° − arcsin x + 360°k, θ = ±arccos x + 360°k and θ = arctan x + 180°k."
+related: [math/right-triangle-trig, math/angle-converter, math/law-of-sines, math/law-of-cosines, math/pythagorean-theorem, math/slope]
+---
+
+## How to use the inverse trig calculator
+
+Enter a **value** — a ratio such as opposite ÷ hypotenuse — and read arcsin, arccos, arctan and arccot. Switch any result between degrees, radians, gradians or turns with its unit selector. To go the other way, clear the value and type an angle into one of the result boxes: the calculator returns the sine, cosine or tangent of that angle as the value. arcsin and arccos are only defined for values from −1 to 1.
+
+## Inverse trig formulas and ranges
+
+<p class="formula">θ = arcsin x ⇔ sin θ = x, −90° ≤ θ ≤ 90° &nbsp;·&nbsp; θ = arccos x ⇔ cos θ = x, 0° ≤ θ ≤ 180°</p>
+
+<p class="formula">θ = arctan x ⇔ tan θ = x, −90° &lt; θ &lt; 90° &nbsp;·&nbsp; arccot x = 90° − arctan x</p>
+
+Useful identities: arcsin x + arccos x = 90°, arctan x + arctan(1/x) = 90° for x &gt; 0, and arcsin(−x) = −arcsin x.
+
+## Worked example
+
+Find the angles whose sine, cosine, tangent and cotangent equal 0.5:
+
+- arcsin 0.5 = **30°** (0.5236 rad), since sin 30° = 0.5
+- arccos 0.5 = **60°** (1.0472 rad); check: 30° + 60° = 90°
+- arctan 0.5 = **26.565°** (0.4636 rad)
+- arccot 0.5 = 90° − 26.565° = **63.435°**
+
+In a right triangle with opposite side 1 and adjacent side 2, the angle is arctan(1/2) = 26.57°.
+
+## arcsin and arccos of exact values
+
+| x | arcsin x | arcsin (rad) | arccos x | arccos (rad) |
+|---|---|---|---|---|
+| −1 | −90° | −1.5708 | 180° | 3.1416 |
+| −√3/2 (−0.8660) | −60° | −1.0472 | 150° | 2.6180 |
+| −√2/2 (−0.7071) | −45° | −0.7854 | 135° | 2.3562 |
+| −1/2 | −30° | −0.5236 | 120° | 2.0944 |
+| 0 | 0° | 0.0000 | 90° | 1.5708 |
+| 1/2 | 30° | 0.5236 | 60° | 1.0472 |
+| √2/2 (0.7071) | 45° | 0.7854 | 45° | 0.7854 |
+| √3/2 (0.8660) | 60° | 1.0472 | 30° | 0.5236 |
+| 1 | 90° | 1.5708 | 0° | 0.0000 |
+
+## arctan and arccot values
+
+| x | arctan x | arctan (rad) | arccot x |
+|---|---|---|---|
+| −√3 (−1.732) | −60.0000° | −1.0472 | 150.0000° |
+| −1 | −45.0000° | −0.7854 | 135.0000° |
+| −1/√3 (−0.5774) | −30.0000° | −0.5236 | 120.0000° |
+| 0 | 0.0000° | 0.0000 | 90.0000° |
+| 1/√3 (0.5774) | 30.0000° | 0.5236 | 60.0000° |
+| 0.5 | 26.5651° | 0.4636 | 63.4349° |
+| 1 | 45.0000° | 0.7854 | 45.0000° |
+| √3 (1.732) | 60.0000° | 1.0472 | 30.0000° |
+| 2 | 63.4349° | 1.1071 | 26.5651° |
+| 10 | 84.2894° | 1.4711 | 5.7106° |
+| 100 | 89.4271° | 1.5608 | 0.5729° |
+
+## Gradient (percent slope) to angle
+
+The angle of a slope is arctan(rise ÷ run):
+
+| Gradient | rise ÷ run | Angle |
+|---|---|---|
+| 1% | 0.01 | 0.57° |
+| 2% | 0.02 | 1.15° |
+| 5% | 0.05 | 2.86° |
+| 8% | 0.08 | 4.57° |
+| 10% | 0.1 | 5.71° |
+| 15% | 0.15 | 8.53° |
+| 25% | 0.25 | 14.04° |
+| 50% | 0.5 | 26.57° |
+| 100% | 1 | 45.00° |
+
+## Practical notes
+
+- **Two-argument arctangent:** arctan(y/x) cannot tell (1, 1) from (−1, −1). For angles of vectors, phasors or coordinates use atan2(y, x), which returns the full −180° to 180° range — see the [vector calculator](/math/vector/).
+- **Degrees vs radians:** spreadsheets and programming languages return radians; multiply by 180/π (57.2958) to get degrees. Convert other units with the [angle converter](/math/angle-converter/).
+- **Solving triangles:** use arcsin with the [law of sines](/math/law-of-sines/) (watch for the ambiguous case where 180° − θ is also a solution) and arccos with the [law of cosines](/math/law-of-cosines/), which never has that ambiguity.

@@ -1,76 +1,85 @@
 ---
-title: Momentum Calculator (p = mv)
-description: Calculate momentum from mass and velocity, or find velocity or mass from momentum.
+title: Momentum Calculator (p = mv, Linear Momentum)
+description: Calculate linear momentum from mass and velocity (p = mv), or find the mass or velocity from a momentum, with kinetic energy and collision examples.
 category: physics
-intro: "Momentum is mass times velocity — a measure of how hard it is to stop a moving object. It is conserved in collisions, making it a powerful tool for analysing impacts."
-keywords: [momentum calculator, p = mv, linear momentum, impulse, kg m/s, conservation of momentum]
-updated: 2026-10-27
+intro: "Momentum is mass times velocity — a measure of how hard a moving object is to stop, and a quantity that is conserved in every collision. This momentum calculator finds the linear momentum p = mv from any mass and speed, or the speed or mass from a known momentum, and also gives the kinetic energy so you can compare the two."
+keywords: [momentum calculator, p = mv, linear momentum calculator, momentum formula, calculate momentum, kg m/s, conservation of momentum, momentum and kinetic energy]
+updated: 2026-11-14
 variables:
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 0.16, min: 0 }
   - { id: v, label: Velocity, family: velocity, unit: kmh, imperialUnit: mph, default: 140 }
   - { id: p, label: Momentum, suffix: kg·m/s }
+  - { id: ke, label: Kinetic energy (½mv²), family: energy, unit: J, imperialUnit: BTU, min: 0 }
 equations:
   - p = m * v
+  - ke = 0.5 * m * v^2
 faq:
-  - q: What is momentum?
-    a: The quantity of motion an object has — its mass times its velocity. It has direction as well as size.
+  - q: How do you calculate momentum?
+    a: Multiply the mass in kg by the velocity in m/s, p = m × v. Convert km/h to m/s by dividing by 3.6 first. A 160 g cricket ball at 140 km/h (38.89 m/s) has p = 0.16 × 38.89 = 6.22 kg·m/s.
+  - q: What are the units of momentum?
+    a: Kilogram-metres per second (kg·m/s), which is the same as newton-seconds (N·s), because a force of 1 N acting for 1 s changes momentum by 1 kg·m/s. In US customary units momentum is usually given in slug·ft/s or lbf·s.
   - q: What is conservation of momentum?
-    a: In a collision with no outside forces, the total momentum before equals the total after.
-  - q: What is impulse?
-    a: The change in momentum, equal to force × time. Spreading a stop over a longer time (air bags, crumple zones) reduces the force.
-  - q: "What are the units of momentum?"
-    a: "Kilogram-metres per second (kg·m/s), which is the same as newton-seconds (N·s)."
-  - q: "What is the difference between momentum and kinetic energy?"
-    a: "Momentum (mv) is a vector and is always conserved in collisions. Kinetic energy (½mv²) is a scalar and is only conserved in elastic collisions."
-related: [physics/kinetic-energy, physics/force]
+    a: When no outside force acts, the total momentum of a system stays the same — the total before a collision or explosion equals the total after. Momentum is a vector, so velocities in opposite directions have opposite signs.
+  - q: What is the difference between momentum and kinetic energy?
+    a: Momentum (mv) is a vector and is conserved in every collision; kinetic energy (½mv²) is a scalar and is only conserved in elastic collisions. Doubling the speed doubles the momentum but quadruples the kinetic energy, which is why speed matters so much in crashes.
+related: [physics/impulse, physics/kinetic-energy, physics/elastic-collision, physics/force, physics/acceleration, physics/speed-distance-time]
 ---
 
 ## How to use the momentum calculator
 
-Enter **mass** and **velocity** to get momentum in kg·m/s. You can also solve for velocity or mass.
+Enter the **mass** and the **velocity** to get the momentum in kg·m/s and the kinetic energy. To find a speed, clear the velocity and enter the momentum; to find a mass, clear the mass. Both mass and velocity have unit selectors (kg, g, lb; km/h, m/s, mph and more), and the calculation is always done in SI units. Enter a negative velocity for motion in the opposite direction.
 
 ## Momentum formula
 
-<p class="formula">p = m × v</p>
+<p class="formula">p = m × v &nbsp;·&nbsp; KE = ½ m v² = p² ÷ 2m</p>
+
+p is in kg·m/s when m is in kg and v in m/s. The change in momentum equals the impulse, Δp = F × Δt.
 
 ## Worked example
 
-A 160 g cricket ball bowled at 140 km/h (38.9 m/s):
+A 160 g cricket ball bowled at 140 km/h:
 
-p = 0.16 × 38.89 = **6.22 kg·m/s**
+- Speed in m/s = 140 ÷ 3.6 = 38.89 m/s
+- Momentum p = 0.16 × 38.89 = **6.22 kg·m/s**
+- Kinetic energy = ½ × 0.16 × 38.89² = **121.0 J**
 
-A 1,200 kg car at just 0.5 km/h has a similar momentum: 167 kg·m/s.
+A 1,200 kg car has the same momentum when crawling at only 0.019 km/h (0.52 cm/s) — yet at that speed its kinetic energy is just 0.016 J, because the energy depends on v².
 
-## Momentum examples
+## Momentum of everyday objects
 
-| Object | Mass | Speed | Momentum |
-|---|---|---|---|
-| Tennis serve | 0.058 kg | 200 km/h | 3.2 kg·m/s |
-| Cricket ball | 0.16 kg | 140 km/h | 6.2 kg·m/s |
-| Footballer running | 75 kg | 30 km/h | 625.0 kg·m/s |
-| Car | 1200 kg | 50 km/h | 16,666.7 kg·m/s |
-| Loaded truck | 30000 kg | 60 km/h | 500,000.0 kg·m/s |
+| Object | Mass | Speed | Momentum | Kinetic energy |
+|---|---|---|---|---|
+| Tennis serve | 0.058 kg | 200 km/h | 3.2 kg·m/s | 90 J |
+| Cricket ball (fast bowler) | 0.16 kg | 140 km/h | 6.2 kg·m/s | 121 J |
+| Football kick | 0.43 kg | 100 km/h | 11.9 kg·m/s | 166 J |
+| Sprinter | 75 kg | 36 km/h | 750.0 kg·m/s | 3,750 J |
+| Cyclist with bike | 85 kg | 25 km/h | 590.3 kg·m/s | 2,050 J |
+| Car | 1,200 kg | 50 km/h | 16,666.7 kg·m/s | 115,741 J |
+| Car | 1,200 kg | 100 km/h | 33,333.3 kg·m/s | 462,963 J |
+| Loaded truck | 30,000 kg | 60 km/h | 500,000.0 kg·m/s | 4,166,667 J |
+| Bullet (9 mm) | 0.008 kg | 1,300 km/h | 2.9 kg·m/s | 522 J |
 
-## Conservation of momentum
+## Conservation of momentum in a collision
 
 In a collision with no outside forces, the total momentum before equals the total after:
 
 <p class="formula">m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</p>
 
-**Example**: a 1,000 kg car at 20 m/s hits a stationary 1,500 kg car and they move off together. Final speed = 20,000 ÷ 2,500 = **8 m/s**.
+If the objects stick together (a perfectly inelastic collision) the common final speed is v = (m₁u₁ + m₂u₂) ÷ (m₁ + m₂). A 1,000 kg car at 20 m/s hitting a stationary car:
 
-## Elastic vs inelastic collisions
+| Stationary car | Final speed | KE before | KE after | KE lost |
+|---|---|---|---|---|
+| 500 kg | 13.33 m/s | 200 kJ | 133.3 kJ | 33% |
+| 1,000 kg | 10.00 m/s | 200 kJ | 100.0 kJ | 50% |
+| 1,500 kg | 8.00 m/s | 200 kJ | 80.0 kJ | 60% |
+| 2,000 kg | 6.67 m/s | 200 kJ | 66.7 kJ | 67% |
+| 5,000 kg | 3.33 m/s | 200 kJ | 33.3 kJ | 83% |
 
-| Type | Momentum conserved? | Kinetic energy conserved? |
-|---|---|---|
-| Elastic (billiard balls, nearly) | Yes | Yes |
-| Inelastic (most real collisions) | Yes | No — some becomes heat and sound |
-| Perfectly inelastic (objects stick) | Yes | Largest loss |
+Momentum is conserved in every case, but most of the kinetic energy turns into deformation, heat and sound. For bouncing (elastic) collisions use the [elastic collision calculator](/physics/elastic-collision/).
 
-## Recoil
+## Practical notes
 
-When a gun fires, the bullet's forward momentum equals the gun's backward momentum. A heavier gun recoils more slowly, which is why recoil feels softer in heavier firearms. Rockets work the same way: exhaust is pushed backward, the rocket moves forward.
-
-## Impulse and safety
-
-Force = change in momentum ÷ time. Catching a ball by pulling your hands back extends the stopping time and reduces the force on your hands — the same principle behind helmets, air bags and crumple zones.
+- **Direction matters:** momentum is a vector. In a head-on collision, give one velocity a negative sign before adding momenta.
+- **Stopping force:** the average force needed to stop an object is its momentum divided by the stopping time, F = p ÷ t — see the [impulse calculator](/physics/impulse/). Air bags, crumple zones and catching a ball with "soft hands" all work by making t longer.
+- **Recoil:** when a gun fires or a rocket burns, the forward momentum of the bullet or exhaust equals the backward momentum of the gun or rocket. A heavier gun recoils more slowly for the same bullet.
+- At speeds approaching the speed of light, use relativistic momentum p = γmv instead.

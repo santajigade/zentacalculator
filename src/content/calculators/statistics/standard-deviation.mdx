@@ -4,7 +4,7 @@ description: Paste your data to get sample and population standard deviation, va
 category: statistics
 intro: "Standard deviation measures how spread out values are around their mean. A small standard deviation means the data are tightly clustered."
 keywords: [standard deviation calculator, sample standard deviation, population standard deviation, variance, sd, stdev]
-updated: 2026-11-09
+updated: 2026-11-14
 featured: true
 dataset:
   label: Your data
@@ -24,22 +24,22 @@ equations:
   - mean = data_mean
   - n = data_n
 faq:
-  - q: Should I use sample or population standard deviation?
-    a: Use the sample formula (divide by n − 1) when your data is a sample from a larger group — the usual case. Use the population formula (divide by n) only when you have every member of the group.
-  - q: What does standard deviation tell me?
-    a: How spread out the values are around the mean. A small value means the data is tightly clustered.
-  - q: How is variance related?
-    a: Variance is the square of the standard deviation.
+  - q: "Should I use sample or population standard deviation?"
+    a: "Use the sample formula (divide by n − 1) when your data is a sample from a larger group — the usual case. Use the population formula (divide by n) only when you have every member of the group."
+  - q: "What does standard deviation tell me?"
+    a: "How spread out the values are around the mean. A small value means the data is tightly clustered."
+  - q: "How is variance related?"
+    a: "Variance is the square of the standard deviation."
   - q: "What is a good standard deviation?"
     a: "There is no universal value — it depends on the data. Compare it with the mean (see coefficient of variation) or with a target tolerance."
   - q: "Why divide by n − 1?"
     a: "Because the mean is estimated from the same data, which makes deviations slightly smaller. Dividing by n − 1 corrects this bias."
   - q: "What is the standard deviation of 2, 4, 4, 4, 5, 5, 7, 9?"
     a: "The population standard deviation is 2 and the sample standard deviation is 2.14. The mean is 5."
-  - q: "What is a good standard deviation?"
-    a: "It depends on the data. Compare it with the mean using the coefficient of variation: below about 10% is usually considered low spread."
   - q: "Can standard deviation be negative?"
     a: "No. It is a square root of an average squared distance, so it is always zero or positive."
+  - q: "How do I combine two standard deviations?"
+    a: "For independent sources, add the variances and take the square root: √(0.3² + 0.4²) = 0.5. Never add the standard deviations directly."
 related: [statistics/mean-median-mode, statistics/z-score, statistics/standard-error]
 ---
 
@@ -118,3 +118,22 @@ Sample: `=STDEV.S(range)` · Population: `=STDEV.P(range)`
 | NumPy | np.std(x, ddof=1) | np.std(x) |
 | R | sd(x) | sqrt(mean((x − mean(x))²)) |
 | Casio calculator | sx or σn−1 | σx or σn |
+
+## Standard deviation in quality control
+
+In manufacturing and measurement, standard deviation shows whether a process can stay within its limits. The process capability index compares the tolerance with the spread:
+
+<p class="formula">C<sub>p</sub> = (USL − LSL) ÷ 6σ</p>
+
+A shaft specified at 10.0 ± 0.3 mm with σ = 0.08 mm gives C<sub>p</sub> = 0.6 ÷ 0.48 = **1.25**. Many industries ask for at least 1.33.
+
+## Combining uncertainties
+
+Independent random errors combine as the **root sum of squares**, not by simple addition. A sensor with σ = 0.3 and a transmitter with σ = 0.4 give a combined σ of √(0.3² + 0.4²) = **0.5**, not 0.7.
+
+## Common mistakes
+
+- **Using the population formula on a sample.** It underestimates the spread, especially with fewer than about 30 values.
+- **Adding standard deviations.** Add variances, then take the square root.
+- **Applying the 68 to 95 to 99.7 rule to skewed data.** It only holds for roughly normal data. For incomes, waiting times or particle sizes, use percentiles instead.
+- **Letting one outlier decide the result.** Check the data for typing errors before you report it.

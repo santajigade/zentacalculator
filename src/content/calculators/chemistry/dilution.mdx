@@ -4,7 +4,7 @@ description: Calculate how much stock solution and solvent you need to make a di
 category: chemistry
 intro: "Diluting a solution lowers its concentration while the amount of solute stays the same. C₁V₁ = C₂V₂ tells you how much stock solution and solvent to mix. This free dilution calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [dilution calculator, c1v1 = c2v2, stock solution, dilute, serial dilution, concentration]
-updated: 2026-11-09
+updated: 2026-11-14
 featured: true
 variables:
   - { id: C1, label: Stock concentration (C₁), default: 10, min: 0 }
@@ -16,22 +16,20 @@ equations:
   - C1 * V1 = C2 * V2
   - Vd = V2 - V1
 faq:
-  - q: What is the dilution formula?
-    a: C₁V₁ = C₂V₂ — the amount of solute stays the same, only the volume changes.
-  - q: Which concentration units can I use?
-    a: Any, as long as C₁ and C₂ use the same unit — mol/L, %, mg/mL or ppm all work.
-  - q: What is a dilution factor?
-    a: C₁ ÷ C₂. Diluting 10 M to 0.5 M is a 20-fold dilution.
+  - q: "What is the dilution formula?"
+    a: "C₁V₁ = C₂V₂ — the amount of solute stays the same, only the volume changes."
+  - q: "Which concentration units can I use?"
+    a: "Any, as long as C₁ and C₂ use the same unit — mol/L, %, mg/mL or ppm all work."
+  - q: "What is a dilution factor?"
+    a: "C₁ ÷ C₂. Diluting 10 M to 0.5 M is a 20-fold dilution."
   - q: "How do I make a 1:10 dilution?"
     a: "Mix 1 part stock with 9 parts solvent, for example 1 mL stock plus 9 mL water for 10 mL total."
-  - q: "What is C1V1 = C2V2?"
-    a: "The dilution equation: the amount of solute before (C₁ × V₁) equals the amount after (C₂ × V₂)."
   - q: "How do I make 70% ethanol from 95% ethanol?"
     a: "Use C₁V₁ = C₂V₂: 70 × 100 ÷ 95 = 73.7 mL of 95% ethanol, made up to 100 mL with water."
-  - q: "What does a 1:10 dilution mean?"
-    a: "One part of stock in a total of ten parts, for example 1 mL stock plus 9 mL diluent."
   - q: "Is a 1:10 dilution the same as 1+10?"
     a: "No. 1+10 means 1 part stock plus 10 parts diluent, which is a 1:11 dilution."
+  - q: "How much water do I add for a dilution?"
+    a: "V₂ − V₁. To make 100 mL of 1 M from 5 M stock, take 20 mL of stock and add 80 mL of diluent, or better, make it up to the 100 mL mark."
 related: [chemistry/molarity, chemistry/ppm]
 ---
 
@@ -112,3 +110,15 @@ A 1:10 dilution means 1 part stock in 10 parts **total**, so 10 mL stock plus 90
 | 30% | 3% | 10 mL | 90 mL |
 | 50% | 25% | 50 mL | 50 mL |
 | 10% | 1% | 10 mL | 90 mL |
+
+## Common mistakes
+
+- **Adding V₂ of diluent instead of making up to V₂.** C₁V₁ = C₂V₂ gives the final volume. The diluent you add is V₂ − V₁.
+- **Mixing concentration units.** If C₁ is in mol/L and C₂ in mmol/L, convert first. 1 M = 1,000 mM.
+- **Confusing 1:10 with 1+10.** A 1:10 dilution is 1 part in 10 total. A 1+10 mix is 1 part plus 10 parts, which is 1:11.
+- **Making very large single-step dilutions.** Pipetting 1 µL into 1 L is inaccurate. Use two or three serial steps instead.
+- **Forgetting that errors add up in serial dilutions.** A 1% pipetting error in each of 6 steps can add up to about 6% in the final tube.
+
+## Choosing pipette volumes
+
+Pipettes are most accurate between about 35% and 100% of their maximum volume. For a 1:20 dilution to 10 mL, pipette 500 µL with a 1,000 µL pipette rather than a 5 mL one, and add the stock to the diluent, not the other way round.

@@ -4,7 +4,7 @@ description: Convert a 4–20 mA loop current to a process value (and back) for 
 category: engineering
 intro: "The 4–20 mA current loop is the standard analog signal in process instrumentation: 4 mA means 0% of the range and 20 mA means 100%. Converting between current and process value is daily work for instrument engineers — see the [4 to 20 mA current loop explained](https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/) and [PLC analog scaling from raw counts](https://www.instrumentationblog.in/plc-analog-scaling-raw-count/). This free 4–20 mA scaling calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [4-20 mA, 4 20 ma calculator, current loop, scaling, transmitter, mA to pressure, mA to temperature, percent span, plc scaling]
-updated: 2026-11-09
+updated: 2026-11-14
 featured: true
 variables:
   - { id: I, label: Loop current, family: current, unit: mA, default: 12, min: 0, max: 0.03 }
@@ -17,24 +17,22 @@ equations:
   - V = L + s * (H - L)
 chart: { x: I, y: V, from: 4, to: 20 }
 faq:
-  - q: How do I convert 4–20 mA to a process value?
-    a: Value = low + (mA − 4) ÷ 16 × (high − low). For 12 mA on a 0–10 bar transmitter, (12 − 4) ÷ 16 × 10 = 5 bar.
-  - q: Why does the signal start at 4 mA instead of 0?
-    a: The 4 mA "live zero" powers two-wire transmitters and lets the system tell a real zero reading (4 mA) from a broken wire (0 mA).
-  - q: What do currents below 4 mA or above 20 mA mean?
-    a: Many devices follow NAMUR NE 43. Readings below about 3.6 mA or above about 21 mA signal a fault, such as a sensor failure or open circuit.
-  - q: Can I calculate the mA output for a given value?
-    a: Yes. Press × on Loop current, then type the process value. The calculator gives the expected current, useful for loop checks.
+  - q: "How do I convert 4–20 mA to a process value?"
+    a: "Value = low + (mA − 4) ÷ 16 × (high − low). For 12 mA on a 0–10 bar transmitter, (12 − 4) ÷ 16 × 10 = 5 bar."
+  - q: "Why does the signal start at 4 mA instead of 0?"
+    a: "The 4 mA \"live zero\" powers two-wire transmitters and lets the system tell a real zero reading (4 mA) from a broken wire (0 mA)."
+  - q: "What do currents below 4 mA or above 20 mA mean?"
+    a: "Many devices follow NAMUR NE 43. Readings below about 3.6 mA or above about 21 mA signal a fault, such as a sensor failure or open circuit."
+  - q: "Can I calculate the mA output for a given value?"
+    a: "Yes. Press × on Loop current, then type the process value. The calculator gives the expected current, useful for loop checks."
   - q: "What is 12 mA in percent?"
     a: "50% of span. 4 mA is 0% and 20 mA is 100%, so each 1.6 mA is 10%."
-  - q: "What does a reading below 3.8 mA mean?"
-    a: "Under NAMUR NE 43, values below 3.8 mA indicate a fault or a reading below range, and below 3.6 mA a failure signal."
-  - q: "What is 12 mA in a 4 to 20 mA loop?"
-    a: "12 mA is exactly 50% of span. On a 0 to 10 bar transmitter that is 5 bar."
   - q: "What does each mA represent in 4 to 20 mA?"
     a: "Each 1 mA is 6.25% of the measuring span, because the 16 mA span covers 100%."
   - q: "How do I convert 4 to 20 mA to 1 to 5 V?"
     a: "Pass the loop current through a 250 Ω resistor. 4 mA gives 1 V and 20 mA gives 5 V."
+  - q: "Why is my flow reading wrong after scaling a DP transmitter?"
+    a: "Check where square-root extraction is done. If both the transmitter and the DCS apply it, the reading is badly wrong. Use it in one place only."
 related: [engineering/hydrostatic-pressure, engineering/pt100-resistance, physics/ohms-law]
 ---
 
@@ -142,3 +140,23 @@ Many PLC inputs read the loop as a voltage across a 250 Ω resistor, giving 1–
 | 20 mA | 100% | 10 bar | 100 °C | 150 °C | 250 m³/h |
 
 Each 1 mA is 6.25% of span. For any other range, multiply the % of span by the span and add the lower range value.
+
+## Troubleshooting a 4 to 20 mA loop
+
+| Symptom | Likely cause |
+|---|---|
+| 0 mA | Open loop, blown fuse, no supply or reversed polarity |
+| 3.6 mA or below, steady | Transmitter reports a fault (NAMUR NE 43 low alarm) |
+| 21 mA or above | Fault high alarm, or process far above range |
+| Stuck at 4 mA | Wrong range, sensor damaged, or the process really is at its low limit |
+| Reading off by a fixed ratio | Range set in the DCS differs from the transmitter LRV and URV |
+| Noisy or jumping reading | Shield grounded at both ends, cable run next to VFD or power cables |
+
+To measure the loop current without breaking it, use a clamp meter for mA, or put a meter across the transmitter's test terminals if it has them.
+
+## Common mistakes
+
+- **Different ranges in the transmitter and the DCS.** Both ends must use the same LRV and URV, or every reading is scaled wrongly.
+- **Double square-root extraction** on differential pressure flow. Apply it in the transmitter or in the DCS, never both.
+- **Too little loop voltage.** Supply voltage minus the drop across the loop resistance must stay above the transmitter's minimum, or it cannot reach 20 mA.
+- **Treating 0 mA as zero.** In a live-zero loop, 0 mA always means a broken loop, not an empty tank or zero flow.

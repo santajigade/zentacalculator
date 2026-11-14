@@ -4,7 +4,7 @@ description: Convert gauge pressure to absolute pressure and back, including vac
 category: engineering
 intro: "Gauge pressure is measured relative to the surrounding atmosphere, absolute pressure relative to a perfect vacuum, and the difference is the local atmospheric pressure. This absolute to gauge pressure calculator converts between them — and handles vacuum as negative gauge pressure — as explained in [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/) and [how to calculate vacuum pressure](https://www.instrumentationblog.in/how-to-calculate-vacuum-pressure/)."
 keywords: [absolute to gauge pressure calculator, gauge to absolute pressure, psia to psig, bar g to bar a, vacuum pressure calculator, atmospheric pressure altitude, absolute pressure formula]
-updated: 2026-11-05
+updated: 2026-11-14
 variables:
   - { id: pg, label: Gauge pressure (negative = vacuum), family: pressure, unit: bar, imperialUnit: psi, default: 2, min: -1e7 }
   - { id: z, label: Altitude above sea level, family: length, unit: m, imperialUnit: ft, default: 0, min: -500, max: 11000 }
@@ -14,14 +14,18 @@ equations:
   - pa = 101325 * (1 - 2.25577e-5 * z)^5.25588
   - pabs = pg + pa
 faq:
-  - q: How do I convert gauge pressure to absolute pressure?
-    a: Add atmospheric pressure — p_abs = p_gauge + p_atm. At sea level 2 bar(g) is 3.013 bar(a), and 100 psig is 114.7 psia.
-  - q: How is vacuum related to gauge pressure?
-    a: Vacuum is negative gauge pressure. A vacuum of 0.6 bar at sea level is −0.6 bar(g), or 1.013 − 0.6 = 0.413 bar(a).
-  - q: Why does altitude matter?
-    a: Atmospheric pressure falls about 12% per 1,000 m near sea level, so the same absolute pressure reads differently on a gauge at altitude. Enter the altitude or override atmospheric pressure with a barometer reading.
-  - q: Can absolute pressure be negative?
-    a: No — zero absolute is a perfect vacuum, so the most negative gauge reading possible is minus the atmospheric pressure.
+  - q: "How do I convert gauge pressure to absolute pressure?"
+    a: "Add atmospheric pressure — p_abs = p_gauge + p_atm. At sea level 2 bar(g) is 3.013 bar(a), and 100 psig is 114.7 psia."
+  - q: "How is vacuum related to gauge pressure?"
+    a: "Vacuum is negative gauge pressure. A vacuum of 0.6 bar at sea level is −0.6 bar(g), or 1.013 − 0.6 = 0.413 bar(a)."
+  - q: "Why does altitude matter?"
+    a: "Atmospheric pressure falls about 12% per 1,000 m near sea level, so the same absolute pressure reads differently on a gauge at altitude. Enter the altitude or override atmospheric pressure with a barometer reading."
+  - q: "Can absolute pressure be negative?"
+    a: "No — zero absolute is a perfect vacuum, so the most negative gauge reading possible is minus the atmospheric pressure."
+  - q: "Should I use gauge or absolute pressure in gas calculations?"
+    a: "Always absolute. The gas laws and flow compensation formulas use absolute pressure. Using 2 bar(g) instead of 3.013 bar(a) would make a gas density about 34% too low."
+  - q: "What is a sealed gauge transmitter?"
+    a: "A gauge transmitter whose reference side is sealed at about 1 atm instead of vented. It is used where moisture could enter a vent, but it ignores weather and altitude changes in atmospheric pressure."
 related: [engineering/hydrostatic-pressure, engineering/gas-flow-correction, engineering/manometer, engineering/compressor-power]
 ---
 
@@ -57,3 +61,27 @@ Enter the **gauge pressure** (use a negative value for vacuum) and the **altitud
 
 - Weather changes atmospheric pressure by about ±3% around the standard value.
 - Gas flow corrections and compressor calculations always need absolute pressure.
+
+## Worked example at altitude
+
+A pump suction gauge reads **−0.5 bar(g)** in Pune, about 560 m above sea level:
+
+- Atmospheric pressure at 560 m ≈ **0.948 bar(a)**
+- Absolute suction pressure = 0.948 − 0.5 = **0.448 bar(a)**
+
+At sea level the same gauge reading would mean 0.513 bar(a). That 13% difference matters when you check NPSH or whether a liquid will flash or boil.
+
+## Gauge, absolute and sealed gauge transmitters
+
+| Type | Reference | Typical units | Use it for |
+|---|---|---|---|
+| Gauge (vented) | Local atmosphere | bar(g), psig | Pumps, compressors, hydraulics, most process lines |
+| Absolute | Sealed vacuum | bar(a), psia | Vacuum, distillation, gas flow compensation, boiling points |
+| Sealed gauge | Sealed at about 1 atm | bar(sg) | High pressures where a vent could let in moisture |
+
+## Common mistakes
+
+- **Using gauge pressure in the gas laws.** Ideal gas, density and flow compensation formulas need absolute pressure.
+- **Assuming 1.013 bar everywhere.** At 1,600 m atmospheric pressure is only about 0.835 bar.
+- **Ignoring the weather.** Barometric pressure moves about ±30 mbar. On low-pressure or vacuum work, use an absolute transmitter or a local barometer reading.
+- **Mixing up vacuum notations.** "600 mbar vacuum" is −600 mbar(g), while "600 mbar absolute" is a much weaker vacuum. Always check which one a datasheet means.

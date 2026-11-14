@@ -4,7 +4,7 @@ description: Calculate the average probability of failure on demand (PFDavg) for
 category: engineering
 intro: "In a safety instrumented system, each safety function must reach a target probability of failure on demand (PFDavg) that sets its SIL. For a single channel, PFDavg depends on the dangerous undetected failure rate and how often it is proof tested. This PFDavg calculator does the 1oo1 calculation — see the [PFDavg calculation formula](https://www.instrumentationblog.in/pfdavg-calculation-formula/), [what SIL is](https://www.instrumentationblog.in/what-is-sil-safety-integrity-level/) and [SIL verification](https://www.instrumentationblog.in/sil-verification/)."
 keywords: [pfdavg calculator, pfd avg calculation, sil calculation, probability of failure on demand, sil verification calculator, proof test interval, lambda du, iec 61511]
-updated: 2026-10-28
+updated: 2026-11-14
 variables:
   - { id: lam, label: Dangerous undetected failure rate (λDU), suffix: FIT, default: 500, min: 0, help: '1 FIT = 1 failure per 10⁹ hours.' }
   - { id: TI, label: Proof test interval, suffix: years, default: 1, min: 0 }
@@ -16,14 +16,18 @@ equations:
   - RRF = 1 / PFD
   - SIL = max(0, min(4, floor(log10(RRF))))
 faq:
-  - q: What is the PFDavg formula for 1oo1?
-    a: PFDavg ≈ λDU × TI ÷ 2, where λDU is the dangerous undetected failure rate per hour and TI the proof test interval in hours.
-  - q: What PFDavg does each SIL need?
-    a: SIL 1 — 10⁻² to 10⁻¹; SIL 2 — 10⁻³ to 10⁻²; SIL 3 — 10⁻⁴ to 10⁻³; SIL 4 — 10⁻⁵ to 10⁻⁴ (low-demand mode, IEC 61511).
-  - q: Is PFDavg enough to claim a SIL?
-    a: No. You must also meet architectural constraints (hardware fault tolerance), systematic capability and proof-test coverage requirements.
-  - q: How do I lower PFDavg?
-    a: Test more often, choose devices with lower λDU, add redundancy (1oo2, 2oo3) or improve diagnostic coverage.
+  - q: "What is the PFDavg formula for 1oo1?"
+    a: "PFDavg ≈ λDU × TI ÷ 2, where λDU is the dangerous undetected failure rate per hour and TI the proof test interval in hours."
+  - q: "What PFDavg does each SIL need?"
+    a: "SIL 1 — 10⁻² to 10⁻¹; SIL 2 — 10⁻³ to 10⁻²; SIL 3 — 10⁻⁴ to 10⁻³; SIL 4 — 10⁻⁵ to 10⁻⁴ (low-demand mode, IEC 61511)."
+  - q: "Is PFDavg enough to claim a SIL?"
+    a: "No. You must also meet architectural constraints (hardware fault tolerance), systematic capability and proof-test coverage requirements."
+  - q: "How do I lower PFDavg?"
+    a: "Test more often, choose devices with lower λDU, add redundancy (1oo2, 2oo3) or improve diagnostic coverage."
+  - q: "What is a FIT?"
+    a: "One failure per 10⁹ device hours. 1,000 FIT means about one failure in 114 years for a single device, or one failure a year across 114 devices."
+  - q: "Which part of a safety function usually dominates PFDavg?"
+    a: "The final element. A shutdown valve with its solenoid often has a λDU of several hundred FIT, far more than the transmitter or safety PLC, so it usually decides the SIL."
 related: [engineering/availability-mtbf, statistics/probability, statistics/poisson-probability, engineering/instrument-accuracy]
 ---
 
@@ -65,3 +69,28 @@ This simplified formula assumes perfect proof testing and ignores repair time an
 | 2oo3 | (λ<sub>DU</sub> TI)² + β λ<sub>DU</sub> TI / 2 |
 
 β is the common-cause factor (typically 2–10%). For a full assessment, follow IEC 61508/61511 — see [SIL determination methods](https://www.instrumentationblog.in/sil-determination-risk-graph-lopa-consequence-severity-matrix/).
+
+## Worked example: high-pressure trip loop
+
+A typical safety function has a pressure transmitter (λ<sub>DU</sub> = 50 FIT), a certified safety PLC (10 FIT) and a shutdown valve with its solenoid (400 FIT). The loop total is **460 FIT**, proof tested once a year:
+
+- PFD<sub>avg</sub> = 460 × 10⁻⁹ × 8,760 ÷ 2 = **2.01 × 10⁻³**
+- RRF = 1 ÷ 0.00201 ≈ **496**, which is in the **SIL 2** band
+
+The valve alone contributes 87% of the result. Testing only the valve every 6 months, while the rest stays at 1 year, lowers PFD<sub>avg</sub> to about 1.14 × 10⁻³ (RRF ≈ 880). This is why partial stroke testing of valves is so common.
+
+## Imperfect proof testing
+
+Real proof tests do not find every dangerous failure. With proof test coverage PTC and mission time MT (the time until the device is fully overhauled or replaced):
+
+<p class="formula">PFD<sub>avg</sub> ≈ PTC × λ<sub>DU</sub> × TI ÷ 2 + (1 − PTC) × λ<sub>DU</sub> × MT ÷ 2</p>
+
+For the loop above with PTC = 90% and MT = 15 years, PFD<sub>avg</sub> rises from 2.01 × 10⁻³ to about **4.84 × 10⁻³** (RRF ≈ 207). The failures that are never tested quietly add up over the mission time, so a better test procedure can matter more than a shorter test interval.
+
+## Common mistakes
+
+- **Using λ<sub>D</sub> instead of λ<sub>DU</sub>.** Dangerous detected failures are caught by diagnostics and handled separately. Only the undetected part goes into this formula.
+- **Mixing units.** FIT is failures per 10⁹ hours. A rate given per year must be divided by 8,760 first.
+- **Leaving out the final element** or the solenoid valve. They are usually the weakest link.
+- **Claiming a SIL from PFD<sub>avg</sub> alone.** Hardware fault tolerance and systematic capability must also meet the target SIL.
+- **Assuming a 100% proof test.** Use the coverage formula above unless the test really proves every failure mode.

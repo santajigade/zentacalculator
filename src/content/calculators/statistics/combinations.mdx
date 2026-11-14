@@ -4,7 +4,7 @@ description: Calculate the number of combinations — ways to choose r items fro
 category: statistics
 intro: "A combination counts the ways to choose items when order does not matter — like lottery numbers or team selections."
 keywords: [combination calculator, ncr, n choose r, binomial coefficient, lottery odds, combinatorics]
-updated: 2026-11-09
+updated: 2026-11-14
 featured: true
 variables:
   - { id: n, label: Total items (n), default: 49, min: 0 }
@@ -15,12 +15,12 @@ equations:
   - Cn = nCr(n, r)
   - odds = 1 / Cn
 faq:
-  - q: What is a combination?
-    a: A selection where order doesn't matter, such as choosing 3 toppings from 10.
-  - q: What is the formula?
-    a: nCr = n! ÷ (r! (n − r)!).
-  - q: What are the odds of winning a 6/49 lottery?
-    a: 1 in 13,983,816 for the jackpot.
+  - q: "What is a combination?"
+    a: "A selection where order doesn't matter, such as choosing 3 toppings from 10."
+  - q: "What is the formula?"
+    a: "nCr = n! ÷ (r! (n − r)!)."
+  - q: "What are the odds of winning a 6/49 lottery?"
+    a: "1 in 13,983,816 for the jackpot."
   - q: "How many combinations of 3 from 10 are there?"
     a: "120."
   - q: "How many 5-card poker hands are there?"
@@ -31,6 +31,8 @@ faq:
     a: "1,326."
   - q: "How many combinations does a 4-digit code have?"
     a: "10,000 (0000 to 9999). Order matters and digits repeat, so it is 10⁴, not a combination."
+  - q: "What is the probability of getting exactly two aces in a 5-card hand?"
+    a: "C(4,2) × C(48,3) ÷ C(52,5) = 6 × 17,296 ÷ 2,598,960 ≈ 3.99%, or about 1 in 25 hands."
 related: [statistics/permutations, statistics/binomial-probability, statistics/probability]
 ---
 
@@ -119,3 +121,29 @@ nCr values form Pascal's triangle — each number is the sum of the two above it
 | 5 from 69 (main numbers) | 69 | 5 | 11,238,513 |
 | 5 from 70 (main numbers) | 70 | 5 | 12,103,014 |
 | Keno 10 from 80 | 80 | 10 | 1,646,492,110,120 |
+
+## Combinations in probability
+
+Many probability questions are a ratio of two combination counts: the number of ways to get the result you want, divided by the total number of ways.
+
+Example: the chance of **exactly two aces** in a 5-card hand:
+
+- Ways to choose 2 of the 4 aces: C(4,2) = 6
+- Ways to choose the other 3 cards from the 48 non-aces: C(48,3) = 17,296
+- All possible hands: C(52,5) = 2,598,960
+- Probability = 6 × 17,296 ÷ 2,598,960 ≈ **3.99%**
+
+## Everyday examples
+
+| Question | Calculation | Answer |
+|---|---|---|
+| Pick a team of 11 from a squad of 15 | C(15,11) | 1,365 |
+| Handshakes when 20 people all meet | C(20,2) | 190 |
+| Pizzas with any number of 10 toppings | 2¹⁰ | 1,024 |
+| Choose 3 committee members from 12 | C(12,3) | 220 |
+
+## Common mistakes
+
+- **Using permutations when order does not matter.** Picking 3 people for a committee is C(n,3). Electing a president, secretary and treasurer is P(n,3).
+- **Forgetting repetition.** If an item can be chosen more than once (scoops of the same flavour), use combinations with repetition.
+- **Double counting** in "at least one" problems. It is usually easier to work out 1 − P(none).

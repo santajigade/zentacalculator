@@ -27,14 +27,12 @@ equations:
   - lf = q1 - 1.5 * iqr
   - uf = q3 + 1.5 * iqr
 faq:
-  - q: What is the interquartile range?
-    a: Q3 − Q1, the spread of the middle 50% of the data. It is not affected by extreme values.
-  - q: How are outliers identified?
-    a: A common rule flags values below Q1 − 1.5×IQR or above Q3 + 1.5×IQR.
-  - q: Why do calculators give different quartiles?
-    a: There are several methods. This one uses linear interpolation, the same as Excel's QUARTILE.INC and PERCENTILE.INC.
   - q: "What is the interquartile range?"
-    a: "Q3 − Q1: the range of the middle 50% of the data."
+    a: "Q3 − Q1, the spread of the middle 50% of the data. It is not affected by extreme values."
+  - q: "How are outliers identified?"
+    a: "A common rule flags values below Q1 − 1.5×IQR or above Q3 + 1.5×IQR."
+  - q: "Why do calculators give different quartiles?"
+    a: "There are several methods. This one uses linear interpolation, the same as Excel's QUARTILE.INC and PERCENTILE.INC."
   - q: "How do I find Q1?"
     a: "Sort the data and find the median of the lower half. The calculator does this automatically."
 related: [statistics/combinations, statistics/odds-probability, statistics/permutations, statistics/mean-median-mode, statistics/standard-deviation]

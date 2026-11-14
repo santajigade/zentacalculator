@@ -439,7 +439,7 @@ body:has(.hx__search) header .search { visibility: hidden; } @media (max-width: 
 .rel-cards a:hover .rel-cards__go svg { transform: translateX(3px); } .rel-cards__go svg { transition: transform .15s; }
 
 /* Embed call-to-action */
-.embed-cta { margin: 34px 0 10px; padding: 26px 28px; border-radius: 20px; color: #fff; background: linear-gradient(120deg, #4f5bff, #7c3aed 55%, #db2777); box-shadow: 0 14px 34px rgba(79, 91, 255, .25); }
+.embed-cta { margin: 34px 0 28px; padding: 26px 28px; border-radius: 20px; color: #fff; background: linear-gradient(120deg, #4f5bff, #7c3aed 55%, #db2777); box-shadow: 0 14px 34px rgba(79, 91, 255, .25); }
 .embed-cta__top { display: flex; align-items: center; gap: 20px; }
 .embed-cta__top > div { flex: 1; min-width: 0; }
 .embed-cta__kick { font-size: 11.5px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: .85; }

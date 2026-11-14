@@ -129,17 +129,6 @@ fetch('/api/views.php?p='+encodeURIComponent(p)+(hit?'&hit=1':''),{cache:'no-sto
             </section>
           )}
 
-          <h2 id="related">Related calculators</h2>
-          <ul class="rel-cards">
-            {related.map((c) => { const k = catBySlug(c.data.category)!; return (
-              <li style={`--c:${k.color}`}><a href={urlOf(c)}>
-                <span class="rel-cards__cat"><span class="rel-cards__ic" aria-hidden="true">{k.icon}</span>{k.name}</span>
-                <b>{shortTitle(c.data.title)}</b>
-                <span class="rel-cards__d">{c.data.description.replace(/\s+[–—]\s+/g, ', ')}</span>
-                <span class="rel-cards__go">Open calculator <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-              </a></li>); })}
-          </ul>
-
           <section class="embed-cta" aria-labelledby="embed">
             <div class="embed-cta__top">
               <div>
@@ -163,6 +152,17 @@ fetch('/api/views.php?p='+encodeURIComponent(p)+(hit?'&hit=1':''),{cache:'no-sto
               setTimeout(() => { l.textContent = 'Copy embed code'; b.classList.remove('is-done'); }, 2000);
             }));
           </script>
+
+          <h2 id="related">Related calculators</h2>
+          <ul class="rel-cards">
+            {related.map((c) => { const k = catBySlug(c.data.category)!; return (
+              <li style={`--c:${k.color}`}><a href={urlOf(c)}>
+                <span class="rel-cards__cat"><span class="rel-cards__ic" aria-hidden="true">{k.icon}</span>{k.name}</span>
+                <b>{shortTitle(c.data.title)}</b>
+                <span class="rel-cards__d">{c.data.description.replace(/\s+[–—]\s+/g, ', ')}</span>
+                <span class="rel-cards__go">Open calculator <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              </a></li>); })}
+          </ul>
         </div>
       </article>
 

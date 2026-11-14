@@ -78,6 +78,7 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
     <div class="page">
       <article>
         <h1>{d.title}</h1>
+        <div class="meta-row">
         <div class="byline">
           <img src={author.photo} alt="" width="36" height="36" class="byline__img" />
           <span>By <a href={authorUrl(author)} rel="author">{author.name}</a>
@@ -86,9 +87,9 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
             <br /><span class="muted">Updated {updated}</span></span>
         </div>
         <div class="pshare" aria-label="Share this calculator">
-          <span class="pshare__label">Share</span>
-          {shares.map((x) => <a class="pshare__btn" href={x.h} target="_blank" rel="noopener nofollow" aria-label={`Share on ${x.n}`} title={`Share on ${x.n}`} style={`--c:${x.c}`}><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d={x.d} /></svg></a>)}
+                    {shares.map((x) => <a class="pshare__btn" href={x.h} target="_blank" rel="noopener nofollow" aria-label={`Share on ${x.n}`} title={`Share on ${x.n}`} style={`--c:${x.c}`}><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d={x.d} /></svg></a>)}
           <button type="button" class="pshare__btn pshare__copy" data-url={`${SITE.url}${url}`} aria-label="Copy link" title="Copy link" style="--c:#5b6474"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M10.6 13.4a1 1 0 0 1 0-1.4l3.5-3.5a1 1 0 1 1 1.4 1.4L12 13.4a1 1 0 0 1-1.4 0zM8 19a4 4 0 0 1-2.8-6.8l2.1-2.1a1 1 0 1 1 1.4 1.4l-2.1 2.1a2 2 0 0 0 2.8 2.8l2.1-2.1a1 1 0 1 1 1.4 1.4L10.8 18A4 4 0 0 1 8 19zm7.5-5.1a1 1 0 0 1-.7-1.7l2.1-2.1a2 2 0 0 0-2.8-2.8L12 9.4A1 1 0 1 1 10.6 8l2.1-2.1a4 4 0 0 1 5.6 5.6l-2.1 2.1a1 1 0 0 1-.7.3z" /></svg><span class="pshare__ok">Copied</span></button>
+        </div>
         </div>
         <script is:inline>document.querySelectorAll('.pshare__copy').forEach(function(b){b.addEventListener('click',function(){try{navigator.clipboard.writeText(b.dataset.url).then(function(){b.classList.add('is-ok');setTimeout(function(){b.classList.remove('is-ok')},1500)})}catch(e){}})});</script>
 

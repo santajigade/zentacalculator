@@ -4,6 +4,7 @@ description: Calculate how many tiles you need for a floor or wall from the area
 category: construction
 intro: "The number of tiles depends on the floor or wall area and the tile size. Adding wastage for cuts and breakages avoids running short."
 keywords: [tile calculator, how many tiles, floor tiles, wall tiles, tiles per square metre, bathroom tiles]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: L, label: Area length, family: length, unit: m, imperialUnit: ft, default: 4, min: 0 }
@@ -18,16 +19,14 @@ equations:
   - A = L * W
   - n = ceil(A / ((tl + g) * (tw + g)) * (1 + wst))
 faq:
-  - q: How much extra tile should I buy?
-    a: About 10% for straight layouts and 15% for diagonal or herringbone patterns. Keep a few spare for future repairs.
-  - q: How many 600 × 600 tiles are in a square metre?
-    a: About 2.8 tiles (before waste).
-  - q: Should I buy tiles by the box?
-    a: Yes — round up to whole boxes, and buy from the same batch so the colour matches.
+  - q: "How much extra tile should I buy?"
+    a: "About 10% for straight layouts and 15% for diagonal or herringbone patterns. Keep a few spare for future repairs."
+  - q: "How many 600 × 600 tiles are in a square metre?"
+    a: "About 2.8 tiles (before waste)."
+  - q: "Should I buy tiles by the box?"
+    a: "Yes — round up to whole boxes, and buy from the same batch so the colour matches."
   - q: "How many 600 × 600 tiles in 1 m²?"
     a: "About 2.75 tiles with 3 mm joints, before waste."
-  - q: "How much extra tile should I buy?"
-    a: "10% for straight layouts, 15% for diagonal or complex rooms."
 related: [construction/flooring, construction/square-footage, math/rectangle]
 ---
 

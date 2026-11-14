@@ -54,6 +54,7 @@ description: Calculate tight-side and slack-side belt tension, the tension ratio
 category: engineering
 {intro("A belt transmits power through the difference between the tension on its tight side and its slack side, and friction around the pulley limits how large that difference can get. This belt tension calculator uses the Euler–Eytelwein (capstan) equation to work out the tension ratio, the tight-side and slack-side tensions, the centrifugal tension, the static installation tension and the load on the shaft bearings for flat and V-belt drives.")}
 keywords: [belt tension calculator, tight side and slack side tension, v belt tension calculation, belt tension formula, t1/t2 = e^(μθ), capstan equation, belt drive shaft load, centrifugal tension of belt]
+published: {D}
 updated: {D}
 variables:
   - {{ id: P, label: Power transmitted, family: power, unit: kW, imperialUnit: hp, default: {bP:g}, min: 0 }}
@@ -176,6 +177,7 @@ description: Calculate interference fit contact pressure, hub and shaft hoop str
 category: engineering
 {intro("An interference (press or shrink) fit holds a hub on a shaft by making the shaft slightly larger than the bore, so the parts squeeze each other. This press fit calculator uses Lamé's thick-cylinder equations to find the contact pressure from the diametral interference, the hoop stresses in the hub and shaft, the axial force needed to press the parts together and the torque the joint can carry before it slips.")}
 keywords: [press fit calculator, interference fit calculator, interference fit pressure, shrink fit calculator, press fit force calculation, lame equation interference fit, hub hoop stress, press fit torque capacity]
+published: {D}
 updated: {D}
 variables:
   - {{ id: d, label: Nominal interface diameter, family: length, unit: mm, imperialUnit: in, default: {fd*1000:g}, min: 0 }}
@@ -299,6 +301,7 @@ description: Calculate the theoretical (stoichiometric) air needed to burn a fue
 category: chemistry
 {intro("Every kilogram of fuel needs a fixed amount of oxygen to burn completely, set by how much carbon, hydrogen and sulphur it contains. This combustion air calculator works out the theoretical (stoichiometric) oxygen and air from the fuel's ultimate analysis, then adds your excess air to give the actual air–fuel ratio, the air volume in Nm³ per kg and the air flow a burner or boiler fan must supply.")}
 keywords: [combustion air calculator, stoichiometric air calculation, theoretical air required for combustion, air fuel ratio from ultimate analysis, combustion air requirement, excess air combustion calculation, air required to burn fuel]
+published: {D}
 updated: {D}
 variables:
   - {{ id: C, label: Carbon in the fuel (mass), family: percent, unit: '%', default: {aC*100:g}, min: 0, max: 1 }}
@@ -398,6 +401,7 @@ description: Convert gross calorific value (GCV, HHV) to net calorific value (NC
 category: chemistry
 {intro("The gross calorific value of a fuel counts the heat released when the water formed in combustion condenses; the net value assumes that water leaves as vapour. This GCV to NCV calculator subtracts the latent heat of the water formed from the fuel's hydrogen and the moisture it already contains, so you can quote boiler efficiencies, fuel prices and emission factors on either basis.")}
 keywords: [gcv to ncv calculator, gross to net calorific value, hhv to lhv calculator, higher heating value to lower heating value, net calorific value formula, ncv from gcv, calorific value conversion kcal/kg]
+published: {D}
 updated: {D}
 variables:
   - {{ id: G, label: Gross calorific value (GCV / HHV), suffix: MJ/kg, default: {gG:g}, min: 0, help: '1 MJ/kg = 238.85 kcal/kg = 429.92 BTU/lb. Enter a kcal/kg figure divided by 238.85.' }}
@@ -496,6 +500,7 @@ description: Round any number to a chosen number of significant figures or decim
 category: math
 intro: "Significant figures show how precisely a number is known: 1,230 to three significant figures is not the same claim as 1,234.5678. This significant figures calculator rounds any number to the number of sig figs you choose, gives its power-of-ten exponent for scientific notation and also rounds to a fixed number of decimal places, using the round-half-away-from-zero rule taught in school."
 keywords: [significant figures calculator, sig fig calculator, round to significant figures, sig figs rounding, rounding calculator, round to decimal places, significant digits calculator]
+published: {D}
 updated: {D}
 variables:
   - {{ id: x, label: Number to round, default: {sx} }}
@@ -578,8 +583,9 @@ P('math', 'inverse-trig', f'''
 title: Inverse Trig Calculator (arcsin, arccos, arctan)
 description: Calculate arcsin, arccos, arctan and arccot of any value in degrees and radians, with tables of exact angles and the principal value ranges of each function.
 category: math
-intro: "The inverse trigonometric functions run sine, cosine and tangent backwards: given a ratio, they return the angle. This inverse trig calculator finds arcsin, arccos, arctan and arccot of any number in degrees or radians, using the standard principal-value ranges, and also works the other way — enter an angle to get back the ratio."
+intro: "The inverse trigonometric functions run sine, cosine and tangent backwards: given a ratio, they return the angle. This inverse trig calculator finds arcsin, arccos, arctan and arccot of any number in degrees or radians, using the standard principal-value ranges, and also works the other way — enter an angle to get back the ratio. Use it to find an angle from the sides of a right triangle, a slope or a phasor."
 keywords: [inverse trig calculator, arcsin calculator, arccos calculator, arctan calculator, inverse sine calculator, inverse cosine, inverse tangent calculator, sin⁻¹ cos⁻¹ tan⁻¹]
+published: {D}
 updated: {D}
 variables:
   - {{ id: x, label: Value (ratio), default: {ix:g}, help: 'arcsin and arccos need −1 ≤ x ≤ 1; arctan and arccot accept any number.' }}

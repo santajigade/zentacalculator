@@ -4,6 +4,7 @@ description: Calculate a confidence interval for a mean from the sample mean, st
 category: statistics
 intro: "A confidence interval gives a range that is likely to contain the true population mean, based on a sample. It shows how precise an estimate is."
 keywords: [confidence interval calculator, 95% confidence interval, margin of error, sample mean, z interval]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - id: zc
@@ -25,16 +26,12 @@ equations:
   - lo = xb - E
   - hi = xb + E
 faq:
-  - q: What does a 95% confidence interval mean?
-    a: If you repeated the sampling many times, about 95% of the intervals built this way would contain the true population mean.
-  - q: How do I make the interval narrower?
-    a: Increase the sample size (quadrupling n halves the width) or accept a lower confidence level.
-  - q: Should I use z or t?
-    a: This uses z, which is accurate for samples of about 30 or more. For small samples, a t-interval is wider.
-  - q: "What is a 95% confidence interval?"
-    a: "A range, built from sample data, that would contain the true population value in about 95% of repeated samples."
+  - q: "What does a 95% confidence interval mean?"
+    a: "If you repeated the sampling many times, about 95% of the intervals built this way would contain the true population mean."
+  - q: "How do I make the interval narrower?"
+    a: "Increase the sample size (quadrupling n halves the width) or accept a lower confidence level."
   - q: "Should I use z or t?"
-    a: "Use t when the sample is small and the population standard deviation is estimated from the sample. For large samples they give almost the same result."
+    a: "This uses z, which is accurate for samples of about 30 or more. For small samples, a t-interval is wider."
 related: [statistics/margin-of-error, statistics/sample-size, statistics/standard-error]
 ---
 

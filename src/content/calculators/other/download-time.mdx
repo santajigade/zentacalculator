@@ -4,6 +4,7 @@ description: "Estimate how long a file takes to download or upload at a given in
 category: other
 intro: "Download time depends on file size and connection speed — and on remembering that speeds are in bits while files are in bytes."
 keywords: [download time calculator, upload time, internet speed, mbps to mb/s, file transfer time, bandwidth]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: s, label: File size, family: data, unit: GB, default: 5, min: 0 }
@@ -15,16 +16,14 @@ equations:
   - t = s * 8 / (sp * 1000000 * ef)
   - mbs = sp * ef / 8
 faq:
-  - q: What is the difference between Mbps and MB/s?
-    a: Mbps is megabits per second; MB/s is megabytes per second. There are 8 bits in a byte, so 100 Mbps ≈ 12.5 MB/s.
-  - q: Why is my download slower than my plan?
-    a: Network overheads, Wi-Fi, server speed and other users all reduce real throughput. 80–90% of the plan is typical on a good wired connection.
-  - q: How long does a 50 GB game take on 100 Mbps?
-    a: About 74 minutes at 90% efficiency.
+  - q: "What is the difference between Mbps and MB/s?"
+    a: "Mbps is megabits per second; MB/s is megabytes per second. There are 8 bits in a byte, so 100 Mbps ≈ 12.5 MB/s."
+  - q: "Why is my download slower than my plan?"
+    a: "Network overheads, Wi-Fi, server speed and other users all reduce real throughput. 80–90% of the plan is typical on a good wired connection."
+  - q: "How long does a 50 GB game take on 100 Mbps?"
+    a: "About 74 minutes at 90% efficiency."
   - q: "How long does it take to download 1 GB at 100 Mbps?"
     a: "About 80 seconds at full speed, or about 90 seconds in practice."
-  - q: "What is the difference between Mbps and MB/s?"
-    a: "Mbps is megabits per second; MB/s is megabytes per second. Divide Mbps by 8 to get MB/s."
 related: [other/data-storage-converter, other/video-file-size]
 ---
 

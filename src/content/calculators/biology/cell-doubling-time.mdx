@@ -4,7 +4,8 @@ description: Calculate population doubling time and growth rate from starting an
 category: biology
 intro: "Doubling time is how long a cell population takes to double in number. It is the standard way to compare how fast cultured cells, bacteria or tumours grow. This free cell doubling time calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [doubling time, cell doubling time, population doubling, cell culture growth, generation time]
-updated: 2026-11-09
+published: 2026-10-27
+updated: 2026-11-14
 featured: true
 variables:
   - { id: N0, label: Initial cell count, default: 100000, min: 0 }
@@ -16,14 +17,12 @@ equations:
   - nd = log2(N / N0)
   - td = t / nd
 faq:
-  - q: How is doubling time calculated?
-    a: Doubling time = time × ln 2 ÷ ln(final ÷ initial), which is the same as time divided by the number of doublings.
-  - q: Should I use cells in log phase?
-    a: Yes. Doubling time is only meaningful during exponential (log-phase) growth.
-  - q: What is a typical doubling time?
-    a: E. coli can double in about 20 minutes in rich media; many mammalian cell lines take 18–36 hours.
-  - q: "How do I calculate doubling time?"
-    a: "Doubling time = time × ln 2 ÷ ln(final ÷ initial). From 100,000 to 800,000 in 72 hours is 3 doublings, so 24 hours."
+  - q: "How is doubling time calculated?"
+    a: "Doubling time = time × ln 2 ÷ ln(final ÷ initial), which is the same as time divided by the number of doublings."
+  - q: "Should I use cells in log phase?"
+    a: "Yes. Doubling time is only meaningful during exponential (log-phase) growth."
+  - q: "What is a typical doubling time?"
+    a: "E. coli can double in about 20 minutes in rich media; many mammalian cell lines take 18–36 hours."
   - q: "Why is my doubling time longer than expected?"
     a: "Common causes are over-confluence, old medium, high passage number, contamination or a long lag phase after passaging."
   - q: "What is the doubling time if cells grow 10-fold in 72 hours?"
@@ -32,6 +31,8 @@ faq:
     a: "Multiply the starting count by 2 to the power of (hours ÷ doubling time). With a 24 hour doubling time, 1 × 10⁵ cells become 8 × 10⁵."
   - q: "Is doubling time the same as generation time?"
     a: "For cultures where every cell divides, yes. Generation time usually refers to bacteria, doubling time to mammalian cell lines."
+  - q: "How many cells should I seed to have a set number later?"
+    a: "Divide the target by 2 to the power of (time ÷ doubling time). For 2 × 10⁶ cells in 48 hours with a 24 hour doubling time, seed 2 × 10⁶ ÷ 4 = 5 × 10⁵ cells, plus extra for the lag phase."
 related: [biology/bacterial-growth, biology/specific-growth-rate, biology/hemocytometer]
 ---
 
@@ -105,3 +106,18 @@ To have 5 million cells from 500,000 with a 24-hour doubling time: log₂(10) = 
 | 32× | 5 | 4.8 h | 9.6 h | 14.4 h |
 
 Read across: cells that grew 4× in 48 hours went through 2 doublings, so the doubling time is **24 hours**.
+
+## Planning how many cells to seed
+
+Work backwards from the number you need:
+
+<p class="formula">N<sub>seed</sub> = N<sub>target</sub> ÷ 2<sup>t ÷ T<sub>d</sub></sup></p>
+
+To have 2 × 10⁶ cells in 48 hours with a 24 hour doubling time, seed 2 × 10⁶ ÷ 2² = **5 × 10⁵ cells**. Most lines show a lag of 12 to 24 hours after passaging, so add that to the time or seed a little more.
+
+## Common mistakes
+
+- **Counting during the lag phase.** Counts in the first day after seeding make the doubling time look too long. Start timing once growth is steady.
+- **Including dead cells.** Count only viable cells, for example with trypan blue, or the growth rate will be wrong.
+- **Letting cultures reach confluence.** Growth slows as cells fill the surface, so the last count gives a falsely long doubling time.
+- **Using only two time points.** Count at three or more times and fit a line to ln(count) against time for a more reliable result.

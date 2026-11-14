@@ -4,6 +4,7 @@ description: Calculate concentration in ppm from solute and solution mass — an
 category: chemistry
 intro: "Parts per million (ppm) expresses very small concentrations — dissolved salts in water, pollutants in air or trace elements in a sample. 1 ppm is about 1 mg per litre of water."
 keywords: [ppm calculator, parts per million, mg/l, ppm to percent, ppb, water quality, tds]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: ms, label: Mass of substance, family: mass, unit: mg, default: 50, min: 0 }
@@ -16,16 +17,14 @@ equations:
   - pct = ppm / 1000000
   - ppb = ppm * 1000
 faq:
-  - q: What does ppm mean?
-    a: Parts per million — 1 part of a substance in 1,000,000 parts of the whole. 1 ppm = 0.0001%.
-  - q: Is ppm the same as mg/L?
-    a: For dilute water solutions, yes — 1 litre of water weighs about 1 kg, so 1 mg/L ≈ 1 ppm.
-  - q: How do I convert ppm to percent?
-    a: Divide by 10,000. 5,000 ppm = 0.5%.
+  - q: "What does ppm mean?"
+    a: "Parts per million — 1 part of a substance in 1,000,000 parts of the whole. 1 ppm = 0.0001%."
+  - q: "Is ppm the same as mg/L?"
+    a: "For dilute water solutions, yes — 1 litre of water weighs about 1 kg, so 1 mg/L ≈ 1 ppm."
+  - q: "How do I convert ppm to percent?"
+    a: "Divide by 10,000. 5,000 ppm = 0.5%."
   - q: "How many ppm is 1%?"
     a: "10,000 ppm."
-  - q: "Is ppm the same as mg/L?"
-    a: "For dilute water solutions, yes, approximately. For other solvents or concentrated solutions, convert using density."
 related: [chemistry/mass-percent, chemistry/dilution]
 ---
 

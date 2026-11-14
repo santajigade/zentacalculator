@@ -4,6 +4,7 @@ description: Calculate how many boxes of laminate, vinyl or wood flooring you ne
 category: construction
 intro: "Laminate and wood flooring are sold in packs that cover a fixed area. Adding a waste allowance for cuts ensures you buy enough to finish the room."
 keywords: [flooring calculator, laminate flooring, how many boxes, wood flooring, vinyl plank, flooring cost]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: A, label: Floor area, family: area, unit: m2, imperialUnit: ft2, default: 20, min: 0 }
@@ -16,14 +17,12 @@ equations:
   - n = ceil(A * (1 + wst) / bx)
   - cost = n * pb
 faq:
-  - q: How much extra flooring should I buy?
-    a: About 5–10% for straight installation, more for diagonal layouts or rooms with many corners.
-  - q: Where do I find the coverage per box?
-    a: On the box or product page, usually in m² or ft².
-  - q: Do I need underlay?
-    a: Laminate and many vinyl floors need underlay unless it is pre-attached. Buy it for the same area.
   - q: "How much extra flooring should I buy?"
-    a: "Usually 8–10% for a standard room, more for diagonal or herringbone patterns."
+    a: "About 5–10% for straight installation, more for diagonal layouts or rooms with many corners."
+  - q: "Where do I find the coverage per box?"
+    a: "On the box or product page, usually in m² or ft²."
+  - q: "Do I need underlay?"
+    a: "Laminate and many vinyl floors need underlay unless it is pre-attached. Buy it for the same area."
   - q: "How many boxes of laminate for 20 m²?"
     a: "With 2.2 m² per box and 8% waste, 21.6 ÷ 2.2 = 10 boxes."
 related: [construction/tile-calculator, construction/square-footage]

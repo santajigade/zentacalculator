@@ -4,6 +4,7 @@ description: Calculate the probability of A and B, A or B, not A, and neither �
 category: statistics
 intro: "Probability measures how likely an event is, from 0 (impossible) to 1 (certain). Combining the probabilities of two events answers questions about “and”, “or” and “not”."
 keywords: [probability calculator, independent events, a and b, a or b, complement, probability of both]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: pa, label: Probability of A, family: percent, unit: '%', default: 50, min: 0, max: 1 }
@@ -18,16 +19,14 @@ equations:
   - pnota = 1 - pa
   - pnone = 1 - por
 faq:
-  - q: How do I find the probability of two events both happening?
-    a: For independent events, multiply — P(A and B) = P(A) × P(B).
-  - q: How do I find the probability of either event?
-    a: P(A or B) = P(A) + P(B) − P(A and B), so the overlap isn't counted twice.
-  - q: What does independent mean?
-    a: One event doesn't change the chance of the other, like two separate coin flips.
+  - q: "How do I find the probability of two events both happening?"
+    a: "For independent events, multiply — P(A and B) = P(A) × P(B)."
+  - q: "How do I find the probability of either event?"
+    a: "P(A or B) = P(A) + P(B) − P(A and B), so the overlap isn't counted twice."
+  - q: "What does independent mean?"
+    a: "One event doesn't change the chance of the other, like two separate coin flips."
   - q: "What is the probability of rolling a 6 on a die?"
     a: "1 in 6, or about 16.7%."
-  - q: "What is the probability of two independent events both happening?"
-    a: "Multiply them: P(A) × P(B). Two heads in a row is 0.5 × 0.5 = 25%."
 related: [statistics/standard-deviation, statistics/empirical-rule, statistics/normal-distribution, statistics/poisson-probability, statistics/combinations, statistics/binomial-probability, statistics/odds-probability]
 ---
 

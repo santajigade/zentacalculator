@@ -4,7 +4,8 @@ description: Estimate your baby's due date and how many weeks pregnant you are f
 category: other
 intro: "A pregnancy due date is usually calculated as 280 days from the first day of the last menstrual period."
 keywords: [due date calculator, pregnancy calculator, how many weeks pregnant, estimated due date, naegele rule, lmp]
-updated: 2026-11-09
+published: 2026-10-27
+updated: 2026-11-14
 featured: true
 variables:
   - { id: lmp, label: First day of last menstrual period, family: date, default: -70 }
@@ -18,14 +19,12 @@ equations:
   - wk = (today - lmp - (cyc - 28)) / 7
   - left = due - today
 faq:
-  - q: How is the due date calculated?
-    a: By Naegele's rule — 280 days (40 weeks) after the first day of the last period, adjusted for cycles longer or shorter than 28 days.
-  - q: How accurate is it?
-    a: Only about 4–5% of babies arrive on their due date; most are born within two weeks either side. An early ultrasound gives a more accurate date.
-  - q: Why count from the last period, not conception?
-    a: The period date is usually known. Conception typically happens about two weeks later, so you are counted as "2 weeks pregnant" at conception.
-  - q: "How is a due date calculated?"
-    a: "By adding 280 days (40 weeks) to the first day of the last menstrual period, adjusted for cycle length."
+  - q: "How is the due date calculated?"
+    a: "By Naegele's rule — 280 days (40 weeks) after the first day of the last period, adjusted for cycles longer or shorter than 28 days."
+  - q: "How accurate is it?"
+    a: "Only about 4–5% of babies arrive on their due date; most are born within two weeks either side. An early ultrasound gives a more accurate date."
+  - q: "Why count from the last period, not conception?"
+    a: "The period date is usually known. Conception typically happens about two weeks later, so you are counted as \"2 weeks pregnant\" at conception."
   - q: "What if I do not know my last period date?"
     a: "An ultrasound scan in the first trimester can estimate the due date accurately."
   - q: "If my last period was on 1 January, when is my due date?"
@@ -34,6 +33,8 @@ faq:
     a: "A full-term pregnancy is 39 to 40 weeks. Babies born from 37 weeks are considered term."
   - q: "Can the due date change after an ultrasound?"
     a: "Yes. An early dating scan is more accurate than the period date, so your doctor may adjust the due date after it."
+  - q: "How do I calculate a due date from the conception date?"
+    a: "Add 266 days (38 weeks) to the conception date. Conception on 15 January gives a due date of about 8 October."
 related: [other/ovulation, everyday-life/days-until]
 ---
 
@@ -100,3 +101,17 @@ This tool gives an estimate only. Your doctor or midwife will confirm your due d
 | 01 Dec 2026 | 07 Sep 2027 | 02 Mar 2027 | 08 Jun 2027 |
 
 The due date is 280 days (40 weeks) after the first day of your last period. Only about 4% of babies arrive on the exact day; most are born within two weeks either side.
+
+## Due date from the conception date
+
+If you know the conception date (for example from ovulation tracking), add **266 days**, which is 38 weeks. This gives the same result as counting 280 days from a period that started two weeks earlier. Conception on 15 January gives a due date of about **8 October**.
+
+## Adjusting for cycle length
+
+Naegele's rule assumes a 28-day cycle. If your cycle is longer or shorter, ovulation shifts by the same number of days, so the due date does too. With a 32-day cycle, add 4 days. With a 25-day cycle, take away 3 days. The calculator does this when you enter your cycle length.
+
+## Common mistakes
+
+- **Counting from the date of the positive test** or from the end of the period. Use the **first day** of the last period.
+- **Treating the due date as a deadline.** Only about 1 in 25 babies arrive on the day. Most are born within two weeks either side.
+- **Keeping the period-based date after a dating scan.** If an early ultrasound gives a different date, your doctor or midwife will usually use the scan date. Always follow their advice.

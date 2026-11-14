@@ -4,6 +4,7 @@ description: "Calculate the runs per over needed to chase a target with the ball
 category: sports
 intro: "The required run rate is how many runs per over a chasing team needs to win."
 keywords: [required run rate, rrr, cricket chase, runs needed per over, target calculator]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: tgt, label: Target, default: 181, min: 0 }
@@ -17,14 +18,12 @@ equations:
   - rrr = need / (bl / 6)
   - rpb = need / bl
 faq:
-  - q: How is the required run rate calculated?
-    a: Required run rate = runs still needed ÷ overs remaining.
-  - q: What is the target?
-    a: One more than the opposition's total — the score needed to win.
-  - q: What about rain-reduced matches?
-    a: Revised targets use the DLS method, which is not covered by this calculator.
-  - q: "How is required run rate calculated?"
-    a: "Runs needed ÷ overs remaining. 89 needed off 9 overs is 9.89 per over."
+  - q: "How is the required run rate calculated?"
+    a: "Required run rate = runs still needed ÷ overs remaining."
+  - q: "What is the target?"
+    a: "One more than the opposition's total — the score needed to win."
+  - q: "What about rain-reduced matches?"
+    a: "Revised targets use the DLS method, which is not covered by this calculator."
   - q: "What is the difference between current and required run rate?"
     a: "Current run rate is how fast a team has scored so far; required run rate is how fast it must score from now on to win."
 related: [sports/cricket-run-rate, sports/net-run-rate]

@@ -4,6 +4,7 @@ description: Calculate the UART baud rate divisor, actual baud rate and percenta
 category: electronics
 intro: "A UART makes its bit clock by dividing the system clock by an integer, so the actual baud rate is rarely exactly what you asked for. This UART baud rate error calculator finds the nearest divisor, the real baud rate and the error — keep it within about ±2% for reliable links, as explained in [UART frame format and baud rate](https://www.instrumentationblog.in/uart-communication-frame-baud-rate/)."
 keywords: [uart baud rate error calculator, baud rate calculator, ubrr calculator, uart divisor calculator, baud rate error percentage, serial baud rate clock, avr baud rate]
+published: 2026-11-05
 updated: 2026-11-05
 variables:
   - { id: f, label: Peripheral clock frequency, family: frequency, unit: MHz, default: 16, min: 0 }

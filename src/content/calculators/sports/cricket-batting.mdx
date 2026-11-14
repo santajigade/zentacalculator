@@ -4,6 +4,7 @@ description: Calculate a batter's average, strike rate and boundary percentage f
 category: sports
 intro: "Batting average and strike rate show how many runs a cricketer scores and how quickly they score them. This free cricket batting average & strike rate calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [batting average, strike rate, cricket batting, batting stats, runs per dismissal]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: runs, label: Runs scored, default: 1240, min: 0 }
@@ -15,14 +16,12 @@ equations:
   - avg = runs / outs
   - sr = runs / balls * 100
 faq:
-  - q: How is batting average calculated?
-    a: Total runs divided by the number of times the batter was out. Not-out innings add runs but not dismissals.
-  - q: What is strike rate?
-    a: Runs scored per 100 balls faced — a measure of scoring speed.
-  - q: What is a good batting average?
-    a: In Test cricket, an average above 40 is very good and above 50 is world class.
-  - q: "How is batting average calculated in cricket?"
-    a: "Runs scored ÷ number of times dismissed."
+  - q: "How is batting average calculated?"
+    a: "Total runs divided by the number of times the batter was out. Not-out innings add runs but not dismissals."
+  - q: "What is strike rate?"
+    a: "Runs scored per 100 balls faced — a measure of scoring speed."
+  - q: "What is a good batting average?"
+    a: "In Test cricket, an average above 40 is very good and above 50 is world class."
   - q: "What is a good strike rate in T20?"
     a: "Around 130–150 or higher for top-order batters."
 related: [sports/cricket-run-rate, sports/bowling-economy]

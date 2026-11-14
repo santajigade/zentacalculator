@@ -51,6 +51,7 @@ description: Calculate linear momentum from mass and velocity (p = mv), or find 
 category: physics
 intro: "Momentum is mass times velocity — a measure of how hard a moving object is to stop, and a quantity that is conserved in every collision. This momentum calculator finds the linear momentum p = mv from any mass and speed, or the speed or mass from a known momentum, and also gives the kinetic energy so you can compare the two."
 keywords: [momentum calculator, p = mv, linear momentum calculator, momentum formula, calculate momentum, kg m/s, conservation of momentum, momentum and kinetic energy]
+published: 2026-10-27
 updated: {U}
 variables:
   - {{ id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: {mm:g}, min: 0 }}
@@ -138,6 +139,7 @@ description: Calculate pressure from force and area with P = F/A, or the force o
 category: physics
 intro: "Pressure is force spread over an area, P = F ÷ A. It explains why sharp knives cut and why wide tyres do not sink, and it is one of the most measured quantities in industry — see [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/) and [Pascal's law in pressure instruments](https://www.instrumentationblog.in/understanding-pascals-law-pressure-instruments/). This pressure calculator finds the pressure from any force and area, or the force or area you need for a target pressure, in Pa, kPa, bar, psi or MPa."
 keywords: [pressure calculator, p = f/a, pressure formula, force and area to pressure, calculate pressure from force, pressure in pascals, force over area calculator, psi calculator]
+published: 2026-10-27
 updated: {U}
 variables:
   - {{ id: F, label: Force, family: force, unit: N, imperialUnit: lbf, default: {pF:g}, min: 0 }}
@@ -222,6 +224,7 @@ description: Calculate permutations nPr = n!/(n − r)! — ordered arrangements
 category: statistics
 intro: "A permutation counts the ways to arrange items when the order matters — race finishing positions, PIN codes or the order of songs in a playlist. This permutation calculator works out nPr = n! ÷ (n − r)! for any n and r, and also gives the count when items may repeat (n to the power r) and the number of combinations nCr, so you can see how much the order adds."
 keywords: [permutation calculator, npr calculator, permutation formula, permutations with repetition, number of arrangements, order matters, npr vs ncr, how many ways to arrange]
+published: 2026-10-27
 updated: {U}
 variables:
   - {{ id: n, label: Total items (n), default: {qn}, min: 0 }}

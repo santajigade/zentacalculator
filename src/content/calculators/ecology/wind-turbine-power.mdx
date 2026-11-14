@@ -4,6 +4,7 @@ description: Calculate wind turbine power from rotor diameter, wind speed, air d
 category: ecology
 intro: "The power a wind turbine produces rises with the cube of wind speed, so a small increase in wind gives much more energy. Rotor size and efficiency matter too. This free wind turbine power calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [wind turbine power, wind power calculator, p = 1/2 rho a v3, betz limit, wind energy, rotor diameter]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: D, label: Rotor diameter, family: length, unit: m, imperialUnit: ft, default: 80, min: 0 }
@@ -15,16 +16,14 @@ equations:
   - P = 0.5 * rho * pi * (D / 2)^2 * v^3 * cp
 chart: { x: v, y: P, from: 0, to: 15 }
 faq:
-  - q: How is wind power calculated?
-    a: P = ½ ρ A v³ Cp — the power rises with the cube of wind speed and the square of rotor diameter.
-  - q: What is the Betz limit?
-    a: No turbine can capture more than 59.3% (16/27) of the wind's energy. Modern turbines reach about 40–50%.
-  - q: Why does wind speed matter so much?
-    a: Doubling the wind speed gives eight times the power, which is why turbine siting is crucial.
+  - q: "How is wind power calculated?"
+    a: "P = ½ ρ A v³ Cp — the power rises with the cube of wind speed and the square of rotor diameter."
+  - q: "What is the Betz limit?"
+    a: "No turbine can capture more than 59.3% (16/27) of the wind's energy. Modern turbines reach about 40–50%."
+  - q: "Why does wind speed matter so much?"
+    a: "Doubling the wind speed gives eight times the power, which is why turbine siting is crucial."
   - q: "How much power does a wind turbine produce?"
     a: "P = ½ × ρ × A × v³ × Cp. A 2 m rotor in 6 m/s wind produces about 170 W at Cp 0.4."
-  - q: "What is the Betz limit?"
-    a: "The theoretical maximum share of wind energy a turbine can extract: 59.3%."
 related: [ecology/solar-output, physics/kinetic-energy]
 ---
 

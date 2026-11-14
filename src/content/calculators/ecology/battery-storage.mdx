@@ -4,6 +4,7 @@ description: Calculate the battery capacity needed for backup or off-grid solar 
 category: ecology
 intro: "A home battery stores solar energy for use at night or during power cuts. Its size depends on how much energy you use and how deeply the battery can be discharged. This free solar battery storage size calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [battery size calculator, solar battery storage, kwh battery needed, off grid battery, depth of discharge, inverter battery]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: load, label: Daily energy to cover, suffix: kWh, default: 6, min: 0 }
@@ -17,16 +18,14 @@ equations:
   - kwh = load * days / (dod * eff)
   - ah = kwh * 1000 / V
 faq:
-  - q: How big a battery do I need?
-    a: Daily load × days of backup, divided by usable depth of discharge and efficiency.
-  - q: What depth of discharge should I use?
-    a: About 80–95% for lithium iron phosphate (LFP) batteries and about 50% for lead-acid to protect battery life.
-  - q: How do I convert kWh to Ah?
-    a: Ah = kWh × 1,000 ÷ battery voltage.
+  - q: "How big a battery do I need?"
+    a: "Daily load × days of backup, divided by usable depth of discharge and efficiency."
+  - q: "What depth of discharge should I use?"
+    a: "About 80–95% for lithium iron phosphate (LFP) batteries and about 50% for lead-acid to protect battery life."
+  - q: "How do I convert kWh to Ah?"
+    a: "Ah = kWh × 1,000 ÷ battery voltage."
   - q: "How many kWh battery do I need for my home?"
     a: "Divide your daily energy need by DoD × efficiency. For 6 kWh a day with LFP (80% DoD, 90% efficiency), about 8.3 kWh."
-  - q: "How do I convert kWh to Ah?"
-    a: "Ah = kWh × 1,000 ÷ battery voltage. 10 kWh at 48 V is about 208 Ah."
 related: [ecology/solar-output, ecology/solar-system-size]
 ---
 

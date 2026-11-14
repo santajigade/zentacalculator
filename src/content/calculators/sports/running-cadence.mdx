@@ -4,6 +4,7 @@ description: Calculate running speed from cadence and stride length — or the s
 category: sports
 intro: "Running cadence is the number of steps per minute. Together with stride length, it decides your running speed. This free running cadence & stride length calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [running cadence, stride length, steps per minute, running form, 180 cadence, step length]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: cad, label: Cadence, suffix: steps/min, default: 170, min: 0 }
@@ -14,14 +15,12 @@ equations:
   - v = cad * sl / 60
   - pk = 1000 / v / 60
 faq:
-  - q: What is a good running cadence?
-    a: Many recreational runners run at 160–175 steps per minute; elite runners often exceed 180 at race pace. The ideal depends on height and speed.
-  - q: Should I increase my cadence?
-    a: A small increase (5–10%) can reduce overstriding and impact for some runners. Change gradually.
-  - q: Is step length the same as stride length?
-    a: Not exactly — a stride is two steps (left and right). Here, step length is per step.
   - q: "What is a good running cadence?"
-    a: "Typically 160–180 steps per minute, depending on speed and height."
+    a: "Many recreational runners run at 160–175 steps per minute; elite runners often exceed 180 at race pace. The ideal depends on height and speed."
+  - q: "Should I increase my cadence?"
+    a: "A small increase (5–10%) can reduce overstriding and impact for some runners. Change gradually."
+  - q: "Is step length the same as stride length?"
+    a: "Not exactly — a stride is two steps (left and right). Here, step length is per step."
   - q: "Does a higher cadence make you faster?"
     a: "Speed = cadence × step length, so either can increase speed. Raising cadence slightly often helps form more than speed."
 related: [sports/pace-calculator, health/steps-to-distance]

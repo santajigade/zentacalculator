@@ -26,6 +26,7 @@ const calculators = defineCollection({
     description: z.string().max(170),
     category: z.string(),
     keywords: z.array(z.string()).default([]),
+    published: z.coerce.date().optional(), // first publish date (set once, never changed)
     updated: z.coerce.date(),
     author: z.string().default('santaji-gadepatil'), // id from src/data/authors.ts
     reviewer: z.string().optional(),
@@ -36,7 +37,7 @@ const calculators = defineCollection({
     chart: z.object({ x: z.string(), y: z.string(), from: z.number().optional(), to: z.number().optional() }).optional(),
     faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
     related: z.array(z.string()).default([]),
-    intro: z.string().optional(), // 1–3 sentence topic intro shown above the calculator; supports [text](url) and **bold**
+    intro: z.string().optional(), // topic intro shown above the calculator: 1 or 2 short paragraphs (blank line between), 60 to 90 words; supports [text](url) and **bold**
     links: z.array(z.object({ title: z.string(), url: z.string().url(), note: z.string().optional() })).default([]), // external further reading
     dataset: z.object({ label: z.string(), default: z.string().optional(), placeholder: z.string().optional(), help: z.string().optional() }).optional(), // list input → data_n, data_mean, data_median, data_mode, data_sd …
   }),

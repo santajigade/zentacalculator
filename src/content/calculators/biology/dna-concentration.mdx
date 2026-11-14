@@ -4,7 +4,8 @@ description: Calculate nucleic acid concentration from A260 absorbance for dsDNA
 category: biology
 intro: "DNA and RNA absorb ultraviolet light at 260 nm, so a spectrophotometer reading gives their concentration directly. The A260/A280 ratio also tells you how pure the sample is. This free DNA / RNA concentration calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [dna concentration, a260, rna concentration, nanodrop, 260/280 ratio, nucleic acid quantification]
-updated: 2026-11-09
+published: 2026-10-27
+updated: 2026-11-14
 featured: true
 variables:
   - id: f
@@ -23,22 +24,20 @@ equations:
   - c = a260 * f * dil
   - ratio = a260 / a280
 faq:
-  - q: How do I calculate DNA concentration from A260?
-    a: Concentration (µg/mL) = A260 × 50 × dilution factor for double-stranded DNA. Use 40 for RNA and 33 for single-stranded DNA.
-  - q: What is a good 260/280 ratio?
-    a: About 1.8 for pure DNA and about 2.0 for pure RNA. Lower values suggest protein or phenol contamination.
-  - q: Are µg/mL and ng/µL the same?
-    a: Yes, they are equal.
-  - q: "What is a good A260/A280 ratio?"
-    a: "About 1.8 for DNA and 2.0 for RNA."
-  - q: "Is ng/µL the same as µg/mL?"
-    a: "Yes, they are numerically identical."
+  - q: "How do I calculate DNA concentration from A260?"
+    a: "Concentration (µg/mL) = A260 × 50 × dilution factor for double-stranded DNA. Use 40 for RNA and 33 for single-stranded DNA."
+  - q: "What is a good 260/280 ratio?"
+    a: "About 1.8 for pure DNA and about 2.0 for pure RNA. Lower values suggest protein or phenol contamination."
+  - q: "Are µg/mL and ng/µL the same?"
+    a: "Yes, they are equal."
   - q: "What concentration is an A260 of 1.0?"
     a: "About 50 ng/µL for dsDNA, 33 ng/µL for ssDNA and 40 ng/µL for RNA."
   - q: "What is a good 260/230 ratio?"
     a: "Between 2.0 and 2.2 for pure nucleic acid. Lower values suggest salt, phenol or carbohydrate carry-over."
   - q: "Why does my NanoDrop concentration differ from Qubit?"
     a: "Absorbance measures all nucleic acid and some contaminants, while dye-based Qubit assays measure only the target type, so Qubit is often lower."
+  - q: "Why is my 260/280 ratio above 2.0 for DNA?"
+    a: "Usually RNA contamination, since RNA has a ratio near 2.0 to 2.1. Treat the sample with RNase or check it on a gel."
 related: [biology/dna-copy-number, biology/protein-concentration-a280, chemistry/beer-lambert]
 ---
 
@@ -115,3 +114,21 @@ If you diluted the sample before reading, multiply by the dilution factor. A 1:1
 ## How much DNA do you have?
 
 Total yield = concentration × volume. 120 ng/µL in 50 µL is **6 µg** of DNA.
+
+## What your purity ratios are telling you
+
+| Reading | Likely cause | What to do |
+|---|---|---|
+| 260/280 below 1.7 | Protein or phenol carry-over | Repeat the clean-up or add a chloroform step |
+| 260/280 above 2.0 (DNA) | RNA contamination | RNase treatment |
+| 260/230 below 1.8 | Guanidine salts, EDTA, carbohydrate or phenol | Extra wash or ethanol precipitation |
+| A260 below 0.1 | Too dilute for a reliable reading | Use less dilution or a dye-based assay |
+| A260 above 1.0 to 1.5 | Outside the linear range of many instruments | Dilute and measure again |
+
+## Common mistakes
+
+- **Blanking with the wrong liquid.** Blank with exactly the buffer the sample is dissolved in.
+- **Measuring in unbuffered water.** Slightly acidic water lowers the 260/280 ratio by about 0.2 to 0.3. A slightly alkaline buffer such as TE (pH 8) gives more consistent ratios.
+- **Using the dsDNA factor for RNA or oligos.** Use 50 for dsDNA, 40 for RNA and 33 for ssDNA, or the exact extinction coefficient for short oligos.
+- **Forgetting the dilution factor** when the sample was diluted for the reading.
+- **Not mixing before sampling.** Genomic DNA is viscous and settles. Mix gently and take the reading twice.

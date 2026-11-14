@@ -4,6 +4,7 @@ description: Calculate the RC time constant, charging time and cut-off frequency
 category: physics
 intro: "When a capacitor charges or discharges through a resistor, the voltage changes exponentially with a time constant τ = RC. It sets timing in circuits, filters and delays — see [RC and RL time constants explained](https://www.instrumentationblog.in/rc-and-rl-time-constant-explained/) and their use in [RC snubber design](https://www.instrumentationblog.in/snubber-circuit-rc-design/). This free RC time constant calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [rc time constant, rc circuit, capacitor charging time, tau = rc, cutoff frequency, low pass filter]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: R, label: Resistance, family: resistance, unit: kohm, default: 10, min: 0 }
@@ -16,16 +17,12 @@ equations:
   - t5 = 5 * tau
   - fc = 1 / (2 * pi * tau)
 faq:
-  - q: What is the RC time constant?
-    a: τ = R × C, the time for a capacitor to charge to about 63.2% of the supply voltage through a resistor.
-  - q: How long does a capacitor take to charge fully?
-    a: About 5 time constants (5RC) to reach 99.3%.
-  - q: What is the cut-off frequency of an RC filter?
-    a: fc = 1 ÷ (2πRC) — the frequency at which the output falls to 70.7% (−3 dB).
-  - q: "What is a time constant?"
-    a: "τ = R × C, the time for a charging capacitor to reach about 63.2% of the supply voltage."
-  - q: "How long does a capacitor take to fully charge?"
-    a: "About 5 time constants, when it reaches 99.3% of the supply voltage."
+  - q: "What is the RC time constant?"
+    a: "τ = R × C, the time for a capacitor to charge to about 63.2% of the supply voltage through a resistor."
+  - q: "How long does a capacitor take to charge fully?"
+    a: "About 5 time constants (5RC) to reach 99.3%."
+  - q: "What is the cut-off frequency of an RC filter?"
+    a: "fc = 1 ÷ (2πRC) — the frequency at which the output falls to 70.7% (−3 dB)."
 related: [physics/resistors-series-parallel, physics/ohms-law]
 ---
 

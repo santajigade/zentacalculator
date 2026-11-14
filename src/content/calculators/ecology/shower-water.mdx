@@ -4,6 +4,7 @@ description: Calculate how much water and energy your showers use — and what a
 category: ecology
 intro: "Showers use water and the energy to heat it. Shorter showers and low-flow heads cut both bills and emissions. This free shower water & energy calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [shower water usage, litres per shower, water saving, low flow shower head, shower energy cost]
+published: 2026-10-27
 updated: 2026-10-27
 variables:
   - { id: t, label: Shower length, suffix: minutes, default: 8, min: 0 }
@@ -17,16 +18,14 @@ equations:
   - yr = per * n * 52
   - kwh = yr * 1000 * 4.186 * 25 / 3600
 faq:
-  - q: How much water does a shower use?
-    a: About 8–12 litres per minute for a standard shower head and 6–8 for a low-flow head.
-  - q: How much energy does heating shower water take?
-    a: Raising water by 25 °C takes about 0.03 kWh per litre — about 2.3 kWh for an 80-litre shower.
-  - q: How do I measure my flow rate?
-    a: Time how long it takes to fill a 5-litre bucket. 30 seconds means 10 L/min.
+  - q: "How much water does a shower use?"
+    a: "About 8–12 litres per minute for a standard shower head and 6–8 for a low-flow head."
+  - q: "How much energy does heating shower water take?"
+    a: "Raising water by 25 °C takes about 0.03 kWh per litre — about 2.3 kWh for an 80-litre shower."
+  - q: "How do I measure my flow rate?"
+    a: "Time how long it takes to fill a 5-litre bucket. 30 seconds means 10 L/min."
   - q: "How much water does a 10-minute shower use?"
     a: "About 60–120 litres, depending on the shower head flow rate."
-  - q: "How do I measure my shower flow rate?"
-    a: "Time how long it takes to fill a 5 L bucket. If it takes 30 seconds, the flow is 10 L/min."
 related: [ecology/water-leak, everyday-life/electricity-cost, chemistry/specific-heat]
 ---
 

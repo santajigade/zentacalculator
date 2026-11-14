@@ -4,6 +4,7 @@ description: "Convert RCF (× g) to RPM and RPM to g-force for any centrifuge ro
 category: biology
 intro: "Lab protocols specify centrifugation in g-force (RCF), but centrifuges are set in rpm — and the conversion depends on the rotor radius. Using the right RCF makes results repeatable on any machine. This free centrifuge RPM ↔ RCF calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [rpm to g, rcf calculator, centrifuge, g force, relative centrifugal force, rotor radius]
+published: 2026-10-27
 updated: 2026-11-03
 featured: true
 variables:
@@ -13,12 +14,12 @@ variables:
 equations:
   - rcf = 0.00001118 * r * 100 * rpm^2
 faq:
-  - q: Why use RCF instead of RPM?
-    a: The force on samples depends on both speed and rotor radius. RCF (× g) is the same on any centrifuge, so protocols specify it.
-  - q: Where do I find the rotor radius?
-    a: In the rotor manual — use the maximum radius (rmax) measured from the centre to the bottom of the tube.
-  - q: What speed gives 10,000 × g?
-    a: Press × on Speed and enter 10,000 as RCF. With an 8.5 cm rotor that is about 10,260 rpm.
+  - q: "Why use RCF instead of RPM?"
+    a: "The force on samples depends on both speed and rotor radius. RCF (× g) is the same on any centrifuge, so protocols specify it."
+  - q: "Where do I find the rotor radius?"
+    a: "In the rotor manual — use the maximum radius (rmax) measured from the centre to the bottom of the tube."
+  - q: "What speed gives 10,000 × g?"
+    a: "Press × on Speed and enter 10,000 as RCF. With an 8.5 cm rotor that is about 10,260 rpm."
   - q: "How do I convert rpm to g?"
     a: "RCF = 1.118 × 10⁻⁵ × radius (cm) × rpm². At 12,000 rpm and 8 cm, RCF ≈ 12,880 × g."
   - q: "What radius should I use?"
@@ -27,8 +28,6 @@ faq:
     a: "RCF is expressed in multiples of g. \"1,000 × g\" and \"1,000 g\" mean a relative centrifugal force 1,000 times Earth's gravity."
   - q: "How do I convert 1000 × g to rpm?"
     a: "It depends on the rotor radius: about 2,991 rpm at 10 cm, 3,244 rpm at 8.5 cm and 2,442 rpm at 15 cm."
-  - q: "How do I convert rpm to g?"
-    a: "RCF = 1.118 × 10⁻⁵ × radius (cm) × rpm². Enter rpm and radius in the calculator to get × g."
 related: [physics/centripetal-force, biology/serial-dilution]
 ---
 

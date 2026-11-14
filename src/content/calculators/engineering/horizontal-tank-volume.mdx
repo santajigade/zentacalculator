@@ -4,7 +4,8 @@ description: Calculate liquid volume in a partially filled horizontal cylindrica
 category: engineering
 intro: "In a horizontal cylindrical tank, the liquid volume does not rise in step with level, because the tank is widest in the middle. Converting a level reading into volume needs the circular-segment formula — see [tank volume from level measurement](https://www.instrumentationblog.in/tank-volume-from-level-measurement/). This free horizontal tank volume calculator solves for whichever value you leave blank and shows the formula and steps."
 keywords: [horizontal tank volume, tank level to volume, partially filled cylinder, tank strapping, cylindrical tank, tank calibration]
-updated: 2026-11-09
+published: 2026-10-27
+updated: 2026-11-14
 featured: true
 variables:
   - { id: D, label: Tank inner diameter, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
@@ -19,22 +20,22 @@ equations:
   - pct = V / Vt
 chart: { x: h, y: V, from: 0, to: 2 }
 faq:
-  - q: Why isn't volume proportional to level in a horizontal tank?
-    a: The tank is widest in the middle, so each centimetre of level holds more liquid near the centre than near the top or bottom. At 25% of the diameter the tank is only about 20% full.
-  - q: Does this include dished or hemispherical ends?
-    a: No. It calculates the cylindrical shell only. Heads add extra volume; the calculator gives the shell part, which is most of the tank for long vessels.
-  - q: Can I find the level for a given volume?
-    a: Yes. Press × on Liquid level, then type the volume. The level is solved numerically.
+  - q: "Why isn't volume proportional to level in a horizontal tank?"
+    a: "The tank is widest in the middle, so each centimetre of level holds more liquid near the centre than near the top or bottom. At 25% of the diameter the tank is only about 20% full."
+  - q: "Does this include dished or hemispherical ends?"
+    a: "No. It calculates the cylindrical shell only. Heads add extra volume; the calculator gives the shell part, which is most of the tank for long vessels."
+  - q: "Can I find the level for a given volume?"
+    a: "Yes. Press × on Liquid level, then type the volume. The level is solved numerically."
   - q: "Is 25% level the same as 25% volume in a horizontal tank?"
     a: "No. At 25% of the diameter, a horizontal cylinder holds about 19.6% of its volume, because the bottom is narrower."
   - q: "How do I include dished heads?"
     a: "Add the head volumes from the table above when full. For partial levels, use the vendor strapping table or a detailed head-volume formula."
   - q: "How full is a horizontal tank at 50% level?"
     a: "Exactly 50% full. Above and below the middle, volume and level are not proportional."
-  - q: "What volume is in a horizontal tank at 25% level?"
-    a: "About 19.6% of the full volume, because the rounded bottom holds less liquid."
   - q: "How much does a 2 m diameter, 6 m long tank hold?"
     a: "About 18,850 litres with flat ends. Dished ends add extra volume."
+  - q: "How much diesel is in a 1.5 m by 4 m tank at 45 cm level?"
+    a: "About 1,784 litres of the 7,069 litre shell, or 25.2% full at 30% level. Add the volume of the dished ends if the tank has them."
 related: [engineering/hydrostatic-pressure, engineering/4-20ma-scaling, math/cylinder-volume]
 ---
 
@@ -140,3 +141,20 @@ Use it with any flat-ended horizontal cylinder: multiply the % full by the full 
 | 3 m | 8 m | 56,549 L | 14,939 US gal |
 | 3 m | 10 m | 70,686 L | 18,673 US gal |
 | 3.5 m | 12 m | 115,454 L | 30,500 US gal |
+
+## Worked example: diesel day tank
+
+A horizontal day tank has an inner diameter of **1.5 m**, a straight length of **4 m** and a dip reading of **0.45 m**:
+
+- Full shell volume = π × 0.75² × 4 = **7,069 L**
+- Liquid volume at 0.45 m = **1,784 L**, which is 25.2% full at 30% of the diameter
+
+The level reads 30%, but the tank is only about a quarter full. This is why a level reading must be converted with this formula or a strapping table before you order fuel.
+
+## Common mistakes
+
+- **Using the outside diameter.** Wall thickness on a large tank can take several percent off the volume. Use the inner diameter.
+- **Measuring ullage instead of level.** A dip from the top gives the empty space. Level = diameter − ullage.
+- **Ignoring the transmitter offset.** A level transmitter on a side nozzle does not see the bottom of the tank. Add the nozzle height to its reading.
+- **Ignoring the tank slope.** A tank that tilts towards a drain gives a different reading at each end. Measure at the middle, or correct for the slope.
+- **Forgetting temperature.** Diesel expands about 0.08% per °C, so a full tank holds about 1.6% less fuel at 35 °C than at 15 °C.

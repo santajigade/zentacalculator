@@ -4,7 +4,8 @@ description: Find how many survey responses you need for a given margin of error
 category: statistics
 intro: "Sample size decides how many people you need to survey to get results within a chosen margin of error and confidence level."
 keywords: [sample size calculator, survey sample size, margin of error, confidence level, population size, how many respondents]
-updated: 2026-11-09
+published: 2026-10-27
+updated: 2026-11-14
 featured: true
 variables:
   - id: zc
@@ -23,22 +24,20 @@ equations:
   - n0 = ceil(zc^2 * p * (1 - p) / E^2)
   - n = ceil(zc^2 * p * (1 - p) / E^2 / (1 + (zc^2 * p * (1 - p) / E^2 - 1) / N))
 faq:
-  - q: How many people do I need to survey?
-    a: For a large population, 95% confidence and ±5% margin, about 385 responses. For ±3%, about 1,068.
-  - q: Why use 50% for the proportion?
-    a: It gives the largest (safest) sample size when you don't know the expected result.
-  - q: Does population size matter much?
-    a: Only for small populations. Above about 20,000, the required sample barely changes.
+  - q: "How many people do I need to survey?"
+    a: "For a large population, 95% confidence and ±5% margin, about 385 responses. For ±3%, about 1,068."
+  - q: "Why use 50% for the proportion?"
+    a: "It gives the largest (safest) sample size when you don't know the expected result."
+  - q: "Does population size matter much?"
+    a: "Only for small populations. Above about 20,000, the required sample barely changes."
   - q: "Why is 385 a common sample size?"
     a: "It gives a ±5% margin of error at 95% confidence for a large population with p = 50%."
-  - q: "Does population size matter?"
-    a: "Only when the sample is a sizeable fraction of the population. Above about 20,000 people, the required sample barely changes."
   - q: "What sample size do I need for a population of 1,000?"
     a: "278 responses for a ±5% margin of error at 95% confidence."
-  - q: "Why does sample size stop growing for large populations?"
-    a: "Above about 20,000 people the population barely matters. You need about 385 responses at ±5% whether the population is 100,000 or 10 million."
   - q: "Is 100 responses enough for a survey?"
     a: "For a large population, 100 responses gives a margin of error of about ±10% at 95% confidence, which is fine for a rough estimate only."
+  - q: "What is the margin of error for 400 responses?"
+    a: "About ±4.9% at 95% confidence for a large population, using 1.96 × √(0.25 ÷ 400)."
 related: [statistics/margin-of-error, statistics/confidence-interval]
 ---
 
@@ -130,3 +129,22 @@ Based on p = 50% (the most conservative case) with the finite population correct
 | 10,000 | 623 | 1,557 |
 | 100,000 | 660 | 1,810 |
 | Unlimited | 664 | 1,843 |
+
+## Margin of error for a sample you already have
+
+You can turn the formula around to see how precise a finished survey is:
+
+<p class="formula">E = z × √(p (1 − p) ÷ n)</p>
+
+With 400 responses and p = 50%, E = 1.96 × √(0.25 ÷ 400) = **±4.9%** at 95% confidence. Halving the margin of error needs four times as many responses.
+
+## Cluster samples and the design effect
+
+If you survey whole groups (schools, branches, villages) instead of picking individuals at random, people in the same group tend to answer alike. Multiply the sample size by the **design effect**, often 1.5 to 2. A 385-person target becomes about **578** with a design effect of 1.5.
+
+## Common mistakes
+
+- **Counting invitations instead of responses.** The formula gives completed responses. With a 20% response rate, 385 responses needs about 1,925 invitations.
+- **Using the formula for a convenience sample.** An online poll anyone can join is not random, and no sample size fixes that bias.
+- **Reporting subgroups with the overall margin.** If only 100 people are under 25, their results carry about ±10%, not ±5%.
+- **Forgetting the design effect** when sampling in clusters.

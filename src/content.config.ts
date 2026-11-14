@@ -26,6 +26,7 @@ const calculators = defineCollection({
     description: z.string().max(170),
     category: z.string(),
     keywords: z.array(z.string()).default([]),
+    published: z.coerce.date().optional(), // first publish date (set once, never changed)
     updated: z.coerce.date(),
     author: z.string().default('santaji-gadepatil'), // id from src/data/authors.ts
     reviewer: z.string().optional(),

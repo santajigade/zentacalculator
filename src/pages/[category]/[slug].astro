@@ -55,7 +55,12 @@ const shares = [
   { n: 'Pinterest', c: '#e60023', h: `https://www.pinterest.com/pin/create/button/?url=${shareUrl}&media=${shareImg}&description=${shareText}`, d: 'M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.5 1.8-2.5.9 0 1.3.7 1.3 1.5 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.3-2 3.3-4.9 0-2.6-1.8-4.4-4.5-4.4-3 0-4.8 2.3-4.8 4.6 0 .9.3 1.9.8 2.4.1.1.1.2.1.3l-.3 1.2c0 .2-.2.3-.4.2-1.4-.6-2.2-2.6-2.2-4.2 0-3.4 2.5-6.6 7.2-6.6 3.8 0 6.7 2.7 6.7 6.3 0 3.7-2.4 6.8-5.6 6.8-1.1 0-2.2-.6-2.5-1.3l-.7 2.6c-.2 1-.9 2.2-1.4 2.9A10 10 0 1 0 12 2z' },
   { n: 'Email', c: '#5b6474', h: `mailto:?subject=${shareText}&body=${shareUrl}`, d: 'M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4.4 7H4v.6l8 5.6 8-5.6V7h-.4L12 12.2z' },
 ];
-const updated = d.updated.toLocaleDateString(SITE.locale, { day: 'numeric', month: 'long', year: 'numeric' });
+const pubDate = d.published ?? d.updated;
+const publishedIso = pubDate.toISOString().slice(0, 10);
+const published = pubDate.toLocaleDateString(SITE.locale, { day: 'numeric', month: 'short', year: 'numeric' });
+const readWords = ((d.intro ?? '') + ' ' + (calc.body ?? '')).replace(/<[^>]+>/g, ' ').split(/\s+/).filter((w: string) => /[A-Za-z0-9]/.test(w)).length + (d.faq ?? []).reduce((n: number, f: { q: string; a: string }) => n + (f.q + ' ' + f.a).split(/\s+/).length, 0);
+const readMin = Math.max(1, Math.round(readWords / 200));
+const updated = d.updated.toLocaleDateString(SITE.locale, { day: 'numeric', month: 'short', year: 'numeric' });
 
 const schema: object[] = [
   { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
@@ -64,7 +69,7 @@ const schema: object[] = [
     { '@type': 'ListItem', position: 3, name: d.title, item: `${SITE.url}${url}` } ] },
   { '@context': 'https://schema.org', '@type': 'WebApplication', name: d.title, url: `${SITE.url}${url}`, image: `${SITE.url}/og/${d.category}/${slugOf(calc)}.jpg`,
     applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any', description: d.description,
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, dateModified: d.updated.toISOString().slice(0, 10),
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, datePublished: publishedIso, dateModified: d.updated.toISOString().slice(0, 10),
     author: { '@type': 'Person', name: author.name, url: `${SITE.url}${authorUrl(author)}`, sameAs: [author.linkedin].filter(Boolean) } },
 ];
 if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map((f) => (
@@ -78,20 +83,34 @@ if (d.faq.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQP
     <div class="page">
       <article>
         <h1>{d.title}</h1>
-        <div class="meta-row">
-        <div class="byline">
-          <img src={author.photo} alt="" width="36" height="36" class="byline__img" />
-          <span>By <a href={authorUrl(author)} rel="author">{author.name}</a>
-            {author.linkedin && <a href={author.linkedin} class="byline__in" target="_blank" rel="noopener" aria-label={`${author.name} on LinkedIn`}>in</a>}
-            {reviewer && <> · Reviewed by <a href={authorUrl(reviewer)}>{reviewer.name}</a></>}
-            <br /><span class="muted">Updated {updated}</span></span>
+        <div class="pmeta">
+          <div class="pmeta__top">
+            <div class="pmeta__author">
+              <img src={author.photo} alt={author.name} width="44" height="44" class="pmeta__img" />
+              <div>
+                <a class="pmeta__name" href={authorUrl(author)} rel="author">{author.name}</a>
+                <div class="pmeta__role">{author.headline ?? author.role}</div>
+                {reviewer && <div class="pmeta__role">Reviewed by <a href={authorUrl(reviewer)}>{reviewer.name}</a></div>}
+                  {author.linkedin && <a class="pmeta__connect" href={author.linkedin} target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm7 0h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.1c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4V9.5z" /></svg>Connect on LinkedIn</a>}
+              </div>
+            </div>
+            <div class="pshare" aria-label="Share this calculator">
+              <span class="pshare__label">Share</span>
+              {shares.map((x) => <a class="pshare__btn" href={x.h} target="_blank" rel="noopener nofollow" aria-label={`Share on ${x.n}`} title={`Share on ${x.n}`} style={`--c:${x.c}`}><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d={x.d} /></svg></a>)}
+              <button type="button" class="pshare__btn pshare__copy" data-url={`${SITE.url}${url}`} aria-label="Copy link" title="Copy link" style="--c:#5b6474"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M10.6 13.4a1 1 0 0 1 0-1.4l3.5-3.5a1 1 0 1 1 1.4 1.4L12 13.4a1 1 0 0 1-1.4 0zM8 19a4 4 0 0 1-2.8-6.8l2.1-2.1a1 1 0 1 1 1.4 1.4l-2.1 2.1a2 2 0 0 0 2.8 2.8l2.1-2.1a1 1 0 1 1 1.4 1.4L10.8 18A4 4 0 0 1 8 19zm7.5-5.1a1 1 0 0 1-.7-1.7l2.1-2.1a2 2 0 0 0-2.8-2.8L12 9.4A1 1 0 1 1 10.6 8l2.1-2.1a4 4 0 0 1 5.6 5.6l-2.1 2.1a1 1 0 0 1-.7.3z" /></svg><span class="pshare__ok">Copied</span></button>
+            </div>
+          </div>
+          <dl class="pmeta__stats">
+            <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V2zm12 8H5v9h14v-9z" /></svg>Published</dt><dd><time datetime={publishedIso}>{published}</time></dd></div>
+            <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4a8 8 0 0 1 7.4 5H17v2h6V5h-2v2.3A10 10 0 1 0 22 13h-2a8 8 0 1 1-8-9z" /></svg>Last updated</dt><dd><time datetime={d.updated.toISOString().slice(0, 10)}>{updated}</time></dd></div>
+            <div><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm1 3v5l4 2-1 1.7-5-2.7V7h2z" /></svg>Read time</dt><dd>{readMin} min</dd></div>
+            <div class="pmeta__views" hidden><dt><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 5c5 0 9 4.5 10 7-1 2.5-5 7-10 7S3 14.5 2 12c1-2.5 5-7 10-7zm0 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" /></svg>Views</dt><dd data-views>&nbsp;</dd></div>
+          </dl>
         </div>
-        <div class="pshare" aria-label="Share this calculator">
-                    {shares.map((x) => <a class="pshare__btn" href={x.h} target="_blank" rel="noopener nofollow" aria-label={`Share on ${x.n}`} title={`Share on ${x.n}`} style={`--c:${x.c}`}><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d={x.d} /></svg></a>)}
-          <button type="button" class="pshare__btn pshare__copy" data-url={`${SITE.url}${url}`} aria-label="Copy link" title="Copy link" style="--c:#5b6474"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M10.6 13.4a1 1 0 0 1 0-1.4l3.5-3.5a1 1 0 1 1 1.4 1.4L12 13.4a1 1 0 0 1-1.4 0zM8 19a4 4 0 0 1-2.8-6.8l2.1-2.1a1 1 0 1 1 1.4 1.4l-2.1 2.1a2 2 0 0 0 2.8 2.8l2.1-2.1a1 1 0 1 1 1.4 1.4L10.8 18A4 4 0 0 1 8 19zm7.5-5.1a1 1 0 0 1-.7-1.7l2.1-2.1a2 2 0 0 0-2.8-2.8L12 9.4A1 1 0 1 1 10.6 8l2.1-2.1a4 4 0 0 1 5.6 5.6l-2.1 2.1a1 1 0 0 1-.7.3z" /></svg><span class="pshare__ok">Copied</span></button>
-        </div>
-        </div>
-        <script is:inline>document.querySelectorAll('.pshare__copy').forEach(function(b){b.addEventListener('click',function(){try{navigator.clipboard.writeText(b.dataset.url).then(function(){b.classList.add('is-ok');setTimeout(function(){b.classList.remove('is-ok')},1500)})}catch(e){}})});</script>
+        <script is:inline>(function(){document.querySelectorAll('.pshare__copy').forEach(function(b){b.addEventListener('click',function(){try{navigator.clipboard.writeText(b.dataset.url).then(function(){b.classList.add('is-ok');setTimeout(function(){b.classList.remove('is-ok')},1500)})}catch(e){}})});
+var box=document.querySelector('.pmeta__views');if(!box||!window.fetch)return;var p=location.pathname,k='zv:'+p,t=new Date().toISOString().slice(0,10),hit=0;
+try{if(localStorage.getItem(k)!==t){hit=1;localStorage.setItem(k,t)}}catch(e){hit=1}
+fetch('/api/views.php?p='+encodeURIComponent(p)+(hit?'&hit=1':''),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&typeof j.views==='number'&&j.views>0){box.querySelector('[data-views]').textContent=j.views.toLocaleString('en-IN');box.hidden=false;box.parentNode.classList.add('has-views')}}).catch(function(){})})();</script>
 
         <img class="hero-img" src={`/og/${d.category}/${slugOf(calc)}.jpg`} alt={`${d.title}: formula and free online calculator`} width="1200" height="630" fetchpriority="high" decoding="async" />
         {introParas.map((h: string) => <p class="intro" set:html={h} />)}

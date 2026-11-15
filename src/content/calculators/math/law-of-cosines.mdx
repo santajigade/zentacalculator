@@ -1,11 +1,11 @@
 ---
-title: Law of Cosines Calculator
-description: Find the third side, the angles and the area of any triangle from two sides and the included angle, using the law of cosines.
+title: "Law of Cosines Calculator (Side, Angles and Area)"
+description: "Solve any triangle with the law of cosines: find the third side, both other angles and the area from two sides and the included angle, or angles from 3 sides."
 category: math
-intro: "The law of cosines extends Pythagoras' theorem to any triangle. It finds a side from two sides and the angle between them, or any angle from three sides."
+intro: "The law of cosines, c² = a² + b² − 2ab cos C, extends Pythagoras' theorem to every triangle. This law of cosines calculator finds the third side, the two remaining angles and the area from two sides and the angle between them, or the angles from three sides.\n\nStudents use it for trigonometry homework, while surveyors, navigators and engineers use it to find distances and angles that cannot be measured directly."
 keywords: [law of cosines calculator, cosine rule, sas triangle, find third side of triangle, triangle calculator, solve triangle, cosine law]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-15
 variables:
   - { id: a, label: Side a, family: length, unit: cm, imperialUnit: in, default: 7, min: 0 }
   - { id: b, label: Side b, family: length, unit: cm, imperialUnit: in, default: 9, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: cos A = (b² + c² − a²) ÷ 2bc. In the calculator, enter a, b and c and press × on angle C.
   - q: Is the Pythagorean theorem a special case?
     a: Yes. When C = 90°, cos C = 0 and the formula becomes c² = a² + b².
+  - q: "Can the law of cosines find an obtuse angle?"
+    a: "Yes, and without ambiguity. If b² + c² − a² is negative, cos A is negative and arccos returns an angle between 90° and 180°. For sides 4, 7 and 10 the angle opposite the 10 side is about 128.7°."
+  - q: "What if the three sides do not form a triangle?"
+    a: "Every side must be shorter than the sum of the other two (the triangle inequality). Sides 2, 3 and 6 fail this, the cosine works out below −1 and the calculator shows no angle."
 related: [math/pythagorean-theorem, math/right-triangle-trig, math/triangle-area, math/polygon]
 ---
 
@@ -48,8 +52,12 @@ and for angles:
 a = 7, b = 9, C = 50°:
 
 - c² = 49 + 81 − 126 × cos 50° = 130 − 80.99 = 49.01
-- c = **7.00**
-- Area = ½ × 7 × 9 × sin 50° = **24.13**
+- c = √49.01 = **7.00**
+- cos A = (b² + c² − a²) ÷ 2bc = (81 + 49.01 − 49) ÷ (2 × 9 × 7.001) = 0.6429, so A = **49.99°**
+- B = 180° − 49.99° − 50° = **80.01°**, the largest angle because it is opposite the longest side, b = 9
+- Area = ½ × 7 × 9 × sin 50° = **24.13** square units, and the perimeter is 23.00
+
+Because c came out almost equal to a, angle A is almost equal to angle C: equal sides face equal angles.
 
 ## Third side for different angles (a = 7, b = 9)
 
@@ -76,3 +84,34 @@ Use it with two angles and a side. Beware the ambiguous case (two sides and a no
 - **Surveying**: distance across a lake from two measured sides and the angle between them.
 - **Navigation**: distance between two ships from their bearings and distances.
 - **Engineering**: forces in trusses and linkages.
+
+## Angles from three sides (SSS)
+
+Each angle follows from cos A = (b² + c² − a²) ÷ 2bc and its two partners. Some common triangles:
+
+| Sides a, b, c | Angle A | Angle B | Angle C | Type |
+|---|---|---|---|---|
+| 3, 4, 5 | 36.87° | 53.13° | 90.00° | right |
+| 5, 5, 5 | 60.00° | 60.00° | 60.00° | acute |
+| 5, 12, 13 | 22.62° | 67.38° | 90.00° | right |
+| 7, 8, 9 | 48.19° | 58.41° | 73.40° | acute |
+| 2, 3, 4 | 28.96° | 46.57° | 104.48° | obtuse |
+| 6, 6, 10 | 33.56° | 33.56° | 112.89° | obtuse |
+| 4, 7, 10 | 18.19° | 33.12° | 128.68° | obtuse |
+
+The sign of b² + c² − a² tells you the type at a glance: positive gives an acute angle, zero a right angle and negative an obtuse angle.
+
+## Practical notes
+
+- **Which formula to use:** two sides and the included angle (SAS) or three sides (SSS) need the law of cosines; two angles and a side, or a side and the angle opposite it, are easier with the [law of sines](/math/law-of-sines/). For three known sides, the [SSS triangle calculator](/math/sss-triangle/) lists all angles at once.
+- **No ambiguous case:** arccos returns angles from 0° to 180°, so the law of cosines always gives the one correct angle, obtuse or not. That is why it is safer than the law of sines for the first angle.
+- **Precision:** keep full precision for c before using it to find the angles. Rounding c to 7.00 in the example above changes angle A in the second decimal place.
+- **Area without an angle:** with three sides you can also use Heron's formula; the [triangle area calculator](/math/triangle-area/) covers both methods.
+
+## Common mistakes
+
+- **Using an angle that is not between the two sides.** In c² = a² + b² − 2ab cos C, angle C must be the angle formed by sides a and b, opposite side c.
+- **Calculator in radians mode.** cos 50 in radians is 0.965 instead of 0.643, which gives a wrong side with no warning. This calculator lets you pick the unit.
+- **Forgetting the minus sign or the 2.** Writing c² = a² + b² − ab cos C, or adding the term, are the most common slips in hand work.
+- **Sides that cannot form a triangle.** If one side is longer than the sum of the other two, (b² + c² − a²) ÷ 2bc falls outside −1 to 1 and no angle exists.
+- **Taking the square root too early.** Work out a² + b² − 2ab cos C completely, then take the square root once.

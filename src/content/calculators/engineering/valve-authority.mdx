@@ -2,10 +2,10 @@
 title: Valve Authority Calculator (Control Valve Authority N)
 description: Calculate control valve authority from the valve and circuit pressure drops, N = Δp valve ÷ (Δp valve + Δp system), with the recommended range.
 category: engineering
-intro: "Valve authority is the share of the circuit's variable pressure drop taken by the control valve at full flow — too low and the valve loses control at small openings. This valve authority calculator works out N from the valve and system pressure drops and rates the result, a useful check when choosing a [control valve flow coefficient](https://www.instrumentationblog.in/control-valve-flow-coefficient/)."
+intro: "Valve authority is the share of the circuit's variable pressure drop taken by the control valve at full flow. Too low and the valve loses control at small openings. This valve authority calculator works out N from the valve and system pressure drops and rates the result.\n\nHVAC designers and control engineers use it when selecting a valve size, a useful check alongside the [control valve flow coefficient](https://www.instrumentationblog.in/control-valve-flow-coefficient/), and when tracing why a loop hunts at low load."
 keywords: [valve authority calculator, control valve authority, valve authority formula, hvac valve authority, control valve pressure drop, valve sizing authority, n = dp valve]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: dpv, label: Pressure drop across the fully open valve, family: pressure, unit: bar, imperialUnit: psi, default: 0.5, min: 0 }
   - { id: dps, label: "Pressure drop of the rest of the circuit (pipes, coil, fittings)", family: pressure, unit: bar, imperialUnit: psi, default: 1, min: 0 }
@@ -29,6 +29,8 @@ faq:
     a: Because the valve would then take almost all the available pressure, which wastes pump energy. Authority around 0.5 balances control quality and pumping cost.
   - q: What pressure drops should be included?
     a: Only the part of the circuit whose flow the valve varies — the coil, branch piping and fittings — not the constant-pressure parts upstream of a differential pressure controller.
+  - q: "Do pressure independent control valves need an authority check?"
+    a: "Much less. A pressure independent control valve (PICV) has a built-in regulator that holds a constant pressure across its control element, so its authority is effectively 1 within its working pressure range. You still need to make sure the minimum differential pressure the PICV requires is available at the index circuit."
 related: [engineering/control-valve-kv-cv, engineering/minor-losses, engineering/darcy-weisbach-head-loss, engineering/pump-power]
 ---
 
@@ -46,6 +48,8 @@ A valve dropping 0.5 bar in a branch whose coil and pipework drop 1.0 bar:
 
 - N = 0.5 ÷ (0.5 + 1.0) = **0.333** — acceptable, but a smaller valve (higher Δp) would control better.
 
+To lift the authority of this branch to 0.5, the valve itself must drop 1 bar at design flow, so select a valve with a smaller Kv. With N = 0.333, an equal-percentage valve at half stroke already passes about 24% of design flow.
+
 ## Authority for different pressure drops
 
 | Valve Δp | Circuit 0.5 bar | Circuit 1 bar | Circuit 2 bar |
@@ -57,6 +61,34 @@ A valve dropping 0.5 bar in a branch whose coil and pipework drop 1.0 bar:
 | 1.5 bar | 0.75 | 0.60 | 0.43 |
 | 2 bar | 0.80 | 0.67 | 0.50 |
 | 3 bar | 0.86 | 0.75 | 0.60 |
+
+## Installed flow of an equal-percentage valve
+
+Flow as a share of design flow at each stroke position, for an equal-percentage valve with an inherent rangeability of 50:1, computed from Q/Q<sub>max</sub> = f ÷ √(N + (1 − N) f²) with f = 50<sup>(x − 1)</sup>:
+
+| Stroke | N = 1 | N = 0.5 | N = 0.33 | N = 0.25 | N = 0.1 |
+|---|---|---|---|---|---|
+| 10% | 3% | 4% | 5% | 6% | 9% |
+| 25% | 5% | 8% | 9% | 11% | 17% |
+| 50% | 14% | 20% | 24% | 27% | 41% |
+| 75% | 38% | 50% | 58% | 63% | 79% |
+| 90% | 68% | 79% | 85% | 88% | 95% |
+
+At N = 1 the curve is the inherent characteristic. As authority falls, the curve bows upward, so most of the flow change is squeezed into the first part of the stroke and the loop gain at low load becomes very high.
+
+## How to get the pressure drops
+
+- **Valve Δp:** from the valve sizing at design flow, Δp = (Q ÷ Kv)² in bar with Q in m³/h for water. Pick the next smaller standard Kv and recalculate.
+- **Circuit Δp:** add the coil or heat exchanger drop from its datasheet, the branch pipe friction and the fittings at the same design flow. Only include the part of the circuit whose flow changes when this valve moves.
+- **On a running plant:** read pressure gauges or test points across the valve and across the branch at full flow with the valve wide open.
+
+## Common mistakes
+
+- **Including the whole pump head.** Pressure drops held constant by a differential pressure controller or in the common header do not belong in the denominator.
+- **Using the valve's Δp at part load.** Authority is defined with the valve fully open at design flow.
+- **Oversizing to save pump head.** A valve sized for a very low Δp gives N well below 0.25, and the loop will cycle at light load.
+- **Treating authority as fixed.** When other branches close, the available pressure across the branch rises and the effective authority changes; pressure-independent valves avoid this.
+- **Ignoring the valve characteristic.** Low authority hurts an equal-percentage valve less than a linear one in coil circuits, so check both together.
 
 ## Notes
 

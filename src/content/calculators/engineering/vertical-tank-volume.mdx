@@ -2,10 +2,10 @@
 title: Vertical Tank Volume Calculator (Level to Volume)
 description: Calculate the volume of liquid in a vertical cylindrical tank from its diameter and level — with full capacity, percentage fill and litres per mm.
 category: engineering
-intro: "In a vertical cylindrical tank, volume rises in direct proportion to level, so one strapping factor converts a level reading into litres. This vertical tank volume calculator gives liquid volume, total capacity and percent full — see [tank volume from level measurement](https://www.instrumentationblog.in/tank-volume-from-level-measurement/) and how to [select the right level sensor](https://www.instrumentationblog.in/how-to-select-the-right-level-sensor/)."
+intro: "In a vertical cylindrical tank, volume rises in direct proportion to level, so one strapping factor converts a level reading into litres. This vertical tank volume calculator gives liquid volume, total capacity and percent full, as explained in [tank volume from level measurement](https://www.instrumentationblog.in/tank-volume-from-level-measurement/).\n\nOperators, instrument engineers and storage planners use it to turn a level transmitter or a dip reading into inventory, scale a DCS volume display and plan how much a tank can still receive."
 keywords: [vertical tank volume calculator, cylindrical tank volume, tank level to volume, liters in tank calculator, vertical cylinder tank capacity, tank strapping]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-15
 variables:
   - { id: D, label: Tank inside diameter, family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
   - { id: H, label: Tank height (straight side), family: length, unit: m, imperialUnit: ft, default: 5, min: 0 }
@@ -28,6 +28,8 @@ faq:
     a: Because volume is linear with level in a vertical cylinder, you can scale the 4–20 mA signal directly to volume once the tank diameter is known.
   - q: Why use litres per mm?
     a: It is a quick strapping factor — multiply any level change in mm to get the volume added or removed.
+  - q: "How do I find the level from an ullage dip?"
+    a: "Subtract the ullage from the tank reference height: level = reference height − ullage. With a 5.50 m reference height and a 2.30 m ullage, the level is 3.20 m. Then use the level here to get the volume."
 related: [engineering/horizontal-tank-volume, engineering/hydrostatic-pressure, math/cylinder-volume, engineering/dp-level-range]
 ---
 
@@ -38,6 +40,45 @@ Enter the tank's **inside diameter**, its **straight-side height** and the **liq
 ## Vertical tank volume formula
 
 <p class="formula">V = (π × D² ÷ 4) × h</p>
+
+## Worked example
+
+A tank with a **3 m** inside diameter and **5 m** straight side holds liquid at **3.2 m**:
+
+- Cross-section = π × 3² ÷ 4 = **7.0686 m²**, which is **7.069 L per mm** of level
+- Liquid volume = 7.0686 × 3.2 = 22.619 m³ = **22,619 L**
+- Total capacity = 7.0686 × 5 = **35,343 L**
+- Percent full = 3.2 ÷ 5 = **64%**, leaving room for 12,723 L
+
+To receive a total of 30,000 L the level must reach 30 ÷ 7.0686 = **4.244 m**.
+
+## Level to volume table for this tank
+
+| Level | Volume | m³ | US gallons | Percent full |
+|---|---|---|---|---|
+| 0.5 m | 3,534 L | 3.53 m³ | 934 gal | 10% |
+| 1 m | 7,069 L | 7.07 m³ | 1,867 gal | 20% |
+| 1.5 m | 10,603 L | 10.60 m³ | 2,801 gal | 30% |
+| 2 m | 14,137 L | 14.14 m³ | 3,735 gal | 40% |
+| 2.5 m | 17,671 L | 17.67 m³ | 4,668 gal | 50% |
+| 3 m | 21,206 L | 21.21 m³ | 5,602 gal | 60% |
+| 3.2 m | 22,619 L | 22.62 m³ | 5,975 gal | 64% |
+| 3.5 m | 24,740 L | 24.74 m³ | 6,536 gal | 70% |
+| 4 m | 28,274 L | 28.27 m³ | 7,469 gal | 80% |
+| 4.5 m | 31,809 L | 31.81 m³ | 8,403 gal | 90% |
+| 5 m | 35,343 L | 35.34 m³ | 9,337 gal | 100% |
+
+## Using it with level instruments
+
+Because volume is linear with level, a DCS can show volume by scaling the level transmitter directly: 0 to 5 m becomes 0 to 35,343 L. Remember that the transmitter's zero is often a nozzle some distance above the floor, so add that offset to the measured level first. Manual gauging works two ways: an **innage dip** measures the liquid depth directly, and an **ullage (outage) dip** measures from the reference point at the top down to the surface, so level = reference height − ullage. Multiply volume by density for mass; for that, a hydrostatic transmitter measures mass more directly than level does.
+
+## Common mistakes
+
+- **Using the outside diameter.** For a 3 m outside diameter with an 8 mm wall, the inside diameter is 2.984 m, and using the outside figure overstates the volume by 1.1%.
+- **Measuring level from the wrong datum.** Level must be measured from the bottom of the straight side. A transmitter nozzle 300 mm above the floor needs that 300 mm added.
+- **Leaving out the bottom.** A cone or dished bottom holds liquid below the straight side; add it separately or the tank seems to empty early.
+- **Calling percent full by level the usable capacity.** Overflow nozzles, high level alarms and the roof take up the top, so the safe fill is often 90% or less.
+- **Ignoring internals and temperature.** Heating coils, agitators and the thermal expansion of a large tank all shift volume, which is why custody transfer tanks use calibrated strapping tables.
 
 ## Capacity per metre of level
 

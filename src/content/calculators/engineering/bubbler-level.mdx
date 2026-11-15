@@ -1,0 +1,90 @@
+---
+title: Bubbler Level Calculator (Purge Dip Tube Back Pressure)
+description: Convert bubbler (purge) dip tube back pressure to tank level for any liquid density, and find the maximum back pressure to size the transmitter.
+category: engineering
+intro: "A bubbler pushes a small flow of air down a dip tube, and the pressure needed to release bubbles equals the liquid head above the tube end. This bubbler level calculator turns that back pressure into level, as described in [bubbler level measurement with a purge](https://www.instrumentationblog.in/bubbler-level-measurement-purge/).\n\nInstrument engineers use it to range the transmitter and check readings. Bubblers suit sludge, slurries and corrosive liquids, because only the dip tube touches the process."
+keywords: [bubbler level calculator, bubbler level measurement, purge level measurement, dip tube level calculation, back pressure to level, bubbler tube level formula, air purge level system]
+published: 2026-11-15
+updated: 2026-11-15
+variables:
+  - { id: Pb, label: Dip tube back pressure (gauge), family: pressure, unit: mbar, imperialUnit: inH2O, default: 250, min: 0, help: 'Measured by the transmitter on the purge line, relative to the tank vapour space (an open tank: relative to atmosphere).' }
+  - { id: sg, label: Liquid specific gravity, default: 1.05, min: 0 }
+  - { id: z, label: Height of dip tube end above tank bottom, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
+  - { id: Lmax, label: Maximum level (from tank bottom), family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
+  - { id: h, label: Liquid head above the dip tube end, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: L, label: Level above tank bottom, family: length, unit: m, imperialUnit: ft, min: 0 }
+  - { id: Pmax, label: Back pressure at maximum level (URV), family: pressure, unit: mbar, imperialUnit: inH2O, min: 0 }
+  - { id: pc, label: Level (percent of maximum), family: percent, unit: '%' }
+equations:
+  - h = Pb / (sg * 1000 * g0)
+  - L = h + z
+  - Pmax = sg * 1000 * g0 * (Lmax - z)
+  - pc = L / Lmax
+faq:
+  - q: How does a bubbler level system work?
+    a: "Gas flows through a regulator and a small rotameter into a dip tube that reaches near the tank bottom. The gas pressure rises until it equals the liquid head at the tube end, then bubbles escape. From then on the pressure in the tube, measured by a gauge or transmitter, follows the level: level = back pressure ÷ (density × g)."
+  - q: How much purge flow does a bubbler need?
+    a: "Only enough for a slow, steady stream of bubbles, often around 1 standard cubic foot per hour (about 0.5 L/min). Too much flow adds friction loss in the tube and makes the reading high and noisy; too little lets liquid creep up the tube and slows the response when the level rises."
+  - q: Why does the bubbler not read down to the tank bottom?
+    a: "The back pressure is the head above the tube end, so the measurement starts at the tube end. The tube is kept a little above the bottom to stay clear of sludge, and the calculator adds that height back so the level is reported from the tank bottom."
+  - q: Can a bubbler be used on a closed or pressurised tank?
+    a: "Yes, with a DP transmitter: the HP side connects to the purge line and the LP side to the vapour space. The DP is then the liquid head alone, and the gas supply pressure must exceed the tank pressure plus the maximum head."
+  - q: Can bubblers measure density as well as level?
+    a: "Yes. Two dip tubes ending at a known vertical distance apart give a pressure difference that depends only on density: ρ = ΔP ÷ (g × Δz). This is used in sugar, mining and chemical tanks, and the density can then compensate the level reading."
+related: [engineering/hydrostatic-pressure, engineering/dp-level-range, engineering/interface-level, engineering/ultrasonic-level, engineering/vertical-tank-volume, engineering/4-20ma-scaling]
+---
+
+## How to use the bubbler level calculator
+
+Enter the **back pressure** measured on the purge line, the **specific gravity** of the liquid, the **height of the dip tube end** above the tank bottom and the **maximum level** you need to measure. The calculator gives the head above the tube end, the level from the tank bottom, the level as a percentage of maximum and the back pressure at maximum level, which is the URV for the transmitter. To find the back pressure for a known level, enter the level and press × on the back pressure.
+
+## Bubbler level formula
+
+<p class="formula">h = P<sub>b</sub> ÷ (SG × ρ<sub>w</sub> × g) &nbsp;·&nbsp; L = h + z &nbsp;·&nbsp; P<sub>max</sub> = SG × ρ<sub>w</sub> × g × (L<sub>max</sub> − z)</p>
+
+P<sub>b</sub> is the gauge back pressure in Pa, ρ<sub>w</sub> = 1,000 kg/m³, g = 9.80665 m/s² and z the height of the tube end above the bottom. The transmitter is ranged from 0 (level at the tube end) to P<sub>max</sub>.
+
+## Worked example
+
+A tank of liquor with SG 1.05 has a dip tube ending 100 mm above the bottom and a maximum level of 3 m. The transmitter reads **250 mbar**:
+
+- Head above the tube end h = 25,000 Pa ÷ (1.05 × 1,000 × 9.80665) = **2.428 m**
+- Level from the bottom L = 2.428 + 0.100 = **2.528 m**, or **84.3%** of the 3 m maximum
+- Back pressure at maximum level = 1.05 × 1,000 × 9.80665 × (3 − 0.1) = **298.6 mbar**, so range the transmitter 0 to 299 mbar and set the gas regulator comfortably above that
+
+## Back pressure by level and density
+
+For a dip tube 100 mm above the bottom:
+
+| Level | SG 0.8 | SG 1.0 | SG 1.05 | SG 1.2 | SG 1.4 |
+|---|---|---|---|---|---|
+| 0.5 m | 31.4 mbar | 39.2 mbar | 41.2 mbar | 47.1 mbar | 54.9 mbar |
+| 1.0 m | 70.6 mbar | 88.3 mbar | 92.7 mbar | 105.9 mbar | 123.6 mbar |
+| 1.5 m | 109.8 mbar | 137.3 mbar | 144.2 mbar | 164.8 mbar | 192.2 mbar |
+| 2.0 m | 149.1 mbar | 186.3 mbar | 195.6 mbar | 223.6 mbar | 260.9 mbar |
+| 2.5 m | 188.3 mbar | 235.4 mbar | 247.1 mbar | 282.4 mbar | 329.5 mbar |
+| 3.0 m | 227.5 mbar | 284.4 mbar | 298.6 mbar | 341.3 mbar | 398.1 mbar |
+
+## Density from two dip tubes
+
+Two tubes whose ends are 1.000 m apart vertically give a pressure difference that depends only on density:
+
+| ΔP between tubes | Density | SG |
+|---|---|---|
+| 78.5 mbar | 800 kg/m³ | 0.800 |
+| 98.1 mbar | 1,000 kg/m³ | 1.000 |
+| 103.0 mbar | 1,050 kg/m³ | 1.050 |
+| 117.7 mbar | 1,200 kg/m³ | 1.200 |
+| 137.3 mbar | 1,400 kg/m³ | 1.400 |
+
+## How a bubbler is installed
+
+A typical panel has a filter regulator, a **differential pressure flow regulator** or needle valve with a small rotameter, a check valve and the pressure transmitter, teed into the purge line close to the tank. The dip tube is usually 15 to 25 mm pipe in a material that suits the liquid, often with a notch or a 45° cut at the end so bubbles leave evenly instead of pulsing. Instrument air is common; nitrogen is used where air would oxidise or contaminate the product. Because the transmitter never touches the liquid, it can be mounted at a convenient height, and the tube can be rodded out or blown down if it fouls.
+
+## Common mistakes
+
+- **Purging too hard.** Friction in a long or narrow purge line adds pressure that is not liquid head, so the level reads high. Keep the flow low and the transmitter tee near the tank.
+- **Forgetting the tube end offset.** The bubbler measures from the tube end, not from the tank bottom; adding z back is essential for volume calculations.
+- **Using the wrong density.** Level is inversely proportional to SG, so a 5% density error gives a 5% level error. Use the density at operating temperature, or add a second tube for density compensation.
+- **Gas supply pressure set too low.** If the supply is below the maximum back pressure, purge flow stops before the tank is full and the reading freezes.
+- **Ignoring pressure in a closed tank.** In a vented or pressurised tank the reading must be referenced to the vapour space with a DP transmitter, or any tank pressure appears as false level.

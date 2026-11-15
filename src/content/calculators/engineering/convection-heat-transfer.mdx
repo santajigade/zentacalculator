@@ -2,10 +2,10 @@
 title: Convection Heat Transfer Calculator (Q = h·A·ΔT)
 description: Calculate convective heat transfer rate with Newton's law of cooling, Q = h·A·ΔT, or solve for the heat transfer coefficient, area or temperature difference.
 category: engineering
-intro: "Convection is heat carried away by a moving fluid, and its rate is set by the heat transfer coefficient h, the surface area and the surface-to-fluid temperature difference. This convection heat transfer calculator solves Q = h·A·(Ts − T∞) for any one unknown and lists typical h values — it pairs with [calculating heat loss in piping](https://www.instrumentationblog.in/calculate-heat-loss-in-piping/)."
+intro: "Convection is heat carried away by a moving fluid, and its rate depends on the heat transfer coefficient h, the surface area and the temperature difference. This convection heat transfer calculator solves Q = h·A·(Ts − T∞) for any one unknown.\n\nProcess, HVAC and electronics engineers use it to estimate heat loss from hot equipment, size heaters and coolers, and check surface temperatures. It pairs with [calculating heat loss in piping](https://www.instrumentationblog.in/calculate-heat-loss-in-piping/)."
 keywords: [convection heat transfer calculator, q = h a delta t calculator, heat transfer coefficient calculator, convective heat transfer formula, newton's law of cooling convection, heat flux calculator]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: h, label: Heat transfer coefficient h, suffix: W/m²·K, default: 25, min: 0 }
   - { id: A, label: Surface area, family: area, unit: m2, imperialUnit: ft2, default: 2, min: 0 }
@@ -25,6 +25,8 @@ faq:
     a: Yes — Q = hAΔT is Newton's law of cooling. The physics version of that law gives the temperature-versus-time curve of a cooling object.
   - q: What does a negative result mean?
     a: The fluid is hotter than the surface, so heat flows into the surface instead of out of it.
+  - q: "How do I calculate the heat transfer coefficient h?"
+    a: "From a Nusselt number correlation: h = Nu × k ÷ L. For turbulent water in a tube, Dittus-Boelter gives Nu = 0.023 Re^0.8 Pr^0.4; water at 1 m/s in a 25 mm tube has h of about 4,806 W/m²·K. For still air on a vertical wall, h is only about 3 to 6 W/m²·K."
 related: [physics/newtons-law-of-cooling, physics/heat-conduction, engineering/lmtd, physics/stefan-boltzmann-law]
 ---
 
@@ -59,3 +61,36 @@ A 2 m² surface at 80 °C in air at 25 °C with h = 25 W/m²·K:
 
 - Hot surfaces also lose heat by radiation — at 80 °C in still air it can equal the convective loss; see the [Stefan–Boltzmann calculator](/physics/stefan-boltzmann-law/).
 - For heat transfer between two fluids through a wall, use an overall coefficient U and the [LMTD calculator](/engineering/lmtd/).
+
+## Estimating the heat transfer coefficient
+
+The hard part of any convection problem is h, which depends on the fluid, its velocity, the geometry and whether the flow is laminar or turbulent. Engineers find it from a Nusselt number correlation, Nu = hL ÷ k.
+
+**Free convection in air.** For a vertical surface, simplified correlations give h = 1.42 (ΔT/L)<sup>0.25</sup> in laminar flow and h = 1.31 ΔT<sup>1/3</sup> in turbulent flow (W/m²·K, ΔT in K, L the height in m). For a 0.5 m high surface:
+
+| ΔT | h, laminar (L = 0.5 m) | Q for 2 m², laminar | h, turbulent (surfaces over about 1 m tall) |
+|---|---|---|---|
+| 10 K | 3.0 W/m²·K | 60 W | 2.8 W/m²·K |
+| 25 K | 3.8 W/m²·K | 189 W | 3.8 W/m²·K |
+| 55 K | 4.6 W/m²·K | 506 W | 5.0 W/m²·K |
+| 100 K | 5.3 W/m²·K | 1,068 W | 6.1 W/m²·K |
+
+At ΔT = 55 K the laminar value is about 4.6 W/m²·K, so the 25 W/m²·K in the worked example implies a light forced draught, not still air.
+
+**Forced convection inside tubes.** The Dittus-Boelter equation Nu = 0.023 Re<sup>0.8</sup> Pr<sup>0.4</sup> (heating, Re above about 10,000) gives, for water at about 40 °C (k = 0.631 W/m·K, ν = 0.658 mm²/s, Pr = 4.32) in a 25 mm tube:
+
+| Velocity | Re | Nu | h |
+|---|---|---|---|
+| 0.5 m/s | 18,997 | 109 | 2,760 W/m²·K |
+| 1 m/s | 37,994 | 190 | 4,806 W/m²·K |
+| 2 m/s | 75,988 | 332 | 8,368 W/m²·K |
+
+At 1 m/s, h ≈ 4,806 W/m²·K, about 192 times the air value in the example. That is why liquid cooling moves so much more heat through the same area.
+
+## Common mistakes
+
+- **Using the wrong temperature difference.** ΔT is between the surface and the bulk fluid far from it, not between the inlet and outlet of the fluid. For a fluid that heats up along an exchanger, use the [LMTD](/engineering/lmtd/).
+- **Taking h from a table without checking the flow regime.** Tables give wide ranges; a value from the wrong end can be ten times off. Calculate it from a correlation when the result matters.
+- **Ignoring radiation from hot surfaces.** In still air, radiation from a painted surface at 80 °C is of the same size as natural convection, so adding only convection understates the loss by about half.
+- **Mixing up h and U.** h is a single film coefficient; U combines both films and the wall. Using a film h where an overall U belongs overstates heat transfer.
+- **Forgetting fouling.** Scale and deposits add thermal resistance over time, so design values are often 10 to 30% below clean values.

@@ -2,10 +2,10 @@
 title: Chiller Tonnage Calculator (TR from Flow & ΔT)
 description: Calculate chiller capacity in tons of refrigeration (TR) and kW from chilled water flow and temperature difference, Q = m·cp·ΔT, with a sizing table.
 category: engineering
-intro: "A chiller's cooling load is the heat the chilled water picks up: mass flow × specific heat × temperature rise. This chiller tonnage calculator turns flow and ΔT into kW and tons of refrigeration (1 TR = 3.517 kW) — see the step-by-step guide to [calculating industrial chiller capacity](https://www.instrumentationblog.in/calculate-industrial-chiller-capacity/)."
+intro: "A chiller's cooling load is the heat the chilled water picks up: mass flow × specific heat × temperature rise. This chiller tonnage calculator turns flow and ΔT into kW and tons of refrigeration (1 TR = 3.517 kW).\n\nHVAC designers, plant engineers and energy auditors use it to size new chillers, check whether an existing machine is loaded, and set pump flows. See the step-by-step guide to [calculating industrial chiller capacity](https://www.instrumentationblog.in/calculate-industrial-chiller-capacity/)."
 keywords: [chiller tonnage calculator, chiller capacity calculator, tons of refrigeration calculator, tr calculation formula, chilled water flow calculator, chiller sizing, kw to tr]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: V, label: Chilled water flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
   - { id: dT, label: Temperature difference (return − supply), family: tempdiff, unit: K, imperialUnit: F, default: 5, min: 0 }
@@ -25,6 +25,8 @@ faq:
     a: 12,000 BTU/h = 3.517 kW — the heat needed to melt one short ton of ice in 24 hours.
   - q: What about glycol?
     a: Use the glycol mixture's specific heat and density. 30% ethylene glycol has cp ≈ 3,700 J/kg·K, so it carries about 10% less heat than water at the same flow and ΔT.
+  - q: "How many kW of electricity does a chiller use per ton?"
+    a: "It depends on the machine. A modern water-cooled centrifugal chiller uses roughly 0.5 to 0.7 kW of input power per TR at full load, while an air-cooled chiller typically uses about 1.0 to 1.3 kW per TR. Divide the cooling load by the COP to get the input power."
 related: [engineering/heat-duty, engineering/lmtd, engineering/pump-power, chemistry/specific-heat]
 ---
 
@@ -44,6 +46,8 @@ Enter the **chilled water flow**, the **temperature difference** between return 
 - Q = 13.86 × 4,186 × 5 = **290.1 kW**
 - Capacity = 290.1 ÷ 3.517 = **82.5 TR**
 
+The same example in US units: 50 m³/h is 220.1 gpm and 5 K is 9 °F, so tons = 220.1 × 9 ÷ 24 = **82.6 TR**, which agrees with the SI result.
+
 ## Chiller capacity (TR) by flow and ΔT (water)
 
 | Flow | ΔT 4 K | ΔT 5 K | ΔT 6 K | ΔT 8 K |
@@ -54,6 +58,37 @@ Enter the **chilled water flow**, the **temperature difference** between return 
 | 100 m³/h | 132.0 | 165.0 | 198.0 | 264.0 |
 | 200 m³/h | 264.0 | 330.0 | 396.0 | 528.0 |
 | 500 m³/h | 659.9 | 824.9 | 989.9 | 1319.9 |
+
+## Chilled water flow needed per ton
+
+For water (ρ = 998 kg/m³, c<sub>p</sub> = 4186 J/kg·K), the flow that carries one ton of refrigeration at each design ΔT, and the flow for a 100 TR chiller:
+
+| Design ΔT | Flow per TR | Flow per TR | Flow for 100 TR |
+|---|---|---|---|
+| 4 K (7.2 °F) | 0.758 m³/h | 3.34 gpm | 75.8 m³/h |
+| 5 K (9 °F) | 0.606 m³/h | 2.67 gpm | 60.6 m³/h |
+| 6 K (10.8 °F) | 0.505 m³/h | 2.22 gpm | 50.5 m³/h |
+| 7 K (12.6 °F) | 0.433 m³/h | 1.91 gpm | 43.3 m³/h |
+| 8 K (14.4 °F) | 0.379 m³/h | 1.67 gpm | 37.9 m³/h |
+| 10 K (18 °F) | 0.303 m³/h | 1.33 gpm | 30.3 m³/h |
+
+The familiar rule of 2.4 gpm per ton belongs to a 10 °F (5.6 K) ΔT. Designing for a larger ΔT cuts the flow, the pipe size and the pump power, at the cost of a lower supply temperature or a larger coil.
+
+## How chiller load is measured in practice
+
+On site the load is found from three measurements: a flow meter on the chilled water header (an electromagnetic or ultrasonic clamp-on meter is common) and two matched temperature sensors on the supply and return lines. Because ΔT is small, the temperature sensors matter most: an error of 0.2 K on a 5 K ΔT is already a 4% error in tonnage. Use a matched pair of RTDs in thermowells, or clamp-on sensors under insulation, and log readings over a stable period rather than taking one spot value. Building management systems and BTU meters do this calculation continuously.
+
+## Low ΔT syndrome
+
+If the plant is designed for 5 K but runs at 3.5 K, the same 50 m³/h only carries 57.7 TR. To deliver the full 82.5 TR at 3.5 K the pumps would need 71.4 m³/h. Fouled coils, open bypass valves and three-way valves on coils are the usual causes, and the chillers end up running at part load while the pumps are at full speed.
+
+## Common mistakes
+
+- **Using the nominal ΔT instead of the measured one.** Real ΔT is often 1 to 2 K below design, which hides spare capacity or a problem.
+- **Ignoring glycol.** A glycol mixture has a lower specific heat and a higher density than water; enter both, or the load will be overstated.
+- **Mixing up volume and mass flow units.** The formula needs mass flow, so multiply the volume flow by density, and convert m³/h to m³/s (÷ 3,600).
+- **Confusing refrigeration tons with weight tons.** 1 TR is a rate of heat removal (3.517 kW), not 1,000 kg of anything.
+- **Sizing on the instantaneous peak alone.** Add allowances for pump heat, pipe gains and future load, but check part-load efficiency too: an oversized chiller cycles and wastes energy.
 
 ## Notes
 

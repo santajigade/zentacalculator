@@ -2,10 +2,10 @@
 title: Barlow's Formula Calculator (Pipe Wall Thickness & Pressure)
 description: Use Barlow's formula P = 2·S·t ÷ D to find the burst or allowable pressure of a pipe, or the wall thickness needed, with a design factor and Sch 40 table.
 category: engineering
-intro: "Barlow's formula relates the internal pressure a pipe can hold to its wall thickness, outside diameter and material strength. This Barlow's formula calculator gives the burst pressure and the design (allowable) pressure with a design factor, or the minimum wall thickness for a given pressure — a quick check before [hydrostatic testing](https://www.instrumentationblog.in/hydrostatic-testing-in-oil-gas-industry/)."
+intro: "Barlow's formula relates the internal pressure a pipe can hold to its wall thickness, outside diameter and material strength. This Barlow's formula calculator gives the burst and design pressure with a design factor, or the minimum wall for a given pressure.\n\nPiping and pipeline engineers, inspectors and fabricators use it for quick wall thickness checks, pressure ratings of tube and line pipe, and as a sanity check before [hydrostatic testing](https://www.instrumentationblog.in/hydrostatic-testing-in-oil-gas-industry/)."
 keywords: [barlow's formula calculator, pipe wall thickness calculator, pipe pressure rating calculator, barlow formula, pipe burst pressure calculator, hoop stress pipe, allowable pipe pressure]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: S, label: Material strength (SMYS or allowable stress), family: pressure, unit: MPa, imperialUnit: psi, default: 290, min: 0 }
   - { id: t, label: Wall thickness, family: length, unit: mm, imperialUnit: in, default: 7.11, min: 0 }
@@ -25,6 +25,8 @@ faq:
     a: For gas pipelines (ASME B31.8) use the specified minimum yield strength with a design factor. For burst estimates use tensile strength with F = 1. For process piping use the code allowable stress.
   - q: Does Barlow's formula include corrosion allowance?
     a: No. Add corrosion allowance and mill tolerance (often 12.5% of wall) to the thickness — ASME B31.3 uses t = PD ÷ 2(SEW + PY) plus allowances.
+  - q: "What is the difference between Barlow and Lamé equations?"
+    a: "Barlow assumes the hoop stress is uniform through the wall, which is accurate for thin walls. Lamé's thick-cylinder solution shows the stress is highest at the bore and falls toward the outside surface. For thick walls Barlow with the outside diameter becomes increasingly conservative, and codes such as ASME B31.3 require thick-wall methods once the wall reaches one sixth of the diameter."
 related: [engineering/hydrostatic-pressure, engineering/factor-of-safety, engineering/water-hammer, engineering/pipe-flow-velocity]
 ---
 
@@ -43,6 +45,8 @@ Enter the pipe material **strength**, the **wall thickness** and the **outside d
 - P at SMYS = 2 × 290 × 7.11 ÷ 168.3 = **24.50 MPa** (245 bar)
 - Design pressure = 24.50 × 0.72 = **17.64 MPa** (176 bar)
 
+Going the other way, the minimum wall for a design pressure of 10 MPa on the same pipe is t = 10 × 168.3 ÷ (2 × 290 × 0.72) = **4.03 mm**. With a 12.5% mill under-tolerance, order at least 4.03 ÷ 0.875 = 4.61 mm nominal wall, before any corrosion allowance.
+
 ## Schedule 40 carbon steel pipe, S = 241 MPa (API 5L Gr B SMYS)
 
 | Size | OD (mm) | Wall (mm) | P at SMYS (MPa) | P with F = 0.72 (MPa) |
@@ -59,3 +63,33 @@ Enter the pipe material **strength**, the **wall thickness** and the **outside d
 
 - Barlow's formula is a thin-wall approximation; it is conservative for thick walls (D/t below about 20).
 - Always verify against the governing code (ASME B31.1, B31.3, B31.4, B31.8) before use.
+
+## How accurate is Barlow for thick walls?
+
+Hoop stress for an internal pressure P, comparing Barlow with the outside diameter, the mean diameter form (D − t) and the exact Lamé stress at the bore:
+
+| D/t | Barlow, D/2t | Mean diameter, (D − t)/2t | Lamé at bore | Barlow vs Lamé |
+|---|---|---|---|---|
+| 100 | 50.00 P | 49.50 P | 49.51 P | +1.0% |
+| 50 | 25.00 P | 24.50 P | 24.51 P | +2.0% |
+| 30 | 15.00 P | 14.50 P | 14.52 P | +3.3% |
+| 20 | 10.00 P | 9.50 P | 9.53 P | +5.0% |
+| 15 | 7.50 P | 7.00 P | 7.04 P | +6.6% |
+| 10 | 5.00 P | 4.50 P | 4.56 P | +9.8% |
+| 6 | 3.00 P | 2.50 P | 2.60 P | +15.4% |
+
+Using the outside diameter keeps Barlow on the safe side of the exact bore stress at every D/t: by about 1% for thin pipe, rising to about 15% at a D/t of 6. The mean-diameter form is closer to Lamé but reads slightly low. ASME B31.3 limits its thin-wall equation to walls thinner than D/6; beyond that, thick-wall design is required.
+
+## Where Barlow's formula is used
+
+- **Pipelines:** ASME B31.4 and B31.8 use the Barlow form with SMYS, a design factor, a joint factor and a temperature derating factor to set maximum operating pressure.
+- **Tubing and instrument tubing:** manufacturers' pressure ratings for stainless tube are based on the same equation with an allowable stress.
+- **Hydrotest planning:** the test pressure must stay below the pressure that yields the pipe. For the example, a test at 1.25 × design = 22.05 MPa gives a hoop stress of 90% of SMYS.
+
+## Common mistakes
+
+- **Using the nominal wall without mill tolerance.** Seamless pipe can be 12.5% thinner than nominal, so the real rating is lower.
+- **Mixing up yield and tensile strength.** SMYS with a design factor gives a working pressure; tensile strength with F = 1 gives an estimate of burst.
+- **Using the inside diameter by habit.** The standard Barlow form uses the outside diameter, which is the conservative choice.
+- **Forgetting temperature derating.** Allowable stress falls at high temperature; use the code value at design temperature.
+- **Ignoring weld joint efficiency.** Welded pipe ratings in B31.3 multiply the stress by a joint quality factor E below 1 for some seam types.

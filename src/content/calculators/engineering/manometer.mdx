@@ -2,10 +2,10 @@
 title: Manometer Calculator (U-Tube & Inclined Manometer)
 description: Calculate differential pressure from a U-tube or inclined manometer reading, Δp = (ρm − ρf)·g·L·sin θ, for water, oil or mercury filled manometers.
 category: engineering
-intro: "A manometer measures pressure difference as the height of a liquid column, and tilting the tube spreads a small height over a longer, easier-to-read scale. This manometer calculator converts a U-tube or inclined manometer reading into pressure, including the effect of the fluid above the manometer liquid — see the [U-tube manometer working principle and formula](https://www.instrumentationblog.in/u-tube-manometer-working-formula/)."
+intro: "A manometer measures pressure difference as the height of a liquid column, and tilting the tube spreads a small height over a longer, easier-to-read scale. This manometer calculator converts a U-tube or inclined manometer reading into pressure, including the fluid above the manometer liquid.\n\nHVAC technicians use it for duct and filter pressures, and instrument technicians use it as a simple reference standard. See the [U-tube manometer working principle and formula](https://www.instrumentationblog.in/u-tube-manometer-working-formula/)."
 keywords: [manometer calculator, u tube manometer calculator, inclined manometer calculator, manometer formula, differential pressure manometer, mm water column to pa, manometer reading to pressure]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: rm, label: Manometer liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
   - { id: rf, label: Density of the fluid above it (process fluid), family: density, unit: kgm3, imperialUnit: lbft3, default: 1.2, min: 0 }
@@ -25,6 +25,8 @@ faq:
     a: Water or light gauge oil for small draft and filter pressures (a few hundred Pa), mercury for pressures of tens of kPa. Mercury is now avoided for safety reasons.
   - q: What is 1 mm of water column in pascals?
     a: About 9.81 Pa (9.80665 Pa by definition at standard gravity).
+  - q: "What is a well-type manometer?"
+    a: "One leg is replaced by a large reservoir, so its level hardly moves and you read only the single tube. The small fall of the reservoir is allowed for in the scale, which is compressed by the ratio of the tube area to the reservoir area."
 related: [engineering/hydrostatic-pressure, engineering/absolute-gauge-pressure, engineering/pressure-to-head, engineering/pitot-tube-velocity]
 ---
 
@@ -43,6 +45,34 @@ A water-filled inclined manometer at 30° reads 150 mm along the tube, measuring
 - h = 150 × sin 30° = **75 mm**
 - Δp = (1,000 − 1.2) × 9.80665 × 0.075 = **734.6 Pa**
 
+Check the default result: 75 mm of water is 75 × 9.79 ≈ 734616.2 Pa, or 74910.0 mm H₂O once the air above the water is allowed for.
+
+## Liquid over liquid example
+
+A vertical mercury U-tube measures the pressure drop across an orifice in a water line. The mercury levels differ by 200 mm, with water filling both legs above the mercury:
+
+- Δp = (13,546 − 998) × 9.80665 × 0.2 = **24610.77 kPa**
+
+Ignoring the water above the mercury would give 26.57 kPa, an error of about 8%.
+
+## Where manometers are used
+
+- **Ventilation and filters:** inclined manometers show the pressure drop across air filters and fans, with a mark at the replacement point.
+- **Combustion draft:** a few tens of Pa of furnace draft are read on an inclined gauge with light oil.
+- **Calibration:** a vertical water or mercury column is a primary standard for low pressures, because the result depends only on density, g and a length.
+- **Flow measurement:** U-tubes across orifice plates and pitot tubes give the differential pressure for flow calculations.
+
+## Inclination and sensitivity (water, measuring air)
+
+| Angle | Scale magnification | Pa per mm of scale | Vertical rise for 200 mm scale | Pressure at 200 mm scale |
+|---|---|---|---|---|
+| 90° | 1.00 | 9.795 Pa | 200.0 mm | 1959.0 Pa |
+| 45° | 1.41 | 6.926 Pa | 141.4 mm | 1385.2 Pa |
+| 30° | 2.00 | 4.897 Pa | 100.0 mm | 979.5 Pa |
+| 20° | 2.92 | 3.350 Pa | 68.4 mm | 670.0 Pa |
+| 10° | 5.76 | 1.701 Pa | 34.7 mm | 340.2 Pa |
+| 5° | 11.47 | 0.854 Pa | 17.4 mm | 170.7 Pa |
+
 ## Pressure for a 100 mm scale reading (Pa, measuring air)
 
 | Manometer liquid | Vertical (90°) | Inclined 30° | Inclined 10° |
@@ -56,3 +86,11 @@ A water-filled inclined manometer at 30° reads 150 mm along the tube, measuring
 
 - For a liquid-over-liquid manometer (for example mercury under water) the fluid density term matters: use ρ<sub>m</sub> − ρ<sub>f</sub>.
 - Level the instrument carefully — an error of 1° at a 10° incline changes the reading by about 10%.
+
+## Common mistakes
+
+- **Reading only one leg of a U-tube.** The pressure depends on the difference between the two levels. If one leg rises 50 mm, the other falls 50 mm, so h is 100 mm.
+- **Using the scale length as the height on an inclined gauge.** Multiply by sin θ first, or use a scale already marked in Pa or mm H₂O.
+- **Wrong fluid density.** Gauge oil, water and mercury change density with temperature, and a scale marked for SG 0.826 oil reads wrong if filled with water.
+- **Reading the meniscus incorrectly.** Read the bottom of a water meniscus and the top of a mercury meniscus, with the eye level with the surface.
+- **Trapped bubbles or dirty tubes.** An air bubble in a liquid-filled leg adds a false column, and a dirty bore makes the liquid stick.

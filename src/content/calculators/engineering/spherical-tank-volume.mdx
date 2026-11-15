@@ -2,10 +2,10 @@
 title: Spherical Tank Volume Calculator (Partially Filled Sphere)
 description: Calculate the liquid volume in a partially filled spherical tank from its diameter and liquid level, the full capacity and percent filled, with a level table.
 category: engineering
-intro: "Storage spheres for LPG, ammonia and other pressurised liquids hold far more or less than a simple level percentage suggests, because the cross-section changes with height. This spherical tank volume calculator uses the spherical-cap formula to convert level to volume — the basis of [LPG level measurement in bullets and spheres](https://www.instrumentationblog.in/lpg-level-measurement-bullet-sphere/) and of [tank volume from level](https://www.instrumentationblog.in/tank-volume-from-level-measurement/)."
+intro: "Storage spheres for LPG, ammonia and other pressurised liquids hold more or less than a simple level percentage suggests, because the cross-section changes with height. This spherical tank volume calculator uses the spherical-cap formula to turn a liquid level into a volume.\n\nTerminal operators, instrument engineers and inventory accountants use it to build level-to-volume tables, set high-level alarms and check fill limits. See [LPG level measurement in bullets and spheres](https://www.instrumentationblog.in/lpg-level-measurement-bullet-sphere/)."
 keywords: [spherical tank volume calculator, partially filled sphere volume, sphere tank level to volume, spherical cap volume, lpg sphere volume, tank strapping sphere, sphere fill percentage]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: D, label: Sphere inside diameter, family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
   - { id: h, label: Liquid level (from bottom), family: length, unit: m, imperialUnit: ft, default: 4, min: 0 }
@@ -25,6 +25,8 @@ faq:
     a: Typically to no more than 85% of volume to leave vapour space for thermal expansion — check the local regulation and the design.
   - q: Does the calculator use inside or outside diameter?
     a: Inside diameter. Subtract twice the wall thickness from the outside diameter for an accurate capacity.
+  - q: "At what level is a sphere 85% full?"
+    a: "At 75.6% of its inside diameter, whatever the size. For a 10 m sphere that is 7.56 m of liquid. The ratio is the same for every sphere because the shape scales."
 related: [engineering/horizontal-tank-volume, engineering/vertical-tank-volume, math/sphere, engineering/dp-level-range]
 ---
 
@@ -63,3 +65,35 @@ A 10 m sphere (R = 5 m) with 4 m of liquid:
 
 - Level and volume are only equal (in percent) at 0, 50% and 100%.
 - For mass, multiply the volume by the liquid density at the measured temperature.
+
+## From volume to mass
+
+Inventory is usually reported in tonnes. In the worked example, if the 4 m of liquid is propane at about 500 kg/m³ (its density near 20 °C), the stock is 184.31 × 500 = **92.2 t**. Use the density at the measured liquid temperature: liquid propane gets noticeably lighter as it warms, so the same volume holds less mass on a hot afternoon.
+
+## How level is measured on spheres
+
+- **Radar or servo gauges** on a still pipe on the top of the sphere measure the liquid surface directly. Because the vessel is under pressure, the gauge sits on a pressure-rated nozzle or behind a ball valve.
+- **Differential pressure transmitters** need the vapour pressure on the low side, and the vapour density matters at high pressure. See the [DP level range calculator](/engineering/dp-level-range/).
+- **Strapping tables** from a calibration survey replace the ideal formula for custody transfer, because real spheres are slightly out of round and have legs, nozzles and internal pipes.
+
+## Sphere sizes and the 85% fill level
+
+Because the top of a sphere is narrow, 85% of the volume is reached well before 85% of the height. Masses assume LPG at 500 kg/m³:
+
+| Diameter | Capacity | Level at 85% volume | LPG at 85% |
+|---|---|---|---|
+| 8 m | 268 m³ | 6.04 m (75.6%) | 114 t |
+| 10 m | 524 m³ | 7.56 m (75.6%) | 223 t |
+| 12 m | 905 m³ | 9.07 m (75.6%) | 385 t |
+| 14 m | 1,437 m³ | 10.58 m (75.6%) | 611 t |
+| 16 m | 2,145 m³ | 12.09 m (75.6%) | 911 t |
+| 18 m | 3,054 m³ | 13.60 m (75.6%) | 1,298 t |
+| 20 m | 4,189 m³ | 15.11 m (75.6%) | 1,780 t |
+
+## Common mistakes
+
+- **Treating level percent as volume percent.** At 40% level a sphere is only 35.2% full; at 90% level it is already 97.2% full.
+- **Using the outside diameter.** Shell plates on large spheres can be 40 to 60 mm thick, which changes the capacity by around 2 to 4% on a 10 m sphere.
+- **Measuring level from the wrong datum.** The formula needs the depth from the lowest inside point. Gauges are often referenced to a nozzle or flange, so add the offset first.
+- **Forgetting the bottom fittings.** Liquid trapped in the drain sump and outlet piping below the sphere is not part of the cap volume.
+- **Setting alarms by level instead of volume.** A high-level alarm for 85% fill must be set at about 76% of the height on any sphere, not at 85%.

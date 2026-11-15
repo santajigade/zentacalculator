@@ -2,10 +2,10 @@
 title: Water Hammer Calculator (Joukowsky Equation)
 description: Calculate the surge pressure from sudden valve closure or pump trip with the Joukowsky equation — with wave speed and critical closure time.
 category: engineering
-intro: "When a valve closes quickly or a pump trips, the moving liquid stops suddenly and its momentum turns into a pressure spike that can burst pipes and damage instruments. This water hammer calculator uses the Joukowsky equation to estimate the surge — see the [Joukowsky equation for water hammer](https://www.instrumentationblog.in/joukowsky-equation-water-hammer/) and the [hammer effect in pressure gauges](https://www.instrumentationblog.in/hammer-effect-in-pressure-gauges/)."
+intro: "Water hammer is the pressure spike that appears when a valve closes quickly or a pump trips and the moving liquid stops almost at once. This water hammer calculator uses the Joukowsky equation to find the surge pressure, the surge head and the critical closure time of a pipeline.\n\nPipeline, water utility and plant engineers use it to set pipe pressure ratings, choose valve closing times and protect gauges. Read more on the [Joukowsky equation for water hammer](https://www.instrumentationblog.in/joukowsky-equation-water-hammer/) and the [hammer effect in pressure gauges](https://www.instrumentationblog.in/hammer-effect-in-pressure-gauges/)."
 keywords: [water hammer calculator, joukowsky equation, surge pressure calculation, pressure surge valve closure, water hammer formula, pipeline surge, critical closure time]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-15
 variables:
   - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
   - { id: a, label: Pressure wave speed, family: velocity, unit: ms, imperialUnit: fts, default: 1200, min: 0, help: 'About 1,000–1,400 m/s in steel pipe full of water, 300–500 m/s in PVC/HDPE.' }
@@ -27,6 +27,10 @@ faq:
     a: 2L ÷ a, the time for a pressure wave to travel to the reservoir and back. Closing faster than this gives the full Joukowsky surge; closing slower reduces it.
   - q: How is water hammer prevented?
     a: Slow-closing valves, surge tanks, air vessels, surge relief valves, VFD ramp-down of pumps and lower design velocities.
+  - q: "How do I calculate the pressure wave speed in a pipe?"
+    a: "Use the Korteweg formula a = √[(K/ρ) ÷ (1 + (K/E)(D/e))]. For water (K = 2.19 GPa) in steel pipe with D/e = 50 it gives about 1,197 m/s; in PVC with the same D/e it gives about 242 m/s."
+  - q: "Does closing a valve slowly stop water hammer?"
+    a: "It reduces it. If the closure is slower than the critical time 2L/a, the surge falls roughly in proportion; for a 500 m line at 2 m/s, closing over 5 s cuts the head rise from about 245 m to about 41 m."
 related: [engineering/pipe-flow-velocity, engineering/darcy-weisbach-head-loss, engineering/pump-power, engineering/hydrostatic-pressure]
 ---
 
@@ -37,6 +41,16 @@ Enter the liquid **density**, the **pressure wave speed** for your pipe material
 ## Joukowsky equation
 
 <p class="formula">ΔP = ρ × a × Δv &nbsp;·&nbsp; ΔH = a × Δv ÷ g &nbsp;·&nbsp; t<sub>c</sub> = 2L ÷ a</p>
+
+## Worked example
+
+Water (1,000 kg/m³) flows at 2 m/s in a 500 m steel line with a wave speed of 1,200 m/s, and a valve at the end shuts suddenly:
+
+- Surge pressure ΔP = 1,000 × 1,200 × 2 = 2,400,000 Pa = **24.0 bar**
+- Surge head ΔH = 1,200 × 2 ÷ 9.80665 = **244.7 m**
+- Critical closure time t<sub>c</sub> = 2 × 500 ÷ 1,200 = **0.833 s**
+
+The surge adds to the pressure already in the line, so a pipe running at 6 bar briefly sees about 30 bar at the valve. If the valve instead closes over 5 s, much longer than 0.83 s, Michaud's estimate ΔH ≈ 2Lv ÷ (g t) gives only 40.8 m (4.0 bar).
 
 ## Surge for water in steel pipe (a = 1,200 m/s)
 
@@ -63,3 +77,39 @@ Flexible plastic pipes have lower wave speeds, so surges are smaller.
 ## Protecting instruments
 
 Pressure gauges and transmitters on lines prone to surges need snubbers, liquid-filled gauges or pulsation dampers, and a pressure rating above the surge pressure.
+
+## Wave speed from the pipe wall
+
+The wave speed depends on how stiff the liquid and the pipe wall are. The Korteweg formula is a = √[(K/ρ) ÷ (1 + (K/E)(D/e))], with K the bulk modulus of the liquid (water about 2.19 GPa), E the elastic modulus of the pipe wall, D the internal diameter and e the wall thickness. Values for water, computed with that formula:
+
+| Pipe material | E | D/e = 20 | D/e = 50 | D/e = 100 |
+|---|---|---|---|---|
+| Steel | 207 GPa | 1,344 m/s | 1,197 m/s | 1,032 m/s |
+| Ductile iron | 170 GPa | 1,320 m/s | 1,154 m/s | 978 m/s |
+| PVC | 3 GPa | 375 m/s | 242 m/s | 172 m/s |
+| HDPE | 0.9 GPa | 210 m/s | 134 m/s | 95 m/s |
+
+Thin flexible walls stretch and absorb part of the surge, which is why plastic pipe sees much smaller pressure spikes than steel at the same velocity. Air or gas bubbles in the liquid lower the wave speed even more, but they make the surge less predictable.
+
+## Effect of valve closing time
+
+For the example pipeline (500 m, 2 m/s, t<sub>c</sub> = 0.83 s). Closures slower than t<sub>c</sub> use Michaud's linear estimate, which is a first check only; a transient analysis is needed for a final design.
+
+| Closing time | Surge head | Surge pressure | Basis |
+|---|---|---|---|
+| 0.50 s | 244.7 m | 24.0 bar | full Joukowsky surge |
+| 0.83 s | 244.7 m | 24.0 bar | full Joukowsky surge |
+| 2.00 s | 102.0 m | 10.0 bar | Michaud estimate |
+| 5.00 s | 40.8 m | 4.0 bar | Michaud estimate |
+| 10.00 s | 20.4 m | 2.0 bar | Michaud estimate |
+| 20.00 s | 10.2 m | 1.0 bar | Michaud estimate |
+
+Most of the velocity change in a gate or butterfly valve happens in the last 10 to 20% of travel, so the effective closing time is far shorter than the full stroke time. Two-stage or characterised closing helps.
+
+## Common mistakes
+
+- **Using the stroke time of the valve as the closing time.** Flow barely changes until the valve is nearly shut, so the real deceleration happens in a fraction of the stroke.
+- **Forgetting the pump trip case.** When a pump stops, the pressure first drops on the discharge side. If it falls to vapour pressure, the column separates and the rejoining slug can cause a surge larger than the Joukowsky value.
+- **Taking the steel wave speed for plastic pipe.** PVC and HDPE give wave speeds three to five times lower, so using 1,200 m/s overstates their surge.
+- **Comparing the surge alone with the pipe rating.** Add the steady operating pressure to the surge before comparing with the pressure class of the pipe, valves and flanges.
+- **Using the length of the whole network.** L is the distance from the valve to the nearest point where the wave reflects, such as a reservoir, a large tank or a big header.

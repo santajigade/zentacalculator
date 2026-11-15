@@ -1,0 +1,99 @@
+---
+title: Interface Level Calculator (DP Transmitter, Two Liquids)
+description: Calculate oil and water interface level from DP transmitter reading, or set the LRV, URV and span for interface measurement with remote seals.
+category: engineering
+intro: "Interface level is the height of the boundary between two liquids that do not mix, such as oil floating on water in a separator. This interface level calculator gives the DP a transmitter sees, the LRV, URV and span, as explained in [interface level measurement](https://www.instrumentationblog.in/interface-level-measurement/).\n\nInstrument engineers use it to range transmitters on separators, decanters and desalters, and to check quickly whether the density difference is large enough for DP to work."
+keywords: [interface level calculator, dp interface level measurement, oil water interface level, interface level transmitter range, lrv urv interface level, interface level formula, separator interface level]
+published: 2026-11-15
+updated: 2026-11-15
+variables:
+  - { id: H, label: Distance between the HP and LP taps, family: length, unit: mm, imperialUnit: in, default: 2000, min: 0 }
+  - { id: s1, label: SG of the upper (light) liquid, default: 0.85, min: 0 }
+  - { id: s2, label: SG of the lower (heavy) liquid, default: 1, min: 0 }
+  - { id: sf, label: SG of the seal fill fluid or wet leg, default: 0.934, min: 0, help: 'Silicone fill fluids are typically 0.93 to 0.97. Enter 0 for a transmitter with direct, dry connections where both taps are always covered by liquid and nothing fills the lines (rare).' }
+  - { id: h, label: Interface height above the HP tap, family: length, unit: mm, imperialUnit: in, default: 1200, min: 0, help: 'Must lie between 0 and the tap distance. The vessel must be full so that the LP tap is always covered by the light liquid.' }
+  - { id: dp, label: Differential pressure (HP minus LP), family: pressure, unit: mbar, imperialUnit: inH2O }
+  - { id: lrv, label: LRV (interface at the HP tap), family: pressure, unit: mbar, imperialUnit: inH2O }
+  - { id: urv, label: URV (interface at the LP tap), family: pressure, unit: mbar, imperialUnit: inH2O }
+  - { id: span, label: Calibrated span, family: pressure, unit: mbar, imperialUnit: inH2O }
+  - { id: pc, label: Interface level (percent of range), family: percent, unit: '%' }
+equations:
+  - dp = (s2 * h + s1 * (H - h) - sf * H) * 1000 * g0
+  - lrv = (s1 - sf) * H * 1000 * g0
+  - urv = (s2 - sf) * H * 1000 * g0
+  - span = (s2 - s1) * H * 1000 * g0
+  - pc = (dp - lrv) / span
+faq:
+  - q: How does a DP transmitter measure interface level?
+    a: "With the vessel full, the pressure difference between the two taps is the weight of the liquid column between them. Heavy liquid weighs more than light liquid, so the DP rises as the interface moves up. The change from interface at the bottom tap to interface at the top tap is (SG heavy − SG light) × tap distance."
+  - q: Why is the LRV negative for interface measurement with remote seals?
+    a: "The capillary on the LP side carries a column of fill fluid as tall as the tap distance. If the fill fluid is heavier than the light process liquid, that column outweighs the process liquid above the HP tap and the DP at minimum interface is below zero. This is normal; the transmitter is simply ranged from a negative LRV."
+  - q: What density difference is needed for DP interface measurement?
+    a: "As a rule of thumb at least 0.1 SG, and more for short tap distances. With a 2 m tap distance and a 0.15 SG difference the span is only about 29 mbar, so a 0.01 SG error in the light liquid moves the reading by several percent. Below about 0.1 SG consider guided wave radar or a displacer instead."
+  - q: Can I measure interface level if the vessel is not full?
+    a: "Not with a single DP transmitter. If the upper tap is uncovered, the reading depends on both the total level and the interface position. You then need a second measurement of total level, or a technology that sees both surfaces such as guided wave radar."
+  - q: Does the transmitter mounting height matter with remote seals?
+    a: "For the span and LRV, no: the fill fluid in both capillaries from the transmitter up to the lower tap cancels out, and only the fill fluid column between the two taps remains. Mounting height still matters for the minimum allowed pressure on the seals in vacuum service."
+related: [engineering/dp-level-range, engineering/hydrostatic-pressure, engineering/4-20ma-scaling, engineering/bubbler-level, physics/density, engineering/api-gravity]
+---
+
+## How to use the interface level calculator
+
+Enter the **distance between the two taps**, the **specific gravity of the light and heavy liquids**, the **specific gravity of the seal fill fluid** (or of the wet leg) and the **interface height** above the lower tap. The calculator gives the DP the transmitter sees, the LRV and URV to configure, the span and the interface as a percentage of range. To turn a live reading into an interface height, enter the DP and press × on the interface height so it becomes the result.
+
+## Interface level formula
+
+<p class="formula">ΔP = ρ<sub>w</sub> g [SG<sub>2</sub> h + SG<sub>1</sub> (H − h) − SG<sub>f</sub> H]</p>
+
+<p class="formula">LRV = ρ<sub>w</sub> g (SG<sub>1</sub> − SG<sub>f</sub>) H &nbsp;·&nbsp; URV = ρ<sub>w</sub> g (SG<sub>2</sub> − SG<sub>f</sub>) H &nbsp;·&nbsp; span = ρ<sub>w</sub> g (SG<sub>2</sub> − SG<sub>1</sub>) H</p>
+
+H is the tap distance, h the interface height above the HP tap, SG<sub>1</sub> the light liquid, SG<sub>2</sub> the heavy liquid and SG<sub>f</sub> the fill fluid; ρ<sub>w</sub> = 1,000 kg/m³ and g = 9.80665 m/s², so 1 mmH₂O is 9.80665 Pa.
+
+## Worked example
+
+An oil and water separator has taps 2,000 mm apart, oil of SG 0.85 on water of SG 1, and remote seals filled with silicone of SG 0.934. The interface is 1,200 mm above the lower tap:
+
+- LRV = (0.85 − 0.934) × 2 m × 1,000 × 9.80665 = **−16.48 mbar**
+- URV = (1 − 0.934) × 2 × 1,000 × 9.80665 = **12.94 mbar**
+- Span = (1 − 0.85) × 2 × 1,000 × 9.80665 = **29.42 mbar**
+- DP at the interface = (1 × 1.2 + 0.85 × 0.8 − 0.934 × 2) × 9,806.65 = **1.18 mbar**
+- Interface = (1.18 − (−16.48)) ÷ 29.42 = **60.0%** of range, which checks against 1.2 ÷ 2 = 60%
+
+## DP and output across the range
+
+For the example separator (2,000 mm taps, SG 0.85 over 1, fill SG 0.934):
+
+| Interface (% of range) | Height above HP tap | DP | DP | Output (4 to 20 mA) |
+|---|---|---|---|---|
+| 0% | 0.00 m | −16.48 mbar | −168 mmH₂O | 4.00 mA |
+| 25% | 0.50 m | −9.12 mbar | −93 mmH₂O | 8.00 mA |
+| 50% | 1.00 m | −1.77 mbar | −18 mmH₂O | 12.00 mA |
+| 75% | 1.50 m | 5.59 mbar | 57 mmH₂O | 16.00 mA |
+| 100% | 2.00 m | 12.94 mbar | 132 mmH₂O | 20.00 mA |
+
+## Span for common liquid pairs
+
+For a 2,000 mm tap distance. The span is independent of the fill fluid:
+
+| Liquid pair | SG light | SG heavy | SG difference | Span |
+|---|---|---|---|---|
+| Light hydrocarbon on water | 0.70 | 1.00 | 0.30 | 58.8 mbar |
+| Crude or diesel on water | 0.85 | 1.00 | 0.15 | 29.4 mbar |
+| Heavy oil on water | 0.92 | 1.00 | 0.08 | 15.7 mbar |
+| Water on brine (SG 1.2) | 1.00 | 1.20 | 0.20 | 39.2 mbar |
+| Solvent on chlorinated solvent | 0.80 | 1.60 | 0.80 | 156.9 mbar |
+| Oil on 98% sulphuric acid | 0.86 | 1.84 | 0.98 | 192.2 mbar |
+
+## How interface level is measured in practice
+
+Most separators use a DP transmitter with **two flush diaphragm seals** and capillaries, because the process liquids are often hot, waxy or corrosive and impulse lines would plug. The seals are mounted on nozzles above and below the expected interface band, and the vessel is kept liquid full, usually by an overflow weir or by level control on the total level. The transmitter can be mounted at or below the lower tap. The range is set from the LRV and URV calculated above, then checked by sampling the vessel at its try cocks or sight glass.
+
+Other technologies are common where DP is weak: **guided wave radar** sees both the top surface and the interface when the upper liquid has a low dielectric constant; **displacers** work well over short ranges; and **capacitance** or **nuclear density profilers** handle emulsion bands in desalters.
+
+## Common mistakes
+
+- **Leaving the LP tap uncovered.** If the top of the vessel contains gas, the transmitter measures a mix of total level and interface and the reading is meaningless.
+- **Using design densities that do not match the process.** A 0.01 SG change in the oil at 50% interface moves this example reading by +3.3% of range, so use the measured density at operating temperature.
+- **Forgetting the fill fluid column.** Ranging the transmitter from 0 instead of the negative LRV puts the whole range out by the weight of the capillary fill.
+- **Ignoring the emulsion layer.** A DP transmitter reports one average interface; a thick rag layer between oil and water shifts the reading toward the middle of the band.
+- **Placing taps outside the interface band.** The interface must stay between the taps; outside them the output saturates at 0% or 100% and hides the real position.

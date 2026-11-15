@@ -2,10 +2,10 @@
 title: Ultrasonic Level Calculator (Time of Flight and Temperature)
 description: Calculate the distance and liquid level measured by an ultrasonic level transmitter from echo time and air temperature — with the speed-of-sound correction.
 category: engineering
-intro: "An ultrasonic level transmitter sends a sound pulse down to the liquid surface and times the echo. Because the speed of sound in air changes about 0.6 m/s per °C, temperature compensation is essential. This ultrasonic level calculator converts echo time into distance and level — see [ultrasonic level transmitter working](https://www.instrumentationblog.in/ultrasonic-level-transmitter-working/) and [how an ultrasonic level transmitter works](https://www.instrumentationblog.in/how-does-an-ultrasonic-level-transmitter-work/)."
+intro: "An ultrasonic level transmitter sends a sound pulse down to the liquid surface and times the echo, and the speed of sound in air changes by about 0.6 m/s per °C. This ultrasonic level calculator converts echo time and air temperature into distance and level, as explained in [ultrasonic level transmitter working](https://www.instrumentationblog.in/ultrasonic-level-transmitter-working/).\n\nInstrument technicians use it to check a transmitter's reading against a manual dip, set the empty distance and span, and see how much a temperature error shifts the level."
 keywords: [ultrasonic level calculator, time of flight level calculation, ultrasonic level transmitter, speed of sound temperature, echo time to distance, ultrasonic distance calculator]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-15
 variables:
   - { id: t, label: Echo time (round trip), family: seconds, unit: ms, default: 20, min: 0 }
   - { id: T, label: Air temperature, suffix: °C, default: 30 }
@@ -26,6 +26,10 @@ faq:
     a: A zone just below the sensor where echoes cannot be measured while the transducer is still ringing — typically 0.25–0.5 m.
   - q: When is ultrasonic a poor choice?
     a: With heavy vapour, foam, dust, high pressure or vacuum, or strong turbulence. Radar is usually better in those cases.
+  - q: "How do I set the 4 to 20 mA range of an ultrasonic level transmitter?"
+    a: "Enter the empty distance from the sensor face to the 0% point, which gives 4 mA, and the span up to the 100% point, which gives 20 mA. The 100% point must be at least the blanking distance below the sensor face, or the top of the range cannot be measured."
+  - q: "Does the gas above the liquid affect an ultrasonic level reading?"
+    a: "Yes. The speed of sound depends on the gas as well as the temperature. In carbon dioxide it is about 267 m/s at 20 °C against 343 m/s in air, so a transmitter set up for air would read the distance about 22% too short. Radar is not affected by the gas composition."
 related: [engineering/vertical-tank-volume, engineering/hydrostatic-pressure, physics/speed-distance-time, physics/doppler-effect]
 ---
 
@@ -56,6 +60,45 @@ Echo time 20 ms at 30 °C, empty distance 6 m:
 
 - c = 349.0 m/s, distance = 349.0 × 0.020 ÷ 2 = **3.49 m**
 - Level = 6 − 3.49 = **2.51 m**
+
+## What a temperature error costs
+
+Take the same echo of 20 ms with an empty distance of 6 m, but suppose the transmitter's temperature compensation fails and it assumes 20 °C while the air in the tank is really 30 °C:
+
+- Assumed speed of sound at 20 °C = 331.3 × √(1 + 20/273.15) = **343.2 m/s**
+- Distance it reports = 343.2 × 0.02 ÷ 2 = **3.432 m**, so level = 6 − 3.432 = **2.568 m**
+- True level at 30 °C = **2.510 m**, so the reading is **58 mm** too high
+
+The error grows with distance, so it is worst when the tank is nearly empty, which is exactly when a pump may be running dry.
+
+## Echo time by distance and temperature
+
+Round-trip echo time t = 2d ÷ c:
+
+| Distance to surface | 0 °C | 20 °C | 40 °C |
+|---|---|---|---|
+| 0.5 m | 3.02 ms | 2.91 ms | 2.82 ms |
+| 1 m | 6.04 ms | 5.83 ms | 5.64 ms |
+| 2 m | 12.07 ms | 11.65 ms | 11.28 ms |
+| 4 m | 24.15 ms | 23.31 ms | 22.55 ms |
+| 6 m | 36.22 ms | 34.96 ms | 33.83 ms |
+| 8 m | 48.29 ms | 46.62 ms | 45.10 ms |
+| 10 m | 60.37 ms | 58.27 ms | 56.38 ms |
+| 15 m | 90.55 ms | 87.41 ms | 84.57 ms |
+
+A transmitter that measures to 15 m must wait about 90 ms for each echo, which is why long-range units update more slowly and average several pulses.
+
+## Setting up the transmitter in practice
+
+The transmitter does not know where the bottom of the tank is: you enter the **empty distance** (sensor face to the 0% point) and the **span** (0% to 100%), and it scales the 4 to 20 mA output between them. The 100% point must stay below the **blanking distance**, so a sensor with 0.3 m blanking cannot read the last 0.3 m under its face. During commissioning, run the false echo suppression (echo mapping) with the tank empty or at low level, so the unit learns and ignores reflections from ladders, welds and agitator blades. Then compare the reading with a manual dip at two levels at least.
+
+## Common mistakes
+
+- **Measuring the empty distance to the nozzle flange** instead of the transducer face. The face sits some way inside or above the flange, and the whole offset ends up in the level.
+- **Mounting in a long, narrow nozzle.** The pulse rings off the nozzle walls and the unit locks onto that echo. Keep the transducer face at or just below the end of the nozzle.
+- **Trusting the built-in temperature probe in a stratified tank.** The probe reads the air at the sensor, but a warm vapour layer near the liquid has a different speed of sound.
+- **Using ultrasonic over foam.** Foam absorbs the pulse, so the echo is weak or comes from the top of the foam rather than the liquid.
+- **Ignoring the gas in the tank.** In carbon dioxide sound travels at about 267 m/s at 20 °C, roughly 22% slower than in air, so an air-calibrated unit reads badly wrong.
 
 ## Installation tips
 

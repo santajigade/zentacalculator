@@ -1,11 +1,11 @@
 ---
-title: Voltage Unbalance Calculator (NEMA Method)
-description: Calculate percentage voltage unbalance from three line voltages, plus the motor derating and extra temperature rise it causes.
+title: "Voltage Unbalance Calculator (NEMA Method, Motor Derating)"
+description: "Calculate percent voltage unbalance from three line voltages by the NEMA MG 1 method, with the extra motor temperature rise and derating it causes."
 category: electrical
-intro: "When the three phase voltages are not equal, motors draw unbalanced currents and run hotter — even a small voltage unbalance causes a much larger current unbalance. This guide to [voltage unbalance calculation for motors](https://www.instrumentationblog.in/voltage-unbalance-calculation-motors/) explains the NEMA method and its effect on motor rating."
+intro: "When the three line voltages of a supply are not equal, motors draw unbalanced currents and run hotter. This voltage unbalance calculator applies the NEMA MG 1 method: the largest deviation from the average, divided by the average.\n\nElectricians, maintenance engineers and energy auditors use it to check a motor supply before blaming the motor. This guide to [voltage unbalance calculation for motors](https://www.instrumentationblog.in/voltage-unbalance-calculation-motors/) explains the derating it leads to."
 keywords: [voltage unbalance calculator, phase unbalance, nema voltage unbalance, motor derating unbalance, three phase voltage imbalance, percent unbalance]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-15
 variables:
   - { id: Va, label: Voltage L1–L2, family: voltage, unit: V, default: 412, min: 0 }
   - { id: Vb, label: Voltage L2–L3, family: voltage, unit: V, default: 405, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: It creates negative-sequence current that opposes rotation and heats the rotor. Temperature rise increases by about twice the square of the percentage unbalance.
   - q: What causes voltage unbalance?
     a: Unevenly distributed single-phase loads, a blown capacitor fuse, high-resistance connections, open-delta transformers and long feeders.
+  - q: "Should I measure line-to-line or line-to-neutral voltage for unbalance?"
+    a: "Line-to-line. The NEMA MG 1 definition and the derating curve are based on line voltages. Line-to-neutral readings can be affected by neutral shift and zero-sequence voltage that a three-wire motor never sees."
+  - q: "Does voltage unbalance affect VFDs?"
+    a: "Yes. A six-pulse drive rectifier draws most of its current through the highest phase, so 2% to 3% voltage unbalance can make the input currents very uneven, raise DC bus ripple and trip the drive on input phase loss. Line reactors reduce the effect."
 related: [electrical/kw-to-amps, electrical/three-phase-motor-power, electrical/induction-motor-slip, electrical/thd, electrical/cable-voltage-drop]
 ---
 
@@ -43,14 +47,17 @@ For more background, read [Motor Protection Relay Types](https://www.instrumenta
 
 Extra temperature rise ≈ 2 × (% unbalance)² percent.
 
-## Example
+## Worked example
 
-412, 405 and 418 V:
+A 30 kW motor terminal box reads 412 V (L1 to L2), 405 V (L2 to L3) and 418 V (L3 to L1):
 
-- Average = 411.7 V
-- Largest deviation = 411.7 − 405 = 6.7 V
-- Unbalance = 6.7 ÷ 411.7 = **1.62%**
-- Temperature rise increases by about **5.2%**
+- Average = (412 + 405 + 418) ÷ 3 = **411.7 V**
+- Deviations: +0.33 V, −6.67 V and +6.33 V, so the largest is **6.67 V** (L2 to L3)
+- Unbalance = 6.67 ÷ 411.7 × 100 = **1.62%**
+- Extra winding temperature rise ≈ 2 × 1.62² = **5.2%**
+- Derating factor read from the curve between 1% and 2% ≈ 0.97, so the motor should carry no more than about 29.1 kW
+- The IEC definition (negative to positive sequence ratio) gives 1.82% for the same three voltages, a little higher than the NEMA figure because the two definitions differ
+- Expect a current unbalance of roughly 10% to 16%, which is enough to worry a motor protection relay set at 10%
 
 ## Motor derating (NEMA MG 1, approximate)
 
@@ -71,3 +78,36 @@ A small voltage unbalance causes a much larger current unbalance — typically 6
 ## Other definitions
 
 IEC 61000 uses the ratio of negative-sequence to positive-sequence voltage. For small unbalances it gives results close to the NEMA method above.
+
+## Unbalance, heating and current
+
+The temperature figure is the increase in winding temperature rise (2 × unbalance²), and the current column uses the usual rule of thumb that current unbalance is 6 to 10 times the voltage unbalance:
+
+| Voltage unbalance | Extra temperature rise | Typical current unbalance | Derate the motor? |
+|---|---|---|---|
+| 0.5% | 0.5% | 3% to 5% | no |
+| 1% | 2.0% | 6% to 10% | no |
+| 1.5% | 4.5% | 9% to 15% | yes |
+| 2% | 8.0% | 12% to 20% | yes |
+| 2.5% | 12.5% | 15% to 25% | yes |
+| 3% | 18.0% | 18% to 30% | yes |
+| 3.5% | 24.5% | 21% to 35% | yes |
+| 4% | 32.0% | 24% to 40% | yes |
+| 5% | 50.0% | 30% to 50% | yes |
+
+## How to measure voltage unbalance
+
+- Measure **line-to-line** voltages at the motor terminals or at the starter, with the motor running at normal load. Unbalance at no load can look better than it is.
+- Use one true-RMS meter for all three readings, so meter error does not show up as unbalance. A power quality analyser that logs over a day catches unbalance that comes and goes with single-phase loads.
+- Compare the result with the **current unbalance** on a clamp meter. If the currents are far more unbalanced than 6 to 10 times the voltage figure, suspect the motor (a shorted turn or a high-resistance joint) rather than the supply.
+- Rotate the supply leads one position (L1 to L2, L2 to L3, L3 to L1) and measure the currents again. If the high current follows the supply phase, the supply is the cause; if it stays on the same motor lead, the motor or its cable is.
+
+More on the related protection and power quality topics: [what signal and power problems a VFD causes](https://www.instrumentationblog.in/power-quality-issues-vfd-plc/) and how relays react in [motor protection relay types](https://www.instrumentationblog.in/motor-protection-relay-types/).
+
+## Common mistakes
+
+- **Using line-to-neutral voltages.** NEMA MG 1 defines unbalance on line-to-line voltages. Phase voltages include zero-sequence components and give a different answer.
+- **Dividing by the lowest or rated voltage.** The denominator is the average of the three measured voltages, not 400 V or 415 V nameplate.
+- **Measuring at the main board only.** Long feeders and single-phase loads downstream change the balance; measure where the motor is connected.
+- **Ignoring low unbalance.** At 3% the winding runs about 18% hotter in temperature rise, which shortens insulation life well before any trip.
+- **Treating the 6 to 10 times rule as exact.** Current unbalance depends on motor design and load; use it to judge, and measure the real currents.

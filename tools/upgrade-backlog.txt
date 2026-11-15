@@ -1,25 +1,5 @@
 # Pages to expand (Part C of the daily task). Take from the top; delete a line once the page is done.
 # Order: priority category, then thinnest body first.
-engineering/kinematic-viscosity
-engineering/spherical-tank-volume
-engineering/availability-mtbf
-engineering/manometer
-engineering/pressure-to-head
-engineering/chiller-tonnage
-engineering/valve-authority
-engineering/turndown-ratio
-engineering/residence-time
-engineering/barlow-formula
-engineering/water-hammer
-engineering/venturi-flow
-engineering/hazen-williams
-engineering/convection-heat-transfer
-engineering/instrument-accuracy
-engineering/ultrasonic-level
-engineering/signal-converter
-engineering/fan-affinity-laws
-engineering/sensor-response-time
-engineering/vertical-tank-volume
 engineering/pulley-speed
 engineering/compressor-power
 engineering/low-flow-cutoff
@@ -88,7 +68,6 @@ electrical/lumen-method
 electrical/wire-resistance
 electrical/polarization-index
 electrical/ferranti-effect
-electrical/voltage-unbalance
 electrical/ct-burden
 electrical/earth-conductor-size
 electrical/braking-resistor
@@ -128,7 +107,6 @@ electronics/uart-baud-rate-error
 electronics/resistor-color-code
 electronics/capacitors-series-parallel
 electronics/dbm-to-watts
-electronics/snr
 electronics/battery-charge-time
 electronics/strain-gauge
 electronics/rc-phase-shift-oscillator
@@ -344,7 +322,6 @@ math/frustum-volume
 math/torus
 math/polygon
 math/fraction-to-decimal
-math/law-of-cosines
 math/pyramid-volume
 math/law-of-sines
 math/system-of-3-equations

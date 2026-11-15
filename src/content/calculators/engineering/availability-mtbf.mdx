@@ -2,10 +2,10 @@
 title: Availability Calculator (MTBF and MTTR)
 description: Calculate equipment availability from MTBF and MTTR, plus failure rate, expected downtime per year and the probability of running without failure.
 category: engineering
-intro: "Availability is the fraction of time equipment is ready to work. It depends on how often it fails (MTBF) and how quickly it is repaired (MTTR). This availability calculator also gives the failure rate, downtime per year and reliability over a mission time — useful for comparing instruments, pumps and control systems, and for [SIS final element reliability](https://www.instrumentationblog.in/sis-final-element-reliability/)."
+intro: "Availability is the fraction of time equipment is ready to work. It depends on how often the equipment fails (MTBF) and how quickly it is repaired (MTTR). This availability calculator also gives the failure rate, downtime per year and reliability over a mission time.\n\nMaintenance, reliability and control system engineers use it to compare instruments, pumps and controllers and to justify spares or redundancy, as in [SIS final element reliability](https://www.instrumentationblog.in/sis-final-element-reliability/)."
 keywords: [availability calculator, mtbf mttr calculator, availability formula, mtbf calculation, downtime per year, reliability calculator, failure rate calculator]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-15
 variables:
   - { id: mtbf, label: MTBF (mean time between failures), family: seconds, unit: h, default: 87600, min: 0 }
   - { id: mttr, label: MTTR (mean time to repair), family: seconds, unit: h, default: 8, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: 99.999% availability — about 5.3 minutes of downtime per year.
   - q: How do I improve availability?
     a: Reduce failures (better equipment, condition monitoring) or shorten repairs (spares on site, diagnostics, redundancy with online repair).
+  - q: "How do I calculate MTBF from field data?"
+    a: "Divide the total operating hours of all units by the number of failures. 40 pumps running for 3 years (1,051,200 h in total) with 6 failures have an MTBF of 175,200 h, or 20 years. Count only failures of the function you care about, and use several years of data."
+  - q: "What is the difference between MTBF and MTTF?"
+    a: "MTTF (mean time to failure) is used for items that are replaced, not repaired. MTBF applies to repairable equipment and equals MTTF plus MTTR. When repairs take hours and failures come years apart, the two are practically the same number."
 related: [engineering/pfd-avg, statistics/poisson-probability, statistics/probability, finance/payback-period]
 ---
 
@@ -38,6 +42,33 @@ Enter the **MTBF**, the **MTTR** and a **mission time**. You get availability, e
 ## Availability formulas
 
 <p class="formula">A = MTBF ÷ (MTBF + MTTR) &nbsp;·&nbsp; λ = 1 ÷ MTBF &nbsp;·&nbsp; R(t) = e<sup>−t/MTBF</sup></p>
+
+## Worked example
+
+A transmitter has an MTBF of 87,600 h (10 years), an average repair time of 8 h and you want the chance of a fault-free year (8,760 h):
+
+- Availability A = 87,600 ÷ (87,600 + 8) = **99.99087%**
+- Downtime per year = (1 − A) × 8,760 = **0.80 h** (about 48 minutes)
+- Failure rate λ = 8,760 ÷ 87,600 = **0.1 failures per year**
+- Probability of no failure in a year R = e<sup>−8,760/87,600</sup> = **90.48%**
+
+So roughly 1 transmitter in 10 of this type will fail in any given year, but each one is out of service for well under an hour a year on average.
+
+## Where MTBF and MTTR come from
+
+- **Field data:** MTBF = total operating hours ÷ number of failures. For example, 40 identical pumps running 3 years with 6 failures give 1,051,200 ÷ 6 = 175,200 h, about 20 years.
+- **Databases and vendors:** OREDA, exida and manufacturer FMEDA reports publish failure rates for valves, transmitters and logic solvers. Vendor figures usually exclude misuse and process-related failures, so field MTBF is often lower.
+- **MTTR** must include the whole outage: detecting the fault, getting a technician and spare to site, the repair itself, testing and restart. Logistics often take longer than the repair.
+
+## Availability by MTBF and MTTR
+
+| MTBF | MTTR 2 h | 8 h | 24 h | 72 h | 1 week |
+|---|---|---|---|---|---|
+| 1 yr | 99.977% | 99.909% | 99.727% | 99.185% | 98.118% |
+| 2 yr | 99.989% | 99.954% | 99.863% | 99.591% | 99.050% |
+| 5 yr | 99.995% | 99.982% | 99.945% | 99.836% | 99.618% |
+| 10 yr | 99.998% | 99.991% | 99.973% | 99.918% | 99.809% |
+| 20 yr | 99.999% | 99.995% | 99.986% | 99.959% | 99.904% |
 
 ## Availability and downtime
 
@@ -62,3 +93,11 @@ Two identical units in parallel, where either can do the job, have unavailabilit
 | 1,000 years | 0.001 per year | 114 |
 
 For safety instrumented functions, the dangerous undetected portion of the failure rate drives the [PFDavg](/engineering/pfd-avg/).
+
+## Common mistakes
+
+- **Reading MTBF as a lifetime.** MTBF describes random failures during useful life. It says nothing about wear-out, so a 100-year MTBF valve still needs overhaul.
+- **Leaving waiting time out of MTTR.** A 1 h repair that waits 2 days for a spare part has an MTTR of about 49 h for availability purposes.
+- **Multiplying availabilities of redundant units.** Multiplying applies to items in series (all must work). For parallel redundancy combine the unavailabilities instead.
+- **Mixing MTBF and MTTF.** For repairable items the difference is the MTTR, which is negligible here. For non-repairable parts such as fuses or bulbs, use MTTF.
+- **Ignoring planned downtime.** This formula covers unplanned failures only. Scheduled shutdowns and proof tests reduce operational availability further.

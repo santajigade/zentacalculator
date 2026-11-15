@@ -2,10 +2,10 @@
 title: Hazen–Williams Calculator (Water Pipe Head Loss)
 description: Calculate friction head loss and pressure drop in water pipes with the Hazen–Williams equation from flow, pipe diameter, length and C factor.
 category: engineering
-intro: "The Hazen–Williams equation is the go-to empirical formula for friction loss in water supply, fire-protection and irrigation pipes, using a single roughness C factor. This Hazen–Williams calculator gives head loss, pressure drop and velocity in SI units — see [how to calculate pressure drop in pipes](https://www.instrumentationblog.in/calculate-pressure-drop-in-pipes/)."
+intro: "The Hazen-Williams equation is the standard empirical formula for friction loss in water pipes, with a single C factor for pipe roughness. This Hazen-Williams calculator gives head loss, pressure drop and velocity from flow, pipe diameter, length and C.\n\nWater supply, fire sprinkler and irrigation designers use it to size pipes and pumps quickly. See [how to calculate pressure drop in pipes](https://www.instrumentationblog.in/calculate-pressure-drop-in-pipes/) for the wider method."
 keywords: [hazen williams calculator, hazen williams equation, water pipe head loss calculator, pipe friction loss calculator, c factor pipe, pressure drop water pipe]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-15
 variables:
   - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
   - { id: d, label: Pipe internal diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: About 150 for plastic pipe, 130–140 for copper and new lined pipe, 120 for new steel and 100 or less for old, tuberculated cast iron. Design codes often specify the value.
   - q: How does pipe size affect head loss?
     a: Strongly — head loss varies with d^−4.87, so one size larger pipe often cuts friction loss by more than half.
+  - q: "How accurate is the Hazen-Williams equation?"
+    a: "For clean water at normal temperatures in turbulent flow it is usually within about 5 to 10% of Darcy-Weisbach, which is good enough for distribution and sprinkler design. The main uncertainty is the C factor, not the formula. Accuracy falls at very low or very high velocities."
 related: [engineering/darcy-weisbach-head-loss, engineering/minor-losses, engineering/pipe-flow-velocity, engineering/pump-power]
 ---
 
@@ -69,3 +71,41 @@ Enter the **flow rate**, the pipe **internal diameter**, its **length** and the 
 | New welded steel | 120 |
 | Galvanised steel | 120 |
 | Old cast iron | 80–100 |
+
+## Effect of the C factor
+
+Same example (50 m³/h, 100 mm, 100 m). C falls as pipes age, scale and corrode, and head loss rises quickly as it does:
+
+| C factor | Head loss | Pressure drop | vs C = 130 |
+|---|---|---|---|
+| 150 | 2.683 m | 26.31 kPa | 77% |
+| 140 | 3.049 m | 29.90 kPa | 87% |
+| 130 | 3.498 m | 34.30 kPa | 100% |
+| 120 | 4.056 m | 39.78 kPa | 116% |
+| 100 | 5.686 m | 55.76 kPa | 163% |
+| 80 | 8.595 m | 84.29 kPa | 246% |
+
+Designers often use a lower C than the new-pipe value to allow for 20 to 30 years of service, for example 100 to 120 for unlined steel.
+
+## Head loss vs flow
+
+Friction loss rises with Q<sup>1.852</sup>, so doubling the flow multiplies head loss by about 3.61. For 100 m of 100 mm pipe at C = 130:
+
+| Flow | Velocity | Head loss | Pressure drop |
+|---|---|---|---|
+| 25 m³/h | 0.88 m/s | 0.969 m | 9.50 kPa |
+| 50 m³/h | 1.77 m/s | 3.498 m | 34.30 kPa |
+| 75 m³/h | 2.65 m/s | 7.411 m | 72.68 kPa |
+| 100 m³/h | 3.54 m/s | 12.626 m | 123.82 kPa |
+
+## The US customary form
+
+Fire sprinkler hydraulic calculations (NFPA 13) use p = 4.52 Q<sup>1.852</sup> ÷ (C<sup>1.852</sup> d<sup>4.87</sup>), with p in psi per foot, Q in gpm and d in inches. The example is 220.1 gpm in a 3.937 in bore: p = 0.0151 psi/ft, which agrees within rounding with the SI result of 0.3430 kPa/m (0.0152 psi/ft). Hydraulic software applies the formula pipe by pipe and adds fittings as equivalent lengths.
+
+## Common mistakes
+
+- **Using the nominal size instead of the bore.** A 100 mm (4 in) schedule 40 steel pipe has a 102.3 mm bore; at d<sup>4.87</sup> that 2.3% difference changes head loss by about 12%.
+- **Using it for hot water, oil or gas.** The constants assume water near room temperature. Use the [Darcy-Weisbach calculator](/engineering/darcy-weisbach-head-loss/) for other fluids.
+- **Forgetting the minor losses.** Valves, bends and tees can add as much loss as the straight pipe in short, fitting-rich runs.
+- **Taking the new-pipe C for an old main.** Tuberculated cast iron can drop to C = 60 to 80, more than doubling friction loss.
+- **Mixing units.** The 10.67 constant needs Q in m³/s and d in m; the 4.52 constant needs gpm and inches. Putting litres per second or millimetres into either gives nonsense.

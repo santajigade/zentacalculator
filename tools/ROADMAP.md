@@ -46,8 +46,8 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 ## Engineering — Pressure, level & tanks
 - [x] Manometer (U-tube, inclined) (ib)
 - [x] Absolute ↔ gauge ↔ vacuum pressure (ib)
-- [ ] Bubbler (purge) level (ib)
-- [ ] Interface level by DP (ib)
+- [x] Bubbler (purge) level (ib)
+- [x] Interface level by DP (ib)
 - [ ] Capacitance level probe
 - [ ] Radar level: dielectric constant & reflection
 - [x] Spherical tank volume (ib)
@@ -111,7 +111,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Conveyor belt speed & capacity
 
 ## Engineering — Process & chemical
-- [ ] Mass balance (mixing two streams)
+- [x] Mass balance (mixing two streams)
 - [x] Residence time
 - [ ] Reactor space time / conversion
 - [x] Boiler efficiency (direct method)
@@ -141,7 +141,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] MCCB / breaker selection (ib)
 - [ ] Fuse I²t / let-through
 - [x] Motor starting voltage dip (ib)
-- [ ] Soft starter current (ib)
+- [x] Soft starter current (ib)
 - [x] Capacitor bank current & kVAr ↔ µF
 - [x] Busbar size (current density)
 - [ ] Arc flash incident energy (simplified) (ib)
@@ -161,7 +161,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Transmission line: Ferranti effect (ib)
 - [x] Skin depth (ib)
 - [x] Insulation resistance / PI (ib)
-- [ ] Motor winding resistance unbalance (ib)
+- [x] Motor winding resistance unbalance (ib)
 - [x] Watt-hour meter constant (imp/kWh)
 - [x] Lightning protection: rolling sphere radius
 - [x] Voltage drop for DC (solar/battery) (exists: cable-voltage-drop)
@@ -299,7 +299,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [ ] Definite integral (numeric)
 - [ ] Limits / series sums
 - [x] Interpolation (linear) (very useful for engineers)
-- [ ] Unit circle / trig values
+- [x] Unit circle / trig values
 - [x] Inverse trig
 - [x] Complex numbers (polar ↔ rectangular)
 - [ ] Log base converter / antilog

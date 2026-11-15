@@ -2,10 +2,10 @@
 title: Instrument Accuracy Calculator (% of Span vs % of Reading)
 description: Convert instrument accuracy between % of span, % of full scale and % of reading — and find the measurement error at any point in the range.
 category: engineering
-intro: "Instrument accuracy can be stated as a percentage of span, of full scale or of reading — and the difference matters most at low readings. A meter that is ±1% of full scale can be ±10% of reading at 10% of range. This instrument accuracy calculator shows the real error — see [accuracy reading vs full scale](https://www.instrumentationblog.in/flow-meter-accuracy-reading-vs-full-scale/) and [pressure transmitter accuracy specifications](https://www.instrumentationblog.in/pressure-transmitter-accuracy-specifications/)."
+intro: "Instrument accuracy can be stated as a percentage of span, of full scale or of reading, and the difference matters most at low readings. This instrument accuracy calculator turns any % of span figure into the real error band in engineering units and as % of reading.\n\nInstrument engineers use it to select transmitters, set alarm margins and check that a meter is good enough for custody transfer or control. See [accuracy reading vs full scale](https://www.instrumentationblog.in/flow-meter-accuracy-reading-vs-full-scale/) and [pressure transmitter accuracy specifications](https://www.instrumentationblog.in/pressure-transmitter-accuracy-specifications/)."
 keywords: [instrument accuracy calculator, percent of span accuracy, percent of reading vs full scale, measurement error calculation, transmitter accuracy, accuracy specification]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-15
 variables:
   - { id: lo, label: Range low (LRV), default: 0 }
   - { id: hi, label: Range high (URV), default: 100 }
@@ -29,6 +29,8 @@ faq:
     a: No. Accuracy is closeness to the true value; precision is repeatability. See accuracy vs precision.
   - q: Does rangeability change accuracy?
     a: Yes. Re-ranging a transmitter to a smaller span usually increases the error as a % of the new span — check the turndown effect in the datasheet.
+  - q: "What is total probable error?"
+    a: "The combined error of an instrument loop under real operating conditions, found as the square root of the sum of the squares of the independent errors (reference accuracy, ambient temperature, static pressure, stability and input card). In the example on this page it is ±0.19% of span compared with ±0.065% reference accuracy."
 related: [math/percent-error, engineering/turndown-ratio, engineering/4-20ma-scaling, statistics/standard-deviation]
 ---
 
@@ -39,6 +41,16 @@ Enter the instrument's **range** (LRV and URV), the current **reading** and the 
 ## Accuracy formulas
 
 <p class="formula">Error = ±(% of span) × (URV − LRV) &nbsp;·&nbsp; % of reading = Error ÷ Reading</p>
+
+## Worked example
+
+A transmitter ranged 0 to 100 with an accuracy of ±0.5% of span reads 25:
+
+- Error band = 0.5% × (100 − 0) = **±0.5 units**
+- As a percentage of reading = 0.5 ÷ 25 = **±2%**
+- The true value lies between **24.5** and **25.5**
+
+The same ±0.5 units at a reading of 100 would be only ±0.5% of reading, so the error relative to the value grows four times as the reading falls to a quarter of range.
 
 ## ±1% of full scale vs ±1% of reading (0–100 range)
 
@@ -66,3 +78,45 @@ Enter the instrument's **range** (LRV and URV), the current **reading** and the 
 ## Total probable error
 
 Several independent errors (transmitter, ambient temperature effect, static pressure effect, card) combine as the square root of the sum of squares — not a simple sum. For calibration checks see [calibration error calculation](https://www.instrumentationblog.in/calibration-error-calculation/) and [accuracy vs precision](https://www.instrumentationblog.in/difference-between-accuracy-and-precision/).
+
+## Accuracy of DP flow at low flow
+
+On a DP flow meter the DP rises with flow squared, so a fixed ±0.5% of DP span becomes a large flow error at low flow. Flow error in % of reading is about half the DP error in % of reading:
+
+| Flow (% of max) | DP (% of span) | DP error, % of reading | Flow error, % of reading |
+|---|---|---|---|
+| 100% | 100.00% | ±0.5% | ±0.25% |
+| 75% | 56.25% | ±0.9% | ±0.44% |
+| 50% | 25.00% | ±2.0% | ±1.00% |
+| 25% | 6.25% | ±8.0% | ±4.00% |
+| 10% | 1.00% | ±50.0% | ±25.00% |
+
+This is why DP flow loops are rarely used below about 25 to 30% of maximum flow, and why the [turndown ratio](/engineering/turndown-ratio/) of a DP meter is often quoted as 3:1 or 4:1.
+
+## Total probable error of a loop
+
+The datasheet "reference accuracy" applies only at reference conditions. In service, ambient temperature, static pressure, drift and the input card all add error. For a DP transmitter with a 250 mbar span (typical datasheet values):
+
+| Error source | % of span | mbar |
+|---|---|---|
+| Reference accuracy | ±0.065% | ±0.163 mbar |
+| Ambient temperature effect | ±0.1% | ±0.250 mbar |
+| Static pressure effect | ±0.05% | ±0.125 mbar |
+| Stability (1 year) | ±0.1% | ±0.250 mbar |
+| Input card (DCS/PLC) | ±0.1% | ±0.250 mbar |
+| **Root sum of squares** | **±0.192%** | **±0.479 mbar** |
+| Simple sum (worst case) | ±0.415% | ±1.038 mbar |
+
+The independent errors combine by root sum of squares, giving ±0.19% of span, about 2.9 times the reference accuracy alone.
+
+## How accuracy is checked in practice
+
+During calibration the transmitter is compared with a reference standard at several points, usually 0, 25, 50, 75 and 100% of span, rising and falling. The reference should be at least four times more accurate than the device under test (a 4:1 test uncertainty ratio). The as-found error at each point is compared with the tolerance; see the [calibration error calculator](/engineering/calibration-error/).
+
+## Common mistakes
+
+- **Reading % of span as % of reading.** ±0.5% of span is a fixed band in units, which can be many percent of a small reading.
+- **Using reference accuracy as the loop accuracy.** Add temperature, static pressure, stability and the input card by root sum of squares.
+- **Forgetting the effect of re-ranging.** Many smart transmitters quote accuracy as a % of the calibrated span plus a term in % of URL, which grows when the span is turned down.
+- **Adding all errors linearly.** A straight sum gives the worst case (0.415% in the table above), which overstates the probable error of independent sources.
+- **Ignoring the reference standard.** A calibrator only as good as the device under test cannot prove that it meets its specification.

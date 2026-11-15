@@ -2,10 +2,10 @@
 title: Residence Time Calculator (Hold-Up Time, τ = V ÷ Q)
 description: Calculate residence time (hold-up or hydraulic retention time) of a tank, reactor or pipe from volume and flow rate, plus space velocity in volumes per hour.
 category: engineering
-intro: "Residence time is the average time a fluid spends inside a vessel — the liquid volume divided by the throughput. This residence time calculator works out τ = V ÷ Q for tanks, reactors, settling basins and pipes, and the space velocity (tank turnovers per hour)."
+intro: "Residence time is the average time a fluid spends inside a vessel: the liquid volume divided by the throughput. This residence time calculator works out τ = V ÷ Q for tanks, reactors, settling basins and pipes, plus the space velocity.\n\nProcess and water treatment engineers use it to size buffer tanks and clarifiers, check reaction or contact time, and work out how long a change at the inlet takes to reach the outlet."
 keywords: [residence time calculator, hold up time calculator, hydraulic retention time calculator, space time reactor, retention time formula, tank residence time, space velocity calculator]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: V, label: Liquid volume (working volume), family: volume, unit: m3, imperialUnit: galUS, default: 10, min: 0 }
   - { id: Q, label: Volumetric flow rate (throughput), family: flow, unit: m3h, imperialUnit: gpm, default: 5, min: 0 }
@@ -23,6 +23,8 @@ faq:
     a: The reciprocal of space time — how many vessel volumes pass through per hour. A residence time of 2 hours is a space velocity of 0.5 h⁻¹.
   - q: Do all particles stay for τ?
     a: Only in ideal plug flow. In a well-mixed tank, residence times follow an exponential distribution — about 63% of the fluid leaves before τ.
+  - q: "What is hydraulic retention time in wastewater treatment?"
+    a: "Hydraulic retention time (HRT) is the same τ = V ÷ Q applied to an aeration tank, clarifier or digester using the average daily influent flow. It is different from sludge retention time (SRT), which is how long the biomass stays in the system and is controlled by sludge wasting."
 related: [engineering/vertical-tank-volume, engineering/horizontal-tank-volume, engineering/pipe-flow-velocity, engineering/mass-flow-rate]
 ---
 
@@ -51,6 +53,37 @@ A 10 m³ buffer tank with 5 m³/h flowing through it:
 | 25 m³ | 12.5 h | 5.0 h | 2.5 h | 75 min | 30 min |
 | 50 m³ | 25.0 h | 10.0 h | 5.0 h | 2.5 h | 60 min |
 | 100 m³ | 50.0 h | 20.0 h | 10.0 h | 5.0 h | 2.0 h |
+
+## How fluid really leaves a tank
+
+The formula gives the average. In a well-mixed tank (CSTR) the fraction of the inlet fluid that has already left after a time t is 1 − e<sup>−t/τ</sup>. Splitting the same volume into two equal tanks in series narrows the spread towards plug flow. For the 10 m³ tank at 5 m³/h (τ = 2 h):
+
+| Time after entry | One mixed tank | Two tanks in series | Ideal plug flow |
+|---|---|---|---|
+| 0.1 τ (12 min) | 9.5% | 1.8% | 0% |
+| 0.25 τ (30 min) | 22.1% | 9.0% | 0% |
+| 0.5 τ (60 min) | 39.3% | 26.4% | 0% |
+| 1 τ (120 min) | 63.2% | 59.4% | 100% |
+| 2 τ (240 min) | 86.5% | 90.8% | 100% |
+| 3 τ (360 min) | 95.0% | 98.3% | 100% |
+
+This is why disinfection contact tanks are baffled: a mixed tank lets about 10% of the water out in a tenth of the nominal time.
+
+## Residence time in a pipe
+
+For a pipe, τ = L ÷ v. A 100 mm line 300 m long at 1.5 m/s holds the fluid for 200 s (3.3 min), carrying 42.4 m³/h. The same result follows from τ = V ÷ Q with the pipe's internal volume. This sets the transport delay seen by an analyser at the end of a sample line.
+
+## Measuring residence time
+
+The actual residence time distribution is found with a tracer test: inject a pulse or step of salt, dye or a conductivity tracer at the inlet and log the outlet concentration. The mean of the response curve is the real residence time; if it is much shorter than V ÷ Q, part of the tank is a dead zone and flow is short-circuiting.
+
+## Common mistakes
+
+- **Using the total vessel volume.** Use the liquid volume at operating level, minus the space taken by internals, agitators and settled solids.
+- **Using the wrong flow.** Include recycle streams that pass through the vessel; a 100% recycle halves the residence time per pass.
+- **Assuming every particle stays τ.** For contact, kill or reaction time, design on the short end of the distribution, not the average.
+- **Mixing units.** m³ divided by m³/h gives hours; convert to minutes or seconds before comparing with a specification.
+- **Ignoring density change in reactors.** For gas reactions with a change in moles, space time based on the inlet flow differs from the actual mean residence time.
 
 ## Notes
 

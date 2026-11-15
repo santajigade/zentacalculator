@@ -1,0 +1,106 @@
+---
+title: Motor Winding Resistance Unbalance Calculator
+description: Calculate the percent unbalance of three motor winding resistance readings and correct the average to a reference temperature for copper or aluminium.
+category: electrical
+intro: "A winding resistance test measures the DC resistance of each motor phase with a low resistance ohmmeter. This motor winding resistance unbalance calculator gives the average, the percent unbalance and the spread, and corrects the average to a reference temperature, as covered in [the motor winding resistance test](https://www.instrumentationblog.in/motor-winding-resistance-test/).\n\nMaintenance electricians and rewind shops use it to find shorted turns, loose joints and broken strands before a fault burns out the winding."
+keywords: [motor winding resistance unbalance calculator, winding resistance test, resistance unbalance formula, motor winding resistance temperature correction, phase resistance imbalance, three phase motor resistance test]
+published: 2026-11-15
+updated: 2026-11-15
+variables:
+  - { id: R1, label: Resistance U to V (or phase 1), family: resistance, unit: ohm, default: 0.512, min: 0 }
+  - { id: R2, label: Resistance V to W (or phase 2), family: resistance, unit: ohm, default: 0.508, min: 0 }
+  - { id: R3, label: Resistance W to U (or phase 3), family: resistance, unit: ohm, default: 0.521, min: 0 }
+  - { id: Tm, label: Winding temperature during the test, family: temperature, unit: C, imperialUnit: F, default: 32 }
+  - { id: Tr, label: Reference temperature, family: temperature, unit: C, imperialUnit: F, default: 25, help: 'Use 25 °C to compare with factory data, or the value on the test sheet. 75 °C is often used for efficiency and loss calculations.' }
+  - id: k
+    label: Winding material
+    default: 234.5
+    options:
+      - { label: 'Copper (k = 234.5)', value: 234.5 }
+      - { label: 'Aluminium (k = 225)', value: 225 }
+  - { id: Ra, label: Average resistance, family: resistance, unit: ohm, min: 0 }
+  - { id: dev, label: Largest deviation from the average, family: resistance, unit: mohm, min: 0 }
+  - { id: u, label: Resistance unbalance (max deviation ÷ average), family: percent, unit: '%', min: 0 }
+  - { id: mm, label: Spread (max − min) ÷ min, family: percent, unit: '%', min: 0 }
+  - { id: Rc, label: Average resistance at reference temperature, family: resistance, unit: ohm, min: 0 }
+equations:
+  - Ra = (R1 + R2 + R3) / 3
+  - dev = max(max(abs(R1 - Ra), abs(R2 - Ra)), abs(R3 - Ra))
+  - u = dev / Ra
+  - mm = (max(max(R1, R2), R3) - min(min(R1, R2), R3)) / min(min(R1, R2), R3)
+  - Rc = Ra * (k + Tr - 273.15) / (k + Tm - 273.15)
+faq:
+  - q: How do you calculate winding resistance unbalance?
+    a: "Average the three readings, find the reading furthest from the average, and divide that deviation by the average: unbalance = max |R − R_avg| ÷ R_avg × 100%. Some test sheets use (R_max − R_min) ÷ R_min instead, which gives roughly twice the figure, so always state which definition you use."
+  - q: What is an acceptable resistance unbalance for a motor?
+    a: "Common maintenance practice treats readings within about 1 to 2% of the average as normal for a healthy winding. Unbalance above about 2% is worth investigating, and above about 5% usually points to a real defect such as shorted turns, a high resistance joint or broken strands. Follow the manufacturer or your test standard where they give a limit."
+  - q: Why correct winding resistance to a reference temperature?
+    a: "Copper resistance rises about 0.39% per °C near room temperature, so a reading on a warm motor is not comparable with factory data at 25 °C. The correction R_ref = R × (234.5 + T_ref) ÷ (234.5 + T) for copper, or 225 for aluminium, puts all results on the same basis. Unbalance itself needs no correction because all three phases are at the same temperature."
+  - q: Why use a low resistance ohmmeter instead of a multimeter?
+    a: "Motor windings are often well below 1 Ω, so the test leads and contact resistance of a two wire multimeter swamp the reading. A four wire (Kelvin) micro ohmmeter injects a test current through one pair of leads and measures voltage with another, so lead resistance drops out and milliohm differences become visible."
+  - q: Do I measure line to line or phase resistance?
+    a: "On a three terminal motor you can only measure line to line. In star, each reading is two phase windings in series, so phase resistance is half the reading. In delta, each reading is one winding in parallel with the other two in series, so phase resistance is 1.5 times the reading. Unbalance can be judged on the line to line readings directly."
+related: [electrical/voltage-unbalance, electrical/wire-resistance, electrical/polarization-index, electrical/three-phase-motor-power, electrical/induction-motor-slip, electrical/motor-starting-current]
+---
+
+## How to use the motor winding resistance unbalance calculator
+
+Enter the **three resistance readings** from your low resistance ohmmeter, line to line on U to V, V to W and W to U for a three terminal motor, or per phase when all six leads are brought out. Add the **winding temperature** during the test (from an embedded RTD, or ambient for a motor that has been idle for several hours), the **reference temperature** and the **winding material**. The calculator gives the average, the largest deviation, the unbalance in two common forms and the average corrected to the reference temperature.
+
+## Winding resistance unbalance formulas
+
+<p class="formula">R<sub>avg</sub> = (R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub>) ÷ 3 &nbsp;·&nbsp; unbalance = max|R<sub>i</sub> − R<sub>avg</sub>| ÷ R<sub>avg</sub> × 100%</p>
+
+<p class="formula">R<sub>ref</sub> = R<sub>avg</sub> × (k + T<sub>ref</sub>) ÷ (k + T<sub>test</sub>), &nbsp; k = 234.5 for copper, 225 for aluminium</p>
+
+## Worked example
+
+A motor is tested at 32 °C and reads **0.512, 0.508 and 0.521 Ω** line to line:
+
+- Average = (0.512 + 0.508 + 0.521) ÷ 3 = **0.5137 Ω**
+- Deviations: −1.67, −5.67 and +7.33 mΩ, so the largest is **7.33 mΩ**
+- Unbalance = 7.33 ÷ 513.7 = **1.43%**; the max to min spread is (0.521 − 0.508) ÷ 0.508 = **2.56%**
+- Corrected to 25 °C: 0.5137 × (234.5 + 25) ÷ (234.5 + 32) = **0.5002 Ω**
+
+At 1.43% the unbalance is inside the common 2% alert level, but the max to min spread of 2.6% would exceed it, which is why a test sheet must say which definition it uses. Trend the readings against earlier tests before deciding.
+
+## Temperature correction factors
+
+Multiply a reading at the test temperature by the factor in the column you need:
+
+| Test temperature | Copper, to 25 °C | Aluminium, to 25 °C | Copper, to 75 °C |
+|---|---|---|---|
+| 10 °C | 0.9422 | 0.9400 | 1.2658 |
+| 20 °C | 0.9807 | 0.9800 | 1.2161 |
+| 25 °C | 1.0000 | 1.0000 | 1.1927 |
+| 40 °C | 1.0578 | 1.0600 | 1.1275 |
+| 60 °C | 1.1349 | 1.1400 | 1.0509 |
+| 75 °C | 1.1927 | 1.2000 | 1.0000 |
+| 95 °C | 1.2697 | 1.2800 | 0.9393 |
+
+## How one faulty phase shows up
+
+Two readings of 0.5100 Ω and one reading higher by the amount shown, as from a loose lug or a few broken strands:
+
+| Third reading high by | Third reading | Unbalance (from average) | Spread (max − min) ÷ min |
+|---|---|---|---|
+| +0.5% | 0.5125 Ω | 0.33% | 0.50% |
+| +1% | 0.5151 Ω | 0.66% | 1.00% |
+| +2% | 0.5202 Ω | 1.32% | 2.00% |
+| +3% | 0.5253 Ω | 1.98% | 3.00% |
+| +5% | 0.5355 Ω | 3.28% | 5.00% |
+| +10% | 0.5610 Ω | 6.45% | 10.00% |
+
+Because the average includes the faulty phase, the deviation from average is only about two thirds of the actual change, and the spread is close to the change itself.
+
+## How the test is done
+
+Isolate and lock out the motor, disconnect the supply cables at the terminal box so the cable is not in the measurement, and remove the star or delta links if you want each phase separately. Use a four wire micro ohmmeter with a test current of at least 1 A, and wait for the reading to settle, because winding inductance makes the current rise slowly. Take each reading in both current directions and average them to cancel thermal EMFs. Record the temperature at the same time. Comparing results with earlier tests on the same motor is often more useful than any fixed limit.
+
+## Common mistakes
+
+- **Testing through the cable.** A long supply cable adds its own resistance and connection joints to each reading and can hide or create an unbalance.
+- **Using a two wire meter.** Lead and probe contact resistance of tens of milliohms is the same size as the differences you are looking for.
+- **Not waiting for the reading to stabilise.** Large windings have long time constants; an early reading is too low and varies from phase to phase.
+- **Correcting unbalance for temperature.** All phases are at the same temperature, so correct the average, not the percentage.
+- **Comparing with a different definition.** Max deviation from average and (max − min) ÷ min differ by about a factor of two; use the one your acceptance criterion uses.

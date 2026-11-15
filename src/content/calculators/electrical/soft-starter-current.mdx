@@ -1,0 +1,101 @@
+---
+title: Soft Starter Current Calculator (Current Limit & Torque)
+description: Calculate soft starter starting current, motor voltage and starting torque from the current limit setting, and the minimum current limit for the load.
+category: electrical
+intro: "A soft starter lowers motor voltage during starting, which cuts inrush current but also starting torque. This soft starter current calculator turns a current limit setting and the locked rotor data into starting current, motor voltage and starting torque, as explained in [how a soft starter works](https://www.instrumentationblog.in/soft-starter-working-principle/).\n\nElectrical engineers use it to set current limits, check that a generator or weak supply can start the motor, and confirm the load will still accelerate."
+keywords: [soft starter current calculator, soft starter current limit setting, soft starter starting torque, soft starter inrush current, reduced voltage starting torque, soft start current limit calculation]
+published: 2026-11-15
+updated: 2026-11-15
+variables:
+  - { id: FLC, label: Motor full-load current, family: current, unit: A, default: 100, min: 0 }
+  - { id: k, label: Locked rotor current (× FLC), default: 6.5, min: 1, help: 'From the motor datasheet (IA/IN), typically 5.5 to 8 for IE2 and IE3 motors.' }
+  - { id: LRT, label: Locked rotor torque (% of full-load torque), family: percent, unit: '%', default: 160, min: 0, help: 'From the datasheet (TA/TN or MA/MN), typically 130 to 250%.' }
+  - { id: Il, label: Soft starter current limit (× FLC), default: 3.5, min: 0 }
+  - { id: Tl, label: Load breakaway torque (% of motor full-load torque), family: percent, unit: '%', default: 30, min: 0 }
+  - { id: Is, label: Starting current (line), family: current, unit: A, min: 0 }
+  - { id: Idol, label: Direct on line starting current, family: current, unit: A, min: 0 }
+  - { id: v, label: Effective motor voltage at current limit, family: percent, unit: '%', min: 0 }
+  - { id: Ts, label: Starting torque (% of full-load torque), family: percent, unit: '%', min: 0 }
+  - { id: mg, label: Starting torque ÷ load torque, min: 0, decimals: 2 }
+  - { id: Ilmin, label: Current limit at which motor torque equals load torque, suffix: × FLC, min: 0, decimals: 2 }
+equations:
+  - Is = Il * FLC
+  - Idol = k * FLC
+  - v = Il / k
+  - Ts = v ^ 2 * LRT
+  - mg = Ts / Tl
+  - Ilmin = k * sqrt(Tl / LRT)
+faq:
+  - q: How does a soft starter reduce starting current?
+    a: "Thyristors in each phase switch on part way through each half cycle, so the motor sees a reduced RMS voltage. At standstill an induction motor behaves like a fixed impedance, so its current falls in proportion to voltage: at 50% voltage it draws half its locked rotor current."
+  - q: Why does a soft starter reduce starting torque so much?
+    a: "Torque is proportional to voltage squared. Limiting current to 3.5 × FLC on a motor with 6.5 × FLC locked rotor current means 54% voltage and only 29% of the locked rotor torque. That is why soft starters suit pumps and fans, whose torque is low at low speed, better than loaded conveyors or crushers."
+  - q: What current limit should I set on a soft starter?
+    a: "High enough that motor torque clearly exceeds the load torque through the whole acceleration, usually 3 to 4 × FLC for pumps and fans and 4 to 5 × FLC for heavier loads. A common check is that the starting torque at the current limit is at least about 1.5 times the load torque so the motor accelerates in a reasonable time."
+  - q: What is the difference between a soft starter and a VFD for starting?
+    a: "A soft starter only lowers voltage at fixed 50 or 60 Hz, so current and torque fall together. A VFD lowers voltage and frequency together and can produce full rated torque at about rated current. Use a VFD when the load needs high starting torque from a weak supply."
+  - q: Does starting with a soft starter heat the motor less?
+    a: "Not necessarily. The rotor heat in a start is roughly equal to the kinetic energy given to the load, and a longer, lower torque start can add more heating. Check the allowed starts per hour of both the motor and the soft starter for long or frequent starts."
+related: [electrical/motor-starting-current, electrical/motor-starting-voltage-dip, electrical/three-phase-motor-power, electrical/generator-size, electrical/induction-motor-slip, engineering/torque-power-speed]
+---
+
+## How to use the soft starter current calculator
+
+Enter the motor **full-load current**, the **locked rotor current** and **locked rotor torque** from the motor datasheet, the **current limit** you plan to set on the soft starter and the **breakaway torque** of the load as a percentage of motor full-load torque. The calculator gives the starting current drawn from the supply, the equivalent motor voltage, the starting torque, the ratio of motor torque to load torque and the lowest current limit at which the motor could just hold the load. Any input can be solved: for example, enter a required starting torque and press × on the current limit.
+
+## Soft starter formulas
+
+<p class="formula">V ÷ V<sub>N</sub> = I<sub>limit</sub> ÷ I<sub>LR</sub> &nbsp;·&nbsp; T<sub>start</sub> = (V ÷ V<sub>N</sub>)² × T<sub>LR</sub></p>
+
+<p class="formula">I<sub>limit,min</sub> = I<sub>LR</sub> × √(T<sub>load</sub> ÷ T<sub>LR</sub>)</p>
+
+These follow from the motor behaving as a fixed impedance at standstill: current is proportional to voltage and torque to voltage squared.
+
+## Worked example
+
+A 100 A motor has a locked rotor current of 6.5 × FLC and a locked rotor torque of 160%. It drives a pump needing 30% torque to break away against static head, and the soft starter is set to 3.5 × FLC:
+
+- Starting current = 3.5 × 100 = **350 A**, against **650 A** direct on line
+- Effective voltage = 3.5 ÷ 6.5 = **53.8%**
+- Starting torque = 0.5385² × 160% = **46.4%** of full-load torque
+- Torque margin = 46.4 ÷ 30 = **1.55**, so the pump will start
+- Lowest workable current limit = 6.5 × √(0.3 ÷ 1.6) = **2.81 × FLC**; in practice set comfortably above this
+
+## Starting torque by current limit
+
+For the example motor (6.5 × FLC locked rotor current, 160% locked rotor torque):
+
+| Current limit | Motor voltage | Starting torque (% of FLT) | Torque as % of DOL starting torque |
+|---|---|---|---|
+| 2.0 × FLC | 31% | 15% | 9% |
+| 2.5 × FLC | 38% | 24% | 15% |
+| 3.0 × FLC | 46% | 34% | 21% |
+| 3.5 × FLC | 54% | 46% | 29% |
+| 4.0 × FLC | 62% | 61% | 38% |
+| 4.5 × FLC | 69% | 77% | 48% |
+| 5.0 × FLC | 77% | 95% | 59% |
+
+## Minimum current limit for typical loads
+
+Breakaway torques are typical values; check the actual load curve. The last column allows the motor torque to be 1.5 times the load torque:
+
+| Load | Breakaway torque | Limit for torque = load | Limit for 1.5 × load torque |
+|---|---|---|---|
+| Centrifugal pump (valve closed) | 10% | 1.62 × FLC | 1.99 × FLC |
+| Centrifugal fan (damper closed) | 15% | 1.99 × FLC | 2.44 × FLC |
+| Centrifugal pump (against static head) | 30% | 2.81 × FLC | 3.45 × FLC |
+| Screw compressor (unloaded) | 35% | 3.04 × FLC | 3.72 × FLC |
+| Loaded conveyor | 80% | 4.60 × FLC | 5.63 × FLC |
+| Crusher or mixer under load | 100% | 5.14 × FLC | 6.29 × FLC |
+
+## Setting up a soft starter in practice
+
+Most soft starters offer a **voltage ramp** with an initial voltage, a ramp time and a **current limit** that caps the current during the ramp. For pumps and fans the usual approach is an initial voltage of 30 to 40%, a ramp of 10 to 20 s and a current limit of 3 to 4 × FLC. Watch the first start: if the motor sits at the current limit without accelerating, the limit is too low; if it reaches speed in a second or two, the ramp is doing little. Many pump starters also have a **soft stop** or pump control mode to reduce water hammer when stopping. After starting, a bypass contactor usually closes so the thyristors do not carry running current.
+
+## Common mistakes
+
+- **Treating the current limit as harmless.** Every step down in current is a much larger step down in torque, because torque falls with the square of voltage.
+- **Using full-load torque instead of breakaway torque.** Loads such as conveyors and positive displacement pumps need high torque at zero speed, often more than at full speed.
+- **Ignoring the locked rotor data.** Using a generic 6 × FLC for a motor with 7.5 × FLC locked rotor current gives the wrong voltage and torque.
+- **Sizing a generator on running current.** The supply must deliver the soft starter current limit for the whole start, which can be four times the running current.
+- **Expecting a soft starter to replace a VFD.** It cannot give full torque at low current; heavy loads on weak supplies need a VFD.

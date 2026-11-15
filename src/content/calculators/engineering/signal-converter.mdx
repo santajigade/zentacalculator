@@ -2,10 +2,10 @@
 title: Signal Converter Calculator (4–20 mA ↔ 0–10 V ↔ 1–5 V)
 description: Convert between 4–20 mA, 0–20 mA, 0–10 V and 1–5 V analog signals and percent of range — for transmitters, PLCs and signal isolators.
 category: engineering
-intro: "Field instruments, PLC inputs and drives use different analog standards, and a signal isolator or converter maps one onto another by percent of range. This signal converter calculator translates 4–20 mA, 0–20 mA, 0–10 V and 1–5 V values in any direction — see [4 to 20 mA signal conversion](https://www.instrumentationblog.in/4-to-20-ma-signal-conversion/) and why [4–20 mA is the best signal for industrial automation](https://www.instrumentationblog.in/4-20ma-the-best-signal-for-industrial-automation/)."
+intro: "Field instruments, PLC inputs and drives use different analog standards, and a signal isolator or converter maps one onto another by percent of range. This signal converter calculator translates 4 to 20 mA, 0 to 20 mA, 0 to 10 V and 1 to 5 V values in any direction, as covered in [4 to 20 mA signal conversion](https://www.instrumentationblog.in/4-to-20-ma-signal-conversion/).\n\nInstrument and control engineers use it when configuring isolators, checking a PLC input card or fault-finding a loop with a multimeter."
 keywords: [signal converter calculator, 4-20ma to 0-10v calculator, ma to volts converter, 1-5v to 4-20ma, 0-10v to 4-20ma conversion, analog signal conversion]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-15
 variables:
   - { id: I, label: 4–20 mA signal, family: current, unit: mA, default: 12 }
   - { id: P, label: Percent of range, family: percent, unit: '%', decimals: 2 }
@@ -28,6 +28,8 @@ faq:
     a: No. Converting voltage to a current loop needs an active converter or isolator that drives a controlled current. Going from current to voltage only needs a resistor.
   - q: Why is 4 mA used instead of 0 mA?
     a: A live zero lets the receiver tell a 0% signal from a broken wire (0 mA), and leaves enough current to power 2-wire transmitters.
+  - q: "What does a reading below 4 mA or above 20 mA mean?"
+    a: "Under NAMUR NE 43, 3.8 to 4 mA and 20 to 20.5 mA are valid under-range and over-range readings. A signal at or below 3.6 mA, or at or above 21 mA, means the transmitter has detected a fault, or the loop is open or shorted."
 related: [engineering/4-20ma-scaling, engineering/plc-analog-scaling, engineering/loop-resistance, electronics/voltage-divider]
 ---
 
@@ -59,6 +61,52 @@ Enter a value in **any one** field — a 4–20 mA current, a percent of range o
 | 75% | 16.00 mA | 15.00 mA | 4.00 V | 7.50 V |
 | 90% | 18.40 mA | 18.00 mA | 4.60 V | 9.00 V |
 | 100% | 20.00 mA | 20.00 mA | 5.00 V | 10.00 V |
+
+## Worked example: from a 1 to 5 V reading
+
+A controller input reads **3.8 V** across its 250 Ω resistor. Enter it in the 1 to 5 V field:
+
+- Percent of range = (3.8 − 1) ÷ 4 = **70%**
+- 4 to 20 mA loop current = 4 + 16 × 0.70 = **15.2 mA**
+- 0 to 10 V equivalent = **7.0 V**, 0 to 20 mA = **14.0 mA**, 0 to 5 V = **3.5 V**
+
+Multiply the percent by the transmitter range to get engineering units: on a 0 to 10 bar transmitter 70% is 7.0 bar.
+
+## NAMUR NE 43 signal levels
+
+Most modern transmitters follow NAMUR NE 43, which keeps the measurement between 3.8 and 20.5 mA and reserves the values beyond for fault signalling:
+
+| Signal | Current | Percent of range | 1 to 5 V equivalent |
+|---|---|---|---|
+| Failure (low) | 3.6 mA | −2.50% | 0.900 V |
+| Under-range limit | 3.8 mA | −1.25% | 0.950 V |
+| 0% (live zero) | 4.0 mA | 0.00% | 1.000 V |
+| 100% | 20.0 mA | 100.00% | 5.000 V |
+| Over-range limit | 20.5 mA | 103.12% | 5.125 V |
+| Failure (high) | 21.0 mA | 106.25% | 5.250 V |
+
+A receiver that clips at 0% and 100% hides these states, so set its alarm limits to catch them.
+
+## Current to voltage with a resistor
+
+A current loop becomes a voltage across a precision resistor, V = I × R:
+
+| Resistor | At 4 mA | At 12 mA | At 20 mA |
+|---|---|---|---|
+| 50 Ω | 0.20 V | 0.60 V | 1.00 V |
+| 100 Ω | 0.40 V | 1.20 V | 2.00 V |
+| 250 Ω | 1.00 V | 3.00 V | 5.00 V |
+| 500 Ω | 2.00 V | 6.00 V | 10.00 V |
+
+The resistor's tolerance goes straight into the reading, so use 0.1% resistors. Each one also adds to the loop load: with a 24 V supply and a transmitter that needs 12 V, the loop can drive at most (24 − 12) ÷ 0.020 = **600 Ω** in total.
+
+## Common mistakes
+
+- **Forgetting the live zero.** 4 mA is 0%, so it maps to 0 V on a 0 to 10 V output, not 2 V. Mapping mA to volts by simple proportion (V = mA ÷ 2) gives a 2 V offset at zero.
+- **Converter configured for the wrong input range.** If an isolator is set to 0 to 20 mA but fed 4 to 20 mA, 4 mA shows up as 20% and the span is wrong too.
+- **Ground loops.** Non-isolated converters tie the field and control system grounds together, and the circulating current shows up as an offset or noise. Use an isolator when the two sides are grounded at different points.
+- **Exceeding the loop load.** Adding a recorder, an indicator and a 250 Ω input in series can push the transmitter below its minimum voltage, and the signal flattens near 20 mA.
+- **Reading 0 to 10 V over long cables.** Voltage signals lose accuracy to cable resistance and pick up noise. For long runs, convert to 4 to 20 mA at the field end.
 
 ## Choosing a signal
 

@@ -2,10 +2,10 @@
 title: Kinematic Viscosity Calculator (cP to cSt, Dynamic ↔ Kinematic)
 description: Convert dynamic viscosity (cP, mPa·s, Pa·s) to kinematic viscosity (cSt, mm²/s) and back with ν = μ ÷ ρ, with values for water, oils and air.
 category: engineering
-intro: "Dynamic viscosity measures a fluid's resistance to shear, while kinematic viscosity is that resistance divided by density. This kinematic viscosity calculator converts between the two with ν = μ ÷ ρ — so cP becomes cSt — as covered in [viscosity measurement explained](https://www.instrumentationblog.in/viscosity-measurement-explained/)."
+intro: "Dynamic viscosity measures a fluid's resistance to shear, and kinematic viscosity is that resistance divided by density. This kinematic viscosity calculator converts between the two with ν = μ ÷ ρ, so a value in cP becomes cSt and back.\n\nLubrication engineers use it to match ISO VG oil grades, and process and instrument engineers use it for Reynolds numbers, pipe friction and flow meter sizing. See [viscosity measurement explained](https://www.instrumentationblog.in/viscosity-measurement-explained/)."
 keywords: [kinematic viscosity calculator, cp to cst calculator, dynamic to kinematic viscosity, centipoise to centistokes, viscosity conversion, mm2/s to cp, kinematic viscosity formula]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: mu, label: Dynamic viscosity μ, family: viscosity, unit: cP, default: 1.002, min: 0 }
   - { id: rho, label: Density ρ, family: density, unit: kgm3, imperialUnit: lbft3, default: 998.2, min: 0 }
@@ -21,6 +21,10 @@ faq:
     a: Either — Re = ρvD ÷ μ = vD ÷ ν. Use kinematic viscosity when the fluid data is given in cSt.
   - q: Why do lubricating oils use cSt?
     a: Oil viscosity grades (ISO VG) are measured with gravity-driven capillary viscometers, which directly measure kinematic viscosity in cSt at 40 °C.
+  - q: "What is the kinematic viscosity of ISO VG 46 oil?"
+    a: "46 cSt at 40 °C by definition, with an allowed range of 41.4 to 50.6 cSt. At a density of about 870 kg/m³ that is roughly 40 cP. At 100 °C a typical VG 46 mineral oil is only about 6.8 cSt."
+  - q: "Why does air have a higher kinematic viscosity than water?"
+    a: "Air's dynamic viscosity (0.018 cP) is about 55 times lower than water's, but its density is about 830 times lower. Dividing by the tiny density gives about 15 cSt for air against 1 cSt for water."
 related: [engineering/reynolds-number, engineering/darcy-weisbach-head-loss, physics/stokes-law, physics/density]
 ---
 
@@ -37,6 +41,53 @@ Enter the **dynamic viscosity** (pick cP, mPa·s, P or Pa·s) and the **density*
 Water at 20 °C, μ = 1.002 cP and ρ = 998.2 kg/m³:
 
 - ν = 0.001002 ÷ 998.2 = 1.004 × 10⁻⁶ m²/s = **1.0038 cSt**
+
+## Converting cSt back to cP
+
+The calculator works in both directions. An ISO VG 46 hydraulic oil has a kinematic viscosity of 46 cSt at 40 °C and a density of about 870 kg/m³ at that temperature:
+
+- μ = ν × ρ = 46 × 10⁻⁶ × 870 = 0.0400 Pa·s = **40.0 cP**
+
+For quick work, cP = cSt × SG, so a fluid lighter than water always has fewer cP than cSt.
+
+## How viscosity is measured
+
+- **Capillary (glass U-tube) viscometers** such as Ubbelohde or Cannon-Fenske tubes time how long a fixed volume takes to drain under gravity. Because gravity drives the flow, the result is kinematic viscosity, ν = K × t, where K is the tube constant. This is the ASTM D445 and ISO 3104 method used for oil grades.
+- **Rotational viscometers** (Brookfield type) measure the torque to turn a spindle in the sample, which gives dynamic viscosity in cP or mPa·s. They are used for paints, slurries and food products.
+- **Inline process viscometers** (vibrating rod or torsional resonator) report the product of viscosity and density, so they are often paired with a density meter to give both μ and ν.
+
+## Water viscosity by temperature
+
+Viscosity of water falls by a factor of six between freezing and boiling, while density changes by only 4%:
+
+| Temperature | μ (cP) | ρ (kg/m³) | ν (cSt) |
+|---|---|---|---|
+| 0 °C | 1.792 | 999.8 | 1.7924 |
+| 10 °C | 1.306 | 999.7 | 1.3064 |
+| 20 °C | 1.002 | 998.2 | 1.0038 |
+| 30 °C | 0.797 | 995.7 | 0.8004 |
+| 40 °C | 0.653 | 992.2 | 0.6581 |
+| 50 °C | 0.547 | 988.0 | 0.5536 |
+| 60 °C | 0.467 | 983.2 | 0.4750 |
+| 80 °C | 0.355 | 971.8 | 0.3653 |
+| 100 °C | 0.282 | 958.4 | 0.2942 |
+
+## ISO viscosity grades at 40 °C
+
+Each ISO VG grade is a midpoint kinematic viscosity with a ±10% band. The cP column assumes a typical mineral oil density of 870 kg/m³ at 40 °C:
+
+| Grade | Midpoint | Allowed range | Approx. μ |
+|---|---|---|---|
+| ISO VG 10 | 10 cSt | 9 to 11 cSt | 8.7 cP |
+| ISO VG 22 | 22 cSt | 19.8 to 24.2 cSt | 19.1 cP |
+| ISO VG 32 | 32 cSt | 28.8 to 35.2 cSt | 27.8 cP |
+| ISO VG 46 | 46 cSt | 41.4 to 50.6 cSt | 40.0 cP |
+| ISO VG 68 | 68 cSt | 61.2 to 74.8 cSt | 59.2 cP |
+| ISO VG 100 | 100 cSt | 90 to 110 cSt | 87.0 cP |
+| ISO VG 150 | 150 cSt | 135 to 165 cSt | 130.5 cP |
+| ISO VG 220 | 220 cSt | 198 to 242 cSt | 191.4 cP |
+| ISO VG 320 | 320 cSt | 288 to 352 cSt | 278.4 cP |
+| ISO VG 460 | 460 cSt | 414 to 506 cSt | 400.2 cP |
 
 ## Dynamic and kinematic viscosity of common fluids
 
@@ -55,3 +106,11 @@ Water at 20 °C, μ = 1.002 cP and ρ = 998.2 kg/m³:
 
 - Viscosity changes strongly with temperature — always use μ and ρ at the same temperature.
 - 1 P (poise) = 100 cP = 0.1 Pa·s; 1 St (stokes) = 100 cSt = 10⁻⁴ m²/s.
+
+## Common mistakes
+
+- **Mixing temperatures.** Taking μ at 20 °C from one table and ρ at 40 °C from another gives a wrong ν. Both values must be at the same temperature.
+- **Dividing by SG when the density is in kg/m³.** cSt = cP ÷ SG only works with SG or g/cm³. With kg/m³ you must also multiply by 1,000.
+- **Using cSt where a formula expects m²/s.** In the Reynolds number Re = vD ÷ ν, 1 cSt is 10⁻⁶ m²/s. Forgetting the factor makes Re a million times too small.
+- **Comparing oil grades at different temperatures.** ISO VG is defined at 40 °C; SAE engine oil grades also refer to 100 °C. A VG 46 oil is far thicker than 46 cSt at room temperature.
+- **Treating non-Newtonian fluids as one number.** Slurries, polymers and paints change viscosity with shear rate, so a single cP value only holds at the shear rate it was measured at.

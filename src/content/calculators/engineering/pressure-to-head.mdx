@@ -2,10 +2,10 @@
 title: Pressure to Head Calculator (Bar, psi to Metres of Pump Head)
 description: Convert pressure to head and head to pressure for any liquid — pump head from pressure in bar, kPa or psi using H = Δp ÷ (ρ·g), with a density table.
 category: engineering
-intro: "Pump curves are drawn in metres or feet of head, while gauges read in bar or psi, so you often need to convert between them. This pressure to head calculator uses H = Δp ÷ (ρ·g) for any liquid density — the same relation behind [hydrostatic level measurement](https://www.instrumentationblog.in/hydrostatic-level-measurement/)."
+intro: "Pump curves are drawn in metres or feet of head, while gauges read in bar or psi, so you often need to convert between them. This pressure to head calculator uses H = Δp ÷ (ρ·g) for any liquid density, and converts head back to pressure.\n\nPump engineers use it to check a pump against its curve, and instrument engineers use the same relation for [hydrostatic level measurement](https://www.instrumentationblog.in/hydrostatic-level-measurement/) and transmitter ranges."
 keywords: [pressure to head calculator, head to pressure calculator, bar to metres head, psi to feet of head, pump head from pressure, pressure head formula, metres of water column]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: dp, label: Pressure (or pressure difference), family: pressure, unit: bar, imperialUnit: psi, default: 5, min: 0 }
   - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
@@ -23,6 +23,8 @@ faq:
     a: A pump adds the same head (energy per unit weight) to any liquid of similar viscosity, but the pressure it produces is proportional to density — so a pump makes less pressure on petrol than on water.
   - q: What is the head of 1 psi of water?
     a: About 0.703 m or 2.31 ft of water at room temperature.
+  - q: "How many metres of head is 1 kg/cm²?"
+    a: "About 10.02 m of water. 1 kg/cm² is 98,066.5 Pa, and dividing by 998 kg/m³ × 9.80665 m/s² gives 10.02 m, which is why older gauges in kg/cm² read almost directly in tens of metres of water."
 related: [engineering/hydrostatic-pressure, engineering/pump-power, engineering/pump-affinity-laws, engineering/darcy-weisbach-head-loss]
 ---
 
@@ -40,6 +42,36 @@ A pump raises water (ρ = 998 kg/m³) by 5 bar:
 
 - H = 500,000 ÷ (998 × 9.80665) = **51.09 m** of head (167.6 ft)
 
+## Pump head from two gauges
+
+A water pump (ρ = 998 kg/m³) has a suction gauge reading 0.5 bar g and a discharge gauge reading 5.5 bar g. The discharge gauge is mounted 0.4 m higher than the suction gauge and both pipes are the same size, so the velocity heads cancel:
+
+- Pressure head = (5.5 − 0.5) × 100,000 ÷ (998 × 9.80665) = 51.09 m
+- Total head = 51.09 + 0.4 = **51.49 m**
+
+Compare this with the pump curve at the measured flow. A head well below the curve points to wear, a closed suction valve or air in the liquid.
+
+## Where the conversion is used
+
+- **Pump testing and commissioning:** suction and discharge pressures give the developed head at the operating point.
+- **Level measurement:** a pressure transmitter at the tank bottom reads ρgh, so the same formula turns pressure into liquid height.
+- **Static head in buildings:** each 10.2 m of water column adds about 1 bar, which sets pressure ratings for high-rise riser pipes.
+
+## Water head for common pressures
+
+At 998 kg/m³ (water near 20 °C):
+
+| Pressure | psi | Head (m) | Head (ft) |
+|---|---|---|---|
+| 0.5 bar | 7.3 psi | 5.11 m | 16.8 ft |
+| 1 bar | 14.5 psi | 10.22 m | 33.5 ft |
+| 2 bar | 29.0 psi | 20.44 m | 67.0 ft |
+| 5 bar | 72.5 psi | 51.09 m | 167.6 ft |
+| 10 bar | 145.0 psi | 102.18 m | 335.2 ft |
+| 16 bar | 232.1 psi | 163.48 m | 536.4 ft |
+| 25 bar | 362.6 psi | 255.44 m | 838.1 ft |
+| 40 bar | 580.2 psi | 408.70 m | 1340.9 ft |
+
 ## Head of 1 bar and 1 psi for common liquids
 
 | Liquid | Density (kg/m³) | Head per bar | Head per psi |
@@ -56,3 +88,11 @@ A pump raises water (ρ = 998 kg/m³) by 5 bar:
 
 - Use the density at the pumping temperature — hot water at 90 °C (965 kg/m³) gives about 3% more head per bar than cold water.
 - Gauge readings must both be gauge or both be absolute; only the difference matters for pump head.
+
+## Common mistakes
+
+- **Using one gauge reading as pump head.** Pump head comes from the pressure difference between discharge and suction, not the discharge gauge alone.
+- **Ignoring gauge elevation.** A gauge 2 m above the pump centreline reads about 0.2 bar less on water. Add the height difference between the gauges to the head.
+- **Mixing gauge and absolute pressure.** A suction reading in bar a and a discharge reading in bar g give a head about 10 m wrong on water.
+- **Using water density for every liquid.** A pump making 50 m of head produces only about 3.6 bar on petrol but 4.9 bar on water.
+- **Converting kg/cm² as if it were bar.** 1 kg/cm² is 0.981 bar, so it gives 10.02 m of water rather than 10.22 m.

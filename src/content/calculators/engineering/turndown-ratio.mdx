@@ -2,10 +2,10 @@
 title: Turndown Ratio Calculator (Flow Meter Rangeability)
 description: Calculate the turndown ratio of a flow meter or control valve from maximum and minimum flow — and the minimum flow for a given turndown.
 category: engineering
-intro: "Turndown (rangeability) is the ratio of the maximum to the minimum flow an instrument can measure or control accurately. It decides whether one meter or valve can cover the whole operating range — see [turndown ratio in flow meters](https://www.instrumentationblog.in/turndown-ratio-in-flow-meters/) and [control valve rangeability](https://www.instrumentationblog.in/control-valve-rangeability-turndown/). This turndown ratio calculator works it out in either direction."
+intro: "Turndown (rangeability) is the ratio of the maximum to the minimum flow an instrument can measure or control accurately. This turndown ratio calculator works it out in either direction and shows the DP left at minimum flow.\n\nInstrument engineers use it to check whether one meter or valve can cover the whole operating range. See [turndown ratio in flow meters](https://www.instrumentationblog.in/turndown-ratio-in-flow-meters/) and [control valve rangeability](https://www.instrumentationblog.in/control-valve-rangeability-turndown/)."
 keywords: [turndown ratio calculator, flow meter turndown, rangeability calculator, minimum flow calculation, turndown ratio formula, flow meter range]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-15
 variables:
   - { id: Qmax, label: Maximum flow, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
   - { id: Qmin, label: Minimum flow, family: flow, unit: m3h, imperialUnit: gpm, default: 10, min: 0 }
@@ -23,6 +23,8 @@ faq:
     a: Coriolis (often 100:1), electromagnetic and ultrasonic meters (30–100:1). Vortex meters are around 10–20:1.
   - q: Is turndown the same as rangeability?
     a: They are often used interchangeably. For control valves, rangeability is the ratio of maximum to minimum controllable Cv.
+  - q: "What turndown do I need for a flow meter?"
+    a: "Divide the highest flow the process will see by the lowest flow you still need to measure within the required accuracy, then add a margin. A meter whose rated turndown, applied to its actual sized range, covers that ratio is suitable."
 related: [engineering/weir-flow, engineering/dp-flow-square-root, engineering/orifice-flow, engineering/flow-meter-k-factor, engineering/instrument-accuracy]
 ---
 
@@ -35,6 +37,15 @@ Enter the **maximum** and **minimum flow**. You get the turndown ratio and, for 
 <p class="formula">Turndown = Q<sub>max</sub> ÷ Q<sub>min</sub></p>
 
 <p class="formula">DP meters: ΔP<sub>min</sub> ÷ ΔP<sub>max</sub> = (Q<sub>min</sub> ÷ Q<sub>max</sub>)²</p>
+
+## Worked example
+
+A process runs between 10 and 100 m³/h:
+
+- Turndown = 100 ÷ 10 = **10.0 : 1**
+- For an orifice meter, DP at minimum flow = (10 ÷ 100)² = **1%** of the DP at maximum flow
+
+If the transmitter is ranged 0 to 250 mbar, minimum flow produces only 2.5 mbar, close to the noise level of the reading. A vortex, magnetic or Coriolis meter covers this 10:1 range comfortably; an orifice plate with one transmitter does not.
 
 ## Typical turndown by meter type
 
@@ -62,3 +73,30 @@ Enter the **maximum** and **minimum flow**. You get the turndown ratio and, for 
 ## Accuracy across the range
 
 Meters specified in **% of reading** keep the same relative accuracy across their turndown; meters specified in **% of full scale** become much less accurate at low flow. See the [instrument accuracy calculator](/engineering/instrument-accuracy/).
+
+## Accuracy at reduced flow
+
+A meter rated ±1% of full scale (0 to 100 m³/h) against a meter rated ±0.5% of reading:
+
+| Flow | Error, 1% of span | As % of reading | Error, 0.5% of reading | As % of reading |
+|---|---|---|---|---|
+| 100 m³/h | ±1.0 m³/h | ±1.0% | ±0.500 m³/h | ±0.5% |
+| 50 m³/h | ±1.0 m³/h | ±2.0% | ±0.250 m³/h | ±0.5% |
+| 25 m³/h | ±1.0 m³/h | ±4.0% | ±0.125 m³/h | ±0.5% |
+| 10 m³/h | ±1.0 m³/h | ±10.0% | ±0.050 m³/h | ±0.5% |
+| 5 m³/h | ±1.0 m³/h | ±20.0% | ±0.025 m³/h | ±0.5% |
+
+## Getting more turndown in practice
+
+- **Stacked DP transmitters:** a second transmitter ranged to 10% of the maximum DP takes over below about 32% of maximum flow, extending an orifice installation to roughly 10:1.
+- **Two meters in parallel:** a small and a large meter with automatic switching, common in custody transfer and boiler fuel lines.
+- **Split-range control valves:** a small valve opens first and a large valve takes over, raising the overall rangeability of the control loop.
+- **Choose the meter for the range:** if the turndown needed is above about 10:1, a linear meter (magnetic, Coriolis, ultrasonic) is usually simpler than tricks with DP meters.
+
+## Common mistakes
+
+- **Quoting the catalogue turndown for the application.** A Coriolis meter's 100:1 is for its own maximum flow; if the meter is sized for twice your maximum, half of that range is wasted.
+- **Forgetting the square law.** A 10:1 flow range on a DP meter means a 100:1 DP range for the transmitter.
+- **Mixing accuracy bases.** Compare meters on the same basis: % of reading and % of span give very different errors at low flow.
+- **Ignoring the low-flow cutoff.** Many transmitters force readings below a cutoff to zero, which sets the real minimum flow.
+- **Confusing valve rangeability with installed rangeability.** The installed value is lower because the valve's pressure drop changes with flow.

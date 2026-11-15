@@ -2,10 +2,10 @@
 title: Venturi Meter Flow Calculator
 description: Calculate liquid flow through a Venturi tube from the differential pressure, inlet and throat diameters — with permanent pressure loss.
 category: engineering
-intro: "A Venturi tube narrows a pipe smoothly to a throat, where the fluid speeds up and its pressure drops; the pressure difference gives the flow rate. See the [Venturi tube flow meter](https://www.instrumentationblog.in/venturi-tube-flow-meter/) explained and how it compares in [flow nozzle vs orifice plate vs Venturi](https://www.instrumentationblog.in/flow-nozzle-vs-orifice-plate-vs-venturi/). This free Venturi meter flow calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A Venturi tube narrows a pipe smoothly to a throat, where the fluid speeds up and its pressure drops; that differential pressure gives the flow rate. This Venturi meter flow calculator solves for flow, throat velocity or DP from the inlet and throat diameters.\n\nWater utilities, irrigation designers and instrument engineers use Venturis where low pressure loss matters. See the [Venturi tube flow meter](https://www.instrumentationblog.in/venturi-tube-flow-meter/) explained and [flow nozzle vs orifice plate vs Venturi](https://www.instrumentationblog.in/flow-nozzle-vs-orifice-plate-vs-venturi/)."
 keywords: [venturi meter calculator, venturi flow, venturi tube, differential pressure flow, throat diameter, beta ratio, venturi coefficient]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-15
 variables:
   - { id: D, label: Inlet (pipe) diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
   - { id: d, label: Throat diameter, family: length, unit: mm, imperialUnit: in, default: 60, min: 0 }
@@ -28,6 +28,8 @@ faq:
     a: Between about 0.4 and 0.75 under ISO 5167-4.
   - q: How does a Venturi measure flow?
     a: Fluid speeds up in the throat, lowering its pressure (Bernoulli). The pressure difference between inlet and throat is proportional to flow squared.
+  - q: "How do I size the throat of a Venturi meter?"
+    a: "Choose the DP you want at maximum flow (often 200 to 500 mbar for water), then solve the flow equation for d, keeping β between about 0.4 and 0.75. In this calculator enter the flow and DP and clear the throat diameter to solve for it."
 related: [engineering/orifice-flow, engineering/dp-flow-square-root, engineering/pitot-tube-velocity, engineering/pipe-flow-velocity]
 ---
 
@@ -39,11 +41,16 @@ Enter the **inlet diameter**, **throat diameter**, **discharge coefficient**, **
 
 <p class="formula">Q = C<sub>d</sub> × (πd²/4) × √[2ΔP ÷ (ρ(1 − β⁴))]</p>
 
-## Example
+## Worked example
 
-D = 100 mm, d = 60 mm, ΔP = 200 mbar, water:
+Water (998 kg/m³) in a 100 mm line with a 60 mm throat, C<sub>d</sub> = 0.985 and a measured DP of 200 mbar (20,000 Pa):
 
-- β = 0.6, Q = **68.0 m³/h**
+- β = 60 ÷ 100 = **0.60**, so 1 − β⁴ = 0.8704
+- Throat area = π × 0.060² ÷ 4 = 28.274 cm² (0.002827 m²)
+- Q = 0.985 × 0.002827 × √(2 × 20,000 ÷ (998 × 0.8704)) = 0.01890 m³/s = **68.0 m³/h**
+- Throat velocity = 0.01890 ÷ 0.002827 = **6.68 m/s** (inlet velocity 2.41 m/s)
+
+The permanent pressure loss of a classical Venturi is about 5 to 20% of the DP, so this meter costs only 10 to 40 mbar of pumping head.
 
 ## Flow vs DP (100/60 mm, water)
 
@@ -72,3 +79,32 @@ D = 100 mm, d = 60 mm, ΔP = 200 mbar, water:
 - Irrigation and cooling-water systems.
 
 For a 4–20 mA DP transmitter on a Venturi, use the [square-root flow calculator](/engineering/dp-flow-square-root/) to scale the signal.
+
+## Throat size and beta ratio
+
+For a 100 mm line carrying water, computed with C<sub>d</sub> = 0.985. E is the velocity of approach factor 1/√(1 − β⁴):
+
+| Throat | β | E | Flow at 200 mbar | Flow at 50 mbar |
+|---|---|---|---|---|
+| 40 mm | 0.40 | 1.0131 | 28.6 m³/h | 14.3 m³/h |
+| 50 mm | 0.50 | 1.0328 | 45.5 m³/h | 22.8 m³/h |
+| 60 mm | 0.60 | 1.0719 | 68.0 m³/h | 34.0 m³/h |
+| 70 mm | 0.70 | 1.1472 | 99.1 m³/h | 49.6 m³/h |
+| 75 mm | 0.75 | 1.2095 | 120.0 m³/h | 60.0 m³/h |
+
+A smaller throat gives a larger DP for the same flow, which helps at low flows but costs more pressure. Pick the throat so the normal flow sits at 50 to 80% of the transmitter range.
+
+## How a Venturi is installed and measured
+
+- **Taps:** the high-pressure tap is in the inlet cylinder, about half a pipe diameter upstream of the convergent cone, and the low-pressure tap is in the throat. Large Venturis use piezometer rings with several holes so one blocked hole does not spoil the reading.
+- **Limits of ISO 5167-4:** classical Venturi tubes are covered for pipe sizes of about 50 to 1,200 mm, β of 0.4 to 0.75 and pipe Reynolds numbers from 2 × 10⁵ to 1 × 10⁶, where the published C<sub>d</sub> of about 0.984 to 0.995 applies.
+- **Transmitter:** a DP transmitter with square-root extraction, or a linear signal that the control system takes the square root of. Mount it below the taps on liquid service so gas bubbles vent back to the line.
+- **Straight pipe:** Venturis need less upstream straight pipe than orifice plates, but a bend or partly open valve just upstream still distorts the profile.
+
+## Common mistakes
+
+- **Leaving out 1 − β⁴.** Ignoring the velocity of approach factor understates flow by 7.2% at β = 0.6, and by much more at β = 0.75.
+- **Using an orifice C<sub>d</sub>.** 0.6 is right for a sharp-edged orifice, not a Venturi; the error would be close to 40%.
+- **Mixing up the measured DP and the permanent loss.** The DP between inlet and throat is the measuring signal; the pressure lost across the whole meter is far smaller.
+- **Using the nominal pipe size for D.** Use the measured inlet bore of the Venturi body, since a 4 inch schedule 40 pipe is 102.3 mm, not 100 mm.
+- **Applying the liquid formula to gas.** Gases expand through the throat, so an expansibility factor ε below 1 must be included for compressible flow.

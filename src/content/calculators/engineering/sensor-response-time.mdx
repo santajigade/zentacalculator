@@ -2,10 +2,10 @@
 title: Sensor Response Time Calculator (Time Constant, T63, T90)
 description: Calculate T50, T63.2, T90 and T99 response times of a first-order sensor from its time constant, and the reading at any time after a step change.
 category: engineering
-intro: "Temperature sensors in thermowells, pressure transmitters with damping and many analysers respond like a first-order lag, reaching 63.2% of a step change in one time constant. This sensor response time calculator converts the time constant into T50, T90 and T99 and predicts the reading at any time — see [temperature sensor response time](https://www.instrumentationblog.in/temperature-sensor-response-time/) and [pressure transmitter damping and response time](https://www.instrumentationblog.in/pressure-transmitter-damping-response-time/)."
+intro: "Temperature sensors in thermowells, damped pressure transmitters and many analysers respond like a first-order lag, reaching 63.2% of a step change in one time constant. This sensor response time calculator converts the time constant into T50, T90 and T99 and predicts the reading at any time, as described in [temperature sensor response time](https://www.instrumentationblog.in/temperature-sensor-response-time/).\n\nInstrument and safety engineers use it to check whether a sensor is fast enough for a control loop or a trip, and how long to wait during calibration."
 keywords: [sensor response time calculator, time constant calculator, t90 response time, t63 time constant, thermocouple response time, first order lag calculator]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-15
 variables:
   - { id: tau, label: Time constant (τ = T63.2), family: seconds, unit: s, default: 8, min: 0 }
   - { id: t, label: Time after step change, family: seconds, unit: s, default: 10, min: 0 }
@@ -31,6 +31,8 @@ faq:
     a: The thermowell wall, air gap and fluid velocity add thermal lag. A spring-loaded sensor tip, thermal paste and a thinner, shorter well all reduce the time constant.
   - q: Does transmitter damping add to the response time?
     a: Yes. Damping is a first-order filter with its own time constant; combined with the sensor, the total response is slower than either alone.
+  - q: "How much does a temperature sensor lag behind a ramp?"
+    a: "Once the ramp is established, a first-order sensor reads r × τ behind the process, where r is the ramp rate. A sensor with τ = 8 s in a process rising at 5 °C per minute reads 5 × 8 ÷ 60 = 0.67 °C low."
 related: [engineering/fopdt-step-test, engineering/pt100-resistance, electronics/rl-time-constant, physics/rc-time-constant]
 ---
 
@@ -51,6 +53,44 @@ A Pt100 in a thermowell with τ = 8 s; the process jumps from 20 °C to 100 °C:
 - T50 = **5.55 s**, T90 = **18.42 s**, T99 = **36.84 s**
 - After 10 s: 1 − e<sup>−10/8</sup> = **71.35%** of the step
 - Reading = 20 + 80 × 0.7135 = **77.08 °C**
+
+## Worked example: sensor plus transmitter damping
+
+The same Pt100 (τ = 8 s) feeds a transmitter with **2 s damping**. Two first-order lags in series respond as
+
+<p class="formula">y(t) = 1 − (τ₁e<sup>−t/τ₁</sup> − τ₂e<sup>−t/τ₂</sup>) ÷ (τ₁ − τ₂)</p>
+
+Solving that numerically for the step response:
+
+- Time to 63.2% = **10.26 s** (sensor alone: 8 s)
+- T90 = **20.72 s** (sensor alone: 18.42 s)
+- Treating the pair as one lag with τ = 8 + 2 = 10 s gives T90 = 23.03 s, a slightly cautious estimate
+
+So 2 s of damping adds about 2.3 s to the T90. Enter 10 s here as the time constant for a quick conservative answer.
+
+## How response time is measured
+
+Datasheets quote response times from a **plunge test**: the sensor, sitting at room temperature, is plunged into a stirred water bath or a stream of water or air at a stated velocity, and the times to 50% and 90% of the step are recorded. The result depends heavily on the medium and its velocity, so a time constant measured in flowing water says little about the same sensor in still air or in a thermowell. In the plant, you can estimate the installed time constant from a step test: record the reading after a known process step and take the time to 63.2% of the change.
+
+## Lag error during a ramp
+
+When the process changes at a steady rate r, a first-order sensor settles into lagging behind by r × τ:
+
+| Ramp rate | τ = 2 s | τ = 8 s | τ = 30 s | τ = 60 s |
+|---|---|---|---|---|
+| 1 °C/min | 0.03 °C | 0.13 °C | 0.50 °C | 1.00 °C |
+| 2 °C/min | 0.07 °C | 0.27 °C | 1.00 °C | 2.00 °C |
+| 5 °C/min | 0.17 °C | 0.67 °C | 2.50 °C | 5.00 °C |
+| 10 °C/min | 0.33 °C | 1.33 °C | 5.00 °C | 10.00 °C |
+| 20 °C/min | 0.67 °C | 2.67 °C | 10.00 °C | 20.00 °C |
+
+## Common mistakes
+
+- **Treating T90 as the time constant.** T90 is 2.303 τ. Entering a datasheet T90 of 18 s as τ predicts a sensor more than twice as slow as it is.
+- **Using a liquid time constant for gas service.** A sensor with τ = 5 s in flowing water can take a minute or more in still air.
+- **Forgetting the thermowell.** The well, any air gap and a loose sensor tip often dominate the response, so the bare sensor figure is far too optimistic.
+- **Adding damping to a trip loop.** Damping hides noise but adds to the safety function's response time budget; check the total before raising it.
+- **Reading too soon during calibration.** In a dry block or bath, wait at least 5 time constants (99.3%) of the whole sensor and block system before recording a point.
 
 ## Response time multiples
 

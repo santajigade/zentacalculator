@@ -2,10 +2,10 @@
 title: Fan Power & Fan Affinity Laws Calculator (CFM, Pa, kW)
 description: Calculate fan air and shaft power from airflow, pressure rise and efficiency, then use the fan affinity laws to predict flow, pressure and power at a new speed.
 category: engineering
-intro: "A fan's air power is simply airflow times pressure rise, and its shaft power is that divided by the fan efficiency. This fan affinity laws calculator finds both, then scales flow, pressure and power to a new speed — flow with the speed ratio, pressure with its square and power with its cube — which is how [VFD energy savings](https://www.instrumentationblog.in/vfd-sizing-selection-guide/) on fans are estimated."
+intro: "A fan's air power is airflow times pressure rise, and its shaft power is that divided by the fan efficiency. This fan affinity laws calculator finds both, then scales flow, pressure and power to a new speed: flow with the speed ratio, pressure with its square and power with its cube.\n\nHVAC designers, energy auditors and plant engineers use it to size fan motors and to estimate [VFD energy savings](https://www.instrumentationblog.in/vfd-sizing-selection-guide/) before slowing a fan instead of throttling it with a damper."
 keywords: [fan affinity laws calculator, fan power calculator, fan shaft power, blower power calculator, fan laws, cfm static pressure power, fan speed change]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-15
 variables:
   - { id: Q, label: Airflow, family: flow, unit: m3h, imperialUnit: cfm, default: 10000, min: 0 }
   - { id: dp, label: Fan total pressure rise, family: pressure, unit: Pa, imperialUnit: inH2O, default: 1000, min: 0 }
@@ -32,6 +32,8 @@ faq:
     a: Shaft horsepower = CFM × total pressure (in. w.g.) ÷ (6356 × efficiency).
   - q: Should I use static or total pressure?
     a: Use fan total pressure with total efficiency, or fan static pressure with static efficiency — do not mix them. Both give the same shaft power.
+  - q: "Why does a hot gas fan overload its motor at a cold start?"
+    a: "Fan power is proportional to gas density. A fan designed for gas at 150 °C handles air about 1.44 times denser when it starts cold at 20 °C, so it draws about 1.44 times its hot running power. Size the motor for the cold start or keep the inlet damper closed until the gas warms up."
 related: [engineering/pump-affinity-laws, engineering/pump-power, engineering/torque-power-speed, electrical/three-phase-motor-power]
 ---
 
@@ -61,6 +63,40 @@ Enter the **airflow**, the **pressure rise** across the fan and the **fan effici
 | 70% | 7,000 m³/h | 490 Pa | 1.36 kW |
 | 60% | 6,000 m³/h | 360 Pa | 0.86 kW |
 | 50% | 5,000 m³/h | 250 Pa | 0.50 kW |
+
+## Energy saving example
+
+Using the worked example above, the fan runs **6,000 hours a year** at 1,160 rpm instead of 1,450 rpm:
+
+- Shaft power falls from 3.968 kW to 2.032 kW, a saving of **1.937 kW**
+- Shaft energy saved = 1.937 × 6,000 = **11,619 kWh per year**
+
+Motor and drive losses are not included; a VFD itself loses roughly 2 to 3% of its throughput.
+
+## Air density and fan power
+
+Pressure and power scale with gas density at the same volume flow and speed. For the example fan rated at 1,000 Pa with air at 20 °C (1.204 kg/m³, sea level):
+
+| Gas temperature | Density | Pressure rise | Shaft power |
+|---|---|---|---|
+| 0 °C | 1.292 kg/m³ | 1,073 Pa | 4.26 kW |
+| 20 °C | 1.204 kg/m³ | 1,000 Pa | 3.97 kW |
+| 40 °C | 1.127 kg/m³ | 936 Pa | 3.71 kW |
+| 80 °C | 0.999 kg/m³ | 830 Pa | 3.29 kW |
+| 150 °C | 0.834 kg/m³ | 693 Pa | 2.75 kW |
+| 250 °C | 0.675 kg/m³ | 560 Pa | 2.22 kW |
+
+## Using the fan laws in practice
+
+The laws compare two operating points of the same fan in the same system, so they hold only if the system curve passes through the origin: all of the pressure is friction that varies with flow squared. Airflow is usually measured in the field with a pitot tube traverse across the duct, pressure rise with a manometer across the fan, and power with a clamp-on power meter at the motor. In variable air volume systems that hold a fixed duct static pressure, the fan cannot follow the cube law all the way down, so real savings are smaller than the calculator shows.
+
+## Common mistakes
+
+- **Applying the laws to a damper change.** Closing a damper moves the fan to a new point on the same speed curve. The fan laws only describe speed (or diameter) changes.
+- **Starting a hot gas fan cold.** A fan sized for gas at 150 °C moves air that is 1.44 times denser at 20 °C, so on a cold start it needs 1.44 times the power and can overload its motor.
+- **Mixing static and total pressure.** Use fan total pressure with total efficiency, or static pressure with static efficiency.
+- **Mixing units.** Air power is m³/s × Pa = W. Feeding m³/h or CFM straight into that product gives an answer 3,600 or 1,700 times too large.
+- **Extrapolating to very low speeds.** Below about 30 to 40% speed, motor cooling, fan stall and minimum duct pressure take over, and efficiency no longer stays constant.
 
 ## Notes
 

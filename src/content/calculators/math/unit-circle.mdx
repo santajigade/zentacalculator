@@ -1,0 +1,107 @@
+---
+title: Unit Circle Calculator (sin, cos, tan of Any Angle)
+description: Find the point on the unit circle for any angle in degrees or radians, with sin, cos, tan, csc, sec, cot, reference angle and quadrant.
+category: math
+intro: "The unit circle has radius 1 and its centre at the origin; at angle θ its point is (cos θ, sin θ), which defines the trig functions for every angle. This unit circle calculator gives that point, all six trig functions, the reference angle and the quadrant for any angle.\n\nStudents use it to check homework and learn exact values, and engineers use it to resolve vectors, phasors and rotating parts into components."
+keywords: [unit circle calculator, unit circle, sin cos tan of any angle, reference angle calculator, unit circle values, trig functions calculator, coterminal angle, quadrant of an angle]
+published: 2026-11-15
+updated: 2026-11-15
+variables:
+  - { id: th, label: Angle θ, family: angle, unit: deg, default: 150, help: 'Any angle, positive (counterclockwise) or negative (clockwise), in degrees, radians, gradians or turns.' }
+  - { id: cs, label: cos θ (x coordinate), decimals: 6 }
+  - { id: sn, label: sin θ (y coordinate), decimals: 6 }
+  - { id: tn, label: tan θ (y ÷ x), decimals: 6 }
+  - { id: csc, label: csc θ (1 ÷ sin θ), decimals: 6 }
+  - { id: sec, label: sec θ (1 ÷ cos θ), decimals: 6 }
+  - { id: cot, label: cot θ (x ÷ y), decimals: 6 }
+  - { id: t0, label: Coterminal angle (0° to 360°), family: angle, unit: deg }
+  - { id: rf, label: Reference angle, family: angle, unit: deg }
+  - { id: qd, label: Quadrant (1 to 4), decimals: 0, help: 'An angle exactly on an axis (0°, 90°, 180°, 270°) lies between quadrants; the number shown is the quadrant that starts there.' }
+equations:
+  - cs = cos(th)
+  - sn = sin(th)
+  - tn = tan(th)
+  - csc = 1 / sin(th)
+  - sec = 1 / cos(th)
+  - cot = cos(th) / sin(th)
+  - t0 = mod(th, 2 * pi)
+  - rf = min(mod(th, pi), pi - mod(th, pi))
+  - qd = floor(mod(th, 2 * pi) / (pi / 2)) + 1
+faq:
+  - q: What is the unit circle?
+    a: "A circle of radius 1 centred at the origin. For an angle θ measured counterclockwise from the positive x axis, the point on the circle is (cos θ, sin θ). Because the radius is 1, cos² θ + sin² θ = 1 for every angle, and tan θ is the slope y ÷ x of the radius."
+  - q: How do I find the reference angle?
+    a: "First reduce the angle to 0° to 360°. In quadrant I the reference angle is θ itself; in quadrant II it is 180° − θ; in quadrant III it is θ − 180°; in quadrant IV it is 360° − θ. The trig functions of θ equal those of the reference angle, with the sign set by the quadrant."
+  - q: How do I remember which functions are positive in each quadrant?
+    a: "Use ASTC, often remembered as All Students Take Calculus: all six functions are positive in quadrant I, sine and cosecant in II, tangent and cotangent in III and cosine and secant in IV."
+  - q: Why is tan 90° undefined?
+    a: "At 90° the point is (0, 1), so tan θ = y ÷ x divides by zero. The calculator shows a very large number because 90° in radians cannot be stored exactly. Secant is undefined at 90° and 270°, while cosecant and cotangent are undefined at 0° and 180°."
+  - q: What is a coterminal angle?
+    a: "Angles that end at the same point on the circle, differing by whole turns of 360° (2π rad). 510°, 150° and −210° are coterminal. The calculator reduces any angle to its coterminal value between 0° and 360°."
+related: [math/inverse-trig, math/right-triangle-trig, math/angle-converter, math/arc-length, math/vector, math/circle]
+---
+
+## How to use the unit circle calculator
+
+Enter an **angle** in degrees, or switch the unit to radians, gradians or turns. The calculator gives the coordinates of the point on the unit circle (cos θ, sin θ), the other four trig functions, the coterminal angle between 0° and 360°, the reference angle and the quadrant. Negative angles are measured clockwise, and angles larger than one turn are reduced automatically. To find an angle from a known sine, cosine or tangent, use the [inverse trig calculator](/math/inverse-trig/), which returns the principal value.
+
+## Unit circle formulas
+
+<p class="formula">(x, y) = (cos θ, sin θ) &nbsp;·&nbsp; tan θ = y ÷ x &nbsp;·&nbsp; x² + y² = 1</p>
+
+<p class="formula">csc θ = 1 ÷ sin θ &nbsp;·&nbsp; sec θ = 1 ÷ cos θ &nbsp;·&nbsp; cot θ = x ÷ y</p>
+
+To convert, radians = degrees × π ÷ 180, so 1 rad = 57.2958°.
+
+## Worked example
+
+For **θ = 150°**:
+
+- In radians, 150° × π ÷ 180 = 5π/6 = 2.6180 rad
+- It lies in **quadrant 2** (between 90° and 180°), and the reference angle is 180° − 150° = **30°**
+- cos 150° = −cos 30° = −√3/2 = **−0.866025**; sin 150° = sin 30° = 1/2 = **0.500000**, so the point is (−0.8660, 0.5000)
+- tan 150° = 0.5000 ÷ (−0.8660) = **−0.577350** (−√3/3)
+- csc = **2.000000**, sec = **−1.154701**, cot = **−1.732051**
+- Check: −0.866025² + 0.500000² = 1.000000
+
+## Unit circle exact values
+
+| Degrees | Radians | Point (cos, sin) | sin θ | cos θ | tan θ |
+|---|---|---|---|---|---|
+| 0° | 0 | (1, 0) | 0 | 1 | 0 |
+| 30° | π/6 | (√3/2, 1/2) | 1/2 | √3/2 | √3/3 |
+| 45° | π/4 | (√2/2, √2/2) | √2/2 | √2/2 | 1 |
+| 60° | π/3 | (1/2, √3/2) | √3/2 | 1/2 | √3 |
+| 90° | π/2 | (0, 1) | 1 | 0 | undefined |
+| 120° | 2π/3 | (−1/2, √3/2) | √3/2 | −1/2 | −√3 |
+| 135° | 3π/4 | (−√2/2, √2/2) | √2/2 | −√2/2 | −1 |
+| 150° | 5π/6 | (−√3/2, 1/2) | 1/2 | −√3/2 | −√3/3 |
+| 180° | π | (−1, 0) | 0 | −1 | 0 |
+| 210° | 7π/6 | (−√3/2, −1/2) | −1/2 | −√3/2 | √3/3 |
+| 225° | 5π/4 | (−√2/2, −√2/2) | −√2/2 | −√2/2 | 1 |
+| 240° | 4π/3 | (−1/2, −√3/2) | −√3/2 | −1/2 | √3 |
+| 270° | 3π/2 | (0, −1) | −1 | 0 | undefined |
+| 300° | 5π/3 | (1/2, −√3/2) | −√3/2 | 1/2 | −√3 |
+| 315° | 7π/4 | (√2/2, −√2/2) | −√2/2 | √2/2 | −1 |
+| 330° | 11π/6 | (√3/2, −1/2) | −1/2 | √3/2 | −√3/3 |
+
+## Signs of the trig functions by quadrant
+
+| Quadrant | sin, csc | cos, sec | tan, cot | Positive functions |
+|---|---|---|---|---|
+| I (0° to 90°) | + | + | + | all positive |
+| II (90° to 180°) | + | − | − | sin, csc |
+| III (180° to 270°) | − | − | + | tan, cot |
+| IV (270° to 360°) | − | + | − | cos, sec |
+
+## Using the unit circle outside the classroom
+
+The unit circle is how engineers split anything that rotates or points in a direction into components. A force of F at angle θ has components F cos θ and F sin θ; an AC voltage phasor of magnitude V at phase angle θ has real and reactive parts V cos θ and V sin θ; and a point on a rotating crank of radius r sits at (r cos θ, r sin θ). The unit circle values are simply these with the size set to 1. Programming languages work in radians, so convert degrees first, and use atan2(y, x) rather than atan(y ÷ x) to recover the angle in the correct quadrant, as the [vector calculator](/math/vector/) does.
+
+## Common mistakes
+
+- **Calculator in the wrong mode.** sin 150 in radian mode gives −0.7149, not 0.5; check the unit before reading results.
+- **Wrong reference angle in quadrant III and IV.** Measure the reference angle to the x axis, not the y axis: for 240° it is 60°, not 30°.
+- **Forgetting the sign.** The reference angle gives the size of the value; the quadrant gives the sign. cos 150° is −√3/2, not √3/2.
+- **Swapping sine and cosine.** The x coordinate is cos θ and the y coordinate is sin θ.
+- **Treating sin⁻¹ as csc.** sin⁻¹ x is the inverse function arcsin; csc θ is 1 ÷ sin θ.

@@ -2,10 +2,10 @@
 title: Low Flow Cutoff Calculator (Square-Root DP Flow)
 description: Calculate the DP at a square-root low-flow cutoff, the cutoff flow and the noise gain near zero for orifice and other DP flow transmitters.
 category: engineering
-intro: "With square-root extraction, flow = √DP, so tiny DP noise near zero becomes a large, jumping flow reading. A low-flow cutoff forces the output to zero below a set point. This low flow cutoff calculator converts the cutoff between flow and DP and shows how much the root amplifies noise — see [square-root extraction in DP flow measurement](https://www.instrumentationblog.in/square-root-extraction-dp-flow/)."
+intro: "With square-root extraction, flow = √DP, so tiny DP noise near zero becomes a large, jumping flow reading, and a cutoff forces the output to zero below a set point. This low flow cutoff calculator converts the cutoff between flow and DP and shows the noise gain.\n\nInstrument and DCS engineers use it when configuring orifice and other DP flow loops, as described in [square-root extraction in DP flow measurement](https://www.instrumentationblog.in/square-root-extraction-dp-flow/)."
 keywords: [low flow cutoff calculator, square root low flow cutoff, dp flow cutoff, flow cutoff percentage, square root extraction noise, orifice low flow cutoff]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-16
 variables:
   - { id: q, label: Cutoff (% of maximum flow), family: percent, unit: '%', default: 5, min: 0, max: 1 }
   - { id: Qmax, label: Maximum flow, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
@@ -28,6 +28,8 @@ faq:
     a: It is the slope of the square-root curve, d(flow) ÷ d(DP) = 1 ÷ (2 × flow fraction). At 5% flow it is 10, so 0.1% DP noise becomes 1% flow noise.
   - q: Does the cutoff hide real flow?
     a: Yes, anything below the cutoff reads zero. Totalizers will miss it, so choose a meter with better turndown if low flows matter.
+  - q: "How much false flow does a DP zero error cause?"
+    a: "Flow reading = √(zero error as a fraction of DP span). A 0.1% zero offset reads as 3.16% of flow and a 1% offset as 10% of flow, which is why the zero must be checked at line pressure before a cutoff is chosen."
 related: [engineering/dp-flow-square-root, engineering/orifice-flow, engineering/turndown-ratio, engineering/4-20ma-scaling]
 ---
 
@@ -68,3 +70,32 @@ Cutoff at 5% flow on a 0–100 m³/h meter with 250 mbar DP span:
 - In the **transmitter** (many smart DP transmitters have a configurable low-flow cutoff and linear-to-root transition).
 - Or in the **DCS/PLC** flow block — but only in one place, not both.
 - Fix zero drift first: re-zero the transmitter at line pressure with equalising valve open before blaming noise.
+
+## How a small zero error becomes false flow
+
+With the pipe blocked in and no flow, any zero offset in the transmitter is square rooted too. A zero shift of only 0.1% of the 250 mbar span (0.25 mbar) reads as √0.001 = **3.16%** flow, or 3.16 m³/h on a 100 m³/h meter, and the totalizer keeps counting it. With the 5% cutoff in this example that error is hidden, which is the purpose of the cutoff. Noise behaves the same way: at the cutoff, a DP disturbance of 0.05% of span moves the flow reading by √(0.05² + 0.0005) − 0.05 = **0.48%** of flow.
+
+## False flow from a zero offset
+
+For a 250 mbar span and 100 m³/h maximum flow:
+
+| Zero offset (% of DP span) | Offset | Apparent flow | Apparent flow |
+|---|---|---|---|
+| 0.01% | 0.025 mbar | 1.00% | 1.00 m³/h |
+| 0.05% | 0.125 mbar | 2.24% | 2.24 m³/h |
+| 0.1% | 0.250 mbar | 3.16% | 3.16 m³/h |
+| 0.25% | 0.625 mbar | 5.00% | 5.00 m³/h |
+| 0.5% | 1.250 mbar | 7.07% | 7.07 m³/h |
+| 1% | 2.500 mbar | 10.00% | 10.00 m³/h |
+
+## Setting the cutoff in practice
+
+Re-zero the transmitter at line pressure with the equalising valve open, then watch the flow reading with the meter blocked in. The cutoff should sit comfortably above the noise band seen there, but below the lowest flow the process needs to see. Many smart transmitters offer a **linear section** below a break point instead of a hard cutoff, so the output follows DP in a straight line near zero rather than jumping. In a DCS, add a little hysteresis (for example cut out at 5% and back in at 6%) so the reading does not chatter around the set point.
+
+## Common mistakes
+
+- **Entering the cutoff as a DP percentage.** A setting of 5% in a field marked DP is about 22% of flow (√0.05), which hides a large part of the range.
+- **Square rooting twice.** If the transmitter is set to square root output, the DCS input must be linear, or the reading will follow the fourth root of DP.
+- **Applying the cutoff in two places.** Two cutoffs with different settings make it hard to tell why the reading drops to zero.
+- **Using the cutoff to hide a bad zero.** A cutoff masks drift but does not fix it; recalibrate when the blocked-in reading wanders.
+- **Forgetting the totalizer.** Flow below the cutoff is not counted, so batch and custody totals read low on long low-flow periods.

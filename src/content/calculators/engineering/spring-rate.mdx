@@ -2,10 +2,10 @@
 title: Spring Rate Calculator (Helical Compression Spring)
 description: Calculate helical compression spring rate from wire diameter, coil diameter, active coils and shear modulus, plus deflection and Wahl shear stress.
 category: engineering
-intro: "The stiffness of a coil spring comes from twisting its wire, so it depends strongly on the wire diameter and the coil diameter. This spring rate calculator uses k = G d⁴ ÷ (8 D³ n) for a helical compression or extension spring, then finds the deflection under a load and the corrected shear stress in the wire using the Wahl factor."
+intro: "The stiffness of a coil spring comes from twisting its wire, so it depends strongly on the wire diameter and the coil diameter. This spring rate calculator uses k = G d⁴ ÷ (8 D³ n) for a helical compression or extension spring, then finds the deflection under load and the Wahl corrected wire stress.\n\nMechanical designers use it to choose springs for valves, actuators and machines, and maintenance teams use it to check a replacement spring before fitting it."
 keywords: [spring rate calculator, spring constant calculator, compression spring calculator, helical spring stiffness, k = gd^4/8d^3n, wahl factor, spring stress calculator]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-16
 variables:
   - { id: d, label: Wire diameter d, family: length, unit: mm, imperialUnit: in, default: 2, min: 0 }
   - { id: D, label: Mean coil diameter D, family: length, unit: mm, imperialUnit: in, default: 20, min: 0, help: 'Mean diameter = outer diameter − wire diameter.' }
@@ -30,6 +30,8 @@ faq:
     a: A correction, K_w = (4C − 1)/(4C − 4) + 0.615/C, for the extra stress on the inside of the coil caused by wire curvature and direct shear. It matters most for tightly wound springs with a small index C.
   - q: What spring index is recommended?
     a: C = D/d between about 4 and 12. Below 4 the spring is hard to coil; above 12 it tends to buckle and tangle.
+  - q: "How do I measure the rate of a spring?"
+    a: "Compress it on a spring tester and read the load at two deflections in the middle of the travel, then divide the load difference by the deflection difference. 9.8 N at 5 mm and 29.6 N at 15 mm gives 1.98 N/mm."
 related: [physics/hookes-law, physics/spring-mass-frequency, engineering/factor-of-safety, physics/youngs-modulus]
 ---
 
@@ -82,3 +84,36 @@ Music wire (G = 79.3 GPa), d = 2 mm, D = 20 mm, 10 active coils, loaded with 20 
 
 - Springs in series add like resistors in parallel (1/k = 1/k₁ + 1/k₂); springs in parallel add directly.
 - The natural frequency of the spring with a mass on it follows from the [spring-mass frequency calculator](/physics/spring-mass-frequency/).
+
+## Worked example: checking the spring at solid height
+
+Take the default spring (d = 2 mm, D = 20 mm, 10 active coils, music wire) with squared and ground ends and a free length of **50 mm**:
+
+- Rate k = **1.982 N/mm**, so the 20 N load compresses it **10.09 mm**
+- Total coils = 10 + 2 = 12, solid height ≈ 12 × 2 = **24 mm**
+- Travel to solid = 50 − 24 = 26 mm, needing F = 1.982 × 26 = **51.5 N**
+- Wire stress at solid = 1.1448 × 8 × 51.5 × 0.02 ÷ (π × 0.002³) = **376 MPa**
+
+Music wire of this size has a tensile strength of roughly 2,000 MPa, so 376 MPa at solid is within the usual static limit of about 45% of tensile strength and the spring will not take a permanent set if it is closed fully. The slenderness L<sub>0</sub> ÷ D = 2.5 is low enough that buckling is not a concern (it becomes one above about 4 with fixed ends).
+
+## Rate for the same geometry in other materials
+
+| Wire material | Shear modulus G | Rate k | Deflection at 20 N |
+|---|---|---|---|
+| Music wire (ASTM A228) | 79,300 MPa | 1.982 N/mm | 10.09 mm |
+| Oil tempered or chrome silicon | 77,200 MPa | 1.930 N/mm | 10.36 mm |
+| Stainless 302 / 304 | 69,000 MPa | 1.725 N/mm | 11.59 mm |
+| Beryllium copper | 48,300 MPa | 1.208 N/mm | 16.56 mm |
+| Phosphor bronze | 41,400 MPa | 1.035 N/mm | 19.32 mm |
+
+## How spring rate is measured
+
+A spring tester compresses the spring and records load against deflection. Because the first and last coils seat unevenly, the rate is taken between two points in the middle of the travel, typically 20% and 80% of the usable deflection: k = (F₂ − F₁) ÷ (x₂ − x₁). For example, 9.8 N at 5 mm and 29.6 N at 15 mm give k = (29.6 − 9.8) ÷ (15 − 5) = **1.98 N/mm**, which is -0.1% from the calculated 1.982 N/mm and within a typical ±10% commercial tolerance.
+
+## Common mistakes
+
+- **Using the outside diameter as D.** The formula needs the mean coil diameter (outside diameter minus wire diameter). Using OD = 22 mm here would give a rate 25% too low.
+- **Counting all coils as active.** Closed end coils do not deflect; with squared ends use total coils minus 2.
+- **Entering Young's modulus instead of shear modulus.** E for steel is about 200 GPa, more than twice G, which would double the calculated rate.
+- **Ignoring solid height.** If the installed travel closes the spring fully, the stress at solid may exceed the wire's limit.
+- **Small wire tolerances.** Because k depends on d⁴, a 2% oversize wire makes the spring about 8% stiffer.

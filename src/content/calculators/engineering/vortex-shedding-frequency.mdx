@@ -2,10 +2,10 @@
 title: Vortex Shedding Frequency Calculator (Strouhal Number)
 description: Calculate vortex shedding frequency from flow velocity, bluff body or cylinder width and Strouhal number — for vortex flow meters and thermowells.
 category: engineering
-intro: "Fluid flowing past a bluff body sheds vortices alternately from each side at a frequency proportional to velocity — the principle of the vortex flow meter and the cause of thermowell vibration. This vortex shedding frequency calculator uses the Strouhal relation f = St·V/d — see [how a vortex shedding flowmeter works](https://www.instrumentationblog.in/vortex-shedding-flowmeter-working/) and [vortex flow meter troubleshooting](https://www.instrumentationblog.in/vortex-flow-meter-troubleshooting/)."
+intro: "Fluid flowing past a bluff body sheds vortices from alternate sides at a frequency proportional to velocity. This vortex shedding frequency calculator uses f = St × V ÷ d, the principle explained in [how a vortex shedding flowmeter works](https://www.instrumentationblog.in/vortex-shedding-flowmeter-working/).\n\nInstrument engineers use it to size vortex meters and estimate K-factors, and mechanical engineers use it to check thermowells for resonance. For field problems see [vortex flow meter troubleshooting](https://www.instrumentationblog.in/vortex-flow-meter-troubleshooting/)."
 keywords: [vortex shedding frequency calculator, strouhal number calculator, vortex flow meter frequency, karman vortex frequency, bluff body shedding frequency, thermowell vortex shedding]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-16
 variables:
   - { id: V, label: Flow velocity, family: velocity, unit: ms, imperialUnit: fts, default: 3, min: 0 }
   - { id: d, label: Bluff body / cylinder width, family: length, unit: mm, imperialUnit: in, default: 20, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: If the shedding frequency approaches the thermowell's natural frequency the well resonates and can break by fatigue. ASME PTC 19.3 TW requires checking this frequency ratio.
   - q: Is the calculated K-factor exact for my meter?
     a: No. The bluff body partly blocks the pipe, raising local velocity, and real meters are flow-calibrated. Use the meter's stamped K-factor for measurement.
+  - q: "What is the minimum flow a vortex meter can measure?"
+    a: "It is set by the minimum Reynolds number, often about 20,000. For water in a 100 mm pipe that is about 0.20 m/s, or 5.65 m³/h. A smaller meter or a higher velocity lowers the cutoff in m³/h."
 related: [engineering/flow-meter-k-factor, engineering/pipe-flow-velocity, engineering/reynolds-number, engineering/turndown-ratio]
 ---
 
@@ -64,3 +66,34 @@ Water at 3 m/s past a 20 mm bluff body (St = 0.2) in a 100 mm pipe:
 - Vortex meters need a minimum Reynolds number (typically about 10,000–20,000) to shed regularly — below that they cut off.
 - Typical sizing velocities: liquids 0.3–7 m/s, gases and steam about 2–80 m/s.
 - Pipe vibration at frequencies near the shedding frequency can cause false counts; see the [K-factor calculator](/engineering/flow-meter-k-factor/) for pulse-to-flow scaling.
+
+## Checking the Reynolds number and low flow limit
+
+The Strouhal number only stays near 0.2 when the flow is turbulent. For water (ν ≈ 1.0 × 10⁻⁶ m²/s) at 3 m/s in the 100 mm pipe, Re = 3 × 0.1 ÷ 1.0 × 10⁻⁶ = **300,000**, well inside the linear range. If the meter needs Re ≥ 20,000 to shed reliably, the lowest usable velocity is 20,000 × 1.0 × 10⁻⁶ ÷ 0.1 = **0.20 m/s**, which is 5.65 m³/h and a shedding frequency of only 2.0 Hz. Below that the meter cuts off to zero. A viscous liquid raises this limit in direct proportion to its kinematic viscosity.
+
+## Approximate frequency and K-factor by meter size
+
+At 3 m/s with St = 0.2 and a bluff body about 0.2 times the bore. Real meters differ by design, so use the stamped K-factor:
+
+| Size | Bluff body | Frequency | Flow | Pulses per litre |
+|---|---|---|---|---|
+| DN25 | 5 mm | 120.0 Hz | 5.3 m³/h | 81.487 |
+| DN50 | 10 mm | 60.0 Hz | 21.2 m³/h | 10.186 |
+| DN80 | 16 mm | 37.5 Hz | 54.3 m³/h | 2.487 |
+| DN100 | 20 mm | 30.0 Hz | 84.8 m³/h | 1.273 |
+| DN150 | 30 mm | 20.0 Hz | 190.9 m³/h | 0.377 |
+| DN200 | 40 mm | 15.0 Hz | 339.3 m³/h | 0.159 |
+
+The K-factor falls roughly with the cube of the bore, so large meters give few pulses per litre and need a longer gate time for a stable reading.
+
+## Thermowells and other immersed bodies
+
+The same formula gives the forcing frequency on a thermowell, with d equal to the tip diameter. ASME PTC 19.3 TW compares that frequency with the well's natural frequency and requires the ratio to stay below set limits, so a short, stiff well or a smaller tip may be needed at high gas or steam velocities. A velocity collar is no longer recommended as a fix.
+
+## Common mistakes
+
+- **Using the pipe velocity at low Reynolds number.** Below the meter's minimum Reynolds number, shedding becomes irregular and stops, so a viscous fluid can read zero at flows the frequency formula says are measurable.
+- **Ignoring blockage.** The bluff body narrows the flow area, so the velocity at the body is higher than the pipe velocity and the real K-factor differs from this estimate.
+- **Mounting on a vibrating pipe.** Pump or compressor vibration near the shedding frequency can be counted as flow, even with no flow at all.
+- **Too little straight pipe.** Elbows and valves upstream distort the vortex street; follow the maker's upstream and downstream run lengths.
+- **Measuring two-phase flow.** Gas in liquid or liquid droplets in steam change the shedding pattern and give unreliable readings.

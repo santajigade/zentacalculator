@@ -1,0 +1,103 @@
+---
+title: Steam Consumption Calculator (Heating with Saturated Steam)
+description: Calculate steam consumption in kg/h to heat a product stream from its flow, specific heat and temperature rise, using the latent heat at steam pressure.
+category: engineering
+intro: "Steam heats a product by condensing and giving up its latent heat. This steam consumption calculator finds the heat duty to warm a flowing liquid and the steam flow in kg/h needed to supply it at your steam pressure, including an allowance for losses.\n\nProcess, utility and instrument engineers use it to size steam control valves, steam traps and flow meters, to check boiler load and to compare heating options before a heat exchanger is specified."
+keywords: [steam consumption calculator, steam consumption formula, steam required to heat water, kg of steam per hour, steam flow calculation heat exchanger, latent heat of steam, steam load calculation]
+published: 2026-11-16
+updated: 2026-11-16
+variables:
+  - { id: m, label: Product mass flow, family: massflow, unit: kgh, imperialUnit: lbh, default: 5000, min: 0 }
+  - { id: cp, label: Product specific heat (cp), suffix: kJ/kg·K, default: 4.19, min: 0, help: 'Water 4.19 · Milk about 3.9 · Light oil about 2.0 · Air 1.005' }
+  - { id: T1, label: Product inlet temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
+  - { id: T2, label: Product outlet temperature, family: temperature, unit: C, imperialUnit: F, default: 80 }
+  - { id: hfg, label: Latent heat of steam at supply pressure (hfg), suffix: kJ/kg, default: 2133, min: 1, help: 'Saturated steam: 0 bar(g) 2,257 · 3 bar(g) 2,133 · 7 bar(g) 2,047 · 10 bar(g) 1,999 kJ/kg (see the table below).' }
+  - { id: eff, label: Heat utilisation (allowance for losses), family: percent, unit: '%', default: 95, min: 0.01, max: 1, help: 'Share of the steam heat that reaches the product. 95% is typical for an insulated heat exchanger; open tanks and direct injection with losses are lower.' }
+  - { id: dT, label: Temperature rise, family: tempdiff, unit: K, imperialUnit: F }
+  - { id: Q, label: Heat duty, family: power, unit: kW, imperialUnit: BTUh }
+  - { id: ms, label: Steam consumption, family: massflow, unit: kgh, imperialUnit: lbh, min: 0 }
+  - { id: r, label: Steam per tonne of product, suffix: kg/t, min: 0, decimals: 1 }
+equations:
+  - dT = T2 - T1
+  - Q = m * cp * 1000 * dT
+  - ms = Q / (hfg * 1000 * eff)
+  - r = 1000 * ms / m
+faq:
+  - q: How do I calculate steam consumption?
+    a: "Find the heat the product needs, Q = ṁ × cp × ΔT, then divide by the heat each kilogram of steam gives up when it condenses, which is its latent heat hfg at the supply pressure. Divide again by the heat utilisation to allow for losses. Heating 5,000 kg/h of water by 60 K with 3 bar(g) steam needs about 620 kg/h."
+  - q: How much steam is needed to heat 1,000 litres of water?
+    a: "Heating 1,000 kg of water by 60 K takes 1,000 × 4.19 × 60 = 251,400 kJ. At 3 bar(g), where hfg is about 2,133 kJ/kg, that is 118 kg of steam with no losses, or 124 kg with a 95% allowance. Divide by the heating time in hours for kg/h."
+  - q: Why use the latent heat and not the total enthalpy of steam?
+    a: "In an indirect heater the steam condenses and leaves through the trap as hot condensate at about the steam temperature, so only the latent heat is given to the product. The total enthalpy hg applies only if the condensate is also cooled to the product temperature, as in direct steam injection."
+  - q: Is higher pressure steam better for heating?
+    a: "Not per kilogram. Latent heat falls as pressure rises, from 2,257 kJ/kg at atmospheric pressure to 1,999 kJ/kg at 10 bar(g), so low pressure steam carries more usable heat per kg. Higher pressure gives a hotter steam temperature and a smaller heat exchanger, and lets steam be distributed in smaller pipes."
+  - q: How does steam consumption relate to boiler capacity?
+    a: "Add the consumption of all users that run at the same time, then add distribution losses and a margin. A boiler rated 'from and at 100 °C' produces less steam when the feedwater is colder or the pressure is higher, so convert the rating before comparing it with the steam demand."
+related: [engineering/heat-duty, engineering/tank-heater-sizing, engineering/boiler-efficiency, engineering/pipe-heat-loss, engineering/lmtd, engineering/mass-flow-rate]
+---
+
+## How to use the steam consumption calculator
+
+Enter the **product mass flow**, its **specific heat**, the **inlet and outlet temperatures**, the **latent heat** of the steam at the pressure in the heater (read it from the table below) and the **heat utilisation**. The calculator gives the temperature rise, the heat duty, the steam consumption in kg/h and the steam needed per tonne of product. To find the product flow a given steam supply can heat, enter the steam flow and press × on the product flow so it becomes the result.
+
+## Steam consumption formula
+
+<p class="formula">Q = ṁ<sub>p</sub> × c<sub>p</sub> × (T<sub>2</sub> − T<sub>1</sub>) &nbsp;·&nbsp; ṁ<sub>s</sub> = Q ÷ (h<sub>fg</sub> × η)</p>
+
+ṁ<sub>p</sub> is the product flow in kg/s, c<sub>p</sub> the specific heat in J/kg·K, h<sub>fg</sub> the latent heat in J/kg and η the heat utilisation as a fraction. The result ṁ<sub>s</sub> is in kg/s; multiply by 3,600 for kg/h. Use the pressure **inside the heater**, after the control valve, because that is where the steam condenses.
+
+## Worked example
+
+A plate heat exchanger warms **5,000 kg/h** of water (c<sub>p</sub> = 4.19 kJ/kg·K) from **20 °C** to **80 °C** with saturated steam at **3 bar(g)**, where h<sub>fg</sub> = 2,133.0 kJ/kg (rounded to 2,133). Heat utilisation is 95%:
+
+- Temperature rise = 80 − 20 = **60 K**
+- Heat duty Q = 5,000 ÷ 3,600 × 4.19 × 60 = **349.2 kW**
+- Steam consumption = 349.2 ÷ (2,133 × 0.95) = 0.1723 kg/s = **620.3 kg/h**
+- Steam per tonne of water = **124.1 kg/t**
+
+With 10 bar(g) steam in the heater (h<sub>fg</sub> = 1,999 kJ/kg) the same duty needs 661.9 kg/h, about 7% more steam by mass. If the condensate is sub-cooled to 90 °C inside the heater before it leaves, each kg gives 2,361 kJ and the consumption falls to 560 kg/h.
+
+## Saturated steam table (IAPWS-IF97)
+
+Computed for gauge pressures above a standard atmosphere of 1.01325 bar. h<sub>f</sub>, h<sub>fg</sub> and h<sub>g</sub> are in kJ/kg; v<sub>g</sub> is the specific volume of the steam in m³/kg:
+
+| Gauge pressure | Absolute | Saturation temperature | h<sub>f</sub> | h<sub>fg</sub> | h<sub>g</sub> | v<sub>g</sub> |
+|---|---|---|---|---|---|---|
+| 0 bar(g) | 1.01 bar(a) | 100.0 °C | 419 | 2,257 | 2,676 | 1.673 |
+| 1 bar(g) | 2.01 bar(a) | 120.4 °C | 506 | 2,201 | 2,707 | 0.880 |
+| 2 bar(g) | 3.01 bar(a) | 133.7 °C | 562 | 2,163 | 2,725 | 0.603 |
+| 3 bar(g) | 4.01 bar(a) | 143.7 °C | 605 | 2,133 | 2,738 | 0.461 |
+| 4 bar(g) | 5.01 bar(a) | 151.9 °C | 641 | 2,108 | 2,748 | 0.374 |
+| 5 bar(g) | 6.01 bar(a) | 158.9 °C | 671 | 2,085 | 2,756 | 0.315 |
+| 6 bar(g) | 7.01 bar(a) | 165.0 °C | 697 | 2,065 | 2,763 | 0.272 |
+| 7 bar(g) | 8.01 bar(a) | 170.5 °C | 721 | 2,047 | 2,768 | 0.240 |
+| 8 bar(g) | 9.01 bar(a) | 175.4 °C | 743 | 2,030 | 2,773 | 0.215 |
+| 10 bar(g) | 11.01 bar(a) | 184.1 °C | 781 | 1,999 | 2,781 | 0.177 |
+| 12 bar(g) | 13.01 bar(a) | 191.7 °C | 815 | 1,972 | 2,787 | 0.151 |
+| 15 bar(g) | 16.01 bar(a) | 201.4 °C | 859 | 1,934 | 2,793 | 0.124 |
+| 20 bar(g) | 21.01 bar(a) | 214.9 °C | 920 | 1,879 | 2,799 | 0.095 |
+
+## Steam needed per tonne of water
+
+For water (c<sub>p</sub> = 4.19 kJ/kg·K) with 95% heat utilisation:
+
+| Temperature rise | 1 bar(g) | 3 bar(g) | 7 bar(g) | 10 bar(g) |
+|---|---|---|---|---|
+| 20 K | 40.1 kg | 41.4 kg | 43.1 kg | 44.1 kg |
+| 40 K | 80.2 kg | 82.7 kg | 86.2 kg | 88.2 kg |
+| 60 K | 120.2 kg | 124.1 kg | 129.3 kg | 132.4 kg |
+| 80 K | 160.3 kg | 165.4 kg | 172.4 kg | 176.5 kg |
+
+## How steam consumption is used in practice
+
+The steam flow sets the size of everything on the steam side. The **control valve** is sized for the maximum steam flow with the heater pressure as its outlet pressure; the **steam trap** must pass the same mass of condensate against the back pressure of the return line; and a **steam flow meter** (vortex or orifice with pressure and temperature compensation) is ranged a little above it. At start-up the product is cold and the heater sees a much larger temperature difference, so the start-up load can be two or three times the running load; size traps for it.
+
+When the condensate returns to an atmospheric tank, part of it flashes back to steam: condensate at 3 bar(g) dropping to 0 bar(g) flashes 8.3% of its mass. That flash steam can be recovered in a flash vessel for low pressure heating, which is one reason plants measure steam and condensate flows separately.
+
+## Common mistakes
+
+- **Using the boiler pressure instead of the heater pressure.** The control valve drops the pressure, so the steam condenses at the lower pressure with a higher latent heat and a lower temperature.
+- **Using total enthalpy h<sub>g</sub> for an indirect heater.** The condensate leaves hot, so only h<sub>fg</sub> (plus any sub-cooling) heats the product. Using h<sub>g</sub> understates the steam by roughly 20%.
+- **Mixing kJ and kW without hours.** kW is kJ/s; a duty in kW divided by kJ/kg gives kg/s, which must be multiplied by 3,600 for kg/h.
+- **Ignoring heat losses and the vessel.** Open tanks lose heat from the surface, and batch heating also warms the vessel steel; a 100% utilisation figure is never reached.
+- **Sizing for running load only.** Cold start-up and stalled condensate drainage can multiply the load, and an undersized trap waterlogs the heater.

@@ -2,10 +2,10 @@
 title: LMTD Calculator (Log Mean Temperature Difference & HX Area)
 description: Calculate the log mean temperature difference (LMTD) for counterflow or parallel-flow heat exchangers, plus heat duty or area from Q = U·A·LMTD.
 category: engineering
-intro: "The log mean temperature difference is the true average driving force for heat transfer between two fluids in a heat exchanger. This LMTD calculator works out the LMTD from the four terminal temperatures for counterflow or parallel flow, then sizes the exchanger with Q = U·A·LMTD — see the [types of heat exchangers](https://www.instrumentationblog.in/types-of-heat-exchangers/) and how a [plate heat exchanger works](https://www.instrumentationblog.in/plate-heat-exchanger-working-principle/)."
+intro: "The log mean temperature difference is the true average driving force for heat transfer between two fluids in a heat exchanger. This LMTD calculator finds it from the four terminal temperatures for counterflow or parallel flow, then sizes the exchanger with Q = U·A·LMTD.\n\nProcess and HVAC engineers use it to size and rate [types of heat exchangers](https://www.instrumentationblog.in/types-of-heat-exchangers/), including how a [plate heat exchanger works](https://www.instrumentationblog.in/plate-heat-exchanger-working-principle/)."
 keywords: [lmtd calculator, log mean temperature difference calculator, heat exchanger area calculator, lmtd formula, counterflow heat exchanger, q = u a lmtd, heat exchanger sizing]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-16
 variables:
   - id: s
     label: Flow arrangement
@@ -37,6 +37,8 @@ faq:
     a: With the same terminal temperatures counterflow gives a larger LMTD, so it needs less area, and it lets the cold outlet temperature rise above the hot outlet temperature.
   - q: What about shell-and-tube exchangers with several passes?
     a: Multiply the counterflow LMTD by a correction factor F (usually 0.75–1.0 from TEMA charts) — Q = U·A·F·LMTD. Designs with F below about 0.8 are normally avoided.
+  - q: "How do I calculate the actual U value of an operating exchanger?"
+    a: "Measure the four terminal temperatures and one flow, calculate the duty Q = ṁ cp ΔT, find the LMTD here and divide: U = Q ÷ (A × LMTD). Trending this U over time shows fouling before the process is affected."
 related: [engineering/heat-duty, engineering/convection-heat-transfer, engineering/chiller-tonnage, chemistry/specific-heat]
 ---
 
@@ -78,3 +80,38 @@ The arithmetic mean always overstates the driving force; the error is small only
 - If ΔT₁ = ΔT₂ the formula is 0 ÷ 0 — the LMTD then equals that common ΔT.
 - A temperature cross (ΔT ≤ 0 at one end) is impossible for the chosen arrangement — check the temperatures.
 - Typical U values: water–water plate exchanger 2,000–6,000 W/m²·K, shell-and-tube water–water 800–1,500, oil–water 100–400, gas–gas 10–50.
+
+## Checking the duty from the fluid flows
+
+The 250 kW duty in the worked example must match both streams, Q = ṁ c<sub>p</sub> ΔT:
+
+- Water, c<sub>p</sub> = 4.18 kJ/kg·K, heated 40 K: ṁ = 250 ÷ (4.18 × 40) = **1.495 kg/s** (5.38 t/h)
+- Hot oil, c<sub>p</sub> = 2.1 kJ/kg·K, cooled 60 K: ṁ = 250 ÷ (2.1 × 60) = **1.984 kg/s** (7.14 t/h)
+
+## Shell and tube correction factor (1 shell pass, 2 or more tube passes)
+
+For a 1-2 exchanger the counterflow LMTD is multiplied by F, which depends on R = (T<sub>hi</sub> − T<sub>ho</sub>) ÷ (T<sub>co</sub> − T<sub>ci</sub>) and P = (T<sub>co</sub> − T<sub>ci</sub>) ÷ (T<sub>hi</sub> − T<sub>ci</sub>). For the example R = 1.50 and P = 0.333, giving **F = 0.910** and a required area of 250,000 ÷ (500 × 0.910 × 69.52) = **7.90 m²** instead of 7.19 m² in pure counterflow.
+
+| P (at R = 1.50) | F |
+|---|---|
+| 0.1 | 0.997 |
+| 0.2 | 0.982 |
+| 0.3 | 0.939 |
+| 0.333 | 0.911 |
+| 0.4 | 0.803 |
+| 0.45 | 0.579 |
+| 0.5 | not possible |
+
+F falls steeply as P rises. Values below about 0.8 mean a single shell is a poor choice and two shells in series are needed.
+
+## Using LMTD to monitor fouling
+
+With four temperature transmitters and one flow meter, the overall U of an operating exchanger can be tracked: U = Q ÷ (A × LMTD). Suppose that months later, at the same flows and inlet temperatures, the water only reaches 64 °C. Then Q = 212.5 kW, the oil leaves at 99.0 °C, the LMTD is 77.19 K and U = 212,500 ÷ (7.19 × 77.19) = **383 W/m²·K**. The added fouling resistance is 1/383 − 1/500 = **6.12 × 10⁻⁴ m²·K/W**, a useful trigger for cleaning.
+
+## Common mistakes
+
+- **Pairing the wrong ends.** In counterflow, ΔT₁ is hot inlet minus cold outlet; using hot inlet minus cold inlet gives a parallel flow LMTD.
+- **Converting ΔT in °F with an offset.** A temperature difference converts by 1.8 only (1 K = 1.8 °F), with no 32 offset.
+- **Leaving out F for multipass exchangers.** A 1-2 shell and tube unit sized on the counterflow LMTD alone is undersized.
+- **Ignoring a temperature cross.** If the cold outlet rises above the hot outlet in a 1-2 exchanger, F drops sharply or no solution exists.
+- **Using a clean U for design.** Add fouling resistances from TEMA or experience, or the exchanger will fall short after a few months.

@@ -1,0 +1,116 @@
+---
+title: Reactor Conversion Calculator (CSTR and PFR, First Order)
+description: Find first order conversion in a CSTR and a PFR from reactor volume, feed flow and rate constant, with space time, Damköhler number and outlet concentrations.
+category: chemistry
+intro: "Conversion is the fraction of a reactant used up in a reactor. This reactor conversion calculator finds the space time, the Damköhler number and the first order conversion in a continuous stirred tank (CSTR) and in a plug flow reactor (PFR) of the same volume, with the outlet concentration for each.\n\nChemical engineering students use it for reactor design problems, and process engineers use it to estimate how far a throughput increase or a cooler reactor will cut conversion."
+keywords: [reactor conversion calculator, cstr conversion calculator, pfr conversion calculator, first order reaction conversion, space time reactor, damkohler number, cstr vs pfr volume]
+published: 2026-11-16
+updated: 2026-11-16
+variables:
+  - { id: V, label: Reactor volume (reacting volume), family: volume, unit: m3, imperialUnit: galUS, default: 2, min: 0 }
+  - { id: v0, label: Volumetric feed flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 4, min: 0 }
+  - { id: k, label: First order rate constant k, suffix: 1/h, default: 1.5, min: 0, help: 'Multiply a per-minute constant by 60, or a per-second constant by 3,600. k depends strongly on temperature (Arrhenius).' }
+  - { id: CA0, label: Feed concentration of A, suffix: mol/L, default: 2, min: 0 }
+  - { id: tau, label: Space time τ = V ÷ v₀, family: seconds, unit: h, min: 0 }
+  - { id: Da, label: Damköhler number k τ, min: 0, decimals: 4 }
+  - { id: Xc, label: Conversion in a CSTR, family: percent, unit: '%', min: 0 }
+  - { id: Xp, label: Conversion in a PFR, family: percent, unit: '%', min: 0 }
+  - { id: Cc, label: Outlet concentration from the CSTR, suffix: mol/L, min: 0, decimals: 4 }
+  - { id: Cp, label: Outlet concentration from the PFR, suffix: mol/L, min: 0, decimals: 4 }
+  - { id: rV, label: CSTR volume needed to match the PFR conversion (ratio), suffix: × PFR volume, min: 0, decimals: 3 }
+equations:
+  - tau = V / v0
+  - Da = k * tau / 3600
+  - Xc = Da / (1 + Da)
+  - Xp = 1 - exp(-Da)
+  - Cc = CA0 * (1 - Xc)
+  - Cp = CA0 * (1 - Xp)
+  - rV = (exp(Da) - 1) / Da
+faq:
+  - q: Why does a PFR give higher conversion than a CSTR of the same volume?
+    a: "A CSTR is perfectly mixed, so the whole tank reacts at the low outlet concentration. In a PFR the concentration falls gradually along the length, so most of the volume reacts at a higher concentration and therefore a higher first order rate. For any positive order the PFR needs less volume for the same conversion."
+  - q: What is the Damköhler number?
+    a: "For a first order reaction Da = k τ, the ratio of the residence time to the reaction time 1 ÷ k. Da well below 1 means the fluid leaves before much reacts; Da of 1 gives 50% in a CSTR and 63.2% in a PFR; Da above about 5 gives high conversion in either reactor."
+  - q: How do I find the space time for a target conversion?
+    a: "Rearrange the design equation. CSTR: τ = X ÷ (k (1 − X)). PFR: τ = −ln(1 − X) ÷ k. For 90% conversion with k = 1.5 per hour, the CSTR needs τ = 6.00 h and the PFR τ = 1.535 h. Multiply by the feed flow to get the volume."
+  - q: Is space time the same as residence time?
+    a: "Only when the density does not change through the reactor, which is the case for most liquid phase reactions and is assumed here. For gas reactions that change the number of moles, or for large temperature changes, the actual mean residence time differs from V ÷ v₀ measured at feed conditions."
+  - q: Why use several CSTRs in series?
+    a: "Each tank works at a lower concentration than the one before, so a chain of tanks approaches plug flow. For 90% first order conversion, one CSTR needs Da = 9, two in series need a total of 4.32, and ten need 2.59, close to the PFR value of 2.303."
+related: [engineering/residence-time, chemistry/integrated-rate-law, chemistry/arrhenius-equation, chemistry/half-life, chemistry/activation-energy, chemistry/percent-yield]
+---
+
+## How to use the reactor conversion calculator
+
+Enter the **reacting volume**, the **volumetric feed flow**, the **first order rate constant** k in reciprocal hours and the **feed concentration** of the reactant. The calculator gives the space time, the Damköhler number, the conversion and outlet concentration for an ideal CSTR and for an ideal PFR of that volume, and how many times larger a CSTR must be to match the PFR conversion. To size a reactor for a target conversion, enter the conversion and press × on the volume so that it becomes the result.
+
+## Reactor conversion formulas
+
+For an irreversible first order reaction A → products, isothermal, at constant density:
+
+<p class="formula">τ = V ÷ v₀ &nbsp;·&nbsp; Da = k τ</p>
+
+<p class="formula">CSTR: X = Da ÷ (1 + Da) &nbsp;·&nbsp; PFR: X = 1 − e<sup>−Da</sup> &nbsp;·&nbsp; C<sub>A</sub> = C<sub>A0</sub> (1 − X)</p>
+
+These follow from the design equations V = F<sub>A0</sub> X ÷ (−r<sub>A</sub>) for the CSTR and V = F<sub>A0</sub> ∫ dX ÷ (−r<sub>A</sub>) for the PFR, with −r<sub>A</sub> = k C<sub>A0</sub> (1 − X). For the same conversion as the PFR, the CSTR needs (e<sup>Da</sup> − 1) ÷ Da times the volume.
+
+## Worked example
+
+A liquid phase reaction with k = **1.5 h⁻¹** runs in a **2 m³** reactor fed at **4 m³/h** with C<sub>A0</sub> = **2 mol/L**:
+
+- Space time τ = 2 ÷ 4 = **0.50 h** (30 min)
+- Damköhler number Da = 1.5 × 0.50 = **0.75**
+- CSTR conversion = 0.75 ÷ (1 + 0.75) = **42.86%**, outlet C<sub>A</sub> = 2 × (1 − 0.4286) = **1.1429 mol/L**
+- PFR conversion = 1 − e<sup>−0.75</sup> = **52.76%**, outlet C<sub>A</sub> = **0.9447 mol/L**
+- To reach 52.76% in a CSTR you would need (e<sup>0.75</sup> − 1) ÷ 0.75 = **1.489** times the volume, or 2.98 m³
+
+## Conversion against Damköhler number
+
+| Da = k τ | CSTR conversion | PFR conversion | CSTR ÷ PFR volume for the PFR conversion |
+|---|---|---|---|
+| 0.1 | 9.1% | 9.5% | 1.05 |
+| 0.25 | 20.0% | 22.1% | 1.14 |
+| 0.5 | 33.3% | 39.3% | 1.30 |
+| 1 | 50.0% | 63.2% | 1.72 |
+| 2 | 66.7% | 86.5% | 3.19 |
+| 3 | 75.0% | 95.0% | 6.36 |
+| 5 | 83.3% | 99.3% | 29.48 |
+| 10 | 90.9% | 100.0% | 2202.55 |
+
+## Volume needed for a target conversion
+
+Da required (proportional to reactor volume at fixed k and feed flow) and the CSTR to PFR volume ratio:
+
+| Target conversion | Da for a CSTR | Da for a PFR | Volume ratio |
+|---|---|---|---|
+| 50% | 1.00 | 0.693 | 1.44 |
+| 80% | 4.00 | 1.609 | 2.49 |
+| 90% | 9.00 | 2.303 | 3.91 |
+| 95% | 19.00 | 2.996 | 6.34 |
+| 99% | 99.00 | 4.605 | 21.50 |
+| 99.9% | 999.00 | 6.908 | 144.62 |
+
+## CSTRs in series for 90% conversion
+
+Total Da = N [(1 − X)<sup>−1/N</sup> − 1] for N equal tanks:
+
+| Number of tanks | Total Da | Total volume ÷ PFR volume |
+|---|---|---|
+| 1 | 9.000 | 3.91 |
+| 2 | 4.325 | 1.88 |
+| 3 | 3.463 | 1.50 |
+| 5 | 2.924 | 1.27 |
+| 10 | 2.589 | 1.12 |
+| PFR (N → ∞) | 2.303 | 1.00 |
+
+## How conversion estimates are used in practice
+
+The ideal CSTR and PFR are the two limits of real mixing. A well agitated stirred tank behaves close to a CSTR, while a long tubular reactor, a packed bed or a pipe reactor in turbulent flow is close to a PFR. Engineers use these formulas to **screen reactor types**, to **scale up** from a lab rate constant, and to judge the effect of operating changes: raising the feed flow by 25% cuts τ and Da by 20%, and in this example drops the CSTR conversion from 42.9% to 37.5%. The rate constant comes from batch kinetics, for example by fitting ln(C<sub>A0</sub> ÷ C<sub>A</sub>) against time, and is corrected for temperature with the Arrhenius equation. A tracer test (residence time distribution) shows where a real vessel sits between the two ideals.
+
+## Common mistakes
+
+- **Mixing time units.** k in min⁻¹ with τ in hours gives Da 60 times too small. Convert k to h⁻¹ first, as this calculator expects.
+- **Using the total vessel volume.** Use the liquid (reacting) volume; vapour space, jackets and dead zones do not react.
+- **Applying the first order formulas to other orders.** For a second order reaction, X depends on C<sub>A0</sub> as well as k τ, and these formulas no longer hold.
+- **Ignoring reversibility.** A reversible reaction cannot exceed its equilibrium conversion however long τ is; check the equilibrium constant first.
+- **Assuming isothermal operation.** An exothermic reaction heats the reactor and raises k; without cooling, the real conversion and the safety margin can differ greatly from the isothermal estimate.

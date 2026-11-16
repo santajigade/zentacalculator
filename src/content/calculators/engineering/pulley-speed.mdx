@@ -2,10 +2,10 @@
 title: Pulley Speed and Belt Length Calculator
 description: Calculate driven pulley rpm, speed ratio, belt speed and belt length for two-pulley belt drives — or the pulley size for a target speed.
 category: engineering
-intro: "Belt and pulley drives change the speed and torque between a motor and a machine. The pulley diameters set the speed ratio, and the shaft centre distance sets the belt length. This free pulley speed and belt length calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Belt and pulley drives change the speed and torque between a motor and a machine: the pulley diameters set the speed ratio and the shaft centre distance sets the belt length. This pulley speed and belt length calculator gives driven rpm, ratio, belt speed and belt length.\n\nMaintenance fitters, millwrights and machine designers use it to change a fan or pump speed, pick a replacement pulley and order the right belt before taking a drive apart."
 keywords: [pulley speed calculator, pulley rpm calculator, belt length calculator, pulley ratio, v belt calculator, belt speed, driven pulley diameter]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-16
 variables:
   - { id: N1, label: Driver speed, suffix: rpm, default: 1440, min: 0 }
   - { id: D1, label: Driver pulley diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: Classical V-belts work best at about 5–25 m/s, with around 20 m/s often most efficient. Very low speeds need high tension; very high speeds cause centrifugal losses.
   - q: Does torque change with pulley size?
     a: Yes. Torque increases by the same ratio that speed decreases (ignoring losses). A 2.5:1 reduction gives about 2.5 times the torque.
+  - q: "How do I find the centre distance for a standard belt length?"
+    a: "Use C = [b + √(b² − 8(D₂ − D₁)²)] ÷ 8 with b = 2L − π(D₁ + D₂). For 100 mm and 250 mm pulleys and a 1,600 mm belt, b = 2,100.4 mm and C = 519.7 mm."
+  - q: "What is the wrap angle of a belt drive?"
+    a: "It is the arc of contact on the small pulley, 180° − 2 asin((D₂ − D₁) ÷ 2C). For 100 mm and 250 mm pulleys at 500 mm centres it is 162.7°. Below about 120° the belt tends to slip."
 related: [engineering/torque-power-speed, sports/cycling-gear-speed, physics/torque, electrical/three-phase-motor-power]
 ---
 
@@ -76,3 +80,56 @@ Use pitch diameters for V-belts.
 ## Choosing a standard belt
 
 Round the calculated length to the nearest standard belt size, then adjust the centre distance with the motor slide rails to set tension.
+
+## Centre distance for a standard belt
+
+Belts come in fixed lengths, so after choosing a size you usually work back to the centre distance. Rearranging the belt length formula gives:
+
+<p class="formula">C = [b + √(b² − 8 (D₂ − D₁)²)] ÷ 8, where b = 2L − π (D₁ + D₂)</p>
+
+For the example drive with a standard 1,600 mm pitch length belt:
+
+- b = 2 × 1,600 − π × (100 + 250) = **2,100.4 mm**
+- C = [2,100.4 + √(2,100.4² − 8 × 150²)] ÷ 8 = **519.7 mm**
+
+So the motor must sit about 20 mm further away than the 500 mm assumed above, which is within the travel of normal slide rails.
+
+## Wrap angle and torque
+
+The belt wraps less than half way round the small pulley, and grip depends on that arc:
+
+<p class="formula">Wrap angle on the small pulley = 180° − 2 × asin[(D₂ − D₁) ÷ (2C)]</p>
+
+For the example, wrap = 180 − 2 × asin(150 ÷ 1000) = **162.7°**. A 5.5 kW motor at 1,440 rpm gives 9,550 × 5.5 ÷ 1,440 = 36.5 N·m on its shaft, and the 2.5:1 ratio raises that to about **91.2 N·m** on the driven shaft before belt losses. To run the driven shaft at 720 rpm instead, the driven pulley must be 100 × 1,440 ÷ 720 = **200 mm**.
+
+## Belt length and wrap angle against centre distance
+
+For the 100 mm and 250 mm pulleys:
+
+| Centre distance | Belt length | Wrap on small pulley |
+|---|---|---|
+| 250 mm | 1,072 mm | 145.1° |
+| 300 mm | 1,169 mm | 151.0° |
+| 400 mm | 1,364 mm | 158.4° |
+| 500 mm | 1,561 mm | 162.7° |
+| 750 mm | 2,057 mm | 168.5° |
+| 1,000 mm | 2,555 mm | 171.4° |
+
+## Belt speed by driver pulley diameter
+
+| Driver pitch diameter | 960 rpm (6 pole) | 1,440 rpm (4 pole) | 2,900 rpm (2 pole) |
+|---|---|---|---|
+| 80 mm | 4.02 m/s | 6.03 m/s | 12.15 m/s |
+| 100 mm | 5.03 m/s | 7.54 m/s | 15.18 m/s |
+| 125 mm | 6.28 m/s | 9.42 m/s | 18.98 m/s |
+| 160 mm | 8.04 m/s | 12.06 m/s | 24.29 m/s |
+| 200 mm | 10.05 m/s | 15.08 m/s | 30.37 m/s |
+| 250 mm | 12.57 m/s | 18.85 m/s | 37.96 m/s |
+
+## Common mistakes
+
+- **Using the outside diameter of a V-belt pulley.** Speed ratio and belt length use the pitch diameter, which is smaller than the rim diameter; using the rim figure gives a belt that is too long.
+- **Using synchronous speed.** A 4 pole motor on 50 Hz turns at about 1,440 rpm under load, not 1,500 rpm. Use the nameplate speed.
+- **Ignoring a short centre distance.** Below about 120° of wrap the small pulley slips; increase the centre distance or use an idler on the slack side.
+- **Exceeding the pulley rim speed.** A large pulley on a 2 pole motor can pass the maker's maximum rim speed for cast iron. Check before speeding up a drive.
+- **Fitting one new belt on a multi-belt drive.** Old belts have stretched, so the new one carries most of the load. Replace matched sets together.

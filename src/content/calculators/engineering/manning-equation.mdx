@@ -2,10 +2,10 @@
 title: Manning Equation Calculator (Open Channel Flow)
 description: Calculate open channel velocity and flow with the Manning equation for a rectangular channel from width, depth, slope and roughness n.
 category: engineering
-intro: "The Manning equation is the standard formula for uniform flow in open channels, ditches and part-full gravity drains, relating velocity to roughness, hydraulic radius and slope. This Manning equation calculator works in SI units for a rectangular channel — see [open channel flow measurement](https://www.instrumentationblog.in/open-channel-flow-measurement/) and the [Parshall flume](https://www.instrumentationblog.in/parshall-flume-open-channel-flow/)."
+intro: "The Manning equation is the standard formula for uniform flow in open channels, ditches and part-full gravity drains, linking velocity to roughness, hydraulic radius and slope. This Manning equation calculator works in SI units for a rectangular channel.\n\nCivil, drainage and wastewater engineers use it to size channels and check capacity, alongside [open channel flow measurement](https://www.instrumentationblog.in/open-channel-flow-measurement/) with a [Parshall flume](https://www.instrumentationblog.in/parshall-flume-open-channel-flow/)."
 keywords: [manning equation calculator, open channel flow calculator, manning formula, hydraulic radius calculator, channel flow rate, manning n values]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-16
 variables:
   - { id: nm, label: Manning roughness (n), default: 0.013, min: 0, decimals: 4 }
   - { id: b, label: Channel bottom width, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
@@ -31,6 +31,10 @@ faq:
     a: The US form includes a factor 1.486, V = (1.486/n) R^(2/3) S^(1/2) with feet. This calculator works internally in SI, so you can switch display units freely.
   - q: Can I find the normal depth for a given flow?
     a: Yes. Clear the depth, enter the flow rate and calculate — the depth is solved numerically.
+  - q: "What is the Froude number and why check it?"
+    a: "Fr = V ÷ √(g y) compares flow velocity with the speed of a surface wave. Below 1 the flow is subcritical and calm; above 1 it is supercritical and fast. The default channel has Fr = 0.53. Designs close to Fr = 1 are avoided because the surface becomes unstable and wavy."
+  - q: "What velocity keeps a channel from silting up?"
+    a: "A common design rule is a self-cleansing velocity of at least about 0.6 to 0.9 m/s at normal flow for sewers and storm drains. Unlined earth channels also have an upper limit, often around 0.6 to 1.0 m/s, above which the bed starts to erode."
 related: [engineering/api-gravity, engineering/weir-flow, engineering/hazen-williams, engineering/darcy-weisbach-head-loss, engineering/pipe-flow-velocity]
 ---
 
@@ -74,7 +78,39 @@ Concrete channel (n = 0.013), 2 m wide, 0.5 m deep, slope 0.1%:
 | Earth channel, clean | 0.018–0.025 |
 | Natural stream, some weeds and stones | 0.030–0.040 |
 
+## Worked example: normal depth for a design flow
+
+The same 2 m concrete channel (n = 0.013, slope 0.1%) must carry **2 m³/s**. Clear the depth, enter the flow and the calculator solves for the depth at which Manning gives exactly that flow:
+
+- Normal depth y = **0.731 m**
+- Area = 2 × 0.731 = 1.461 m², velocity = 2 ÷ 1.461 = **1.369 m/s**
+- Check the default case too: Froude number Fr = V ÷ √(g y) = 1.169 ÷ √(9.80665 × 0.5) = **0.53**, so the flow is subcritical (Fr below 1) and calm.
+
+## Effect of slope (2 m wide, 0.5 m deep, n = 0.013)
+
+| Slope | Velocity | Flow | Froude number |
+|---|---|---|---|
+| 0.05% (1 in 2,000) | 0.827 m/s | 0.827 m³/s | 0.37 |
+| 0.1% (1 in 1,000) | 1.169 m/s | 1.169 m³/s | 0.53 |
+| 0.2% (1 in 500) | 1.654 m/s | 1.654 m³/s | 0.75 |
+| 0.5% (1 in 200) | 2.615 m/s | 2.615 m³/s | 1.18 |
+| 1% (1 in 100) | 3.698 m/s | 3.698 m³/s | 1.67 |
+
+Velocity rises with the square root of slope, so doubling the slope gives only 41% more flow. Steep channels quickly become supercritical (Fr above 1), with standing waves and hydraulic jumps where the slope eases.
+
+## How it is used in practice
+
+Manning is a design and estimating tool. Engineers use it to size storm drains, irrigation canals and plant effluent channels, and to estimate flow from a measured depth where no flume exists (the slope-area method). For flow that must be measured accurately, a primary device such as a weir or Parshall flume with an ultrasonic or radar level sensor is installed, because a flume's depth to flow relation is fixed by its geometry and does not depend on an estimated n.
+
 ## Notes
 
 - Manning assumes steady, uniform, fully turbulent flow; it is not valid near weirs, gates or sudden changes.
 - For flow measurement, use a calibrated structure such as a weir or flume — see the [weir flow calculator](/engineering/weir-flow/).
+
+## Common mistakes
+
+- **Entering slope as a whole number.** A fall of 1 m in 1,000 m is 0.1%, or 0.001 as a fraction. Entering 0.1 as a fraction makes the flow ten times too high.
+- **Using the US form with metric data.** The 1.486 factor belongs only with feet; mixing systems gives a 49% error.
+- **Choosing n for a new surface.** Weed growth, sediment and joint deterioration raise n over time; design with a value that reflects the channel as it will be maintained.
+- **Applying Manning near structures.** Flow approaching a weir, gate or bend is not uniform, so the depth there is not the normal depth.
+- **Ignoring the minimum velocity.** Channels running below about 0.6 m/s at normal flow tend to collect silt, which changes both the area and the roughness.

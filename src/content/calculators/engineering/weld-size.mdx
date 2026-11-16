@@ -2,10 +2,10 @@
 title: Fillet Weld Size Calculator (Throat, Stress & Capacity)
 description: Calculate fillet weld throat thickness, shear stress and load capacity from leg size, weld length and allowable stress — a = 0.707 × leg size.
 category: engineering
-intro: "A fillet weld transfers load through its throat, the shortest distance from the root to the weld face, which for an equal-leg weld is 0.707 times the leg size. This fillet weld size calculator finds the throat, the shear stress for a given load and weld length, and the load the weld can safely carry at an allowable stress."
+intro: "A fillet weld carries load through its throat, the shortest distance from root to face, which for an equal-leg weld is 0.707 times the leg size. This fillet weld size calculator finds the throat, the shear stress and the load the weld can carry.\n\nStructural and mechanical engineers, fabricators and welding inspectors use it to size brackets, lugs and stiffeners, and to check that a drawing's weld callout can take the design load."
 keywords: [fillet weld size calculator, weld strength calculator, fillet weld throat thickness, weld capacity calculator, weld stress calculator, 0.707 leg size, aws fillet weld strength]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-16
 variables:
   - { id: s, label: Fillet leg size, family: length, unit: mm, imperialUnit: in, default: 6, min: 0 }
   - { id: L, label: Effective weld length, family: length, unit: mm, imperialUnit: in, default: 100, min: 0, help: 'Total length of weld carrying the load, excluding start and end craters.' }
@@ -29,6 +29,8 @@ faq:
     a: AWS D1.1 allows 0.30 × the electrode's tensile strength on the effective throat — about 145 MPa (21 ksi) for E70XX electrodes. Eurocode 3 uses a directional or simplified method based on the parent metal's strength.
   - q: Is there a minimum fillet weld size?
     a: "Yes. Codes set minimum leg sizes based on the thicker plate (in AWS D1.1: 3 mm up to 6 mm plate, 5 mm for 6–12 mm, 6 mm for 12–20 mm and 8 mm above) so the weld cools slowly enough to fuse properly, and a maximum leg along plate edges."
+  - q: "How do I calculate the throat of an unequal-leg fillet weld?"
+    a: "Throat = s₁ × s₂ ÷ √(s₁² + s₂²), the height of the right-angled triangle measured to its long side. A 6 × 10 mm fillet has a throat of 5.14 mm, compared with 4.24 mm for a 6 mm equal-leg fillet."
 related: [engineering/factor-of-safety, engineering/bending-stress, engineering/bolt-torque, physics/youngs-modulus]
 ---
 
@@ -66,3 +68,34 @@ A 6 mm fillet, 100 mm long, made with E70 electrodes (τ<sub>allow</sub> = 145 M
 - This simplified method treats the load as shear on the throat in any direction; it is conservative for welds loaded transversely.
 - The parent metal next to the weld must also be checked.
 - Compare the weld stress with your required [factor of safety](/engineering/factor-of-safety/).
+
+## Sizing a weld for a load
+
+To find the leg needed for 80 kN on the same 100 mm of weld at 145 MPa:
+
+- Required throat a = 80 × 1,000 ÷ (145 × 100) = **5.52 mm**
+- Required leg s = 5.52 ÷ 0.707 = **7.80 mm**, so specify an **8 mm** fillet
+
+If the joint is welded on both sides, each weld line counts, so two 100 mm runs of 6 mm fillet give 123.0 kN. For an unequal-leg fillet the throat is s₁ s₂ ÷ √(s₁² + s₂²); a 6 × 10 mm fillet has a throat of **5.14 mm**, only a little more than a 6 mm equal-leg weld.
+
+## Eurocode 3 simplified design strength
+
+EN 1993-1-8 gives a design shear strength f<sub>vw,d</sub> = f<sub>u</sub> ÷ (√3 × β<sub>w</sub> × γ<sub>M2</sub>) with γ<sub>M2</sub> = 1.25. These are design values for factored loads, not allowable stresses, so do not mix them with the AWS figure above:
+
+| Steel grade | f<sub>u</sub> | β<sub>w</sub> | f<sub>vw,d</sub> | Resistance per mm of 6 mm fillet |
+|---|---|---|---|---|
+| S235 | 360 MPa | 0.80 | 207.8 MPa | 0.882 kN/mm |
+| S275 | 430 MPa | 0.85 | 233.7 MPa | 0.991 kN/mm |
+| S355 | 510 MPa | 0.90 | 261.7 MPa | 1.110 kN/mm |
+
+## Inspection and practice
+
+The leg size is checked with a fillet weld gauge after welding, and a concave weld face reduces the true throat below 0.707 × leg, so inspectors check the throat too. Effective length excludes the start and stop craters; many codes deduct about twice the leg size from each run and set a minimum length of around four times the leg. Intermittent welds carry load only over their weld lengths, not the gaps between them.
+
+## Common mistakes
+
+- **Using the leg as the throat.** Designing with the leg size overstates capacity by about 41%.
+- **Counting the full run as effective length.** Craters at each end carry little load; deduct them, especially on short welds.
+- **Ignoring eccentric loads.** A load offset from the weld group adds bending and torsion stress; the simple F ÷ (aL) check is then unsafe.
+- **Mixing factored and working loads.** Allowable stresses (AWS) go with service loads; Eurocode design strengths go with factored loads.
+- **Forgetting the parent metal.** The plate next to the weld can fail in shear before the weld does, so check its capacity as well.

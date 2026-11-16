@@ -2,10 +2,10 @@
 title: Ziegler–Nichols PID Tuning Calculator (Ultimate Gain Method)
 description: Calculate P, PI and PID controller settings from ultimate gain Ku and ultimate period Pu using the Ziegler–Nichols closed-loop tuning rules.
 category: engineering
-intro: "The Ziegler–Nichols closed-loop method finds the gain at which a loop just oscillates steadily (Ku) and the period of that oscillation (Pu), then sets the controller from simple ratios. This Ziegler–Nichols PID tuning calculator gives P, PI and PID settings — see the [PID controller tuning guide](https://www.instrumentationblog.in/pid-controller-tuning-guide/) and [step-test, relay and Ziegler–Nichols auto-tuning in a DCS](https://www.instrumentationblog.in/dcs-pid-auto-tune-step-test-relay-feedback-ziegler-nichols/)."
+intro: "The Ziegler-Nichols closed loop method finds the gain at which a loop just oscillates steadily (Ku) and the period of that oscillation (Pu), then sets the controller from simple ratios. This Ziegler-Nichols PID tuning calculator gives P, PI and PID settings.\n\nControl and commissioning engineers use it as a quick first tuning, as in the [PID controller tuning guide](https://www.instrumentationblog.in/pid-controller-tuning-guide/) and [step-test, relay and Ziegler-Nichols auto-tuning in a DCS](https://www.instrumentationblog.in/dcs-pid-auto-tune-step-test-relay-feedback-ziegler-nichols/)."
 keywords: [ziegler nichols calculator, pid tuning calculator, ultimate gain method, ziegler nichols tuning rules, ku pu tuning, closed loop pid tuning]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-16
 variables:
   - { id: Ku, label: Ultimate gain (Ku), default: 2, min: 0 }
   - { id: Pu, label: Ultimate period (Pu), family: seconds, unit: s, default: 60, min: 0 }
@@ -31,6 +31,10 @@ faq:
     a: They target a quarter-amplitude decay, which overshoots and oscillates. Many engineers halve the gain, or use the gentler Tyreus–Luyben rules shown in the table.
   - q: How do I convert gain to proportional band?
     a: PB (%) = 100 ÷ Kc. A gain of 1.2 is a proportional band of about 83%.
+  - q: "What is the relay auto-tune method?"
+    a: "The controller output is switched up and down by a fixed amount d around its normal value, which makes the PV cycle at the ultimate period. The ultimate gain is Ku = 4d ÷ (π a), where a is the PV amplitude. A ±5% relay giving a 3.2% PV amplitude means Ku = 1.99."
+  - q: "Do Ziegler-Nichols settings work in a series PID?"
+    a: "Yes, after conversion. Because the classic rule has Ti = 4 Td, the series equivalents are Kc = 0.3 Ku, Ti = Td = Pu ÷ 4. For Ku = 2 and Pu = 60 s that is a gain of 0.6 with Ti and Td both 15 s."
 related: [engineering/lambda-tuning, engineering/fopdt-step-test, engineering/sensor-response-time, engineering/4-20ma-scaling]
 ---
 
@@ -63,3 +67,40 @@ A loop oscillates steadily at **Ku = 2** with a period **Pu = 60 s**:
 - The test drives the loop to the edge of instability — don't do it on loops where oscillation is unsafe; use a step test and the [lambda tuning calculator](/engineering/lambda-tuning/) instead.
 - Valve stiction and sensor lag change Ku and Pu; fix mechanical problems first.
 - After tuning, test with a small set-point step and reduce gain if overshoot is excessive.
+
+## Worked example: from a relay test to PID settings
+
+Driving a loop to steady oscillation with a P-only controller is risky, so many DCS auto-tuners use a **relay test** instead: the output is switched ±d around its working value and the PV settles into a limit cycle of amplitude a. The describing function gives the ultimate gain:
+
+<p class="formula">K<sub>u</sub> = 4d ÷ (π a)</p>
+
+With a relay step of d = ±5% and a measured PV amplitude of a = 3.2% (peak), K<sub>u</sub> = 4 × 5 ÷ (π × 3.2) = **1.989**, and the period of the cycle is P<sub>u</sub>. Taking the calculator defaults K<sub>u</sub> = 2 and P<sub>u</sub> = 60 s, the classic PID settings are:
+
+- K<sub>c</sub> = 0.6 × 2 = **1.2** (PB 83%)
+- T<sub>i</sub> = 60 ÷ 2 = **30 s** (0.5 min, or 2 repeats per minute)
+- T<sub>d</sub> = 60 ÷ 8 = **7.5 s** (0.125 min)
+
+## Settings for a series (interacting) PID
+
+Many controllers use the series form. The classic rule has T<sub>i</sub> = 4 T<sub>d</sub> exactly, which is the limit for converting ideal settings to series ones:
+
+<p class="formula">K<sub>c</sub>′ = (K<sub>c</sub>/2)(1 + √(1 − 4T<sub>d</sub>/T<sub>i</sub>)) &nbsp;·&nbsp; T<sub>i</sub>′ = (T<sub>i</sub>/2)(1 + √…) &nbsp;·&nbsp; T<sub>d</sub>′ = (T<sub>i</sub>/2)(1 − √…)</p>
+
+For the example the root is zero, so the series settings are K<sub>c</sub>′ = **0.6**, T<sub>i</sub>′ = **15 s** and T<sub>d</sub>′ = **15 s**. Typing the ideal values into a series controller gives a different, more aggressive loop.
+
+## Variations on the closed loop rules (K<sub>u</sub> = 2, P<sub>u</sub> = 60 s)
+
+| Rule | K<sub>c</sub> rule | K<sub>c</sub> | PB | T<sub>i</sub> | T<sub>d</sub> |
+|---|---|---|---|---|---|
+| Classic PID | 0.6 K<sub>u</sub> | 1.200 | 83% | 30.0 s | 7.5 s |
+| Pessen integral rule | 0.7 K<sub>u</sub> | 1.400 | 71% | 24.0 s | 9.0 s |
+| Some overshoot | 0.33 K<sub>u</sub> | 0.660 | 152% | 30.0 s | 20.0 s |
+| No overshoot | 0.2 K<sub>u</sub> | 0.400 | 250% | 30.0 s | 20.0 s |
+
+## Common mistakes
+
+- **Leaving integral action on during the test.** Ku and Pu must come from a proportional-only loop or a relay test; integral action shortens the period.
+- **Testing with a saturating valve.** If the output hits 0 or 100% during the oscillation, the measured Ku is wrong.
+- **Ignoring the controller form.** Ideal, series and parallel PID forms need different numbers for the same response.
+- **Using derivative on a noisy PV.** Flow and liquid pressure loops are noisy; use PI there and keep derivative for slow temperature loops.
+- **Keeping the settings without a check.** Ziegler-Nichols aims for quarter amplitude decay; most process loops need the gain reduced after a set point test.

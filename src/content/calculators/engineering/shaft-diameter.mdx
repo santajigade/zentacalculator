@@ -2,10 +2,10 @@
 title: Shaft Diameter Calculator (Torsion, from Power & Speed)
 description: Calculate the minimum diameter of a solid shaft to transmit a given power at a given speed without exceeding the allowable shear stress, τ = 16T/πd³.
 category: engineering
-intro: "A rotating shaft must carry its torque without the torsional shear stress at its surface exceeding a safe limit. This shaft diameter calculator converts power and speed into torque and then sizes a solid circular shaft from the torsion formula τ = 16T ÷ (πd³), using an allowable shear stress that already includes your safety margin."
+intro: "A rotating shaft must carry its torque without the torsional shear stress at its surface exceeding a safe limit. This shaft diameter calculator converts power and speed into torque and sizes a solid round shaft from τ = 16T ÷ (πd³), using an allowable shear stress that already includes your margin.\n\nMechanical and maintenance engineers use it to size pump, fan and gearbox shafts, check couplings and confirm that a replacement shaft is strong enough."
 keywords: [shaft diameter calculator, shaft size calculator, torsional shear stress calculator, shaft design calculator, solid shaft torque, tau = 16t / pi d^3, motor shaft diameter]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-16
 variables:
   - { id: P, label: Power transmitted, family: power, unit: kW, imperialUnit: hp, default: 15, min: 0 }
   - { id: N, label: Shaft speed, suffix: rpm, default: 1450, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: No. Shafts carrying pulleys, gears or overhung loads also bend. Then combine them with the equivalent torque √(M² + T²) in place of T, and apply shock factors for the load type.
   - q: How does speed affect shaft size?
     a: At the same power, torque is inversely proportional to speed, and diameter grows with the cube root of torque. Halving the speed increases the diameter by about 26%.
+  - q: "How much lighter is a hollow shaft for the same torque?"
+    a: "With a bore of 0.6 times the outside diameter, the outside diameter grows by only about 5% but the cross section, and so the weight, drops to about 70% of a solid shaft. Material near the centre carries little torsional stress."
+  - q: "How do I check shaft twist?"
+    a: "Use θ = T L ÷ (G J) with J = π d⁴ ÷ 32. A 25 mm steel shaft carrying 98.8 N·m twists about 1.86° per metre. Many machinery guidelines limit twist to about 0.25° per metre."
 related: [engineering/torque-power-speed, physics/torque, engineering/bending-stress, engineering/gear-ratio]
 ---
 
@@ -61,3 +65,39 @@ A 15 kW motor running at 1,450 rpm, steel shaft with τ<sub>allow</sub> = 40 MPa
 - Keyways, shoulders and grooves concentrate stress; fatigue design for these features needs stress-concentration factors.
 - Long shafts may be governed by twist rather than strength — a common limit is 0.25° per metre for machinery shafts.
 - Check that a motor's shaft size matches its output torque using the [torque, power & speed calculator](/engineering/torque-power-speed/).
+
+## Worked example: adding bending from a belt pulley
+
+The 15 kW, 1,450 rpm drive above gives T = **98.79 N·m** and a pure torsion diameter of **23.3 mm**. If an overhung pulley also puts a bending moment of 60 N·m on the shaft, use the equivalent torque:
+
+- T<sub>e</sub> = √(M² + T²) = √(60² + 98.79²) = **115.6 N·m**
+- d = ∛(16 × 115.6 ÷ (π × 40 × 10⁶)) = **24.5 mm**, so a 25 mm shaft still works but with less margin
+
+Enter T<sub>e</sub> as the torque (or the matching power) to size a shaft for combined loading.
+
+## Hollow shafts and twist
+
+A hollow shaft with bore = 0.6 × outside diameter carries the same torque with d<sub>o</sub> = ∛(16T ÷ (πτ(1 − 0.6⁴))) = **24.4 mm** outside and 14.6 mm bore. It is only 5% larger in diameter but uses **70%** of the material of the solid shaft.
+
+Stiffness can govern instead of strength. A 25 mm solid steel shaft (G = 79.3 GPa) carrying 98.8 N·m twists by θ = T L ÷ (G J) = **1.86° per metre**, against a common machinery limit of 0.25° per metre, so a long line shaft would need to be larger than the stress check suggests.
+
+## Torque and power capacity of solid shafts at τ = 40 MPa
+
+| Diameter | Torque capacity | Power at 1450 rpm | Power at 960 rpm |
+|---|---|---|---|
+| 20 mm | 63 N·m | 9.5 kW | 6.3 kW |
+| 25 mm | 123 N·m | 18.6 kW | 12.3 kW |
+| 30 mm | 212 N·m | 32.2 kW | 21.3 kW |
+| 35 mm | 337 N·m | 51.1 kW | 33.9 kW |
+| 40 mm | 503 N·m | 76.3 kW | 50.5 kW |
+| 50 mm | 982 N·m | 149.1 kW | 98.7 kW |
+| 60 mm | 1,696 N·m | 257.6 kW | 170.5 kW |
+| 80 mm | 4,021 N·m | 610.6 kW | 404.3 kW |
+
+## Common mistakes
+
+- **Using rpm as angular velocity.** Torque is P ÷ ω with ω in rad/s; ω = 2πN ÷ 60.
+- **Sizing on average power.** Use the maximum torque, including motor starting torque and any service factor for shock loads.
+- **Entering yield strength as the allowable.** The allowable shear stress must already include the safety margin and keyway allowance.
+- **Forgetting bending.** Pulleys, sprockets and gears on the shaft add bending that often exceeds the torsion.
+- **Not rounding up.** Choose the next standard size above the result, then check that the keyway and bearing seats still leave enough section.

@@ -1,11 +1,11 @@
 ---
-title: Transformer Size Calculator (kVA Rating from Load)
-description: Calculate the transformer kVA rating needed for your connected load from kW, power factor, diversity factor and future growth — and pick the next standard size.
+title: "Transformer Size Calculator (kVA from Connected Load)"
+description: "Calculate the transformer kVA rating for a connected load from kW, demand factor, power factor and growth margin, then pick the next standard size."
 category: electrical
-intro: "Choosing a transformer means turning the connected load into a kVA figure, allowing for diversity, power factor and future growth. Too small and it overheats; too large and it wastes money and no-load losses. This transformer size calculator follows the usual method — see [how to calculate transformer kVA rating](https://www.instrumentationblog.in/how-to-calculate-transformer-kva-rating/)."
+intro: "Choosing a transformer means turning the connected load into a kVA figure, allowing for demand factor, power factor and future growth. This transformer size calculator gives the maximum demand and the kVA rating to buy.\n\nElectrical engineers, contractors and plant planners use it at the design stage, because too small a unit overheats and too large a one wastes money and no-load losses. See [how to calculate transformer kVA rating](https://www.instrumentationblog.in/how-to-calculate-transformer-kva-rating/)."
 keywords: [transformer size calculator, transformer kva calculation, transformer sizing, kva rating calculator, distribution transformer selection, diversity factor, how to size a transformer]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-16
 variables:
   - { id: P, label: Total connected load, family: power, unit: kW, imperialUnit: hp, default: 500, min: 0 }
   - { id: df, label: Demand / diversity factor, default: 0.7, min: 0.01, max: 1, help: 'Fraction of connected load expected to run at the same time — often 0.6–0.8 for industrial plants.' }
@@ -25,6 +25,10 @@ faq:
     a: Transformers last longer and are most efficient at 50–80% load, and margins allow for growth and motor starting.
   - q: Should harmonics be considered?
     a: Yes. With many VFDs, UPSs or rectifiers, use a K-rated transformer or derate a standard one.
+  - q: "What size transformer do I need for a 100 kW load?"
+    a: "At unity diversity and 0.9 power factor, 100 kW is 111 kVA, so 160 kVA with a growth margin. With the default 0.7 demand factor and 25% growth, 100 kW connected needs 97 kVA, which is a 100 kVA unit."
+  - q: "Can a transformer be loaded above its kVA rating?"
+    a: "For short periods, yes: IEC 60076-7 allows cyclic overloads if the hot-spot temperature stays within limits, typically after a light-load period. Continuous overload ages the insulation quickly, roughly halving its life for every 6 to 7 °C of extra hot-spot temperature."
 related: [electrical/ct-burden, electrical/three-phase-motor-power, electrical/transformer-current, electrical/transformer-efficiency, electrical/power-factor-correction, electrical/generator-size]
 ---
 
@@ -36,12 +40,16 @@ Enter the **total connected load** in kW, the **demand (diversity) factor**, the
 
 <p class="formula">kVA = (connected kW × demand factor) ÷ PF × (1 + growth margin)</p>
 
-## Example
+## Worked example
 
-500 kW connected, 0.7 demand factor, 0.9 PF, 25% growth:
+A factory has **500 kW** of connected load, a demand factor of **0.7**, a corrected power factor of **0.9** and allows **25%** for growth:
 
-- Maximum demand = 350 kW
-- kVA = 350 ÷ 0.9 × 1.25 = **486 kVA** → choose **500 kVA**
+- Maximum demand = 500 × 0.7 = **350 kW**
+- Apparent power today = 350 ÷ 0.9 = 388.9 kVA
+- Required rating = 388.9 × (1 + 0.25) = **486 kVA**
+- Next standard size: **500 kVA**, whose full-load current at 415 V is 500 × 1,000 ÷ (√3 × 415) = **696 A**
+
+On day one the 500 kVA unit runs at 78% load, close to the 50 to 80% band where distribution transformers are most efficient.
 
 ## Standard distribution transformer ratings
 
@@ -61,3 +69,46 @@ Enter the **total connected load** in kW, the **demand (diversity) factor**, the
 - Check full-load current and protection with the [transformer current calculator](/electrical/transformer-current/).
 - Check fault level with the [transformer short-circuit calculator](/electrical/transformer-short-circuit/).
 - Plan capacitor banks with the [power factor correction calculator](/electrical/power-factor-correction/) — a better PF reduces the kVA you need.
+
+## Transformer size for common loads
+
+Demand factor 0.7, power factor 0.9, 25% growth, and full-load secondary current at 415 V for the chosen standard size:
+
+| Connected load | Maximum demand | Required rating | Standard size | Full-load current |
+|---|---|---|---|---|
+| 100 kW | 70 kW | 97 kVA | 100 kVA | 139 A |
+| 200 kW | 140 kW | 194 kVA | 200 kVA | 278 A |
+| 300 kW | 210 kW | 292 kVA | 315 kVA | 438 A |
+| 500 kW | 350 kW | 486 kVA | 500 kVA | 696 A |
+| 750 kW | 525 kW | 729 kVA | 800 kVA | 1,113 A |
+| 1,000 kW | 700 kW | 972 kVA | 1,000 kVA | 1,391 A |
+| 1,500 kW | 1,050 kW | 1,458 kVA | 1,600 kVA | 2,226 A |
+| 2,000 kW | 1,400 kW | 1,944 kVA | 2,000 kVA | 2,782 A |
+
+## Effect of power factor
+
+For the example's 350 kW maximum demand with 25% growth, a poor power factor pushes the rating up by one or two sizes:
+
+| Power factor | Required rating | Standard size |
+|---|---|---|
+| 0.70 | 625 kVA | 630 kVA |
+| 0.80 | 547 kVA | 630 kVA |
+| 0.85 | 515 kVA | 630 kVA |
+| 0.90 | 486 kVA | 500 kVA |
+| 0.95 | 461 kVA | 500 kVA |
+| 1.00 | 438 kVA | 500 kVA |
+
+## Practical checks after sizing
+
+- **Motor starting.** A large direct-on-line motor draws 6 to 7 times its full-load current. If the largest motor is more than about 20 to 30% of the transformer rating, check the voltage dip with the [motor starting voltage dip calculator](/electrical/motor-starting-voltage-dip/).
+- **Harmonic loads.** Drives, UPS systems and LED lighting raise eddy losses; use a K-rated unit or derate by 10 to 20% when they make up much of the load.
+- **Ambient and altitude.** Ratings assume about 40 °C maximum ambient and up to 1,000 m altitude; hotter or higher sites need derating.
+- **Parallel or standby units.** Critical plants often split the load across two transformers, each able to carry the essential load alone.
+
+## Common mistakes
+
+- **Adding kW and kVA together.** Convert every load to the same basis before summing, and apply the power factor once.
+- **Skipping the demand factor entirely or using a very low one.** Without measured data, an optimistic factor is the commonest cause of undersized transformers.
+- **Using the power factor before correction when a capacitor bank is planned,** or after correction when it is not. The rating must match the power factor the transformer will actually see.
+- **Counting standby equipment.** Duty and standby pumps do not run together; include only one of each pair.
+- **Rounding down to a standard size.** A 486 kVA requirement needs 500 kVA, never the size below it.

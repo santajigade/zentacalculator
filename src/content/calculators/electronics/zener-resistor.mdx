@@ -1,11 +1,11 @@
 ---
-title: Zener Diode Resistor Calculator (Voltage Regulator)
-description: Calculate the series resistor and power ratings for a Zener diode shunt regulator from input voltage, Zener voltage and load current.
+title: "Zener Diode Resistor Calculator (Series Resistor and Power)"
+description: "Calculate the series resistor for a Zener diode voltage regulator, plus resistor and Zener power, from input voltage, Zener voltage and load current."
 category: electronics
-intro: "A Zener diode with a series resistor is the simplest voltage regulator: the Zener holds a fixed voltage while the resistor drops the rest and limits current. This Zener diode resistor calculator sizes the resistor and checks the power in both parts — see [what a Zener diode is](https://www.instrumentationblog.in/what-is-a-zener-diode/)."
+intro: "A Zener diode with a series resistor is the simplest voltage regulator: the Zener holds a fixed voltage while the resistor drops the rest and limits current. This Zener diode resistor calculator sizes that resistor and checks the power in both parts.\n\nElectronics hobbyists, students and circuit designers use it for references, clamps and small supplies. For the device itself, see [what a Zener diode is](https://www.instrumentationblog.in/what-is-a-zener-diode/)."
 keywords: [zener diode resistor calculator, zener regulator calculator, zener series resistor, zener diode calculation, zener power dissipation, shunt regulator]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-16
 variables:
   - { id: Vin, label: Minimum input voltage, family: voltage, unit: V, default: 12, min: 0 }
   - { id: Vz, label: Zener voltage, family: voltage, unit: V, default: 5.1, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: For more than a few tens of milliamps, or when efficiency matters. Zener regulators waste power and regulate less tightly than ICs.
   - q: Why does Zener voltage change with temperature?
     a: Zeners below about 5 V have a negative temperature coefficient and those above have a positive one; around 5.1–5.6 V the effects nearly cancel.
+  - q: "What wattage Zener diode do I need?"
+    a: "At least twice the no-load Zener power at the highest input voltage. In the example, 130 mW at 12 V rises to 168 mW at 14 V, so a 0.5 W Zener is suitable and a 0.25 W part is not."
+  - q: "Can I connect two Zener diodes in series?"
+    a: "Yes, two Zeners in series give the sum of their voltages and share the power, for example 5.1 V plus 6.8 V for 11.9 V. Do not connect Zeners in parallel to share current, because the one with the lower voltage takes nearly all of it."
 related: [electronics/led-resistor, electronics/voltage-divider, physics/ohms-law, electronics/transistor-base-resistor]
 ---
 
@@ -40,13 +44,16 @@ Enter the **minimum input voltage**, the **Zener voltage**, the **maximum load c
 
 <p class="formula">P<sub>R</sub> = (V<sub>in</sub> − V<sub>Z</sub>)² ÷ R &nbsp;·&nbsp; P<sub>Z,max</sub> = V<sub>Z</sub> × (V<sub>in</sub> − V<sub>Z</sub>) ÷ R</p>
 
-## Example
+## Worked example
 
-12 V in, 5.1 V Zener, 20 mA load, 5 mA minimum Zener current:
+A 5.1 V Zener must supply a load of up to 20 mA from a supply that never falls below 12 V, keeping at least 5 mA in the Zener:
 
-- R = 6.9 ÷ 0.025 = **276 Ω** → use 270 Ω
-- Resistor power ≈ **176 mW** → 0.5 W resistor
-- Zener power with no load ≈ **130 mW** → 0.5 W Zener
+- Voltage across the resistor = 12 − 5.1 = **6.9 V**
+- R = 6.9 ÷ (20 + 5) mA = 6.9 ÷ 0.025 A = **276 Ω**
+- Resistor power = 6.9² ÷ 276 = **172.5 mW**
+- Zener power with the load removed = 5.1 × 6.9 ÷ 276 = **127.5 mW**
+
+Choose the next lower E24 value, **270 Ω**, so the Zener current only rises: it becomes 25.6 mA in total, leaving 5.6 mA in the Zener at full load. With 270 Ω the resistor dissipates 176 mW and the unloaded Zener 130 mW, so 0.5 W parts give a safe 2 to 3 times margin.
 
 ## Common Zener voltages (E24 series)
 
@@ -57,3 +64,38 @@ Enter the **minimum input voltage**, the **Zener voltage**, the **maximum load c
 - **Overvoltage clamps** on sensor inputs.
 - **Reference voltages** for comparators.
 - **Intrinsic safety barriers** use Zeners to limit voltage into hazardous areas.
+
+## Resistor values for a 12 V supply
+
+Load 20 mA and minimum Zener current 5 mA, with the standard value rounded down to E24 and the powers computed for that standard value:
+
+| Zener voltage | Calculated R | E24 resistor | Resistor power | Zener power, no load |
+|---|---|---|---|---|
+| 3.3 V | 348 Ω | 330 Ω | 229 mW | 87 mW |
+| 3.9 V | 324 Ω | 300 Ω | 219 mW | 105 mW |
+| 4.7 V | 292 Ω | 270 Ω | 197 mW | 127 mW |
+| 5.1 V | 276 Ω | 270 Ω | 176 mW | 130 mW |
+| 5.6 V | 256 Ω | 240 Ω | 171 mW | 149 mW |
+| 6.2 V | 232 Ω | 220 Ω | 153 mW | 163 mW |
+| 6.8 V | 208 Ω | 200 Ω | 135 mW | 177 mW |
+| 8.2 V | 152 Ω | 150 Ω | 96 mW | 208 mW |
+| 9.1 V | 116 Ω | 110 Ω | 76 mW | 240 mW |
+| 10 V | 80 Ω | 75 Ω | 53 mW | 267 mW |
+
+## Design for the highest input voltage too
+
+The resistor is sized at the lowest input voltage, but the Zener dissipates the most at the highest input with no load. If the 12 V supply in the example can rise to 14 V, the 270 Ω resistor passes 33.0 mA, the unloaded Zener dissipates **168 mW** and the resistor **293 mW**. Always check the power at the maximum input, and derate the Zener above 25 °C ambient as its datasheet shows (often about 4 mW per °C for a 0.5 W glass part).
+
+## Practical notes
+
+- **Regulation is modest.** The Zener's dynamic resistance (typically 5 to 30 Ω for small parts) means the output moves by tens of millivolts as the load current changes. Add an emitter follower transistor or use a regulator IC for tighter control.
+- **Choose the Zener test current.** The datasheet voltage is quoted at a test current, often 5 mA for 0.5 W parts. Running far below it gives a lower, softer voltage.
+- **Add a capacitor.** A 100 nF to 10 µF capacitor across the Zener reduces its noise, which is significant in avalanche diodes above about 6 V.
+
+## Common mistakes
+
+- **Sizing at the nominal input voltage.** If the supply sags below the design value, the Zener current falls to zero and the output drops out of regulation.
+- **Rounding the resistor up.** A higher standard value reduces the current and can starve the Zener at full load; round down instead.
+- **Forgetting the no-load case.** When the load is disconnected all the current flows into the Zener, which is when it overheats.
+- **Using a Zener for large currents.** Above roughly 50 mA the wasted power grows quickly; a linear regulator or a switching converter is more efficient.
+- **Ignoring tolerance.** A 5.1 V Zener with 5% tolerance can be anywhere from about 4.85 to 5.36 V, which matters when it is used as a reference.

@@ -1,0 +1,120 @@
+---
+title: Molar Flow Rate Calculator (Mass, Molar and Gas Volume Flow)
+description: Convert mass flow to molar flow in kmol/h and mol/s, then to actual gas volume flow and Nm³/h or Sm³/h using the ideal gas law and molar volume.
+category: chemistry
+intro: "Molar flow rate is the number of moles passing a point per unit time, the basis of every reaction and material balance. This molar flow rate calculator converts a mass flow and molar mass into kmol/h and mol/s, and for a gas into actual, normal and standard volume flow, as discussed in [actual, standard and normal flow](https://www.instrumentationblog.in/actual-flow-standard-flow-normal-flow/).\n\nChemical and process engineers use it to write stream tables and check stoichiometry, and instrument engineers use it to compare mass, volumetric and normalised flow meter readings."
+keywords: [molar flow rate calculator, mass flow to molar flow, kmol/h to kg/h, molar flow to volumetric flow, kmol/h to Nm3/h, mol/s calculator, molar flow formula]
+published: 2026-11-16
+updated: 2026-11-16
+variables:
+  - { id: m, label: Mass flow rate, family: massflow, unit: kgh, imperialUnit: lbh, default: 500, min: 0 }
+  - { id: M, label: Molar mass, suffix: g/mol (kg/kmol), default: 28.014, min: 0, help: 'N₂ 28.014, air 28.965, O₂ 31.998, CO₂ 44.009, CH₄ 16.043, H₂ 2.016, H₂O 18.015. For a mixture use the mole-weighted average.' }
+  - { id: T, label: Actual gas temperature, family: temperature, unit: C, imperialUnit: F, default: 25 }
+  - { id: Pa, label: Actual absolute pressure, family: pressure, unit: bar, imperialUnit: psi, default: 6, min: 0, help: 'Absolute = gauge + atmospheric (1.01325 bar at sea level).' }
+  - { id: Z, label: Compressibility factor Z, default: 1, min: 0, decimals: 4, help: '1 for an ideal gas. Only affects the actual volume flow.' }
+  - { id: n, label: Molar flow rate, suffix: kmol/h, min: 0, decimals: 4 }
+  - { id: ns, label: Molar flow rate, suffix: mol/s, min: 0, decimals: 4 }
+  - { id: Q, label: Actual volume flow at T and P, family: flow, unit: m3h, imperialUnit: cfm, min: 0 }
+  - { id: Qn, label: Normal volume flow (0 °C and 1.01325 bar), suffix: Nm³/h, min: 0 }
+  - { id: Qs, label: Standard volume flow (15 °C and 1.01325 bar), suffix: Sm³/h, min: 0 }
+equations:
+  - n = m * 3600 / M
+  - ns = n / 3.6
+  - Q = ns * Z * 8.314462618 * T / Pa
+  - Qn = n * 8.314462618 * 273.15 / 101.325
+  - Qs = n * 8.314462618 * 288.15 / 101.325
+faq:
+  - q: How do I convert mass flow to molar flow?
+    a: "Divide the mass flow by the molar mass: ṅ = ṁ ÷ M. Because 1 kmol of a substance has a mass of M kg, kg/h divided by kg/kmol gives kmol/h. For example, 500 kg/h of nitrogen (M = 28.014) is 17.848 kmol/h, or 4.958 mol/s."
+  - q: How do I convert kmol/h to Nm³/h?
+    a: "Multiply by the molar volume at normal conditions, 22.414 Nm³/kmol at 0 °C and 1.01325 bar. So 1 kmol/h of any ideal gas is 22.414 Nm³/h. At standard conditions of 15 °C the factor is 23.645 Sm³/kmol, which is why the same molar flow gives a Sm³/h figure about 5.5% higher."
+  - q: Why is molar flow used instead of mass flow in reaction balances?
+    a: "Chemical equations balance in moles, not kilograms. One mole of methane reacts with two moles of oxygen whatever their masses, so converting each stream to kmol/h makes stoichiometric ratios, excess air and conversion direct to read. Mass is conserved too, but moles show what actually reacts."
+  - q: Does pressure change the molar flow rate?
+    a: "No. Molar flow, like mass flow, is the same at any pressure and temperature along a pipe at steady state. Only the actual volume flow changes: doubling the absolute pressure halves the actual m³/h, while kmol/h, kg/h and Nm³/h stay the same."
+  - q: How do I find the molar mass of a gas mixture?
+    a: "Take the mole-fraction weighted average: M = Σ yᵢ Mᵢ. A biogas of 80 mol% methane and 20 mol% CO₂ has M = 0.8 × 16.043 + 0.2 × 44.009 = 21.636 g/mol. If you know mass fractions wᵢ instead, use 1 ÷ M = Σ wᵢ ÷ Mᵢ."
+related: [engineering/mass-flow-rate, engineering/gas-flow-correction, chemistry/gas-density, chemistry/moles, physics/ideal-gas-law, chemistry/combustion-air]
+---
+
+## How to use the molar flow rate calculator
+
+Enter the **mass flow rate** and the **molar mass** of the stream. The calculator returns the molar flow in kmol/h and mol/s. For a gas, also enter the **actual temperature**, the **absolute pressure** and, if you know it, the **compressibility factor Z**; the calculator then gives the actual volume flow at line conditions and the normal (Nm³/h) and standard (Sm³/h) volume flows. For a liquid, ignore the gas results. To go the other way, enter a molar flow and press × on the mass flow so that it becomes the result.
+
+## Molar flow rate formula
+
+<p class="formula">ṅ = ṁ ÷ M</p>
+
+<p class="formula">Q<sub>actual</sub> = ṅ Z R T ÷ P &nbsp;·&nbsp; Q<sub>N</sub> = ṅ × 22.414 m³/kmol &nbsp;·&nbsp; Q<sub>S</sub> = ṅ × 23.645 m³/kmol</p>
+
+ṁ is the mass flow, M the molar mass in kg/kmol (numerically equal to g/mol), R = 8.314462618 J/(mol·K), T the absolute temperature in kelvin and P the absolute pressure in Pa. The molar volumes come from the same law: V<sub>m</sub> = R T ÷ P = 8.314462618 × 273.15 ÷ 101,325 = 0.022414 m³/mol at 0 °C.
+
+## Worked example
+
+Nitrogen flows at **500 kg/h** (M = 28.014 g/mol) at **25 °C** and **6 bar(a)**, treated as an ideal gas (Z = 1):
+
+- Molar flow = 500 ÷ 28.014 = **17.8482 kmol/h**
+- In SI units = 17.8482 × 1,000 ÷ 3,600 = **4.9578 mol/s**
+- Actual volume flow = 4.9578 × 8.314462618 × 298.15 ÷ 600,000 = 0.020484 m³/s = **73.74 m³/h**
+- Normal volume flow = 17.8482 × 22.414 = **400.05 Nm³/h**
+- Standard volume flow = 17.8482 × 23.645 = **422.02 Sm³/h**
+
+The pipe carries only 73.7 m³/h of real gas, but the same gas would fill 400.0 m³/h at normal conditions, about 5.4 times more.
+
+## Molar masses of common gases
+
+Computed from IUPAC standard atomic weights. The last two columns give the molar flow and normal volume flow for 1,000 kg/h, and the ideal gas density at 0 °C and 1.01325 bar:
+
+| Gas | Formula | M (g/mol) | kmol/h per 1,000 kg/h | Nm³/h per 1,000 kg/h | ρ<sub>N</sub> (kg/Nm³) |
+|---|---|---|---|---|---|
+| Hydrogen | H₂ | 2.016 | 496.03 | 11,118.0 | 0.0899 |
+| Methane | CH₄ | 16.043 | 62.33 | 1,397.1 | 0.7158 |
+| Ammonia | NH₃ | 17.031 | 58.72 | 1,316.1 | 0.7598 |
+| Water vapour | H₂O | 18.015 | 55.51 | 1,244.2 | 0.8037 |
+| Nitrogen | N₂ | 28.014 | 35.70 | 800.1 | 1.2498 |
+| Carbon monoxide | CO | 28.010 | 35.70 | 800.2 | 1.2497 |
+| Oxygen | O₂ | 31.998 | 31.25 | 700.5 | 1.4276 |
+| Hydrogen sulphide | H₂S | 34.076 | 29.35 | 657.8 | 1.5203 |
+| Argon | Ar | 39.948 | 25.03 | 561.1 | 1.7823 |
+| Carbon dioxide | CO₂ | 44.009 | 22.72 | 509.3 | 1.9635 |
+| Propane | C₃H₈ | 44.097 | 22.68 | 508.3 | 1.9674 |
+| Sulphur dioxide | SO₂ | 64.058 | 15.61 | 349.9 | 2.8579 |
+| Chlorine | Cl₂ | 70.900 | 14.10 | 316.1 | 3.1632 |
+| Air (dry) | mixture | 28.965 | 34.52 | 773.8 | 1.2923 |
+
+## Molar volume at common reference conditions
+
+Every ideal gas occupies the same volume per mole at a given temperature and pressure, so the reference condition must always be stated with a "normal" or "standard" flow:
+
+| Reference condition | Molar volume | Imperial |
+|---|---|---|
+| Normal (DIN 1343), 0 °C and 1.01325 bar | 22.414 m³/kmol | 359.0 ft³/lb-mol |
+| Standard (ISO 13443), 15 °C and 1.01325 bar | 23.645 m³/kmol | 378.8 ft³/lb-mol |
+| 20 °C and 1.01325 bar | 24.055 m³/kmol | 385.3 ft³/lb-mol |
+| IUPAC STP, 0 °C and 1 bar | 22.711 m³/kmol | 363.8 ft³/lb-mol |
+| 60 °F and 14.696 psia (US gas industry) | 23.690 m³/kmol | 379.5 ft³/lb-mol |
+
+## Effect of pressure on actual volume flow
+
+For the 500 kg/h nitrogen example at 25 °C. Molar, mass and normal flows are unchanged; only the actual volume changes:
+
+| Absolute pressure | Actual volume flow | Nm³/h per actual m³/h |
+|---|---|---|
+| 1.01325 bar(a) | 436.66 m³/h | 0.92 |
+| 2 bar(a) | 221.22 m³/h | 1.81 |
+| 6 bar(a) | 73.74 m³/h | 5.43 |
+| 10 bar(a) | 44.24 m³/h | 9.04 |
+| 20 bar(a) | 22.12 m³/h | 18.08 |
+| 40 bar(a) | 11.06 m³/h | 36.17 |
+
+## How molar flow is used in practice
+
+Process design starts with a **stream table** in kmol/h, because reactor feeds, combustion air and absorber gas rates are all set by mole ratios. Instruments rarely measure moles directly: a **Coriolis meter** gives kg/h, a **thermal mass meter** is usually calibrated in Nm³/h of a reference gas, and a **DP, vortex or turbine meter** gives actual volume flow that must be corrected for pressure and temperature. Converting each reading to kmol/h puts them on the same footing, which is how plant engineers reconcile meters around a unit and spot a drifting transmitter. For a mixture, work out the average molar mass from the gas analysis first; a change in composition changes the kmol/h for the same kg/h.
+
+## Common mistakes
+
+- **Using gauge pressure.** The gas law needs absolute pressure. Entering 5 bar(g) as 5 bar instead of 6.0133 bar(a) overstates the actual volume flow by 20%.
+- **Mixing up normal and standard.** Nm³ at 0 °C and Sm³ at 15 °C differ by 5.5%, and some companies use 20 °C or 60 °F. Always state the reference.
+- **Using °C in the gas law.** T must be in kelvin; 25 °C is 298.15 K, not 25.
+- **Averaging molar masses by mass fraction.** For a mixture, M is the mole-fraction weighted average; weighting by mass fraction gives the wrong value whenever the components have different molar masses.
+- **Applying Z to normal flow.** At 0 °C and 1 atm most gases are close to ideal, so Z mainly corrects the actual volume at high pressure; use the Z at line conditions.

@@ -2,10 +2,10 @@
 title: Gas Flow Correction Calculator (Actual to Normal m³/h)
 description: Convert actual gas flow (Am³/h) to normal or standard flow (Nm³/h, Sm³/h) using line pressure and temperature — for flow meters and compressors.
 category: engineering
-intro: "Gas volume changes with pressure and temperature, so the same mass of gas can be very different volumes. Flows are corrected to normal or standard conditions to compare them — see [actual flow vs standard flow vs normal flow](https://www.instrumentationblog.in/actual-flow-standard-flow-normal-flow/). This free gas flow correction calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Gas volume changes with pressure and temperature, so the same mass of gas can occupy very different volumes. This gas flow correction calculator converts actual flow at line conditions to normal or standard flow, as explained in [actual flow vs standard flow vs normal flow](https://www.instrumentationblog.in/actual-flow-standard-flow-normal-flow/).\n\nInstrument, process and utility engineers use it to compare meter readings, compressor ratings and gas consumption on one basis, and to set up pressure and temperature compensation in flow computers."
 keywords: [actual to normal flow, nm3/h to am3/h, gas flow correction, standard cubic meters, pressure temperature compensation, scfm to acfm, gas volume correction]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-16
 variables:
   - { id: Qa, label: Actual flow (at line conditions), family: flow, unit: m3h, imperialUnit: cfm, default: 100, min: 0 }
   - { id: Pg, label: Line pressure (gauge), family: pressure, unit: bar, imperialUnit: psi, default: 5, min: -1 }
@@ -31,6 +31,10 @@ faq:
     a: At 5 bar(g), gas is compressed about six times, so each actual cubic metre contains about six normal cubic metres.
   - q: Does this include compressibility?
     a: No. It assumes ideal gas behaviour. At high pressures, divide by the compressibility factor Z for accuracy.
+  - q: "How do I convert Nm³/h to Sm³/h?"
+    a: "Both are at 1.01325 bar(a), so only the temperature differs. Multiply Nm³/h (0 °C) by 288.15 ÷ 273.15 = 1.0549 to get Sm³/h at 15 °C, or by 293.15 ÷ 273.15 = 1.0732 for 20 °C."
+  - q: "How does altitude affect gas flow correction?"
+    a: "The local atmosphere falls with altitude, about 0.899 bar(a) at 1,000 m. Adding 1.01325 bar to a gauge reading there overstates the absolute pressure and the normal flow; at 5 bar(g) the error is about 1.9%."
 related: [engineering/4-20ma-scaling, statistics/empirical-rule, physics/ideal-gas-law, chemistry/combined-gas-law, engineering/mass-flow-rate, conversion/flow-rate-converter]
 ---
 
@@ -76,3 +80,41 @@ Always state the reference conditions with a standard flow figure.
 ## Flow meter compensation
 
 Volumetric gas meters (vortex, turbine, ultrasonic) measure actual flow. Flow computers or multivariable transmitters add pressure and temperature inputs to report normal flow or mass flow in real time.
+
+## Worked example
+
+A vortex meter on a compressed gas line reads **100 m³/h** at **5 bar(g)** and **30 °C**. Converting to normal conditions (0 °C, 1.01325 bar(a)):
+
+- Absolute pressure = 5 + 1.01325 = **6.01325 bar(a)**
+- Absolute temperature = 30 + 273.15 = **303.15 K**
+- Correction factor = (6.01325 ÷ 1.01325) × (273.15 ÷ 303.15) = **5.3473**
+- Normal flow = 100 × 5.3473 = **534.7 Nm³/h**
+
+If the gas compressibility at line conditions is Z = 0.985 (and 1 at reference conditions), divide by Z: 534.7 ÷ 0.985 = **542.9 Nm³/h**, a 1.5% correction that matters for billing.
+
+## Effect of site altitude on the correction
+
+The calculator adds standard atmospheric pressure to the gauge reading. At altitude the real atmosphere is lower, so the true absolute pressure is lower too. For the example (5 bar(g), 30 °C, 100 m³/h actual):
+
+| Site altitude | Local atmosphere | True factor | True normal flow | Error using 1.01325 bar |
+|---|---|---|---|---|
+| 0 m | 1.0132 bar(a) | 5.3473 | 534.7 Nm³/h | +0.00% |
+| 500 m | 0.9546 bar(a) | 5.2952 | 529.5 Nm³/h | +0.98% |
+| 1,000 m | 0.8987 bar(a) | 5.2455 | 524.5 Nm³/h | +1.94% |
+| 1,500 m | 0.8456 bar(a) | 5.1982 | 519.8 Nm³/h | +2.87% |
+| 2,000 m | 0.7950 bar(a) | 5.1532 | 515.3 Nm³/h | +3.77% |
+| 3,000 m | 0.7011 bar(a) | 5.0697 | 507.0 Nm³/h | +5.48% |
+
+At high altitude, enter the gauge pressure plus the local atmosphere minus 1.01325 bar, or use an absolute pressure transmitter for compensation.
+
+## How compensation is done in practice
+
+A flow computer or DCS block takes the meter's actual flow, a pressure transmitter (preferably absolute) and a temperature sensor, and calculates normal flow every scan with the formula above, often with a Z factor from AGA 8 or a fixed value for air. Pressure and temperature should be measured close to the meter: pressure at the meter body and temperature a few diameters downstream, so the sensor does not disturb the flow profile.
+
+## Common mistakes
+
+- **Using gauge pressure in the ratio.** The formula needs absolute pressures; 5 bar(g) is about 6.01 bar(a).
+- **Using °C instead of kelvin.** 30 °C ÷ 0 °C has no meaning; 303.15 K ÷ 273.15 K does.
+- **Mixing normal and standard.** One Nm³ (0 °C) equals 1.0549 Sm³ at 15 °C, a 5.5% difference that often appears in contract disputes.
+- **Applying the correction to a mass flow meter.** Coriolis and thermal mass meters already measure mass or normal flow; correcting again doubles the effect.
+- **Leaving out Z at high pressure.** Natural gas at 50 bar can deviate from ideal behaviour by several percent.

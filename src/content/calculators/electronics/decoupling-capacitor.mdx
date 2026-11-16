@@ -1,0 +1,98 @@
+---
+title: Decoupling Capacitor Calculator (Bulk Capacitance and SRF)
+description: Calculate the decoupling capacitance for a load current step and allowed voltage droop, the target impedance and a capacitor's self resonant frequency.
+category: electronics
+intro: "A decoupling capacitor supplies sudden load current locally so the supply rail does not dip while the regulator catches up. This decoupling capacitor calculator finds the capacitance for a current step, droop limit and hold time, the target impedance, and a capacitor's self resonant frequency, as explained in [how decoupling capacitors work](https://www.instrumentationblog.in/how-decoupling-capacitors-work/).\n\nHardware and PCB designers use it to size bulk and local capacitors for microcontrollers, FPGAs and ADCs, and to check that the capacitors chosen still act as capacitors at the frequencies that matter."
+keywords: [decoupling capacitor calculator, decoupling capacitor value, bypass capacitor calculator, bulk capacitor calculation, target impedance pdn, capacitor self resonant frequency, esl capacitor, decoupling capacitance formula]
+published: 2026-11-16
+updated: 2026-11-16
+variables:
+  - { id: dI, label: Load current step (ΔI), family: current, unit: A, default: 0.5, min: 0 }
+  - { id: dV, label: Allowed voltage droop (ΔV), family: voltage, unit: mV, default: 33, min: 0, help: 'Often 1 to 5% of the rail voltage, from the device datasheet.' }
+  - { id: dt, label: Time the capacitor must supply the step (Δt), family: seconds, unit: us, default: 2, min: 0, help: 'Roughly the time the regulator needs to respond: about 1 ÷ (4 × loop bandwidth) for a switching regulator, or the hold-up time required.' }
+  - { id: C, label: Required decoupling capacitance, family: capacitance, unit: uF, min: 0 }
+  - { id: Zt, label: Target impedance of the supply network, family: resistance, unit: mohm, min: 0 }
+  - { id: Cd, label: Value of one decoupling capacitor (for the SRF check), family: capacitance, unit: nF, default: 100, min: 0 }
+  - { id: ESL, label: Mounted ESL of that capacitor (with vias), family: inductance, unit: nH, default: 0.5, min: 0, help: 'Typical mounted values: 0402 about 0.4 to 0.6 nH, 0603 about 0.6 to 0.9 nH, 0805 about 0.8 to 1.2 nH, through-hole electrolytic several nH.' }
+  - { id: fs, label: Self resonant frequency of the capacitor, family: frequency, unit: MHz, min: 0 }
+  - { id: fL, label: Frequency where its ESL reactance reaches the target impedance, family: frequency, unit: MHz, min: 0 }
+equations:
+  - C = dI * dt / dV
+  - Zt = dV / dI
+  - fs = 1 / (2 * pi * sqrt(ESL * Cd))
+  - fL = Zt / (2 * pi * ESL)
+faq:
+  - q: How do I calculate the decoupling capacitor value?
+    a: "From the charge the capacitor must deliver: C = ΔI × Δt ÷ ΔV. A 0.5 A step that must be supplied for 2 µs with no more than 33 mV droop needs 0.5 × 2 µs ÷ 0.033 V = 30.3 µF of effective capacitance."
+  - q: Why use 100 nF decoupling capacitors?
+    a: "100 nF in a small package is a long standing compromise: enough charge for the fast edges of a logic IC and a self resonant frequency in the tens of MHz. Its value matters less than its mounted inductance; a 100 nF in 0402 with short vias outperforms a larger value on long traces."
+  - q: What is the self resonant frequency of a capacitor?
+    a: "It is the frequency where the capacitor's reactance and its equivalent series inductance cancel: f = 1 ÷ (2π√(ESL × C)). Below it the part behaves as a capacitor; above it, as an inductor whose impedance rises with frequency, and only the ESR remains at resonance."
+  - q: What is target impedance in power distribution design?
+    a: "It is the highest impedance the supply network may have at any frequency so that the expected current step causes no more than the allowed ripple: Z = ΔV ÷ ΔI. Designers keep the combined impedance of regulator, bulk, ceramic and plane capacitance below it up to the frequency of the load current edges."
+  - q: Should I use several values of decoupling capacitor in parallel?
+    a: "Mixing values spreads the resonances, but parallel resonance peaks can appear between them. Many designers now prefer several capacitors of the same small package and value, which lowers the total ESL without creating anti resonances, plus bulk capacitance near the regulator."
+  - q: Does DC bias reduce decoupling capacitance?
+    a: "Yes, for class II ceramics such as X5R and X7R. A 10 µF 6.3 V capacitor in 0603 can lose half or more of its capacitance at 3.3 V, so check the manufacturer's DC bias curve and size the effective capacitance, not the marked value."
+related: [electronics/resonant-frequency, electronics/reactance, electronics/capacitors-series-parallel, electronics/capacitor-energy, electronics/buck-converter, electronics/lm317]
+---
+
+## How to use the decoupling capacitor calculator
+
+Enter the **load current step**, the **allowed voltage droop** and the **time the capacitors must supply the step** before the regulator responds. The calculator gives the capacitance needed and the target impedance of the supply network. In the second part, enter the **value and mounted ESL of one decoupling capacitor** to get its self resonant frequency, and the frequency above which a single capacitor's inductance alone exceeds the target impedance. To find the largest current step a given capacitance can handle, enter the capacitance and press × on the current step.
+
+## Decoupling capacitor formulas
+
+<p class="formula">C = ΔI × Δt ÷ ΔV &nbsp;·&nbsp; Z<sub>t</sub> = ΔV ÷ ΔI</p>
+
+<p class="formula">f<sub>SRF</sub> = 1 ÷ (2π √(ESL × C)) &nbsp;·&nbsp; f<sub>L</sub> = Z<sub>t</sub> ÷ (2π × ESL)</p>
+
+The first formula is the charge balance Q = C × ΔV: the capacitor supplies ΔI for Δt and its voltage falls by ΔV. The SRF formula is the series LC resonance of the capacitor and its mounting inductance. Above f<sub>L</sub> the inductive reactance 2πf × ESL of one capacitor is already larger than Z<sub>t</sub>, so more capacitors in parallel, or a lower inductance layout, are needed.
+
+## Worked example
+
+A 3.3 V rail feeds a microcontroller whose current jumps by **0.5 A** when it wakes up. The droop must stay within 1% (**33 mV**) and the switching regulator needs about **2 µs** to respond:
+
+- Required capacitance C = 0.5 × 2 × 10⁻⁶ ÷ 0.033 = **30.3 µF**
+- Target impedance Z<sub>t</sub> = 0.033 ÷ 0.5 = **66 mΩ**
+- One 100 nF capacitor with 0.5 nH mounted ESL resonates at 1 ÷ (2π √(0.5 × 10⁻⁹ × 100 × 10⁻⁹)) = **22.5 MHz**
+- Its ESL reactance reaches 66 mΩ at 0.066 ÷ (2π × 0.5 × 10⁻⁹) = **21.0 MHz**
+
+A practical choice is a 47 µF bulk capacitor near the regulator (leaving margin for DC bias derating) plus 100 nF ceramics at each supply pin. To hold 66 mΩ up to 100 MHz with 0.5 nH parts, about 5 capacitors in parallel are needed, because their inductances combine like parallel resistors. At 1 MHz the 30.3 µF bulk has a reactance of only 5.3 mΩ, well under the target.
+
+## Self resonant frequency by value and mounted ESL
+
+Computed from f = 1 ÷ (2π√(LC)). The ESL columns are typical mounted values (capacitor plus pads and vias): about 0.4 nH for a 0402 with via in pad, 0.6 nH for 0603, 1 nH for 0805 and 2 nH for a long trace or larger case:
+
+| Capacitance | ESL 0.4 nH | ESL 0.6 nH | ESL 1.0 nH | ESL 2.0 nH |
+|---|---|---|---|---|
+| 10 nF | 79.6 MHz | 65.0 MHz | 50.3 MHz | 35.6 MHz |
+| 100 nF | 25.2 MHz | 20.5 MHz | 15.9 MHz | 11.3 MHz |
+| 1 µF | 8.0 MHz | 6.5 MHz | 5.0 MHz | 3.6 MHz |
+| 4.7 µF | 3.7 MHz | 3.0 MHz | 2.3 MHz | 1.6 MHz |
+| 10 µF | 2.5 MHz | 2.1 MHz | 1.6 MHz | 1.1 MHz |
+| 47 µF | 1.2 MHz | 0.9 MHz | 0.7 MHz | 0.5 MHz |
+
+## Capacitance needed for common load steps
+
+| Load step, droop and hold time | Target impedance | Capacitance needed |
+|---|---|---|
+| 0.1 A step, 50 mV droop, 1 µs | 500.0 mΩ | 2.0 µF |
+| 0.5 A step, 33 mV droop (1% of 3.3 V), 2 µs | 66.0 mΩ | 30.3 µF |
+| 1 A step, 50 mV droop, 5 µs | 50.0 mΩ | 100.0 µF |
+| 2 A step, 18 mV droop (1.5% of 1.2 V), 1 µs | 9.0 mΩ | 111.1 µF |
+| 5 A step, 50 mV droop, 10 µs | 10.0 mΩ | 1000.0 µF |
+
+## How decoupling is designed in practice
+
+A power distribution network is built in layers. The regulator itself holds the rail at low frequency, up to its loop bandwidth. **Bulk capacitors** (tens to hundreds of µF, electrolytic, polymer or large ceramics) cover the gap from there up to a few hundred kHz, and this is the capacitance the first formula sizes. **Local ceramic capacitors** of 100 nF to 1 µF at each supply pin cover the range up to tens of MHz, and above that only the **plane capacitance** of closely spaced power and ground planes and the capacitance inside the IC package help.
+
+Layout decides how well the local capacitors work. The loop from the capacitor through its vias to the IC pin and back sets the mounted ESL, which is usually larger than the capacitor's own ESL. Place the capacitor on the same side as the IC, as close to the pin as possible, with the vias right at the pads, and connect straight into solid planes rather than through thin traces.
+
+## Common mistakes
+
+- **Using the marked value of a ceramic.** DC bias and temperature can remove half the capacitance of an X5R part; size for the effective value.
+- **Ignoring ESL.** Adding a larger value does not help at high frequency if it sits on a long trace; above its SRF a capacitor is an inductor.
+- **Forgetting ESR on bulk capacitors.** An electrolytic with 100 mΩ ESR already drops 50 mV at a 0.5 A step, more than the 33 mV budget in this example, before any capacitance is used.
+- **Taking Δt too short.** If the regulator responds in 10 µs but Δt is entered as 1 µs, the bulk capacitance comes out ten times too small.
+- **Placing all capacitors far from the load.** Bulk capacitance near the regulator does nothing for the fast edges at the IC pins.

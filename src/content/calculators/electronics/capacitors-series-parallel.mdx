@@ -1,11 +1,11 @@
 ---
-title: Capacitors in Series and Parallel Calculator
-description: Calculate the total capacitance of up to four capacitors in series or parallel, with the total voltage rating guide and charge.
+title: "Capacitors in Series and Parallel Calculator (Total C)"
+description: "Calculate the total capacitance of up to four capacitors in series or parallel, with worked examples, voltage sharing and voltage rating guidance."
 category: electronics
-intro: "Capacitors combine the opposite way to resistors: in parallel their capacitances add, while in series the total is smaller than the smallest one. This capacitors in series and parallel calculator handles up to four capacitors — see the [capacitor working principle](https://www.instrumentationblog.in/capacitor-working-principle/) and [series vs parallel circuits](https://www.instrumentationblog.in/series-vs-parallel-circuits-explained/)."
+intro: "Capacitors combine the opposite way to resistors: in parallel their capacitances add, while in series the total is smaller than the smallest one. This capacitors in series and parallel calculator gives the equivalent capacitance of up to four parts.\n\nStudents, technicians and designers use it to make odd values from stock parts or to raise a voltage rating. See the [capacitor working principle](https://www.instrumentationblog.in/capacitor-working-principle/) and [series vs parallel circuits](https://www.instrumentationblog.in/series-vs-parallel-circuits-explained/)."
 keywords: [capacitors in series calculator, capacitors in parallel calculator, total capacitance calculator, series capacitance formula, equivalent capacitance, capacitor combination]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-16
 variables:
   - id: s
     label: Connection
@@ -29,6 +29,10 @@ faq:
     a: To raise the voltage rating. Each capacitor shares the voltage; add balancing resistors so the voltage divides evenly.
   - q: How do I leave a capacitor out?
     a: Enter 0 for C3 or C4 — unused capacitors are ignored in both series and parallel.
+  - q: "How do I make a non-standard capacitance?"
+    a: "Combine standard values. Two 47 µF capacitors in parallel give 94 µF, and 220 nF in series with 330 nF gives 132 nF. Parallel combinations are usually easier because the total is simply the sum."
+  - q: "Does connecting capacitors in series increase the stored energy?"
+    a: "No. For the same voltage, energy is ½CV², and a series pair has less capacitance than either part. In the example, 6.88 µF at 50 V stores 8.6 mJ, while the parallel pair at the same voltage stores 40.0 mJ."
 related: [electronics/capacitor-energy, physics/resistors-series-parallel, electronics/rc-filter, electronics/reactance]
 ---
 
@@ -51,6 +55,16 @@ For two capacitors in series: C = C₁C₂ ÷ (C₁ + C₂).
 | 100 nF + 100 nF + 100 nF | 33.3 nF | 300 nF |
 | 1 µF + 100 nF | 90.9 nF | 1.1 µF |
 
+## Worked example
+
+A 10 µF and a 22 µF capacitor are connected in series across **50 V**:
+
+- 1/C = 1/10 + 1/22 = 0.14545 per µF, so **C = 6.875 µF** (or 10 × 22 ÷ (10 + 22))
+- Both capacitors carry the same charge: Q = 6.875 µF × 50 V = **343.8 µC**
+- Voltage on the 10 µF part = Q ÷ C1 = **34.4 V**, and on the 22 µF part **15.6 V**
+
+The smaller capacitor takes the larger share: the 10 µF part needs a rating above 34.4 V (a 50 V part), while the 22 µF part would manage with 25 V. Connected in parallel instead, the same two parts give **32 µF** and each sees the full 50 V.
+
 ## Voltage ratings
 
 - **Parallel**: every capacitor sees the full voltage, so the lowest voltage rating applies.
@@ -59,3 +73,39 @@ For two capacitors in series: C = C₁C₂ ÷ (C₁ + C₂).
 ## Compared with resistors
 
 Capacitors in parallel behave like resistors in series, and vice versa. See the [resistors in series and parallel calculator](/physics/resistors-series-parallel/).
+
+## More combinations
+
+| Capacitors | Series | Parallel |
+|---|---|---|
+| 47 µF and 47 µF | 23.5 µF | 94 µF |
+| 100 nF and 47 nF | 32 nF | 147 nF |
+| 10 µF and 4.7 µF | 3.2 µF | 14.7 µF |
+| 220 nF and 330 nF | 132 nF | 550 nF |
+| 1 µF and 2.2 µF | 688 nF | 3.2 µF |
+| 100 µF and 100 µF | 50 µF | 200 µF |
+
+## Equal capacitors in series and parallel
+
+Identical capacitors divide the capacitance by the number in series and multiply the voltage rating; in parallel the capacitance multiplies and the rating stays the same:
+
+| Bank | Series C | Series rating | Parallel C | Parallel rating |
+|---|---|---|---|---|
+| 2 × 100 µF, 50 V | 50.0 µF | 100 V | 200 µF | 50 V |
+| 3 × 100 µF, 50 V | 33.3 µF | 150 V | 300 µF | 50 V |
+| 4 × 100 µF, 50 V | 25.0 µF | 200 V | 400 µF | 50 V |
+
+## Practical notes
+
+- **Balancing resistors.** Leakage current, not capacitance, sets the DC voltage split in a series stack over time. A resistor of equal value across each capacitor, passing roughly 5 to 10 times the leakage current, keeps the voltages equal.
+- **Electrolytic tolerance.** Aluminium electrolytics are often ±20%, so two nominally equal parts in series may share the voltage 55:45. Leave margin on the rating.
+- **Parallel for low ESR.** Several smaller capacitors in parallel have lower ESR and ESL than one large one, which is why decoupling and power supply output stages use banks of them.
+- **Mixed values for decoupling.** Paralleling a 100 nF ceramic with a 10 µF capacitor covers a wider frequency range than either alone.
+
+## Common mistakes
+
+- **Adding series capacitors directly.** Two 10 µF capacitors in series make 5 µF, not 20 µF.
+- **Assuming the voltage splits equally between unequal capacitors.** It splits in inverse proportion to capacitance, so the smallest part sees the most voltage.
+- **Using the highest voltage rating in a parallel bank.** All parallel parts see the full voltage, so the lowest rating limits the bank.
+- **Mixing units.** Entering one value in nF and another in µF without converting gives an answer off by a factor of 1,000.
+- **Putting polarised electrolytics in series the wrong way.** For a non-polar pair, connect them back to back (negative to negative), and remember that only half the capacitance remains.

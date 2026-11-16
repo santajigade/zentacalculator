@@ -2,10 +2,10 @@
 title: Lambda Tuning Calculator (IMC PI & Cohen–Coon)
 description: Calculate PI controller gain and integral time from process gain, time constant and dead time using lambda (IMC) tuning, with Cohen–Coon for comparison.
 category: engineering
-intro: "Lambda tuning sets a PI controller so the closed loop responds like a first-order lag with a time constant λ that you choose — fast or gentle, with no overshoot. This lambda tuning calculator uses process gain, time constant and dead time from a step test and compares the result with Cohen–Coon — see [PID controller tuning parameters](https://www.instrumentationblog.in/pid-controller-tuning-parameters/) and [how to tune a PID controller](https://www.instrumentationblog.in/how-to-tune-a-pid-controller/)."
+intro: "Lambda tuning sets a PI controller so the closed loop responds like a first order lag with a time constant λ that you choose, fast or gentle, with no overshoot. This lambda tuning calculator uses process gain, time constant and dead time from a step test and compares the result with Cohen-Coon.\n\nControl engineers use it to tune flow, pressure and temperature loops predictably, as covered in [PID controller tuning parameters](https://www.instrumentationblog.in/pid-controller-tuning-parameters/) and [how to tune a PID controller](https://www.instrumentationblog.in/how-to-tune-a-pid-controller/)."
 keywords: [lambda tuning calculator, imc tuning calculator, cohen coon calculator, pi controller tuning, fopdt tuning rules, self regulating loop tuning]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-16
 variables:
   - { id: K, label: Process gain (Δ PV % ÷ Δ output %), default: 2, min: 0 }
   - { id: tau, label: Process time constant (τ), family: seconds, unit: s, default: 60, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: Cohen–Coon aims for quarter-amplitude decay, so it is aggressive and sensitive to model error. It is mainly useful for loops with dead time that is large compared with the time constant.
   - q: Where do K, τ and θ come from?
     a: From an open-loop step test — use the [FOPDT step test calculator](/engineering/fopdt-step-test/) to extract them from the 28.3% and 63.2% response times.
+  - q: "How do I tune a level loop with lambda tuning?"
+    a: "Use the integrating rule: Kc = (2λ + θ) ÷ (Ki (λ + θ)²) and Ti = 2λ + θ, where Ki is the ramp rate of the level in % per second per % of output and λ is the arrest time you want after a disturbance."
+  - q: "How do I check that the loop responds as designed?"
+    a: "Make a small set point step in automatic. The PV should start to move after the dead time, reach about 63% of the step at λ + θ (here 40 s) and settle without overshoot. A faster or oscillating response means the process gain or dead time was underestimated."
 related: [engineering/pfd-avg, engineering/fopdt-step-test, engineering/ziegler-nichols-pid-tuning, engineering/sensor-response-time, engineering/turndown-ratio]
 ---
 
@@ -68,3 +72,39 @@ The Cohen–Coon gain is more than three times higher — expect overshoot. Lamb
 - These rules are for **self-regulating** processes (flow, temperature, pressure). Integrating processes such as tank level need the integrating-process lambda rules.
 - Flow loops are often tuned with λ of 1–3 × τ; temperature loops with λ = τ or slower.
 - Coordinate λ across cascaded loops: the inner (slave) loop should be at least 3–5 times faster than the outer loop.
+
+## Worked example: entering the settings in a controller
+
+For the default process (K = 2, τ = 60 s, θ = 10 s) and λ = 30 s the calculator gives K<sub>c</sub> = **0.750** and T<sub>i</sub> = **60 s**. Controllers use different units, so convert before typing:
+
+- Proportional band = 100 ÷ 0.750 = **133%**
+- Integral time = 60 s = **1 min per repeat**, or **1 repeat per minute**
+- Expected response: after a set point step, the PV starts to move after the 10 s dead time and reaches 63% of the change about λ + θ = **40 s** after the step, with no overshoot.
+
+Cohen-Coon for the same process gives K<sub>c</sub> = 2.742 and T<sub>i</sub> = 24.7 s, a far more aggressive loop.
+
+## Integrating processes such as tank level
+
+A level loop has no steady state gain; instead the PV ramps at a rate K<sub>i</sub> (% per second for each % of output). The integrating lambda rule, with λ as the arrest time, is:
+
+<p class="formula">K<sub>c</sub> = (2λ + θ) ÷ [K<sub>i</sub> (λ + θ)²] &nbsp;·&nbsp; T<sub>i</sub> = 2λ + θ</p>
+
+For a tank with K<sub>i</sub> = 0.01 %/s per % and θ = 20 s:
+
+| Arrest time λ | K<sub>c</sub> | PB | T<sub>i</sub> |
+|---|---|---|---|
+| 100 s | 1.53 | 65% | 220 s (3.7 min) |
+| 200 s | 0.87 | 115% | 420 s (7.0 min) |
+| 300 s | 0.61 | 165% | 620 s (10.3 min) |
+| 600 s | 0.32 | 315% | 1220 s (20.3 min) |
+| 900 s | 0.22 | 465% | 1820 s (30.3 min) |
+
+A surge tank is tuned slowly (large λ) so the outlet flow stays smooth; a reactor level that must stay tight uses a short λ. With λ = 300 s the settings are K<sub>c</sub> = 0.61 and T<sub>i</sub> = 620 s.
+
+## Common mistakes
+
+- **Using K in engineering units.** K must be % of PV span per % of output. A gain of 4 °C per % output on a 0 to 200 °C span is 2% per %.
+- **Mixing integral time units.** Typing 60 into a controller that expects minutes per repeat sets T<sub>i</sub> to an hour.
+- **Choosing λ shorter than the dead time.** The loop then loses robustness quickly; λ of at least 3θ is a safer start.
+- **Applying the self-regulating rule to a level loop.** Integrating processes need the separate rule above.
+- **Testing once at one operating point.** Valve characteristics change K across the range, so step test at low and high loads and tune for the worst case.

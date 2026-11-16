@@ -1,0 +1,103 @@
+---
+title: Conveyor Belt Capacity Calculator (Speed and t/h)
+description: Calculate conveyor belt speed from pulley diameter and rpm, then the capacity in m³/h and t/h from the load cross section and bulk density.
+category: engineering
+intro: "A belt conveyor carries a strip of bulk material whose cross section moves at belt speed. This conveyor belt capacity calculator finds the belt speed from the drive pulley diameter and rpm, then the volume and tonnes per hour, the load per metre and the travel time.\n\nMechanical, process and instrument engineers use it to check a conveyor against plant throughput, to set the speed of a variable speed drive and to range belt scales and speed sensors."
+keywords: [conveyor belt capacity calculator, conveyor belt speed calculator, conveyor capacity formula, belt conveyor tph calculation, conveyor belt speed formula, conveyor load per metre, belt conveyor capacity in tonnes per hour]
+published: 2026-11-16
+updated: 2026-11-16
+variables:
+  - { id: D, label: Drive pulley diameter (over the belt), family: length, unit: mm, imperialUnit: in, default: 500, min: 0, help: 'For belt speed use the diameter to the middle of the belt: pulley plus lagging plus belt thickness.' }
+  - { id: N, label: Drive pulley speed, suffix: rpm, default: 60, min: 0 }
+  - { id: A, label: Cross-sectional area of the load on the belt, family: area, unit: m2, imperialUnit: ft2, default: 0.06, min: 0, help: 'From the belt manufacturer or design standard for the belt width, troughing angle and surcharge angle.' }
+  - { id: rho, label: Bulk density of the material, family: density, unit: kgm3, imperialUnit: lbft3, default: 850, min: 0 }
+  - { id: Lc, label: Conveyor length (centre to centre), family: length, unit: m, imperialUnit: ft, default: 100, min: 0 }
+  - { id: v, label: Belt speed, family: velocity, unit: ms, imperialUnit: fts, min: 0 }
+  - { id: Qv, label: Volumetric capacity, family: flow, unit: m3h, imperialUnit: cfm, min: 0 }
+  - { id: Qm, label: Mass capacity, family: massflow, unit: th, imperialUnit: lbh, min: 0 }
+  - { id: q, label: Load per metre of belt, suffix: kg/m, min: 0, decimals: 1 }
+  - { id: t, label: Material travel time, family: seconds, unit: s, min: 0 }
+equations:
+  - v = pi * D * N / 60
+  - Qv = A * v
+  - Qm = A * v * rho
+  - q = A * rho
+  - t = Lc / v
+faq:
+  - q: How do you calculate conveyor belt capacity?
+    a: "Multiply the cross-sectional area of the material on the belt by the belt speed to get volume per second, then by the bulk density for mass. In tonnes per hour: Q = 3.6 × A × v × ρ with A in m², v in m/s and ρ in kg/m³. A 0.06 m² load at 1.571 m/s on coal of 850 kg/m³ gives about 288 t/h."
+  - q: How do you calculate conveyor belt speed?
+    a: "Belt speed is the circumference of the drive pulley times its revolutions per second: v = π × D × N ÷ 60, with D in metres and N in rpm. A 500 mm pulley at 60 rpm moves the belt at 1.571 m/s. Find the pulley rpm from the motor speed divided by the gearbox ratio."
+  - q: What is a typical conveyor belt speed?
+    a: "Most bulk conveyors run between about 1 and 4 m/s. Fine, dusty or fragile materials and feeders run slower; long overland conveyors carrying coal or ore can run at 4 to 6 m/s or more. Higher speed raises capacity for a given belt width but increases wear, dust and spillage at transfers."
+  - q: What does the load per metre tell me?
+    a: "Load per metre, q = A × ρ, is the weight the idlers and belt carry on each metre of conveyor. It is needed for idler selection and belt tension, and a belt scale measures it directly: the scale reads kg/m, a speed sensor reads m/s, and their product is the flow rate in kg/s."
+  - q: Why is the measured capacity lower than the design capacity?
+    a: "The design area assumes the belt is loaded full and evenly across its width. In practice feed varies, material slumps on inclines, and the belt is rarely filled to the full surcharge, so many conveyors run at 70 to 90% of their theoretical capacity. Size with a margin and check with a belt scale."
+related: [engineering/pulley-speed, engineering/belt-tension, engineering/gear-ratio, engineering/torque-power-speed, engineering/mass-flow-rate, physics/density]
+---
+
+## How to use the conveyor belt capacity calculator
+
+Enter the **drive pulley diameter** (to the middle of the belt), the **pulley speed** in rpm, the **cross-sectional area** of the load on the belt, the material's **bulk density** and the **conveyor length**. The calculator gives the belt speed, the volume and mass capacity, the load per metre and how long material takes to travel from tail to head. To find the pulley speed for a target capacity, enter the capacity and press × on the speed so it becomes the result.
+
+## Conveyor belt capacity formula
+
+<p class="formula">v = π × D × N ÷ 60 &nbsp;·&nbsp; Q<sub>v</sub> = A × v &nbsp;·&nbsp; Q<sub>m</sub> = A × v × ρ &nbsp;·&nbsp; q = A × ρ</p>
+
+D is in metres, N in rpm, A in m², ρ in kg/m³ and v in m/s, so Q<sub>v</sub> is in m³/s and Q<sub>m</sub> in kg/s. Multiply Q<sub>v</sub> by 3,600 for m³/h and Q<sub>m</sub> by 3.6 for t/h.
+
+## Worked example
+
+A coal conveyor has a **500 mm** drive pulley turning at **60 rpm**. The belt design gives a load cross section of **0.06 m²**, the coal's bulk density is **850 kg/m³** and the conveyor is **100 m** long:
+
+- Belt speed v = π × 0.5 × 60 ÷ 60 = **1.571 m/s**
+- Volumetric capacity = 0.06 × 1.571 = 0.0942 m³/s = **339.3 m³/h**
+- Mass capacity = 0.0942 × 850 = 80.11 kg/s = **288.4 t/h**
+- Load per metre = 0.06 × 850 = **51.0 kg/m**
+- Travel time = 100 ÷ 1.571 = **63.7 s**
+
+To reach 400 t/h on the same belt the speed must rise to 400 ÷ 3.6 ÷ 51.0 = 2.179 m/s, which is 83.2 rpm at the pulley.
+
+## Capacity by belt speed and load area
+
+Tonnes per hour at a bulk density of 850 kg/m³. The area depends on belt width, troughing angle and surcharge angle:
+
+| Belt speed | 0.02 m² | 0.04 m² | 0.06 m² | 0.10 m² | 0.15 m² |
+|---|---|---|---|---|---|
+| 1.0 m/s | 61 t/h | 122 t/h | 184 t/h | 306 t/h | 459 t/h |
+| 1.5 m/s | 92 t/h | 184 t/h | 275 t/h | 459 t/h | 688 t/h |
+| 2.0 m/s | 122 t/h | 245 t/h | 367 t/h | 612 t/h | 918 t/h |
+| 2.5 m/s | 153 t/h | 306 t/h | 459 t/h | 765 t/h | 1,148 t/h |
+| 3.0 m/s | 184 t/h | 367 t/h | 551 t/h | 918 t/h | 1,377 t/h |
+| 4.0 m/s | 245 t/h | 490 t/h | 734 t/h | 1,224 t/h | 1,836 t/h |
+
+## Typical bulk densities
+
+Loose bulk densities vary with moisture, size grading and compaction, so these are typical ranges only; measure your material where accuracy matters. The last column is the capacity of the example belt (0.06 m² at 1.571 m/s) at the middle of each range:
+
+| Material | Typical bulk density | Capacity on example belt |
+|---|---|---|
+| Coal (bituminous, crushed) | 800 to 900 kg/m³ | 288 t/h |
+| Wheat | 750 to 800 kg/m³ | 263 t/h |
+| Cement (Portland, loose) | 1,200 to 1,500 kg/m³ | 458 t/h |
+| Limestone (crushed) | 1,400 to 1,600 kg/m³ | 509 t/h |
+| Sand (dry) | 1,500 to 1,700 kg/m³ | 543 t/h |
+| Gravel | 1,600 to 1,800 kg/m³ | 577 t/h |
+| Iron ore | 2,000 to 2,400 kg/m³ | 746 t/h |
+
+## How the load area is found
+
+The load cross section is set by the **belt width**, the **troughing angle** of the idlers (often 20°, 35° or 45°) and the **surcharge angle**, the angle the material heap forms on the moving belt, which is usually 10° to 20° less than its angle of repose. Belt manufacturers and design standards such as CEMA and ISO 5048 publish the area for each combination, and only part of the belt width (the edge distance is kept clear) is loaded. A steeply inclined conveyor carries a smaller heap, so the area is reduced on inclines.
+
+## Measuring capacity in practice
+
+Plants measure the actual flow with a **belt weigher**: load cells under one or more idlers give the load per metre, and a speed sensor on a tail or bend pulley gives the belt speed. The integrator multiplies them into t/h and totalises tonnes. Zero calibration is done with the belt running empty and span calibration with test weights or a material test. Speed is often also monitored by a zero speed switch to trip the conveyor if the belt slips or breaks.
+
+## Common mistakes
+
+- **Using the bare pulley diameter.** The belt speed follows the middle of the belt. A 12 mm belt on this 500 mm pulley raises the speed from 1.571 to 1.608 m/s, a 2.4% difference that also shows up in a belt scale's totals.
+- **Using the motor rpm.** The pulley turns at the motor speed divided by the gearbox and any belt drive ratio.
+- **Using particle density instead of bulk density.** Bulk density includes the voids between lumps and is often half the solid density or less.
+- **Treating the theoretical capacity as the rating.** Uneven feed, inclines and spillage keep real capacity below A × v × ρ; leave a margin.
+- **Mixing units.** A in m² times v in m/s gives m³/s, not m³/h; forgetting the factor of 3,600 makes capacity look tiny.

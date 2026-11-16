@@ -2,10 +2,10 @@
 title: Compressor Power Calculator (Isentropic, Single Stage)
 description: Estimate air or gas compressor power from inlet flow, suction and discharge pressure and isentropic efficiency, plus the ideal discharge temperature.
 category: engineering
-intro: "The ideal work to compress a gas follows the isentropic (adiabatic) relation, and real compressors need more by the inverse of their isentropic efficiency. This compressor power calculator gives the shaft power and ideal discharge temperature for a single stage — staging, explained in [single-stage vs multi-stage compressors](https://www.instrumentationblog.in/single-stage-and-multi-stage-compressor/), cuts power at high pressure ratios."
+intro: "The ideal work to compress a gas follows the isentropic relation, and a real machine needs more by the inverse of its isentropic efficiency. This compressor power calculator gives shaft power and ideal discharge temperature for one stage.\n\nUtility, process and energy engineers use it to size compressor motors, check a vendor's power figure and see when staging pays off, as explained in [single-stage vs multi-stage compressors](https://www.instrumentationblog.in/single-stage-and-multi-stage-compressor/)."
 keywords: [compressor power calculator, isentropic compressor power, air compressor kw calculator, adiabatic compression power, compressor discharge temperature, gas compressor power formula, compressor sizing]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-16
 variables:
   - { id: V, label: Inlet volumetric flow (actual), family: flow, unit: m3h, imperialUnit: cfm, default: 600, min: 0 }
   - { id: p1, label: Suction pressure (absolute), family: pressure, unit: bar, imperialUnit: psi, default: 1.01325, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: The compression ratio p₂/p₁ only has physical meaning in absolute pressure. Add atmospheric pressure (about 1.013 bar) to gauge readings.
   - q: When should I use multiple stages?
     a: Above a pressure ratio of about 4–5 per stage the discharge temperature gets too high. Intercooled stages with equal pressure ratios approach isothermal compression and use less power.
+  - q: "How much power does two-stage compression save?"
+    a: "With equal pressure ratios and intercooling to the inlet temperature, compressing 600 m³/h of air to 8 bar(a) needs 54.1 kW instead of 63.4 kW at 75% efficiency, a saving of about 15%. The saving grows with the overall pressure ratio."
+  - q: "What is isothermal compressor power?"
+    a: "It is the ideal work if the gas is kept at inlet temperature: P = p₁V₁ ln(p₂/p₁). For 600 m³/h from 1.01325 to 8 bar(a) it is 34.9 kW, against 47.6 kW ideal isentropic work. No real machine reaches it, but intercooled stages get closer."
 related: [engineering/gas-flow-correction, physics/ideal-gas-law, engineering/fan-affinity-laws, engineering/absolute-gauge-pressure]
 ---
 
@@ -64,3 +68,43 @@ Enter the **actual inlet flow**, the **suction and discharge pressures in absolu
 
 - Real discharge temperature is higher than the ideal value, roughly T₁ + (T₂ − T₁) ÷ η.
 - Add motor efficiency and transmission losses to size the driver.
+
+## Real discharge temperature
+
+The ideal T₂ assumes no losses. The extra work of an inefficient stage also ends up as heat in the gas, so a better estimate is T₂ ≈ T₁ + (T₂,ideal − T₁) ÷ η. For the example, T₂ ≈ 20 + (256 − 20) ÷ 0.75 = **335 °C**. That is far above the limit for most lubricants and seals, which is why single-stage dry compression to 8 bar is rare and oil-injected screws cool the gas with the oil.
+
+## Two stages with intercooling
+
+Splitting the same duty into two stages with equal pressure ratios and cooling back to 20 °C between them:
+
+- Ratio per stage = √7.895 = **2.810**, so the intermediate pressure is 2.847 bar(a)
+- Each stage handles the same p × V, so each needs the same power: 20.30 ÷ 0.75 = 27.06 kW
+- Total shaft power = **54.1 kW** against 63.4 kW for one stage, a saving of 15%
+- Ideal discharge temperature of each stage = **121 °C**
+
+The isothermal limit, p₁V₁ ln(p₂/p₁) = **34.9 kW** of ideal work, is the floor that more stages approach.
+
+## One stage, two stages and the isothermal limit
+
+600 m³/h of air at 1.01325 bar(a) and 20 °C, η = 75% per stage, intercooled to 20 °C:
+
+| Discharge | One stage | Two stages | Saving | Isothermal ideal |
+|---|---|---|---|---|
+| 4 bar(a) | 37.9 kW | 34.2 kW | 10% | 23.2 kW |
+| 6 bar(a) | 52.2 kW | 45.6 kW | 13% | 30.0 kW |
+| 8 bar(a) | 63.4 kW | 54.1 kW | 15% | 34.9 kW |
+| 10 bar(a) | 72.8 kW | 61.0 kW | 16% | 38.7 kW |
+| 13 bar(a) | 84.6 kW | 69.3 kW | 18% | 43.1 kW |
+| 16 bar(a) | 94.6 kW | 76.2 kW | 19% | 46.6 kW |
+
+## Using the result in practice
+
+The inlet flow must be the **actual** volume at suction conditions. Vendors often quote free air delivery (FAD) or normal m³/h; convert those to actual inlet flow with the [gas flow correction calculator](/engineering/gas-flow-correction/) first. Add the motor efficiency (typically 94 to 96% for this size) and any belt or gearbox loss to get the electrical input, and leave a margin for filter fouling and higher summer inlet temperature.
+
+## Common mistakes
+
+- **Entering gauge pressure.** 7 bar(g) is 8.013 bar(a); using 7 and 0 bar gives a ratio that is meaningless.
+- **Using normal or standard flow as inlet flow.** At a hot or low pressure inlet the actual volume is larger than the normal volume, and the power scales with it.
+- **Confusing isentropic and isothermal efficiency.** Screw and reciprocating data usually quote isentropic efficiency; turbo compressor maps may quote polytropic efficiency, which is higher for the same machine.
+- **Sizing the motor on shaft power alone.** Motor, drive and transmission losses add several percent, and the motor should not run continuously above its rating.
+- **Ignoring inlet temperature.** Power is proportional to absolute inlet temperature for a given mass flow, so warm intake air costs energy.

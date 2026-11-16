@@ -2,10 +2,10 @@
 title: Rotameter Correction Calculator (Density Correction Factor)
 description: Correct a rotameter (variable area flow meter) reading for a liquid of different density from the calibration fluid, using the float density.
 category: engineering
-intro: "A rotameter is calibrated for one fluid, usually water, and reads wrong when the liquid's density changes because the float settles at a different height. This rotameter correction calculator converts the scale reading to actual flow using the float density — see the [metal tube rotameter working principle](https://www.instrumentationblog.in/metal-tube-rotameter-working/) and [10 factors in rotameter selection](https://www.instrumentationblog.in/rotameter-selection-10-factors/)."
+intro: "A rotameter is calibrated for one fluid, usually water, and reads wrong on a liquid of different density because the float settles at a different height. This rotameter correction calculator converts the scale reading to actual flow using the float density, as covered in the [metal tube rotameter working principle](https://www.instrumentationblog.in/metal-tube-rotameter-working/).\n\nOperators and instrument technicians use it when a meter is moved to a new liquid; see also [10 factors in rotameter selection](https://www.instrumentationblog.in/rotameter-selection-10-factors/)."
 keywords: [rotameter correction calculator, rotameter density correction, variable area flow meter correction factor, rotameter conversion factor, rotameter different liquid, float density correction]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-16
 variables:
   - { id: Q1, label: Scale reading, family: flow, unit: Lmin, imperialUnit: gpm, default: 10, min: 0 }
   - { id: r1, label: Calibration fluid density, family: density, unit: kgm3, default: 998, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: Because the float is far denser than any gas, the correction simplifies to Q2 = Q1 × √(ρ1 ÷ ρ2), where density depends on gas, pressure and temperature.
   - q: Does viscosity matter?
     a: Yes, for viscous liquids. This correction assumes viscosity close to the calibration fluid; above a few cP the manufacturer's viscosity immunity ceiling should be checked.
+  - q: "Which part of the rotameter float should I read?"
+    a: "Read at the reading edge marked by the manufacturer. For most shaped floats this is the widest part (the top edge of the float body); for a ball float read the centre of the ball, at eye level."
 related: [engineering/gas-flow-correction, engineering/flow-meter-k-factor, engineering/turndown-ratio, physics/density]
 ---
 
@@ -65,3 +67,34 @@ Densities are typical values at about 20 °C; use your actual fluid density.
 
 - Correction assumes the same float and tube and a viscosity close to the calibration fluid.
 - For large density differences it is better to order the meter scaled for the actual fluid.
+
+## Setting a target flow on the scale
+
+To deliver a required actual flow, divide by the correction factor. For 12 L/min of the 800 kg/m³ liquid through the same meter, set the float at 12 ÷ 1.1326 = **10.60 L/min** on the water scale. The float material matters: with an aluminium float (2,700 kg/m³) the same liquid gives a factor of **1.1801**, a larger correction, because a light float is more sensitive to the liquid's buoyancy.
+
+Temperature counts too. If the liquid warms and its density falls to 790 kg/m³, the factor rises to 1.1405, so the same scale reading means 0.7% more flow.
+
+## Correction factor by float material
+
+For a water-calibrated meter (998 kg/m³), measuring a light liquid of 800 kg/m³ and a heavy liquid of 1,200 kg/m³:
+
+| Float material | Float density | Factor at 800 kg/m³ | Factor at 1,200 kg/m³ |
+|---|---|---|---|
+| Stainless steel 316 | 8,000 kg/m³ | 1.1326 | 0.8987 |
+| Hastelloy C | 8,890 kg/m³ | 1.1308 | 0.9002 |
+| Titanium | 4,500 kg/m³ | 1.1481 | 0.8853 |
+| Aluminium | 2,700 kg/m³ | 1.1801 | 0.8561 |
+| PTFE | 2,170 kg/m³ | 1.2076 | 0.8297 |
+| PVDF | 1,780 kg/m³ | 1.2503 | 0.7854 |
+
+## Reading a rotameter in practice
+
+The meter must be truly vertical, with flow upward, and the reading taken at the edge the manufacturer marks, usually the widest part of a shaped float or the centre of a ball float. Read at eye level to avoid parallax on glass tubes. On metal tube meters the float position is shown by a magnetic follower and indicator, which can also give a 4 to 20 mA output; the same density correction applies to that signal.
+
+## Common mistakes
+
+- **Mixing SG and kg/m³.** All three densities must be in the same unit; entering the float density in kg/m³ and the liquids as SG gives a nonsense factor.
+- **Correcting a meter already scaled for the fluid.** Many meters are ordered with a scale for the actual liquid; correcting them again doubles the error.
+- **Ignoring viscosity.** The density correction assumes viscosity close to the calibration fluid. Thick oils need the manufacturer's viscosity correction or a new scale.
+- **Reading the wrong part of the float.** Using the top of a float that should be read at its widest edge shifts every reading by the float height.
+- **Using it on pulsating flow.** A bouncing float from a reciprocating pump gives an unreliable average; add a damper or use another meter type.

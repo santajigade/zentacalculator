@@ -2,10 +2,10 @@
 title: Pump Affinity Laws Calculator (Speed & Impeller Diameter)
 description: Apply the pump affinity laws — find new flow, head and power of a centrifugal pump after a change in speed (VFD) or impeller diameter (trimming).
 category: engineering
-intro: "The affinity laws predict how a centrifugal pump's flow, head and power change with speed or impeller diameter: flow scales with the ratio, head with its square and power with its cube. This pump affinity laws calculator applies them for a VFD speed change or an impeller trim — useful when comparing [centrifugal vs positive displacement pumps](https://www.instrumentationblog.in/centrifugal-vs-positive-displacement-pump/) or sizing a [VFD](https://www.instrumentationblog.in/vfd-sizing-selection-guide/)."
+intro: "The affinity laws predict how a centrifugal pump's flow, head and power change with speed or impeller diameter: flow follows the ratio, head its square and power its cube. This pump affinity laws calculator applies them for a VFD speed change or an impeller trim.\n\nProcess, maintenance and energy engineers use it to estimate VFD savings, predict a trimmed duty and compare options, for example when sizing a [VFD](https://www.instrumentationblog.in/vfd-sizing-selection-guide/)."
 keywords: [pump affinity laws calculator, affinity laws, pump speed change calculator, impeller trimming calculator, vfd pump energy savings, pump flow head power speed, centrifugal pump laws]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-16
 variables:
   - { id: Q1, label: Original flow rate Q₁, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
   - { id: H1, label: Original head H₁, family: length, unit: m, imperialUnit: ft, default: 50, min: 0 }
@@ -30,6 +30,8 @@ faq:
     a: Not directly. They move the pump along curves of constant efficiency, but a system with large static head does not follow those curves — find the new duty point on the system curve instead.
   - q: How accurate are they for impeller trimming?
     a: Reasonably for trims up to about 10–15% of diameter. Beyond that efficiency drops and the actual head and flow fall below the predicted values.
+  - q: "How do I find the impeller diameter for a target head?"
+    a: "Rearrange the head law: D₂ = D₁ × √(H₂ ÷ H₁). For a 250 mm impeller giving 50 m, a target of 45 m needs 237.2 mm. Flow then falls by the same diameter ratio."
 related: [engineering/pump-power, engineering/fan-affinity-laws, engineering/pressure-to-head, engineering/torque-power-speed]
 ---
 
@@ -65,3 +67,37 @@ A pump delivers 100 m³/h at 50 m head and absorbs 18.5 kW at 1,450 rpm. A VFD s
 - Efficiency is assumed constant — real savings are slightly lower because motor and VFD losses rise at low load.
 - Check that the reduced head still overcomes the static head of the system.
 - For fans and blowers the same laws apply; see the [fan affinity laws calculator](/engineering/fan-affinity-laws/).
+
+## Impeller trim example
+
+At constant speed the diameter ratio works the same way. Trimming the 250 mm impeller to 235 mm (ratio 0.94):
+
+- Flow = 100 × 0.94 = **94.0 m³/h**
+- Head = 50 × 0.94² = **44.2 m**
+- Power = 18.5 × 0.94³ = **15.37 kW**
+
+To reach a target head of 45 m at the same flow ratio, the diameter must be 250 × √(45 ÷ 50) = **237.2 mm**. Trim a little less than calculated and test, because metal cannot be put back.
+
+## Impeller trim table (250 mm, 100 m³/h, 50 m, 18.5 kW)
+
+| Trimmed diameter | Flow | Head | Power |
+|---|---|---|---|
+| 250 mm (100%) | 100.0 m³/h | 50.0 m | 18.50 kW |
+| 242 mm (97%) | 97.0 m³/h | 47.0 m | 16.88 kW |
+| 238 mm (95%) | 95.0 m³/h | 45.1 m | 15.86 kW |
+| 230 mm (92%) | 92.0 m³/h | 42.3 m | 14.41 kW |
+| 225 mm (90%) | 90.0 m³/h | 40.5 m | 13.49 kW |
+| 220 mm (88%) | 88.0 m³/h | 38.7 m | 12.61 kW |
+| 212 mm (85%) | 85.0 m³/h | 36.1 m | 11.36 kW |
+
+## Energy saving with a VFD
+
+In the speed example, power falls from 18.5 kW to 9.47 kW. Over 6,000 running hours a year that is (18.5 − 9.47) × 6,000 = **54,168 kWh** of shaft energy, before motor and VFD losses. The saving is this large only when the system is mostly friction head. If the system has, say, 20 m of static head, the pump cannot deliver any flow once its shutoff head falls below 20 m, and the real duty point must be found where the scaled pump curve crosses the system curve H = H<sub>static</sub> + kQ².
+
+## Common mistakes
+
+- **Applying the laws to a system with high static head.** The new duty point is not on the affinity parabola; flow falls faster than speed and savings are smaller.
+- **Slowing below the minimum continuous flow.** Low flow causes recirculation, heating and vibration; check the pump's minimum flow and the motor's cooling at low speed.
+- **Trimming too far.** Beyond about 10 to 15% of diameter, efficiency drops and the laws overpredict flow and head.
+- **Forgetting NPSH.** Speeding a pump up raises the NPSH it requires roughly with the square of speed, which can start cavitation.
+- **Using power at a different duty.** P₁ must be the shaft power at the same operating point as Q₁ and H₁, not the motor rating.

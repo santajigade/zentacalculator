@@ -2,10 +2,10 @@
 title: Gear Ratio Calculator (Speed & Torque from Teeth)
 description: Calculate gear ratio, output speed and output torque of a gear pair from the number of teeth, input speed, input torque and gear efficiency.
 category: engineering
-intro: "A gear pair trades speed for torque in proportion to its tooth counts: a small pinion driving a large gear slows the output and multiplies the torque. This gear ratio calculator gives the ratio, the output speed and the output torque after gear losses, for spur, helical and other parallel or bevel gear pairs."
+intro: "A gear pair trades speed for torque in proportion to its tooth counts: a small pinion driving a large gear slows the output and multiplies the torque. This gear ratio calculator gives the ratio, output speed and output torque after mesh losses.\n\nMechanical designers, maintenance engineers and students use it to select gearbox stages, check a drive's torque and verify that a replacement gear set gives the speed the machine needs."
 keywords: [gear ratio calculator, gear speed calculator, gear torque calculator, number of teeth ratio, output rpm calculator, gear reduction calculator, driver driven gear]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-16
 variables:
   - { id: z1, label: Teeth on the driving gear (pinion), default: 20, min: 1 }
   - { id: z2, label: Teeth on the driven gear, default: 60, min: 1 }
@@ -28,6 +28,8 @@ faq:
     a: "Multiply the ratios of each stage. Two stages of 3 : 1 and 4 : 1 give 12 : 1 overall; efficiencies also multiply (0.98 × 0.98 ≈ 0.96)."
   - q: Does an idler gear change the ratio?
     a: No. An idler between two gears only reverses the direction of rotation; the ratio still depends only on the first and last gears.
+  - q: "How do I calculate the centre distance of spur gears?"
+    a: "Centre distance = module × (z₁ + z₂) ÷ 2. A 20-tooth pinion and 60-tooth gear with a 3 mm module sit 120 mm apart. For imperial gears use (N₁ + N₂) ÷ (2 × diametral pitch) in inches."
 related: [engineering/pulley-speed, engineering/torque-power-speed, engineering/shaft-diameter, sports/cycling-gear-speed]
 ---
 
@@ -64,3 +66,40 @@ A 20-tooth pinion on a 1,450 rpm motor delivering 50 N·m drives a 60-tooth gear
 - Use gear counts with no common factor (a "hunting tooth" ratio such as 17 : 68 → 17 : 69) to spread wear evenly across teeth.
 - Belt and chain drives follow the same speed rule with pulley diameters or sprocket teeth — see the [pulley speed calculator](/engineering/pulley-speed/).
 - Size the output shaft for the increased torque with the [shaft diameter calculator](/engineering/shaft-diameter/).
+
+## Power balance check
+
+Power in must equal power out plus the loss in the mesh, which is a good check on any result:
+
+- Input power = 50 N·m × 1,450 rpm × 2π ÷ 60 = **7.59 kW**
+- Output power = 147 N·m × 483.3 rpm × 2π ÷ 60 = **7.44 kW**
+- Loss = 0.15 kW, about 2%, which leaves the gearbox as heat
+
+## Two-stage example and gear geometry
+
+Adding a second stage of 18 : 54 (3 : 1) after the first gives an overall ratio of 3 × 3 = **9 : 1**. The output turns at 1,450 ÷ 9 = **161.1 rpm** with 50 × 9 × 0.98² = **432.2 N·m**.
+
+For spur gears the tooth size is set by the **module** m, and the pitch diameter is d = m × z. With m = 3 mm the 20-tooth pinion is 60 mm and the 60-tooth gear 180 mm across the pitch circle, the centre distance is a = m (z₁ + z₂) ÷ 2 = **120 mm**, and the pitch line velocity is π × 0.06 × 1,450 ÷ 60 = **4.56 m/s**.
+
+## Pitch diameter and centre distance for 20 : 60 teeth
+
+| Module | Pinion pitch diameter | Gear pitch diameter | Centre distance | Pitch line speed at 1,450 rpm |
+|---|---|---|---|---|
+| 1 mm | 20 mm | 60 mm | 40 mm | 1.52 m/s |
+| 1.5 mm | 30 mm | 90 mm | 60 mm | 2.28 m/s |
+| 2 mm | 40 mm | 120 mm | 80 mm | 3.04 m/s |
+| 2.5 mm | 50 mm | 150 mm | 100 mm | 3.80 m/s |
+| 3 mm | 60 mm | 180 mm | 120 mm | 4.56 m/s |
+| 4 mm | 80 mm | 240 mm | 160 mm | 6.07 m/s |
+| 5 mm | 100 mm | 300 mm | 200 mm | 7.59 m/s |
+| 6 mm | 120 mm | 360 mm | 240 mm | 9.11 m/s |
+
+Two gears only mesh if they have the same module and pressure angle (usually 20°).
+
+## Common mistakes
+
+- **Inverting the ratio.** The ratio is driven teeth ÷ driving teeth; swapping them turns a reduction into a speed-up.
+- **Applying efficiency to speed.** Losses reduce torque and power, not speed; the output speed of a gear pair is fixed by the tooth counts.
+- **Assuming high efficiency for worm gears.** A worm set can be 50% efficient or less at high ratios, so the output torque is far below T₁ × i.
+- **Forgetting the service factor.** Shock loads, frequent starts and long running hours need a gearbox rated above the calculated torque.
+- **Meshing gears of different module or pressure angle.** They will not run together even if the tooth counts give the right ratio.

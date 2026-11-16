@@ -2,10 +2,10 @@
 title: Factor of Safety Calculator (FoS & Margin of Safety)
 description: Calculate the factor of safety and margin of safety from material strength and working stress or load — and the allowable stress for a required safety factor.
 category: engineering
-intro: "A factor of safety tells you how many times stronger a part is than it needs to be for the load it carries. This factor of safety calculator divides the material's strength by the actual working stress, gives the margin of safety, and works out the allowable stress for the safety factor your design code or company standard requires."
+intro: "A factor of safety tells you how many times stronger a part is than it needs to be for the load it carries. This factor of safety calculator divides the material strength by the working stress, gives the margin of safety and finds the allowable stress for the factor you need.\n\nMechanical, structural and maintenance engineers use it to check brackets, rods, lifting points and machine parts against a design code or company standard."
 keywords: [factor of safety calculator, safety factor calculator, margin of safety calculator, allowable stress calculator, fos formula, design factor, yield strength safety factor]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-16
 variables:
   - { id: S, label: Material strength (yield or ultimate), family: pressure, unit: MPa, imperialUnit: psi, default: 250, min: 0 }
   - { id: s, label: Working (applied) stress, family: pressure, unit: MPa, imperialUnit: psi, default: 100, min: 0, help: 'You can also enter loads in the same unit for both fields — the ratio is the same.' }
@@ -26,6 +26,10 @@ faq:
     a: Typical values are 1.25–1.5 for well-known loads and materials (aircraft structures), 2–3 for general machine design, 3–4 for uncertain loads or brittle materials, and higher for lifting equipment and pressure parts as set by codes.
   - q: Should I use yield or ultimate strength?
     a: Use yield strength for ductile metals where permanent deformation counts as failure, and ultimate strength for brittle materials such as cast iron or ceramics. State which one you used.
+  - q: "Is a factor of safety of 1 enough?"
+    a: "No. A factor of 1 means the part reaches its strength limit under the working load, so any extra load, material variation or wear causes failure. Even aircraft, where weight is critical, use at least 1.5 on ultimate load."
+  - q: "What is the difference between a safety factor and a load factor?"
+    a: "A safety factor is applied once, to the strength. Load factors in limit state design multiply the loads instead (1.35 for permanent and 1.5 for variable load in Eurocode), and a separate material factor reduces the strength. For 10 kN permanent plus 20 kN variable load the combined load factor is 1.45."
 related: [engineering/bending-stress, physics/youngs-modulus, engineering/bolt-torque, engineering/weld-size]
 ---
 
@@ -64,3 +68,38 @@ Strengths are typical minimum values; use the certified values for your material
 
 - For fatigue (fluctuating) loading, compare the stress amplitude with the endurance limit, not the static strength.
 - Find working stresses with the [bending stress](/engineering/bending-stress/), [bolt torque](/engineering/bolt-torque/) or [weld size](/engineering/weld-size/) calculators.
+
+## Worked example: a rod in tension
+
+A 20 mm diameter S235 steel rod (yield 235 MPa) hangs a load of **30 kN**. The required factor of safety is 2:
+
+- Area = π × 20² ÷ 4 = **314.2 mm²**
+- Working stress = 30,000 N ÷ 314.2 mm² = **95.5 MPa**
+- Factor of safety = 235 ÷ 95.5 = **2.46**, margin of safety **146%**
+- Smallest rod for FoS 2: allowable stress 117.5 MPa, so d = √(4F ÷ (π σ<sub>allow</sub>)) = **18.0 mm**
+
+## Typical design factors by application
+
+| Application | Typical factor | Basis |
+|---|---|---|
+| Aircraft structure | 1.5 | Ultimate load ÷ limit load |
+| Structural steel (allowable stress design) | about 1.67 | Yield |
+| Pressure vessels, ASME VIII Div. 1 | 3.5 on ultimate, 1.5 on yield | Lower allowable governs |
+| General machine parts, known loads | 2 to 3 | Yield |
+| Chain slings, grade 80 | 4 | Breaking load ÷ working load limit |
+| Wire rope slings | 5 | Breaking load ÷ working load limit |
+| Brittle materials, shock loads | 4 to 8 | Ultimate |
+
+For example, a pressure vessel steel with 485 MPa ultimate and 260 MPa yield gets an allowable of min(485 ÷ 3.5, 260 × 2/3) = **138.6 MPa**.
+
+## Partial factors in limit state design
+
+Modern structural codes split the safety factor between loads and materials. In Eurocode the design load is 1.35 × permanent + 1.5 × variable. For 10 kN permanent and 20 kN variable load, the design load is 1.35 × 10 + 1.5 × 20 = **43.5 kN**, an overall factor of **1.45** on the actual load, while steel uses a material factor of 1.0 on yield. The effective factor of safety therefore depends on the mix of loads.
+
+## Common mistakes
+
+- **Applying the factor twice.** If the allowable stress from a code already includes a safety factor, comparing it with the working stress again with another factor of 2 is overly conservative.
+- **Ignoring stress concentrations.** Holes, threads and sharp corners raise the local stress by 2 to 3 times; use the peak stress, not the nominal one.
+- **Using static strength for fatigue loads.** A part with FoS 3 on yield can still fail by fatigue under millions of cycles.
+- **Mixing yield and ultimate.** State which strength you used; FoS 2 on ultimate can be close to FoS 1.2 on yield for some steels.
+- **Forgetting dynamic and shock loads.** A load dropped or started suddenly can double the stress compared with the same load applied slowly.

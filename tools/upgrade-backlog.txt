@@ -1,25 +1,5 @@
 # Pages to expand (Part C of the daily task). Take from the top; delete a line once the page is done.
 # Order: priority category, then thinnest body first.
-engineering/pulley-speed
-engineering/compressor-power
-engineering/low-flow-cutoff
-engineering/vortex-shedding-frequency
-engineering/pump-affinity-laws
-engineering/fopdt-step-test
-engineering/gear-ratio
-engineering/rotameter-correction
-engineering/calibration-error
-engineering/weld-size
-engineering/bending-stress
-engineering/five-point-calibration
-engineering/manning-equation
-engineering/lambda-tuning
-engineering/ziegler-nichols-pid-tuning
-engineering/shaft-diameter
-engineering/gas-flow-correction
-engineering/factor-of-safety
-engineering/spring-rate
-engineering/lmtd
 engineering/weibull-reliability
 engineering/bearing-life
 engineering/plc-analog-scaling

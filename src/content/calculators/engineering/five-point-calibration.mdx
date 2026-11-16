@@ -2,10 +2,10 @@
 title: 5-Point Calibration Calculator (0–25–50–75–100% Table)
 description: Generate a 5-point calibration table for any transmitter — input values and expected 4–20 mA (or other) outputs at 0, 25, 50, 75 and 100% of range.
 category: engineering
-intro: "A 5-point check at 0, 25, 50, 75 and 100% of range is the standard way to calibrate a transmitter and reveal zero, span and linearity errors. This 5-point calibration calculator builds the table of input values and expected outputs for any range — see the [calibration process for a DP transmitter](https://www.instrumentationblog.in/calibration-process-differential-pressure-transmitter/)."
+intro: "A 5-point check at 0, 25, 50, 75 and 100% of range is the standard way to calibrate a transmitter and reveal zero, span and linearity errors. This 5-point calibration calculator builds the table of input values and expected outputs for any range.\n\nInstrument technicians use it to prepare calibration sheets before going to the field, as in the [calibration process for a DP transmitter](https://www.instrumentationblog.in/calibration-process-differential-pressure-transmitter/)."
 keywords: [5 point calibration calculator, five point calibration table, transmitter calibration points, 4-20ma calibration table, 0 25 50 75 100 calibration, calibration check sheet]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-16
 variables:
   - { id: LRV, label: Input range low (LRV), default: 0, help: 'Process units, e.g. bar, °C, mbar, %.' }
   - { id: URV, label: Input range high (URV), default: 10 }
@@ -33,6 +33,10 @@ faq:
     a: Yes. Enter a negative LRV for an elevated range (for example −50 to +150 mbar) and the input points are spaced across that range.
   - q: What about reverse-acting outputs?
     a: Enter the output high value as the low and vice versa (for example 20 and 4) — the expected outputs then decrease as the input rises.
+  - q: "What test accuracy ratio do I need for calibration?"
+    a: "A common rule is 4:1, meaning the reference is at least four times more accurate than the tolerance being checked. To verify a transmitter to ±0.25% of span, the calibrator should be good to about ±0.06% of that span or better."
+  - q: "What is the difference between as-found and as-left data?"
+    a: "As-found readings are taken before any adjustment and show how the instrument performed in service. As-left readings are taken after adjustment and show the state it was returned in. Both are recorded on the calibration sheet."
 related: [engineering/calibration-error, engineering/4-20ma-scaling, engineering/signal-converter, engineering/instrument-accuracy]
 ---
 
@@ -62,3 +66,41 @@ where p = 0, 0.25, 0.5, 0.75 and 1.
 2. Apply each point **upscale** (0 → 100%) and record the output, then repeat **downscale** (100 → 0%).
 3. Calculate the error at each point as % of span. If any point is out of tolerance, adjust zero and span and repeat to record as-left data.
 4. For DP flow transmitters with square-root extraction, the output at 25% DP is 50% flow — see the [DP flow square-root calculator](/engineering/dp-flow-square-root/).
+
+## Worked example: temperature transmitter with as-found errors
+
+A temperature transmitter is ranged **50 to 250 °C** with a 4 to 20 mA output. Entering LRV 50, URV 250, 4 and 20 gives the 25, 50 and 75% inputs of **100, 150 and 200 °C**, with expected outputs of 8, 12 and 16 mA. The technician applies each point from a dry block, upscale and then downscale. Error is (measured − expected) ÷ 16 mA × 100:
+
+| Point | Input | Expected | Upscale | Downscale | Error up | Error down | Hysteresis |
+|---|---|---|---|---|---|---|---|
+| 0% | 50 °C | 4.000 mA | 4.006 mA | 4.010 mA | +0.038% | +0.062% | 0.025% |
+| 25% | 100 °C | 8.000 mA | 8.012 mA | 8.022 mA | +0.075% | +0.138% | 0.062% |
+| 50% | 150 °C | 12.000 mA | 12.018 mA | 12.026 mA | +0.113% | +0.162% | 0.050% |
+| 75% | 200 °C | 16.000 mA | 16.014 mA | 16.020 mA | +0.087% | +0.125% | 0.038% |
+| 100% | 250 °C | 20.000 mA | 19.994 mA | 19.994 mA | -0.038% | -0.038% | 0.000% |
+
+The worst error is **0.162% of span** and the largest hysteresis is at 25%. Against a ±0.25% tolerance the transmitter passes as found; against ±0.1% it fails and needs a zero and span trim, followed by a fresh as-left record.
+
+## Tolerance in output units
+
+| Tolerance (% of span) | 4 to 20 mA | 1 to 5 V | 0 to 10 V |
+|---|---|---|---|
+| ±0.1% | ±0.016 mA | ±0.004 V | ±0.010 V |
+| ±0.25% | ±0.040 mA | ±0.010 V | ±0.025 V |
+| ±0.5% | ±0.080 mA | ±0.020 V | ±0.050 V |
+| ±1% | ±0.160 mA | ±0.040 V | ±0.100 V |
+
+## Good practice
+
+- Choose a reference standard at least **4 times** more accurate than the tolerance being checked (a 4:1 test accuracy ratio).
+- Let each point settle before reading, and approach it from one direction only. If you overshoot on the way up, go back below the point and approach it again, otherwise you hide hysteresis.
+- Exercise pressure transmitters to full range two or three times before recording, so the sensor and seals settle.
+- Record the as-found data before you touch anything, then the as-left data after adjustment. Trend the as-found error from one calibration to the next to set the interval.
+
+## Common mistakes
+
+- **Adjusting before recording as-found data.** The as-found result is what tells you whether the loop was within tolerance in service.
+- **Ignoring damping.** A transmitter with several seconds of damping needs time to settle; reading too early looks like a span error.
+- **Using a gauge reference on an absolute transmitter.** Atmospheric pressure then appears as a zero error of about 1.013 bar.
+- **Calibrating a DP flow transmitter in flow units.** The table here is linear in DP; the square-root output is a separate check.
+- **Skipping the downscale run.** Hysteresis only shows when you compare upscale and downscale readings at the same point.

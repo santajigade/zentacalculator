@@ -79,7 +79,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 ## Engineering — Heat transfer & HVAC
 - [x] LMTD heat exchanger
 - [x] Heat exchanger area (Q = U·A·LMTD) (ib)
-- [ ] Steam consumption for heating
+- [x] Steam consumption for heating
 - [x] Pipe heat loss (insulated)
 - [ ] Insulation thickness
 - [x] Convection heat transfer (Q = hAΔT)
@@ -108,12 +108,12 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Factor of safety
 - [x] Young's modulus / stress-strain
 - [x] Weld size (fillet throat)
-- [ ] Conveyor belt speed & capacity
+- [x] Conveyor belt speed & capacity
 
 ## Engineering — Process & chemical
 - [x] Mass balance (mixing two streams)
 - [x] Residence time
-- [ ] Reactor space time / conversion
+- [x] Reactor space time / conversion
 - [x] Boiler efficiency (direct method)
 - [ ] Steam table lookup (saturated)
 - [x] Specific gravity ↔ density ↔ °Brix / °Baumé
@@ -123,13 +123,13 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Flue gas O₂ to excess air
 - [x] Heating value converter (GCV/NCV)
 - [x] Gas density (ideal + Z) — gas-density (chemistry)
-- [ ] Molar flow ↔ mass flow ↔ volume flow
+- [x] Molar flow ↔ mass flow ↔ volume flow
 
 ## Engineering — Safety & reliability
 - [ ] Risk graph / LOPA (simplified) (ib)
 - [ ] 1oo2 / 2oo3 PFDavg (ib)
 - [x] Safe failure fraction (SFF) (ib)
-- [ ] Proof test coverage effect
+- [x] Proof test coverage effect
 - [x] MTTF ↔ FIT ↔ failure rate converter (FIT table in availability-mtbf; life-test FIT: acceleration-factor)
 - [x] Weibull reliability
 - [ ] Hazardous area: temperature class check (ib)
@@ -178,7 +178,7 @@ Subcategory = the `groups` entry in `src/data/catseo.ts` the calculator should b
 - [x] Inductor design (turns for AL value)
 - [x] Air-core coil inductance (Wheeler)
 - [x] Ohm's law for AC (power, apparent, reactive) (exists: electrical/kva-to-kw)
-- [ ] Decoupling capacitor selection (ib)
+- [x] Decoupling capacitor selection (ib)
 - [x] Crystal load capacitance
 - [x] RC oscillator / phase-shift oscillator frequency (ib)
 - [x] Schmitt trigger thresholds

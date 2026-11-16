@@ -22,13 +22,13 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Pipe & open-channel hydraulics', ids: ['hazen-williams', 'minor-losses', 'manning-equation'] },
       { name: 'Pressure, level & tanks', ids: ['hydrostatic-pressure', 'dp-level-range', 'ultrasonic-level', 'vertical-tank-volume', 'horizontal-tank-volume', 'spherical-tank-volume', 'absolute-gauge-pressure', 'manometer', 'barlow-formula', 'darcy-weisbach-head-loss', 'water-hammer', 'api-gravity', 'cone-bottom-tank-volume', 'tank-drain-time', 'interface-level', 'bubbler-level'] },
       { name: 'Pressure vessels & testing', ids: ['pressure-vessel-thickness', 'hydrostatic-test-pressure'] },
-      { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'valve-authority', 'pump-power', 'npsh-available', 'pump-affinity-laws', 'pressure-to-head', 'fan-affinity-laws', 'compressor-power', 'heat-duty', 'thermal-expansion', 'air-receiver-size', 'compressed-air-leak'] },
+      { name: 'Valves, pumps & heat', ids: ['control-valve-kv-cv', 'valve-authority', 'pump-power', 'npsh-available', 'pump-affinity-laws', 'pressure-to-head', 'fan-affinity-laws', 'compressor-power', 'heat-duty', 'thermal-expansion', 'air-receiver-size', 'compressed-air-leak', 'steam-consumption'] },
       { name: 'Boilers & combustion', ids: ['boiler-efficiency'] },
       { name: 'Heat transfer & HVAC', ids: ['lmtd', 'convection-heat-transfer', 'chiller-tonnage', 'dew-point', 'tank-heater-sizing', 'pipe-heat-loss', 'air-changes-per-hour', 'cooling-tower'] },
       { name: 'Process & fluid properties', ids: ['residence-time', 'kinematic-viscosity', 'mass-balance'] },
-      { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force', 'gear-ratio', 'shaft-diameter', 'bearing-life', 'bolt-torque', 'spring-rate', 'chain-length', 'belt-tension', 'press-fit'] },
+      { name: 'Mechanical', ids: ['torque-power-speed', 'pulley-speed', 'hydraulic-cylinder-force', 'gear-ratio', 'shaft-diameter', 'bearing-life', 'bolt-torque', 'spring-rate', 'chain-length', 'belt-tension', 'press-fit', 'conveyor-belt-capacity'] },
       { name: 'Strength of materials & structures', ids: ['beam-deflection', 'bending-stress', 'area-moment-of-inertia', 'factor-of-safety', 'weld-size'] },
-      { name: 'Safety & reliability', ids: ['pfd-avg', 'availability-mtbf', 'safe-failure-fraction', 'weibull-reliability', 'acceleration-factor'] },
+      { name: 'Safety & reliability', ids: ['pfd-avg', 'availability-mtbf', 'safe-failure-fraction', 'weibull-reliability', 'acceleration-factor', 'proof-test-coverage'] },
     ],
     about: [
       { h: 'Calculators built for the plant floor', p: 'These tools cover the everyday sums of process instrumentation: converting transmitter signals, checking loop power budgets, sizing primary flow elements and turning level into volume. They use the same equations found in ISO 5167, IEC 60751 and standard fluid-mechanics references, with units you can switch between metric and imperial.' },
@@ -74,7 +74,7 @@ export const CAT_SEO: Record<string, CatSEO> = {
     intro: 'Free online electronics calculators for hobbyists, students and circuit designers. Find the right **LED resistor**, design a **voltage divider**, read a **resistor colour code**, set a **555 timer** frequency, choose an **RC filter** cut-off, size a **buck or boost converter** and check **PCB trace width** — each with formulas, standard values and design tips.',
     groups: [
       { name: 'Resistors & basic circuits', ids: ['led-resistor', 'voltage-divider', 'current-divider', 'resistor-color-code', 'zener-resistor', 'transistor-base-resistor', 'wheatstone-bridge'] },
-      { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'lc-filter', 'capacitor-lifetime', 'air-core-inductor', 'inductor-al-value'] },
+      { name: 'Capacitors, inductors & AC', ids: ['capacitor-energy', 'capacitors-series-parallel', 'inductor-energy', 'rl-time-constant', 'reactance', 'resonant-frequency', 'rc-filter', 'lc-filter', 'capacitor-lifetime', 'air-core-inductor', 'inductor-al-value', 'decoupling-capacitor'] },
       { name: 'Timing, amplifiers & signals', ids: ['555-timer', 'op-amp-gain', 'instrumentation-amplifier-gain', 'pwm-duty-cycle', 'adc-resolution', 'snr', 'dbm-to-watts', 'rc-phase-shift-oscillator', 'crystal-load-capacitance', 'uart-baud-rate-error', 'i2c-pull-up-resistor'] },
       { name: 'Op-amp circuits, active filters & comparators', ids: ['summing-amplifier', 'differential-amplifier', 'op-amp-integrator', 'sallen-key-low-pass', 'schmitt-trigger'] },
       { name: 'Power electronics & PCB', ids: ['buck-converter', 'boost-converter', 'mosfet-power-loss', 'heat-sink', 'pcb-trace-width', 'microstrip-impedance', 'battery-charge-time', 'lm317', 'buck-boost-converter', 'flyback-transformer', 'peukerts-law', 'rc-snubber']
@@ -125,8 +125,8 @@ export const CAT_SEO: Record<string, CatSEO> = {
       { name: 'Vapour pressure, gas solubility & water chemistry', ids: ['raoults-law', 'henrys-law', 'water-hardness', 'dissolved-oxygen-saturation', 'tds-conductivity', 'conductivity-cell-constant'] },
       { name: 'Acids, bases & analysis', ids: ['ph', 'pka', 'weak-acid-ph', 'henderson-hasselbalch', 'titration', 'beer-lambert'] },
       { name: 'Electrochemistry', ids: ['nernst-equation', 'faraday-electrolysis', 'cell-potential'] },
-      { name: 'Gas laws', ids: ['boyles-law', 'charles-law', 'combined-gas-law', 'gay-lussacs-law', 'avogadros-law', 'daltons-law', 'grahams-law', 'van-der-waals', 'gas-density'] },
-      { name: 'Thermodynamics, kinetics & colligative properties', ids: ['specific-heat', 'gibbs-free-energy', 'arrhenius-equation', 'activation-energy', 'half-life', 'boiling-point-elevation', 'freezing-point-depression', 'osmotic-pressure', 'percent-yield', 'equilibrium-constant', 'bomb-calorimeter', 'integrated-rate-law', 'enthalpy-of-reaction'] },
+      { name: 'Gas laws', ids: ['boyles-law', 'charles-law', 'combined-gas-law', 'gay-lussacs-law', 'avogadros-law', 'daltons-law', 'grahams-law', 'van-der-waals', 'gas-density', 'molar-flow-rate'] },
+      { name: 'Thermodynamics, kinetics & colligative properties', ids: ['specific-heat', 'gibbs-free-energy', 'arrhenius-equation', 'activation-energy', 'half-life', 'boiling-point-elevation', 'freezing-point-depression', 'osmotic-pressure', 'percent-yield', 'equilibrium-constant', 'bomb-calorimeter', 'integrated-rate-law', 'enthalpy-of-reaction', 'reactor-conversion'] },
       { name: 'Combustion & flue gas', ids: ['excess-air', 'combustion-air', 'gcv-to-ncv'] },
     ],
     faq: [

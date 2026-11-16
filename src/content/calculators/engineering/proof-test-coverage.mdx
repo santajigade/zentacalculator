@@ -1,0 +1,102 @@
+---
+title: Proof Test Coverage Calculator (PFDavg with Imperfect Proof Tests)
+description: "Calculate 1oo1 PFDavg with an imperfect proof test: proof test coverage, test interval and mission time, compared with a perfect test, with RRF and SIL."
+category: engineering
+intro: "Proof test coverage is the share of dangerous undetected failures that a proof test actually finds. This proof test coverage calculator adds the failures a test misses, which stay hidden until overhaul or the end of the mission time, to the 1oo1 PFDavg, as covered in [proof test interval and coverage](https://www.instrumentationblog.in/proof-test-interval-coverage-safety-transmitters-iec-61511/).\n\nSafety engineers use it in SIL verification to show how much an imperfect test raises PFDavg, and to choose the test procedure, test interval and overhaul interval that keep the SIF within its SIL."
+keywords: [proof test coverage calculator, proof test coverage, ptc pfdavg, imperfect proof test, pfdavg mission time, proof test interval sil, iec 61511 proof test coverage, partial proof test]
+published: 2026-11-16
+updated: 2026-11-16
+variables:
+  - { id: lam, label: Dangerous undetected failure rate (λDU), suffix: FIT, default: 500, min: 0, help: '1 FIT = 1 failure per 10⁹ hours. Use the λDU of the whole 1oo1 safety function (sensor, logic solver and final element).' }
+  - { id: TI, label: Proof test interval, suffix: years, default: 1, min: 0 }
+  - { id: PTC, label: Proof test coverage, family: percent, unit: '%', default: 90, min: 0, max: 1, help: 'Fraction of λDU the proof test reveals. 100% is a perfect test.' }
+  - { id: MT, label: Mission time (or overhaul interval), suffix: years, default: 15, min: 0, help: 'Time after which the failures the proof test misses are found and repaired: a full overhaul, replacement, or the end of the plant life.' }
+  - { id: PFD, label: PFDavg with imperfect proof test, min: 0, decimals: 6 }
+  - { id: PFDp, label: PFDavg with a perfect proof test, min: 0, decimals: 6 }
+  - { id: ratio, label: Increase over a perfect test (times), min: 0, decimals: 2 }
+  - { id: RRF, label: Risk reduction factor (1/PFDavg), min: 0, decimals: 0 }
+  - { id: SIL, label: SIL achieved (by PFDavg only), min: 0, decimals: 0 }
+equations:
+  - PFD = lam * 1e-9 * 8760 * (PTC * TI + (1 - PTC) * MT) / 2
+  - PFDp = lam * 1e-9 * 8760 * TI / 2
+  - ratio = PFD / PFDp
+  - RRF = 1 / PFD
+  - SIL = max(0, min(4, floor(log10(RRF))))
+faq:
+  - q: What is proof test coverage?
+    a: "Proof test coverage (PTC) is the fraction of dangerous undetected failures that a proof test detects. A test that applies a real process signal and checks the trip action end to end may reach 90% or more; a test that only simulates the transmitter output reaches much less, because failures of the sensing element are not exercised."
+  - q: What is the PFDavg formula with proof test coverage?
+    a: "For a 1oo1 function, PFDavg ≈ PTC × λDU × TI ÷ 2 + (1 − PTC) × λDU × MT ÷ 2. The first term is the part the proof test finds every TI; the second is the part that stays hidden until the mission time MT, when the device is overhauled or replaced."
+  - q: Why does mission time matter so much?
+    a: "Failures the proof test cannot find build up for the whole mission time, not just one test interval. With 10% of λDU missed and a 15 year mission time, the hidden part alone averages 0.1 × 15 ÷ 2 = 0.75 years of exposure, which is more than the 0.45 years from the tested part with a 1 year interval."
+  - q: Can I make up for low coverage by testing more often?
+    a: "Only partly. Testing more often shrinks the first term, but the second term, (1 − PTC) × λDU × MT ÷ 2, does not depend on the test interval. Once it dominates, the only fixes are a better test procedure, a shorter overhaul interval or a device with a lower λDU."
+  - q: Does a partial stroke test count as a proof test?
+    a: "A partial stroke test is a partial proof test with limited coverage of the valve failures, typically 50 to 80% of the valve λDU. It is modelled as an extra test with its own interval and coverage, and the full stroke proof test is still needed for the rest."
+  - q: What proof test coverage should I assume if the vendor gives none?
+    a: "Do not assume 100%. Many SIL verifications use 90% for a well written end to end procedure and lower values for partial tests, but the figure should come from a failure mode review of the actual test steps, as IEC 61511 asks."
+related: [engineering/pfd-avg, engineering/safe-failure-fraction, engineering/availability-mtbf, engineering/weibull-reliability, statistics/exponential-distribution]
+---
+
+## How to use the proof test coverage calculator
+
+Enter the **dangerous undetected failure rate** λDU of the safety function in FIT, the **proof test interval** in years, the **proof test coverage** of your test procedure and the **mission time**, which is when the failures the test misses are finally found: at overhaul, replacement or the end of the plant life. The calculator gives PFDavg with the imperfect test, PFDavg if the test were perfect, how many times worse the imperfect test is, the risk reduction factor and the SIL band that PFDavg supports. To find the coverage you need for a target PFDavg, enter the target and press × on proof test coverage.
+
+## PFDavg formula with proof test coverage
+
+<p class="formula">PFD<sub>avg</sub> ≈ PTC × λ<sub>DU</sub> × TI ÷ 2 + (1 − PTC) × λ<sub>DU</sub> × MT ÷ 2</p>
+
+λ<sub>DU</sub> is in failures per hour (FIT × 10<sup>−9</sup>), and TI and MT are in hours (years × 8,760). The first term is the familiar 1oo1 result for the failures the test reveals; the second treats the unrevealed failures as if their only "test" were the mission time. With PTC = 100% the formula reduces to λ<sub>DU</sub> × TI ÷ 2, the [PFDavg calculation formula](ib:pfdavg-calculation-formula) for a perfect test. The simplified form is valid while λ<sub>DU</sub> × MT is small (well below 0.1); it ignores repair time and common cause, which matter for redundant architectures.
+
+## Worked example
+
+A 1oo1 safety function has λDU = **500 FIT**, is proof tested every **1 year** with a procedure judged to cover **90%** of dangerous undetected failures, and is overhauled at the end of a **15 year** mission time:
+
+- λDU = 500 × 10⁻⁹ = 5 × 10⁻⁷ per hour
+- Tested part = 0.9 × 5 × 10⁻⁷ × 8,760 h ÷ 2 = **0.001971**
+- Hidden part = 0.1 × 5 × 10⁻⁷ × 131,400 h ÷ 2 = **0.003285**
+- PFDavg = 0.001971 + 0.003285 = **0.005256**, RRF = **190**, so the function is in the **SIL 2** band
+- With a perfect test PFDavg would be **0.002190**, so the imperfect test makes it **2.40 times** higher
+
+To bring PFDavg below 0.005 without changing the overhaul interval, the coverage must rise to **90.8%**. The largest λDU that still meets SIL 2 (PFDavg below 0.01) with this test regime is **951 FIT**.
+
+## PFDavg by coverage and mission time
+
+For λDU = 500 FIT and a 1 year proof test interval. The 100% row is the perfect test and does not depend on mission time:
+
+| Proof test coverage | MT 5 years | MT 10 years | MT 15 years | MT 20 years |
+|---|---|---|---|---|
+| 50% | 0.00657 (SIL 2) | 0.01205 (SIL 1) | 0.01752 (SIL 1) | 0.02300 (SIL 1) |
+| 60% | 0.00569 (SIL 2) | 0.01007 (SIL 1) | 0.01445 (SIL 1) | 0.01883 (SIL 1) |
+| 70% | 0.00482 (SIL 2) | 0.00810 (SIL 2) | 0.01139 (SIL 1) | 0.01467 (SIL 1) |
+| 80% | 0.00394 (SIL 2) | 0.00613 (SIL 2) | 0.00832 (SIL 2) | 0.01051 (SIL 1) |
+| 90% | 0.00307 (SIL 2) | 0.00416 (SIL 2) | 0.00526 (SIL 2) | 0.00635 (SIL 2) |
+| 95% | 0.00263 (SIL 2) | 0.00318 (SIL 2) | 0.00372 (SIL 2) | 0.00427 (SIL 2) |
+| 100% | 0.00219 (SIL 2) | 0.00219 (SIL 2) | 0.00219 (SIL 2) | 0.00219 (SIL 2) |
+
+## Typical proof test coverage values
+
+These ranges are typical of published SIL verification practice and manufacturer safety manuals; always use the coverage stated for your device and test procedure:
+
+| Test | Typical coverage |
+|---|---|
+| Pressure transmitter, full calibration with applied pressure | 90 to 98% |
+| Pressure transmitter, current loop test only (no pressure applied) | 50 to 70% |
+| Shutdown valve, full stroke with leak test | 90 to 99% |
+| Shutdown valve, full stroke without leak test | 70 to 90% |
+| Shutdown valve, partial stroke test | 50 to 80% of the valve λDU |
+| Safety PLC, I/O and logic test per manual | 90 to 99% |
+
+## How coverage is handled in practice
+
+IEC 61511 asks that proof test procedures are written for each safety function, and that the SIL verification uses realistic assumptions about what they reveal. The usual workflow is to list the dangerous undetected failure modes of each device from its FMEDA, mark which ones each test step exercises, and add up the λDU of the covered modes to get PTC. A pressure transmitter test that only injects a current at the logic solver input never checks a plugged impulse line or a drifted sensor, so its coverage is low; applying a real pressure at the transmitter is much better. For final elements, a full stroke with a tight shutoff check finds most failures, while a partial stroke test covers only the sticking modes.
+
+The mission time term also explains why overhaul matters. A valve that is never fully refurbished carries its untestable failures for the whole plant life, so many operators set an overhaul or replacement interval for safety valves and include it as MT. In this example the hidden part alone is 0.003285, already more than the perfect test PFDavg of 0.002190, so no proof test interval, however short, can bring the function back to the perfect test figure.
+
+## Common mistakes
+
+- **Assuming 100% coverage.** Most SIL calculations that ignore coverage are optimistic. At 90% coverage and 15 years, PFDavg is 2.4 times the perfect test figure.
+- **Using the proof test interval as the mission time.** MT is when the hidden failures are found, often 10 to 20 years, not the test interval.
+- **Counting diagnostic coverage as proof test coverage.** Online diagnostics already move failures from λDU to λDD. Proof test coverage applies to what is left in λDU.
+- **Shortening TI to fix a coverage problem.** The hidden term does not depend on TI, so testing monthly cannot cure a poor test procedure.
+- **Taking coverage from a generic table without checking the procedure.** A test that skips the leak check or uses a simulated signal must be credited with the lower figure.

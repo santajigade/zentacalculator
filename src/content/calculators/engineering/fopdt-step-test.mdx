@@ -2,10 +2,10 @@
 title: FOPDT Step Test Calculator (Gain, Time Constant, Dead Time)
 description: Find process gain, time constant and dead time of a first-order-plus-dead-time model from an open-loop step test using the 28.3% and 63.2% times.
 category: engineering
-intro: "An open-loop step test — change the controller output in manual and watch the process variable — is the standard way to model a process before tuning. This FOPDT step test calculator turns the step size and the times to reach 28.3% and 63.2% of the response into process gain, time constant and dead time — see [step-test and auto-tune methods in DCS PID controllers](https://www.instrumentationblog.in/dcs-pid-auto-tune-step-test-relay-feedback-ziegler-nichols/)."
+intro: "An open-loop step test, changing the controller output in manual and watching the process variable, is the standard way to model a process before tuning. This FOPDT step test calculator turns the step and the 28.3% and 63.2% times into gain, time constant and dead time.\n\nControl engineers and technicians use it before PID tuning and auto-tune checks, as described in [step-test and auto-tune methods in DCS PID controllers](https://www.instrumentationblog.in/dcs-pid-auto-tune-step-test-relay-feedback-ziegler-nichols/)."
 keywords: [fopdt calculator, step test calculator, process time constant calculator, dead time calculation, process gain calculation, two point method smith]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-16
 variables:
   - { id: du, label: Controller output step, family: percent, unit: '%', default: 10 }
   - { id: dy, label: Process variable change (% of span), family: percent, unit: '%', default: 20 }
@@ -29,6 +29,8 @@ faq:
     a: Below about 0.2 the loop is easy to control; above 1 it is dead-time dominant and needs slow, careful tuning or advanced control.
   - q: What if the dead time comes out negative?
     a: The response is not first order (for example, it overshoots or is integrating). Check the data, use a larger step, or fit the model by eye from the tangent at the steepest point.
+  - q: "How long should I wait after the step?"
+    a: "Until the PV is steady, which for a first-order process is about θ + 4τ (98% of the change). For K = 2, τ = 22.5 s and θ = 17.5 s that is 107.5 s. Slow loops such as large temperature processes may need hours."
 related: [engineering/lambda-tuning, engineering/ziegler-nichols-pid-tuning, engineering/sensor-response-time, physics/rc-time-constant]
 ---
 
@@ -68,3 +70,40 @@ A 10% output step raises a temperature PV by 20% of span; the PV reaches 28.3% o
 - Make the step large enough to see clearly above noise (typically 5–10% output), but small enough to stay safe.
 - Wait for the process to be steady before the step, and repeat in the opposite direction to check for non-linearity.
 - Valve deadband and stiction add apparent dead time — check valve response separately.
+
+## From the model to controller settings
+
+With K = 2, τ = 22.5 s and θ = 17.5 s, lambda tuning gives a robust PI controller. Choose λ as the larger of τ and 3θ, here λ = max(22.5, 52.5) = **52.5 s**:
+
+- Kc = τ ÷ (K × (λ + θ)) = 22.5 ÷ (2 × (52.5 + 17.5)) = **0.161**
+- Ti = τ = **22.5 s**
+
+Because θ/τ is high, the loop is dead-time heavy and should not be tuned aggressively. The [lambda tuning calculator](/engineering/lambda-tuning/) compares this with Cohen-Coon.
+
+## Checking the fit
+
+The fitted model predicts PV change = K × ΔOP × (1 − e<sup>−(t − θ)/τ</sup>) after the dead time. Compare it with the recorded trend; the temperature column assumes a 0 to 200 °C transmitter span:
+
+| Time after step | Predicted PV change | Share of final | In °C |
+|---|---|---|---|
+| 0.0 s | 0.00% | 0.0% | 0.0 °C |
+| 17.5 s | 0.00% | 0.0% | 0.0 °C |
+| 25.0 s | 5.67% | 28.3% | 11.3 °C |
+| 40.0 s | 12.64% | 63.2% | 25.3 °C |
+| 62.5 s | 17.29% | 86.5% | 34.6 °C |
+| 85.0 s | 19.00% | 95.0% | 38.0 °C |
+| 130.0 s | 19.87% | 99.3% | 39.7 °C |
+
+If the recorded curve rises later and then faster than this, the process is higher order and the two-point model is only an approximation. Hold the output steady for at least θ + 4τ = **107.5 s** after the step, when the response is 98% complete.
+
+## Running the test in practice
+
+Put the loop in manual at a steady operating point, record the PV with fast sampling (at least 10 samples per time constant) and step the output once. Note the exact time of the step from the trend or the event log. Make the step 5 to 10% of output if the process allows, large enough to stand clear of noise and valve deadband. Repeat the step back down to check that gain and timing are similar in both directions; a big difference points to a nonlinear valve or process.
+
+## Common mistakes
+
+- **Timing from the start of the PV movement.** Both t28 and t63 must be measured from the output step; timing from the first PV movement loses the dead time.
+- **Mixing engineering units and percent.** The gain is in % of PV span per % of output. A 40 °C change on a 0 to 200 °C span is 20%, not 40.
+- **Stopping before the PV settles.** If the final value is guessed too early, the 28.3% and 63.2% levels are wrong and so are τ and θ.
+- **Testing during a disturbance.** A feed or load change during the test shows up as part of the response; repeat the test.
+- **Using the method on an integrating loop.** Most level loops never settle after a step, so the FOPDT model does not apply.

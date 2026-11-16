@@ -2,10 +2,10 @@
 title: Bending Stress Calculator (σ = M/Z = M·y/I)
 description: Calculate the maximum bending stress in a beam from bending moment and section modulus, σ = M/Z, and compare it with yield strength for a factor of safety.
 category: engineering
-intro: "A bending moment stretches one face of a beam and compresses the other, with the stress greatest at the outer fibres. This bending stress calculator applies σ = M ÷ Z (equivalently M·y ÷ I) to find that peak stress and compares it with the material's yield strength — the surface strain it produces is what [strain gauges](https://www.instrumentationblog.in/strain-gauge-working-principle/) measure on loaded beams."
+intro: "A bending moment stretches one face of a beam and compresses the other, and the stress is greatest at the outer fibres. This bending stress calculator applies σ = M ÷ Z (the same as M·y ÷ I) to find that peak stress and compares it with the yield strength.\n\nStructural and mechanical engineers use it to check beams, brackets and shafts, and test engineers use it to predict the strain that [strain gauges](https://www.instrumentationblog.in/strain-gauge-working-principle/) will read on a loaded beam."
 keywords: [bending stress calculator, flexural stress calculator, beam bending stress, section modulus stress, sigma = m/z, my/i calculator, maximum bending stress formula]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-16
 variables:
   - { id: M, label: Bending moment, family: torque, unit: kNm, imperialUnit: lbft, default: 15, min: 0 }
   - { id: Z, label: Elastic section modulus Z, suffix: cm³, default: 194, min: 0, help: 'Z = I ÷ y_max. IPE 200 ≈ 194 cm³; rectangle b·h²/6; solid round πd³/32.' }
@@ -24,6 +24,8 @@ faq:
     a: The elastic modulus Z gives the moment at which the outer fibre first yields. The plastic modulus (larger, by about 15% for I-beams and 50% for rectangles) gives the moment when the whole section has yielded; steel design codes use it for compact sections.
   - q: How do I get the bending moment?
     a: For a simply supported beam with a central load it is PL/4; with a uniform load wL²/8; for a cantilever with an end load PL. The beam deflection calculator gives these moments too.
+  - q: "How is bending stress related to strain?"
+    a: "In the elastic range σ = E × ε at the outer fibre. A steel beam (E = 200 GPa) stressed to 77.3 MPa has a surface strain of about 387 microstrain, which is what a strain gauge on the top or bottom face reads."
 related: [engineering/beam-deflection, engineering/area-moment-of-inertia, engineering/factor-of-safety, physics/youngs-modulus]
 ---
 
@@ -61,3 +63,39 @@ Section moduli are nominal values from European IPE tables.
 
 - Slender beams can fail by lateral-torsional buckling before reaching the yield stress; design codes reduce the capacity of unrestrained beams.
 - Combine bending with axial or shear stresses (for example with the von Mises criterion) when both act together.
+
+## Worked example: flat bar on two supports
+
+A 50 × 150 mm steel flat bar, standing on edge, spans **3 m** between two simple supports and carries a uniform load of **10 kN/m**:
+
+- Bending moment at mid span = w L² ÷ 8 = 10 × 3² ÷ 8 = **11.25 kN·m**
+- Section modulus = b h² ÷ 6 = 50 × 150² ÷ 6 = 187,500 mm³ = **187.5 cm³**
+- σ = 11,250 N·m ÷ 187.5 × 10⁻⁶ m³ = **60.0 MPa**
+- Factor of safety against 250 MPa yield = 250 ÷ 60.0 = **4.17**
+
+Laid flat, the same bar has Z = 150 × 50² ÷ 6 = 62.5 cm³, so the stress triples to 180 MPa and the bar yields. Orientation matters as much as size.
+
+## Section modulus of common shapes
+
+Moment at first yield uses S<sub>y</sub> = 250 MPa:
+
+| Section | Formula | Z | Moment at first yield |
+|---|---|---|---|
+| Rectangle 50 × 100 mm (on edge) | b·h² ÷ 6 | 83.33 cm³ | 20.83 kN·m |
+| Rectangle 100 × 50 mm (flat) | b·h² ÷ 6 | 41.67 cm³ | 10.42 kN·m |
+| Solid round 50 mm | π d³ ÷ 32 | 12.27 cm³ | 3.07 kN·m |
+| Solid round 80 mm | π d³ ÷ 32 | 50.27 cm³ | 12.57 kN·m |
+| Tube 60.3 × 3.91 mm (2 in Sch 40) | π (D⁴ − d⁴) ÷ 32D | 9.18 cm³ | 2.29 kN·m |
+| Tube 114.3 × 6.02 mm (4 in Sch 40) | π (D⁴ − d⁴) ÷ 32D | 52.68 cm³ | 13.17 kN·m |
+
+## How bending stress is measured in practice
+
+On a real structure the stress is checked with a strain gauge bonded to the outer fibre, aligned with the beam axis. In the elastic range σ = E × ε, so the IPE 200 example above at 77.3 MPa on steel (E = 200 GPa) shows about **387 µε**. A quarter bridge picks up this strain, and a half bridge with one gauge on the top face and one on the bottom doubles the signal and cancels temperature and axial effects. Load cells of the bending beam type work on exactly this principle.
+
+## Common mistakes
+
+- **Mixing cm³ and mm³.** Steel tables list Z in cm³; 194 cm³ is 194,000 mm³. A factor of 1,000 error is the most common slip.
+- **Using I instead of Z.** I (cm⁴) must be divided by the distance to the outer fibre before it gives stress.
+- **Taking the wrong axis.** An IPE 200 has Z ≈ 194 cm³ about its strong axis but only about 28.5 cm³ about its weak axis.
+- **Leaving out self-weight and point loads.** Add every load to the bending moment at the critical section, not just the main one.
+- **Comparing with ultimate strength.** For ductile steel the outer fibre yielding is the usual limit; ultimate strength gives a falsely high factor of safety.

@@ -1,0 +1,15 @@
+# Priority pages for Part C: Google crawled them but did not index them (Search Console, Nov 2026).
+# Expand these first (if still in tools/upgrade-backlog.txt), then continue from the top of the backlog.
+engineering/pfd-avg
+health/bmi
+electronics/schmitt-trigger
+chemistry/solution-preparation
+engineering/absolute-gauge-pressure
+chemistry/dilution
+electrical/induction-motor-slip
+biology/dna-concentration
+other/due-date
+statistics/sample-size
+statistics/standard-deviation
+biology/cell-doubling-time
+statistics/combinations

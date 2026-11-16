@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { SITE } from '../../site.config.ts';
 import { CATEGORIES, catBySlug } from '../../data/categories.ts';
 import { CAT_SEO } from '../../data/catseo.ts';
+import { CAT_EXTRA } from '../../data/catseo-extra.ts';
 import { allCalcs, urlOf } from '../../lib/calcs.ts';
 import { POPULAR } from '../../data/popular.ts';
 
@@ -10,7 +11,12 @@ export async function getStaticPaths() {
   return CATEGORIES.map((c) => ({ params: { category: c.slug } }));
 }
 const cat = catBySlug(Astro.params.category!)!;
-const seo = CAT_SEO[cat.slug];
+const baseSeo = CAT_SEO[cat.slug];
+const extra = CAT_EXTRA[cat.slug];
+const seo = baseSeo && extra ? { ...baseSeo,
+  groups: baseSeo.groups?.length ? baseSeo.groups : extra.groups,
+  about: [...(baseSeo.about ?? []), ...(extra.about ?? [])],
+  faq: [...(baseSeo.faq ?? []), ...(extra.faq ?? [])] } : baseSeo;
 const calcs = (await allCalcs()).filter((c) => c.data.category === cat.slug);
 const slugOf = (c: (typeof calcs)[number]) => c.id.split('/').pop()!;
 const pop = POPULAR.map((id) => calcs.find((c) => `${c.data.category}/${slugOf(c)}` === id)).filter((c): c is NonNullable<typeof c> => !!c);

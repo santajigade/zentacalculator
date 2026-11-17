@@ -2,10 +2,10 @@
 title: Dilution Calculator (C₁V₁ = C₂V₂)
 description: Calculate how much stock solution and solvent you need to make a diluted solution — or the final concentration.
 category: chemistry
-intro: "Diluting a solution lowers its concentration while the amount of solute stays the same. C₁V₁ = C₂V₂ tells you how much stock solution and solvent to mix. This free dilution calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Diluting a solution lowers its concentration while the amount of solute stays the same, so C₁V₁ = C₂V₂. This dilution calculator gives the volume of stock and of solvent needed for a target concentration and volume, or the final concentration of a mix.\n\nLab technicians, students, pharmacists and water treatment operators use it to prepare working standards, reagents and cleaning solutions from concentrated stock without wasting chemicals."
 keywords: [dilution calculator, c1v1 = c2v2, stock solution, dilute, serial dilution, concentration]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-17
 featured: true
 variables:
   - { id: C1, label: Stock concentration (C₁), default: 10, min: 0 }
@@ -31,6 +31,10 @@ faq:
     a: "No. 1+10 means 1 part stock plus 10 parts diluent, which is a 1:11 dilution."
   - q: "How much water do I add for a dilution?"
     a: "V₂ − V₁. To make 100 mL of 1 M from 5 M stock, take 20 mL of stock and add 80 mL of diluent, or better, make it up to the 100 mL mark."
+  - q: "How do I dilute concentrated hydrochloric acid to 1 M?"
+    a: "37% HCl is about 12.1 M. Add 82.8 mL of it slowly to about 800 mL of water, stir, let it cool, then make up to 1 L. Always add acid to water."
+  - q: "How do I find the concentration after a serial dilution?"
+    a: "Multiply the dilution factors of each step and divide the stock concentration by the total. Four 1:10 steps give a factor of 10,000, so 10 M becomes 0.001 M."
 related: [chemistry/molarity, chemistry/ppm]
 ---
 
@@ -123,3 +127,39 @@ A 1:10 dilution means 1 part stock in 10 parts **total**, so 10 mL stock plus 90
 ## Choosing pipette volumes
 
 Pipettes are most accurate between about 35% and 100% of their maximum volume. For a 1:20 dilution to 10 mL, pipette 500 µL with a 1,000 µL pipette rather than a 5 mL one, and add the stock to the diluent, not the other way round.
+
+## Checking the default example step by step
+
+With the default inputs (C₁ = 10, C₂ = 0.5, V₂ = 200 mL) the calculator returns V₁ = 10 mL and 190 mL of solvent. The dilution factor is 10 ÷ 0.5 = **20**, so the stock volume is always the final volume divided by 20: 200 ÷ 20 = 10 mL. In practice, pipette the 10 mL of stock into a 200 mL volumetric flask that already holds some water, then fill to the mark rather than measuring 190 mL separately.
+
+## Diluting concentrated acids and bases
+
+Bottles of concentrated reagent are labelled in % by mass, not mol/L, so first convert the label to molarity:
+
+<p class="formula">C (mol/L) = w × ρ (g/mL) × 1000 ÷ M</p>
+
+For 37% hydrochloric acid with a density of 1.19 g/mL and M = 36.46 g/mol: C = 0.37 × 1.19 × 1000 ÷ 36.46 = **12.08 M**. To make 1 L of 1 M HCl, V₁ = 1 × 1000 ÷ 12.08 = **82.8 mL** of the concentrated acid, added slowly to about 800 mL of water and then made up to 1 L.
+
+| Concentrated reagent | Density | Molarity | Volume for 1 L of 1 M |
+|---|---|---|---|
+| Hydrochloric acid 37% | 1.19 g/mL | 12.1 M | 82.8 mL |
+| Sulfuric acid 98% | 1.84 g/mL | 18.4 M | 54.4 mL |
+| Nitric acid 70% | 1.42 g/mL | 15.8 M | 63.4 mL |
+| Acetic acid (glacial) 99.8% | 1.05 g/mL | 17.5 M | 57.3 mL |
+| Ammonia solution 28% | 0.9 g/mL | 14.8 M | 67.6 mL |
+| Phosphoric acid 85% | 1.685 g/mL | 14.6 M | 68.4 mL |
+
+Label densities vary slightly between suppliers, so use the figure on your bottle or certificate of analysis.
+
+## Serial dilution from the 10 M stock
+
+Four 1:10 steps take the default 10 M stock down by 10,000 times with ordinary pipettes:
+
+| Step | Transfer | Concentration |
+|---|---|---|
+| 1 | 1 mL into 9 mL | 1 M |
+| 2 | 1 mL into 9 mL | 0.1 M |
+| 3 | 1 mL into 9 mL | 0.01 M |
+| 4 | 1 mL into 9 mL | 0.001 M |
+
+Mix each tube fully before taking the next aliquot, and use a fresh tip each time so stock carried on the outside of the tip does not raise the next concentration.

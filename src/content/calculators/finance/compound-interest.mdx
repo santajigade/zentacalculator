@@ -2,10 +2,10 @@
 title: Compound Interest Calculator
 description: Find maturity amount, interest earned, rate or time for any compounding frequency — with a growth chart and step-by-step working.
 category: finance
-intro: "Compound interest earns interest on previous interest as well as the original amount. Over long periods it makes savings grow much faster than simple interest."
+intro: "Compound interest is interest earned on earlier interest as well as on the original deposit, so savings grow faster each year. This compound interest calculator finds the maturity amount, interest, rate or time for yearly to daily compounding.\n\nSavers comparing fixed deposits, CDs and savings accounts use it to see what a rate really earns, and borrowers use it to understand how unpaid interest builds up on a loan or card."
 keywords: [compound interest, fd, fixed deposit, cd, certificate of deposit, savings, maturity amount, interest rate, investment growth, cagr]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-17
 featured: true
 variables:
   - { id: P, label: Principal, family: currency, default: 10000, min: 0, decimals: 2 }
@@ -39,6 +39,8 @@ faq:
     a: APR is the nominal yearly rate. APY (or EAR) includes compounding, so it shows what you actually earn in a year. A 7.5% APR compounded monthly is about a 7.76% APY.
   - q: Does compound interest work against me on loans?
     a: Yes. Credit cards and many loans compound interest, so unpaid interest itself starts earning interest. Paying more than the minimum stops this.
+  - q: "How is compound interest taxed?"
+    a: "In most countries deposit interest is taxed in the year it is credited, even if it stays in the account. At 7.5% quarterly with 30% tax, 10,000 grows to about 12,980 after 5 years instead of 14,499."
 related: []
 ---
 
@@ -128,3 +130,29 @@ Banks may quote the same nominal rate with different compounding. Compare them w
 - Interest is usually taxable, so your after-tax return is lower.
 - Inflation reduces real returns; compare your rate with current inflation.
 - Stock and fund returns are not fixed, so this formula gives an estimate only.
+
+## Year by year growth of the default deposit
+
+For 10,000 at 7.5% compounded quarterly, each year adds a little more than the last because the interest base keeps rising:
+
+| Year | Opening balance | Interest in the year | Closing balance |
+|---|---|---|---|
+| 1 | 10,000.00 | 771.36 | 10,771.36 |
+| 2 | 10,771.36 | 830.86 | 11,602.22 |
+| 3 | 11,602.22 | 894.95 | 12,497.16 |
+| 4 | 12,497.16 | 963.98 | 13,461.14 |
+| 5 | 13,461.14 | 1,038.34 | 14,499.48 |
+
+The fifth year earns noticeably more than the first even though the rate never changes. That widening gap is the whole effect of compounding.
+
+## Real return after tax and inflation
+
+Interest on deposits is normally taxed as it is credited. If 30% tax is paid from each quarterly credit, the effective rate falls to 7.5 × 0.70 = 5.25% and the 5 year balance is **12,979.58** instead of 14,499.48. With 5% inflation, the untaxed 14,499.48 buys only what **11,360.72** buys today. Comparing the post-tax rate with inflation shows whether a deposit is actually growing your purchasing power.
+
+## Common mistakes
+
+- **Entering the rate as a decimal.** Type 7.5 for 7.5%, not 0.075.
+- **Mixing up time units.** Time is in years; 18 months is 1.5, not 18.
+- **Comparing quoted rates with different compounding.** Convert both to an effective annual rate before choosing between offers.
+- **Assuming payouts compound.** A deposit that pays interest out monthly does not compound at all; only reinvested interest grows.
+- **Using the rule of 72 at high rates.** It drifts above about 20%; at 7.5% quarterly the exact doubling time is 9.33 years.

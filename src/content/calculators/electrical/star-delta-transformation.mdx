@@ -1,11 +1,11 @@
 ---
-title: Star-Delta (Y-Δ) Transformation Calculator
-description: Convert delta (Δ) resistances or impedances to an equivalent star (Y), and star to delta — for circuit analysis and network simplification.
+title: "Star-Delta Transformation Calculator (Delta to Star and Star to Delta)"
+description: "Convert delta (Δ) resistances to an equivalent star (Y) network and back, with formulas, a bridge circuit worked example and a conversion table."
 category: electrical
-intro: "Some resistor and impedance networks cannot be simplified with series and parallel rules alone. The star-delta (Y-Δ) transformation swaps one three-terminal arrangement for an equivalent one, as explained in this [star-delta transformation formula](https://www.instrumentationblog.in/star-delta-transformation-formula/) guide."
+intro: "Some resistor and impedance networks cannot be reduced with series and parallel rules alone. This star-delta transformation calculator swaps a three-terminal delta for its equivalent star, or a star for its delta, as explained in this [star-delta transformation formula](https://www.instrumentationblog.in/star-delta-transformation-formula/) guide.\n\nElectrical students, test engineers and circuit designers use it to solve bridge networks, find per-phase values for delta loads and check hand calculations quickly."
 keywords: [star delta transformation calculator, delta to star conversion, y delta transformation, delta to wye, wye to delta, network theorem, resistor network]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-17
 variables:
   - { id: Rab, label: Delta resistance R_ab, family: resistance, unit: ohm, default: 30, min: 0 }
   - { id: Rbc, label: Delta resistance R_bc, family: resistance, unit: ohm, default: 60, min: 0 }
@@ -26,6 +26,8 @@ faq:
     a: For three equal resistances, R_star = R_delta ÷ 3, and R_delta = 3 × R_star.
   - q: Does this work for AC impedances?
     a: Yes, with complex impedances. This calculator handles resistances (or magnitudes of identical-angle impedances).
+  - q: "Can a star-delta transformation be used to solve a Wheatstone bridge?"
+    a: "Yes. Convert one triangle of the bridge to a star and the rest becomes series and parallel. With the default 30, 60 and 90 Ω delta and legs of 40 and 50 Ω, the resistance from a to d is 45.77 Ω."
 related: [physics/resistors-series-parallel, physics/ohms-law, electronics/wheatstone-bridge, electrical/three-phase-motor-power]
 ---
 
@@ -62,3 +64,48 @@ Delta 30, 60 and 90 Ω (sum 180 Ω):
 ## Star-delta motor starting
 
 A motor started in star sees 1/√3 of line voltage, so starting current and torque fall to one third of their direct-on-line values. After a few seconds, the starter switches to delta for full voltage.
+
+## Checking the default conversion in reverse
+
+Starting from the star values 15, 10 and 30 Ω, the sum of pairwise products is 15 × 10 + 10 × 30 + 30 × 15 = **900 Ω²**. Dividing by the opposite star resistor returns the original delta:
+
+- R<sub>ab</sub> = 900 ÷ 30 = **30 Ω**
+- R<sub>bc</sub> = 900 ÷ 15 = **60 Ω**
+- R<sub>ca</sub> = 900 ÷ 10 = **90 Ω**
+
+Running the conversion both ways like this is a quick way to catch a value typed into the wrong field.
+
+## Worked example: solving an unbalanced bridge
+
+Take the default delta (30, 60 and 90 Ω) as the top half of a bridge, add 40 Ω from b to d and 50 Ω from c to d, and apply 12 V between a and d. No resistor pair is in series or parallel, so convert the delta to star first:
+
+1. The star gives R<sub>a</sub> = 15 Ω in the feed, then two branches: 10 + 40 = 50 Ω and 30 + 50 = 80 Ω.
+2. The branches are now in parallel: 50 × 80 ÷ (50 + 80) = **30.769 Ω**.
+3. Total resistance a to d = 15 + 30.769 = **45.769 Ω**, so the supply current is 12 ÷ 45.769 = **262.2 mA**.
+4. The current divides 161.3 mA through the b branch and 100.8 mA through the c branch.
+
+## Delta to star conversion table
+
+| R<sub>ab</sub> / R<sub>bc</sub> / R<sub>ca</sub> | R<sub>a</sub> | R<sub>b</sub> | R<sub>c</sub> |
+|---|---|---|---|
+| 10 / 10 / 10 Ω | 3.33 Ω | 3.33 Ω | 3.33 Ω |
+| 30 / 60 / 90 Ω | 15.00 Ω | 10.00 Ω | 30.00 Ω |
+| 100 / 100 / 50 Ω | 20.00 Ω | 40.00 Ω | 20.00 Ω |
+| 1 / 1 / 1,000 Ω | 1.00 Ω | 0.00 Ω | 1.00 Ω |
+| 47 / 220 / 330 Ω | 25.98 Ω | 17.32 Ω | 121.61 Ω |
+| 1,000 / 2,200 / 4,700 Ω | 594.94 Ω | 278.48 Ω | 1,308.86 Ω |
+
+Notice that a delta with one very large resistor (the 1 / 1 / 1,000 Ω row) gives a star with one very small arm, which is why the transformation can turn an awkward network into a simple one.
+
+## Practical notes
+
+- In three-phase work, a balanced delta load of Z per phase behaves exactly like a star load of Z ÷ 3, so per-phase current and power can be found from line voltage ÷ √3.
+- For AC networks with different phase angles, apply the same formulas with complex impedances; using magnitudes alone gives wrong answers.
+- In measurement bridges, converting the ratio arms to star shows how lead and contact resistance add to the detector branch.
+
+## Common mistakes
+
+- **Mixing up which resistors touch a node.** R<sub>a</sub> uses the two delta resistors connected to terminal a (R<sub>ab</sub> and R<sub>ca</sub>), not R<sub>bc</sub>.
+- **Dividing by the wrong resistor in star to delta.** Each delta resistor is divided by the star arm opposite to it, the one not connected to either of its terminals.
+- **Losing the terminals.** The star centre is a new internal node; the three outer terminals must stay connected to the rest of the circuit exactly as before.
+- **Treating the star centre as the neutral of a supply.** It is a mathematical node, and its voltage is not zero unless the network is balanced.

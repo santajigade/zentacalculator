@@ -2,10 +2,10 @@
 title: Transformer Current Calculator (Full-Load Amps)
 description: Calculate primary and secondary full-load current of single-phase and three-phase transformers from kVA and voltages.
 category: electrical
-intro: "A transformer's kVA rating and voltage set the full-load current on each winding — the figure used to size breakers, fuses, cables and busbars. Learn [how to calculate transformer kVA rating](https://www.instrumentationblog.in/how-to-calculate-transformer-kva-rating/) and why switching on causes [transformer inrush current](https://www.instrumentationblog.in/transformer-inrush-current/). This free transformer current calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A transformer's kVA rating and line voltages set the full-load current on each winding. This transformer current calculator gives primary and secondary full-load amps and the voltage ratio for single-phase and three-phase units. Learn [how to calculate transformer kVA rating](https://www.instrumentationblog.in/how-to-calculate-transformer-kva-rating/).\n\nElectrical engineers, contractors and substation staff use it to size breakers, fuses, cables, busbars and current transformers, and to check how heavily a unit is loaded."
 keywords: [transformer current calculator, transformer full load current, kva to amps transformer, primary current, secondary current, 3 phase transformer current]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-17
 variables:
   - { id: S, label: Transformer rating, suffix: kVA, default: 500, min: 0 }
   - id: ph
@@ -32,6 +32,8 @@ faq:
     a: The no-load secondary is set slightly higher to allow for voltage drop under load, so customers receive close to 415 V.
   - q: Does power factor affect transformer current?
     a: Not the rating calculation — transformers are rated in kVA, so full-load current depends only on kVA and voltage.
+  - q: "How do I check transformer loading with a clamp meter?"
+    a: "Measure the LV phase currents, take the highest, and divide by the full-load current. For a 500 kVA, 433 V unit, 480 A is 72% of the 667 A rating."
 related: [electrical/transformer-short-circuit, electrical/kva-to-kw, electrical/kw-to-amps, electrical/cable-voltage-drop]
 ---
 
@@ -79,3 +81,39 @@ Distribution transformers are most efficient at about 40–60% load. Continuous 
 ## Fault current
 
 Short-circuit current depends on the transformer's impedance. See the [transformer short-circuit calculator](/electrical/transformer-short-circuit/).
+
+## Worked example: 500 kVA, 11 kV to 433 V
+
+With the default three-phase inputs:
+
+- Primary: I = 500 × 1,000 ÷ (√3 × 11,000) = 500,000 ÷ 19,053 = **26.24 A**
+- Secondary: I = 500 × 1,000 ÷ (√3 × 433) = 500,000 ÷ 750.0 = **666.7 A**
+- Voltage ratio = 11,000 ÷ 433 = **25.40**
+
+The current ratio is the inverse of the voltage ratio: 666.7 ÷ 26.24 = 25.40.
+
+## Using the result on site
+
+- **Checking load.** A clamp meter reading of 480 A per phase on the LV side means 480 ÷ 666.7 = **72%** loading, or about 360 kVA.
+- **Choosing LV current transformers.** An 800/5 A CT gives 4.17 A on its secondary at full load, leaving headroom for overload without saturating.
+- **HV fuse selection.** Magnetising inrush of around 10 times rated current, about 262 A for a few cycles, must not blow the HV fuse.
+- **Fault level.** With 4.75% impedance the LV short-circuit current is roughly 666.7 ÷ 0.0475 = **14.0 kA**, which sets the breaker breaking capacity.
+
+## Single-phase transformer currents
+
+| Rating | 230 V | 240 V | 120 V |
+|---|---|---|---|
+| 5 kVA | 21.7 A | 20.8 A | 41.7 A |
+| 10 kVA | 43.5 A | 41.7 A | 83.3 A |
+| 15 kVA | 65.2 A | 62.5 A | 125.0 A |
+| 25 kVA | 108.7 A | 104.2 A | 208.3 A |
+| 50 kVA | 217.4 A | 208.3 A | 416.7 A |
+| 100 kVA | 434.8 A | 416.7 A | 833.3 A |
+
+## Common mistakes
+
+- **Using phase voltage with the √3 formula.** Three-phase full-load current uses line voltage; using 250 V instead of 433 V inflates the answer by √3.
+- **Applying power factor to kVA.** Rating current depends only on kVA; power factor matters only when converting a kW load to kVA.
+- **Sizing on 433 V and running at 400 V.** A lower secondary voltage means more current for the same kVA.
+- **Forgetting delta winding current.** Inside a delta winding the current is line current ÷ √3, which matters for winding and internal CT checks.
+- **Ignoring harmonics.** Non-linear loads heat a transformer more than the RMS current suggests; derate using the K factor.

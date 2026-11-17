@@ -5,7 +5,7 @@ category: electronics
 intro: "Capacitors combine the opposite way to resistors: in parallel their capacitances add, while in series the total is smaller than the smallest one. This capacitors in series and parallel calculator gives the equivalent capacitance of up to four parts.\n\nStudents, technicians and designers use it to make odd values from stock parts or to raise a voltage rating. See the [capacitor working principle](https://www.instrumentationblog.in/capacitor-working-principle/) and [series vs parallel circuits](https://www.instrumentationblog.in/series-vs-parallel-circuits-explained/)."
 keywords: [capacitors in series calculator, capacitors in parallel calculator, total capacitance calculator, series capacitance formula, equivalent capacitance, capacitor combination]
 published: 2026-10-28
-updated: 2026-11-16
+updated: 2026-11-17
 variables:
   - id: s
     label: Connection
@@ -33,6 +33,8 @@ faq:
     a: "Combine standard values. Two 47 µF capacitors in parallel give 94 µF, and 220 nF in series with 330 nF gives 132 nF. Parallel combinations are usually easier because the total is simply the sum."
   - q: "Does connecting capacitors in series increase the stored energy?"
     a: "No. For the same voltage, energy is ½CV², and a series pair has less capacitance than either part. In the example, 6.88 µF at 50 V stores 8.6 mJ, while the parallel pair at the same voltage stores 40.0 mJ."
+  - q: "What is the reactance of capacitors in series?"
+    a: "The reactances add: X = X₁ + X₂. At 50 Hz a 10 µF part is 318.3 Ω and a 22 µF part 144.7 Ω, so the series pair is 463.0 Ω, the same as one 6.875 µF capacitor."
 related: [electronics/capacitor-energy, physics/resistors-series-parallel, electronics/rc-filter, electronics/reactance]
 ---
 
@@ -109,3 +111,21 @@ Identical capacitors divide the capacitance by the number in series and multiply
 - **Using the highest voltage rating in a parallel bank.** All parallel parts see the full voltage, so the lowest rating limits the bank.
 - **Mixing units.** Entering one value in nF and another in µF without converting gives an answer off by a factor of 1,000.
 - **Putting polarised electrolytics in series the wrong way.** For a non-polar pair, connect them back to back (negative to negative), and remember that only half the capacitance remains.
+
+## Reactance of the combination on AC
+
+On AC each capacitor behaves as a reactance X<sub>C</sub> = 1 ÷ (2πfC). Series reactances add like series resistors, so the series pair always has more reactance than either part. For the default 10 µF and 22 µF pair:
+
+| Frequency | 10 µF alone | 22 µF alone | Series (6.875 µF) | Parallel (32 µF) |
+|---|---|---|---|---|
+| 50 Hz | 318.31 Ω | 144.69 Ω | 463.00 Ω | 99.472 Ω |
+| 120 Hz | 132.63 Ω | 60.29 Ω | 192.92 Ω | 41.447 Ω |
+| 1 kHz | 15.92 Ω | 7.23 Ω | 23.15 Ω | 4.974 Ω |
+| 10 kHz | 1.59 Ω | 0.72 Ω | 2.31 Ω | 0.497 Ω |
+| 100 kHz | 0.16 Ω | 0.07 Ω | 0.23 Ω | 0.050 Ω |
+
+At 50 Hz, 318.3 Ω + 144.7 Ω = 463.0 Ω, which is exactly the reactance of a single 6.875 µF capacitor. This is a quick way to check a series result by hand.
+
+## Tolerance on the total
+
+With ±20% electrolytics the default series pair can measure anywhere from **5.50 µF** (both parts low) to **8.25 µF** (both high). The voltage split is worse: if the 10 µF part is 20% low and the 22 µF part 20% high, the 10 µF part sees **38.4 V** of the 50 V instead of 34.4 V. Measure the parts with an LCR meter before building a series stack for high voltage.

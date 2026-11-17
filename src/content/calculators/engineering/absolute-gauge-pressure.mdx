@@ -2,10 +2,10 @@
 title: Absolute to Gauge Pressure Calculator (and Vacuum)
 description: Convert gauge pressure to absolute pressure and back, including vacuum readings, with atmospheric pressure set directly or estimated from altitude.
 category: engineering
-intro: "Gauge pressure is measured relative to the surrounding atmosphere, absolute pressure relative to a perfect vacuum, and the difference is the local atmospheric pressure. This absolute to gauge pressure calculator converts between them — and handles vacuum as negative gauge pressure — as explained in [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/) and [how to calculate vacuum pressure](https://www.instrumentationblog.in/how-to-calculate-vacuum-pressure/)."
+intro: "Gauge pressure is measured relative to the surrounding air, absolute pressure relative to a perfect vacuum, and the difference is local atmospheric pressure. This absolute to gauge pressure calculator converts between them, with vacuum as negative gauge pressure, as explained in [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/).\n\nInstrument engineers, process operators and HVAC technicians use it when a transmitter, datasheet or gas calculation uses a different reference from the gauge on the pipe."
 keywords: [absolute to gauge pressure calculator, gauge to absolute pressure, psia to psig, bar g to bar a, vacuum pressure calculator, atmospheric pressure altitude, absolute pressure formula]
 published: 2026-11-05
-updated: 2026-11-14
+updated: 2026-11-17
 variables:
   - { id: pg, label: Gauge pressure (negative = vacuum), family: pressure, unit: bar, imperialUnit: psi, default: 2, min: -1e7 }
   - { id: z, label: Altitude above sea level, family: length, unit: m, imperialUnit: ft, default: 0, min: -500, max: 11000 }
@@ -27,6 +27,8 @@ faq:
     a: "Always absolute. The gas laws and flow compensation formulas use absolute pressure. Using 2 bar(g) instead of 3.013 bar(a) would make a gas density about 34% too low."
   - q: "What is a sealed gauge transmitter?"
     a: "A gauge transmitter whose reference side is sealed at about 1 atm instead of vented. It is used where moisture could enter a vent, but it ignores weather and altitude changes in atmospheric pressure."
+  - q: "How do I convert inches of mercury vacuum to absolute pressure?"
+    a: "Multiply the vacuum reading by 33.864 to get mbar, then subtract it from atmospheric pressure. At sea level, 25 inHg vacuum is 25 × 33.864 = 846.6 mbar below 1,013.25 mbar, so the absolute pressure is about 166.7 mbar(a)."
 related: [engineering/hydrostatic-pressure, engineering/gas-flow-correction, engineering/manometer, engineering/compressor-power]
 ---
 
@@ -80,9 +82,29 @@ At sea level the same gauge reading would mean 0.513 bar(a). That 13% difference
 | Absolute | Sealed vacuum | bar(a), psia | Vacuum, distillation, gas flow compensation, boiling points |
 | Sealed gauge | Sealed at about 1 atm | bar(sg) | High pressures where a vent could let in moisture |
 
+## Vacuum readings in other units
+
+Vacuum equipment is specified in several ways. At sea level (1,013.25 mbar atmosphere) the same gauge readings convert as follows:
+
+| Gauge reading | Absolute | Absolute in torr | Vacuum in inHg | Vacuum as % of atmosphere |
+|---|---|---|---|---|
+| -0.2 bar(g) | 813 mbar(a) | 610.0 torr | 5.91 inHg vacuum | 19.7% |
+| -0.5 bar(g) | 513 mbar(a) | 385.0 torr | 14.76 inHg vacuum | 49.3% |
+| -0.8 bar(g) | 213 mbar(a) | 160.0 torr | 23.62 inHg vacuum | 79.0% |
+| -0.9 bar(g) | 113 mbar(a) | 84.9 torr | 26.58 inHg vacuum | 88.8% |
+| -0.95 bar(g) | 63 mbar(a) | 47.4 torr | 28.05 inHg vacuum | 93.8% |
+| -0.99 bar(g) | 23 mbar(a) | 17.4 torr | 29.23 inHg vacuum | 97.7% |
+
+A rough vacuum pump that pulls 50 mbar(a) is already at about 95% vacuum, while the last few percent down to 1 mbar(a) take a much better pump and tight seals. This is why vacuum below about 100 mbar is always specified in absolute units.
+
+## Checking a gauge against a barometer
+
+To check that a gauge transmitter and an absolute transmitter agree, read a local barometer and add its value to the gauge reading. With the default 2 bar(g) and a barometer showing 1,005 mbar, the absolute transmitter should read 3.005 bar(a), not the 3.01325 bar(a) the standard atmosphere predicts. The 8.3 mbar difference is weather, not a calibration fault.
+
 ## Common mistakes
 
 - **Using gauge pressure in the gas laws.** Ideal gas, density and flow compensation formulas need absolute pressure.
 - **Assuming 1.013 bar everywhere.** At 1,600 m atmospheric pressure is only about 0.835 bar.
 - **Ignoring the weather.** Barometric pressure moves about ±30 mbar. On low-pressure or vacuum work, use an absolute transmitter or a local barometer reading.
 - **Mixing up vacuum notations.** "600 mbar vacuum" is −600 mbar(g), while "600 mbar absolute" is a much weaker vacuum. Always check which one a datasheet means.
+- **Calibrating a vacuum gauge against an absolute reference without a barometer.** Weather alone can shift the expected gauge reading by 20 to 30 mbar.

@@ -2,10 +2,10 @@
 title: Ohm's Law Calculator
 description: Enter any two of voltage, current, resistance or power and get the other two — with steps, unit conversion and a live graph.
 category: physics
-intro: "Ohm's law, V = I × R, is the most important relationship in electrical work: voltage, current and resistance are tied together. Start with the [basics of Ohm's law](https://www.instrumentationblog.in/basics-of-ohms-law/) and the [electrical units of measure](https://www.instrumentationblog.in/electrical-units-of-measure-explained/)."
+intro: "Ohm's law, V = I × R, ties voltage, current and resistance together, and adding P = V × I brings in power. This Ohm's law calculator solves any two of the four values from the other two, with unit conversion. Start with the [basics of Ohm's law](https://www.instrumentationblog.in/basics-of-ohms-law/).\n\nStudents, electricians and instrument technicians use it to check resistor values, loop loads, heater currents and fuse sizes before power is applied."
 keywords: [ohm, voltage, current, resistance, power, V=IR, electrical, watt, ampere]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-17
 featured: true
 variables:
   - { id: V, label: Voltage, family: voltage, unit: V, default: 24, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: "I = V ÷ R. 24 V across 250 Ω gives 0.096 A (96 mA)."
   - q: "How do I calculate power from voltage and resistance?"
     a: "P = V² ÷ R. 12 V across 6 Ω dissipates 24 W."
+  - q: "What size resistor should carry 24 V and 96 mA?"
+    a: "It dissipates 2.30 W, so choose a 5 W resistor to keep at least a 2× power margin. A 1/4 W or 1 W part would overheat."
 related: []
 ---
 
@@ -102,3 +104,38 @@ Ohm's law holds for resistors and metal wires at constant temperature. It does n
 - **Resistor wattage:** choose a resistor rated at least 2× the calculated power.
 - **Wire and fuse sizing** depend on current, so calculate I first.
 - Remember to convert mA to A and kΩ to Ω when working by hand — the calculator handles this for you.
+
+## Worked example with the default values
+
+The calculator opens with 24 V across 250 Ω:
+
+- I = V ÷ R = 24 ÷ 250 = **0.096 A (96 mA)**
+- P = V × I = 24 × 0.096 = **2.304 W**
+
+A standard 1/4 W resistor would burn out here; it needs at least a 5 W part to keep a 2× margin. This is the case of a 250 Ω resistor connected straight across a 24 V supply by mistake, instead of in series with a transmitter.
+
+## Loop load check for a 4 to 20 mA circuit
+
+A 24 V loop must leave enough voltage for the transmitter at 20 mA. With 200 m of 1 mm² copper (7.0 Ω for both cores) and a transmitter that needs 12 V:
+
+| Load resistance | Drop at 20 mA | Left for transmitter | Result |
+|---|---|---|---|
+| 0 Ω | 0.14 V | 23.86 V | OK |
+| 250 Ω | 5.14 V | 18.86 V | OK |
+| 500 Ω | 10.14 V | 13.86 V | OK |
+| 600 Ω | 12.14 V | 11.86 V | Too low |
+| 750 Ω | 15.14 V | 8.86 V | Too low |
+
+The largest total loop resistance is (24 − 12) ÷ 0.020 = **600 Ω**, including cable.
+
+## Measuring to confirm the numbers
+
+Measure resistance only with the circuit de-energised, because a meter on the ohms range in a live circuit reads wrong and can be damaged. Measure current by breaking the circuit and putting the meter in series, or by reading the voltage across a known resistor and dividing. Comparing a measured voltage drop with V = I × R is the quickest way to spot a corroded terminal or a wrong resistor.
+
+## Common mistakes
+
+- **Forgetting to convert milliamps.** 96 mA is 0.096 A; using 96 gives a resistance a thousand times too small.
+- **Using cold resistance for a lamp or heater.** Filament resistance rises many times when hot, so a cold ohmmeter reading overstates the current.
+- **Applying V = IR to an LED or diode.** Their current is not proportional to voltage; use the forward voltage and a series resistor.
+- **Using RMS and peak values together.** In AC work, keep voltage and current both in RMS when calculating power.
+- **Ignoring resistor tolerance.** A 5% resistor can be 237.5 to 262.5 Ω, which moves the current by the same 5%.

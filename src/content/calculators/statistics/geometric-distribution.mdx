@@ -2,10 +2,10 @@
 title: Geometric Distribution Calculator (Trials to First Success)
 description: Calculate geometric distribution probabilities — the chance the first success comes on trial k, within k trials or after k — plus the mean and variance.
 category: statistics
-intro: "The geometric distribution describes how many independent tries it takes to get the first success when each try has the same probability p. This geometric distribution calculator gives the probability that the first success comes exactly on trial k, by trial k or only after k, along with the expected number of trials."
+intro: "The geometric distribution counts how many independent tries it takes to get the first success when every try has the same chance p. This geometric distribution calculator gives the probability that the first success lands exactly on trial k, by trial k or only after it.\n\nStudents use it for probability coursework, quality engineers for the first defect in an inspection run, and sales or reliability teams to plan how many attempts are needed before a result is likely."
 keywords: [geometric distribution calculator, geometric probability calculator, probability of first success, number of trials until success, geometric distribution formula, geometric distribution mean, cumulative geometric probability]
 published: 2026-11-04
-updated: 2026-11-04
+updated: 2026-11-17
 variables:
   - { id: p, label: Probability of success per trial (p), family: percent, unit: '%', default: 20, min: 0, max: 1 }
   - { id: k, label: Trial number of the first success (k), default: 3, min: 1 }
@@ -29,6 +29,10 @@ faq:
     a: This calculator counts trials up to and including the first success (k = 1, 2, 3 …). Some textbooks count only the failures before it (k = 0, 1, 2 …); then P = (1 − p)^k × p and the mean is (1 − p) ÷ p.
   - q: Is the geometric distribution memoryless?
     a: Yes — having already failed several times does not change the chance of success on the next trial. It is the discrete counterpart of the exponential distribution.
+  - q: "How many trials do I need to be 95% sure of at least one success?"
+    a: "Use n = ln(0.05) ÷ ln(1 − p) and round up. With p = 20% that is 14 trials, and with p = 5% it is 59 trials."
+  - q: "How is the geometric distribution related to the negative binomial?"
+    a: "The geometric distribution is the negative binomial with r = 1. The negative binomial counts the trials needed for r successes, so it is the sum of r independent geometric variables."
 related: [statistics/binomial-probability, statistics/exponential-distribution, statistics/poisson-probability, statistics/probability]
 ---
 
@@ -41,14 +45,6 @@ Enter the **probability of success** on each trial and the **trial number k**. T
 <p class="formula">P(X = k) = (1 − p)<sup>k−1</sup> p &nbsp;·&nbsp; P(X ≤ k) = 1 − (1 − p)<sup>k</sup></p>
 
 <p class="formula">μ = 1 ÷ p &nbsp;·&nbsp; σ = √(1 − p) ÷ p</p>
-
-## Example
-
-A sales call succeeds 20% of the time. The chance that the first sale comes on the 3rd call:
-
-- P(X = 3) = 0.8² × 0.2 = **12.8%**
-- P(X ≤ 3) = 1 − 0.8³ = **48.8%**, P(X > 3) = 0.8³ = **51.2%**
-- Expected calls = 1 ÷ 0.2 = **5**, standard deviation = √0.8 ÷ 0.2 = **4.4721**
 
 ## Geometric probabilities for p = 20%
 
@@ -71,3 +67,49 @@ A sales call succeeds 20% of the time. The chance that the first sale comes on t
 
 - The trials must be independent with a constant success probability.
 - To count successes in a fixed number of trials instead, use the [binomial probability calculator](/statistics/binomial-probability/).
+
+## Worked example with the default inputs
+
+A sales call succeeds 20% of the time (p = 20%). For the first sale to come on the third call (k = 3), two failures must be followed by a success:
+
+- P(X = 3) = 0.8 × 0.8 × 0.2 = **12.8%**
+- P(X ≤ 3) = 1 − 0.8³ = 1 − 0.512 = **48.8%**
+- P(X > 3) = 0.8³ = **51.2%**
+- Mean = 1 ÷ 0.2 = **5 trials**, standard deviation = √0.8 ÷ 0.2 = **4.4721**
+
+The median is only **4 trials**, lower than the mean of 5, because the distribution has a long right tail: a few long runs of failures pull the average up.
+
+## How many trials for a given confidence
+
+Solving 1 − (1 − p)<sup>n</sup> ≥ c for n gives the number of attempts needed to be c sure of at least one success:
+
+<p class="formula">n = ⌈ ln(1 − c) ÷ ln(1 − p) ⌉</p>
+
+For p = 20% and 95% confidence, n = ln(0.05) ÷ ln(0.8) rounded up = **14** trials, giving 95.6%.
+
+| Success rate p | Mean trials | 50% sure | 90% sure | 95% sure | 99% sure |
+|---|---|---|---|---|---|
+| 50% | 2 | 1 | 4 | 5 | 7 |
+| 20% | 5 | 4 | 11 | 14 | 21 |
+| 10% | 10 | 7 | 22 | 29 | 44 |
+| 5% | 20 | 14 | 45 | 59 | 90 |
+| 2% | 50 | 35 | 114 | 149 | 228 |
+| 1% | 100 | 69 | 230 | 299 | 459 |
+
+## Where it is used
+
+- **Inspection and testing.** If 2% of parts are defective, the chance the first defect turns up within 50 parts is 1 − 0.98⁵⁰ = 63.6%.
+- **Retries in communications.** The number of transmissions until a packet gets through, when each attempt fails independently, is geometric. The mean is the expected retry cost.
+- **Games and draws.** The number of rolls until a six (p = 1/6) has a mean of 6, but there is still a 16.2% chance of no six in 10 rolls.
+
+## The memoryless property in numbers
+
+Suppose the first five calls all failed. The chance of a sale in the next three is still 1 − 0.8³ = **48.8%**, exactly the same as P(X ≤ 3) from a fresh start. Past failures carry no information when trials are independent, so there is no such thing as being "due" a success.
+
+## Common mistakes
+
+- **Mixing up the two definitions.** Counting failures before the first success shifts k by one and changes the mean from 1/p to (1 − p)/p. Check which one a textbook or exam uses.
+- **Using it when p changes.** Learning effects, fatigue or sampling without replacement from a small batch break the constant p assumption. A small batch needs the hypergeometric approach instead.
+- **Reading the mean as a typical value.** With p = 20% the mean is 5 trials but the median is 4; one run in ten needs 11 or more trials.
+- **Expecting a success by trial 1/p.** P(X ≤ 5) is only 67.2%, not 100%.
+- **Confusing P(X = k) with P(X ≤ k).** "First success on the third try" and "a success within three tries" are different questions with different answers.

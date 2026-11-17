@@ -1,11 +1,11 @@
 ---
-title: Heat Sink Calculator (Thermal Resistance)
-description: Calculate the maximum heat sink thermal resistance for a transistor, MOSFET or regulator from power dissipation, junction and ambient temperatures.
+title: "Heat Sink Calculator (Required Thermal Resistance Rθsa)"
+description: "Find the maximum heat sink thermal resistance for a MOSFET, transistor or regulator from power, junction and ambient temperatures, with a worked example."
 category: electronics
-intro: "Power transistors, MOSFETs and regulators turn some energy into heat, and too much heat shortens their life or destroys them. A heat sink with low enough thermal resistance keeps the junction cool — see this [heat sink calculation](https://www.instrumentationblog.in/heat-sink-calculation/) guide."
+intro: "Power transistors, MOSFETs and regulators turn part of their energy into heat, and too much heat shortens their life. This heat sink calculator finds the highest sink thermal resistance that keeps the junction below your design limit, as described in this [heat sink calculation](https://www.instrumentationblog.in/heat-sink-calculation/) guide.\n\nElectronics designers and repair technicians use it to choose a heat sink, compare insulating pads and decide early whether a design needs forced air cooling."
 keywords: [heat sink calculator, thermal resistance calculator, heatsink selection, junction temperature calculation, rth sa, mosfet heat sink, regulator heat sink]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-17
 variables:
   - { id: P, label: Power dissipated, family: power, unit: W, default: 10, min: 0 }
   - { id: Tj, label: Maximum junction temperature (design), family: temperature, unit: C, imperialUnit: F, default: 125 }
@@ -26,7 +26,9 @@ faq:
     a: Stay 20–30 °C below the datasheet maximum (often 150 or 175 °C) for reliability — 110–125 °C is a common design target.
   - q: What is a typical case-to-sink resistance?
     a: 0.1–0.5 °C/W for a TO-220 with thermal paste; 0.5–1.5 °C/W with a silicone or mica insulating pad.
-related: [electronics/mosfet-power-loss, electronics/ntc-thermistor, physics/heat-conduction, electronics/capacitor-lifetime, electrical/three-phase-motor-power, physics/ohms-law]
+  - q: "How do I calculate the junction temperature with a given heat sink?"
+    a: "Add up the thermal resistances and multiply by the power: Tj = Ta + P × (Rθjc + Rθcs + Rθsa). For 10 W, 40 °C ambient, 1.5 and 0.5 °C/W and a 5 °C/W sink, Tj = 40 + 10 × 7 = 110 °C."
+related: [electronics/mosfet-power-loss, electronics/lm317, physics/heat-conduction, electronics/ntc-thermistor, electronics/capacitor-lifetime, electronics/buck-converter]
 ---
 
 ## How to use the heat sink calculator
@@ -69,3 +71,40 @@ For more background, read [What Is Thermal Conductivity?](https://www.instrument
 | With fan airflow | 2–4 times lower |
 
 Mount fins vertically for natural convection, and remember the enclosure air temperature — not room temperature — is the ambient.
+
+## Checking a chosen heat sink
+
+With the default inputs the sink must be at most 6.5 °C/W. Suppose you pick a profile rated **5 °C/W**. Working back up the thermal circuit at 10 W:
+
+- Heat sink temperature = 40 + 10 × 5 = **90 °C**
+- Case temperature = 90 + 10 × 0.5 = **95 °C**
+- Junction temperature = 95 + 10 × 1.5 = **110 °C**, leaving 15 °C of margin below the 125 °C target.
+
+If the drain tab must be insulated from the sink with a mica or silicone pad of about 1.2 °C/W instead of 0.5 °C/W, the allowed sink resistance falls to 8.5 − 1.5 − 1.2 = **5.8 °C/W**.
+
+## Required heat sink against power
+
+For the default 125 °C junction target, 40 °C ambient, R<sub>θjc</sub> 1.5 and R<sub>θcs</sub> 0.5 °C/W:
+
+| Power | Total allowed | Max R<sub>θsa</sub> | Junction with an ideal sink |
+|---|---|---|---|
+| 2 W | 42.50 °C/W | 40.50 °C/W | 44 °C |
+| 5 W | 17.00 °C/W | 15.00 °C/W | 50 °C |
+| 10 W | 8.50 °C/W | 6.50 °C/W | 60 °C |
+| 15 W | 5.67 °C/W | 3.67 °C/W | 70 °C |
+| 20 W | 4.25 °C/W | 2.25 °C/W | 80 °C |
+| 30 W | 2.83 °C/W | 0.83 °C/W | 100 °C |
+
+The last column is the junction temperature with an ideal (zero resistance) heat sink. Once it passes the target, no passive heat sink is enough.
+
+## Measuring temperatures in practice
+
+Fix a fine thermocouple to the device tab or to the sink right beside the package with a dab of thermal epoxy, run the circuit at full load until readings stop changing (often 20 to 40 minutes), and measure the air inside the enclosure, not the room. The junction temperature is then T<sub>case</sub> + P × R<sub>θjc</sub>. Measure the power from voltage and current, because datasheet loss estimates often miss switching losses.
+
+## Common mistakes
+
+- **Using room temperature as ambient.** Air inside a closed enclosure is often 10 to 20 °C warmer than the room, which can halve the allowed R<sub>θsa</sub>.
+- **Reading R<sub>θja</sub> as the heat sink figure.** R<sub>θja</sub> is for the bare package with no heat sink and is not used once a sink is fitted.
+- **Ignoring the insulating pad.** A pad can add more resistance than the device itself; include it in R<sub>θcs</sub>.
+- **Trusting the catalogue figure at any power.** Natural convection ratings are quoted at a stated temperature rise and fin orientation; a horizontal sink or a smaller rise performs worse.
+- **Forgetting other devices on the same sink.** Add all the power that flows into a shared heat sink before calculating its temperature.

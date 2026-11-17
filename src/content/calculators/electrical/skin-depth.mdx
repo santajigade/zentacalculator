@@ -2,10 +2,10 @@
 title: Skin Depth Calculator (Skin Effect in Conductors)
 description: Calculate the skin depth of copper, aluminium and other conductors at any frequency — the depth where AC current density falls to 37% of the surface value.
 category: electrical
-intro: "Alternating current crowds towards the surface of a conductor, so at high frequency only a thin outer layer carries it and the AC resistance rises. This skin depth calculator finds that layer's depth for copper, aluminium and other metals at any frequency — see [skin effect in conductors](https://www.instrumentationblog.in/skin-effect-in-conductors/) for why it matters in busbars, cables and RF circuits."
+intro: "Alternating current crowds towards the surface of a conductor, so at high frequency only a thin outer layer carries it and AC resistance rises. This skin depth calculator finds the depth of that layer for copper, aluminium and other metals at any frequency.\n\nPower engineers use it to size busbars and large cables, and electronics designers use it for transformer windings and RF traces; see [skin effect in conductors](https://www.instrumentationblog.in/skin-effect-in-conductors/) for the physics."
 keywords: [skin depth calculator, skin effect calculator, skin depth formula, copper skin depth, skin depth at 50 hz, ac resistance skin effect, rf skin depth]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-17
 variables:
   - id: rho
     label: Conductor
@@ -30,12 +30,16 @@ faq:
     a: It falls with the square root of frequency. Copper's skin depth is about 2.1 mm at 1 kHz, 65 µm at 1 MHz and 2.1 µm at 1 GHz.
   - q: How do I reduce skin effect losses?
     a: Use flat or hollow conductors, several smaller conductors in parallel, or Litz wire (many insulated, twisted strands) for kHz-range transformers and inductors.
+  - q: "What percentage of current flows within one skin depth?"
+    a: "About 63% (1 − 1/e) in a thick flat conductor, about 86% within 2δ and 95% within 3δ. The current density at depth δ is 37% of its surface value."
+  - q: "How thick should a conductor be to avoid skin effect losses?"
+    a: "A thickness of about 2δ to 3δ uses the material well. For copper at 50 Hz (δ = 9.22 mm) that is about 18 to 28 mm for a bar cooled from both sides; thicker sections add little and are better split into several bars."
 related: [electrical/busbar-size, electrical/wire-resistance, electronics/pcb-trace-width, electronics/reactance]
 ---
 
 ## How to use the skin depth calculator
 
-Choose the **conductor material**, enter its **relative permeability** (1 for non-magnetic metals) and the **frequency**. The calculator returns the skin depth δ. At depth δ the current density is 37% of its surface value; about 86% of the current flows within the outer δ of a thick conductor.
+Choose the **conductor material**, enter its **relative permeability** (1 for non-magnetic metals) and the **frequency**. The calculator returns the skin depth δ. At depth δ the current density is 37% of its surface value; about 63% of the current flows within the outer δ of a thick conductor and about 86% within 2δ.
 
 ## Skin depth formula
 
@@ -71,3 +75,47 @@ Copper (ρ = 1.678 × 10⁻⁸ Ω·m, μ<sub>r</sub> = 1) at 50 Hz:
 - **Switch-mode power supplies**: at 100 kHz copper's δ is about 0.2 mm, so windings use Litz wire or copper foil.
 - **RF and PCB traces**: above about 100 MHz current flows in a few micrometres, so surface roughness and plating matter.
 - Resistivity rises with temperature, so hot conductors have a slightly larger skin depth.
+
+## Worked example: copper at the default 50 Hz, cold and hot
+
+With the defaults (copper, μr = 1, 50 Hz), π × f × μ₀ = π × 50 × 1.25663706 × 10⁻⁶ = 1.9739e-04 and δ = √(1.678 × 10⁻⁸ ÷ 1.9739e-04) = **9.22 mm**.
+
+At a 90 °C conductor temperature copper resistivity rises to 1.678 × 10⁻⁸ × (1 + 0.00393 × 70) = 2.140e-08 Ω·m, so the skin depth grows to **10.41 mm**. A hot bar is slightly less affected by skin effect, but its DC resistance is 1.28 times higher, so the total loss still rises.
+
+## AC resistance of a winding wire at 100 kHz
+
+A 1.0 mm copper wire in a switch-mode transformer at 100 kHz has δ = **0.206 mm**. If the current flows mainly in an outer ring one skin depth thick, the useful area is π × (0.5² − 0.294²) = **0.514 mm²** against 0.785 mm² for the full wire, so R<sub>AC</sub> ÷ R<sub>DC</sub> is roughly **1.53**. This ring model is only an estimate when the radius is close to δ; Dowell's method gives a better answer for multilayer windings, where the proximity effect usually adds more loss than the skin effect. A Litz bundle of strands well below 2δ (about 0.41 mm here), such as 0.1 mm strands, keeps the ratio close to 1.
+
+## How current falls with depth
+
+For a thick flat conductor the current density at depth x is J₀ e<sup>−x/δ</sup>:
+
+| Depth | Current density left | Share of current carried above this depth |
+|---|---|---|
+| 0.5 δ | 60.7% | 39.3% |
+| 1 δ | 36.8% | 63.2% |
+| 2 δ | 13.5% | 86.5% |
+| 3 δ | 5.0% | 95.0% |
+| 5 δ | 0.7% | 99.3% |
+
+## Effect of magnetic permeability
+
+Skin depth falls with the square root of μr. For a steel with ρ = 1.0 × 10⁻⁷ Ω·m at 50 Hz:
+
+| μr | Factor 1/√μr | Skin depth |
+|---|---|---|
+| 1 | 1.000 | 22.51 mm |
+| 10 | 0.316 | 7.12 mm |
+| 100 | 0.100 | 2.25 mm |
+| 500 | 0.045 | 1.01 mm |
+| 1,000 | 0.032 | 0.71 mm |
+
+This is why steel conduit, steel wire armour and steel enclosures heat up when single core cables pass through them separately, and why induction heating works so well on carbon steel.
+
+## Common mistakes
+
+- **Saying all the current flows within δ.** Only about 63% flows in the first skin depth; a conductor needs a thickness of about 3δ to carry 95% as if it were infinitely thick.
+- **Treating proximity effect as skin effect.** In coils and closely spaced bars, the field of nearby conductors pushes current to one side and often causes more loss than skin effect alone.
+- **Setting μr = 1 for carbon steel.** Mild steel has μr of 100 or more, which shrinks δ to around a millimetre at 50 Hz.
+- **Using Litz wire at several MHz.** Strand capacitance and imperfect twisting cancel the benefit above about 1 to 2 MHz; use foil, tubing or plated conductors there.
+- **Plating thinner than the skin depth.** A silver or gold layer only lowers RF loss if it is at least 2 to 3δ thick at the working frequency.

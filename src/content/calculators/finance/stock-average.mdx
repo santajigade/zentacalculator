@@ -2,10 +2,10 @@
 title: Stock Average Calculator (Average Down Calculator)
 description: Calculate the average buy price of shares after buying at different prices — and how many more shares you need to reach a target average.
 category: finance
-intro: "When you buy more of a share at a different price, your average cost changes. Knowing it tells you your break-even price. This free stock average calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Buying more of a share at a different price changes your average cost, which is also your break-even price. This stock average calculator combines up to three purchases into total shares, total invested and average price per share.\n\nRetail investors use it before averaging down or up, to see how many shares a target average needs and how much extra money that ties up in one stock."
 keywords: [stock average calculator, average down calculator, share average calculator, average buy price, average cost per share, averaging shares]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-17
 featured: true
 variables:
   - { id: q1, label: First purchase — shares, default: 100, min: 0 }
@@ -30,6 +30,8 @@ faq:
     a: Only if your reasons for owning the stock still hold. Averaging down lowers your break-even price but increases your exposure to a falling share.
   - q: Do brokerage and taxes change the average?
     a: Yes. Add brokerage, exchange charges and stamp duty to the price paid for an accurate cost basis.
+  - q: "How do I adjust my average price after a stock split?"
+    a: "Multiply the shares held by the split ratio and divide the old price by the same ratio. After a 1 for 2 split, 100 shares at 250 become 200 shares at 125, and the total invested does not change."
 related: [finance/cagr, finance/roi, finance/dividend-yield, finance/pe-ratio]
 ---
 
@@ -78,3 +80,37 @@ Both increase your position size. Set a maximum allocation per stock before you 
 ## Tax lots
 
 For capital gains tax, many systems use **first in, first out** (FIFO) to decide which shares were sold. Your average cost and your tax cost basis may differ — check local rules.
+
+## Worked example with the default purchases
+
+- First buy: 100 × 250 = 25,000
+- Second buy: 50 × 200 = 10,000
+- Total shares = 150; total invested = **35,000.00**
+- Average = 35,000 ÷ 150 = **233.33** per share
+
+The average fell by only 16.67 even though the second price was 50 lower, because the second lot was half the size of the first. If brokerage and charges of 0.1% are added to each buy, the true cost basis is 35,035.00 and the average becomes **233.57**.
+
+## Profit or loss at different market prices
+
+For the 150 shares held at an average of 233.33:
+
+| Market price | Holding value | Profit or loss | Return |
+|---|---|---|---|
+| 180.00 | 27,000.00 | -8,000.00 | -22.9% |
+| 200.00 | 30,000.00 | -5,000.00 | -14.3% |
+| 220.00 | 33,000.00 | -2,000.00 | -5.7% |
+| 233.33 | 34,999.50 | -0.50 | -0.0% |
+| 250.00 | 37,500.00 | +2,500.00 | +7.1% |
+| 280.00 | 42,000.00 | +7,000.00 | +20.0% |
+
+## Average cost against FIFO when you sell part
+
+Selling 60 shares at 240 shows a gain of 400.00 against the average cost, but under FIFO those shares come from the first lot at 250, giving a tax loss of -600.00. Brokers' portfolio screens usually show the average, while contract notes and tax statements may follow FIFO, so keep both views.
+
+## Common mistakes
+
+- **Leaving out charges.** Brokerage, exchange fees, stamp duty and tax change the real break-even price.
+- **Averaging across a split or bonus.** Adjust old quantities and prices for the split ratio before adding new buys.
+- **Treating the average as a target price.** The market does not know your cost; judge the stock on its prospects.
+- **Ignoring position size.** Each average down raises the share of money in one stock; set a cap before you start.
+- **Mixing currencies or exchanges.** Convert purchases made in different currencies at the rate on each trade date.

@@ -1,11 +1,11 @@
 ---
-title: Boiling Point Elevation Calculator
-description: Calculate how much a dissolved solute raises the boiling point of a solvent using ΔTb = i·Kb·m — for water, ethanol, benzene and more.
+title: "Boiling Point Elevation Calculator (ΔTb = i·Kb·m)"
+description: "Calculate the rise in boiling point from molality, van 't Hoff factor and solvent Kb, with worked examples, solvent constants and molar mass checks."
 category: chemistry
-intro: "Dissolving a solute raises a liquid's boiling point by an amount that depends on how many particles are dissolved. It is one of the colligative properties of solutions. This free boiling point elevation calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Dissolving a solute raises a liquid's boiling point by an amount set by how many particles are dissolved, not by what they are. This boiling point elevation calculator applies ΔTb = i × Kb × m and gives the rise and the new boiling point.\n\nChemistry students use it for colligative property problems, and lab chemists use it to estimate the molar mass of an unknown or to check how much a dissolved salt shifts a solvent's boiling point."
 keywords: [boiling point elevation calculator, delta tb, kb constant, ebullioscopic constant, colligative properties, salt in water boiling point]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-17
 variables:
   - id: Kb
     label: Solvent
@@ -33,7 +33,9 @@ faq:
     a: Because Kb for most solvents is smaller than Kf. For water, Kf is 1.86 but Kb is only 0.512.
   - q: Does altitude affect boiling point?
     a: Yes, much more than solutes do. Water boils at about 95 °C at 1,500 m and about 90 °C at 3,000 m because air pressure is lower.
-related: [chemistry/freezing-point-depression, chemistry/molality, chemistry/osmotic-pressure, chemistry/specific-heat]
+  - q: "How do I find the van 't Hoff factor from a boiling point measurement?"
+    a: "Rearrange the formula: i = ΔTb ÷ (Kb × m). For example, a 0.10 mol/kg NaCl solution that boils 0.097 °C above pure water gives i = 0.097 ÷ (0.512 × 0.10) = 1.89, slightly below the ideal 2 because of ion pairing."
+related: [chemistry/freezing-point-depression, chemistry/molality, chemistry/osmotic-pressure, chemistry/raoults-law]
 ---
 
 ## How to use the boiling point elevation calculator
@@ -76,3 +78,50 @@ Ebullioscopy works like cryoscopy: m = ΔTb ÷ (i × Kb), then molar mass = mass
 ## Colligative properties
 
 Freezing point depression, boiling point elevation, vapour pressure lowering and [osmotic pressure](/chemistry/osmotic-pressure/) all depend on the number of dissolved particles, not their identity.
+
+## Worked example with the default values
+
+A 1 mol/kg solution of sodium chloride in water (i = 2, K<sub>b</sub> = 0.512 °C·kg/mol):
+
+- ΔT<sub>b</sub> = 2 × 0.512 × 1 = **1.024 °C**
+- New boiling point = 100 + 1.024 = **101.02 °C**
+
+To make this solution, dissolve 29.22 g of NaCl (58.44 g/mol) in 500 g of water. Note that molality is per kilogram of solvent, so the water is weighed, not made up to a volume.
+
+## Where Kb comes from
+
+The ebullioscopic constant follows from the solvent's own properties: K<sub>b</sub> = R × T<sub>b</sub>² × M ÷ ΔH<sub>vap</sub>. For water, 8.314 × 373.15² × 0.018015 ÷ 40,660 = **0.513 °C·kg/mol**, which matches the tabulated 0.512. Solvents with a high boiling point and a low heat of vaporisation per mole have large K<sub>b</sub> values.
+
+## Solvent constants and the rise they give
+
+| Solvent | Normal bp | K<sub>b</sub> (°C·kg/mol) | Rise at 0.5 mol/kg (i = 1) | Rise at 1 mol/kg (i = 1) |
+|---|---|---|---|---|
+| Water | 100 °C | 0.512 | 0.256 °C | 0.512 °C |
+| Ethanol | 78.4 °C | 1.22 | 0.610 °C | 1.220 °C |
+| Acetic acid | 118 °C | 3.07 | 1.535 °C | 3.070 °C |
+| Benzene | 80.1 °C | 2.53 | 1.265 °C | 2.530 °C |
+| Chloroform | 61.2 °C | 3.63 | 1.815 °C | 3.630 °C |
+
+## Ideal and measured van 't Hoff factors
+
+| Solute | Ideal i | Measured i (dilute, about 0.05 mol/kg) |
+|---|---|---|
+| Sucrose, glucose, urea | 1 | 1.0 |
+| NaCl, KCl | 2 | about 1.9 |
+| MgSO₄ | 2 | about 1.3 |
+| CaCl₂, MgCl₂ | 3 | about 2.7 |
+| FeCl₃ | 4 | about 3.4 |
+
+Ion pairing makes real electrolytes behave as if they release fewer particles, so the ideal i overstates the rise, especially above about 0.1 mol/kg.
+
+## Finding molar mass by ebullioscopy
+
+10 g of an unknown non-electrolyte in 200 g of benzene raises the boiling point by 0.80 °C. The molality is 0.80 ÷ 2.53 = 0.3162 mol/kg, so the moles dissolved are 0.3162 × 0.2 = 0.06324 mol and the molar mass is 10 ÷ 0.06324 = **158 g/mol**. Measure the rise with a Beckmann or digital thermometer reading to 0.01 °C, and record barometric pressure, because a small pressure change moves the boiling point more than the solute does.
+
+## Common mistakes
+
+- **Using molarity instead of molality.** K<sub>b</sub> is defined per kilogram of solvent; mol/L gives a small error in water and a larger one in dense or light solvents.
+- **Dividing by the mass of solution.** Only the solvent mass goes in the denominator of molality.
+- **Forgetting the van 't Hoff factor.** Salts split into ions; using i = 1 for NaCl halves the predicted rise.
+- **Applying the formula to concentrated solutions.** The linear law is for dilute, ideal solutions; strong brines deviate noticeably.
+- **Ignoring a volatile solute.** The formula assumes the solute does not evaporate; ethanol in water lowers, not raises, the boiling point.

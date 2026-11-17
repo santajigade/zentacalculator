@@ -2,10 +2,10 @@
 title: Solution Preparation Calculator (Mass of Solid Needed)
 description: Calculate how many grams of solid to weigh out to make a solution of a given molarity and volume, corrected for reagent purity, with common reagent masses.
 category: chemistry
-intro: "To make a solution of known molarity you weigh out moles × molar mass of the solid, dissolve it and make up to volume. This solution preparation calculator gives the mass of solid needed for any concentration and volume, corrected for reagent purity, and lists the masses for common lab reagents."
+intro: "To make a solution of known molarity you weigh moles × molar mass of the solid, dissolve it and make up to volume. This solution preparation calculator gives the mass of solid needed for any concentration and volume, corrected for reagent purity.\n\nLab technicians, chemistry students and quality control analysts use it to prepare reagents, buffers and standards quickly and to record how the weighed mass was worked out."
 keywords: [solution preparation calculator, mass needed for molar solution, how many grams to make a solution, grams to make 0.1 m solution, molar solution preparation, reagent purity correction, make a solution from solid]
 published: 2026-11-06
-updated: 2026-11-14
+updated: 2026-11-17
 variables:
   - { id: c, label: Target concentration, suffix: mol/L, default: 0.1, min: 0 }
   - { id: V, label: Final solution volume, family: volume, unit: mL, imperialUnit: mL, default: 500, min: 0 }
@@ -29,6 +29,8 @@ faq:
     a: "0.1 mol/L × 0.500 L × 40.00 g/mol = 2.00 g. Because NaOH absorbs water and CO₂ from the air, standardise the solution by titration if the exact concentration matters."
   - q: "How do I make 1 M HCl from concentrated acid?"
     a: "Concentrated 37% HCl (density 1.19 g/mL) is about 12.1 M. Add about 82.8 mL of it slowly to roughly 700 mL of water, then make up to 1 L. Always add acid to water."
+  - q: "What do I do if I weigh slightly more or less than the calculated mass?"
+    a: "Keep the mass you weighed and recalculate the concentration from it: c = mass × purity ÷ (molar mass × volume in L). For 2.9412 g of 99.5% NaCl in 500 mL that is 0.10015 mol/L."
 related: [chemistry/molarity, chemistry/dilution, chemistry/normality, chemistry/mass-percent]
 ---
 
@@ -90,3 +92,25 @@ For concentrated acids and bases, first work out the molarity of the stock:
 - **Dissolving the solid in the full volume of water.** The solid adds volume. Dissolve it in less water, then make up to the mark.
 - **Filling the flask while the solution is warm.** Volumetric flasks are calibrated at 20 °C. Let heat from dissolving NaOH or acids dissipate first.
 - **Trusting the weighed mass of hygroscopic solids.** NaOH and KOH pick up water as you weigh them, so standardise these solutions.
+
+## Recalculating from the mass you actually weighed
+
+You will rarely hit the target mass exactly. Weigh close to it, record the real figure and work out the true concentration. For the default recipe the target is 2.9367 g. If the balance shows **2.9412 g**:
+
+- Actual moles = 2.9412 × 0.995 ÷ 58.44 = 0.050077 mol
+- Actual concentration = 0.050077 ÷ 0.5 L = **0.10015 mol/L**, which is +0.15% from 0.1 M
+
+Label the bottle with this value rather than the nominal 0.1 M. It is usually quicker and more accurate than adding or removing a few milligrams of solid.
+
+## How balance resolution limits accuracy
+
+Rounding on the balance display adds an error of half the last digit. For the 2.937 g weighing above:
+
+| Balance readability | Rounding error | Error in concentration |
+|---|---|---|
+| 0.1 g (top pan) | ±0.05 g | ±1.703% |
+| 0.01 g | ±0.005 g | ±0.170% |
+| 1 mg | ±0.0005 g | ±0.017% |
+| 0.1 mg (analytical) | ±5e-05 g | ±0.002% |
+
+For standard solutions aim for an error below 0.1%, which here needs at least a 1 mg balance. Weighing a larger amount into a larger flask also reduces the relative error.

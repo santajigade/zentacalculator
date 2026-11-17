@@ -2,10 +2,10 @@
 title: Weir Flow Calculator (V-Notch and Rectangular)
 description: Calculate open-channel flow over a V-notch or rectangular weir from the head — for effluent, irrigation and flow measurement.
 category: engineering
-intro: "A weir is a notch or barrier in an open channel; the height of water flowing over it gives the flow rate. Weirs are common for effluent and irrigation, and are often paired with level transmitters — see [measuring flow rate with level sensors](https://www.instrumentationblog.in/measure-flow-rate-level-sensors/). This free weir flow calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A weir is a notch or plate across an open channel, and the height of water above it sets the flow. This weir flow calculator works out flow for a V-notch or a contracted rectangular weir from the measured head.\n\nEffluent plant operators, irrigation engineers and environmental inspectors use it to check flow meters and discharge permits. See [measuring flow rate with level sensors](https://www.instrumentationblog.in/measure-flow-rate-level-sensors/)."
 keywords: [weir flow calculator, v notch weir, rectangular weir, francis formula, open channel flow, weir head flow, thomson weir]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-17
 variables:
   - id: t
     label: Weir type
@@ -29,6 +29,8 @@ faq:
     a: Q = 1.84 (L − 0.2h) h^1.5 in SI units, for a rectangular weir with end contractions on both sides.
   - q: How accurate are weir formulas?
     a: Typically within 2–5% when the weir is installed to standard (sharp crest, free fall, ventilated nappe, adequate approach channel).
+  - q: "How much does a 1 mm error in head change V-notch flow?"
+    a: "Flow follows h^2.5, so the error is about 2.5 times the relative head error. At 150 mm head, 1 mm is 1.7% of flow; at 50 mm it is 5.1%."
 related: [engineering/orifice-flow, engineering/pipe-flow-velocity, engineering/hydrostatic-pressure, conversion/flow-rate-converter]
 ---
 
@@ -84,3 +86,39 @@ Flow rises with h<sup>2.5</sup>, so doubling the head increases flow about 5.7 t
 ## Automating with level sensors
 
 Ultrasonic or radar level transmitters above the weir measure head continuously. The flow computer then applies the weir equation — a common setup for effluent flow monitoring.
+
+## Worked example: 90° V-notch at 150 mm head
+
+The default inputs are a 90° V-notch, C<sub>d</sub> = 0.585, and h = 150 mm:
+
+- √(2g) = √(2 × 9.80665) = 4.4287 m^0.5/s
+- tan(90° ÷ 2) = 1
+- h^2.5 = 0.150^2.5 = 0.008714 m^2.5
+- Q = 8/15 × 0.585 × 4.4287 × 1 × 0.008714 = **0.01204 m³/s = 43.35 m³/h (12.04 L/s)**
+
+Switching the type to rectangular with the default 0.5 m crest gives Q = 1.84 × (0.5 − 0.2 × 0.15) × 0.15^1.5 = **180.9 m³/h**, about 4.2 times as much at the same head.
+
+## Effect of notch angle at 150 mm head
+
+| Notch angle | tan(θ/2) | Flow |
+|---|---|---|
+| 22.5° | 0.1989 | 8.62 m³/h |
+| 30° | 0.2679 | 11.61 m³/h |
+| 45° | 0.4142 | 17.95 m³/h |
+| 60° | 0.5774 | 25.03 m³/h |
+| 90° | 1.0000 | 43.35 m³/h |
+| 120° | 1.7321 | 75.08 m³/h |
+
+Narrow notches suit small effluent flows; a 120° notch passes more water before overtopping.
+
+## How accurately must the head be measured?
+
+Because flow goes with h^2.5, a 1 mm head error at 150 mm shifts the V-notch flow by **1.7%**. At 50 mm head the same 1 mm error is **5.1%** of a flow of only 2.78 m³/h. That is why the head is read in a stilling well with a hook gauge or an ultrasonic sensor that has been zeroed against the notch bottom, not against the channel floor.
+
+## Common mistakes
+
+- **Measuring head at the plate.** The surface draws down near the weir; read it 4 to 5 heads upstream.
+- **Zeroing to the wrong point.** Head is measured from the notch vertex or crest, so survey that level into the sensor zero.
+- **A submerged or clinging nappe.** If tailwater rises above the crest or the nappe sticks to the plate, the free discharge formulas no longer apply.
+- **Using the Francis formula for a full width weir.** A suppressed weir without end contractions needs the 0.2h term removed.
+- **Letting silt build up upstream.** A filled approach pool raises approach velocity and makes the weir read low.

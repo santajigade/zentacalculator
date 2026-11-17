@@ -2,10 +2,10 @@
 title: Busbar Size Calculator (Current Density Method)
 description: Estimate copper or aluminium busbar cross-section and width from current and a design current density, with the resistive loss per metre.
 category: electrical
-intro: "A first estimate of busbar size divides the current by a safe current density, typically about 1.2–1.6 A/mm² for copper and 0.8–1.0 A/mm² for aluminium inside switchboards. This busbar size calculator gives the cross-section, the bar width for a chosen thickness and the resistive loss per metre — see the [busbar sizing calculation guide](https://www.instrumentationblog.in/busbar-sizing-calculation-guide/) for temperature-rise and short-circuit checks."
+intro: "A first estimate of busbar size divides the current by a safe current density, typically 1.2 to 1.6 A/mm² for copper and 0.8 to 1.0 A/mm² for aluminium in switchboards. This busbar size calculator gives the cross-section, bar width and resistive loss per metre.\n\nPanel builders and electrical designers use it to pick a starting bar size before checking it against the [busbar sizing calculation guide](https://www.instrumentationblog.in/busbar-sizing-calculation-guide/) for temperature rise and short circuit."
 keywords: [busbar size calculator, busbar sizing calculation, copper busbar current capacity, busbar current density, aluminium busbar size, busbar cross section calculator, panel busbar calculation]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-17
 variables:
   - { id: I, label: Rated current, family: current, unit: A, default: 1600, min: 0 }
   - id: rho
@@ -33,6 +33,10 @@ faq:
     a: Aluminium has about 1.6 times the resistivity of copper, so it needs roughly 60% more cross-section for the same loss and temperature rise — but it is much lighter and cheaper.
   - q: Is the current density method enough for final design?
     a: No. Final sizing should be verified by temperature-rise tests or tables (IEC 61439, DIN 43671), and the bars and supports checked for short-circuit thermal and mechanical stress.
+  - q: "How much heat does a busbar produce?"
+    a: "Loss per metre per phase is I² ρ ÷ A. A 1,600 A copper bar of 1,000 mm² loses 44.1 W/m at 20 °C and about 56 W/m at 90 °C, so a three phase run produces about 169 W per metre at full load."
+  - q: "Can I use the same busbar size for 60 Hz?"
+    a: "Almost. The skin depth of copper falls from about 9.2 mm at 50 Hz to 8.4 mm at 60 Hz, so thick bars have slightly higher AC resistance. For bars up to 10 mm thick the difference is small; for thicker or multiple bars use the maker's 60 Hz ratings."
 related: [electrical/cable-voltage-drop, electrical/wire-resistance, electrical/skin-depth, electrical/transformer-current]
 ---
 
@@ -76,3 +80,35 @@ These are current-density estimates, not certified ratings — large bars carry 
 - **Multiple bars per phase** do not share current perfectly; derate by about 10–20% for 2–4 bars.
 - **Painting** bars matt black improves heat dissipation by radiation; enclosure ventilation and ambient temperature matter as much as cross-section.
 - Check the short-circuit withstand: copper needs about A ≥ I<sub>sc</sub> × √t ÷ 143 mm² for a 1 s fault from 90 °C to 250 °C (k ≈ 143).
+
+## Worked example: copper against aluminium for the default 1,600 A board
+
+With the default inputs (1,600 A, copper, 1.6 A/mm², 10 mm bars, one bar per phase) the calculator gives A = 1,600 ÷ 1.6 = **1,000 mm²**, a width of **100 mm** and **44.1 W/m** per phase at 20 °C.
+
+The bars do not run at 20 °C. Copper resistance rises by about 0.393% per kelvin, so at a 90 °C working temperature the loss is 44.1 × (1 + 0.00393 × 70) = **56.3 W/m** per phase, or 169 W for every metre of a three phase run. That heat has to leave the enclosure, which is why ventilation matters.
+
+Switching to aluminium at 0.8 A/mm² needs 1,600 ÷ 0.8 = **2,000 mm²**, for example two 100 × 10 mm bars per phase. Because the section doubles while resistivity rises only by 1.64 times, the loss falls to **36.2 W/m** per phase at 20 °C.
+
+## Short circuit check
+
+The thermal withstand of a bare copper bar is roughly A ≥ I<sub>sc</sub> × √t ÷ k with k ≈ 143. For a 50 kA fault cleared in 1 s, A ≥ 50,000 × √1 ÷ 143 = **350 mm²**, so the 1,000 mm² bar passes the thermal test easily. The mechanical force between phases is usually the harder limit: it rises with the square of the peak fault current and falls with phase spacing, so support spacing must be checked against the maker's tested arrangement.
+
+## Current density, loss and copper weight at 1,600 A
+
+| Current density | Cross-section | Loss per phase (20 °C) | Three phase loss | Copper per phase |
+|---|---|---|---|---|
+| 1.0 A/mm² | 1,600 mm² | 27.6 W/m | 82.8 W/m | 14.34 kg/m |
+| 1.2 A/mm² | 1,333 mm² | 33.1 W/m | 99.3 W/m | 11.95 kg/m |
+| 1.4 A/mm² | 1,143 mm² | 38.6 W/m | 115.9 W/m | 10.24 kg/m |
+| 1.6 A/mm² | 1,000 mm² | 44.1 W/m | 132.4 W/m | 8.96 kg/m |
+| 2.0 A/mm² | 800 mm² | 55.2 W/m | 165.5 W/m | 7.17 kg/m |
+
+Lower densities cost more copper but cut the running loss; over a 20 year life the energy saved often pays for the extra metal in heavily loaded boards.
+
+## Common mistakes
+
+- **Using one thick bar for high AC current.** Beyond about 10 mm the centre of a copper bar carries little current at 50 Hz; two 10 mm bars with a 10 mm gap beat one 20 mm bar.
+- **Applying small-bar densities to large bars.** A 20 × 5 mm bar can run near 2 A/mm², but a 200 × 10 mm bar has far less surface per mm² and must run lower.
+- **Ignoring the neutral.** Harmonic loads (drives, LED lighting, IT equipment) can push neutral current above phase current, so a half size neutral may overheat.
+- **Sizing on 20 °C loss only.** Real bars run 30 to 50 K above a 35 to 40 °C panel ambient, which adds roughly a quarter to the loss.
+- **Mixing copper and aluminium joints without treatment.** Bare Cu to Al joints corrode; use bimetallic washers or tin plated bars and torque the bolts to the specified value.

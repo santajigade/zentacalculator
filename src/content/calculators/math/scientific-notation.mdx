@@ -2,10 +2,10 @@
 title: Scientific Notation Calculator (Standard & Engineering Form)
 description: Convert any number to scientific notation (a × 10ⁿ) and engineering notation (exponent a multiple of 3), and back to decimal — with coefficient and exponent.
 category: math
-intro: "Scientific notation writes a number as a coefficient between 1 and 10 multiplied by a power of ten, so 45,600,000 becomes 4.56 × 10⁷. This scientific notation calculator splits any number into its coefficient and exponent, gives the engineering-notation form whose exponent is a multiple of three, and converts back to an ordinary decimal."
+intro: "Scientific notation writes a number as a coefficient from 1 to just under 10 times a power of ten, so 45,600,000 becomes 4.56 × 10⁷. This scientific notation calculator gives the coefficient, exponent and engineering form, and converts back to a decimal.\n\nStudents use it to check homework in physics and chemistry, while engineers and lab staff use it to read E notation from instruments and spreadsheets and to keep track of very large or very small values."
 keywords: [scientific notation calculator, convert to scientific notation, standard form calculator, engineering notation calculator, e notation, powers of 10, decimal to scientific notation]
 published: 2026-11-07
-updated: 2026-11-07
+updated: 2026-11-17
 variables:
   - { id: x, label: Number (decimal form), default: 4.56e+07 }
   - { id: ex, label: Exponent n (scientific), decimals: 0 }
@@ -26,6 +26,10 @@ faq:
     a: E notation is scientific notation for screens and spreadsheets — 4.56E7 means 4.56 × 10⁷ = 45,600,000. A negative exponent such as 2E-3 means 0.002.
   - q: How do I multiply numbers in scientific notation?
     a: Multiply the coefficients and add the exponents, then renormalise. (3 × 10⁴) × (5 × 10³) = 15 × 10⁷ = 1.5 × 10⁸.
+  - q: "Why does my spreadsheet show 4.56E+07?"
+    a: "The column is too narrow for the full number, so the spreadsheet shows it in E notation: 4.56E+07 means 4.56 × 10⁷ = 45,600,000. Widen the column or apply a number format to see all digits."
+  - q: "What does 10E7 mean?"
+    a: "10E7 means 10 × 10⁷, which is 10⁸ or 100,000,000. To enter ten million in E notation, type 1E7."
 related: [math/exponent, math/logarithm, conversion/number-to-million, math/square-root]
 ---
 
@@ -67,3 +71,38 @@ For a small number, 0.00045 → log₁₀ = −3.35, exponent **−4**, coeffici
 - Zero has no scientific-notation exponent; it is written simply as 0.
 - **Significant figures** are the digits in the coefficient: 4.560 × 10⁷ states four, 4.56 × 10⁷ three.
 - Engineering exponents map to SI prefixes: 10³ kilo, 10⁶ mega, 10⁹ giga, 10⁻³ milli, 10⁻⁶ micro, 10⁻⁹ nano, 10⁻¹² pico.
+
+## Default example check
+
+The calculator starts with 45,600,000. Its exponent is ⌊log₁₀ 45,600,000⌋ = ⌊7.6590⌋ = **7**, the coefficient is **4.56**, the engineering exponent is **6** and the engineering coefficient is **45.6**.
+
+## Arithmetic in scientific notation
+
+- **Adding or subtracting:** rewrite both numbers with the same exponent first. 4.56 × 10⁷ + 3.2 × 10⁵ = 4.56 × 10⁷ + 0.032 × 10⁷ = **4.592 × 10⁷**.
+- **Dividing:** divide the coefficients and subtract the exponents. (4.56 × 10⁷) ÷ (1.2 × 10⁻³) = 3.8 × 10⁷⁻⁽⁻³⁾ = **3.8 × 10¹⁰**.
+- **Multiplying with renormalising:** (4.56 × 10⁷) × (6.5 × 10⁻⁴) = 29.64 × 10³, which is not normalised, so move the point once to get **2.964 × 10⁴**.
+
+## Rounding to significant figures
+
+The coefficient carries the precision. Rounding 45,600,000 to fewer significant figures:
+
+| Significant figures | Scientific notation | Decimal value |
+|---|---|---|
+| 1 | 5 × 10⁷ | 50,000,000 |
+| 2 | 4.6 × 10⁷ | 46,000,000 |
+| 3 | 4.56 × 10⁷ | 45,600,000 |
+| 4 | 4.560 × 10⁷ | 45,600,000 |
+
+Trailing zeros in the coefficient are meaningful: 4.560 × 10⁷ claims a precision of ±5,000, while 4.56 × 10⁷ claims ±50,000.
+
+## Where you meet it
+
+Spreadsheets switch to E notation when a number is too wide for the column, showing 4.56E+07. Spreadsheet programs keep only 15 significant digits, so a 16 digit card or account number typed as a number is stored in scientific form and its last digit becomes 0; format such columns as text before pasting. Instruments and data loggers often export readings like 1.23E-06 A, which is 1.23 µA in engineering terms.
+
+## Common mistakes
+
+- **Writing 10E7 for 10⁷.** On calculators and in code, 10E7 means 10 × 10⁷ = 10⁸. Type 1E7 for ten million.
+- **Leaving the coefficient above 10.** 45.6 × 10⁶ is valid engineering notation but not normalised scientific notation; it should be 4.56 × 10⁷.
+- **Getting the exponent sign backwards for small numbers.** 0.00045 needs the point moved four places right, so the exponent is −4, not +4.
+- **Adding exponents when adding numbers.** Exponents add only when multiplying; for sums, match the exponents first.
+- **Dropping significant zeros.** Writing 4.5 × 10⁷ for a value measured as 4.50 × 10⁷ throws away a digit of precision.

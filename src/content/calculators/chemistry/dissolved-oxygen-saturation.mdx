@@ -2,10 +2,10 @@
 title: Dissolved Oxygen Saturation Calculator (mg/L vs Temperature)
 description: Calculate the dissolved oxygen saturation concentration of water in mg/L from temperature, salinity and barometric pressure, plus a sample's percent saturation.
 category: chemistry
-intro: "Water in equilibrium with air holds a fixed amount of oxygen that falls as temperature and salinity rise and as barometric pressure drops. This dissolved oxygen saturation calculator uses the Benson–Krause equations adopted in Standard Methods to give the saturation value in mg/L and the percent saturation of a measured sample — the reference an [optical dissolved oxygen sensor](https://www.instrumentationblog.in/how-do-optical-dissolved-oxygen-sensors-work/) is calibrated against."
+intro: "Water in contact with air holds a fixed amount of oxygen that falls as temperature and salinity rise and as barometric pressure drops. This dissolved oxygen saturation calculator uses the Benson and Krause equations from Standard Methods to give the saturation value in mg/L and a sample's percent saturation.\n\nWater quality technicians, aquaculture operators and wastewater engineers use it to calibrate an [optical dissolved oxygen sensor](https://www.instrumentationblog.in/how-do-optical-dissolved-oxygen-sensors-work/), judge aeration and report results."
 keywords: [dissolved oxygen saturation calculator, do saturation calculator, oxygen solubility in water calculator, dissolved oxygen mg/l temperature, percent saturation dissolved oxygen, do saturation table, benson krause equation]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-17
 variables:
   - { id: T, label: Water temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
   - { id: S, label: Salinity, suffix: g/kg (ppt), default: 0, min: 0, help: 'Fresh water 0; brackish 1–30; seawater about 35.' }
@@ -27,6 +27,10 @@ faq:
     a: Saturation is roughly proportional to barometric pressure (corrected for water vapour). At about 1,000 m elevation pressure is near 90 kPa, so saturation at 20 °C drops to about 8.05 mg/L.
   - q: What is percent saturation?
     a: Measured DO ÷ saturation DO × 100%. Values above 100% (supersaturation) occur with strong algal photosynthesis or aeration; values below about 60% stress fish.
+  - q: "Why does my DO meter read above 100% saturation?"
+    a: "Water can hold more oxygen than its air equilibrium value for a while, for example below a weir, in a pressurised aeration line or when algae photosynthesise. A stream at 12 °C and 1,200 m reading 9.6 mg/L is 103.1% saturated."
+  - q: "Does dissolved oxygen saturation depend on the oxygen content of air only?"
+    a: "It depends on the oxygen partial pressure above the water. Air is 20.95% oxygen everywhere, so saturation changes with total barometric pressure, temperature and salinity. Water in contact with pure oxygen holds nearly five times as much."
 related: [chemistry/henrys-law, chemistry/water-hardness, chemistry/raoults-law, chemistry/ppm]
 ---
 
@@ -70,3 +74,43 @@ Fresh water at 20 °C and 101.325 kPa:
 
 - DO probes are calibrated in water-saturated air or air-saturated water using these saturation values.
 - Biochemical oxygen demand (BOD) tests and aeration design both start from the saturation concentration.
+
+## Dissolved oxygen saturation against altitude
+
+Using the standard atmosphere to estimate station pressure, fresh water saturation (mg/L) falls with elevation:
+
+| Elevation | Station pressure | 10 °C | 20 °C | 30 °C |
+|---|---|---|---|---|
+| 0 m | 101.3 kPa | 11.29 | 9.09 | 7.56 |
+| 500 m | 95.5 kPa | 10.63 | 8.55 | 7.10 |
+| 1,000 m | 89.9 kPa | 10.00 | 8.04 | 6.67 |
+| 1,500 m | 84.6 kPa | 9.40 | 7.55 | 6.25 |
+| 2,000 m | 79.5 kPa | 8.83 | 7.09 | 5.86 |
+| 3,000 m | 70.1 kPa | 7.77 | 6.23 | 5.13 |
+
+Real pressure varies a few kPa with the weather, so use a barometer reading when you have one rather than the elevation estimate.
+
+## Field example: river sample at altitude
+
+A river sampled at 1,200 m elevation is at 12 °C and the probe reads 9.6 mg/L. The standard atmosphere gives a station pressure of about **87.7 kPa** (658 mmHg).
+
+- Saturation at that pressure = **9.31 mg/L**
+- Percent saturation = 9.6 ÷ 9.31 × 100 = **103.1%**
+- Using the sea level value of 10.78 mg/L instead would report only 89.1%, wrongly suggesting an oxygen deficit
+
+The sample is slightly supersaturated, which is normal for a turbulent mountain stream or for water with algae photosynthesising in daylight. If the same water warmed to 25 °C its capacity would drop to 7.12 mg/L, so warm afternoon stretches of a river are the first to stress fish.
+
+## How DO probes use the saturation value
+
+- **Air calibration.** The probe is held in water saturated air (a damp sponge in the calibration cup). The meter reads the barometer and temperature and sets its 100% point to the saturation value from this equation.
+- **Salinity compensation.** Optical and membrane probes respond to oxygen partial pressure, not concentration. The meter converts to mg/L with the salinity you enter, so a seawater sample read with salinity left at 0 is overstated by about 20%.
+- **Zero check.** A fresh sodium sulfite solution removes all oxygen and should read below about 0.2 mg/L.
+- **BOD bottles.** Dilution water is aerated to near saturation before the five day biochemical oxygen demand test, and the starting DO is checked against this value.
+
+## Common mistakes
+
+- **Using sea level corrected pressure.** Weather reports adjust pressure to sea level. A DO meter needs the actual station pressure, which can be 10 to 20 kPa lower at a hill site.
+- **Mixing up mg/L and percent saturation.** Fish tolerance limits are usually set in mg/L, while aeration control often uses percent. A reading of 100% at 30 °C is only 7.56 mg/L.
+- **Ignoring temperature equilibrium.** The probe and the sample must be at the same temperature; reading a cold sample with a warm probe during the first minute gives a drifting value.
+- **Leaving salinity at zero in brackish water.** Estuaries and cooling towers with high dissolved solids need the salinity entered, or the saturation is overstated.
+- **Treating supersaturation as a fault.** Values over 100% are real when water is aerated under pressure, downstream of dams or during algal blooms.

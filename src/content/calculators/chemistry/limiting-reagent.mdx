@@ -2,10 +2,10 @@
 title: Limiting Reagent Calculator (Limiting Reactant & Excess)
 description: Find the limiting reagent of a reaction from the masses, molar masses and coefficients of two reactants — with the theoretical yield and excess left over.
 category: chemistry
-intro: "In a reaction the limiting reagent is the reactant that runs out first, so it alone fixes how much product can form; the other reactant is left in excess. This limiting reagent calculator converts both masses to moles, divides by the balanced-equation coefficients to find which runs out, and returns the theoretical yield and the mass of excess reactant remaining."
+intro: "In a reaction the limiting reagent is the reactant that runs out first, so it alone fixes how much product can form while the other reactant is left in excess. This limiting reagent calculator converts both masses to moles and divides by the coefficients to find it.\n\nChemistry students use it to check stoichiometry problems, and lab and process chemists use it to plan batch charges, predict theoretical yield and decide how much excess reagent is worth adding."
 keywords: [limiting reagent calculator, limiting reactant calculator, how to find limiting reagent, excess reactant calculator, stoichiometry calculator, theoretical yield from limiting reagent, mole ratio calculator]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-17
 variables:
   - { id: mA, label: Mass of reactant A, family: mass, unit: g, imperialUnit: g, default: 50, min: 0 }
   - { id: MA, label: Molar mass of A, suffix: g/mol, default: 28.014, min: 0 }
@@ -35,6 +35,8 @@ faq:
     a: Multiply the limiting reagent's moles-per-coefficient by the product's coefficient to get moles of product, then multiply by the product's molar mass.
   - q: How much excess reactant is left?
     a: Subtract the moles consumed (coefficient × reaction extent) from the moles present and convert back to grams. The calculator shows this as the excess left over.
+  - q: "How do I find the limiting reagent with more than two reactants?"
+    a: "Work out moles ÷ coefficient for every reactant. The smallest value is the limiting reagent and also the reaction extent. Run this calculator for each pair if needed; the reactant that is limiting in every pair it appears in is the overall limiting reagent."
 related: [chemistry/theoretical-yield, chemistry/percent-yield, chemistry/moles, chemistry/percent-composition]
 ---
 
@@ -65,3 +67,43 @@ Balance the equation first. Enter the **mass**, **molar mass** and **coefficient
 4. Use that value with the product's coefficient to find moles and grams of product.
 
 Compare the theoretical yield with what you actually recovered using the [percent yield calculator](/chemistry/percent-yield/).
+
+## Changing the hydrogen charge
+
+With 50 g of N₂ fixed, the reactant that limits the ammonia yield depends on how much H₂ is charged. The exact stoichiometric amount is 1.7848 × 3 × 2.016 = **10.79 g** H₂:
+
+| H₂ charged | Limiting reagent | NH₃ theoretical yield | N₂ left | H₂ left |
+|---|---|---|---|---|
+| 6 g | H₂ | 33.79 g | 22.21 g | 0.00 g |
+| 8 g | H₂ | 45.06 g | 12.94 g | 0.00 g |
+| 10 g | H₂ | 56.32 g | 3.68 g | 0.00 g |
+| 10.79 g | H₂ | 60.77 g | 0.02 g | 0.00 g |
+| 12 g | N₂ | 60.79 g | 0.00 g | 1.21 g |
+| 15 g | N₂ | 60.79 g | 0.00 g | 4.21 g |
+
+Above the stoichiometric point extra hydrogen does not raise the yield; it only ends up as excess.
+
+## Second example: 2H₂ + O₂ → 2H₂O
+
+Burning 4 g of hydrogen in 40 g of oxygen:
+
+- H₂: 4 ÷ 2.016 ÷ 2 = **0.9921**
+- O₂: 40 ÷ 31.998 ÷ 1 = **1.2501**, so hydrogen is limiting even though it is the smaller mass by a factor of ten
+- Water formed = 0.9921 × 2 × 18.015 = **35.74 g**
+- Oxygen left = (1.2501 − 0.9921) × 31.998 = **8.26 g**
+
+## Percent excess and percent yield
+
+In the default ammonia example nitrogen is supplied at 1.7848 ÷ 1.6534 = 1.079 times the amount needed, which is **7.9% excess** N₂. If the run recovers 48 g of NH₃, the percent yield is 48 ÷ 56.32 × 100 = **85.2%**. Yield is always based on the limiting reagent.
+
+## Why industry uses an excess on purpose
+
+Plants rarely feed reactants in exact proportions. Combustion runs with 10 to 20% excess air so every bit of fuel burns. In esterification an excess of the cheaper alcohol pushes the equilibrium towards the ester. The expensive or hazardous reactant is made the limiting one, so it is used up and does not need recovering.
+
+## Common mistakes
+
+- **Comparing grams instead of moles.** The smaller mass is often not limiting, as the hydrogen examples show.
+- **Forgetting to divide by the coefficient.** Comparing 1.78 mol N₂ with 4.96 mol H₂ directly would wrongly make N₂ limiting.
+- **Using an unbalanced equation.** Every coefficient feeds the result, so balance first and check atoms on both sides.
+- **Using atomic instead of molecular mass.** Hydrogen gas is H₂ at 2.016 g/mol, not 1.008; oxygen gas is 31.998 g/mol.
+- **Ignoring purity.** A reagent that is 95% pure supplies only 95% of its weighed mass; correct the mass before entering it.

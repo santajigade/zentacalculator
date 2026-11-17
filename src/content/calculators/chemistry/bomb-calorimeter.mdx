@@ -2,10 +2,10 @@
 title: Bomb Calorimeter Calculator (Heat of Combustion ΔU & ΔH)
 description: Calculate the heat of combustion from a bomb calorimeter run — heat released, ΔcU per gram and per mole, and ΔcH — from calorimeter constant, ΔT and mass.
 category: chemistry
-intro: "In a bomb calorimeter a sample burns in oxygen inside a sealed steel vessel, so the heat released raises the temperature of the calorimeter at constant volume. This bomb calorimeter calculator turns the calorimeter constant and temperature rise into the heat released, the energy of combustion ΔcU per gram and per mole, and the enthalpy of combustion ΔcH."
+intro: "In a bomb calorimeter a sample burns in oxygen inside a sealed steel vessel, so the heat released raises the temperature of the calorimeter at constant volume. This bomb calorimeter calculator turns the calorimeter constant and temperature rise into the heat released, ΔcU and ΔcH.\n\nFuel laboratories, food scientists and chemistry students use it to find calorific values of coal, oils and biomass, check calibrations and work through thermochemistry practicals."
 keywords: [bomb calorimeter calculator, heat of combustion calculator, bomb calorimetry formula, calorimeter constant, q = c delta t, enthalpy of combustion calculator, constant volume calorimetry]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-17
 variables:
   - { id: C, label: Calorimeter heat capacity (constant), suffix: kJ/K, default: 10, min: 0 }
   - { id: dT, label: Corrected temperature rise ΔT, family: tempdiff, unit: K, default: 2.648, min: 0 }
@@ -32,6 +32,8 @@ faq:
     a: By burning a known mass of benzoic acid, whose certified energy of combustion is about 26.434 kJ/g, and dividing the heat released by the measured temperature rise.
   - q: What is the difference between gross and net calorific value?
     a: The bomb gives the gross (higher) value because the water formed condenses. The net (lower) value subtracts the latent heat of that water.
+  - q: "How do I convert gross calorific value to net calorific value?"
+    a: "Subtract the latent heat of the water formed: NCV ≈ GCV − 2.442 × (9H + W), with H the hydrogen and W the moisture mass fractions, in MJ/kg. A coal at 28.30 MJ/kg gross with 5% hydrogen is about 27.20 MJ/kg net."
 related: [chemistry/specific-heat, chemistry/gibbs-free-energy, physics/final-temperature, physics/latent-heat]
 ---
 
@@ -65,3 +67,53 @@ C₆H₅COOH + 7.5 O₂ → 7 CO₂ + 3 H₂O(l), so Δn(g) = 7 − 7.5 = −0.5
 
 - Correct ΔT for heat exchange with the surroundings (Regnault–Pfaundler or graphical extrapolation).
 - Nitric and sulfuric acid formed from N and S in the sample release extra heat — titrate the bomb washings to correct for it.
+
+## Calibrating the calorimeter constant
+
+Before testing unknowns, burn a pellet of certified benzoic acid (26.434 kJ/g). With a 0.9875 g pellet, a corrected rise of 2.6158 K and 48 J of fuse wire:
+
+<p class="formula">C<sub>cal</sub> = (m × 26.434 + q<sub>fuse</sub>) ÷ ΔT</p>
+
+- C<sub>cal</sub> = (0.9875 × 26.434 + 0.048) ÷ 2.6158 = **9.998 kJ/K**
+
+Laboratories repeat this five or more times and accept the mean when the relative standard deviation is below about 0.1%.
+
+## Fuel example: gross and net calorific value of coal
+
+A 1.025 g coal sample in the calorimeter above gives a corrected rise of 2.912 K. The fuse correction is 45 J and titrating the bomb washings shows 62 J from nitric and sulfuric acid.
+
+- q = 9.998 × 2.912 − (45 + 62) ÷ 1000 = **29.01 kJ**
+- Gross calorific value = 29.01 ÷ 1.025 = **28.30 kJ/g** (28.30 MJ/kg)
+- With 5% hydrogen, each gram forms 9 × 0.050 = 0.45 g of water. Subtracting its latent heat (2.442 kJ/g at 25 °C) gives a net value of about **27.20 MJ/kg**
+
+Boiler efficiency in Europe and India is usually quoted on the net value, while the bomb measures the gross value, so always state which basis a figure uses.
+
+## Δn(g) and the ΔH correction for common fuels
+
+Water is taken as liquid, the state it ends in inside the bomb. At 25 °C:
+
+| Fuel | Balanced combustion | Δn(g) | Δn·RT |
+|---|---|---|---|
+| Methane CH₄ | CH₄ + 2O₂ → CO₂ + 2H₂O | -2 | -4.96 kJ/mol |
+| Ethanol C₂H₅OH(l) | C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O | -1 | -2.48 kJ/mol |
+| Glucose C₆H₁₂O₆(s) | C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O | 0 | +0.00 kJ/mol |
+| Naphthalene C₁₀H₈(s) | C₁₀H₈ + 12O₂ → 10CO₂ + 4H₂O | -2 | -4.96 kJ/mol |
+| Octane C₈H₁₈(l) | C₈H₁₈ + 12.5O₂ → 8CO₂ + 9H₂O | -4.5 | -11.16 kJ/mol |
+
+The correction is a few kJ/mol at most, under 0.3% of the energy of combustion, but it must be included for tabulated enthalpies.
+
+## Test procedure in brief
+
+1. Press the sample into a pellet, weigh it to 0.1 mg and place it in the crucible with a measured length of fuse wire touching it.
+2. Add 1 mL of water to the bomb so acids dissolve, seal it and fill with oxygen to about 30 bar.
+3. Immerse the bomb in a weighed quantity of water in the bucket, let the temperature drift settle and record it.
+4. Fire, record the temperature until it rises and levels off, and correct the rise for heat leak.
+5. Release the gas slowly, wash the interior and titrate for acid, and measure any unburnt wire.
+
+## Common mistakes
+
+- **Leaving out the minus sign.** Heat released by the sample is positive q, but ΔcU and ΔcH are negative.
+- **Using the raw temperature rise.** Without correcting for heat exchange during the run the result can be 0.5% to 1% off.
+- **Including water vapour in Δn(g).** Water condenses in the bomb, so it counts as liquid.
+- **Changing the bucket water mass.** The calorimeter constant only applies to the same water mass used in calibration, usually weighed to 0.1 g.
+- **Incomplete combustion.** Soot in the crucible means not all carbon burnt; the run must be rejected, not corrected.

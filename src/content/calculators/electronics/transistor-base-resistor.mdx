@@ -2,10 +2,10 @@
 title: Transistor Base Resistor Calculator (BJT Switch)
 description: Calculate the base resistor for an NPN or PNP transistor used as a switch — from load current, hFE and drive voltage, with overdrive for saturation.
 category: electronics
-intro: "To use a bipolar transistor as a switch for a relay, LED strip or buzzer, you must drive enough base current to saturate it fully. This transistor base resistor calculator works out the resistor from the load current and gain — see the [basics of transistors](https://www.instrumentationblog.in/basics-of-transistors/) and [BJT currents and voltages](https://www.instrumentationblog.in/bjt-currents-and-voltages-explained/)."
+intro: "To use a bipolar transistor as a switch for a relay, LED strip or buzzer, the base must get enough current to saturate it fully. This transistor base resistor calculator works out the resistor from the load current, gain and drive voltage. See the [basics of transistors](https://www.instrumentationblog.in/basics-of-transistors/).\n\nHobbyists, students and embedded engineers use it when a microcontroller pin must drive a load that needs more current or voltage than the pin can supply."
 keywords: [transistor base resistor calculator, bjt base resistor, transistor as switch calculator, base current calculation, npn switch resistor, hfe calculation]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-17
 variables:
   - { id: Vin, label: Drive voltage (e.g. microcontroller output), family: voltage, unit: V, default: 5, min: 0 }
   - { id: Vbe, label: Base-emitter voltage, family: voltage, unit: V, default: 0.7, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: Yes. Put a flyback diode across the relay coil to absorb the voltage spike when the transistor turns off.
   - q: When should I use a MOSFET instead?
     a: For loads above a few hundred milliamps, a logic-level MOSFET needs no continuous drive current and wastes less power.
+  - q: "How do I check that the transistor is saturated?"
+    a: "Measure V_CE with the load on. Below about 0.3 V for a small signal BJT means it is saturated. If it is near 1 V or more, increase the base current by lowering R_B."
+  - q: "What base resistor do I need from a 3.3 V microcontroller?"
+    a: "For a 100 mA load with hFE 100 and 5 times overdrive, R_B = (3.3 − 0.7) ÷ 5 mA = 520 Ω, so use 510 Ω. Check the pin can source 5 mA."
 related: [electronics/led-resistor, electronics/mosfet-power-loss, electronics/zener-resistor, physics/ohms-law]
 ---
 
@@ -60,3 +64,38 @@ Switching a 100 mA relay from a 5 V microcontroller pin with a BC547-class trans
 - Check that the microcontroller pin can supply the base current (often 10–20 mA max).
 - Add a 10 kΩ resistor from base to emitter to keep the transistor off while the pin floats at power-up.
 - Saturation voltage V<sub>CE(sat)</sub> is typically 0.1–0.3 V; power dissipated ≈ I<sub>C</sub> × V<sub>CE(sat)</sub>.
+
+## Worked example with the default inputs
+
+A 5 V pin drives a 100 mA load through an NPN transistor with minimum hFE 100, V<sub>BE</sub> 0.7 V and 5 times overdrive:
+
+- Minimum base current = 100 mA ÷ 100 = 1 mA; with overdrive I<sub>B</sub> = **5 mA**
+- R<sub>B</sub> = (5 − 0.7) ÷ 5 mA = **860 Ω**
+
+Rounding down to the standard **820 Ω** gives I<sub>B</sub> = 4.3 ÷ 820 = **5.24 mA**, a forced beta of 100 ÷ 5.24 = **19.1**. The resistor dissipates 4.3 V × 5.24 mA = 22.5 mW, so any 0.125 W part is fine. With V<sub>CE(sat)</sub> ≈ 0.2 V the transistor dissipates about 20 mW.
+
+From a 3.3 V pin the same load needs (3.3 − 0.7) ÷ 5 mA = **520 Ω**, so use 510 Ω. If you add a 10 kΩ base to emitter resistor, it steals 0.7 ÷ 10 kΩ = 0.07 mA; to keep 5 mA into the base the 5 V resistor becomes 848 Ω, which still rounds to 820 Ω.
+
+## Base resistor for common loads (hFE 100, 5 times overdrive)
+
+| Load current | Base current | R<sub>B</sub> from 3.3 V | R<sub>B</sub> from 5 V |
+|---|---|---|---|
+| 20 mA | 1 mA | 2,600 Ω | 4,300 Ω |
+| 50 mA | 2.5 mA | 1,040 Ω | 1,720 Ω |
+| 100 mA | 5 mA | 520 Ω | 860 Ω |
+| 200 mA | 10 mA | 260 Ω | 430 Ω |
+| 500 mA | 25 mA | 104 Ω | 172 Ω |
+
+At 500 mA the 25 mA base current exceeds most microcontroller pins. Use a Darlington, a two stage driver or a logic level MOSFET for loads that large.
+
+## Checking saturation in the circuit
+
+With the load connected and the pin high, measure collector to emitter with a multimeter. A saturated small signal transistor reads about 0.05 to 0.3 V. A reading of 1 V or more means it is in the active region: increase the base current, or the transistor will heat and the load will see less voltage. Also check the pin voltage under load; if it sags well below the supply, the pin is overloaded.
+
+## Common mistakes
+
+- **Using the typical hFE.** Design with the minimum gain at your collector current, which can be a third of the headline figure.
+- **Forgetting V<sub>BE</sub>.** Dividing the full 5 V by the base current gives a resistor about 16% too large.
+- **Driving a PNP high side switch from a low voltage pin.** A 3.3 V pin cannot turn off a PNP whose emitter sits at 12 V; add an NPN stage to pull its base.
+- **No flyback diode on a relay or solenoid.** The turn off spike can exceed the transistor's V<sub>CEO</sub> and destroy it.
+- **Leaving the base floating at reset.** Pins are inputs during power up, so a pull down keeps the load off.

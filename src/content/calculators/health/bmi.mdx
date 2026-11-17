@@ -2,10 +2,10 @@
 title: BMI Calculator
 description: Calculate Body Mass Index from weight and height in kg, lb, cm or inches — or find the weight for a target BMI.
 category: health
-intro: "Body Mass Index compares weight with height to give a quick screening measure of whether weight is in a healthy range. This free BMI calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Body Mass Index divides weight in kilograms by the square of height in metres to give one number for comparing weight with height. This BMI calculator works in kg, lb, cm or inches and can also give the weight for a target BMI.\n\nAdults use it to check whether their weight sits in the healthy range, and doctors, dietitians and fitness coaches use it as a first screening step before measuring waist size, body fat or blood tests."
 keywords: [bmi, body mass index, weight, height, obesity, healthy weight, overweight]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-17
 featured: true
 variables:
   - { id: m, label: Weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 0 }
@@ -37,6 +37,10 @@ faq:
     a: "The formula and adult categories are the same for both. Women naturally carry more body fat at the same BMI, which BMI does not show."
   - q: "How much weight is one BMI point?"
     a: "Your height in metres squared, in kilograms. At 1.75 m one BMI point is about 3.1 kg (6.8 lb); at 1.60 m it is about 2.6 kg (5.6 lb)."
+  - q: "What is a good BMI for my height?"
+    a: "Any weight that gives a BMI from 18.5 to 24.9 is in the WHO healthy range, or 18.5 to 22.9 under Asian cut-offs. At 172 cm that is 54.7 kg to 73.7 kg (WHO) or 54.7 kg to 67.7 kg (Asian)."
+  - q: "Is BMI valid for older adults?"
+    a: "BMI uses the same formula, but older adults often lose muscle and height, so the same BMI can hide more body fat. Large studies of people over 65 find that mortality risk rises below a BMI of about 23 and is lowest at around 25 to 28, so results should be read with a doctor."
 related: [health/lean-body-mass]
 ---
 
@@ -133,3 +137,35 @@ A person who is 5 ft 9 in (69 in) tall and weighs 170 lb:
 - **Rounding height.** At 5 ft 9 in, entering 5 ft 8 in raises BMI by about 0.75, enough to change the category near a cut-off.
 - **Using adult cut-offs for children.** Under 18, BMI must be compared with age and sex percentiles.
 - **Relying on one weigh-in.** Body weight swings by 1 to 2 kg over a day. Weigh in the morning on a few days and use the average.
+
+## Worked example at the default values
+
+The calculator opens with 70 kg and 172 cm:
+
+- Height in metres squared: 1.72 × 1.72 = **2.9584 m²**
+- BMI = 70 ÷ 2.9584 = **23.7 kg/m²**
+- BMI Prime = 23.66 ÷ 25 = **0.95**
+
+Under the WHO table this is normal weight (18.5 to 24.9). Under the Asian cut-offs it falls in the 23 to 24.9 overweight band. At 172 cm the WHO healthy range is **54.7 kg to 73.7 kg**, and reaching the top of the Asian normal range (22.9) would mean a weight of 67.7 kg, about 2.3 kg less.
+
+## Target weights at 172 cm
+
+| Target BMI | Weight at 1.72 m | Change from 70 kg |
+|---|---|---|
+| 18.5 | 54.7 kg | -15.3 kg |
+| 20 | 59.2 kg | -10.8 kg |
+| 22 | 65.1 kg | -4.9 kg |
+| 22.9 | 67.7 kg | -2.3 kg |
+| 24.9 | 73.7 kg | +3.7 kg |
+| 27.5 | 81.4 kg | +11.4 kg |
+| 30 | 88.8 kg | +18.8 kg |
+
+## Measuring weight and height properly
+
+A BMI is only as good as the two numbers behind it. Measure height barefoot, standing straight against a wall with heels together, and mark the top of the head with a flat object held level. Weigh in light clothing on a flat, hard floor, ideally in the morning after using the toilet and before eating.
+
+The sensitivity is larger than most people expect. At the default values, a height entered 1 cm too short gives a BMI of 23.9 instead of 23.7, and weighing 1.5 kg heavier after a meal and clothes gives 24.2. Near a category boundary either error can flip the result, so use measured rather than remembered figures.
+
+## What BMI is used for in practice
+
+Clinics record BMI at routine visits because it is quick and needs only a scale and a stadiometer. It is used to flag people who may need a check for blood pressure, blood sugar and cholesterol, to set eligibility for some treatments such as bariatric surgery, and to adjust doses or anaesthesia plans. Public health surveys use it to track population trends. For an individual, a change in BMI over months is often more informative than a single reading.

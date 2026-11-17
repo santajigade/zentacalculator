@@ -2,10 +2,10 @@
 title: Generator Frequency Calculator (Poles & RPM, f = PN/120)
 description: Calculate the output frequency of an alternator from its number of poles and speed — or the speed in rpm needed for 50 Hz or 60 Hz.
 category: electrical
-intro: "A synchronous generator's output frequency is fixed by how fast its rotor turns and how many magnetic poles it has. This generator frequency calculator applies f = P × N ÷ 120 to find the frequency from the speed, or the speed a prime mover must run at for 50 Hz or 60 Hz — see [how an alternator works](https://www.instrumentationblog.in/alternator-working-principle-explained/)."
+intro: "A synchronous generator's output frequency is set by how fast its rotor turns and how many magnetic poles it has. This generator frequency calculator applies f = P × N ÷ 120 to find the frequency, or the speed for 50 Hz or 60 Hz; see [how an alternator works](https://www.instrumentationblog.in/alternator-working-principle-explained/).\n\nGenset technicians, power plant engineers and students use it to set governor speed, match a prime mover to an alternator and check readings before synchronising."
 keywords: [generator frequency calculator, alternator frequency formula, f = pn/120 calculator, generator rpm calculator, number of poles calculator, synchronous speed generator, 50 hz generator speed]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-17
 variables:
   - { id: p, label: Number of poles, default: 4, min: 2, help: 'Always an even number — poles come in north–south pairs.' }
   - { id: N, label: Rotor speed, suffix: rpm, default: 1500, min: 0 }
@@ -23,6 +23,8 @@ faq:
     a: 3,000 rpm for 50 Hz and 3,600 rpm for 60 Hz — the usual speed of steam- and gas-turbine generators.
   - q: Why do hydro generators have so many poles?
     a: Water turbines turn slowly (often 100–500 rpm), so the generator needs many poles to reach 50 or 60 Hz. A 48-pole machine runs at 125 rpm for 50 Hz.
+  - q: "Why does generator frequency drop when load is added?"
+    a: "Extra load slows the engine until the governor adds fuel. A droop governor lets it settle at a lower speed on purpose: with 4% droop a set adjusted to 50 Hz at full load runs at 52 Hz with no load."
 related: [electrical/induction-motor-slip, electrical/generator-size, electrical/generator-power-angle, physics/angular-velocity]
 ---
 
@@ -60,3 +62,32 @@ A 4-pole diesel generator set running at 1,500 rpm:
 - The governor holds speed — and therefore frequency — constant as load changes; a 2% droop governor lets a 50 Hz set fall to 49 Hz at full load.
 - Induction motors run slightly slower than synchronous speed; see the [induction motor slip calculator](/electrical/induction-motor-slip/).
 - Before paralleling with the grid, a generator must match its frequency, voltage and phase angle.
+
+## Frequency under governor droop
+
+The default 4 pole set at 1,500 rpm gives 4 × 1,500 ÷ 120 = **50 Hz**. Most gensets that share load use a droop governor, so speed and frequency fall slightly as load rises. With 4% droop set to give 50 Hz at full load, the no load frequency is 50 × (1 + 0.04) = 52 Hz:
+
+| Load | Frequency | Rotor speed |
+|---|---|---|
+| 0% | 52.00 Hz | 1,560 rpm |
+| 25% | 51.50 Hz | 1,545 rpm |
+| 50% | 51.00 Hz | 1,530 rpm |
+| 75% | 50.50 Hz | 1,515 rpm |
+| 100% | 50.00 Hz | 1,500 rpm |
+
+An isochronous governor holds 50 Hz at every load, which suits a single set running alone but makes load sharing between parallel sets unstable without a load sharing controller.
+
+## Choosing the pole count for a hydro turbine
+
+A water turbine has a best efficiency speed set by head and flow, and the generator must use a whole number of pole pairs. If the turbine runs best at about 214.3 rpm, the ideal pole count is 120 × 50 ÷ 214.3 = 28.00. Choosing **28 poles** gives a synchronous speed of 120 × 50 ÷ 28 = **214.3 rpm**, the nearest standard speed, and the runner is then designed for that speed.
+
+## Measuring frequency and speed on site
+
+Frequency is read from the generator control panel, a clamp meter with a Hz range or a portable power analyser. Speed is checked with an optical tachometer on a reflective mark on the shaft or from the magnetic pickup on the flywheel teeth. If a tachometer reads **1,488 rpm** on the 4 pole set, the expected frequency is 4 × 1,488 ÷ 120 = **49.6 Hz**; a panel reading of exactly 50 Hz would then point to a tachometer or meter error.
+
+## Common mistakes
+
+- **Using pole pairs instead of poles.** f = P N ÷ 120 uses the total number of poles. With pole pairs the formula is f = p N ÷ 60.
+- **Counting the engine's cylinders or the alternator's terminal leads.** Neither tells you the pole count; use the nameplate rated speed and frequency.
+- **Expecting a 60 Hz alternator to work at 50 Hz with the same voltage.** At 5/6 of rated speed the voltage, cooling fan airflow and output kVA all drop, so the set must be derated.
+- **Confusing generator speed with induction motor speed.** A 4 pole motor runs at about 1,440 to 1,480 rpm because of slip, but a 4 pole synchronous generator must turn at exactly 1,500 rpm for 50 Hz.

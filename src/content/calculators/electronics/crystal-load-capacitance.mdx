@@ -2,10 +2,10 @@
 title: Crystal Load Capacitance Calculator (Pierce Oscillator Caps)
 description: Calculate crystal load capacitance from the two Pierce oscillator capacitors and stray capacitance, CL = C1·C2 ÷ (C1 + C2) + Cstray, and pick the right caps.
 category: electronics
-intro: "A quartz crystal only oscillates at its marked frequency when the circuit presents the load capacitance it was cut for. This crystal load capacitance calculator finds the effective load from the two capacitors of a Pierce oscillator plus board stray capacitance — see how a [crystal oscillator works](https://www.instrumentationblog.in/crystal-oscillator-working-principle/)."
+intro: "A quartz crystal only runs at its marked frequency when the circuit presents the load capacitance it was cut for. This crystal load capacitance calculator finds the effective load from the two capacitors of a Pierce oscillator plus board stray capacitance. See how a [crystal oscillator works](https://www.instrumentationblog.in/crystal-oscillator-working-principle/).\n\nHardware designers use it to pick capacitors for microcontroller, RTC and radio clocks, where a wrong load shifts the frequency or stops the oscillator starting."
 keywords: [crystal load capacitance calculator, crystal capacitor calculator, pierce oscillator capacitors, load capacitance formula, crystal cl calculation, microcontroller crystal capacitors, stray capacitance crystal]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-17
 variables:
   - { id: C1, label: Capacitor C1 (XIN to ground), family: capacitance, unit: pF, default: 22, min: 0 }
   - { id: C2, label: Capacitor C2 (XOUT to ground), family: capacitance, unit: pF, default: 22, min: 0 }
@@ -22,6 +22,10 @@ faq:
     a: The frequency shifts — usually by a few to a few tens of ppm. Too much capacitance lowers the frequency and can stop a weak oscillator from starting; too little raises it.
   - q: Why not just use 22 pF?
     a: 22 pF suits 18–20 pF crystals. Low-power 32.768 kHz crystals rated 6–12.5 pF need much smaller capacitors, and 22 pF can make them run slow or fail to start.
+  - q: "How do I measure crystal frequency without disturbing it?"
+    a: "Output the clock on a spare pin and use a frequency counter. A 10 pF scope probe on XOUT raises the load in the example from 16 pF to 18.04 pF and shifts the frequency."
+  - q: "What is the critical transconductance of a crystal oscillator?"
+    a: "g_m,crit = 4 × ESR × (2πf)² × (C0 + CL)². It is the minimum gain needed to sustain oscillation. For 16 MHz, 40 Ω ESR, 5 pF C0 and 16 pF CL it is 0.71 mA/V; aim for 5 times margin."
 related: [electronics/555-timer, electronics/resonant-frequency, electronics/capacitors-series-parallel, electronics/rc-phase-shift-oscillator]
 ---
 
@@ -59,3 +63,49 @@ C1 = C2 = 22 pF with 5 pF stray:
 
 - Round to the nearest standard E12 value (10, 12, 15, 18, 22, 27 pF) and verify the frequency with a counter if accuracy matters.
 - Keep crystal traces short and guard them with ground to keep stray capacitance low and predictable.
+
+## Worked example with the default inputs
+
+With C1 = C2 = 22 pF and 5 pF of stray capacitance, the two capacitors appear in series across the crystal: 22 × 22 ÷ 44 = 11 pF. Adding the stray gives **C<sub>L</sub> = 16 pF**, so this layout suits a crystal specified for 16 pF.
+
+If the same board is fitted with a 12 pF crystal, the circuit loads it with 4 pF too much. Using typical values for a fundamental mode AT cut crystal (motional capacitance C<sub>1</sub> ≈ 15 fF, shunt capacitance C<sub>0</sub> ≈ 5 pF), the pulling is:
+
+<p class="formula">Δf/f ≈ (C<sub>1</sub> ÷ 2) × [1 ÷ (C<sub>0</sub> + C<sub>L,actual</sub>) − 1 ÷ (C<sub>0</sub> + C<sub>L,spec</sub>)]</p>
+
+That gives **-84 ppm**, which is larger than the ±20 ppm tolerance of many crystals. The equal capacitor fix is 2 × (12 − 5) = 14 pF; the nearest standard value is 15 pF.
+
+## Frequency pulling around a 16 pF crystal
+
+Using the same typical C<sub>1</sub> and C<sub>0</sub>, for a 16 MHz crystal specified at 16 pF:
+
+| Actual load | Frequency error | At 16 MHz |
+|---|---|---|
+| 10 pF | +142.9 ppm | +2,286 Hz |
+| 12 pF | +84.0 ppm | +1,345 Hz |
+| 14 pF | +37.6 ppm | +602 Hz |
+| 16 pF | +0.0 ppm | +0 Hz |
+| 18 pF | -31.1 ppm | -497 Hz |
+| 20 pF | -57.1 ppm | -914 Hz |
+| 22 pF | -79.4 ppm | -1,270 Hz |
+
+Look up C<sub>1</sub> and C<sub>0</sub> on the crystal datasheet for exact figures; small 32.768 kHz tuning fork crystals pull far more per picofarad.
+
+## Will the oscillator start?
+
+More load capacitance makes the oscillator harder to start. A common check (from microcontroller oscillator application notes) is the critical transconductance:
+
+<p class="formula">g<sub>m,crit</sub> = 4 × ESR × (2πf)² × (C<sub>0</sub> + C<sub>L</sub>)²</p>
+
+For 16 MHz, ESR = 40 Ω, C<sub>0</sub> = 5 pF and C<sub>L</sub> = 16 pF, g<sub>m,crit</sub> = **0.71 mA/V**. The oscillator's transconductance from the datasheet should be at least 5 times this for a safe gain margin.
+
+## Measuring the frequency
+
+Do not hang an oscilloscope probe on the crystal pins: a 10 pF probe on XOUT turns C2 into 32 pF and the load into 18.04 pF, which pulls the frequency while you watch. Route the clock to an output pin (many microcontrollers have a clock output or a timer toggle) and read it with a frequency counter, or use a near field probe.
+
+## Common mistakes
+
+- **Setting C1 and C2 equal to C<sub>L</sub>.** The caps are in series, so each must be about twice C<sub>L</sub> minus the stray.
+- **Ignoring stray capacitance.** Pin capacitance and traces add 2 to 7 pF, which matters most for 6 pF and 7 pF watch crystals.
+- **Copying 22 pF from an old design.** It suits only 16 to 20 pF crystals.
+- **Using high tolerance or Y5V capacitors.** Use C0G (NP0) ceramics so the load does not drift with temperature.
+- **Long traces or vias under the crystal.** They add stray capacitance and pick up noise; keep the crystal close to the chip with a ground guard.

@@ -2,10 +2,10 @@
 title: I2C Pull-Up Resistor Calculator (Min & Max Rp)
 description: Calculate the minimum and maximum I2C pull-up resistor from supply voltage, sink current, bus capacitance and rise time for 100 kHz, 400 kHz and 1 MHz buses.
 category: electronics
-intro: "I²C lines are open-drain, so pull-up resistors set both the low-level current the devices must sink and the rise time of every edge. This I2C pull-up resistor calculator finds the allowed range from the I²C specification and the rise time of the value you pick — background on [pull-up and pull-down resistor values](https://www.instrumentationblog.in/pull-up-pull-down-resistor-values/) and [SPI vs I²C](https://www.instrumentationblog.in/spi-vs-i2c-protocol-comparison/)."
+intro: "I²C lines are open drain, so the pull-up resistors set both the current a device must sink when it pulls a line low and the rise time of every edge. This I2C pull-up resistor calculator finds the allowed range from the I²C specification.\n\nEmbedded and hardware designers use it when adding sensors to a bus or debugging corrupted data. See [pull-up and pull-down resistor values](https://www.instrumentationblog.in/pull-up-pull-down-resistor-values/) and [SPI vs I²C](https://www.instrumentationblog.in/spi-vs-i2c-protocol-comparison/)."
 keywords: [i2c pull up resistor calculator, i2c pull-up resistor value, i2c rise time calculation, i2c bus capacitance, pull up resistor for i2c 3.3v, 4.7k pull up i2c, i2c rp min max]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-17
 variables:
   - { id: Vdd, label: Pull-up supply voltage, family: voltage, unit: V, default: 3.3, min: 0 }
   - id: tr
@@ -37,6 +37,10 @@ faq:
     a: For 100 kHz with modest capacitance, yes. At 400 kHz and 200 pF the maximum is about 1.8 kΩ, so 4.7 kΩ gives too slow a rise time — use 1.5–2.2 kΩ.
   - q: How do I estimate bus capacitance?
     a: Add about 10 pF per device pin plus roughly 1–2 pF per cm of PCB trace or cable; measure the rise time with an oscilloscope to confirm.
+  - q: "What happens if the I2C pull-up resistor is too small?"
+    a: "The devices cannot sink enough current to bring the line under V_OL, so a low may read as high. On a 3.3 V bus with 3 mA drivers anything under about 967 Ω risks this, and it also wastes power."
+  - q: "Do SDA and SCL need the same pull-up value?"
+    a: "Usually yes, since both lines see similar capacitance. If SCL is driven push-pull by a single master it can tolerate a weaker pull-up, but most designs fit equal values for simplicity."
 related: [electronics/voltage-divider, electronics/rc-filter, electronics/uart-baud-rate-error, physics/rc-time-constant]
 ---
 
@@ -78,3 +82,42 @@ Enter the **pull-up supply**, choose the **bus speed** (which sets the maximum r
 
 - Fit one pull-up per line (SDA and SCL) for the whole bus — module boards often add their own, which appear in parallel.
 - If no value satisfies both limits, reduce capacitance, use a bus buffer, or use an active current-source pull-up.
+
+## Standard resistor values on the example bus
+
+For the default bus (3.3 V, Fast mode, 200 pF, 3 mA sink), the window is 967 Ω to 1,770 Ω:
+
+| Pull-up | Rise time (30 to 70%) | Sink current | Within limits |
+|---|---|---|---|
+| 1 kΩ | 169 ns | 2.90 mA | Yes |
+| 1.2 kΩ | 203 ns | 2.42 mA | Yes |
+| 1.5 kΩ | 254 ns | 1.93 mA | Yes |
+| 1.8 kΩ | 305 ns | 1.61 mA | No |
+| 2.2 kΩ | 373 ns | 1.32 mA | No |
+| 2.7 kΩ | 458 ns | 1.07 mA | No |
+| 3.3 kΩ | 559 ns | 0.88 mA | No |
+| 4.7 kΩ | 796 ns | 0.62 mA | No |
+
+Only 1 kΩ, 1.2 kΩ and 1.5 kΩ pass. The default 2.2 kΩ gives 373 ns, above the 300 ns limit, and 1.8 kΩ just misses at 305 ns.
+
+## Pull-ups on breakout boards add in parallel
+
+Many sensor modules carry their own 10 kΩ pull-ups. With three such modules and a 4.7 kΩ on the main board, the line sees 1 ÷ (3/10 kΩ + 1/4.7 kΩ) = **1,950 Ω**, a 330 ns rise time at 200 pF, fine for 100 kHz but too slow for 400 kHz. Keep adding modules and the problem flips: with nine of them the total is **899 Ω**, below the 967 Ω minimum, and a 3 mA driver can no longer pull the line under 0.4 V. Remove the extra resistors with a solder jumper so the bus has one deliberate pull-up per line.
+
+## Power and supply voltage
+
+While a line is held low the pull-up burns V² ÷ R. For 2.2 kΩ on 3.3 V that is 4.95 mW, or roughly 0.75 mA average per line at a 50% low duty. Battery designs therefore pick the highest value that still meets the rise time, often at 100 kHz.
+
+On a 5 V bus the minimum rises to (5.0 − 0.4) ÷ 3 mA = **1,533 Ω**, while the maximum at 100 kHz and 200 pF is 5,901 Ω, so 2.2 kΩ to 4.7 kΩ is a common choice there.
+
+## Checking the bus with an oscilloscope
+
+Probe SDA or SCL with a 10x probe and trigger on a rising edge. Measure from 30% to 70% of V<sub>DD</sub> (0.99 V to 2.31 V on a 3.3 V bus) and compare with the mode limit. You can then work backwards: C<sub>b</sub> = t<sub>r</sub> ÷ (0.8473 × R<sub>p</sub>). Also check the low level stays under 0.4 V when the weakest device pulls down.
+
+## Common mistakes
+
+- **Copying 4.7 kΩ from an Arduino example.** That suits 100 kHz and short wiring; at 400 kHz with a few modules it is usually too slow.
+- **Forgetting module pull-ups.** Three or four boards in parallel can drop the total below R<sub>min</sub> and the low level fails.
+- **Measuring rise time 10% to 90%.** The I²C specification uses 30% to 70%; the 10% to 90% time is about 2.6 times longer and would wrongly suggest a failure.
+- **Pulling up to the wrong rail.** A 5 V pull-up on a 3.3 V only device can damage it; use a level shifter or a 3.3 V pull-up when all devices accept it.
+- **Long cables without a buffer.** Over about 1 m of cable the capacitance passes 400 pF; use a bus extender or differential I²C.

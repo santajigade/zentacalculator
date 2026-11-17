@@ -2,10 +2,10 @@
 title: PFDavg Calculator (SIL Verification, 1oo1)
 description: Calculate the average probability of failure on demand (PFDavg) for a 1oo1 safety function from dangerous undetected failure rate and proof test interval — with SIL band.
 category: engineering
-intro: "In a safety instrumented system, each safety function must reach a target probability of failure on demand (PFDavg) that sets its SIL. For a single channel, PFDavg depends on the dangerous undetected failure rate and how often it is proof tested. This PFDavg calculator does the 1oo1 calculation — see the [PFDavg calculation formula](https://www.instrumentationblog.in/pfdavg-calculation-formula/), [what SIL is](https://www.instrumentationblog.in/what-is-sil-safety-integrity-level/) and [SIL verification](https://www.instrumentationblog.in/sil-verification/)."
+intro: "PFDavg is the average probability that a safety instrumented function fails to act when a demand arrives, and it sets the SIL band the function reaches. This PFDavg calculator works out the 1oo1 value from the [PFDavg calculation formula](https://www.instrumentationblog.in/pfdavg-calculation-formula/).\n\nFunctional safety engineers use it during [SIL verification](https://www.instrumentationblog.in/sil-verification/) to check a loop against its target, choose a proof test interval and see which device dominates the result."
 keywords: [pfdavg calculator, pfd avg calculation, sil calculation, probability of failure on demand, sil verification calculator, proof test interval, lambda du, iec 61511]
 published: 2026-10-28
-updated: 2026-11-14
+updated: 2026-11-17
 variables:
   - { id: lam, label: Dangerous undetected failure rate (λDU), suffix: FIT, default: 500, min: 0, help: '1 FIT = 1 failure per 10⁹ hours.' }
   - { id: TI, label: Proof test interval, suffix: years, default: 1, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: "One failure per 10⁹ device hours. 1,000 FIT means about one failure in 114 years for a single device, or one failure a year across 114 devices."
   - q: "Which part of a safety function usually dominates PFDavg?"
     a: "The final element. A shutdown valve with its solenoid often has a λDU of several hundred FIT, far more than the transmitter or safety PLC, so it usually decides the SIL."
+  - q: "What is the maximum λDU for SIL 2 with annual proof testing?"
+    a: "For a 1oo1 function, PFDavg must stay below 10⁻², so λDU must be below 2 × 0.01 ÷ 8,760 h = 2,283 FIT in total across the sensor, logic solver and final element."
+  - q: "How does the demand rate affect the risk with a given PFDavg?"
+    a: "The residual hazard frequency is the demand rate times PFDavg. With PFDavg = 0.00219 and 0.1 demands per year, the hazard is expected about once every 4,566 years."
 related: [engineering/availability-mtbf, statistics/probability, statistics/poisson-probability, engineering/instrument-accuracy]
 ---
 
@@ -95,3 +99,33 @@ For the loop above with PTC = 90% and MT = 15 years, PFD<sub>avg</sub> rises fro
 - **Leaving out the final element** or the solenoid valve. They are usually the weakest link.
 - **Claiming a SIL from PFD<sub>avg</sub> alone.** Hardware fault tolerance and systematic capability must also meet the target SIL.
 - **Assuming a 100% proof test.** Use the coverage formula above unless the test really proves every failure mode.
+
+## Checking the default inputs
+
+With the calculator's starting values, a single channel with λ<sub>DU</sub> = 500 FIT tested once a year:
+
+- PFD<sub>avg</sub> = 500 × 10⁻⁹ × 8,760 ÷ 2 = **2.19 × 10⁻³**
+- RRF = 1 ÷ 0.00219 = **457**
+- log₁₀(457) = 2.66, so PFD<sub>avg</sub> alone supports **SIL 2**
+
+## Largest λDU allowed for each SIL
+
+Rearranging the 1oo1 formula gives the highest total λ<sub>DU</sub> a loop can have and still meet the upper PFD<sub>avg</sub> limit of a band: λ<sub>DU,max</sub> = 2 × PFD<sub>limit</sub> ÷ TI.
+
+| Proof test interval | SIL 1 (PFD < 10⁻¹) | SIL 2 (PFD < 10⁻²) | SIL 3 (PFD < 10⁻³) |
+|---|---|---|---|
+| 6 months | 45,662 FIT | 4,566 FIT | 456.6 FIT |
+| 1 year | 22,831 FIT | 2,283 FIT | 228.3 FIT |
+| 2 years | 11,416 FIT | 1,142 FIT | 114.2 FIT |
+| 3 years | 7,610 FIT | 761 FIT | 76.1 FIT |
+| 5 years | 4,566 FIT | 457 FIT | 45.7 FIT |
+
+This table is a quick screening tool: if the sum of the device λ<sub>DU</sub> values from the safety manuals is above the figure for your test interval, a single channel cannot meet the target and redundancy or a better final element is needed.
+
+## From PFDavg to hazard frequency
+
+PFD<sub>avg</sub> becomes meaningful when it is combined with how often the process actually challenges the function. In a LOPA study the hazardous event frequency is the demand rate times PFD<sub>avg</sub>. If the high pressure condition is expected 0.1 times a year, the default loop leaves a residual frequency of 0.1 × 0.00219 = **2.19 × 10⁻⁴ per year**, roughly once in 4,566 years. The formula on this page assumes low demand mode, which IEC 61511 defines as no more than one demand per year; above that, the function is in high demand mode and must be judged on its dangerous failure frequency (PFH) instead.
+
+## Where λDU values come from
+
+Use the λ<sub>DU</sub> printed in each device's IEC 61508 certificate or safety manual, which is normally derived from an FMEDA. Where a device is justified by prior use, the rate should come from your own maintenance records over enough operating hours to be credible. Generic databases are acceptable for early screening but tend to give higher rates than certified data, so the final calculation should state which source was used for each element.

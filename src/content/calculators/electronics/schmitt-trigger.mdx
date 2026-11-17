@@ -2,10 +2,10 @@
 title: Schmitt Trigger Calculator (Comparator Hysteresis Thresholds)
 description: Calculate the upper and lower switching thresholds and hysteresis of an inverting comparator Schmitt trigger from Vref, R1, R2 and the output levels.
 category: electronics
-intro: "A Schmitt trigger adds positive feedback to a comparator so it switches at two different input levels, which stops noisy, slow signals from causing chatter at the output. This Schmitt trigger calculator gives the upper and lower thresholds and the hysteresis band for an inverting comparator — see [Schmitt trigger hysteresis](https://www.instrumentationblog.in/schmitt-trigger-hysteresis/) and [comparator circuits](https://www.instrumentationblog.in/comparator-circuits-explained/) explained."
+intro: "A Schmitt trigger adds positive feedback to a comparator so it switches at two different input levels, which stops noisy or slow signals from making the output chatter. This Schmitt trigger calculator gives the upper and lower thresholds and the [hysteresis](https://www.instrumentationblog.in/schmitt-trigger-hysteresis/) band.\n\nElectronics designers and students use it to set trip points for level switches, thermostats, zero crossing detectors and button inputs, where a clean single transition matters."
 keywords: [schmitt trigger calculator, comparator hysteresis calculator, schmitt trigger threshold voltage, hysteresis resistor calculation, inverting schmitt trigger formula, upper and lower threshold voltage]
 published: 2026-11-06
-updated: 2026-11-14
+updated: 2026-11-17
 variables:
   - { id: Vr, label: Reference voltage V_ref, family: voltage, unit: V, default: 2.5 }
   - { id: R1, label: R₁ (V_ref to non-inverting input), family: resistance, unit: kohm, default: 10, min: 0 }
@@ -32,6 +32,8 @@ faq:
     a: "Yes. The output high level is set by the pull-up resistor, which also sits in series with R₂, so V_OH is lower than the pull-up supply unless R₂ is much larger than the pull-up."
   - q: "What resistor values give 100 mV hysteresis on a 5 V comparator?"
     a: "You need R₁ ÷ (R₁ + R₂) = 0.1 ÷ 5 = 0.02, so R₂ ≈ 49 × R₁. With R₁ = 10 kΩ and the standard value R₂ = 470 kΩ, the hysteresis is about 104 mV."
+  - q: "Can I build a Schmitt trigger with an op amp instead of a comparator?"
+    a: "Yes, but an op amp is slower to come out of saturation and its output may not reach the rails. Use the op amp's measured output swing for V_OH and V_OL, and prefer a comparator when edges must be fast."
 related: [electronics/voltage-divider, electronics/op-amp-gain, electronics/555-timer, electronics/ntc-thermistor]
 ---
 
@@ -80,6 +82,31 @@ Target: **100 mV** of hysteresis with a 0 to 5 V output and V<sub>ref</sub> = 2.
 ## Why the band moves away from V<sub>ref</sub>
 
 The band is centred on V<sub>ref</sub> only when V<sub>ref</sub> is halfway between the output levels. With the same resistors, a 0 to 5 V output and V<sub>ref</sub> = 1.2 V, the thresholds become 1.279 V and 1.175 V. The centre is 1.227 V, which is 27 mV higher than the reference. To put the band exactly where you want it, lower V<sub>ref</sub> slightly or solve for it here by entering the threshold you need.
+
+## Standard R₂ values with R₁ = 10 kΩ
+
+With V<sub>ref</sub> = 2.5 V and a 0 to 5 V output:
+
+| R₂ | Hysteresis | V<sub>TH</sub> | V<sub>TL</sub> |
+|---|---|---|---|
+| 47 kΩ | 877.2 mV | 2.9386 V | 2.0614 V |
+| 100 kΩ | 454.5 mV | 2.7273 V | 2.2727 V |
+| 220 kΩ | 217.4 mV | 2.6087 V | 2.3913 V |
+| 470 kΩ | 104.2 mV | 2.5521 V | 2.4479 V |
+| 1,000 kΩ | 49.5 mV | 2.5248 V | 2.4752 V |
+
+## Effect of a real reference and a real output
+
+The default case gives 2.7273 V and 2.2727 V. Two practical effects move these numbers:
+
+- **Divider reference.** If the 2.5 V comes from two 10 kΩ resistors across 5 V, their Thevenin resistance of 5 kΩ adds to R₁. The thresholds become **2.8261 V** and **2.1739 V**, so the hysteresis grows to **652.2 mV**. Buffer the reference or include the 5 kΩ in R₁.
+- **Output that does not reach the rails.** With V<sub>OH</sub> = 4.8 V and V<sub>OL</sub> = 0.2 V under load, the thresholds are **2.7091 V** and **2.2909 V**, a hysteresis of **418.2 mV**.
+
+The feedback resistor itself draws only (5 − 2.727) ÷ 100 kΩ = 22.7 µA from the output, so loading by R₂ is rarely a problem.
+
+## Checking the thresholds on the bench
+
+Drive the input with a slow triangle wave that sweeps a little beyond both thresholds, put the input on channel 1 and the output on channel 2 of an oscilloscope, and use XY mode. The trace draws a rectangular loop whose left and right edges sit at V<sub>TL</sub> and V<sub>TH</sub>. Without a scope, ramp a bench supply slowly and note the input voltage at each output change with a multimeter. Do the test at the operating temperature if the threshold matters, because comparator offset drifts.
 
 ## Common mistakes
 

@@ -2,10 +2,10 @@
 title: Frustum Volume Calculator (Truncated Cone)
 description: Calculate the volume, slant height, lateral area and total surface area of a conical frustum (truncated cone) from the two radii and height.
 category: math
-intro: "A frustum is a cone with its top cut off parallel to the base — the shape of buckets, flower pots, lampshades and many hoppers. This frustum volume calculator gives the volume, slant height, lateral area and total surface area of a conical frustum from the bottom and top radii and the height."
+intro: "A frustum is a cone with its top cut off parallel to the base, the shape of buckets, flower pots, lampshades and hopper outlets. This frustum volume calculator gives the volume, slant height, lateral area and total surface area from the two radii and the height.\n\nStudents use it to check geometry homework, while cooks, gardeners and plant engineers use it to find how much a tapered tub, planter or bin holds before filling or ordering material."
 keywords: [frustum volume calculator, truncated cone volume, volume of a frustum, frustum of a cone calculator, bucket volume calculator, frustum surface area, tapered tub volume]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-17
 variables:
   - { id: R, label: Large (base) radius R, family: length, unit: cm, imperialUnit: in, default: 5, min: 0 }
   - { id: r, label: Small (top) radius r, family: length, unit: cm, imperialUnit: in, default: 3, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: Measure the top and bottom diameters and the depth, halve the diameters to get radii, and use the frustum formula. Divide cm³ by 1,000 for litres.
   - q: What about a square or rectangular frustum?
     a: For any frustum with similar parallel ends of areas A₁ and A₂, V = (h/3)(A₁ + A₂ + √(A₁A₂)). For a square frustum with sides a and b that is (h/3)(a² + ab + b²).
+  - q: "How do I find the volume of a partly filled frustum?"
+    a: "Find the radius at the liquid surface by straight-line interpolation between the bottom and top radii, then apply the frustum formula with that radius and the liquid depth. A 30 cm by 25 cm bucket 30 cm deep filled to 20 cm holds about 11.18 L."
+  - q: "Is a frustum the same as a truncated pyramid?"
+    a: "Both are solids cut by a plane parallel to the base. A conical frustum has circular ends; a pyramidal frustum has polygon ends. Both follow V = (h/3)(A₁ + A₂ + √(A₁A₂)) with A₁ and A₂ the end areas."
 related: [math/cone, math/cylinder-volume, math/pyramid-volume, math/sphere]
 ---
 
@@ -63,3 +67,36 @@ R = 5 cm, r = 3 cm, h = 4 cm:
 
 - If r = 0 the formula becomes the cone volume πR²h/3; if r = R it becomes the cylinder πR²h.
 - For a partly filled bucket, use the radius at the liquid surface as the top radius and the liquid depth as h.
+
+## Volume of a partly filled bucket
+
+A tapered bucket holds less in its lower half than in its upper half, so the fill level is not proportional to volume. Take a bucket with a 30 cm top, a 25 cm bottom and a depth of 30 cm. Full, it holds (π × 30 ÷ 3)(12.5² + 12.5 × 15 + 15²) = **17.87 L**.
+
+Filled to 20 cm, the liquid surface radius is 12.5 + (15 − 12.5) × 20 ÷ 30 = **14.167 cm**, so the liquid is a smaller frustum:
+
+- V = (π × 20 ÷ 3)(12.5² + 12.5 × 14.167 + 14.167²) = **11.18 L**
+- That is 62.6% of the full volume at 66.7% of the depth.
+
+| Fill depth | Radius at surface | Liquid volume | Share of full |
+|---|---|---|---|
+| 7.5 cm (25% of depth) | 13.12 cm | 3.87 L | 21.7% |
+| 15 cm (50% of depth) | 13.75 cm | 8.12 L | 45.5% |
+| 22.5 cm (75% of depth) | 14.38 cm | 12.78 L | 71.5% |
+| 27 cm (90% of depth) | 14.75 cm | 15.78 L | 88.3% |
+| 30 cm (100% of depth) | 15.00 cm | 17.87 L | 100.0% |
+
+## Hoppers and silo cones
+
+The outlet cone of a round hopper is an upside down frustum. A hopper with a 2 m top, a 0.3 m outlet and a 1.5 m tall cone holds (π × 1.5 ÷ 3)(1² + 1 × 0.15 + 0.15²) = **1.842 m³**. Filled with grain at about 750 kg/m³ that is roughly **1,381 kg**. The wall makes an angle of atan((1 − 0.15) ÷ 1.5) = **29.5°** with the vertical, which matters because steep walls are needed for mass flow of sticky powders.
+
+## Why averaging the radii is not good enough
+
+A quick estimate uses a cylinder with the mean radius. For the default frustum (R = 5 cm, r = 3 cm, h = 4 cm) that gives π × 4² × 4 = 201.06 cm³, which is 2.0% below the true 205.25 cm³. The error grows as the two ends differ more, so use the exact formula for anything you will pay for by volume.
+
+## Common mistakes
+
+- **Entering diameters as radii.** Buckets and pots are usually sold by diameter; entering 30 cm instead of 15 cm makes the volume four times too large.
+- **Measuring the slant side as the height.** h is the vertical distance between the two flat faces. Measuring down the sloping wall overstates it.
+- **Using outside dimensions.** For capacity, use the inside radii and depth. A thick plastic or concrete wall can cut the usable volume by 10% or more.
+- **Assuming half depth means half full.** In a bucket wider at the top, filling to half depth gives well under half the volume, as the table shows.
+- **Forgetting the unit conversion.** 1,000 cm³ is 1 litre and 1 m³ is 1,000 litres; mixing cm and m in one calculation gives wrong powers of ten.

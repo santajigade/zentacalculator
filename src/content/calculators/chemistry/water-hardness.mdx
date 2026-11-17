@@ -2,10 +2,10 @@
 title: Water Hardness Calculator (ppm CaCO₃, °dH, gpg)
 description: Calculate total water hardness as mg/L (ppm) CaCO₃ from calcium and magnesium, with °dH, °fH, grains per gallon and a soft-to-very-hard rating.
 category: chemistry
-intro: "Water hardness comes mainly from dissolved calcium and magnesium, and is reported as the equivalent amount of calcium carbonate. This water hardness calculator converts Ca and Mg results from a lab report into mg/L (ppm) as CaCO₃, German and French degrees and grains per gallon, and rates the water from soft to very hard."
+intro: "Water hardness comes mainly from dissolved calcium and magnesium and is reported as the equivalent amount of calcium carbonate. This water hardness calculator converts Ca and Mg results into mg/L (ppm) as CaCO₃, °dH, °fH and grains per gallon, and rates the water.\n\nWater treatment operators, boiler engineers and homeowners comparing a lab report use it to decide whether a softener, scale inhibitor or reverse osmosis unit is needed."
 keywords: [water hardness calculator, total hardness calculator, hardness as caco3, ppm caco3, german degrees hardness, grains per gallon hardness, calcium magnesium hardness]
 published: 2026-11-04
-updated: 2026-11-04
+updated: 2026-11-17
 variables:
   - { id: Ca, label: Calcium (Ca²⁺), suffix: mg/L, default: 60, min: 0 }
   - { id: Mg, label: Magnesium (Mg²⁺), suffix: mg/L, default: 15, min: 0 }
@@ -37,6 +37,10 @@ faq:
     a: 1 °dH = 17.848 mg/L CaCO₃, 1 °fH = 10 mg/L CaCO₃ and 1 grain per US gallon = 17.118 mg/L CaCO₃. Divide the ppm value by these factors.
   - q: What is the difference between temporary and permanent hardness?
     a: Temporary (carbonate) hardness is the part balanced by bicarbonate and is removed by boiling, which precipitates CaCO₃ scale. Permanent hardness is balanced by sulfate or chloride and stays after boiling; it needs ion exchange or reverse osmosis.
+  - q: "How do I measure water hardness at home?"
+    a: "Test strips give a rough band in a minute. A drop count titration kit is more accurate: each drop usually equals 1 gpg or 1 °dH, so counting the drops to the colour change gives the hardness directly. For a softener design, use a lab report with Ca and Mg."
+  - q: "How often will my water softener regenerate?"
+    a: "Divide the softener capacity in grains by the daily load: hardness in gpg × gallons used per day. At 211.6 mg/L (12.36 gpg) and 600 L a day, a 32,000 grain unit regenerates about every 16.3 days."
 related: [chemistry/ppm, chemistry/molarity, chemistry/normality, chemistry/titration]
 ---
 
@@ -84,3 +88,41 @@ A well water with 60 mg/L calcium and 15 mg/L magnesium:
 
 - Lab titrations with EDTA report total hardness directly as mg/L CaCO₃.
 - To convert between mg/L and other concentration units, use the [ppm calculator](/chemistry/ppm/).
+
+## Measuring hardness by EDTA titration
+
+Most labs measure total hardness by titrating the sample with EDTA at pH 10 using Eriochrome Black T, which turns from wine red to blue when all the Ca and Mg have been complexed. One mole of EDTA binds one mole of Ca or Mg, so:
+
+<p class="formula">Hardness (mg/L CaCO₃) = V<sub>EDTA</sub> (mL) × M<sub>EDTA</sub> × 100,087 ÷ V<sub>sample</sub> (mL)</p>
+
+For the default water (211.6 mg/L) and a 50 mL sample titrated with 0.01 M EDTA, the endpoint should come at about **10571.18 mL**. Doing the titration again at pH 12 to 13 with murexide or calcon indicator gives calcium alone; magnesium is the difference.
+
+| Total hardness | mmol/L | Expected 0.01 M EDTA for 50 mL sample |
+|---|---|---|
+| 50 mg/L | 0.500 mmol/L | 2.50 mL |
+| 100 mg/L | 0.999 mmol/L | 5.00 mL |
+| 150 mg/L | 1.499 mmol/L | 7.49 mL |
+| 200 mg/L | 1.998 mmol/L | 9.99 mL |
+| 300 mg/L | 2.997 mmol/L | 14.99 mL |
+| 400 mg/L | 3.997 mmol/L | 19.98 mL |
+
+## Carbonate and non-carbonate hardness
+
+The alkalinity result on the same report splits hardness into two parts. With an alkalinity of 150 mg/L as CaCO₃ and total hardness of 211.6 mg/L:
+
+- Carbonate (temporary) hardness = the smaller of the two = **150.0 mg/L**
+- Non-carbonate (permanent) hardness = 211.6 − 150.0 = **61.6 mg/L**
+
+The carbonate part forms scale in kettles, heaters and cooling towers. Lime softening removes it, but the non-carbonate part needs soda ash, ion exchange or membranes.
+
+## Sizing a water softener
+
+A softener is rated by how many grains of hardness it removes between regenerations. At 211.6 mg/L the water carries 12.36 grains per US gallon. A household using 600 L a day treats 159 gallons, which is **1,959 grains per day**. A 32,000 grain softener would therefore regenerate about every **16.3 days**. Iron in the water adds to the load, so add about 4 gpg of extra hardness for each mg/L of iron.
+
+## Common mistakes
+
+- **Adding Ca and Mg directly.** 60 mg/L Ca plus 15 mg/L Mg is not 75 mg/L hardness. Each must be converted to CaCO₃ with its own factor first.
+- **Mixing up Ca as the ion and Ca as CaCO₃.** Some reports give "calcium hardness as CaCO₃"; multiplying that by 2.497 again counts it twice.
+- **Reading ppm on a TDS meter as hardness.** TDS includes sodium, chloride and sulfate, so it is always higher than hardness and cannot replace a titration.
+- **Confusing UK and US grains.** A Clark degree (UK) is 14.25 mg/L CaCO₃, while a US grain per gallon is 17.12 mg/L.
+- **Ignoring magnesium.** Gram for gram, magnesium adds 65% more hardness than calcium, so a calcium-only test underestimates scaling.

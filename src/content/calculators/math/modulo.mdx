@@ -2,10 +2,10 @@
 title: Modulo Calculator (a mod b, Remainder & Quotient)
 description: Calculate a mod b, the quotient and the remainder for positive and negative numbers — showing the floored modulo and the truncated remainder used in C and Java.
 category: math
-intro: "The modulo operation gives the remainder left after dividing one number by another, the basis of clock arithmetic, check digits and cyclic counters. This modulo calculator returns a mod b, the integer quotient and the remainder, and shows how the result differs for negative numbers between mathematical (floored) modulo and the truncated remainder of C, Java and JavaScript."
+intro: "The modulo operation gives the remainder left after dividing one number by another, the basis of clock arithmetic, check digits and cyclic counters. This modulo calculator returns a mod b, the integer quotient and the remainder.\n\nProgrammers, maths students and anyone working with schedules use it to check remainders, wrap indexes and see why negative numbers give different answers in Python and in C, Java or JavaScript."
 keywords: [modulo calculator, mod calculator, a mod b, remainder calculator, modulus calculator, negative modulo, modular arithmetic calculator]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-17
 variables:
   - { id: a, label: Dividend a, default: 17 }
   - { id: b, label: Divisor b (modulus), default: 5 }
@@ -25,6 +25,10 @@ faq:
     a: Python's %, Ruby, and spreadsheet MOD() return a result with the sign of the divisor (floored). C, C++, Java, JavaScript and C# return a result with the sign of the dividend (truncated).
   - q: Can modulo be used with decimals?
     a: Yes. 5.5 mod 2 = 1.5. Floating-point rounding can make results like 0.3 mod 0.1 come out very slightly off zero.
+  - q: "How do I calculate mod on a normal calculator?"
+    a: "Divide a by b, take the whole number part of the result, multiply it by b and subtract from a. For 17 mod 5: 17 ÷ 5 = 3.4, 3 × 5 = 15 and 17 − 15 = 2. For negative a, round the quotient down rather than towards zero to get the floored result."
+  - q: "What does congruent modulo n mean?"
+    a: "Two numbers are congruent modulo n when they leave the same remainder on division by n, written a ≡ b (mod n). For example 38 ≡ 14 (mod 12) because both leave 2, which is why 38 hours after midnight a clock reads 2."
 related: [math/gcf-lcm, math/fraction-to-decimal, math/factorial, math/exponent]
 ---
 
@@ -61,3 +65,45 @@ Enter the **dividend a** and the **divisor b**. The calculator returns the floor
 - **Even and odd** — n mod 2 is 0 for even numbers, 1 for odd.
 - **Check digits** — ISBN-10 uses mod 11, IBAN uses mod 97.
 - **Cyclic counters and ring buffers** — index = (index + 1) mod size.
+
+## Rules of modular arithmetic
+
+Remainders can be taken at every step of a sum or product without changing the final remainder, which keeps numbers small:
+
+<p class="formula">(x + y) mod n = [(x mod n) + (y mod n)] mod n &nbsp;·&nbsp; (x × y) mod n = [(x mod n) × (y mod n)] mod n</p>
+
+For example (17 × 23) mod 5 = (2 × 3) mod 5 = **1**, and 391 ÷ 5 leaves the same remainder.
+
+## Worked examples in daily use
+
+- **Day of the week.** 100 days after a Tuesday: 100 mod 7 = **2**, so it falls 2 days after Tuesday, on a Thursday.
+- **Large powers.** 7¹⁰⁰ mod 13 is found by repeated squaring, reducing mod 13 at every step. Because 13 is prime, Fermat's little theorem gives 7¹² ≡ 1, so 7¹⁰⁰ ≡ 7^(100 mod 12) = 7⁴ = 2,401 ≡ **9** (mod 13).
+- **ISBN-10 check digit.** For 0-306-40615-?, the weighted sum 10×0 + 9×3 + 8×0 + 7×6 + 6×4 + 5×0 + 4×6 + 3×1 + 2×5 = 130. The check digit is (11 − 130 mod 11) mod 11 = **2**.
+- **Luhn check for card numbers.** For the payload 7992739871, doubling every second digit from the right and summing gives 67; the check digit is (10 − 67 mod 10) mod 10 = **3**.
+
+## Residues of 2026
+
+| Modulus n | 2026 mod n | −2026 mod n (floored) | 2²⁰²⁶ mod n |
+|---|---|---|---|
+| 2 | 0 | 0 | 0 |
+| 3 | 1 | 2 | 1 |
+| 7 | 3 | 4 | 2 |
+| 9 | 1 | 8 | 7 |
+| 10 | 6 | 4 | 4 |
+| 11 | 2 | 9 | 9 |
+| 12 | 10 | 2 | 4 |
+
+## Modulo in code
+
+- Python: `-17 % 5` gives 3 (floored); `math.fmod(-17, 5)` gives −2.0 (truncated).
+- C, Java, JavaScript: `-17 % 5` gives −2. For a non-negative index use `((a % b) + b) % b`.
+- Excel and Google Sheets: `=MOD(-17, 5)` gives 3, the floored result.
+- For powers of 2, `x % 8` equals `x & 7` for non-negative integers, which compilers use as a fast shortcut.
+
+## Common mistakes
+
+- **Assuming % is always positive.** A ring buffer index of `(i − 1) % size` in C or Java goes negative when i = 0 and reads outside the array.
+- **Dividing by zero.** a mod 0 is undefined; the calculator returns no result rather than a remainder.
+- **Using floating point for big integers.** In JavaScript, numbers above 2⁵³ lose precision, so a large mod gives a wrong answer; use BigInt.
+- **Mixing up quotient direction.** For −17 ÷ 5 the floored quotient is −4, not −3; the remainder only works out if the quotient matches the convention used.
+- **Reducing too late.** Computing 7¹⁰⁰ first and then taking mod 13 overflows; reduce after every multiplication.

@@ -2,10 +2,10 @@
 title: TDS to Conductivity Calculator (EC µS/cm to ppm, mg/L)
 description: Convert electrical conductivity (EC) in µS/cm to total dissolved solids (TDS) in mg/L or ppm, with temperature compensation to 25 °C and an adjustable factor.
 category: chemistry
-intro: "Conductivity meters measure how well water carries current, and total dissolved solids are estimated from it with a conversion factor of about 0.5–0.7. This TDS to conductivity calculator converts EC in µS/cm to TDS in mg/L (ppm), first correcting the reading to 25 °C, and works in reverse to give the conductivity for a target TDS — see how [electrical conductivity](https://www.instrumentationblog.in/electrical-conductivity-explained/) and a [conductivity sensor](https://www.instrumentationblog.in/conductivity-sensor-working/) work."
+intro: "Total dissolved solids can be estimated from electrical conductivity because dissolved salts carry current. This TDS to conductivity calculator corrects a reading to 25 °C and converts EC in µS/cm to TDS in mg/L (ppm) with an adjustable factor, or works back from a target TDS.\n\nWater treatment operators, RO plant technicians, aquarists and growers use it to read [conductivity sensor](https://www.instrumentationblog.in/conductivity-sensor-working/) results as TDS and to set alarm points."
 keywords: [tds to conductivity calculator, conductivity to tds, ec to ppm calculator, us/cm to ppm, tds calculator, tds conversion factor, conductivity temperature compensation]
 published: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-17
 variables:
   - { id: EC, label: Measured conductivity, suffix: µS/cm, default: 750, min: 0 }
   - { id: T, label: Water temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
@@ -36,6 +36,10 @@ faq:
     a: Ions move faster in warm water, so conductivity rises by about 2% per °C. Readings are referred to 25 °C so that samples measured at different temperatures can be compared.
   - q: What TDS is safe for drinking water?
     a: The WHO gives no health-based limit, but taste is rated excellent below 300 mg/L, good up to 600 and unacceptable above about 1,200. India's BIS IS 10500 sets 500 mg/L as acceptable and 2,000 mg/L as permissible where no other source exists.
+  - q: "What conductivity corresponds to 500 ppm TDS?"
+    a: "With a factor of 0.65 it is about 769 µS/cm at 25 °C; with 0.5 it is 1,000 µS/cm and with 0.7 about 714 µS/cm. The factor depends on the ions in your water."
+  - q: "Which cell constant should I use for my conductivity sensor?"
+    a: "Use about 0.01 to 0.1 cm⁻¹ for ultrapure and RO water, 1.0 cm⁻¹ for drinking and general process water and 10 cm⁻¹ or a toroidal sensor for brines and sea water."
 related: [chemistry/ppm, chemistry/water-hardness, chemistry/dissolved-oxygen-saturation, chemistry/molarity]
 ---
 
@@ -76,3 +80,35 @@ Values are typical; real samples vary widely.
 - Different TDS meters use different built-in factors (0.5 "NaCl", 0.7 "442"), so two meters can show different ppm for the same water — compare EC, not ppm.
 - Conductivity is not a measure of purity against non-ionic contaminants: sugar, oils and many organics do not conduct and are not counted.
 - Keep the conductivity cell clean and calibrated with a standard (e.g. 1,413 µS/cm KCl); the cell constant drifts as electrodes foul.
+
+## Temperature correction at 2 %/°C
+
+Conductivity readings change by about 2% for every degree away from 25 °C. The table shows the correction factor 1 ÷ [1 + 0.02 (T − 25)] and what a raw reading of 750 µS/cm means at each sample temperature with k = 0.65:
+
+| Sample temperature | Factor | EC at 25 °C | TDS |
+|---|---|---|---|
+| 5 °C | 1.6667 | 1,250.0 µS/cm | 812 mg/L |
+| 10 °C | 1.4286 | 1,071.4 µS/cm | 696 mg/L |
+| 15 °C | 1.2500 | 937.5 µS/cm | 609 mg/L |
+| 20 °C | 1.1111 | 833.3 µS/cm | 542 mg/L |
+| 25 °C | 1.0000 | 750.0 µS/cm | 488 mg/L |
+| 30 °C | 0.9091 | 681.8 µS/cm | 443 mg/L |
+| 35 °C | 0.8333 | 625.0 µS/cm | 406 mg/L |
+
+A reading taken on a cold winter sample can therefore understate the TDS by a quarter or more if no compensation is applied.
+
+## Working back from a TDS limit
+
+To set an alarm at 500 mg/L with k = 0.65, the conductivity at 25 °C must be 500 ÷ 0.65 = **769.2 µS/cm**. An uncompensated meter reading a 20 °C sample would show 769.2 × [1 + 0.02 × (20 − 25)] = **692.3 µS/cm** at that point, so the alarm in the raw units has to be lower than the compensated value.
+
+## How conductivity is measured in practice
+
+A conductivity cell applies an AC voltage between two or four electrodes and measures the current. The cell constant K (in cm⁻¹) relates the measured conductance to conductivity, and it is chosen for the range: about 0.01 to 0.1 cm⁻¹ for RO permeate and boiler feed water, 1.0 cm⁻¹ for drinking and process water, and 10 cm⁻¹ or an inductive (toroidal) sensor for brines and sea water. Calibrate with a potassium chloride standard close to the working range, such as 84, 1,413 or 12,880 µS/cm at 25 °C, and rinse the cell with sample before reading.
+
+## Common mistakes
+
+- **Applying compensation twice.** Most handheld meters already show a 25 °C value; entering the sample temperature again with α = 2 corrects it a second time.
+- **Comparing ppm from two meters with different factors.** A meter set to 0.5 and one set to 0.7 differ by 40% on the same water. Compare EC instead.
+- **Using 0.65 for RO permeate or brine.** Very pure water and concentrated salt solutions follow different factors; calibrate k against a gravimetric TDS for those waters.
+- **Using a low cell constant on brackish water.** A K = 0.1 cell saturates or polarises at high conductivity and reads low.
+- **Measuring with air bubbles in the cell.** Bubbles on the electrodes block current paths and give a falsely low reading, common on fresh tap samples.

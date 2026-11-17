@@ -2,10 +2,10 @@
 title: Safe Failure Fraction Calculator (SFF, Diagnostic Coverage)
 description: Calculate the safe failure fraction (SFF) and diagnostic coverage from λS, λDD and λDU failure rates, with IEC 61508 SIL limits for Type A and Type B devices.
 category: engineering
-intro: "The safe failure fraction is the share of a device's failures that are either safe or dangerous but detected by diagnostics, and together with hardware fault tolerance it caps the SIL a subsystem can claim. This safe failure fraction calculator works out SFF and diagnostic coverage from the FMEDA failure rates and shows the IEC 61508 architectural limits — background in [safe failure fraction in functional safety](https://www.instrumentationblog.in/safe-failure-fraction-functional-safety/) and [hardware fault tolerance and SFF](https://www.instrumentationblog.in/hardware-fault-tolerance-sff-iec-61508/)."
+intro: "Safe failure fraction is the share of a device's failures that are safe or dangerous but detected, and with hardware fault tolerance it caps the SIL a subsystem may claim. This safe failure fraction calculator gives SFF and diagnostic coverage from FMEDA failure rates.\n\nSafety engineers and device assessors use it to check a transmitter or valve against the [hardware fault tolerance and SFF](https://www.instrumentationblog.in/hardware-fault-tolerance-sff-iec-61508/) tables of IEC 61508 before it is accepted into a safety function."
 keywords: [safe failure fraction calculator, sff calculator, sff iec 61508, diagnostic coverage calculator, lambda du lambda dd, hardware fault tolerance sil, sff type a type b]
 published: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-17
 variables:
   - { id: lS, label: Safe failure rate λS, suffix: FIT, default: 300, min: 0, help: '1 FIT = 1 failure per 10⁹ hours. Use the FMEDA or safety-manual values.' }
   - { id: lDD, label: Dangerous detected failure rate λDD, suffix: FIT, default: 450, min: 0 }
@@ -38,6 +38,10 @@ faq:
     a: Diagnostic coverage looks only at dangerous failures, DC = λDD ÷ (λDD + λDU). SFF also counts safe failures, so a device with many safe failures can have a high SFF even with modest diagnostics.
   - q: What are Type A and Type B devices?
     a: Type A devices are simple, with well-known failure modes and field data (relays, solenoid valves, simple transmitters). Type B devices contain complex components such as microprocessors whose failure modes are not fully known — most smart transmitters and logic solvers.
+  - q: "Where do I find the λS, λDD and λDU values for a device?"
+    a: "In the IEC 61508 certificate, the safety manual or the FMEDA report supplied by the manufacturer. Use the values for the configuration you actually install, such as fail low output and the trip settings of your logic solver."
+  - q: "Does IEC 61511 still use SFF?"
+    a: "The 2016 edition of IEC 61511 dropped SFF from its own hardware fault tolerance table, which sets minimum HFT by SIL instead. SFF remains part of IEC 61508 Route 1H, which device manufacturers use for certification."
 related: [engineering/pfd-avg, engineering/availability-mtbf, engineering/weibull-reliability, engineering/instrument-accuracy]
 ---
 
@@ -75,3 +79,35 @@ HFT N means the subsystem still works after N dangerous faults (1oo1 = 0, 1oo2 =
 - IEC 61511 (process sector) allows Route 2H or its own HFT table based on prior use instead of SFF; check which route your project uses.
 - "No effect" and "no part" failures are excluded from the SFF calculation in IEC 61508 Edition 2.
 - Detected failures only count as safe if the diagnostic response actually takes the process to a safe state (or alarms and the repair is done within the MTTR assumed).
+
+## How diagnostic coverage moves SFF
+
+Keeping the example device's λ<sub>S</sub> = 300 FIT and its total dangerous rate of 500 FIT, but changing how much of that dangerous rate the diagnostics catch:
+
+| Diagnostic coverage | λ<sub>DD</sub> | λ<sub>DU</sub> | SFF | Type B, HFT 0 limit |
+|---|---|---|---|---|
+| 0% | 0 FIT | 500 FIT | 37.50% | Not allowed |
+| 50% | 250 FIT | 250 FIT | 68.75% | SIL 1 |
+| 60% | 300 FIT | 200 FIT | 75.00% | SIL 1 |
+| 80% | 400 FIT | 100 FIT | 87.50% | SIL 1 |
+| 90% | 450 FIT | 50 FIT | 93.75% | SIL 2 |
+| 95% | 475 FIT | 25 FIT | 96.88% | SIL 2 |
+| 99% | 495 FIT | 5 FIT | 99.38% | SIL 3 |
+
+The safe failures alone give this device a floor of 37.5% SFF. Each step in diagnostic coverage then converts undetected dangerous failures into detected ones, and the jump from 90% to 99% DC is what lifts a Type B single channel from SIL 2 to SIL 3 territory.
+
+## Where the numbers come from: the FMEDA
+
+A failure modes, effects and diagnostic analysis lists every component of the device, its failure rate and each failure mode, then classifies the effect of each mode on the safety function as safe, dangerous detected, dangerous undetected or no effect. The FMEDA must be done for the exact configuration used: the same transmitter can have a different λ<sub>DU</sub> when its output is set to fail low instead of fail high, or when the logic solver is not set to trip on an out of range current below 3.6 mA or above 21 mA.
+
+## SFF and PFDavg are separate checks
+
+A high SFF does not by itself give a low PFD<sub>avg</sub>. The example transmitter's λ<sub>DU</sub> of 50 FIT, proof tested yearly, contributes 50 × 10⁻⁹ × 8,760 ÷ 2 = **2.19 × 10⁻⁴** to the loop's PFD<sub>avg</sub> on its own. A safety function has to meet the SIL target for both the architectural constraint and the PFD<sub>avg</sub>, and the weaker of the two sets the SIL that can be claimed.
+
+## Common mistakes
+
+- **Counting "no effect" failures as safe.** IEC 61508 Edition 2 excludes them, and including them inflates the SFF of devices with many passive parts.
+- **Treating λ<sub>DD</sub> as safe when nothing acts on the diagnostic.** If a detected fault only raises an alarm that nobody responds to within the assumed repair time, it behaves as dangerous.
+- **Using a single device's SFF for a whole subsystem.** The architectural limit applies per subsystem: sensor, logic solver and final element are each checked with their own HFT.
+- **Applying the Type A table to a smart transmitter.** Any device with a microprocessor or software is normally Type B, which has stricter limits.
+- **Mixing data from different FMEDA reports.** Failure rates from different sources often use different assumptions about operating stress, so take λ<sub>S</sub>, λ<sub>DD</sub> and λ<sub>DU</sub> for one device from the same report.

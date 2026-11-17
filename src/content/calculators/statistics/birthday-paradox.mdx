@@ -2,10 +2,10 @@
 title: Birthday Paradox Calculator (Shared Birthday Probability)
 description: Calculate the probability that at least two people in a group share a birthday — the birthday problem — and the chance someone shares your birthday.
 category: statistics
-intro: "In a room of just 23 people there is a better than even chance that two share a birthday, which surprises most people because there are 365 days. This birthday paradox calculator gives the exact probability of a shared birthday for any group size, and the much smaller chance that someone shares your own birthday."
+intro: "In a room of only 23 people there is a better than even chance that two share a birthday, which surprises most people because a year has 365 days. This birthday paradox calculator gives the exact probability of a shared birthday for any group size.\n\nTeachers use it to show how intuition fails with pairs, and software engineers use the same maths to size hash values, random IDs and coupon codes so that collisions stay rare."
 keywords: [birthday paradox calculator, birthday problem calculator, shared birthday probability, probability two people share a birthday, 23 people birthday, birthday probability, collision probability]
 published: 2026-11-04
-updated: 2026-11-04
+updated: 2026-11-17
 variables:
   - { id: n, label: Number of people, default: 23, min: 1, help: 'Exact up to about 120 people; beyond that the probability is effectively 100%.' }
   - { id: d, label: Days in the year, default: 365, min: 1, help: 'Use 365 (ignoring 29 February), or any number of equally likely categories.' }
@@ -27,6 +27,10 @@ faq:
     a: 57 people give about 99.0%, and 70 people about 99.9%. With 366 people a match is certain (ignoring 29 February).
   - q: How likely is it that someone shares my birthday?
     a: Much less likely — 1 − (364/365)^(n − 1). In a group of 23 (you plus 22 others) it is only about 5.9%, and you need 253 other people for a 50% chance.
+  - q: "What is the approximation formula for the birthday problem?"
+    a: "P ≈ 1 − e^(−n(n − 1) ÷ 2d). For 23 people and 365 days it gives 50.0%, close to the exact 50.7%. The group size for a 50% chance is about 1.1774 × √d."
+  - q: "How does the birthday problem apply to hash collisions?"
+    a: "Set d to the number of possible hash values. For a 32 bit hash a collision becomes likely (50%) after only about 77,163 items, far fewer than the 4.3 billion possible values."
 related: [statistics/probability, statistics/permutations, statistics/combinations, statistics/odds-probability]
 ---
 
@@ -39,15 +43,6 @@ Enter the **number of people** in the group. The calculator returns the probabil
 <p class="formula">P(all different) = d × (d − 1) × … × (d − n + 1) ÷ dⁿ = ₙP(d, n) ÷ dⁿ</p>
 
 <p class="formula">P(shared) = 1 − P(all different) &nbsp;·&nbsp; P(shares yours) = 1 − ((d − 1) ÷ d)<sup>n−1</sup></p>
-
-## Example
-
-A group of 23 people:
-
-- P(all different) = 365 × 364 × … × 343 ÷ 365²³ = **49.27%**
-- P(at least one shared birthday) = 1 − 0.4927 = **50.73%**
-- P(someone shares your birthday) = 1 − (364/365)²² = **5.86%**
-- Pairs = 23 × 22 ÷ 2 = **253**
 
 ## Shared-birthday probability by group size
 
@@ -72,3 +67,60 @@ A group of 23 people:
 
 - Real birthdays are not perfectly uniform, which makes a match slightly *more* likely than these figures.
 - The counting uses permutations — see the [permutations calculator](/statistics/permutations/).
+
+## Worked example with the default inputs
+
+For n = 23 people and d = 365 days:
+
+- Pairs = 23 × 22 ÷ 2 = **253**
+- P(all different) = 365 × 364 × … × 343 ÷ 365²³ = **49.27%**
+- P(at least one shared birthday) = **50.73%**
+- P(someone shares your birthday) = 1 − (364 ÷ 365)²² = **5.86%**
+
+Each of the 253 pairs has only a 1 in 365 chance of matching, but there are so many pairs that a match becomes more likely than not. Your own birthday is involved in just 22 of them, which is why the personal figure is so much lower.
+
+## The quick approximation
+
+For mental arithmetic, treat each pair as an independent 1/d chance:
+
+<p class="formula">P(shared) ≈ 1 − e<sup>−n(n−1) ÷ 2d</sup> &nbsp;·&nbsp; n(50%) ≈ 1.1774 √d</p>
+
+| People | Exact | Approximation |
+|---|---|---|
+| 10 | 11.69% | 11.60% |
+| 20 | 41.14% | 40.58% |
+| 23 | 50.73% | 50.00% |
+| 30 | 70.63% | 69.63% |
+| 40 | 89.12% | 88.20% |
+| 50 | 97.04% | 96.51% |
+| 70 | 99.92% | 99.87% |
+
+The approximation slightly underestimates the exact figure but is close enough for design work, and for 365 days it predicts 22.5 people for a 50% chance.
+
+## Group size needed for a target probability
+
+| Target probability | 365 days | 12 months | 10,000 values (4 digit PIN) |
+|---|---|---|---|
+| 10% | 10 | 3 | 47 |
+| 25% | 15 | 4 | 77 |
+| 50% | 23 | 5 | 119 |
+| 75% | 32 | 6 | 167 |
+| 90% | 41 | 8 | 215 |
+| 95% | 47 | 8 | 245 |
+| 99% | 57 | 10 | 303 |
+
+## Collisions in computing
+
+The same formula applies to any set of equally likely values. A 32 bit hash has d = 2³² values, yet a 50% chance of a collision arrives after only about √(2 × 2³² × ln 2) = **77,163** items. A 64 bit hash pushes that to about 5.1 billion. Among 100 people choosing random 4 digit PINs, the chance that two pick the same one is **39.1%**. This is why identifiers and checksums are sized with the birthday bound, not the number of possible values.
+
+## Trying it in a class
+
+A group of 30 to 40 students is the classic demonstration: the calculator gives 71% for 30 and 89% for 40, so a match usually appears. Ask people to call out birthdays month by month; the first repeat ends the experiment.
+
+## Common mistakes
+
+- **Answering the personal question.** "Does anyone share my birthday?" needs 253 other people for 50%. "Do any two people share?" needs only 23.
+- **Dividing n by 365.** 23 ÷ 365 = 6.3% ignores that every pair is a chance for a match.
+- **Adding probabilities across pairs.** 253 ÷ 365 = 69% overcounts; the pairs overlap, so multiply the "all different" chances instead.
+- **Forgetting 29 February.** Using 366 days changes the result for 23 people only to 50.63%, so it rarely matters.
+- **Assuming uniform birthdays is conservative for the wrong side.** Real birth dates cluster by season, which makes a match slightly more likely, not less.

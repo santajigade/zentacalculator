@@ -2,10 +2,10 @@
 title: 3 Variable System of Equations Calculator (Cramer's Rule)
 description: Solve three linear equations in x, y and z with Cramer's rule — enter the coefficients to get the determinant, Dx, Dy, Dz and the unique solution.
 category: math
-intro: "Three linear equations in three unknowns describe three planes, and when they meet at a single point the system has one solution. This 3 variable system of equations calculator finds that point with Cramer's rule, showing the coefficient determinant and the three replacement determinants so you can follow the working."
+intro: "Three linear equations in three unknowns describe three planes, and when they meet at a single point the system has one solution. This 3 variable system of equations calculator finds that point with Cramer's rule, showing D, Dx, Dy and Dz.\n\nStudents use it to check homework and exam working, and engineers use it for small problems such as mesh currents in a circuit, mixture blends and fitting a parabola through three points."
 keywords: [3 variable system of equations calculator, system of 3 equations calculator, three equations three unknowns, cramer's rule 3x3, solve for x y z, 3x3 determinant calculator, simultaneous equations 3 variables]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-17
 variables:
   - { id: a1, label: "a₁ (x coefficient, equation 1)", default: 1 }
   - { id: b1, label: "b₁ (y coefficient, equation 1)", default: 1 }
@@ -43,6 +43,8 @@ faq:
     a: There is no unique solution — the planes are parallel or meet in a line, giving no solutions or infinitely many. Gaussian elimination tells you which.
   - q: Is Cramer's rule efficient?
     a: For 2×2 and 3×3 systems it is quick and clear. For larger systems Gaussian elimination or matrix methods are far more efficient.
+  - q: "Can this calculator fit a parabola through three points?"
+    a: "Yes. For y = ax² + bx + c through (x₁, y₁), (x₂, y₂) and (x₃, y₃), each point gives one equation: x₁²·a + x₁·b + 1·c = y₁. Enter x², x and 1 as the three coefficients and y as the right-hand side, and the solution gives a, b and c."
 related: [math/system-of-equations, math/quadratic-equation, math/vector, math/linear-interpolation]
 ---
 
@@ -72,3 +74,40 @@ Solve x + y + z = 6, 2x − y + 3z = 9 and x + 2y − z = 2:
 1. Use equation 1 to eliminate x from equations 2 and 3.
 2. Solve the resulting two equations in y and z (see the [two-variable system of equations calculator](/math/system-of-equations/)).
 3. Substitute y and z back into equation 1 to find x.
+
+## The same system by Gaussian elimination
+
+Elimination reaches the same answer and shows why D matters. Starting from x + y + z = 6, 2x − y + 3z = 9 and x + 2y − z = 2:
+
+1. Equation 2 − 2 × equation 1 gives **−3y + z = −3**.
+2. Equation 3 − equation 1 gives **y − 2z = −4**.
+3. Three times the second new equation plus the first removes y: **−5z = −15**, so z = **3**.
+4. Back substitution: −3y + 3 = −3 gives y = **2**, and x = 6 − 2 − 3 = **1**.
+
+## Engineering example: three mesh currents
+
+A resistor network has three loops. Kirchhoff's voltage law gives, with currents in amps:
+
+- 15I₁ − 5I₂ = 10
+- −5I₁ + 25I₂ − 10I₃ = 0
+- −10I₂ + 20I₃ = −5
+
+Enter a₁ = 15, b₁ = −5, c₁ = 0, d₁ = 10 and so on. D = **5,500**, giving I₁ = **0.6818 A**, I₂ = **0.0455 A** and I₃ = **-0.2273 A**. The negative I₃ means that loop current flows the other way round from the direction assumed.
+
+## What the determinant tells you
+
+| Result | Geometry | Number of solutions |
+|---|---|---|
+| D ≠ 0 | Three planes meet at one point | Exactly one |
+| D = 0 and all of Dx, Dy, Dz = 0 | Planes share a line, or two or three coincide | None or infinitely many, check by elimination |
+| D = 0 and any of Dx, Dy, Dz ≠ 0 | Planes do not have a common point | None |
+
+For example x + 2y + 3z, 2x + 4y + 6z and x + y + z have D = **0** because the second row is twice the first, so the system cannot have a unique solution whatever the right-hand sides.
+
+## Common mistakes
+
+- **Not lining up the variables.** Rewrite each equation as a·x + b·y + c·z = d before entering; 3z + x = 4 means a = 1, b = 0, c = 3.
+- **Moving a term without changing its sign.** x + y = 6 − z must become x + y + z = 6, with c = +1.
+- **Replacing the wrong column.** Dy replaces the y column with the right-hand sides, not the y row.
+- **Trusting tiny determinants.** If D is very small compared with the coefficients, rounding in the inputs causes large changes in x, y and z; the system is ill conditioned.
+- **Skipping the check.** Substitute the answers back into all three original equations; it catches typing errors at once.

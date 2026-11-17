@@ -1,11 +1,11 @@
 ---
-title: Hemocytometer Cell Count Calculator
-description: Calculate cells per mL from hemocytometer counts, squares counted and dilution — plus total cells.
+title: "Hemocytometer Calculator (Cells per mL and Total Cell Count)"
+description: "Calculate cells per mL and total cells from hemocytometer counts, squares counted and dilution, with viability, counting error and seeding examples."
 category: biology
-intro: "A hemocytometer is a microscope slide with a precise counting grid of known volume. Counting cells in its squares gives the cell concentration of a sample — a routine step in cell culture. This free hemocytometer cell count calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A hemocytometer is a counting chamber with a grid of known volume, so the number of cells seen in its squares gives the cell concentration of a suspension. This hemocytometer cell count calculator turns your count into cells per mL and total cells.\n\nCell culture technicians and biology students use it every time they passage cells, check viability with trypan blue or need the volume of suspension to seed plates and flasks."
 keywords: [hemocytometer, cell count, cells per ml, neubauer chamber, trypan blue, cell counting]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-17
 variables:
   - { id: cnt, label: Total cells counted, default: 180, min: 0 }
   - { id: sq, label: Large squares counted, default: 4, min: 1 }
@@ -25,7 +25,9 @@ faq:
     a: "Mixing equal volumes of cells and trypan blue gives a dilution factor of 2."
   - q: "Why multiply by 10,000?"
     a: "Each large square holds 0.0001 mL, so cells per square × 10,000 gives cells per mL."
-related: [biology/serial-dilution, biology/cell-doubling-time]
+  - q: "How accurate is a hemocytometer count?"
+    a: "The counting error is about 1 ÷ √N of the cells counted. Counting 180 cells gives roughly 7.5% relative error, while 50 cells gives about 14%, so aim for 100 to 300 cells in total."
+related: [biology/serial-dilution, biology/cell-doubling-time, biology/centrifuge-rcf, biology/specific-growth-rate]
 ---
 
 ## How to use the hemocytometer cell count calculator
@@ -70,3 +72,50 @@ To seed 300,000 cells from a suspension at 900,000 cells/mL, use **0.33 mL**.
 ## Counting rules
 
 Count cells touching the top and left borders of each square, but not those touching the bottom and right. This avoids double-counting cells on shared lines.
+
+## Worked example with the default values
+
+180 cells counted in 4 large squares, mixed 1:1 with trypan blue (dilution 2), from a 10 mL suspension:
+
+- Average per square = 180 ÷ 4 = **45 cells**
+- Cells per mL = 45 × 2 × 10⁴ = **900,000 cells/mL** (9.0e+05)
+- Total cells = 900,000 × 10 = **9,000,000 cells** (9.0e+06)
+
+If 20 blue (dead) cells were also seen in the same squares, viability = 180 ÷ (180 + 20) × 100 = **90%**, and the 180 clear cells are the live count used above.
+
+## How precise is a count?
+
+Cells settle at random, so the count follows Poisson statistics and its relative standard deviation is 1 ÷ √N. Counting 180 cells gives about 7.5%, so the true default concentration lies roughly between 768,519 and 1,031,481 cells/mL (95%).
+
+| Cells counted | Coefficient of variation | 95% range |
+|---|---|---|
+| 25 | 20.0% | ±39.2% |
+| 50 | 14.1% | ±27.7% |
+| 100 | 10.0% | ±19.6% |
+| 200 | 7.1% | ±13.9% |
+| 400 | 5.0% | ±9.8% |
+| 800 | 3.5% | ±6.9% |
+
+Doubling the number of squares counted is the easiest way to tighten the result.
+
+## Cells per mL by average count per square
+
+| Average per large square | Dilution 1 | Dilution 2 (1:1 trypan) | Dilution 10 |
+|---|---|---|---|
+| 10 | 100,000 | 200,000 | 1,000,000 |
+| 25 | 250,000 | 500,000 | 2,500,000 |
+| 45 | 450,000 | 900,000 | 4,500,000 |
+| 75 | 750,000 | 1,500,000 | 7,500,000 |
+| 100 | 1,000,000 | 2,000,000 | 10,000,000 |
+
+## Seeding from the count
+
+To seed 200,000 cells per well in a 6 well plate from the default suspension, each well needs 200,000 ÷ 900,000 = **0.222 mL** (222 µL). For all 6 wells, take 1333 µL and top up with medium to the final volume.
+
+## Common mistakes
+
+- **Forgetting the trypan blue dilution.** Equal volumes of cells and dye halve the concentration; leaving out the factor of 2 underestimates the culture by half.
+- **Counting clumps as one cell.** Pipette gently but thoroughly before loading; clumps make counts low and uneven between squares.
+- **Overfilling or underfilling the chamber.** Liquid that flows into the moats or a coverslip that is not seated changes the 0.1 mm depth the 10⁴ factor relies on.
+- **Waiting too long before counting.** Trypan blue slowly stains live cells too, so count within about 5 minutes of mixing.
+- **Mixing up large and small squares.** The 10⁴ factor is for the 1 mm² corner squares; the small central squares need a different factor.

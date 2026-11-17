@@ -2,10 +2,10 @@
 title: NTC Thermistor Calculator (Beta Equation)
 description: Calculate NTC thermistor resistance at any temperature, or temperature from resistance, using the beta (B) equation — for 10k, 100k and other thermistors.
 category: electronics
-intro: "An NTC thermistor's resistance falls sharply as it warms, making it a cheap and sensitive temperature sensor. The beta equation converts between resistance and temperature using the R25 and B values from the datasheet. This NTC thermistor calculator works both ways — see [NTC and PTC thermistor working](https://www.instrumentationblog.in/ntc-ptc-thermistor-working/) and [thermistor vs thermocouple](https://www.instrumentationblog.in/thermistor-vs-thermocouple/)."
+intro: "An NTC thermistor is a resistor whose value falls sharply as it warms, so it makes a cheap and sensitive temperature sensor. This NTC thermistor calculator uses the beta equation and the datasheet R25 and B values to convert temperature to resistance and back.\n\nElectronics designers, HVAC technicians and 3D printer builders use it to choose divider resistors and set firmware lookup tables. See [NTC and PTC thermistor working](https://www.instrumentationblog.in/ntc-ptc-thermistor-working/)."
 keywords: [ntc thermistor calculator, thermistor resistance to temperature, beta equation thermistor, 10k thermistor calculator, b value thermistor, thermistor temperature calculation]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-17
 variables:
   - { id: R25, label: Resistance at 25 °C (R25), family: resistance, unit: kohm, default: 10, min: 0 }
   - { id: B, label: Beta value (B25/85), suffix: K, default: 3950, min: 0 }
@@ -24,6 +24,8 @@ faq:
     a: A thermistor with 10 kΩ at 25 °C and a beta value of 3,950 K — one of the most common types for 3D printers, appliances and HVAC.
   - q: When should I use the Steinhart–Hart equation instead?
     a: For wide temperature ranges or better than ±0.5 °C accuracy, use the three-coefficient Steinhart–Hart equation or the manufacturer's R–T table.
+  - q: "What value of fixed resistor should I pair with an NTC thermistor?"
+    a: "Choose a resistor equal to the thermistor resistance at the middle of the range you care about. For a 10 kΩ, B 3950 part read around 60 °C that is about 2.5 kΩ, so a 2.2 kΩ or 2.7 kΩ resistor gives the best resolution there."
 related: [engineering/pt100-resistance, electronics/voltage-divider, electronics/wheatstone-bridge, conversion/temperature-converter]
 ---
 
@@ -64,3 +66,41 @@ Place the thermistor in a [voltage divider](/electronics/voltage-divider/) with 
 | Linearity | Strongly non-linear | Nearly linear |
 | Cost | Very low | Higher |
 | Interchangeability | ±0.2–1 °C | Class A/B standards |
+
+## Worked example: 10 kΩ, B 3950 thermistor at 60 °C
+
+With the default inputs (R25 = 10 kΩ, B = 3,950 K, T = 60 °C):
+
+- T = 60 + 273.15 = **333.15 K**
+- 1/T − 1/298.15 = 0.003002 − 0.003354 = -0.000352 K⁻¹
+- R = 10 × e^(3,950 × -0.000352) = 10 × 0.2486 = **2.49 kΩ**
+- Sensitivity = −3,950 ÷ 333.15² × 100 = **-3.56 %/°C**
+
+Going the other way, a reading of 4 kΩ gives T = 1 ÷ (1/298.15 + ln(4/10) ÷ 3,950) − 273.15 = **47.2 °C**.
+
+## Divider output with a 10 kΩ fixed resistor and a 12 bit ADC
+
+With the thermistor from 3.3 V to the ADC pin and a 10 kΩ resistor from the pin to ground, V = 3.3 × 10 ÷ (10 + R<sub>T</sub>):
+
+| Temperature | R<sub>T</sub> | ADC pin voltage | 12 bit count |
+|---|---|---|---|
+| 0 °C | 33.62 kΩ | 0.757 V | 939 |
+| 25 °C | 10.00 kΩ | 1.650 V | 2,048 |
+| 40 °C | 5.30 kΩ | 2.157 V | 2,676 |
+| 60 °C | 2.49 kΩ | 2.643 V | 3,280 |
+| 80 °C | 1.27 kΩ | 2.928 V | 3,633 |
+| 100 °C | 0.70 kΩ | 3.085 V | 3,828 |
+
+The counts change fastest near 25 °C, where the two resistors are equal. If the range of interest is 60 to 100 °C, a smaller fixed resistor (around 2.2 kΩ) puts the steepest part of the curve where it is needed.
+
+## Self-heating in practice
+
+At 60 °C the example divider passes 264 µA and the thermistor dissipates 0.174 mW. With a typical bead dissipation constant of 1.5 mW/°C, that warms the sensor by about **0.12 °C** above the air it is measuring. In still air or with a lower value thermistor this error grows quickly, so firmware often powers the divider only while sampling.
+
+## Common mistakes
+
+- **Using the wrong B value.** B25/50 and B25/85 differ by 1 to 2%. Reading a 3,435 K part as 3,950 K turns a true 60 °C into an indicated 55.0 °C.
+- **Forgetting kelvin.** The exponent needs absolute temperature; plugging in °C gives nonsense.
+- **Trusting the beta model far from 25 °C.** Beyond about 0 to 100 °C, fit Steinhart-Hart coefficients or use the maker's R-T table.
+- **Ignoring lead and connector resistance.** It is small next to 10 kΩ at room temperature, but at 125 °C the thermistor is only a few hundred ohms.
+- **Mounting without thermal contact.** A thermistor taped loosely to a heatsink reads the air gap, not the metal. Use thermal paste or a lug.

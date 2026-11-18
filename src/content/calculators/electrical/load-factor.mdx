@@ -2,10 +2,10 @@
 title: Load Factor Calculator (Maximum Demand & Demand Factor)
 description: Calculate load factor from energy consumed and maximum demand, plus average load and demand factor — for monthly electricity bills and plant studies.
 category: electrical
-intro: "Load factor compares the average load over a period with the peak, or maximum demand, so it shows how steadily a plant uses its electrical capacity. This load factor calculator works out average load, load factor and demand factor from a bill's kWh and kW figures — see [maximum demand calculation with diversity](https://www.instrumentationblog.in/maximum-demand-calculation-diversity/) for estimating the peak at design stage."
+intro: "Load factor is the average load over a billing period divided by the maximum demand, so it shows how steadily a site uses its electrical capacity. This load factor calculator finds average load, load factor and demand factor from bill kWh and kW figures. See [maximum demand calculation with diversity](https://www.instrumentationblog.in/maximum-demand-calculation-diversity/).\n\nEnergy managers, plant engineers and consultants use it to understand demand charges, plan peak shaving and size transformers."
 keywords: [load factor calculator, maximum demand calculator, demand factor calculator, load factor formula, average load calculation, electricity load factor, kwh to load factor]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: E, label: Energy consumed in the period, family: energy, unit: kWh, default: 216000, min: 0 }
   - { id: tp, label: Length of the period, family: seconds, unit: h, default: 720, min: 0, help: '720 h = 30 days; 8,760 h = one year.' }
@@ -27,6 +27,10 @@ faq:
     a: Load factor is average ÷ peak load over time. Demand factor is maximum demand ÷ total connected load, and shows how much of the installed equipment runs at the same time.
   - q: How can I improve load factor?
     a: Reduce the peak rather than the energy — stagger motor starts, shift batch loads to off-peak hours and use demand controllers or energy storage.
+  - q: "What is the difference between load factor and capacity factor?"
+    a: "Load factor compares average load with the actual peak demand. Capacity factor compares average output with the rated capacity of a generator or plant. A solar farm may run at a 30% capacity factor simply because the sun sets, while load factor describes how flat a consumer demand profile is."
+  - q: "What is loss factor?"
+    a: "Loss factor is the average power loss divided by the loss at peak load. It is commonly estimated as 0.3 LF + 0.7 LF², so a 60% load factor gives a loss factor of about 0.43."
 related: [electrical/energy-meter-constant, electrical/kw-to-amps, electrical/transformer-size, electrical/power-factor-correction]
 ---
 
@@ -66,3 +70,38 @@ A factory used 216,000 kWh in a 30-day month with a recorded maximum demand of 5
 - Utilities measure maximum demand as the highest average over a 15- or 30-minute window, not the instantaneous peak.
 - With kVA-based demand tariffs, improving power factor also cuts the billed maximum demand.
 - The transformer only needs to be sized for the diversified maximum demand, not the connected load — see the [transformer size calculator](/electrical/transformer-size/).
+
+## How load factor sets the average price per kWh
+
+On a two-part tariff the demand charge is fixed by the peak, so the more kWh that peak is spread over, the cheaper each unit becomes. With an illustrative tariff of 10 per kW of maximum demand per month plus 0.08 per kWh, the default month costs 500 × 10 + 216,000 × 0.08 = **22,280**, an average of **0.1031 per kWh**.
+
+| Load factor | Energy at 500 kW MD | Monthly bill | Average per kWh |
+|---|---|---|---|
+| 20% | 72,000 kWh | 10,760 | 0.1494 |
+| 30% | 108,000 kWh | 13,640 | 0.1263 |
+| 40% | 144,000 kWh | 16,520 | 0.1147 |
+| 50% | 180,000 kWh | 19,400 | 0.1078 |
+| 60% | 216,000 kWh | 22,280 | 0.1031 |
+| 70% | 252,000 kWh | 25,160 | 0.0998 |
+| 80% | 288,000 kWh | 28,040 | 0.0974 |
+| 90% | 324,000 kWh | 30,920 | 0.0954 |
+
+Cutting the peak from 500 kW to 400 kW with the same energy lifts the load factor from 60% to **75%** and saves 1,000 a month, without using a single kWh less.
+
+## Reading the figures from a bill or meter
+
+The kWh figure is the difference between the opening and closing energy register readings, multiplied by the meter constant or CT ratio where the bill does not do it. The maximum demand is the highest average power over one integration window, commonly 15 or 30 minutes, so a 2 second motor inrush barely moves it. If interval data is available, the peak window and the time it occurred show which loads to reschedule.
+
+Many tariffs bill demand in kVA. At 0.9 power factor the default 500 kW peak is 556 kVA, and a kVA based load factor would be 300 ÷ 556 = 54% unless the kWh are also converted. Keep both quantities on the same basis.
+
+## Load factor and losses
+
+Copper losses in cables and transformers follow the square of current, so they depend on the shape of the load curve, not just the average. Distribution planners often estimate the loss factor with the empirical relation 0.3 LF + 0.7 LF². At 60% load factor that gives 0.432: average losses are 43.2% of the losses at maximum demand.
+
+## Common mistakes
+
+- **Using the wrong number of hours.** A 31 day month has 744 h; the same bill over 744 h gives 58.06%, not 60%.
+- **Taking an instantaneous peak as maximum demand.** Utilities bill the highest integrated window, which is lower than a spot reading from a clamp meter.
+- **Confusing demand factor with diversity factor.** Demand factor is MD ÷ connected load (below 1); diversity factor is the sum of individual maximum demands ÷ the combined maximum (above 1).
+- **Mixing kVA demand with kWh energy.** The result understates load factor by the power factor.
+- **Averaging monthly load factors for a year.** The annual figure uses the single highest peak of the year, so it is normally lower than the average of the twelve monthly values.

@@ -1,11 +1,11 @@
 ---
-title: Population Density Calculator
-description: Calculate population density (individuals per km², hectare or square mile) from count and area.
+title: "Population Density Calculator (per km², Hectare and Square Mile)"
+description: "Calculate population density per km², per square mile and per hectare from a count and an area, with worked examples, unit tables and ecology tips."
 category: ecology
-intro: "Population density is the number of individuals per unit area. It is used in ecology, urban planning and geography."
+intro: "Population density tells you how many people, animals or plants share each unit of area. This population density calculator divides a count by its area and gives the result per square kilometre, per square mile and per hectare at once.\n\nGeography students compare cities and countries with it, planners use it for housing and services, and ecologists use it to compare species between habitats and survey plots."
 keywords: [population density, people per square km, density calculator, animals per hectare, density per area]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-18
 variables:
   - { id: n, label: Population (count), default: 1250000, min: 0 }
   - { id: A, label: Area, family: area, unit: km2, imperialUnit: acre, default: 450, min: 0 }
@@ -17,15 +17,17 @@ equations:
   - dm = dk * 2.589988
   - dh = dk / 100
 faq:
-  - q: "How is population density calculated?"
-    a: "Divide the number of individuals by the area they occupy."
+  - q: "What is the difference between crude and ecological density?"
+    a: "Crude density divides the population by the whole area. Ecological density divides it only by the habitat the species can use. 84 deer in a 12 km² reserve is 7.0 per km² crude, but 11.2 per km² across its 7.5 km² of woodland."
   - q: "How do I convert per km² to per square mile?"
     a: "Multiply by 2.59."
   - q: "Is density the same everywhere in an area?"
-    a: "No — it is an average. Cities and habitats are often much denser in some places than others."
+    a: "No. It is an average, and people, animals and plants are usually clustered. City centres and rich habitat patches are often far denser than the overall figure."
   - q: "How do I calculate population density?"
     a: "Divide the population by the area. 1.25 million people on 450 km² is about 2,778 per km²."
-related: [ecology/mark-recapture, conversion/area-converter]
+  - q: "How do I convert density per hectare to per km²?"
+    a: "Multiply by 100, because one square kilometre holds 100 hectares. The default city has 27.78 people per hectare, which is 2,777.8 per km²."
+related: [ecology/mark-recapture, conversion/area-converter, biology/exponential-population-growth, biology/logistic-growth]
 ---
 
 ## How to use the population density calculator
@@ -45,10 +47,10 @@ Enter the **population** and the **area**. Density per km², per square mile and
 | Place | Approximate density |
 |---|---|
 | World (land area) | about 60 per km² |
-| India | about 480 per km² |
+| India | about 440 per km² |
 | United Kingdom | about 280 per km² |
 | United States | about 37 per km² |
-| Australia | about 3–4 per km² |
+| Australia | about 3.5 per km² |
 | Singapore | about 8,000 per km² |
 | Monaco | about 19,000 per km² |
 
@@ -74,3 +76,44 @@ Plant ecologists often count individuals in quadrats (for example 1 m²) and sca
 ## Physiological density
 
 For countries, physiological density divides population by **arable** land only. Egypt has a moderate crude density but a very high physiological density because most people live along the Nile.
+
+## Worked example with the default values
+
+A city of 1,250,000 people on 450 km²:
+
+- Density per km² = 1,250,000 ÷ 450 = **2,777.8 per km²**
+- Density per square mile = 2,777.8 × 2.589988 = **7,194.4 per square mile**
+- Density per hectare = 2,777.8 ÷ 100 = **27.78 per hectare** (or 11.24 per acre)
+
+Turned around, each person has on average 1,000,000 ÷ 2,777.8 = **360 m²** of land, which includes roads, parks and workplaces as well as homes.
+
+## Worked example: crude and ecological density
+
+A survey counts 84 deer in a 12 km² reserve, of which 7.5 km² is woodland they actually use:
+
+- Crude density = 84 ÷ 12 = **7.0 per km²**
+- Ecological density = 84 ÷ 7.5 = **11.2 per km²**
+
+The ecological figure is the one to compare with other woodlands, because open fields and water in the reserve hold almost no deer.
+
+## Worked example: scaling up from quadrats
+
+Five 1 m² quadrats contain 12, 8, 15, 10, 9 plants. The mean is **10.8 per m²** (standard deviation 2.8), which scales to 10.8 × 10,000 = **108,000 plants per hectare**. Place quadrats at random or on a grid, and use more of them when counts vary a lot between plots.
+
+## Density conversion table
+
+| Per km² | Per square mile | Per hectare | Per acre | Area per individual |
+|---|---|---|---|---|
+| 1 | 2.6 | 0.01 | 0.00 | 1,000,000 m² |
+| 10 | 25.9 | 0.10 | 0.04 | 100,000 m² |
+| 100 | 259.0 | 1.00 | 0.40 | 10,000 m² |
+| 500 | 1,295.0 | 5.00 | 2.02 | 2,000 m² |
+| 1,000 | 2,590.0 | 10.00 | 4.05 | 1,000 m² |
+| 2,778 | 7,195.0 | 27.78 | 11.24 | 360 m² |
+| 10,000 | 25,899.9 | 100.00 | 40.47 | 100 m² |
+
+## Practical notes
+
+- Use land area, not total area, for countries with large lakes or coastal waters; the two can differ by several percent.
+- City figures depend on where the boundary is drawn. A city proper and its wider metropolitan area can differ in density by a factor of five or more.
+- For mobile animals, density from a single count is a snapshot. Repeat surveys, or estimate the population with the mark and recapture method before dividing by area.

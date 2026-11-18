@@ -1,11 +1,11 @@
 ---
-title: VFD Braking Resistor Calculator
-description: Calculate the maximum braking resistor value and average power rating for a VFD braking chopper from DC bus voltage, braking power and duty cycle.
+title: "Braking Resistor Calculator for VFDs (Ohms, Power and Peak Current)"
+description: "Size a VFD dynamic braking resistor: maximum ohms from DC bus voltage and braking power, average watts from duty cycle, and peak chopper current."
 category: electrical
-intro: "When a motor driven by a VFD slows down, it acts as a generator and pushes energy back into the drive's DC bus. A braking resistor burns off that energy as heat so the drive does not trip on over-voltage; see this guide to [VFD braking resistor sizing](https://www.instrumentationblog.in/vfd-braking-resistor-sizing/) and the common [causes of VFD overload trips](https://www.instrumentationblog.in/vfd-overload-trip-causes/)."
+intro: "When a motor on a variable frequency drive slows down, it works as a generator and pushes energy back into the DC bus. This braking resistor calculator finds the largest resistance that can absorb that power, as covered in this [VFD braking resistor sizing](https://www.instrumentationblog.in/vfd-braking-resistor-sizing/) guide.\n\nDrive commissioning engineers and panel builders use it to choose a resistor value, its continuous power rating and the chopper current before ordering parts."
 keywords: [braking resistor calculator, vfd braking resistor sizing, dynamic braking resistor, braking chopper, dc bus voltage, regenerative braking resistor]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-18
 variables:
   - { id: Vdc, label: Chopper switch-on DC bus voltage, family: voltage, unit: V, default: 760, min: 0, help: 'Typically about 760–800 V for 400 V drives and 380–400 V for 230 V drives — see the drive manual.' }
   - { id: Pb, label: Peak braking power, family: power, unit: kW, imperialUnit: hp, default: 15, min: 0 }
@@ -18,15 +18,17 @@ equations:
   - Pr = Pb * dc
   - Ipk = Vdc / R
 faq:
-  - q: How do I size a braking resistor?
-    a: The resistance must be low enough to absorb the peak braking power — R ≤ V_dc² ÷ P — but not below the drive’s minimum allowed value. The power rating must cover the average braking power.
+  - q: "How do I size a braking resistor?"
+    a: "Keep the resistance low enough to absorb the peak braking power, R ≤ Vdc² ÷ P, but not below the drive minimum. Then rate it for the average power, P × duty cycle. For 760 V and 15 kW, R ≤ 38.5 Ω and the rating is 1.5 kW."
   - q: What is the braking power?
     a: The rate at which energy flows back from the motor and load while decelerating. For a quick estimate, take the motor rating for full-torque braking, or calculate from inertia and deceleration time.
-  - q: What is the duty cycle?
-    a: The fraction of time spent braking. A 10-second stop every 100 seconds is 10%. Cranes and lifts can be 20–50%.
+  - q: "What is the duty cycle?"
+    a: "The fraction of time spent braking. A 10 second stop every 100 seconds is 10%. Cranes, lifts and downhill conveyors can run at 20 to 50%."
   - q: What happens if the resistor is too small in ohms?
     a: The chopper current exceeds its rating and the drive trips or the chopper is damaged. Always respect the drive's minimum resistance.
-related: [engineering/torque-power-speed, physics/ohms-law, electrical/three-phase-motor-power, physics/kinetic-energy]
+  - q: "What is the peak current through a braking resistor?"
+    a: "Peak current is the DC bus voltage divided by the resistance. With the default 760 V across 38.5 Ω it is 19.7 A, which must not exceed the braking chopper current rating."
+related: [engineering/torque-power-speed, physics/rotational-kinetic-energy, electrical/three-phase-motor-power, physics/ohms-law, electrical/motor-starting-current]
 ---
 
 ## How to use the VFD braking resistor calculator
@@ -52,15 +54,53 @@ Choose a resistor between the drive's minimum resistance and 38.5 Ω, rated at l
 
 | Drive supply | Chopper threshold |
 |---|---|
-| 230 V | 375–400 V DC |
-| 400–415 V | 750–800 V DC |
-| 480 V | 800–850 V DC |
-| 690 V | 1,100–1,200 V DC |
+| 230 V | 375 to 400 V DC |
+| 400 to 415 V | 750 to 800 V DC |
+| 480 V | 800 to 850 V DC |
+| 690 V | 1,100 to 1,200 V DC |
 
 ## Braking power from load inertia
 
-For a flywheel or conveyor: P ≈ J × ω × Δω ÷ t (J in kg·m², ω in rad/s, t in s). Kinetic energy to dissipate is ½Jω².
+For a flywheel or conveyor stopped at constant torque, the peak braking power at the start of the stop is P ≈ J × ω² ÷ t and the average over the stop is half of that, ½Jω² ÷ t (J in kg·m², ω in rad/s, t in s). The kinetic energy to dissipate is ½Jω².
 
 ## Alternatives
 
-For long or frequent braking — cranes, centrifuges, downhill conveyors — a regenerative (active front-end) drive returns energy to the supply instead of wasting it as heat.
+For long or frequent braking, such as cranes, centrifuges and downhill conveyors, a regenerative (active front-end) drive returns energy to the supply instead of wasting it as heat.
+
+## Worked example with the default values
+
+A 400 V drive whose chopper switches on at 760 V DC, braking 15 kW for 10% of the time:
+
+- Maximum resistance = 760² ÷ 15,000 = 577,600 ÷ 15,000 = **38.5 Ω**
+- Average resistor power = 15 × 0.1 = **1.5 kW**
+- Peak chopper current = 760 ÷ 38.5 = **19.7 A** (the same as 15,000 ÷ 760)
+
+If you fit a standard **33 Ω** resistor instead, it can absorb up to 760² ÷ 33 = **17.5 kW** at the threshold and draws **23.0 A** through the chopper. That is fine as long as 33 Ω is above the drive's minimum resistance and 23.0 A is within the chopper rating.
+
+## Worked example: braking power from a flywheel
+
+A 5 kg·m² flywheel spinning at 1,500 rpm (ω = 157.08 rad/s) is stopped in 5 s, once every 50 s:
+
+1. Kinetic energy = ½ × 5 × 157.08² = **61.7 kJ** per stop.
+2. Peak braking power at the start of the stop = 5 × 157.08² ÷ 5 = **24.7 kW**; average over the stop = **12.3 kW**.
+3. Duty cycle = 5 ÷ 50 = **10%**, and the continuous resistor power is 61.7 kJ ÷ 50 s = **1.23 kW**.
+
+Size the resistance from the peak power and the rating from the average power; motor and drive losses absorb a few percent, which adds margin.
+
+## Maximum resistance by braking power
+
+| Peak braking power | At 390 V DC (230 V drive) | At 760 V DC (400 V drive) | At 800 V DC (480 V drive) | Current at 760 V |
+|---|---|---|---|---|
+| 2.2 kW | 69.1 Ω | 262.5 Ω | 290.9 Ω | 2.9 A |
+| 5.5 kW | 27.7 Ω | 105.0 Ω | 116.4 Ω | 7.2 A |
+| 7.5 kW | 20.3 Ω | 77.0 Ω | 85.3 Ω | 9.9 A |
+| 15 kW | 10.1 Ω | 38.5 Ω | 42.7 Ω | 19.7 A |
+| 30 kW | 5.1 Ω | 19.3 Ω | 21.3 Ω | 39.5 A |
+| 55 kW | 2.8 Ω | 10.5 Ω | 11.6 Ω | 72.4 A |
+
+## Practical notes
+
+- **Respect both limits.** The resistor must be at or below R<sub>max</sub> to absorb the peak power, and at or above the drive's minimum resistance to protect the chopper transistor.
+- **Use the resistor's duty rating.** Catalogue resistors are often rated for a short duty (for example 10% over 120 s). For long stops, size on the energy per stop and check the resistor's thermal time constant.
+- **Fit a thermal switch.** Wire the resistor's thermostat or a thermal overload into the drive's external fault input so a stuck chopper cannot overheat it.
+- **Mount it safely.** Resistors can exceed 200 °C; place them where airflow is free and away from cable trays, and use cable rated for the full DC bus voltage.

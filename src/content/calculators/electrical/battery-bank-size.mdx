@@ -2,10 +2,10 @@
 title: Battery Bank Size Calculator (Ah for Backup Time)
 description: Calculate battery bank capacity in Ah for a load and backup time, allowing for inverter efficiency, depth of discharge and an ageing margin.
 category: electrical
-intro: "Sizing a battery bank starts with the energy the load needs, then allows for inverter losses, how deeply the batteries may be discharged and their loss of capacity with age. This battery bank size calculator gives the amp-hour capacity and the number of batteries in series — see [how to calculate battery backup time](https://www.instrumentationblog.in/calculate-battery-backup-time/) and the [IEEE 485 approach to substation battery sizing](https://www.instrumentationblog.in/substation-battery-sizing-ieee-485/)."
+intro: "Sizing a battery bank starts with the energy the load needs, then allows for inverter losses, safe depth of discharge and capacity lost with age. This battery bank size calculator gives the amp-hour capacity and the number of batteries in series. See [how to calculate battery backup time](https://www.instrumentationblog.in/calculate-battery-backup-time/) and [IEEE 485 substation battery sizing](https://www.instrumentationblog.in/substation-battery-sizing-ieee-485/).\n\nSolar installers, UPS designers and substation engineers use it to choose a bank that still covers the load at end of life."
 keywords: [battery bank size calculator, battery ah calculator, battery backup calculator, inverter battery size, solar battery bank sizing, ups battery ah calculation, how many batteries do i need]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: P, label: Load power, family: power, unit: W, default: 500, min: 0 }
   - { id: tb, label: Backup time required, family: seconds, unit: h, default: 4, min: 0 }
@@ -30,6 +30,8 @@ faq:
     a: Lead-acid capacity is usually quoted at the 10- or 20-hour rate. Discharging in 1–2 hours can deliver only 60–75% of the nameplate Ah, so check the manufacturer's constant-power discharge tables for short backups.
   - q: Should I use a higher bank voltage?
     a: For loads above about 1–2 kW, yes. A higher voltage halves the current for the same power, which reduces cable size and losses.
+  - q: "How long will an existing battery bank last?"
+    a: "Rearrange the same formula: hours = bank V × Ah × efficiency × DoD ÷ margin ÷ load W. Four 12 V, 100 Ah batteries in series at 90% efficiency and 80% DoD with a 1.25 margin run a 500 W load for about 5.5 h."
 related: [electrical/ups-sizing, electronics/battery-charge-time, electrical/cable-voltage-drop, electrical/amps-to-watts]
 ---
 
@@ -68,3 +70,45 @@ A 500 W load must run for 4 hours from a 48 V lead-acid bank through a 90% effic
 - At 0–10 °C, lead-acid capacity falls by 10–20% — add a temperature correction factor.
 - The charger must be able to recharge the bank in a reasonable time; see the [battery charge time calculator](/electronics/battery-charge-time/).
 - For the UPS kVA rating itself, use the [UPS sizing calculator](/electrical/ups-sizing/).
+
+## Building the bank from real batteries
+
+The default case needs 72.3 Ah at 48 V, which is 4 batteries of 12 V in series. Two common ways to meet it:
+
+- **One string of 100 Ah batteries:** 4 batteries. Backup = 48 × 100 × 0.9 × 0.8 ÷ 1.25 ÷ 500 = **5.53 h**, comfortably above the 4 h target.
+- **50 Ah batteries:** 72.3 ÷ 50 rounds up to 2 parallel strings, so 8 batteries in total.
+
+Fewer, larger cells are better. Each extra parallel string adds connections and lets current share unevenly between strings, so most makers advise no more than three or four.
+
+## Same load on different bank voltages
+
+The energy stays at 2,000 Wh, but the Ah and the battery current change with voltage:
+
+| Bank voltage | 12 V batteries in series | Battery current | Capacity needed |
+|---|---|---|---|
+| 12 V | 1 | 46.3 A | 289.4 Ah |
+| 24 V | 2 | 23.1 A | 144.7 Ah |
+| 48 V | 4 | 11.6 A | 72.3 Ah |
+
+On a 12 V bank the cables carry four times the current of a 48 V bank, which is why anything above a few hundred watts is better built at 24 or 48 V.
+
+## Effect of battery chemistry
+
+Depth of discharge has the largest effect after the load itself. For the default 500 W, 4 h load on 48 V:
+
+| Battery type | Typical DoD | Capacity needed |
+|---|---|---|
+| Flooded lead-acid, long life | 50% | 115.7 Ah |
+| AGM or gel | 60% | 96.5 Ah |
+| Lead-acid, occasional use | 80% | 72.3 Ah |
+| LiFePO₄ | 90% | 64.3 Ah |
+
+A long-life flooded bank needs 116 Ah where LiFePO₄ needs 64 Ah, which narrows the price gap between the two.
+
+## Common mistakes
+
+- **Leaving out the inverter's own consumption.** A 25 W idle draw adds 100 Wh over 4 h and raises the requirement to 76.0 Ah.
+- **Adding Ah across a series string.** Four 12 V, 100 Ah batteries in series make 48 V, 100 Ah, not 400 Ah.
+- **Mixing old and new batteries.** The weakest unit sets the string capacity and is driven into deep discharge first.
+- **Sizing for the rated load instead of the actual load.** Measure the real average power; a nominal 500 W inverter rarely runs at 500 W for hours.
+- **Skipping the margin for lithium.** LiFePO₄ also loses capacity with cycles, so keep a factor of at least 1.1 to 1.25.

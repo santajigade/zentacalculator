@@ -2,10 +2,10 @@
 title: Wien's Law Calculator (Peak Wavelength from Temperature)
 description: Find the peak wavelength of black-body radiation from temperature with Wien's displacement law — or estimate a star's or hot object's temperature.
 category: physics
-intro: "Wien's displacement law says the wavelength at which a black body radiates most strongly is inversely proportional to its absolute temperature. This Wien's law calculator gives the peak wavelength and peak frequency for any temperature, and solves backwards to estimate temperature from the colour of a star or a glowing object."
+intro: "Wien's displacement law states that the wavelength at which a black body radiates most strongly is inversely proportional to its absolute temperature. This Wien's law calculator returns the peak wavelength and peak frequency for any temperature, or the temperature for a measured peak.\n\nAstronomers use it to estimate star temperatures, while engineers and technicians use it to pick the wavelength band of infrared thermometers, pyrometers and thermal cameras."
 keywords: [wiens law calculator, wien's displacement law calculator, peak wavelength calculator, black body peak wavelength, lambda max = b / t, star temperature from wavelength, wien constant]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: T, label: Temperature, family: temperature, unit: K, imperialUnit: F, default: 5778, min: 0 }
   - { id: lam, label: Peak wavelength (λ_max), suffix: nm, min: 0 }
@@ -24,6 +24,8 @@ faq:
     a: They describe the spectrum per unit wavelength and per unit frequency, which have different shapes. The frequency peak, ν_max = 5.879 × 10¹⁰ Hz/K × T, corresponds to a wavelength about 1.76 times longer than λ_max.
   - q: Why do infrared thermometers work at 8–14 µm?
     a: Objects near room temperature radiate most strongly around 10 µm, and the atmosphere is transparent in the 8–14 µm window.
+  - q: "What fraction of black-body radiation is emitted below the peak wavelength?"
+    a: "About 25%, at any temperature. Planck's law is skewed, with a steep fall on the short-wavelength side and a long tail into the infrared that carries roughly 75% of the power."
 related: [physics/stefan-boltzmann-law, physics/photon-energy, physics/wavelength-frequency, physics/doppler-effect]
 ---
 
@@ -63,3 +65,35 @@ The Sun's photosphere is about 5,778 K:
 - Only ideal black bodies follow the law exactly; real surfaces have emissivity below 1, but their peak position is usually close.
 - The total power radiated rises with T⁴ — see the [Stefan–Boltzmann law calculator](/physics/stefan-boltzmann-law/).
 - To convert the peak wavelength to photon energy, use the [photon energy calculator](/physics/photon-energy/).
+
+## What the Sun's peak means
+
+At the default 5,778 K the peak sits at 501.5 nm, and a photon at that wavelength carries E = 1,239.84 ÷ 501.5 = **2.47 eV**. The per-frequency peak of 339.7 THz corresponds to 883 nm, in the near infrared, which shows how much the "peak" depends on how the spectrum is plotted. Integrating Planck's law shows that only **25.0%** of a black body's power is emitted at wavelengths shorter than λ<sub>max</sub>; the long tail toward the infrared carries the other 75.0%. The Sun looks white rather than green because its spectrum is broad and our eyes respond to the whole visible band.
+
+## Choosing the band for an infrared thermometer
+
+Industrial pyrometers are built around the shift in peak wavelength with process temperature:
+
+| Process temperature | Absolute | Peak wavelength |
+|---|---|---|
+| 100 °C | 373.15 K | 7.77 µm |
+| 300 °C | 573.15 K | 5.06 µm |
+| 500 °C | 773.15 K | 3.75 µm |
+| 800 °C | 1,073.15 K | 2.70 µm |
+| 1,000 °C | 1,273.15 K | 2.28 µm |
+| 1,200 °C | 1,473.15 K | 1.97 µm |
+| 1,500 °C | 1,773.15 K | 1.63 µm |
+
+General purpose handheld thermometers work in the 8 to 14 µm atmospheric window, which suits objects from below 0 °C to a few hundred °C. Instruments for molten metal and glass use short bands near 1 µm or 1.6 µm, on the short-wavelength side of the peak. There the signal changes very steeply with temperature, so an error in the emissivity setting causes a much smaller temperature error. Ratio (two-colour) pyrometers compare two nearby short wavelengths to cancel emissivity and dust effects.
+
+## Sensitivity to measurement error
+
+Since T = b ÷ λ<sub>max</sub>, a relative error in the peak wavelength gives the same relative error in temperature. Locating the solar peak 1% too long would put the temperature about 58 K too low. Broad, flat peaks make the exact maximum hard to find, which is why astronomers usually fit the whole spectrum or use colour indices instead.
+
+## Common mistakes
+
+- **Entering degrees Celsius as kelvin.** 1,000 °C is 1,273.15 K; treating it as 1,000 K shifts the peak from 2.28 µm to 2.90 µm.
+- **Mixing the wavelength and frequency peaks.** Converting ν<sub>max</sub> with λ = c ÷ ν gives about 1.76 × λ<sub>max</sub>, not the same wavelength.
+- **Assuming the visible colour is the peak colour.** A body with a peak in the green still looks white.
+- **Applying it to line sources.** Neon signs, LEDs and sodium lamps emit lines, not a thermal spectrum, so their colour gives no temperature.
+- **Measuring through glass.** Ordinary window glass blocks most radiation beyond about 4 to 5 µm, so a thermal camera cannot see a room-temperature object behind it.

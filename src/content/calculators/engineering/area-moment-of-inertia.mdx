@@ -2,10 +2,10 @@
 title: Area Moment of Inertia Calculator (Rectangle, Circle, Tube)
 description: Calculate the second moment of area I and section modulus Z of rectangular, solid round and hollow circular sections for beam deflection and bending stress.
 category: engineering
-intro: "The second moment of area I describes how a cross-section's material is spread around its bending axis, and it decides how stiff a beam is. This area moment of inertia calculator gives I and the elastic section modulus Z for a rectangle and for a solid or hollow circular section, in the cm⁴ and cm³ units used in steel tables."
+intro: "The second moment of area I measures how a cross-section's material is spread about its bending axis, which sets how stiff a beam is. This area moment of inertia calculator returns I and the elastic section modulus Z for a rectangle and a solid or hollow round section, in cm⁴ and cm³.\n\nStructural and mechanical engineers, fabricators and students use it to size joists, shafts, brackets and pipe supports before checking stress and deflection."
 keywords: [area moment of inertia calculator, second moment of area calculator, moment of inertia rectangle, moment of inertia circle, section modulus calculator, bh^3/12, hollow tube moment of inertia]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: b, label: Rectangle width b, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
   - { id: h, label: Rectangle depth h (in the bending direction), family: length, unit: mm, imperialUnit: in, default: 200, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: No. The area moment (m⁴) describes a cross-section's resistance to bending; the mass moment (kg·m²) describes a body's resistance to rotation. They share a name and the r² weighting but are used for different problems.
   - q: Why are I-beams so efficient?
     a: I grows with the square of the distance from the neutral axis, so putting most material in flanges far from the centre gives a high I and Z for little weight.
+  - q: "What is the polar moment of inertia of a round shaft?"
+    a: "For a circular section J = π D⁴ ÷ 32, exactly twice the bending I. The default 60 mm solid bar has J = 127.23 cm⁴, the value used for shaft torsion stress and twist."
+  - q: "How do I convert cm⁴ to in⁴?"
+    a: "1 in⁴ = 2.54⁴ = 41.623 cm⁴. The default 100 × 200 mm rectangle with I = 6,666.7 cm⁴ is about 160.2 in⁴."
 related: [engineering/beam-deflection, engineering/bending-stress, physics/rotational-kinetic-energy, physics/youngs-modulus]
 ---
 
@@ -77,3 +81,39 @@ A 100 × 200 mm timber beam bending about its strong axis, and a 60 mm solid ste
 
 - Turning a rectangle on its side swaps b and h: a 100 × 200 mm plank is four times stiffer on edge than flat.
 - For built-up shapes, add the I of each part about the common axis using the parallel-axis theorem, I = I<sub>c</sub> + A d².
+
+## From I and Z to a real beam check
+
+Take the default 100 × 200 mm section as a C24 timber beam (E = 11,000 MPa) spanning 3 m, simply supported, with a uniform load of 2 kN/m:
+
+- Maximum moment M = wL² ÷ 8 = 2 × 3² ÷ 8 = **2.25 kN·m**
+- Bending stress σ = M ÷ Z = 2,250,000 N·mm ÷ 666,667 mm³ = **3.38 MPa**
+- Midspan deflection = 5wL⁴ ÷ (384 E I) = **2.88 mm**, which is span ÷ 1,043
+
+Laid flat, the same plank has I = 1,666.7 cm⁴ and Z = 333.3 cm³. The stress doubles to 6.75 MPa and the deflection quadruples to 11.51 mm, because Z follows h² and I follows h³.
+
+## Why hollow sections are efficient
+
+Boring out the centre of the default 60 mm bar removes material that sits close to the neutral axis and contributes little to I:
+
+| Section (D × d) | Area | I | Z | I per unit area |
+|---|---|---|---|---|
+| 60 × 0 mm | 2,827 mm² | 63.62 cm⁴ | 21.21 cm³ | 225 mm² |
+| 60 × 20 mm | 2,513 mm² | 62.83 cm⁴ | 20.94 cm³ | 250 mm² |
+| 60 × 30 mm | 2,121 mm² | 59.64 cm⁴ | 19.88 cm³ | 281 mm² |
+| 60 × 40 mm | 1,571 mm² | 51.05 cm⁴ | 17.02 cm³ | 325 mm² |
+| 60 × 50 mm | 864 mm² | 32.94 cm⁴ | 10.98 cm³ | 381 mm² |
+
+A 60 × 40 mm tube keeps about 80% of the solid bar's stiffness with only 56% of its weight. The limit is wall buckling: very thin walls fail locally before the section reaches its bending capacity.
+
+## Elastic and plastic section modulus
+
+Z here is the elastic modulus, the value that gives the stress when the outer fibre first reaches yield. Once the whole section yields, the plastic modulus applies: b h² ÷ 4 = 1,000.0 cm³ for the default rectangle (1.5 times Z) and D³ ÷ 6 = 36.00 cm³ for the 60 mm bar (1.70 times Z). Eurocode tables list these as W<sub>el</sub> and W<sub>pl</sub>, while AISC tables use S for elastic and Z for plastic, so always check which one a table means.
+
+## Common mistakes
+
+- **Swapping b and h.** h is the depth in the direction of the load. Getting it backwards on the default section understates I by a factor of four.
+- **Mixing mm⁴ and cm⁴.** 1 cm⁴ = 10,000 mm⁴, so a 66,666,667 mm⁴ result is 6,666.7 cm⁴, not 6.7 million.
+- **Using radius in a diameter formula.** π D⁴ ÷ 64 and π r⁴ ÷ 4 are the same thing; mixing them gives an error of 16 times.
+- **Using I for torsion of a rectangle.** The polar moment J = 2I holds only for round sections. Rectangles and open shapes need a separate torsion constant.
+- **Adding parts without the parallel-axis term.** Each flange of a built-up section must include A d² about the common neutral axis, which usually dominates the total.

@@ -2,10 +2,10 @@
 title: Time Dilation Calculator (Special Relativity, Lorentz Factor)
 description: Calculate relativistic time dilation and the Lorentz factor γ for a speed as a fraction of light speed — how much time passes for a stationary observer.
 category: physics
-intro: "Special relativity predicts that a moving clock ticks slower than a clock at rest, by the Lorentz factor γ = 1/√(1 − v²/c²). This time dilation calculator converts the proper time measured on board into the time that passes for a stationary observer, and gives γ and the speed in km/s."
+intro: "Special relativity predicts that a moving clock ticks slower than one at rest, by the Lorentz factor γ = 1/√(1 − v²/c²). This time dilation calculator turns the proper time on board into the time a stationary observer measures, and gives γ, the extra time and the speed.\n\nPhysics students use it to check textbook problems, science fiction writers to plan believable journeys, and anyone curious about the twin paradox or GPS corrections can see the numbers directly."
 keywords: [time dilation calculator, lorentz factor calculator, special relativity calculator, relativistic time dilation, gamma factor, t = t0 / sqrt(1 - v^2/c^2), twin paradox calculator]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: t0, label: Proper time (moving clock), family: time, unit: yr, default: 1, min: 0 }
   - { id: b, label: Speed as a fraction of light speed (v/c), family: percent, unit: '%', default: 90, min: 0, max: 0.999999999 }
@@ -27,6 +27,8 @@ faq:
     a: Yes. Fast muons from cosmic rays survive long enough to reach the ground only because of it, and GPS satellite clocks are corrected for both velocity (special) and gravitational (general) time dilation.
   - q: Does the moving traveller feel time slow down?
     a: No. Each observer sees their own clock tick normally. The difference appears when the clocks are compared, as in the twin paradox.
+  - q: "How much younger does an astronaut on the ISS get?"
+    a: "Over a 6 month stay at 7,660 m/s, speed alone slows the astronaut's clock by about 5.1 ms. Weaker gravity at 400 km speeds it up by about 0.7 ms, so the net result is roughly 4.5 ms younger than people on the ground."
 related: [physics/mass-energy-equivalence, physics/de-broglie-wavelength, physics/photon-energy, physics/speed-distance-time]
 ---
 
@@ -66,3 +68,33 @@ A spacecraft travels at 90% of light speed for 1 year of on-board time:
 
 - The same γ contracts lengths along the motion (L = L₀ ÷ γ) and raises the energy of a moving mass (E = γmc²) — compare the [E = mc² calculator](/physics/mass-energy-equivalence/).
 - Gravity also slows clocks (general relativity); this calculator covers only the speed effect.
+
+## Default result in full
+
+With the default inputs (t₀ = 1 year, v = 90% of c), the calculator returns γ = **2.2942**, a stationary observer time of **2.2942 years**, an extra 1.2942 years and a speed of **269,813,212 m/s** (269,813 km/s).
+
+## Evidence from muons
+
+Cosmic ray muons are made about 10 to 15 km up and live only 2.197 µs at rest. Moving at 99.8% of c, a muon without time dilation would travel just 657 m on average before decaying. With γ = 15.82, its lifetime in the Earth frame stretches to 34.8 µs and the mean path to **10.4 km**, so a large fraction reach detectors at sea level, exactly as measured. In the muon's own frame the same result appears as the atmosphere being length contracted by γ.
+
+## Atomic clocks and satellites
+
+At everyday speeds γ − 1 is tiny, and it is well approximated by v²/(2c²). Precise atomic clocks still detect it: flights around the world in 1971 (the Hafele and Keating experiment) found time shifts of tens to hundreds of nanoseconds, and GPS must allow for it.
+
+| Moving clock | Speed | γ − 1 | Clock falls behind per year |
+|---|---|---|---|
+| Passenger jet | 250 m/s | 3.477e−13 | 10.97 µs |
+| ISS in orbit | 7,660 m/s | 3.264e−10 | 10.30 ms |
+| GPS satellite | 3,874 m/s | 8.349e−11 | 2.63 ms |
+| Earth around the Sun | 29,780 m/s | 4.934e−09 | 155.70 ms |
+| Parker Solar Probe at perihelion | 191,700 m/s | 2.044e−07 | 6.45 s |
+
+A GPS satellite at 3,874 m/s loses about **7.2 µs per day** from its speed. General relativity makes it gain about 45.7 µs per day from the weaker gravity at its altitude, so the net correction built into the satellite clocks is roughly 38 µs per day, which would otherwise grow into kilometres of position error within a day.
+
+## Common mistakes
+
+- **Swapping proper and observed time.** t₀ is measured by the clock that is present at both events, the moving one; the longer time belongs to the observer who sees it move.
+- **Entering speed as a fraction in a percent field.** Type 90 for 90%, not 0.9.
+- **Losing precision near c.** At 99.9999% of c, 1 − b² is about 2 × 10⁻⁶; rounding b early in a spreadsheet changes γ noticeably.
+- **Treating the twin paradox as symmetric.** The travelling twin changes frame on turning round, which is why only that twin ends up younger.
+- **Ignoring gravity for orbiting clocks.** For GPS the gravitational effect is larger than the speed effect and has the opposite sign.

@@ -2,10 +2,10 @@
 title: Autotransformer Calculator (Currents, kVA & Copper Saving)
 description: Calculate autotransformer primary, secondary and common-winding currents, the kVA transformed vs conducted, and the copper saved over a two-winding unit.
 category: electrical
-intro: "An autotransformer uses a single tapped winding, so part of the power passes straight through by conduction and only the rest is transformed magnetically. This autotransformer calculator gives the line and common-winding currents and the split between transformed and conducted kVA — see the [autotransformer working principle](https://www.instrumentationblog.in/autotransformer-working-principle/) for how the shared winding works."
+intro: "An autotransformer uses one tapped winding for both sides, so part of the power flows straight through by conduction and only the rest is transformed magnetically. This autotransformer calculator gives the line and common-winding currents, the transformed and conducted kVA and the copper saving. See the [autotransformer working principle](https://www.instrumentationblog.in/autotransformer-working-principle/).\n\nElectrical engineers use it to size voltage boosters, motor starters and interbus transformers where isolation is not needed."
 keywords: [autotransformer calculator, autotransformer current calculation, autotransformer kva calculation, copper saving in autotransformer, transformed and conducted power, auto transformer formula, variac calculator]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: S, label: Load rating, suffix: kVA, default: 10, min: 0 }
   - { id: Vh, label: High-voltage side, family: voltage, unit: V, default: 240, min: 0 }
@@ -32,6 +32,8 @@ faq:
     a: Copper needed = (1 − K) × that of a two-winding transformer, with K = V_low ÷ V_high, so the saving is K. The closer the two voltages, the bigger the saving.
   - q: What is the main disadvantage of an autotransformer?
     a: There is no electrical isolation between primary and secondary, and if the common winding opens, the full input voltage can appear at the output. It also has lower impedance, so fault currents are higher.
+  - q: "Is the nameplate kVA of an autotransformer the transformed power or the load power?"
+    a: "The nameplate states the load (throughput) power. A 10 kVA, 240/200 V autotransformer supplies a 10 kVA load, though only 1.667 kVA of it passes through the magnetic circuit."
 related: [electrical/transformer-turns-ratio, electrical/transformer-current, electrical/transformer-size, electrical/transformer-efficiency]
 ---
 
@@ -72,3 +74,45 @@ A 10 kVA, 240 V to 200 V step-down autotransformer:
 - **Grid interconnection**: large 400/220 kV and 220/132 kV interbus transformers, where the ratio is close to 1.
 - **Variacs**: variable autotransformers for test benches.
 - Not suitable where isolation is required, or for large ratios such as 11 kV/415 V.
+
+## Checking the two winding sections
+
+An autotransformer is really two windings in series. In the default 10 kVA, 240/200 V unit:
+
+- The **series section** spans 40 V and carries the high-side current: 41.67 A × 40 V = **1.667 kVA**
+- The **common section** spans 200 V and carries the difference current: 8.33 A × 200 V = **1.667 kVA**
+
+Both equal the transformed power of 1.667 kVA, which is why the core and copper are sized for about a sixth of the load. The common section can use wire rated for only 8.33 A, while the series section must carry 41.67 A.
+
+## Winding currents for a 10 kVA unit fed at 240 V
+
+| Ratio | High-side current | Low-side current | Common winding | Transformed kVA |
+|---|---|---|---|---|
+| 240 / 220 V | 41.67 A | 45.45 A | 3.79 A | 0.833 kVA |
+| 240 / 200 V | 41.67 A | 50.00 A | 8.33 A | 1.667 kVA |
+| 240 / 180 V | 41.67 A | 55.56 A | 13.89 A | 2.500 kVA |
+| 240 / 160 V | 41.67 A | 62.50 A | 20.83 A | 3.333 kVA |
+| 240 / 120 V | 41.67 A | 83.33 A | 41.67 A | 5.000 kVA |
+
+## Autotransformer motor starter taps
+
+On a starter, the motor sees the tap voltage, its current falls in proportion and the line current falls by the square, as does torque:
+
+| Tap | Motor current | Line current | Starting torque |
+|---|---|---|---|
+| 50% | 50% of DOL | 25.0% of DOL | 25.0% of DOL |
+| 65% | 65% of DOL | 42.3% of DOL | 42.3% of DOL |
+| 80% | 80% of DOL | 64.0% of DOL | 64.0% of DOL |
+
+The 65% tap is the usual compromise when the driven load needs at least 40% of full-voltage torque to break away.
+
+## Fault level
+
+Because only the series section separates the two systems, the per-unit impedance on the throughput rating is (1 − K) times that of the same core connected as a two-winding transformer. A 4% impedance becomes about **0.67%**, so downstream fault current can be six times higher. Breakers and fuses on the low side must be rated for it.
+
+## Common mistakes
+
+- **Buying on transformed kVA.** The nameplate rating is the throughput load, 10 kVA here, not the 1.667 kVA transformed.
+- **Expecting isolation.** The output is bonded to the input, so it cannot be used to create a separately derived system or a safe low-voltage supply.
+- **Using a large ratio.** At 400/100 V the copper saving is only 25% and an open common winding would put 400 V on 100 V equipment.
+- **Leaving the neutral unconnected in a three-phase star unit.** The star point must be tied to the supply neutral or the phase voltages float.

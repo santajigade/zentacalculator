@@ -2,10 +2,10 @@
 title: Elastic & Inelastic Collision Calculator (1D)
 description: Calculate final velocities after a one-dimensional elastic or perfectly inelastic collision from masses and initial velocities, plus kinetic energy lost.
 category: physics
-intro: "In every collision momentum is conserved; in an elastic collision kinetic energy is conserved too, while in a perfectly inelastic one the objects stick together. This elastic collision calculator gives the final velocities for both cases in one dimension and the kinetic energy lost when the bodies stick."
+intro: "Momentum is conserved in every collision; in an elastic collision kinetic energy is conserved too, while in a perfectly inelastic one the bodies stick together. This elastic collision calculator gives the final velocities for both cases in one dimension and the energy lost on sticking.\n\nPhysics students, lab instructors and engineers use it to check air track experiments, crash and impact estimates, and the limits any real collision must fall between."
 keywords: [elastic collision calculator, inelastic collision calculator, collision final velocity, conservation of momentum calculator, perfectly inelastic collision, 1d collision physics]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-18
 variables:
   - { id: m1, label: Mass 1, family: mass, unit: kg, imperialUnit: lb, default: 2, min: 0 }
   - { id: u1, label: Initial velocity 1, family: velocity, unit: ms, imperialUnit: fts, default: 3 }
@@ -29,6 +29,8 @@ faq:
     a: Choose one direction as positive and give the other object a negative velocity, as in the default example.
   - q: What happens when equal masses collide elastically?
     a: They exchange velocities — the moving one stops and the stationary one moves off at the original speed, like billiard balls or Newton's cradle.
+  - q: "Is there a quick formula for the energy lost in a perfectly inelastic collision?"
+    a: "Yes. ΔKE = ½ μ (u1 − u2)², where μ = m1m2 ÷ (m1 + m2) is the reduced mass. For the default 2 kg and 1 kg carts closing at 4 m/s, μ = 0.667 kg and ΔKE = 5.333 J, the same as the calculator."
 related: [physics/momentum, physics/impulse, physics/kinetic-energy, physics/speed-distance-time]
 ---
 
@@ -56,3 +58,53 @@ A 2 kg cart at 3 m/s meets a 1 kg cart moving at −1 m/s (towards it):
 ## Coefficient of restitution
 
 Real collisions are described by e = (v<sub>2</sub> − v<sub>1</sub>) ÷ (u<sub>1</sub> − u<sub>2</sub>): e = 1 for elastic, e = 0 for perfectly inelastic. Typical values: steel ball on steel about 0.6–0.9, basketball about 0.75–0.85, clay about 0.
+
+## Checking the default result
+
+The default carts (2 kg at 3 m/s and 1 kg at -1 m/s) give elastic final velocities of **0.333 m/s** and **4.333 m/s**, a common velocity of **1.667 m/s** if they stick, and **5.333 J** lost. Three quick checks confirm the elastic answer:
+
+- Momentum after = 2 × 0.333 + 1 × 4.333 = 5.000 kg·m/s, equal to the 5 kg·m/s before
+- Kinetic energy after = 9.500 J, equal to the 9.5 J before
+- Relative velocity reverses: u<sub>1</sub> − u<sub>2</sub> = 4 m/s before, v<sub>2</sub> − v<sub>1</sub> = 4.000 m/s after
+
+The energy lost when sticking also follows from the reduced mass μ = m<sub>1</sub>m<sub>2</sub> ÷ (m<sub>1</sub> + m<sub>2</sub>) = 0.6667 kg: ΔKE = ½ μ (u<sub>1</sub> − u<sub>2</sub>)² = 0.5 × 0.6667 × 16 = **5.333 J**.
+
+## Partially elastic collisions
+
+Real impacts fall between the two limits and are described by the coefficient of restitution e. The final velocities are v<sub>1</sub> = [p − m<sub>2</sub>e(u<sub>1</sub> − u<sub>2</sub>)] ÷ (m<sub>1</sub> + m<sub>2</sub>) and v<sub>2</sub> = [p + m<sub>1</sub>e(u<sub>1</sub> − u<sub>2</sub>)] ÷ (m<sub>1</sub> + m<sub>2</sub>). For the default carts:
+
+| e | v<sub>1</sub> | v<sub>2</sub> | Energy lost | Share of initial KE |
+|---|---|---|---|---|
+| 0 | 1.667 m/s | 1.667 m/s | 5.333 J | 56.1% |
+| 0.25 | 1.333 m/s | 2.333 m/s | 5.000 J | 52.6% |
+| 0.5 | 1.000 m/s | 3.000 m/s | 4.000 J | 42.1% |
+| 0.75 | 0.667 m/s | 3.667 m/s | 2.333 J | 24.6% |
+| 1 | 0.333 m/s | 4.333 m/s | 0.000 J | 0.0% |
+
+The loss scales with 1 − e², so a ball with e = 0.5 still loses three quarters of the energy available in the centre of mass frame.
+
+## Mass ratio and energy transfer
+
+When mass 1 at 3 m/s hits a stationary mass 2 elastically, the share of kinetic energy handed over is 4m<sub>1</sub>m<sub>2</sub> ÷ (m<sub>1</sub> + m<sub>2</sub>)²:
+
+| m<sub>2</sub> ÷ m<sub>1</sub> | v<sub>1</sub> | v<sub>2</sub> | Energy transferred |
+|---|---|---|---|
+| 0.1 | 2.455 m/s | 5.455 m/s | 33.1% |
+| 0.5 | 1.000 m/s | 4.000 m/s | 88.9% |
+| 1 | 0.000 m/s | 3.000 m/s | 100.0% |
+| 2 | -1.000 m/s | 2.000 m/s | 88.9% |
+| 12 | -2.538 m/s | 0.462 m/s | 28.4% |
+| 100 | -2.941 m/s | 0.059 m/s | 3.9% |
+
+Transfer is complete only for equal masses. This is why nuclear reactors slow neutrons with light nuclei: a neutron loses up to all of its energy to a hydrogen nucleus but at most 28.4% to carbon 12, which is the ratio of 12 in the table.
+
+## Measuring collisions in the lab
+
+Air tracks with photogates or ultrasonic motion sensors remove most friction, so carts with magnetic bumpers come close to e = 1 and carts with Velcro pads give e = 0. Measure each velocity just before and just after contact, because the carts slow over longer distances.
+
+## Common mistakes
+
+- **Dropping the sign.** Velocities are vectors along the line; a body moving the other way must be entered as negative.
+- **Expecting kinetic energy to be conserved when objects stick.** Only momentum is; the loss goes into heat, sound and deformation.
+- **Using the 1D formulas for glancing impacts.** Off-centre collisions need momentum conserved in two directions.
+- **Mixing units.** Enter both masses in the same unit and both velocities in the same unit before comparing results.

@@ -2,10 +2,10 @@
 title: LM317 Calculator — Output Voltage, Resistors & Power Dissipation
 description: Calculate LM317 output voltage from R1 and R2 (or the R2 for a target voltage), plus dropout headroom and regulator power dissipation.
 category: electronics
-intro: "The LM317 is an adjustable three-terminal linear regulator that holds 1.25 V between its output and adjust pins, so two resistors set the output voltage. This LM317 calculator finds the output voltage or the R2 value you need, and the heat the regulator must dissipate — see [linear vs switching voltage regulators](https://www.instrumentationblog.in/linear-vs-switching-voltage-regulators/) and [LDO dropout voltage](https://www.instrumentationblog.in/ldo-regulator-dropout-voltage/) for when a linear regulator is the right choice."
+intro: "The LM317 is an adjustable linear regulator that keeps 1.25 V between its output and adjust pins, so a two resistor divider sets the output. This LM317 calculator finds the output voltage, headroom and heat to remove. See [linear vs switching voltage regulators](https://www.instrumentationblog.in/linear-vs-switching-voltage-regulators/).\n\nHobbyists, test engineers and instrument designers use it for bench supplies and clean low-noise rails. Also read [LDO dropout voltage](https://www.instrumentationblog.in/ldo-regulator-dropout-voltage/)."
 keywords: [lm317 calculator, lm317 resistor calculator, lm317 output voltage formula, lm317 r1 r2, adjustable voltage regulator calculator, lm317 power dissipation, linear regulator calculator]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-18
 variables:
   - { id: R1, label: R1 (output to adjust), family: resistance, unit: ohm, default: 240, min: 0, help: '240 Ω (about 5 mA through the divider) helps meet the minimum load current; 120 Ω is also common.' }
   - { id: R2, label: R2 (adjust to ground), family: resistance, unit: ohm, default: 715, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: The datasheet specifies the LM317 for an input–output difference of 3 V to 40 V; the actual dropout is roughly 1.5–2.5 V depending on load current and temperature. Design for at least 3 V of headroom, or use an LDO.
   - q: How hot will the LM317 get?
     a: It dissipates (Vin − Vout) × I_load. 3.5 W in a TO-220 needs a heat sink — without one, the package's roughly 50 °C/W thermal resistance would push the junction far past its limit.
+  - q: "Why does my LM317 output voltage rise when nothing is connected?"
+    a: "The LM317 needs a minimum load current, typically 3.5 mA and up to 10 mA, to stay in regulation. The R1 and R2 divider supplies it: 1.25 V ÷ 240 Ω = 5.2 mA. If R1 is several hundred ohms higher, add a bleed resistor across the output."
 related: [electronics/heat-sink, electronics/voltage-divider, electronics/zener-resistor, electronics/buck-converter]
 ---
 
@@ -70,3 +72,39 @@ Output includes the 50 µA adjust current; use 1% resistors, or a trimmer in ser
 - Fit a 0.1 µF input capacitor near the regulator and at least 1 µF on the output; 10 µF from adjust to ground improves ripple rejection.
 - Dropping a large voltage wastes power — a 24 V to 5 V regulator at 1 A turns 19 W into heat. Consider a [buck converter](/electronics/buck-converter/) instead.
 - Size the heat sink with the [heat sink calculator](/electronics/heat-sink/) using the P<sub>D</sub> above.
+
+## Heat sink check for the default design
+
+The default circuit (R1 = 240 Ω, R2 = 715 Ω, 12 V in, 0.5 A) gives V<sub>out</sub> = **5.010 V**, headroom **6.990 V** and P<sub>D</sub> = **3.495 W**. Using the classic TO-220 figures of about 50 °C/W junction to air and 4 °C/W junction to case:
+
+- Without a heat sink at 25 °C: T<sub>J</sub> = 25 + 3.495 × 50 = **200 °C**, far above the 125 °C limit, so the thermal shutdown will cycle
+- Allowed total thermal resistance at 40 °C ambient: (125 − 40) ÷ 3.495 = 24.3 °C/W
+- Heat sink needed: 24.3 − 4 (junction to case) − 0.5 (pad) = **19.8 °C/W or lower**
+
+A small clip-on TO-220 heat sink of about 20 °C/W is therefore right at the limit; a larger extruded one with some margin is the safer choice.
+
+## Effect of input voltage on dissipation
+
+For the same 5.01 V output at 0.5 A, every extra volt of input is burned in the regulator:
+
+| Input | Headroom | Dissipation | Efficiency | Headroom check |
+|---|---|---|---|---|
+| 8 V | 2.99 V | 1.50 W | 63% | Marginal |
+| 9 V | 3.99 V | 2.00 W | 56% | OK |
+| 12 V | 6.99 V | 3.50 W | 42% | OK |
+| 15 V | 9.99 V | 5.00 W | 33% | OK |
+| 24 V | 18.99 V | 9.50 W | 21% | OK |
+
+Feeding a 5 V LM317 rail from 24 V wastes more power than it delivers. Pick the lowest input that still keeps 3 V of headroom at the bottom of the ripple and at minimum mains voltage.
+
+## Using the LM317 as a current source
+
+With a single resistor between OUT and ADJ and the load from ADJ to ground, the LM317 regulates current instead of voltage: I = 1.25 V ÷ R. A 350 mA LED driver needs R = 1.25 ÷ 0.35 = **3.57 Ω** (use 3.6 Ω), and that resistor dissipates 0.438 W, so a 1 W part is appropriate. Add about 3 V of overhead plus the LED string voltage to find the minimum input.
+
+## Common mistakes
+
+- **Making R1 too large.** The divider current must cover the minimum load current (up to 10 mA on some datasheets). With R1 = 240 Ω it is 5.2 mA; with 1 kΩ only 1.25 mA, and the output can drift up at no load.
+- **Putting R1 at the far end of a long wire.** Connect R1 directly at the output and adjust pins; resistance in the output lead adds to the 1.25 V reference error.
+- **Leaving out protection diodes.** With a large output capacitor or a 10 µF adjust capacitor, a diode from output to input and another from adjust to output stop the capacitors discharging through the chip when input is shorted.
+- **Forgetting ripple valleys.** Headroom must be met at the lowest point of the rectifier ripple, not at the average DC input.
+- **Using the reference as exact.** V<sub>REF</sub> varies from 1.20 to 1.30 V between parts, so a fixed divider can be 4% off; trim if the rail must be precise.

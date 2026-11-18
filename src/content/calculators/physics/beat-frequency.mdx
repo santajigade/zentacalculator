@@ -2,10 +2,10 @@
 title: Beat Frequency Calculator (f_beat = |f₁ − f₂|)
 description: Calculate the beat frequency and beat period when two tones of nearly equal frequency combine, plus the perceived average pitch, for tuning and acoustics.
 category: physics
-intro: "When two sound waves of slightly different frequency overlap, their sum swells and fades at a rate equal to the difference between them. This beat frequency calculator gives the number of beats per second, the time between beats and the average pitch you hear — the basis of tuning instruments by ear."
+intro: "When two tones of slightly different frequency overlap, their combined loudness swells and fades at a rate equal to the difference between them. This beat frequency calculator gives the beats per second, the time between beats and the average pitch you actually hear.\n\nMusicians and piano tuners use beats to tune by ear, physics students use them to measure an unknown frequency, and vibration engineers use them to explain the slow throbbing of two machines running at nearly the same speed."
 keywords: [beat frequency calculator, beats per second calculator, beat frequency formula, f beat = f1 - f2, tuning beats, beat period, interference of sound waves]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: f1, label: Frequency 1, family: frequency, unit: Hz, default: 440, min: 0 }
   - { id: f2, label: Frequency 2, family: frequency, unit: Hz, default: 444, min: 0 }
@@ -25,6 +25,8 @@ faq:
     a: Above roughly 15–20 Hz the beats blur into a rough sound, and with larger differences the ear hears two separate tones instead.
   - q: What pitch do you hear during beats?
     a: The average of the two frequencies, (f₁ + f₂) ÷ 2, whose loudness pulses at the beat frequency.
+  - q: "How many cents out of tune is a 4 Hz beat at A440?"
+    a: "About 15.7 cents if the second tone is at 444 Hz, using 1200 × log₂(444 ÷ 440). The same 4 Hz beat at a lower pitch is a bigger error in cents, because cents measure the frequency ratio, not the difference."
 related: [physics/string-frequency, physics/wavelength-frequency, physics/doppler-effect, physics/decibel]
 ---
 
@@ -63,3 +65,32 @@ A tuning fork at 440 Hz and a string at 444 Hz:
 
 - The same principle appears in radio as the heterodyne: mixing two signals produces their difference frequency.
 - Beats also occur between a moving and a stationary source because of the [Doppler effect](/physics/doppler-effect/).
+
+## Which side of the reference is the unknown tone?
+
+With the default 440 Hz fork and 4 beats per second, the string could be at 444 Hz or 436 Hz. Tighten the string slightly: if the beats speed up, it was already sharp (444 Hz moving to about 445 Hz); if they slow down, it was flat. In pitch terms, the default 4 Hz beat at A440 is 15.7 cents, roughly one sixth of a semitone, which most listeners hear clearly as out of tune when the two notes are played together.
+
+## Beats in piano tuning
+
+Tuners do not only zero out beats. Equal temperament makes most intervals slightly impure, so the coincident partials of two notes beat at a known rate that the tuner counts. For a fifth the third partial of the lower note meets the second partial of the upper note; for a major third it is the fifth and fourth partials. From A3 = 220 Hz:
+
+| Interval | Upper note | Coincident partials | Beat rate |
+|---|---|---|---|
+| Perfect fifth (A3 to E4) | 329.63 Hz | 660.00 Hz vs 659.26 Hz | 0.74 Hz |
+| Perfect fourth (A3 to D4) | 293.66 Hz | 880.00 Hz vs 880.99 Hz | 0.99 Hz |
+| Major third (A3 to C♯4) | 277.18 Hz | 1100.00 Hz vs 1108.73 Hz | 8.73 Hz |
+| Major sixth (A3 to F♯4) | 369.99 Hz | 1100.00 Hz vs 1109.98 Hz | 9.98 Hz |
+
+The fifth beats slowly, about 0.74 Hz or one beat every 1.3 s, while the major third beats several times a second. Counting these rates against a stopwatch is how a temperament octave is set before the rest of the piano is tuned to it. Real piano strings are slightly inharmonic, so the exact rates shift a little from these ideal figures.
+
+## Beats from machines
+
+Two pumps on a common header running at 1,480 and 1,490 rpm vibrate at 24.67 Hz and 24.83 Hz. Their vibrations add to a level that rises and falls 0.1667 times per second, a slow throb every **6 s** that can be felt in the pipework and seen on a vibration trend as a regular amplitude swing. Twin engine aircraft and ships show the same effect, and synchronisers adjust one engine until the throb stops.
+
+## Common mistakes
+
+- **Forgetting the two possible answers.** A beat count gives only the size of the difference, not its sign.
+- **Counting for too short a time.** At 0.5 Hz one beat takes 2 s; count over at least 10 s and divide to get a reliable rate.
+- **Expecting complete silence between beats.** With unequal amplitudes A₁ and A₂ the envelope only dips to |A₁ − A₂|, so the beats are shallow.
+- **Confusing the envelope period with the beat period.** The cos(πΔf t) term repeats at Δf/2, but loudness peaks twice per cycle, so beats occur at Δf.
+- **Using beats for widely separated tones.** Beyond roughly 15 to 20 Hz the ear hears roughness, then two notes, not counted beats.

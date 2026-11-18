@@ -2,10 +2,10 @@
 title: Speed of Sound Calculator (Air & Gases, by Temperature)
 description: Calculate the speed of sound in air or any ideal gas from temperature, heat capacity ratio γ and molar mass with v = √(γRT/M), plus the wavelength.
 category: physics
-intro: "Sound travels faster in warm gas and in light gas, because the speed depends on temperature and molar mass rather than pressure. This speed of sound calculator uses v = √(γRT/M) for air, nitrogen, CO₂, helium and other gases — the same temperature correction that [ultrasonic level transmitters](https://www.instrumentationblog.in/how-does-an-ultrasonic-level-transmitter-work/) and [ultrasonic flow meters](https://www.instrumentationblog.in/how-ultrasonic-flow-meter-works/) apply to their time-of-flight readings."
+intro: "Sound travels faster in warm gas and in light gas, because its speed depends on temperature and molar mass rather than pressure. This speed of sound calculator uses v = √(γRT/M) for air, nitrogen, CO₂, helium and other ideal gases, and gives the wavelength at any frequency.\n\nInstrument engineers apply the same temperature correction in [ultrasonic level transmitters](https://www.instrumentationblog.in/how-does-an-ultrasonic-level-transmitter-work/) and [ultrasonic flow meters](https://www.instrumentationblog.in/how-ultrasonic-flow-meter-works/), while acousticians use it to size rooms and speaker arrays."
 keywords: [speed of sound calculator, speed of sound in air calculator, speed of sound temperature, sound velocity in gas, v = sqrt(gamma r t / m), speed of sound helium, wavelength of sound]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: gam, label: Heat capacity ratio γ (cp/cv), default: 1.4, min: 1, help: 'Air, N₂, O₂ ≈ 1.40 · CO₂ 1.29 · CH₄ 1.30 · He, Ar 1.667' }
   - { id: M, label: Molar mass, suffix: g/mol, default: 28.965, min: 0, help: 'Dry air 28.965 · N₂ 28.014 · CO₂ 44.01 · He 4.003' }
@@ -25,6 +25,8 @@ faq:
     a: Sound travels almost three times faster in helium (about 1,000 m/s), so the resonances of your vocal tract shift upward even though your vocal cords vibrate at the same rate.
   - q: How does humidity affect the speed of sound?
     a: Water vapour (18 g/mol) is lighter than air, so humid air carries sound slightly faster — about 0.1–0.6% faster at room temperature, depending on humidity.
+  - q: "How do I estimate the distance to a lightning strike?"
+    a: "Count the seconds between the flash and the thunder. At 20 °C sound covers 1 km in 2.9 s, so divide the count by 3 for kilometres, or by 5 for miles."
 related: [physics/wavelength-frequency, physics/doppler-effect, physics/decibel, engineering/ultrasonic-level]
 ---
 
@@ -77,3 +79,32 @@ Dry air (γ = 1.4, M = 28.965 g/mol) at 20 °C:
 
 - An ultrasonic level gauge that assumes 343 m/s but works in 60 °C air reads the distance about 6.6% short — the reason these instruments carry a temperature sensor. See the [ultrasonic level calculator](/engineering/ultrasonic-level/).
 - Sound travels much faster in liquids and solids (water ≈ 1,480 m/s, steel ≈ 5,900 m/s); this formula applies to gases only.
+
+## Time of flight measurement
+
+An ultrasonic level transmitter times an echo from the liquid surface and halves the round trip: distance = v × t ÷ 2. In 20 °C air at 343.2 m/s, a surface 2 m below the sensor returns its echo after 11.654 ms. If the tank headspace is really at 60 °C, sound travels at 365.9 m/s, so the same 11.654 ms echo means the surface is 2.132 m away. A gauge that ignored the temperature would report 2 m, an error of 132 mm. Vapour that is not air, such as solvent or CO₂ over a fermenter, changes γ and M too, which a single temperature sensor cannot correct.
+
+## Gas mixtures
+
+For a mixture, average the molar mass by mole fraction and work out γ from the mole-weighted molar heat capacity, not by averaging γ directly. Biogas of 60% methane and 40% CO₂ has M = 27.23 g/mol and c<sub>p</sub> = 36.27 J/(mol·K), so γ = 36.27 ÷ (36.27 − 8.314) = 1.297. At 35 °C sound travels at **349 m/s**, which is why ultrasonic gas meters and biogas analysers can infer methane content from sound speed.
+
+## Linear rule of thumb against the exact formula
+
+The common approximation v ≈ 331.3 + 0.606 T (T in °C) is fine near room temperature but drifts in hot gas:
+
+| Temperature | Exact (dry air) | Linear rule | Error |
+|---|---|---|---|
+| −40 °C | 306.1 m/s | 307.1 m/s | +0.3% |
+| 0 °C | 331.3 m/s | 331.3 m/s | +0.0% |
+| 40 °C | 354.7 m/s | 355.5 m/s | +0.2% |
+| 100 °C | 387.2 m/s | 391.9 m/s | +1.2% |
+| 200 °C | 436.1 m/s | 452.5 m/s | +3.8% |
+| 400 °C | 520.1 m/s | 573.7 m/s | +10.3% |
+
+## Common mistakes
+
+- **Entering molar mass in kg/mol into a g/mol field.** 0.028965 instead of 28.965 gives a speed about 32 times too high.
+- **Using Celsius in the formula by hand.** T must be in kelvin; the calculator converts it, but a spreadsheet will not.
+- **Averaging γ by mole fraction.** It is the heat capacities that average, as in the biogas example above.
+- **Expecting frequency to change the speed.** In ordinary gases sound is non-dispersive; frequency changes only the wavelength.
+- **Using the gas formula for liquids or solids.** Those depend on bulk or elastic modulus and density instead.

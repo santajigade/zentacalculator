@@ -2,10 +2,10 @@
 title: Newton's Law of Cooling Calculator (Temperature vs Time)
 description: Calculate how an object cools or heats towards ambient over time with Newton's law of cooling, find the cooling constant k and the half-time.
 category: physics
-intro: "Newton's law of cooling says an object's rate of temperature change is proportional to the difference between it and its surroundings, giving an exponential approach to ambient. This Newton's law of cooling calculator finds the temperature after any time, the cooling constant from a measurement and the time for the difference to halve — the same first-order behaviour behind a [temperature sensor's response time](https://www.instrumentationblog.in/temperature-sensor-response-time/)."
+intro: "Newton's law of cooling says an object's rate of temperature change is proportional to its difference from the surroundings, so it approaches ambient exponentially. This Newton's law of cooling calculator finds the temperature after a given time, the cooling constant and the half-time.\n\nStudents, food safety staff, process engineers and instrument technicians use it to predict cooling times and to understand a [temperature sensor's response time](https://www.instrumentationblog.in/temperature-sensor-response-time/)."
 keywords: [newtons law of cooling calculator, cooling rate calculator, temperature vs time cooling, cooling constant k, exponential cooling, how long to cool, newton cooling formula]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-18
 variables:
   - { id: T0, label: Initial temperature, family: temperature, unit: C, imperialUnit: F, default: 90 }
   - { id: Ta, label: Ambient (surrounding) temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
@@ -27,6 +27,8 @@ faq:
     a: Yes. If the ambient is hotter than the object, the same equation gives an exponential rise towards ambient.
   - q: When is Newton's law of cooling accurate?
     a: When heat loss is dominated by convection with a roughly constant heat transfer coefficient, the object's temperature is uniform, and the temperature difference is moderate. Strong radiation or boiling make k change with temperature.
+  - q: "Does an object ever reach exactly the ambient temperature?"
+    a: "In the model, no: the difference only approaches zero. In practice it is treated as finished after about five time constants, when less than 0.7% of the original difference remains, which is smaller than most thermometers can resolve."
 related: [electronics/battery-charge-time, physics/heat-conduction, engineering/sensor-response-time, physics/latent-heat, chemistry/half-life]
 ---
 
@@ -71,3 +73,35 @@ After one time constant 36.8% of the difference remains; after five time constan
 - Stirring, wind or a fan raises h and therefore k — the cup cools faster.
 - The same exponential law describes a thermometer or [sensor reaching a step change](/engineering/sensor-response-time/), with τ as its time constant.
 - Forensic "time since death" estimates use the same principle, with empirically corrected k values.
+
+## Time to reach a target temperature
+
+Rearranging the law gives t = ln[(T<sub>0</sub> − T<sub>a</sub>) ÷ (T − T<sub>a</sub>)] ÷ k. With the default inputs (90 °C, 20 °C room, k = 0.05 per minute) the calculator shows **62.46 °C** after 10 min, a half-time of **13.86 min** and a time constant of **20 min**. The same coffee reaches a comfortable 60 °C after ln(70 ÷ 40) ÷ 0.05 = **11.19 min**.
+
+How fast it gets there depends entirely on k:
+
+| k | Time constant | Half-time | Time from 90 to 60 °C |
+|---|---|---|---|
+| 0.02 /min | 50.0 min | 34.7 min | 28.0 min |
+| 0.03 /min | 33.3 min | 23.1 min | 18.7 min |
+| 0.05 /min | 20.0 min | 13.9 min | 11.2 min |
+| 0.08 /min | 12.5 min | 8.7 min | 7.0 min |
+| 0.12 /min | 8.3 min | 5.8 min | 4.7 min |
+
+A lid, an insulated mug or a larger volume lowers k; stirring, a draught or a thin metal cup raises it.
+
+## Finding k from two readings
+
+The starting temperature does not have to be known. If a probe reads 77 °C at 4 min and 58 °C at 12 min in a 20 °C room, then k = ln[(77 − 20) ÷ (58 − 20)] ÷ (12 − 4) = **0.0507 per minute**. Take the readings well apart, because the logarithm magnifies small errors when the two differences are nearly equal.
+
+## Estimating k from the physics
+
+For a solid with a uniform temperature, k = hA ÷ (mc). A 100 g aluminium block (c = 897 J/kg·K) with 60 cm² of surface in still air (h ≈ 15 W/m²·K including radiation) gives k = 15 × 0.006 ÷ (0.1 × 897) × 60 = **0.0602 per minute**. The lumped model is valid when the Biot number hL<sub>c</sub>/k<sub>solid</sub> is below 0.1; here L<sub>c</sub> = V/A = 6.17 mm and Bi = 4.5e-04, so the block is effectively uniform. A thick block of plastic or food is not, and its centre lags the surface.
+
+## Common mistakes
+
+- **Mixing units of k.** This calculator uses k per minute. A k quoted per second must be multiplied by 60 first.
+- **Using the temperature itself instead of the difference.** The exponential applies to T − T<sub>a</sub>; percentages of the starting temperature are meaningless.
+- **Assuming k is constant over a wide range.** Natural convection and radiation both strengthen at large differences, so fit k over the range you actually care about.
+- **Ignoring evaporation.** An open cup of hot liquid loses a large share of its heat by evaporation, so it cools faster at first than the law predicts.
+- **Applying it during a phase change.** While water freezes or wax solidifies the temperature stays flat; use the [latent heat calculator](/physics/latent-heat/) for that stage.

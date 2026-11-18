@@ -2,10 +2,10 @@
 title: Magnetic Field Calculator (Straight Wire & Solenoid)
 description: Calculate the magnetic flux density B around a straight current-carrying wire and inside a solenoid coil, plus the field strength H in A/m.
 category: physics
-intro: "An electric current creates a magnetic field: it circles a straight wire and becomes strong and uniform inside a coil. This magnetic field calculator gives the flux density around a long straight conductor and inside a solenoid — the same field that pulls the plunger in a [solenoid valve](https://www.instrumentationblog.in/solenoid-valve-working-principle/) and that a [Hall-effect sensor](https://www.instrumentationblog.in/how-a-hall-effect-sensor-works/) measures."
+intro: "An electric current produces a magnetic field that circles a straight wire and becomes strong and nearly uniform inside a coil. This magnetic field calculator gives the flux density around a long conductor and inside a solenoid, plus the field strength H.\n\nStudents, coil designers and instrument technicians use it to size [solenoid valve](https://www.instrumentationblog.in/solenoid-valve-working-principle/) coils, check stray fields near busbars and set the range of a [Hall-effect sensor](https://www.instrumentationblog.in/how-a-hall-effect-sensor-works/)."
 keywords: [magnetic field calculator, magnetic field of a wire calculator, solenoid magnetic field calculator, b = mu0 i / 2 pi r, b = mu0 n i / l, flux density calculator, ampere's law calculator]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: I, label: Current, family: current, unit: A, default: 10, min: 0 }
   - { id: r, label: Distance from the wire, family: length, unit: mm, imperialUnit: in, default: 10, min: 0 }
@@ -28,6 +28,8 @@ faq:
     a: 1 T = 10,000 G, so 1 mT = 10 G and 1 µT = 0.01 G. The Earth's field is about 25–65 µT (0.25–0.65 G).
   - q: Why is the field at the end of a solenoid weaker?
     a: At each open end of a long solenoid the flux density drops to about half the central value, because the field lines spread out.
+  - q: "Is the magnetic field near a current-carrying cable a health concern?"
+    a: "At mains frequency the ICNIRP 2010 general public reference level is 200 µT. A single conductor with 10 A reaches that at 10 mm, but in a normal cable the opposing currents cancel most of the field, so typical household exposure is well under 1 µT."
 related: [physics/lorentz-force, physics/faradays-law, electronics/air-core-inductor, physics/coulombs-law]
 ---
 
@@ -71,3 +73,37 @@ For comparison, the Earth's magnetic field is about 50 µT and a fridge magnet a
 - The wire formula assumes a long, straight conductor and a point outside it. Inside a round conductor, B rises linearly from zero at the centre.
 - The field of two conductors carrying equal and opposite currents (a cable's live and neutral) largely cancels, which is why twisted pairs pick up little interference.
 - The force on a conductor or a moving charge in this field is given by the [Lorentz force calculator](/physics/lorentz-force/).
+
+## Short coils: correcting the long solenoid formula
+
+B = μ<sub>0</sub> N I ÷ L assumes the coil is much longer than it is wide. At the centre of a real coil of diameter D the field is reduced by the factor L ÷ √(L² + D²). For the default 500-turn, 10 cm coil carrying 10 A:
+
+| Coil diameter | L ÷ D | Centre factor | B at centre | B at each end |
+|---|---|---|---|---|
+| 1 cm | 10.00 | 99.5% | 62.52 mT | 31.38 mT |
+| 2 cm | 5.00 | 98.1% | 61.61 mT | 31.26 mT |
+| 3 cm | 3.33 | 95.8% | 60.18 mT | 31.07 mT |
+| 5 cm | 2.00 | 89.4% | 56.20 mT | 30.48 mT |
+| 10 cm | 1.00 | 70.7% | 44.43 mT | 28.10 mT |
+
+A slim 2 cm coil reaches 98.1% of the ideal 62.83 mT, but a coil as wide as it is long gives only about 71%. For short coils, use the corrected value or measure it.
+
+## Measuring the field
+
+A Hall-effect gaussmeter is the usual instrument: its probe gives a voltage proportional to the field component perpendicular to the sensor face, so it must be held square to the field lines. A search coil connected to an integrating meter measures AC fields. As a reference, the Earth contributes about 50 µT, which is 25% of the default wire reading of 200 µT and must be subtracted when measuring weak DC fields.
+
+## Energy stored in the field
+
+The energy density of a magnetic field is B² ÷ (2μ<sub>0</sub>). Inside the default air-core solenoid at 62.83 mT that is **1,571 J/m³**. The same expression, read as a pressure, is the force per unit area that pulls a solenoid plunger into the coil, which is why doubling the current gives about four times the pull.
+
+## Exposure reference level
+
+The ICNIRP 2010 guidelines set a general public reference level of 200 µT for 50 Hz fields. The default case, 10 A at 10 mm, sits right at that value, but the field falls with distance: 100 A drops to 200 µT at 100 mm. In a cable the live and neutral fields largely cancel, so real readings are far lower.
+
+## Common mistakes
+
+- **Measuring r from the conductor surface.** The formula uses the distance to the centre; for a 4 mm² wire at 10 mm from the surface, r is about 11.1 mm.
+- **Applying the long solenoid formula to a short coil.** It overstates the centre field, as the table above shows.
+- **Trusting a large μr.** μr = 1,000 on the default coil predicts 62.8 T, but iron saturates near 1.5 to 2 T and an open core gives far less gain than its material μr.
+- **Using total wire length for L.** L is the length of the winding along the axis, not the length of copper in the coil.
+- **Adding fields from several conductors as plain numbers.** Fields are vectors; opposite currents subtract.

@@ -2,10 +2,10 @@
 title: Exponential Distribution Calculator (CDF, PDF, Mean)
 description: Calculate exponential distribution probabilities P(X ≤ x) and P(X > x), the density, mean and median from the rate λ — for waiting times and failure times.
 category: statistics
-intro: "The exponential distribution models the time between random, independent events that happen at a constant average rate — calls arriving, radioactive decays or component failures. This exponential distribution calculator gives the probability that the waiting time is shorter or longer than x, the probability density, the mean and the median."
+intro: "The exponential distribution describes the waiting time between random, independent events that occur at a steady average rate. This exponential distribution calculator gives P(X ≤ x), P(X > x), the density, the mean and the median from the rate λ.\n\nQueueing analysts use it for arrival gaps, reliability engineers for constant rate failures and MTBF, and physicists for radioactive decay, wherever the chance of an event does not depend on elapsed time."
 keywords: [exponential distribution calculator, exponential cdf calculator, exponential probability calculator, waiting time probability, 1 - e^(-lambda x), exponential pdf, memoryless distribution]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: lam, label: Rate λ (events per unit time), default: 0.5, min: 0, help: 'Mean time between events = 1/λ.' }
   - { id: x, label: Time or value x, default: 3, min: 0 }
@@ -29,6 +29,8 @@ faq:
     a: If events occur as a Poisson process with rate λ, the number in a fixed time is Poisson and the time between events is exponential with the same λ.
   - q: How is it used in reliability?
     a: With a constant failure rate λ, reliability over time t is R(t) = e^(−λt) and the MTBF is 1/λ. After one MTBF only about 36.8% of units are still working.
+  - q: "How do I estimate the rate λ from observed data?"
+    a: "Divide the number of events by the total observation time. For waiting times, λ is 1 ÷ (average observed gap). With 12 failures in 240,000 unit hours, λ = 5 × 10⁻⁵ per hour and the MTBF is 20,000 hours."
 related: [statistics/poisson-probability, statistics/normal-distribution, engineering/availability-mtbf, physics/radioactive-activity]
 ---
 
@@ -71,3 +73,40 @@ Customers arrive at an average rate of 0.5 per minute. The chance that the next 
 
 - The exponential model fits the flat "useful life" part of the reliability bathtub curve, not early failures or wear-out; use the Weibull distribution for those.
 - Radioactive decay follows the same law, with λ the decay constant — see the [radioactive activity calculator](/physics/radioactive-activity/).
+
+## Reading the default result
+
+With λ = 0.5 per minute and x = 3 minutes, the calculator gives P(X ≤ 3) = **77.69%**, P(X > 3) = **22.31%**, f(3) = **0.11157**, a mean of **2 min** and a median of **1.3863 min**. The median is shorter than the mean because a few very long gaps pull the mean up: half of all waits are under 1.39 minutes even though the average is 2.
+
+The density value 0.11157 is not a probability. It is a rate per minute, and multiplying it by a short interval gives an approximate probability, for example about 1.12% for an arrival in the 0.1 minute window just after 3 minutes.
+
+## Percentile waiting times at λ = 0.5
+
+Solving 1 − e<sup>−λx</sup> = p gives x = −ln(1 − p) ÷ λ. This is the time by which a given share of waits have ended:
+
+| Share of waits finished | Time x | In multiples of the mean |
+|---|---|---|
+| 10% | 0.211 min | 0.105 × mean |
+| 25% | 0.575 min | 0.288 × mean |
+| 50% | 1.386 min | 0.693 × mean |
+| 75% | 2.773 min | 1.386 × mean |
+| 90% | 4.605 min | 2.303 × mean |
+| 95% | 5.991 min | 2.996 × mean |
+| 99% | 9.210 min | 4.605 × mean |
+
+Planners use the 90% or 95% row to size staffing or buffer time, because designing to the mean leaves 36.8% of waits longer than planned.
+
+## Using it with real data
+
+- **Interval probabilities.** The chance that the next arrival comes between 1 and 3 minutes is e<sup>−0.5</sup> − e<sup>−1.5</sup> = **38.34%**.
+- **Memoryless waits.** If nobody has arrived for 2 minutes, the chance of waiting at least 3 more is still e<sup>−1.5</sup> = 22.31%, the same as from the start.
+- **Reliability.** A unit with an MTBF of 50,000 h running for one year (8,760 h) has R = e<sup>−8,760/50,000</sup> = **83.9%** chance of no failure.
+- **Estimating λ.** From test data, λ = failures ÷ total operating time. Twelve failures in 240,000 unit hours gives λ = 5 × 10⁻⁵ per hour, an MTBF of 20,000 h.
+
+## Common mistakes
+
+- **Entering the mean instead of the rate.** A mean wait of 2 minutes is λ = 0.5, not λ = 2. Swapping them turns 77.69% into 99.75%.
+- **Mixing time units.** λ per hour with x in minutes gives a result 60 times off; convert both to the same unit first.
+- **Treating f(x) as P(X = x).** For a continuous variable the chance of any exact value is zero.
+- **Applying it to wear-out.** Bearings, belts and batteries fail more often as they age, so a constant λ understates late-life risk.
+- **Assuming independence that is not there.** Arrivals that come in bursts, such as customers off the same bus, are not exponential.

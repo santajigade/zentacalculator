@@ -2,10 +2,10 @@
 title: E = mc² Calculator (Mass–Energy Equivalence)
 description: Convert mass to energy with Einstein's E = mc² — in joules, kWh and tonnes of TNT — or find the mass equivalent of any amount of energy.
 category: physics
-intro: "Einstein's equation E = mc² says that mass and energy are two forms of the same thing, linked by the square of the speed of light. This E = mc² calculator converts a mass into its rest energy in joules, kilowatt-hours and TNT equivalent, and works backwards to find the tiny mass change behind chemical and nuclear energy."
+intro: "Einstein's E = mc² states that mass and energy are equivalent, linked by the square of the speed of light, 299,792,458 m/s. This E = mc² calculator turns a mass into its rest energy in joules, kilowatt-hours and TNT equivalent, or finds the mass behind an energy.\n\nPhysics students, nuclear engineers and science writers use it to compare chemical, fission and fusion energy and to check textbook binding energy figures."
 keywords: [e=mc2 calculator, mass energy equivalence calculator, mass to energy calculator, einstein equation calculator, rest energy calculator, energy to mass calculator, e = mc squared]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: m, label: Mass, family: mass, unit: g, imperialUnit: oz, default: 1, min: 0 }
   - { id: E, label: Energy (E = mc²), family: energy, unit: kWh, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: Fission of uranium-235 converts roughly 0.09% of the fuel's mass into energy, millions of times more per kilogram than chemical reactions.
   - q: What units does E = mc² use?
     a: With mass in kilograms and c in metres per second, energy comes out in joules. The calculator converts grams, ounces and other units automatically.
+  - q: "Is a charged battery heavier than a flat one?"
+    a: "Yes, but immeasurably. Storing 100 kWh adds E ÷ c² = 4.01 × 10⁻⁹ kg, about 4 micrograms, far below what any scale can detect on a battery pack."
+  - q: "How much mass does the Sun lose each second?"
+    a: "The Sun radiates about 3.828 × 10²⁶ W, so it loses 4.26 × 10⁹ kg, roughly 4.3 million tonnes, every second through fusion in its core."
 related: [physics/photon-energy, physics/kinetic-energy, physics/de-broglie-wavelength, physics/radioactive-activity]
 ---
 
@@ -65,3 +69,38 @@ Converting 1 gram of mass entirely into energy:
 
 - 1 kilotonne of TNT is defined as 4.184 × 10¹² J.
 - In nuclear reactions the energy released equals the mass defect × c²; in radioactive decay this energy is carried by the emitted particles — see the [radioactive activity calculator](/physics/radioactive-activity/).
+
+## Rest energy of everyday masses
+
+| Mass | Energy | Energy | TNT equivalent |
+|---|---|---|---|
+| 1 µg | 8.9876 × 10⁷ J | 24.97 kWh | 2.148 × 10⁻⁵ kt |
+| 1 mg | 8.9876 × 10¹⁰ J | 2.497 × 10⁴ kWh | 0.02148 kt |
+| 1 g | 8.9876 × 10¹³ J | 2.497 × 10⁷ kWh | 21.48 kt |
+| 1 kg | 8.9876 × 10¹⁶ J | 2.497 × 10¹⁰ kWh | 2.148 × 10⁴ kt |
+| 1 tonne | 8.9876 × 10¹⁹ J | 2.497 × 10¹³ kWh | 2.148 × 10⁷ kt |
+
+The 1 g row is the calculator's default: 8.9876 × 10¹³ J, or 24,965,422 kWh, 89.88 TJ and 21.48 kilotonnes of TNT.
+
+## Where mass really turns into energy
+
+No practical process converts a whole gram. Real reactions convert only the mass defect, the difference between the masses before and after:
+
+- **Deuteron binding.** A proton (1.007276467 u) and a neutron (1.008664916 u) together outweigh a deuteron (2.013553212 u) by 0.002388171 u. Multiplying by 931.494 MeV/u gives **2.225 MeV**, the energy of the gamma ray released when the two fuse.
+- **Fusion of deuterium and tritium.** D + T → ⁴He + n loses 0.018883 u, releasing **17.6 MeV**, about 0.38% of the fuel mass.
+- **Fission of U-235.** About 200 MeV per split nucleus is 0.091% of its mass.
+- **The Sun.** Radiating 3.828 × 10²⁶ W, it loses L ÷ c² = **4.26 × 10⁹ kg** of mass every second.
+
+A 1 GW electric reactor at 33% efficiency releases 9.556 × 10¹⁶ J of heat in a year, which corresponds to only **1.06 kg** of mass, spread across tonnes of fuel. Per kilogram, fission releases about 1.8 million times more energy than burning petrol.
+
+## Converting between units
+
+Nuclear physics works in MeV and atomic mass units rather than joules. 1 MeV = 1.602176634 × 10⁻¹³ J, and 1 u × c² = 931.494 MeV. To use the calculator with particle data, convert the mass in u to kilograms (1 u = 1.66054 × 10⁻²⁷ kg), or convert the result in joules back to MeV by dividing by 1.6022 × 10⁻¹³.
+
+## Common mistakes
+
+- **Leaving mass in grams when working by hand.** E = mc² needs kilograms for joules; 1 g written as 1 gives a result 1,000 times too large. The calculator converts units for you.
+- **Confusing rest energy with kinetic energy.** mc² is the energy of a body at rest. Motion adds (γ − 1) mc², which at everyday speeds is just ½mv².
+- **Assuming fission converts all the fuel.** Only about 0.09% of a U-235 nucleus becomes energy; the rest remains as fission products.
+- **Rounding c to 3 × 10⁸ m/s for precise work.** It overstates c² by 0.14%, enough to spoil MeV level comparisons.
+- **Mixing tonnes and kilotonnes of TNT.** 1 g of mass is 21.48 kilotonnes, which is 21,481 tonnes.

@@ -2,10 +2,10 @@
 title: Electric Field Calculator (Point Charge E & Potential V)
 description: Calculate the electric field strength and electric potential at a distance from a point charge with E = kq/r² and V = kq/r, plus the force on a test charge.
 category: physics
-intro: "A point charge creates an electric field that weakens with the square of distance, and an electric potential that falls off with distance itself. This electric field calculator applies Coulomb's law to give the field strength E, the potential V and the force on a test charge placed at that point — the same field that a [capacitor uses to store energy](https://www.instrumentationblog.in/capacitor-working-principle/) between its plates."
+intro: "A point charge creates an electric field that weakens with the square of distance and a potential that falls with distance itself. This electric field calculator applies Coulomb's law to give the field strength E, the potential V and the force on a test charge, the same field a [capacitor uses to store energy](https://www.instrumentationblog.in/capacitor-working-principle/).\n\nPhysics students use it for electrostatics problems, and engineers use it to estimate fields near charged electrodes and conductors."
 keywords: [electric field calculator, electric field strength calculator, electric potential calculator, point charge electric field, e = kq/r^2, v = kq/r, coulomb constant]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: q, label: Source charge, suffix: µC, default: 5, help: 'Negative for a negative charge; the field then points toward the charge.' }
   - { id: r, label: Distance from the charge, family: length, unit: m, imperialUnit: ft, default: 0.5, min: 0 }
@@ -26,6 +26,8 @@ faq:
     a: Calculate the field of each charge separately and add them as vectors (superposition). Potentials are simply added as numbers, which is often easier.
   - q: What field strength causes air to break down?
     a: Dry air at sea level breaks down at roughly 3 × 10⁶ V/m (3 kV/mm), which limits how much charge an object in air can hold.
+  - q: "How much work does it take to bring a test charge to a point near a charge?"
+    a: "The work equals the test charge times the potential at that point, W = q0 × V. For a 1 µC charge moved to 0.5 m from a 5 µC charge, W = 10⁻⁶ × 89,876 V = 0.0899 J."
 related: [physics/coulombs-law, physics/parallel-plate-capacitor, physics/lorentz-force, physics/ohms-law]
 ---
 
@@ -66,3 +68,34 @@ A 5 µC charge, measured 0.5 m away:
 - Outside a uniformly charged sphere the field is the same as for a point charge at its centre.
 - Between two parallel plates the field is uniform, E = V ÷ d — see the [parallel plate capacitor calculator](/physics/parallel-plate-capacitor/).
 - The force between two charges follows directly from [Coulomb's law](/physics/coulombs-law/).
+
+## Work done on the test charge
+
+The potential tells you the energy per coulomb. Bringing the default 1 µC test charge in from far away to 0.5 m from the 5 µC charge takes W = q<sub>0</sub> V = 1 × 10⁻⁶ × 89,876 = **0.0899 J**. Both charges are positive, so this work is stored as potential energy and released if the test charge is let go. With a negative test charge the sign flips and the charges attract.
+
+Doubling the distance to 1 m cuts the field to a quarter, 44,938 V/m, but the potential only to half, 44,938 V.
+
+## How large can the source be?
+
+The field at the surface of a charged sphere of radius a is kq ÷ a². Air breaks down near 3 × 10⁶ V/m, so a sphere holding 5 µC must have a radius of at least √(kq ÷ E) = √(44,938 ÷ 3 × 10⁶) = **12.2 cm**. A smaller ball would leak charge by corona discharge. This is why Van de Graaff generators use large, smooth domes.
+
+## Typical field strengths
+
+| Situation | Field strength |
+|---|---|
+| Fair-weather atmosphere near the ground | about 100 V/m |
+| ICNIRP public limit, 50 Hz | 5,000 V/m |
+| Default 5 µC charge at 0.5 m | 179,751 V/m |
+| Breakdown of dry air | about 3 × 10⁶ V/m |
+| Across a cell membrane (70 mV over 7 nm) | 1 × 10⁷ V/m |
+| At the Bohr radius of hydrogen | 5.14 × 10¹¹ V/m |
+
+In practice, static and low-frequency fields are measured with a field mill, which uses a rotating shutter to chop the field over a sensing plate, or with a small probe meter around power lines and substations. Near real conductors the field is set by their shape, so the point-charge formula is a far-field estimate.
+
+## Common mistakes
+
+- **Forgetting the micro prefix.** 5 µC is 5 × 10⁻⁶ C; leaving it as 5 C gives a field a million times too large.
+- **Entering distance in centimetres.** r must be in metres, and because it is squared, a cm error is a factor of 10,000.
+- **Adding fields from several charges as plain numbers.** Fields are vectors; add their x and y components. Only potentials add as scalars.
+- **Dropping the sign of the potential.** A negative charge gives a negative potential, which matters when computing work.
+- **Using the formula inside a conductor.** The static field inside a conductor is zero; the 1/r² law applies outside the charge.

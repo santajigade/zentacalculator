@@ -2,10 +2,10 @@
 title: Stefan–Boltzmann Law Calculator (Radiation Heat Transfer)
 description: Calculate thermal radiation power from a surface with the Stefan–Boltzmann law, and the net radiant heat exchange with its surroundings.
 category: physics
-intro: "Every surface above absolute zero radiates energy in proportion to the fourth power of its absolute temperature. This Stefan–Boltzmann law calculator gives the emitted power, the radiant flux per square metre and the net radiation heat transfer between a hot surface and cooler surroundings."
+intro: "The Stefan-Boltzmann law says every surface above absolute zero radiates power in proportion to its emissivity, its area and the fourth power of its absolute temperature. This Stefan-Boltzmann law calculator gives the emitted flux, total power and net radiant heat loss to cooler surroundings.\n\nHeat transfer engineers, HVAC and insulation designers, furnace operators and physics students use it to size heat losses, choose surface finishes and compare radiation with convection."
 keywords: [stefan boltzmann law calculator, radiation heat transfer calculator, thermal radiation calculator, emissive power calculator, q = εσa(t⁴ − ts⁴), black body radiation power, emissivity calculator]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: eps, label: Emissivity (ε), default: 0.9, min: 0, max: 1, help: '1 for a black body; about 0.9 for paint, 0.05 for polished aluminium.' }
   - { id: A, label: Surface area, family: area, unit: m2, imperialUnit: ft2, default: 1, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: The law uses absolute temperature raised to the fourth power. The calculator converts °C or °F to kelvin for you.
   - q: When is radiation more important than convection?
     a: At high temperatures. Near room temperature a painted surface loses heat by radiation and by natural convection at similar rates (each roughly 5 W/m²·K), but radiation grows with T⁴ and dominates in furnaces and above a few hundred °C.
+  - q: "What is the radiation heat transfer coefficient?"
+    a: "It is h_r = εσ(T² + T_s²)(T + T_s), the net radiant loss per square metre per kelvin of temperature difference. For ε = 0.9 at 100 °C in a 20 °C room it is about 7.7 W/(m²·K), comparable to natural convection."
 related: [physics/heat-conduction, physics/newtons-law-of-cooling, physics/wiens-law, engineering/heat-duty]
 ---
 
@@ -75,3 +77,39 @@ Black-body flux σT⁴ and the net loss of an ε = 0.9 surface to 20 °C surroun
 | Water, human skin | 0.95–0.98 |
 
 The wavelength at which a hot body radiates most is given by [Wien's law](/physics/wiens-law/).
+
+## Radiation heat transfer coefficient
+
+Engineers often fold radiation into a coefficient that can be added to the convection coefficient: h<sub>r</sub> = εσ(T² + T<sub>s</sub>²)(T + T<sub>s</sub>). With the default 373.15 K surface and 293.15 K room:
+
+- h<sub>r</sub> = 0.9 × 5.670 × 10⁻⁸ × (373.15² + 293.15²) × (373.15 + 293.15) = **7.66 W/(m²·K)**
+- Check: 612.5 W ÷ (100 − 20) K = 7.66 W/(m²·K)
+
+Natural convection from a warm vertical surface in still air is typically 3 to 10 W/(m²·K), so at only 100 °C radiation already carries about half of the total heat loss. Over a year of continuous operation the default square metre radiates away **5,366 kWh** net.
+
+## Effect of surface finish
+
+Same 1 m² at 100 °C in 20 °C surroundings, with only the emissivity changed:
+
+| Emissivity | Net radiation loss | Per year |
+|---|---|---|
+| 0.05 | 34.0 W | 298 kWh |
+| 0.1 | 68.1 W | 596 kWh |
+| 0.3 | 204.2 W | 1,789 kWh |
+| 0.6 | 408.4 W | 3,577 kWh |
+| 0.9 | 612.5 W | 5,366 kWh |
+| 0.95 | 646.6 W | 5,664 kWh |
+
+This is why insulated hot pipes are clad in aluminium or stainless steel sheet. One metre of bare painted DN100 pipe (114.3 mm outside diameter, 0.359 m² of surface) at these temperatures radiates **220 W**; the same area of clean aluminium at ε = 0.05 radiates only 12.2 W.
+
+## Using emissivity with infrared thermometers
+
+A non-contact thermometer measures radiated power and inverts the same law, so it needs the right emissivity. If the default ε = 0.9 surface at 100 °C is read with the instrument set to 0.95, the reading is about **96.9 °C**, a little low, because the instrument assumes more of the signal is emitted and less reflected from the room. On shiny metals with ε near 0.1 the error can be tens of degrees, so technicians apply black tape or paint of known emissivity before measuring.
+
+## Common mistakes
+
+- **Using °C inside T⁴.** 100⁴ and 373.15⁴ differ by a factor of almost 200.
+- **Forgetting the surroundings.** The emitted 989 W is not the heat loss; the surface absorbs radiation from the room, leaving a net 613 W.
+- **Using the small-body formula between two large plates.** For parallel plates both emissivities matter: ε<sub>eff</sub> = 1 ÷ (1/ε<sub>1</sub> + 1/ε<sub>2</sub> − 1), which is 0.818 for two ε = 0.9 plates and gives 557 W per m² instead of 613 W.
+- **Taking emissivity from the wrong condition.** Polished and oxidised versions of the same metal can differ tenfold; check the actual surface.
+- **Ignoring dirt and ageing.** Aluminium jacketing that is dusty or weathered radiates far more than the 0.05 quoted for a clean sheet.

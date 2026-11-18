@@ -2,10 +2,10 @@
 title: Bolt Torque Calculator (T = K·D·F, Preload & Stress)
 description: Calculate bolt tightening torque from preload, nominal diameter and nut factor with T = K·D·F, plus bolt stress — with an ISO metric 8.8 and 10.9 torque table.
 category: engineering
-intro: "Tightening torque is the practical way to set a bolt's clamping force, but only a small part of the torque stretches the bolt — most is lost to friction in the threads and under the nut. This bolt torque calculator uses the short-form equation T = K × D × F, with the nut factor K capturing that friction, and checks the resulting tensile stress in the bolt."
+intro: "Tightening torque is the everyday way to set a bolt's clamp force, yet most of the torque is spent on friction under the nut and in the threads. This bolt torque calculator uses T = K × D × F, with the nut factor K standing in for that friction, and checks the bolt stress.\n\nMechanics, maintenance fitters and design engineers use it to set wrench values for flanges, machine frames and structural joints."
 keywords: [bolt torque calculator, bolt tightening torque, torque to preload calculator, nut factor, t = kdf, bolt preload calculator, metric bolt torque chart]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: K, label: Nut factor K, default: 0.2, min: 0, help: 'Dry steel ≈ 0.20 · zinc plated ≈ 0.20 · lightly oiled ≈ 0.15–0.18 · MoS₂ paste ≈ 0.10–0.12' }
   - { id: d, label: Nominal bolt diameter, family: length, unit: mm, imperialUnit: in, default: 12, min: 0 }
@@ -25,6 +25,8 @@ faq:
     a: A lot. Oiled or MoS₂-coated threads have a lower K, so the same torque produces 30–60% more preload. Always use the K value matching the actual thread condition, or the bolt may be over-stressed.
   - q: Why is torque tightening imprecise?
     a: Friction varies from bolt to bolt, so the same torque can give ±25% scatter in preload. Critical joints use torque-angle tightening, hydraulic tensioners or ultrasonic bolt-elongation measurement.
+  - q: "How much does a bolt stretch when it is tightened?"
+    a: "Stretch = F × L ÷ (E × A). An M12 steel bolt at 30 kN over a 40 mm grip stretches about 0.071 mm. Measuring this elongation directly is more accurate than relying on torque."
 related: [engineering/torque-power-speed, physics/torque, engineering/factor-of-safety, engineering/hydraulic-cylinder-force]
 ---
 
@@ -64,3 +66,37 @@ Proof stresses from ISO 898-1: class 8.8 — 580 MPa (≤ M16), 600 MPa (> M16);
 
 - Check the clamped joint as well as the bolt: soft gaskets and painted surfaces relax and lose preload.
 - Use the [factor of safety calculator](/engineering/factor-of-safety/) to compare the bolt stress with the material's proof or yield strength.
+
+## Where the torque goes
+
+In a typical dry steel joint only about 10% of the applied torque stretches the bolt. Roughly 50% is lost to friction under the nut or head and about 40% to thread friction. So a modest change in surface condition changes the preload far more than a change in the wrench setting. For the default 12 mm bolt at 30 kN, the 72 N·m from the calculator assumes K = 0.2. The table shows the torque needed for the same 30 kN at other nut factors, and the preload the same 72 N·m would give instead:
+
+| Nut factor K | Torque for 30 kN | Preload at 72 N·m | Stress at 72 N·m |
+|---|---|---|---|
+| 0.10 | 36.0 N·m | 60.0 kN | 712 MPa |
+| 0.12 | 43.2 N·m | 50.0 kN | 593 MPa |
+| 0.15 | 54.0 N·m | 40.0 kN | 474 MPa |
+| 0.18 | 64.8 N·m | 33.3 kN | 395 MPa |
+| 0.20 | 72.0 N·m | 30.0 kN | 356 MPa |
+| 0.25 | 90.0 N·m | 24.0 kN | 285 MPa |
+
+Oiling the threads to K = 0.15 and keeping the dry 72 N·m value raises the preload to **40.0 kN** and the stress to **474 MPa**, 82% of the 580 MPa proof stress of class 8.8. With MoS₂ paste the same wrench setting would take the bolt past proof.
+
+## How much the bolt stretches
+
+Preload is just elastic stretch. Over a 40 mm grip the default bolt lengthens by about F × L ÷ (E × A<sub>t</sub>) = 30,000 × 40 ÷ (200,000 × 84.3) = **0.071 mm** (with E = 200 GPa for steel and the tensile stress area used for the whole length, a simple estimate). Ultrasonic bolt gauges and bolt-length micrometers measure this stretch directly, which removes friction from the result.
+
+## Tightening in practice
+
+- Use a calibrated torque wrench; ISO 6789 allows about ±4% on most hand wrenches, much smaller than the friction scatter.
+- Tighten flanges and multi-bolt joints in a star pattern in stages, for example 30%, 70% then 100% of the final torque, then a check pass.
+- Apply torque to the nut where possible, since turning the head adds under-head friction you may not have allowed for.
+- Add the prevailing torque of nylon insert or all-metal locknuts to the calculated value; it produces no preload.
+
+## Common mistakes
+
+- **Mixing mm and m in a hand calculation.** The calculator converts units, but working T = K × D × F by hand with D = 12 instead of 0.012 m gives 1,000 times the torque.
+- **Using a dry torque chart for lubricated or plated bolts.** It is the most common cause of stripped threads and snapped studs.
+- **Reusing torque-to-yield bolts.** Cylinder head and similar bolts are stretched past yield and must be replaced.
+- **Ignoring joint relaxation.** Gaskets and paint creep, so critical joints are retorqued after the first heat cycle or a set time.
+- **Fitting extensions or crowfoot adapters without correction.** An adapter that lengthens the wrench changes the torque actually delivered.

@@ -2,10 +2,10 @@
 title: Radioactive Activity Calculator (Bq & Ci from Mass)
 description: Calculate the activity of a radioactive sample in becquerels and curies from its mass, molar mass and half-life — and the activity left after time.
 category: physics
-intro: "Activity is the number of nuclei that decay per second, A = λN, and is measured in becquerels (Bq) or curies (Ci). This radioactive activity calculator works out the decay constant, the number of atoms and the activity of a sample from its mass and half-life, plus how much activity remains later — useful for the sealed Cs-137 and Co-60 sources used in [nuclear level measurement](https://www.instrumentationblog.in/types-of-nuclear-level-measurement/)."
+intro: "Activity is the number of nuclei in a sample that decay each second, A = λN, measured in becquerels or curies. This radioactive activity calculator finds the decay constant, atom count and activity from mass, molar mass and half-life, then decays it over time.\n\nRadiation safety officers, nuclear medicine staff and instrument technicians use it to license sources, plan replacements and check the sealed Cs-137 and Co-60 sources in [nuclear level measurement](https://www.instrumentationblog.in/types-of-nuclear-level-measurement/)."
 keywords: [radioactive activity calculator, becquerel calculator, curie calculator, specific activity calculator, a = lambda n, decay constant calculator, activity from half life]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: m, label: Mass of the radionuclide, family: mass, unit: mg, default: 1, min: 0 }
   - { id: M, label: Molar mass (g/mol), default: 59.9338, min: 0, help: 'Close to the mass number: Co-60 = 59.93, Cs-137 = 136.91, Am-241 = 241.06.' }
@@ -33,6 +33,10 @@ faq:
     a: It halves every half-life, A(t) = A₀ × 2^(−t/t½). After 10 half-lives about 0.1% of the original activity is left.
   - q: What is specific activity?
     a: Activity per unit mass, usually Bq/g or Ci/g. Short half-lives give high specific activity — 1 g of Co-60 is about 1,100 Ci, while 1 g of U-238 is only 12 kBq.
+  - q: "How often should a Co-60 gauge source be replaced?"
+    a: "Co-60 loses about 12.3% of its activity each year and falls to half in 5.27 years. Many users replace or recalibrate when the count rate margin is gone, typically after one to two half-lives. A Cs-137 source decays only 2.3% per year."
+  - q: "How do I convert a detector count rate into activity?"
+    a: "Subtract the background count rate, then divide the net counts per second by the detector efficiency for that nuclide and geometry. For example, 50 net counts per second at 5% efficiency means an activity of 1,000 Bq."
 related: [chemistry/half-life, physics/mass-energy-equivalence, chemistry/moles, physics/photon-energy]
 ---
 
@@ -76,3 +80,34 @@ Specific activity here is for the pure isotope; real sources contain carrier mat
 - The half-life field accepts years, days, hours, minutes or seconds.
 - Activity alone does not give dose — that also depends on the radiation type, its energy, distance and shielding.
 - For half-life arithmetic without atoms or masses, use the [half-life calculator](/chemistry/half-life/).
+
+## Decay of the default 1 mg Co-60 source
+
+Starting from A<sub>0</sub> = 4.1867 × 10¹⁰ Bq (1.132 Ci), the activity after each period is A<sub>0</sub> × 2<sup>−t/5.2714</sup>:
+
+| Elapsed time | Activity | Curies | Remaining |
+|---|---|---|---|
+| 0 yr | 4.1867 × 10¹⁰ Bq | 1.132 Ci | 100.0% |
+| 1 yr | 3.6709 × 10¹⁰ Bq | 0.992 Ci | 87.7% |
+| 2 yr | 3.2186 × 10¹⁰ Bq | 0.870 Ci | 76.9% |
+| 5 yr | 2.1694 × 10¹⁰ Bq | 0.586 Ci | 51.8% |
+| 10 yr | 1.1241 × 10¹⁰ Bq | 0.304 Ci | 26.8% |
+| 15 yr | 0.5825 × 10¹⁰ Bq | 0.157 Ci | 13.9% |
+| 20 yr | 0.3018 × 10¹⁰ Bq | 0.082 Ci | 7.2% |
+| 30 yr | 0.0810 × 10¹⁰ Bq | 0.022 Ci | 1.9% |
+
+A Co-60 source loses **12.3% of its activity every year**, so it falls to 10% after 17.5 years. A Cs-137 source loses only 2.28% per year and takes 100 years to reach 10%, which is why Cs-137 is the usual choice for level and density gauges that must stay calibrated for decades.
+
+## How activity is measured in practice
+
+A detector never sees every decay. A Geiger-Müller tube or scintillation probe records counts per second, and the activity is the net count rate divided by the counting efficiency, after subtracting background. Efficiency depends on the radiation type, energy, geometry and window, and is set by counting a certified reference source. Counting is statistical: a 1 kBq check source read at 5% efficiency for 600 s gives about 30,000 counts, with a one-sigma uncertainty of √N, or **0.6%**. Hospitals measure patient doses in a dose calibrator, an ionisation chamber with nuclide-specific settings that reads activity directly in MBq or mCi.
+
+The calculator also works in reverse for licensing paperwork. A 100 mCi (3.7 GBq) Cs-137 gauge source contains only about **1.15 mg** of the isotope itself; the rest of the capsule is carrier and stainless steel.
+
+## Common mistakes
+
+- **Entering the capsule or compound mass.** Only the mass of the radioactive isotope counts. In CsCl, caesium is about 79% of the mass, and the Cs-137 is only a fraction of that.
+- **Treating activity as dose.** Becquerels count decays; dose in grays or sieverts also depends on the emitted energy, distance and shielding.
+- **Ignoring short-lived daughters.** Cs-137 gamma rays actually come from Ba-137m, which is in equilibrium with its parent; gamma yield is about 85 photons per 100 Cs-137 decays.
+- **Mixing up mCi and MBq.** 1 mCi is 37 MBq, so a factor of 37 error is easy when reading certificates from different countries.
+- **Using the activity on the certificate as today's value.** Always decay it from the certificate reference date before calibrating an instrument.

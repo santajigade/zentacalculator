@@ -1,11 +1,11 @@
 ---
-title: PCR Amplification Calculator
-description: Estimate how many DNA copies a PCR produces from the starting copies, number of cycles and efficiency.
+title: "PCR Amplification Calculator (DNA Copies, Cycles and Efficiency)"
+description: "Estimate DNA copies and fold amplification after PCR from starting copies, cycle number and efficiency, with worked examples and qPCR efficiency tables."
 category: biology
-intro: "PCR doubles the target DNA in every cycle, so 30 cycles can turn a single copy into about a billion. Real reactions are slightly less than 100% efficient, which this calculator takes into account. This free PCR amplification calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Each PCR cycle can copy every target molecule once, so the amount of DNA grows exponentially. This PCR amplification calculator applies N = N₀ × (1 + E)ⁿ to give the theoretical copies and fold amplification for any efficiency.\n\nMolecular biology students and lab scientists use it to plan cycle numbers, see why efficiency matters so much and check whether a reaction is likely to reach the plateau."
 keywords: [pcr calculator, pcr cycles, amplification efficiency, dna copies after pcr, exponential amplification, qpcr]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-18
 variables:
   - { id: N0, label: Starting copies, default: 1000, min: 0 }
   - { id: n, label: Number of cycles, default: 30, min: 0 }
@@ -18,15 +18,17 @@ equations:
 faq:
   - q: How many copies does PCR make?
     a: In theory each cycle doubles the DNA (100% efficiency), so 30 cycles give about 10⁹-fold amplification.
-  - q: What is PCR efficiency?
-    a: The fraction of templates copied each cycle. Good qPCR assays run at about 90–105%.
-  - q: Does amplification continue forever?
-    a: No — after 25–35 cycles it plateaus as primers and nucleotides run out.
+  - q: "What is PCR efficiency?"
+    a: "The fraction of templates copied in each cycle. 100% means every molecule is copied, so the DNA doubles. Good qPCR assays run at about 90% to 110%."
+  - q: "Does amplification continue forever?"
+    a: "No. After about 25 to 35 cycles the reaction plateaus as primers and nucleotides run out and the polymerase loses activity."
   - q: "How many copies after 30 cycles?"
     a: "In theory 2³⁰ ≈ 1.07 × 10⁹ times the starting amount at 100% efficiency, but reactions plateau earlier in practice."
   - q: "What is a good qPCR efficiency?"
     a: "Between 90% and 110%, with a standard curve R² above 0.98."
-related: [biology/dna-concentration, biology/exponential-population-growth, biology/dna-copy-number, biology/primer-tm]
+  - q: "How many cycles do I need to reach a set number of copies?"
+    a: "Use n = log(N ÷ N₀) ÷ log(1 + E). Going from 1,000 to 10¹⁰ copies at 90% efficiency takes about 25.1 cycles, or 23.3 cycles at 100%."
+related: [biology/dna-copy-number, biology/dna-concentration, biology/primer-tm, biology/serial-dilution]
 ---
 
 ## How to use the PCR amplification calculator
@@ -44,7 +46,7 @@ Enter the **starting copies**, **number of cycles** and **efficiency**. The theo
 - Fold = 1.9³⁰ = **2.3e+08**
 - Copies = **2.3e+11**
 
-At 100% efficiency the same reaction would reach 1.07e+12 copies — showing how much efficiency matters.
+At 100% efficiency the same reaction would reach 1.07e+12 copies, which shows how much efficiency matters.
 
 ## Fold amplification by efficiency
 
@@ -60,7 +62,7 @@ A small drop in efficiency makes a big difference after 30 cycles.
 
 ## Plateau phase
 
-In practice, PCR slows and stops (plateau) as primers and nucleotides run out and the polymerase loses activity. Most reactions plateau somewhere around 10¹¹–10¹² copies, regardless of the theoretical number.
+In practice, PCR slows and stops (plateau) as primers and nucleotides run out and the polymerase loses activity. Most reactions plateau somewhere around 10¹¹ to 10¹² copies, regardless of the theoretical number.
 
 ## qPCR efficiency from a standard curve
 
@@ -68,8 +70,51 @@ Run a 10-fold dilution series and plot Ct against log₁₀(copies). The slope g
 
 <p class="formula">E = 10<sup>−1/slope</sup> − 1</p>
 
-A slope of −3.32 means 100% efficiency. Acceptable assays are usually 90–110% (slope −3.6 to −3.1).
+A slope of −3.32 means 100% efficiency. Acceptable assays are usually 90% to 110% (slope −3.6 to −3.1).
 
 ## Ct and starting amount
 
 Each cycle difference in Ct means about a 2-fold difference in starting template (at 100% efficiency). A sample with a Ct 3.3 cycles lower has about 10 times more template.
+
+## Worked example with the default values
+
+1,000 starting copies, 30 cycles at 90% efficiency:
+
+- Fold amplification = (1 + 0.9)<sup>30</sup> = 1.9<sup>30</sup> = **2.305 × 10<sup>8</sup>**
+- Copies after PCR = 1,000 × 2.305 × 10<sup>8</sup> = **2.305 × 10<sup>11</sup> copies**
+
+At 100% efficiency the same reaction would give 2<sup>30</sup> = 1.074 × 10<sup>9</sup> fold and 1.074 × 10<sup>12</sup> copies, 4.7 times more. In a real 25 to 50 µL reaction the default result is already near the plateau, so the true yield will be lower than the theoretical figure.
+
+## How many cycles to reach a target?
+
+Rearranging the formula gives n = log(N ÷ N₀) ÷ log(1 + E). To reach 10¹⁰ copies from 1,000 starting copies takes log(10⁷) ÷ log(1.9) = **25.1 cycles** at 90% efficiency, or 23.3 cycles at 100%.
+
+## Copies after each cycle from 1,000 starting copies
+
+| Cycles | 100% | 95% | 90% | 80% |
+|---|---|---|---|---|
+| 10 | 1.02 × 10<sup>6</sup> | 7.95 × 10<sup>5</sup> | 6.13 × 10<sup>5</sup> | 3.57 × 10<sup>5</sup> |
+| 15 | 3.28 × 10<sup>7</sup> | 2.24 × 10<sup>7</sup> | 1.52 × 10<sup>7</sup> | 6.75 × 10<sup>6</sup> |
+| 20 | 1.05 × 10<sup>9</sup> | 6.32 × 10<sup>8</sup> | 3.76 × 10<sup>8</sup> | 1.27 × 10<sup>8</sup> |
+| 25 | 3.36 × 10<sup>10</sup> | 1.78 × 10<sup>10</sup> | 9.31 × 10<sup>9</sup> | 2.41 × 10<sup>9</sup> |
+| 30 | 1.07 × 10<sup>12</sup> | 5.02 × 10<sup>11</sup> | 2.30 × 10<sup>11</sup> | 4.55 × 10<sup>10</sup> |
+| 35 | 3.44 × 10<sup>13</sup> | 1.42 × 10<sup>13</sup> | 5.71 × 10<sup>12</sup> | 8.60 × 10<sup>11</sup> |
+
+These are theoretical values; real reactions stop growing once they reach roughly 10¹¹ to 10¹² copies.
+
+## qPCR efficiency from the standard curve slope
+
+| Slope | Efficiency | Amplification factor per cycle |
+|---|---|---|
+| -3.1 | 110.2% | 2.102 |
+| -3.2 | 105.4% | 2.054 |
+| -3.32 | 100.1% | 2.001 |
+| -3.4 | 96.8% | 1.968 |
+| -3.5 | 93.1% | 1.931 |
+| -3.6 | 89.6% | 1.896 |
+
+## Practical notes
+
+- Use the fewest cycles that give enough product. Extra cycles past the plateau mostly add primer dimers and non-specific bands.
+- For cloning or sequencing, start from more template rather than adding cycles, which also lowers the chance of copying polymerase errors.
+- Count starting copies from DNA mass and length with a copy number calculation before planning a reaction.

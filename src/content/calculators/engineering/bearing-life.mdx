@@ -2,10 +2,10 @@
 title: Bearing Life Calculator (L10 Rating Life, Hours)
 description: Calculate the basic L10 rating life of a ball or roller bearing in millions of revolutions and operating hours from dynamic load rating, load and speed.
 category: engineering
-intro: "Rolling bearings eventually fail by fatigue of the raceways, and their life is quoted statistically as L10 — the life that 90% of identical bearings will reach. This bearing life calculator applies the ISO 281 basic rating life equation L10 = (C ÷ P)^p and converts it into operating hours at the shaft speed."
+intro: "Rolling bearings wear out by fatigue of the raceways and rolling elements, so their life is stated statistically as L10, the life that 90% of identical bearings reach or exceed. This bearing life calculator applies the ISO 281 equation L10 = (C ÷ P)^p and converts the result to operating hours at the shaft speed.\n\nMachine designers use it to select a bearing size, and maintenance engineers use it to judge whether a replacement bearing suits a new duty."
 keywords: [bearing life calculator, l10 bearing life calculator, bearing rating life, bearing life hours, iso 281 bearing life, l10 = (c/p)^3, ball bearing life calculator]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - id: p
     label: Bearing type (life exponent)
@@ -30,6 +30,8 @@ faq:
     a: Very strongly. For a ball bearing, doubling the load cuts life to one-eighth; halving it raises life eightfold.
   - q: What life should I design for?
     a: Typical targets are 8,000–12,000 h for machines used intermittently, 20,000–30,000 h for 8-hour-a-day machinery, and 40,000–60,000 h or more for continuous 24-hour service such as pumps and fans.
+  - q: "How do I find the bearing size needed for a target life?"
+    a: "Convert the target hours to revolutions (hours × 60 × rpm ÷ 10⁶), then C = P × L10^(1/p). For 20,000 h at 1,500 rpm under 4 kN, a ball bearing needs C of at least 48.7 kN."
 related: [engineering/shaft-diameter, engineering/gear-ratio, engineering/availability-mtbf, engineering/torque-power-speed]
 ---
 
@@ -67,3 +69,34 @@ A deep-groove ball bearing with C = 32.5 kN carries 4 kN at 1,500 rpm:
 
 - Modern catalogues add a modified life L<sub>nm</sub> = a₁ a<sub>ISO</sub> L₁₀, which accounts for lubrication, contamination and the required reliability.
 - Real bearings often fail early from poor lubrication, misalignment or contamination rather than fatigue. On inverter-fed motors, [shaft currents from VFDs](ib:vfd-motor-bearing-currents) can also damage the raceways.
+
+## Life at higher reliability (factor a<sub>1</sub>)
+
+L10 accepts that 1 bearing in 10 fails first. For aerospace, medical or hard-to-reach equipment a higher survival rate is specified, and ISO 281 scales the life by a reliability factor a<sub>1</sub>. For the default 6208-size bearing (C = 32.5 kN, P = 4 kN, 1,500 rpm):
+
+| Reliability | a<sub>1</sub> | Life (million rev) | Life at 1,500 rpm |
+|---|---|---|---|
+| 90% | 1.00 | 536.4 | 5,960 h |
+| 95% | 0.64 | 343.3 | 3,814 h |
+| 96% | 0.55 | 295.0 | 3,278 h |
+| 97% | 0.47 | 252.1 | 2,801 h |
+| 98% | 0.37 | 198.5 | 2,205 h |
+| 99% | 0.25 | 134.1 | 1,490 h |
+
+Asking for 99% survival instead of 90% cuts the usable life to a quarter, from 5,960 h to 1,490 h.
+
+## Choosing a bearing for a target life
+
+Work backwards from the hours the machine needs. For 20,000 h at 1,500 rpm the bearing must survive 20,000 × 60 × 1,500 ÷ 10⁶ = **1,800 million revolutions**. The required rating is then C = P × L<sub>10</sub><sup>1/p</sup> = 4 × 1,800<sup>1/3</sup> = **48.7 kN**. The default bearing at 32.5 kN falls short, so the designer moves to a wider series or a larger bore, or reduces the load.
+
+## Getting the load right in practice
+
+The load P in the equation is the equivalent dynamic load, not the static weight. Gear meshing, belt pull, unbalance and shock all add to it, so catalogues multiply the calculated load by a service factor, commonly 1.0 to 1.2 for smooth electric motor drives and 1.5 or more for crushers and vibrating screens. Applying a factor of 1.3 to the default case drops the life from 5,960 h to **2,713 h**, because life falls with the cube of load. Speed matters linearly: the same bearing at 3,000 rpm lasts only 2,980 h.
+
+## Common mistakes
+
+- **Using the static rating C<sub>0</sub>.** C<sub>0</sub> limits permanent deformation under a stationary load; the life equation needs the dynamic rating C.
+- **Using p = 3 for a roller bearing.** Cylindrical, taper and spherical roller bearings use 10/3, which gives noticeably longer life at the same C/P.
+- **Ignoring the axial load.** A thrust component can raise P well above the radial load; use P = X F<sub>r</sub> + Y F<sub>a</sub> with the catalogue factors.
+- **Reading L10 as a guaranteed minimum.** One bearing in ten is expected to fail before L10, so stock spares accordingly.
+- **Mixing N and kN.** C and P must be in the same unit; a 32.5 kN rating against a 4,000 N load gives a life a billion times too small.

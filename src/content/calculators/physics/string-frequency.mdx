@@ -2,10 +2,10 @@
 title: String Frequency Calculator (Standing Waves & Harmonics)
 description: Find the fundamental frequency and harmonics of a vibrating string from its length, tension and linear density, f = (n/2L)·√(T/μ), plus wave speed.
 category: physics
-intro: "A string fixed at both ends vibrates in standing waves whose wavelengths fit a whole number of half-waves into its length. This string frequency calculator uses f = (n ÷ 2L) √(T ÷ μ) to find the fundamental and harmonic frequencies, the wave speed and the wavelength — useful for musical instruments, cables and wire-tension checks."
+intro: "A string fixed at both ends vibrates in standing waves that fit a whole number of half-wavelengths into its length. This string frequency calculator applies f = (n ÷ 2L) √(T ÷ μ) to find harmonic frequencies, wave speed and wavelength.\n\nGuitar and piano builders use it to choose string gauges and tensions, physics students for standing wave labs, and engineers to estimate cable and wire tension from a measured natural frequency."
 keywords: [string frequency calculator, standing wave calculator, vibrating string frequency, string tension frequency, harmonics calculator, f = 1/2l sqrt(t/mu), guitar string tension calculator]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: L, label: Vibrating length, family: length, unit: mm, imperialUnit: in, default: 648, min: 0 }
   - { id: T, label: String tension, family: force, unit: N, imperialUnit: lbf, default: 70, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: A string can vibrate with 1, 2, 3… half-wavelengths along its length. These modes have frequencies n × f₁ and together give an instrument its tone. Harmonic n has n − 1 nodes between the ends.
   - q: How do I find the tension needed for a note?
     a: Enter the length, the linear density and the target frequency, then clear the tension field. The calculator solves T = μ (2Lf ÷ n)².
+  - q: "How do I work out linear density from the string diameter?"
+    a: "For a solid wire, μ = density × π × diameter² ÷ 4. A 0.254 mm steel wire at 7,850 kg/m³ gives about 0.398 g/m. For wound strings, weigh a known length instead."
 related: [physics/wavelength-frequency, physics/beat-frequency, physics/simple-harmonic-motion, physics/speed-of-sound]
 ---
 
@@ -63,3 +65,39 @@ A steel guitar string, 648 mm long, 0.4 g/m, tensioned to 70 N:
 - Stiff, thick strings are slightly inharmonic: their overtones sit a little above exact multiples of f₁.
 - The same equation estimates the tension in a stay cable or wire rope from its measured natural frequency.
 - Two strings tuned slightly apart produce audible beats — see the [beat frequency calculator](/physics/beat-frequency/).
+
+## Tuning the default string to pitch
+
+The default string gives f<sub>1</sub> = **322.8 Hz** with a wave speed of **418.3 m/s** and a wavelength of **1.296 m**. That is 36 cents flat of E<sub>4</sub> at 329.63 Hz. Solving T = μ(2Lf)² for the target note gives 0.0004 × (2 × 0.648 × 329.63)² = **73.0 N**, about 7.44 kgf, so the player needs 3.0 N more tension. A small change in tension is a large change in cents because frequency follows the square root.
+
+## Linear density from the wire size
+
+For a plain solid string, μ = ρ × π d² ÷ 4. A steel string with ρ = 7,850 kg/m³ and d = 0.254 mm (a 0.010 in gauge) gives μ = **0.398 g/m**, matching the default 0.4 g/m. Wound strings have a core plus a wrap, so weigh a measured length or use the maker's unit weight table instead of the diameter.
+
+## Fret positions on a 648 mm scale
+
+Each fret shortens the vibrating length by a factor of 2<sup>1/12</sup>, raising the pitch one semitone at the same tension:
+
+| Fret | Vibrating length | Distance from nut | Fundamental |
+|---|---|---|---|
+| 0 | 648.0 mm | 0.0 mm | 322.8 Hz |
+| 1 | 611.6 mm | 36.4 mm | 342.0 Hz |
+| 2 | 577.3 mm | 70.7 mm | 362.3 Hz |
+| 3 | 544.9 mm | 103.1 mm | 383.9 Hz |
+| 5 | 485.5 mm | 162.5 mm | 430.9 Hz |
+| 7 | 432.5 mm | 215.5 mm | 483.6 Hz |
+| 12 | 324.0 mm | 324.0 mm | 645.6 Hz |
+
+At the 12th fret the length halves and the frequency doubles to 645.6 Hz, one octave up.
+
+## Measuring cable tension by vibration
+
+Rearranged as T = 4 μ L² f<sub>1</sub>², the equation turns an accelerometer reading into a tension. A stay cable with μ = 5 kg/m and a free length of 40 m vibrating at 2 Hz carries about 4 × 5 × 40² × 2² = **128 kN**. Bridge and mast inspectors use this because it needs no load cell. Sag, bending stiffness and end dampers all shift the result, so long or heavy cables need correction factors.
+
+## Common mistakes
+
+- **Entering μ in kg/m.** This calculator expects g/m; 0.0004 typed as kg/m is treated as 0.0004 g/m and gives a frequency 31.6 times too high.
+- **Using total string length.** Only the part between the nut and the saddle vibrates.
+- **Entering tension in kgf.** Convert to newtons by multiplying by 9.81.
+- **Expecting harmonics to stay exact.** Thick, stiff strings run sharp in their upper partials, which is why pianos are stretch tuned.
+- **Forgetting the harmonic number.** n = 2 does not give a different string; it gives the second mode of the same one at twice f<sub>1</sub>.

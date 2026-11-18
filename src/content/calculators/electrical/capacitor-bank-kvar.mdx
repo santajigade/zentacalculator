@@ -2,10 +2,10 @@
 title: Capacitor Bank kVAr to µF Calculator (3-Phase)
 description: Convert capacitor bank kVAr to microfarads per phase for delta or star connection, and find the line current — or the kVAr of a given capacitance.
 category: electrical
-intro: "Power factor correction capacitors are rated in kVAr, but the capacitance inside each phase is what you measure and replace. This capacitor bank kVAr calculator converts between kVAr and µF for delta and star banks and gives the line current — see [how to calculate capacitor bank kVAr](https://www.instrumentationblog.in/how-to-calculate-capacitor-bank-kvar-formula/) and the guide to [capacitor bank sizing for power factor correction](https://www.instrumentationblog.in/capacitor-bank-sizing-power-factor-correction/)."
+intro: "Power factor correction capacitors are rated in kVAr, but the capacitance in each phase is what you measure and replace. This capacitor bank kVAr calculator converts between kVAr and µF for delta and star banks and gives the line current. See [how to calculate capacitor bank kVAr](https://www.instrumentationblog.in/how-to-calculate-capacitor-bank-kvar-formula/).\n\nElectrical engineers and maintenance staff use it to order replacement units, test banks and size feeders. Read about [capacitor bank sizing for power factor correction](https://www.instrumentationblog.in/capacitor-bank-sizing-power-factor-correction/)."
 keywords: [capacitor bank kvar calculator, kvar to uf calculator, kvar to microfarad, capacitor bank current calculator, uf to kvar, delta capacitor bank capacitance, power factor capacitor calculation]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: Q, label: Bank rating, suffix: kVAr, default: 50, min: 0 }
   - { id: V, label: Line voltage, family: voltage, unit: V, default: 415, min: 0 }
@@ -32,6 +32,10 @@ faq:
     a: Its output falls with the square of voltage — (415 ÷ 440)² = 89%, so a 50 kVAr unit delivers about 44.5 kVAr. Over-rating the voltage is common to allow for harmonics and overvoltage.
   - q: How do I find kVAr from a measured capacitance?
     a: Enter the measured µF per phase and clear the kVAr field. A drop of more than about 5–10% from nameplate usually means the capacitor should be replaced.
+  - q: "What should a capacitance meter read across two terminals of a delta capacitor?"
+    a: "1.5 times the capacitance per phase, because one capacitor sits in parallel with the other two in series. For the default 50 kVAr, 415 V, 50 Hz bank that is about 462 µF."
+  - q: "How quickly must a power factor capacitor discharge?"
+    a: "IEC 60831-1 requires 75 V or less within 3 minutes of disconnection. For 308 µF charged to the 587 V peak of a 415 V supply, that needs a discharge resistor of about 284 kΩ or less."
 related: [electrical/power-factor-correction, electrical/kva-to-kw, electronics/reactance, electrical/thd]
 ---
 
@@ -86,3 +90,46 @@ Capacitor output varies with V². For a bank rated 50 kVAr at its rated voltage:
 - Size cables and switchgear for about 1.3–1.5 × rated current to allow for harmonics and capacitance tolerance.
 - Where the [THD](/electrical/thd/) is high, use detuned (reactor) banks to avoid resonance.
 - Find the kVAr you need from the load and power factors with the [power factor correction calculator](/electrical/power-factor-correction/).
+
+## What the default bank does to a real load
+
+Connect the default 50 kVAr, 415 V delta bank to a 200 kW load running at 0.80 power factor:
+
+- Load reactive power = 200 × tan(cos⁻¹ 0.80) = **150.0 kVAr**
+- After correction: 150.0 − 50 = 100.0 kVAr, so apparent power falls from 250.0 kVA to **223.6 kVA**
+- Power factor rises from 0.80 to **0.894**
+- Supply current drops from 347.8 A to **311.1 A**, freeing about 37 A of cable and transformer capacity
+
+## Testing a bank in the field
+
+A healthy bank draws close to its calculated current, so a clamp meter reading near 69.6 A on each line at 415 V is the quickest check. Readings that are unequal by more than about 10% point to a failed element in one phase.
+
+With the bank isolated and discharged, a capacitance meter across two terminals of a three-terminal delta unit does not read C. It reads one capacitor in parallel with the other two in series, so the expected value is 1.5 × 308.0 = **462 µF** for each pair. Compare all three pairs; they should agree within a few percent.
+
+IEC 60831-1 requires each unit to discharge to 75 V or less within 3 minutes. From a peak of 587 V, that needs a discharge resistance no greater than 180 ÷ (308 µF × ln(587 ÷ 75)) = **284 kΩ** per phase. Always wait the full time and short the terminals before touching them.
+
+## Capacitance for a 50 kVAr delta bank at other supplies
+
+| Supply | µF per phase | Line current |
+|---|---|---|
+| 380 V, 50 Hz | 367.4 µF | 76.0 A |
+| 400 V, 50 Hz | 331.6 µF | 72.2 A |
+| 415 V, 50 Hz | 308.0 µF | 69.6 A |
+| 440 V, 50 Hz | 274.0 µF | 65.6 A |
+| 480 V, 60 Hz | 191.9 µF | 60.1 A |
+| 600 V, 60 Hz | 122.8 µF | 48.1 A |
+| 690 V, 50 Hz | 111.4 µF | 41.8 A |
+
+On 60 Hz systems the same kVAr needs 83% of the capacitance it would need at 50 Hz, so never fit a 50 Hz replacement value into a 60 Hz bank without recalculating.
+
+## Detuned banks
+
+Where drives create harmonics, each step gets a series reactor. A 7% reactor tunes the circuit to 50 ÷ √0.07 = **189 Hz**, below the 5th harmonic, but it lifts the voltage across the capacitor to 415 ÷ (1 − 0.07) = 446 V. That is why detuned banks on 415 V systems use capacitors rated 480 V or more.
+
+## Common mistakes
+
+- **Using the star formula for a delta bank.** It gives three times the capacitance needed, and the bank would deliver three times the kVAr.
+- **Entering phase voltage instead of line voltage.** The formulas take V<sub>L</sub>; using 240 V instead of 415 V inflates the result by a factor of three.
+- **Measuring a delta unit pair and calling it C.** The meter shows 1.5 C, so a good 308 µF phase can look like an oversized one.
+- **Over-compensating a motor at its terminals.** Fixed capacitors switched with a motor should not exceed about 90% of its no-load reactive power, or the motor can self-excite after disconnection.
+- **Ignoring the rated voltage on the nameplate.** A unit marked 440 V gives less than its nameplate kVAr on 415 V, so read the output at the actual supply.

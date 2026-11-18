@@ -2,10 +2,10 @@
 title: Faraday's Law of Electrolysis Calculator (Mass Deposited)
 description: Calculate the mass of metal deposited or dissolved in electrolysis and electroplating from current, time and current efficiency with Faraday's law.
 category: chemistry
-intro: "Faraday's laws of electrolysis say the mass of a substance deposited at an electrode is proportional to the charge passed and to its molar mass divided by the electrons transferred. This Faraday's law of electrolysis calculator finds the mass plated or dissolved, the charge and moles of electrons — for copper, nickel, silver, zinc, gold and more."
+intro: "Faraday's laws of electrolysis state that the mass deposited or dissolved at an electrode is proportional to the charge passed and to the molar mass per electron transferred. This Faraday's law of electrolysis calculator returns charge, moles of electrons and mass for common plating metals.\n\nElectroplaters, anodizing and refining engineers, and chemistry students use it to set rectifier current and plating time, check bath efficiency and predict hydrogen output."
 keywords: [faraday electrolysis calculator, faradays law of electrolysis, electroplating calculator, mass deposited electrolysis, m = itm / nf, electrochemical equivalent, plating time calculator]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-18
 variables:
   - { id: I, label: Current, family: current, unit: A, default: 2, min: 0 }
   - { id: t, label: Time, family: seconds, unit: h, default: 1, min: 0 }
@@ -40,6 +40,8 @@ faq:
     a: The share of the current that actually deposits the metal. The rest evolves hydrogen or drives side reactions — acid copper and nickel baths run at 95–100%, hard chromium from chromic acid only about 10–25%.
   - q: How do I find the plating time for a given mass?
     a: Clear the time field and enter the target mass. t = m × z × F ÷ (I × M × efficiency).
+  - q: "How do I convert plating current density to total current?"
+    a: "Multiply the current density by the area being plated. 200 cm² is 2 dm², so 1 A/dm² needs 2 A. Include the rack contacts and any back faces that are exposed to the solution."
 related: [chemistry/nernst-equation, chemistry/moles, physics/ohms-law, electronics/battery-charge-time]
 ---
 
@@ -83,3 +85,41 @@ Copper plating from an acid sulfate (Cu²⁺) bath at 2 A for 1 hour, 100% effic
 - Divide the mass by density and plated area for thickness — copper is 8.96 g/cm³, so 2.37 g over 100 cm² is about 2.6 µm.
 - Real plating thickness varies across a part; edges and corners plate faster than recesses.
 - The same law gives the hydrogen produced by water electrolysis: about 0.0376 g (0.42 L at 0 °C, 1 atm) per ampere-hour.
+
+## Plating time for a target thickness
+
+The default case (2 A for 1 h on copper at 100%) gives Q = 7,200 C, n<sub>e</sub> = 0.07462 mol and **2.3710 g** of copper. In the shop the question usually runs the other way: how long to reach a specified thickness. Take a 10 µm nickel layer on 200 cm² at 2 A from a Watts bath running at 95% efficiency:
+
+- Mass needed = 10 × 10⁻⁴ cm × 200 cm² × 8.908 g/cm³ = **1.7816 g**
+- Current density = 2 A ÷ 2 dm² = 1 A/dm², a modest value for a Watts nickel bath
+- Time = m × F ÷ (I × M/z × η) = 1.7816 × 96,485 ÷ (2 × 29.3467 × 0.95) = **3,083 s (51.4 min)**
+
+Enter the mass, the current and the efficiency with the time field cleared and the calculator gives the same result.
+
+## Deposition rate at 1 A/dm²
+
+Platers think in current density rather than total current, because thickness depends on amps per unit area. At 1 A/dm² and 100% efficiency the average build-up rate is (0.01 A/cm² × 60 s × M/z) ÷ (F × density):
+
+| Metal and ion | Density | Thickness rate | Time for 10 µm |
+|---|---|---|---|
+| Copper, Cu²⁺ | 8.96 g/cm³ | 0.221 µm/min | 272.1 min |
+| Silver, Ag⁺ | 10.49 g/cm³ | 0.639 µm/min | 93.8 min |
+| Nickel, Ni²⁺ | 8.908 g/cm³ | 0.205 µm/min | 292.9 min |
+| Zinc, Zn²⁺ | 7.14 g/cm³ | 0.285 µm/min | 210.7 min |
+| Tin, Sn²⁺ | 7.265 g/cm³ | 0.508 µm/min | 118.1 min |
+| Gold, Au⁺ | 19.32 g/cm³ | 0.634 µm/min | 94.6 min |
+| Chromium, Cr³⁺ | 7.19 g/cm³ | 0.150 µm/min | 400.3 min |
+
+Divide the time by the current density in A/dm² and by the efficiency. Hard chromium is far slower than the Cr³⁺ figure suggests, because chromic acid baths work at z = 6 and only 10 to 25% efficiency.
+
+## How it is used in practice
+
+Plating rectifiers carry an ampere-hour meter, and the line controller stops each load once the ampere-hours calculated from Faraday's law are reached. Bath efficiency is checked by plating a weighed test panel or by a copper coulometer in series: if the panel gains 2.181 g where 2.371 g was expected, the bath is running at 92%. Electrowinning and copper refining tanks use the same figure to report current efficiency to management, since every lost percent is wasted energy.
+
+## Common mistakes
+
+- **Using hours instead of seconds.** Q in coulombs needs time in seconds; 1 A·h is 3,600 C.
+- **Wrong ion charge.** Copper from a cyanide bath is Cu⁺ (z = 1) and deposits twice the mass per coulomb of an acid Cu²⁺ bath.
+- **Using total current for one part.** On a loaded rack the current divides between parts by area, so compute per part with its own share.
+- **Ignoring hidden area.** Racks, hooks and the inside of tubes take current too, which lowers the thickness on the area you measure.
+- **Assuming average thickness is the minimum.** Specifications set a minimum at significant surfaces, so plate long enough that recesses reach it.

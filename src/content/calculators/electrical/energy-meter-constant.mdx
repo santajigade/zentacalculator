@@ -2,10 +2,10 @@
 title: Energy Meter Constant Calculator (imp/kWh to Load kW)
 description: Calculate load power from an energy meter's pulse LED or disc using its meter constant (imp/kWh or rev/kWh), and check the meter's percentage error.
 category: electrical
-intro: "Every electricity meter has a constant, printed as imp/kWh (pulses) or rev/kWh (disc turns), that says how many pulses mean one kilowatt-hour. This energy meter constant calculator converts pulses counted over a time into load power and energy, and compares it with a reference load to give the meter error — useful alongside an [electrical energy consumption calculation](https://www.instrumentationblog.in/electrical-energy-consumption-calculation/)."
+intro: "Every electricity meter carries a constant, printed as imp/kWh for a pulse LED or rev/kWh for a disc, that says how many pulses make one kilowatt-hour. This energy meter constant calculator turns a pulse count over time into load power, energy and meter error.\n\nElectricians, utility testers and homeowners use it to check a disputed bill, alongside an [electrical energy consumption calculation](https://www.instrumentationblog.in/electrical-energy-consumption-calculation/)."
 keywords: [energy meter constant calculator, imp/kwh calculator, meter pulse to kw, energy meter testing, rev/kwh calculator, meter error calculation, kwh meter pulse calculation]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: C, label: Meter constant, suffix: imp/kWh, default: 3200, min: 0, help: 'For a disc meter, enter the rev/kWh value and count revolutions.' }
   - { id: n, label: Pulses (or revolutions) counted, default: 32, min: 0 }
@@ -29,6 +29,8 @@ faq:
     a: Run a known, steady load (a heater measured with a calibrated wattmeter), count pulses for at least a minute and compare. Error = (meter reading − actual) ÷ actual. Class 1 meters must be within ±1%.
   - q: What about CT-operated meters?
     a: For a meter on current and voltage transformers, the constant refers to the secondary side. Multiply the result by the CT ratio × PT ratio to get the primary power.
+  - q: "Why does my meter LED keep flashing with everything switched off?"
+    a: "Something is still drawing power: standby loads, a water heater, an outside light or a neighbour fault. A healthy meter must not creep; IEC 62053-21 includes a no-load test in which the test output may give no more than one pulse in a set time with voltage applied and no current."
 related: [electrical/load-factor, electrical/amps-to-watts, electrical/kw-to-amps, electrical/power-factor-correction]
 ---
 
@@ -70,3 +72,36 @@ A 3,200 imp/kWh meter flashes 32 times in 30 s while a reference wattmeter reads
 - Use a purely resistive, steady load; motor or switching loads fluctuate.
 - For three-phase meters, apply a balanced load or test each element separately.
 - To turn monthly kWh into load factor and demand figures, use the [load factor calculator](/electrical/load-factor/).
+
+## How long to count
+
+A stopwatch count is only as good as its resolution. Starting the watch on a flash and stopping on a flash removes the half pulse at each end, but a miscount of one pulse in the default 32 still shifts the result by 3.1%, much more than the 0.84% error being measured. At 1.19 kW on a 3,200 imp/kWh meter, each pulse takes 0.945 s:
+
+| Pulses counted | Time needed | Effect of a one pulse miscount |
+|---|---|---|
+| 5 | 4.7 s | ±20.0% |
+| 10 | 9.5 s | ±10.0% |
+| 20 | 18.9 s | ±5.0% |
+| 32 | 30.3 s | ±3.1% |
+| 50 | 47.3 s | ±2.0% |
+| 100 | 94.5 s | ±1.0% |
+
+To separate a class 1 meter from a faulty one, count at least 100 pulses, or use a photo head and a meter test set that times the pulses electronically.
+
+## Disc meters and CT operated meters
+
+On an electromechanical meter, count the black mark on the disc instead of LED flashes. A 600 rev/kWh meter turning 10 times in 60 s is carrying 10 × 3,600 ÷ (600 × 60) = **1.00 kW**.
+
+For a meter fed from a 200/5 A CT and an 11,000/110 V PT, the pulses measure secondary power. Multiply by 40 × 100 = **4,000**, so a secondary reading of 1.20 kW is 4.8 MW on the primary side.
+
+## What the default error means on a bill
+
+The default test shows the meter reading 0.84% high. On a household using 300 kWh a month, that is about 2.5 kWh of extra recorded energy each month. It is still inside the ±1% limit of a class 1 meter, so it would pass an accuracy test, although the single 30 s count is too short to prove it.
+
+## Common mistakes
+
+- **Counting the first flash.** Start timing on a flash and call it zero; counting it as one adds a pulse and inflates the power.
+- **Using the kvarh LED.** Many static meters have separate kWh and kvarh pulse outputs. Check the label next to the LED you are watching.
+- **Testing on a varying load.** Fridges, inverters and motors change power during the count; use a resistive heater or kettle.
+- **Forgetting other loads.** Anything else on the circuit adds pulses. Switch off the rest of the installation, or measure the reference at the meter itself.
+- **Leaving out the CT and PT ratios.** On HT and large LT services the raw pulse result is secondary power only.

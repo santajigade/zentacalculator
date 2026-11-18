@@ -2,10 +2,10 @@
 title: Inverse Square Law Calculator (Light, Sound & Radiation)
 description: Calculate how intensity of light, sound or radiation falls with distance using I₂ = I₁(d₁/d₂)², with the decibel drop and distance for a target level.
 category: physics
-intro: "Energy spreading out from a point source covers an area that grows with the square of distance, so its intensity falls as 1/d². This inverse square law calculator scales a measured intensity, illuminance, sound intensity or radiation dose rate from one distance to another and gives the change in decibels."
+intro: "Energy spreading from a point source covers a sphere whose area grows with the square of distance, so its intensity falls as 1/d². This inverse square law calculator scales a measured light level, sound intensity or radiation dose rate from one distance to another and gives the drop in decibels.\n\nRadiation safety officers use it to set barrier distances, lighting designers to estimate lux on a work surface, and sound engineers to predict how loud a speaker is at the audience."
 keywords: [inverse square law calculator, inverse square law light, inverse square law sound, radiation dose distance calculator, intensity distance formula, i1 d1^2 = i2 d2^2, lux distance calculator]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: I1, label: Intensity at distance 1, default: 100, min: 0, help: 'Any unit — lux, W/m², µSv/h, cd — the result is in the same unit.' }
   - { id: d1, label: Distance 1, family: length, unit: m, imperialUnit: ft, default: 1, min: 0 }
@@ -26,6 +26,8 @@ faq:
     a: Dose rate from a small gamma source falls as 1/d², so moving from 1 m to 2 m cuts exposure to 25%. Distance is one of the three basic protections, with time and shielding.
   - q: When does the inverse square law not apply?
     a: Close to large sources (a line or area source), with focused beams such as lasers or spotlights, and where the medium absorbs energy (fog, water). A rule of thumb is that it holds beyond about five times the source's largest dimension.
+  - q: "How far away do I need to be to halve the intensity?"
+    a: "Multiply the distance by √2, about 1.414. A reading taken at 1 m halves at 1.41 m, a 3.01 dB drop. To cut intensity to one tenth, move to √10 = 3.16 times the distance."
 related: [physics/decibel, physics/stefan-boltzmann-law, physics/radioactive-activity, physics/gravitational-force]
 ---
 
@@ -62,3 +64,37 @@ A lamp gives 100 lux at 1 m. At 3 m:
 
 - Decibels use 10 log₁₀ of an intensity ratio, which equals 20 log₁₀ of the distance ratio.
 - The same 1/r² rule governs gravity and electric fields — see the [gravitational force calculator](/physics/gravitational-force/).
+
+## Finding a safe distance for a target level
+
+Rearranging the law gives d₂ = d₁ × √(I₁ ÷ I₂). A gamma source reading 100 µSv/h at 1 m falls to a chosen limit of 2.5 µSv/h at
+
+- d₂ = 1 × √(100 ÷ 2.5) = 1 × √40 = **6.32 m**
+
+So a rope barrier at about 6.4 m keeps anyone outside it below the limit, before any shielding is counted. Halving the limit only moves the barrier out by a factor of √2, which is why distance alone becomes impractical for strong sources and shielding takes over.
+
+## How it is measured in practice
+
+Photometry benches check the law by moving a lux meter along a rail away from a small lamp. Radiographers survey a site by taking one dose rate reading close in and scaling it outward, then confirming at the barrier. In acoustics the same idea is the familiar 6 dB drop per doubling of distance, measured outdoors or in an anechoic room where reflections do not top up the level.
+
+Distances must be taken from the effective centre of the source, not its front face. If a lamp's emitting point sits 10 cm behind the face, readings at 1 m and 3 m from the face are really at 1.1 m and 3.1 m, and the measured ratio is 12.59% instead of the 11.11% the formula predicts. Taking readings at several distances and fitting a line to 1/√I against distance reveals the true origin.
+
+## Point source versus line source
+
+A long road, pipe rack or conveyor behaves as a line source, whose intensity falls as 1/d rather than 1/d². Close to a wide area source the level hardly falls at all.
+
+| Distance multiple | Point source remaining | Point source drop | Line source remaining | Line source drop |
+|---|---|---|---|---|
+| 2 × | 25% | 6.02 dB | 50% | 3.01 dB |
+| 4 × | 6.25% | 12.04 dB | 25% | 6.02 dB |
+| 8 × | 1.562% | 18.06 dB | 12.5% | 9.03 dB |
+| 10 × | 1% | 20.00 dB | 10% | 10.00 dB |
+| 100 × | 0.01% | 40.00 dB | 1% | 20.00 dB |
+
+## Common mistakes
+
+- **Using 10 log for a distance ratio.** The drop is 20 log₁₀(d₂/d₁) because intensity goes with distance squared; 10 log applies to the intensity ratio itself.
+- **Measuring from the housing instead of the source centre.** The offset error is largest at short distances, as the example above shows.
+- **Applying it to beams.** Lasers, spotlights with reflectors and horn loudspeakers concentrate energy and fall off far more slowly in their near field.
+- **Mixing distance units.** Both distances must be in the same unit; only their ratio matters, so metres against feet gives a wrong answer silently.
+- **Ignoring absorption.** Air absorbs high frequency sound, and shielding, fog or water absorb light and radiation on top of the geometric spreading.

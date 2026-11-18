@@ -2,10 +2,10 @@
 title: "Transformer Size Calculator (kVA from Connected Load)"
 description: "Calculate the transformer kVA rating for a connected load from kW, demand factor, power factor and growth margin, then pick the next standard size."
 category: electrical
-intro: "Choosing a transformer means turning the connected load into a kVA figure, allowing for demand factor, power factor and future growth. This transformer size calculator gives the maximum demand and the kVA rating to buy.\n\nElectrical engineers, contractors and plant planners use it at the design stage, because too small a unit overheats and too large a one wastes money and no-load losses. See [how to calculate transformer kVA rating](https://www.instrumentationblog.in/how-to-calculate-transformer-kva-rating/)."
+intro: "Sizing a transformer means turning the connected load into a kVA rating after allowing for demand factor, power factor and future growth. This transformer size calculator gives the maximum demand and the kVA to specify.\n\nElectrical engineers, contractors and plant planners use it at the design stage, since an undersized unit overheats and an oversized one costs more and wastes no-load losses. See [how to calculate transformer kVA rating](https://www.instrumentationblog.in/how-to-calculate-transformer-kva-rating/)."
 keywords: [transformer size calculator, transformer kva calculation, transformer sizing, kva rating calculator, distribution transformer selection, diversity factor, how to size a transformer]
 published: 2026-10-28
-updated: 2026-11-16
+updated: 2026-11-18
 variables:
   - { id: P, label: Total connected load, family: power, unit: kW, imperialUnit: hp, default: 500, min: 0 }
   - { id: df, label: Demand / diversity factor, default: 0.7, min: 0.01, max: 1, help: 'Fraction of connected load expected to run at the same time — often 0.6–0.8 for industrial plants.' }
@@ -29,6 +29,8 @@ faq:
     a: "At unity diversity and 0.9 power factor, 100 kW is 111 kVA, so 160 kVA with a growth margin. With the default 0.7 demand factor and 25% growth, 100 kW connected needs 97 kVA, which is a 100 kVA unit."
   - q: "Can a transformer be loaded above its kVA rating?"
     a: "For short periods, yes: IEC 60076-7 allows cyclic overloads if the hot-spot temperature stays within limits, typically after a light-load period. Continuous overload ages the insulation quickly, roughly halving its life for every 6 to 7 °C of extra hot-spot temperature."
+  - q: "Why are transformers rated in kVA rather than kW?"
+    a: "Transformer heating depends on current and voltage, not on how much of that current does real work. Copper loss follows current and core loss follows voltage, so the limit is apparent power in kVA, whatever the load power factor."
 related: [electrical/ct-burden, electrical/three-phase-motor-power, electrical/transformer-current, electrical/transformer-efficiency, electrical/power-factor-correction, electrical/generator-size]
 ---
 
@@ -112,3 +114,21 @@ For the example's 350 kW maximum demand with 25% growth, a poor power factor pus
 - **Using the power factor before correction when a capacitor bank is planned,** or after correction when it is not. The rating must match the power factor the transformer will actually see.
 - **Counting standby equipment.** Duty and standby pumps do not run together; include only one of each pair.
 - **Rounding down to a standard size.** A 486 kVA requirement needs 500 kVA, never the size below it.
+
+## Losses and efficiency at the day one load
+
+The default inputs give a required rating of **486 kVA** (350 kW maximum demand), so a 500 kVA unit is chosen. Before growth it carries 388.9 kVA, a loading of 77.8%. Taking illustrative losses for a 500 kVA oil-filled unit of 0.9 kW no-load (core) and 6 kW load (copper) loss at full load, with load loss scaling with the square of loading:
+
+| Loading | Output at PF 0.9 | Total losses | Efficiency |
+|---|---|---|---|
+| 25% | 112 kW | 1.27 kW | 98.88% |
+| 39% | 174 kW | 1.80 kW | 98.98% |
+| 50% | 225 kW | 2.40 kW | 98.94% |
+| 75% | 338 kW | 4.28 kW | 98.75% |
+| 100% | 450 kW | 6.90 kW | 98.49% |
+
+Efficiency peaks at √(0.9 ÷ 6) = 38.7% load, where copper loss equals core loss, and the curve is flat between about 30% and 80%. At the day one load the losses are 0.9 + 6 × 0.778² = **4.53 kW**, an efficiency of 98.72%. Held at that load all year, the losses come to about 39,680 kWh, which is why buyers compare tender offers on capitalised losses rather than price alone. Use the maker's tested figures, or the [transformer efficiency calculator](/electrical/transformer-efficiency/), for a real unit.
+
+## Sizing from measured demand
+
+For an existing plant, measured data beats an estimated demand factor. A utility bill or a power analyser logging 15 minute demand gives the real peak in kVA, already including diversity and power factor. If the highest recorded demand is 330 kVA, adding the 25% growth margin gives 412.5 kVA, so a 500 kVA unit still fits. Log for at least a full production cycle, including any seasonal peak such as summer chiller load.

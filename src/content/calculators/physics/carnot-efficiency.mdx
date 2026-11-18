@@ -2,10 +2,10 @@
 title: Carnot Efficiency Calculator (Heat Engine, Heat Pump COP)
 description: Calculate the maximum Carnot efficiency of a heat engine and the ideal COP of a refrigerator or heat pump from hot and cold reservoir temperatures.
 category: physics
-intro: "No heat engine working between two temperatures can beat the efficiency of an ideal reversible Carnot cycle, η = 1 − T_c/T_h, and no refrigerator or heat pump can beat the Carnot COP. This Carnot efficiency calculator gives all three limits from the reservoir temperatures, together with the maximum work from a heat input — the benchmark for judging real [chiller capacity and COP](https://www.instrumentationblog.in/calculate-industrial-chiller-capacity/)."
+intro: "No heat engine working between two temperatures can beat an ideal reversible Carnot cycle, η = 1 − T_c/T_h, and no refrigerator or heat pump can beat the Carnot COP. This Carnot efficiency calculator gives all three limits and the maximum work from a heat input.\n\nPower plant, HVAC and refrigeration engineers use it as the benchmark for judging real machines, such as [chiller capacity and COP](https://www.instrumentationblog.in/calculate-industrial-chiller-capacity/), and students use it to check thermodynamics problems."
 keywords: [carnot efficiency calculator, carnot cycle calculator, maximum efficiency heat engine, carnot cop calculator, heat pump cop calculator, 1 - tc/th, thermal efficiency limit]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: Th, label: Hot reservoir temperature, family: temperature, unit: C, imperialUnit: F, default: 500, min: 0 }
   - { id: Tc, label: Cold reservoir temperature, family: temperature, unit: C, imperialUnit: F, default: 30, min: 0 }
@@ -28,6 +28,8 @@ faq:
     a: Typically 50–70% of the Carnot limit. A steam plant with 550 °C steam and 30 °C cooling water has a Carnot limit near 63% but achieves about 35–45%; combined-cycle gas plants reach about 60%.
   - q: What is the Carnot COP of a heat pump?
     a: COP = T_h ÷ (T_h − T_c). Heating to 35 °C from 0 °C outside gives an ideal COP of 8.8; real heat pumps achieve about 3–4.5 because of compressor and heat-exchanger losses.
+  - q: "Why is the heat pump COP always one more than the refrigerator COP?"
+    a: "A heat pump delivers the heat taken from the cold side plus the compressor work, so Q_h = Q_c + W and Q_h/W = Q_c/W + 1. For the default temperatures that is 1.645 = 0.645 + 1."
 related: [physics/ideal-gas-law, engineering/heat-duty, physics/work-and-power, physics/stefan-boltzmann-law]
 ---
 
@@ -78,3 +80,32 @@ An engine takes 100 kW of heat at 500 °C (773.15 K) and rejects heat at 30 °C 
 
 - Efficiency improves by raising T<sub>h</sub> or lowering T<sub>c</sub>; that is why gas turbines run hot and power plants want cold cooling water.
 - A smaller temperature lift gives a much higher heat-pump COP, which is why underfloor heating (low flow temperature) suits heat pumps.
+
+## Where the rest of the heat goes
+
+In the default case only 60.79 kW of the 100 kW can become work, even in an ideal engine, so at least **39.21 kW** must be rejected to the 30 °C sink. That rejected heat is why power stations need cooling towers or river water, and why the cold side matters as much as the hot side: each degree lower at the sink raises the limit.
+
+The Carnot engine produces its maximum efficiency only at zero speed, because heat must flow across vanishing temperature differences. An engine run for maximum power with finite heat exchangers has the Curzon and Ahlborn efficiency, 1 − √(T<sub>c</sub>/T<sub>h</sub>), which for the defaults is **37.4%**. This lower figure is much closer to what real plants achieve.
+
+## Real plants against the Carnot limit
+
+The ratio of actual to Carnot efficiency, called the second law efficiency, shows how much room for improvement is left:
+
+| System | Hot / cold temperature | Carnot limit | Typical actual | Fraction of Carnot |
+|---|---|---|---|---|
+| Supercritical steam plant | 600 °C / 30 °C | 65.3% | about 45% | 69% |
+| Subcritical steam plant | 540 °C / 35 °C | 62.1% | about 38% | 61% |
+| Geothermal binary plant | 150 °C / 25 °C | 29.5% | about 12% | 41% |
+| Combined cycle gas plant | 1400 °C / 25 °C | 82.2% | about 60% | 73% |
+
+## Heat pumps: use refrigerant temperatures
+
+A heat pump delivering 35 °C water from 0 °C outdoor air has an ideal COP of 8.80 based on those two temperatures. The refrigerant, however, must evaporate below the air and condense above the water. With 5 K approach on each exchanger, the cycle really works between −5 °C and 40 °C, and the Carnot COP falls to **6.96**. A unit measured at COP 3.5 is therefore achieving 50% of its realistic limit, not 40%.
+
+## Common mistakes
+
+- **Entering Celsius into the ratio by hand.** 30 ÷ 500 gives 94% instead of the correct 60.79%; only kelvin ratios are meaningful.
+- **Treating the limit as a target.** Real engines reach about half to three quarters of it, and well below at small scale.
+- **Using air and water temperatures for a heat pump.** The refrigerant temperatures set the limit, as the example above shows.
+- **Mixing up COP and efficiency.** A COP above 1 is normal because a heat pump moves heat rather than creating it.
+- **Forgetting that COP<sub>HP</sub> = COP<sub>ref</sub> + 1.** Heating output includes the compressor work as well as the heat lifted.

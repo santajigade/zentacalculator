@@ -2,10 +2,10 @@
 title: Bayes' Theorem Calculator (Posterior Probability)
 description: Calculate the posterior probability P(A|B) with Bayes' theorem from a prior, the true-positive rate and the false-positive rate, for tests and alarms.
 category: statistics
-intro: "Bayes' theorem updates a prior belief with new evidence: it turns the probability of a positive test given a condition into the probability of the condition given a positive test. This Bayes' theorem calculator works from the prior probability, the true-positive rate and the false-positive rate, and shows why rare events give many false alarms."
+intro: "Bayes' theorem updates a prior belief with new evidence, turning the chance of a positive result given a condition into the chance of the condition given a positive result. This Bayes' theorem calculator works from the prior, the true-positive rate and the false-positive rate.\n\nDoctors, data scientists and reliability engineers use it to judge test results, spam filters and alarms, where rare events mean that most positives can be false."
 keywords: [bayes theorem calculator, bayes calculator, posterior probability calculator, conditional probability calculator, p(a|b), false positive paradox, bayes rule]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: pA, label: Prior probability P(A), family: percent, unit: '%', default: 1, min: 0, max: 1, help: 'How common A is before the evidence — for example the prevalence of a condition.' }
   - { id: pBA, label: P(B | A) — true-positive rate, family: percent, unit: '%', default: 95, min: 0, max: 1, help: 'Sensitivity: chance of the evidence when A is true.' }
@@ -26,6 +26,8 @@ faq:
     a: The prior P(A) is what you believe before the evidence; the posterior P(A|B) is the updated probability after it. Today's posterior can be the prior for the next test.
   - q: What is P(A | not B)?
     a: The chance that A is true even though the evidence was negative — the false-negative risk. It depends on the sensitivity and the prior.
+  - q: "What is the likelihood ratio form of Bayes' theorem?"
+    a: "Posterior odds = prior odds × likelihood ratio, where the positive likelihood ratio is sensitivity ÷ false-positive rate. For 95% and 5% it is 19, so prior odds of 1 : 99 become about 1 : 5.2, a posterior of 16.1%."
 related: [statistics/probability, statistics/relative-risk, statistics/odds-probability, statistics/binomial-probability]
 ---
 
@@ -66,3 +68,40 @@ Out of 10,000 people: 95 true positives and 495 false positives — so only abou
 
 - A second, independent positive test uses the first posterior as the new prior and raises the probability sharply.
 - The same reasoning applies to alarm systems: a sensitive alarm for a rare fault produces mostly nuisance trips.
+
+## The default case as counts
+
+Probabilities are easier to read as people. With the default 1% prior, 95% sensitivity and 5% false-positive rate, out of 10,000 people:
+
+| | Test positive | Test negative | Total |
+|---|---|---|---|
+| Has A | 95 (true positive) | 5 (false negative) | 100 |
+| Does not have A | 495 (false positive) | 9,405 (true negative) | 9,900 |
+| Total | 590 | 9,410 | 10,000 |
+
+The posterior is the first column read downwards: 95 ÷ 590 = **16.10%**, matching the calculator. A negative result is very reliable here: 9,405 of 9,410 negatives are correct, a negative predictive value of 99.95%.
+
+## Odds and likelihood ratios
+
+Clinicians often use the odds form, posterior odds = prior odds × likelihood ratio. The positive likelihood ratio is 0.95 ÷ 0.05 = **19**. Prior odds of 1 : 99 = 0.0101 become 0.1919, and converting back, 0.1919 ÷ (1 + 0.1919) = 16.10%. The negative likelihood ratio is 0.05 ÷ 0.95 = 0.0526, so a negative result cuts the odds about nineteenfold. Likelihood ratios are handy because they do not depend on prevalence and can be quoted for a test once.
+
+## Repeated positive results
+
+If a second test is truly independent, the first posterior becomes the new prior:
+
+| Positive tests in a row | Prior before the test | Posterior after it |
+|---|---|---|
+| 1 | 1.00% | 16.10% |
+| 2 | 16.10% | 78.48% |
+| 3 | 78.48% | 98.58% |
+| 4 | 98.58% | 99.92% |
+
+Two positives take the probability from 1% to about 78%, which is why screening programmes confirm a positive with a second, different test.
+
+## Common mistakes
+
+- **Swapping P(A|B) and P(B|A).** A 95% chance of a positive given the condition is not a 95% chance of the condition given a positive. This is the prosecutor's fallacy.
+- **Entering specificity as the false-positive rate.** A 95% specific test has a false-positive rate of 5%, not 95%.
+- **Repeating the same test and treating it as independent.** A sample that cross-reacts once will usually cross-react again, so the second result adds little.
+- **Using population prevalence for a selected group.** Someone sent for testing because of symptoms has a much higher prior than the general population.
+- **Entering percentages as fractions or the reverse.** Check that 1% is entered as 1% and not as 0.01%.

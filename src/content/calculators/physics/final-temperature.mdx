@@ -2,10 +2,10 @@
 title: Final Temperature Calculator (Mixing Two Substances)
 description: Find the equilibrium temperature when two substances at different temperatures are mixed, from their masses and specific heats, plus the heat transferred.
 category: physics
-intro: "When a hot object meets a cold one in an insulated container, heat flows until both reach the same temperature, and the heat lost by one equals the heat gained by the other. This final temperature calculator solves that heat balance for any two substances from their masses, specific heat capacities and starting temperatures."
+intro: "When a hot and a cold substance share an insulated container, heat flows until both settle at one temperature, and the heat lost equals the heat gained. This final temperature calculator solves that balance from each substance's mass, specific heat and starting temperature.\n\nPhysics students use it for calorimetry problems, lab technicians for method of mixtures tests, and engineers and cooks for quenching parts or blending hot and cold liquids."
 keywords: [final temperature calculator, equilibrium temperature calculator, mixing temperature calculator, specific heat mixture, heat balance calculator, calorimetry final temperature, m1c1t1 + m2c2t2]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-18
 variables:
   - { id: m1, label: Mass of substance 1, family: mass, unit: kg, imperialUnit: lb, default: 0.5, min: 0 }
   - { id: c1, label: Specific heat of substance 1, suffix: J/kg·K, default: 897, min: 0, help: 'Water 4186 · Aluminium 897 · Steel 450 · Copper 385' }
@@ -27,6 +27,8 @@ faq:
     a: Water's specific heat (4186 J/kg·K) is about 4.7 times aluminium's and 11 times copper's, so water absorbs a lot of heat for a small temperature rise.
   - q: Do the temperatures have to be in kelvin?
     a: No. Because the formula is a weighted average and uses only temperature differences, °C, °F or K all give the correct result in the same scale.
+  - q: "How do I find the final temperature of three or more substances?"
+    a: "Extend the same weighted average: T_f = (Σ m·c·T) ÷ (Σ m·c). Add a term for every substance, including the container, as long as nothing melts, boils or reacts."
 related: [chemistry/specific-heat, physics/latent-heat, engineering/heat-duty, physics/newtons-law-of-cooling]
 ---
 
@@ -63,3 +65,34 @@ A 0.5 kg aluminium block at 150 °C is dropped into 2 kg of water at 20 °C:
 
 - Real containers absorb some heat; in a calorimeter, add the vessel's heat capacity (its "water equivalent") to the cold side.
 - For heating a flowing stream rather than a batch, use the [heat duty calculator](/engineering/heat-duty/).
+
+## Why the result sits close to the water temperature
+
+The final temperature is a weighted average, and the weights are the heat capacities m × c. In the default example the water holds 8,372 J/K against the aluminium block's 448.5 J/K, so the water carries 94.9% of the weight. That is why a block at 150 °C only lifts the water from 20 °C to 26.61 °C. The table keeps the 2 kg of water at 20 °C and changes the mass of the aluminium block at 150 °C:
+
+| Aluminium mass | Heat capacity m·c | Final temperature | Heat given to water |
+|---|---|---|---|
+| 0.1 kg | 89.7 J/K | 21.38 °C | 11.54 kJ |
+| 0.25 kg | 224.2 J/K | 23.39 °C | 28.39 kJ |
+| 0.5 kg | 448.5 J/K | 26.61 °C | 55.34 kJ |
+| 1 kg | 897.0 J/K | 32.58 °C | 105.33 kJ |
+| 2 kg | 1,794.0 J/K | 42.94 °C | 192.06 kJ |
+| 5 kg | 4,485.0 J/K | 65.35 °C | 379.66 kJ |
+
+Doubling the block mass does not double the temperature rise, because a bigger block also stops at a higher temperature and gives up less heat per kilogram.
+
+## Allowing for the container
+
+A real calorimeter cup warms up too. If the 2 kg of water sits in a 0.3 kg aluminium cup that starts at 20 °C, the cup adds 269.1 J/K to the cold side and the equilibrium drops to **26.41 °C** instead of 26.61 °C. Add the vessel's heat capacity (its water equivalent) to substance 2, or measure it once by mixing known masses of hot and cold water.
+
+## Finding an unknown specific heat
+
+The method of mixtures runs the equation backwards. Drop 0.5 kg of an unknown metal at 150 °C into 2 kg of water at 20 °C and record a steady 23.5 °C. Then c = m<sub>2</sub>c<sub>2</sub>(T<sub>f</sub> − T<sub>2</sub>) ÷ (m<sub>1</sub>(T<sub>1</sub> − T<sub>f</sub>)) = 8,372 × 3.5 ÷ (0.5 × 126.5) = **463 J/kg·K**, which points to steel or iron. The temperature rise is small, so a thermometer error of only 0.1 °C shifts the answer to 477 J/kg·K. Use a fine resolution thermometer, stir well, and transfer the hot sample quickly so it does not cool in the air.
+
+## Common mistakes
+
+- **Mixing kJ and J.** Specific heats here are in J/kg·K; entering 4.186 for water (the kJ value) makes water look a thousand times easier to heat than it is.
+- **Using a final temperature outside the two starting values.** Without a phase change or a chemical reaction, T<sub>f</sub> must lie between T<sub>1</sub> and T<sub>2</sub>. Anything else means a typing error.
+- **Ignoring steam or ice.** Metal hotter than 100 °C dropped into a little water can boil some of it off, and ice must absorb 334 kJ/kg to melt before its temperature rises.
+- **Reading the thermometer too early.** Wait for the reading to peak and hold before recording it.
+- **Leaving out the container.** A metal cup or beaker can absorb several percent of the heat in a small experiment.

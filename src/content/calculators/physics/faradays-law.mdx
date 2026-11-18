@@ -2,10 +2,10 @@
 title: Faraday's Law Calculator (Induced EMF)
 description: Calculate the EMF induced in a coil by a changing magnetic flux with Faraday's law, ε = N ΔΦ/Δt — plus the flux change and induced current.
 category: physics
-intro: "Faraday's law of induction says that a changing magnetic flux through a coil induces a voltage proportional to the number of turns and the rate of change. This Faraday's law calculator works out the change in flux, the average induced EMF and the resulting current — see [Faraday's law of electromagnetic induction](https://www.instrumentationblog.in/faradays-law-electromagnetic-induction/) and [Lenz's law](https://www.instrumentationblog.in/lenzs-law-electromagnetic-induction/) for the direction of the induced current."
+intro: "Faraday's law of induction says a changing magnetic flux through a coil induces a voltage proportional to the number of turns and the rate of change. This Faraday's law calculator finds the flux change, average EMF and current. See [Faraday's law of electromagnetic induction](https://www.instrumentationblog.in/faradays-law-electromagnetic-induction/).\n\nPhysics students, electrical engineers and instrument technicians use it for search coils, generators, sensors and switching spikes; [Lenz's law](https://www.instrumentationblog.in/lenzs-law-electromagnetic-induction/) gives the current direction."
 keywords: [faradays law calculator, induced emf calculator, electromagnetic induction calculator, emf = n dphi/dt, magnetic flux calculator, induced voltage in a coil, lenz's law]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-18
 variables:
   - { id: N, label: Number of turns, default: 200, min: 0 }
   - { id: A, label: Coil area, family: area, unit: cm2, imperialUnit: in2, default: 50, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: Use more turns, a larger coil area, a stronger field or a faster change. Doubling any one of them doubles the EMF.
   - q: What about a conductor moving through a field?
     a: A straight conductor of length L moving at speed v across a field B has a motional EMF ε = B L v — the same law applied to the area it sweeps.
+  - q: "Why does the total induced charge not depend on how fast the flux changes?"
+    a: "Charge is current times time, Q = (N ΔΦ ÷ Δt ÷ R) × Δt = N ΔΦ ÷ R. A faster change gives a higher EMF for a shorter time. For 200 turns, 2 mWb and 10 Ω the charge is always 0.04 C."
+  - q: "What happens if the magnetic field reverses direction?"
+    a: "The flux change is the full swing from +B to −B, twice the change from zero to B. With the default coil, reversing 0.4 T in 20 ms induces 40 V instead of 20 V."
 related: [physics/magnetic-field, physics/lorentz-force, electronics/inductor-energy, electrical/transformer-turns-ratio]
 ---
 
@@ -65,3 +69,35 @@ A 200-turn coil of 50 cm² is placed in a field that rises from 0 to 0.4 T in 20
 - **Transformers**: the same changing flux links both windings, so the voltages divide in the turns ratio — see the [transformer turns ratio calculator](/electrical/transformer-turns-ratio/).
 - **Magnetic flow meters**: a conducting liquid moving through a magnetic field produces a voltage proportional to its velocity (ε = B D v).
 - **Inductive kick**: switching off a coil collapses its flux quickly and induces a large voltage spike.
+
+## Speed of the change for the default coil
+
+The default coil sees the same flux change of 2.0 mWb every time; only the time it takes changes the result:
+
+| Time for the change | Average EMF | Current in 10 Ω |
+|---|---|---|
+| 1 ms | 400 V | 40 A |
+| 5 ms | 80 V | 8 A |
+| 10 ms | 40 V | 4 A |
+| 20 ms | 20 V | 2 A |
+| 50 ms | 8 V | 0.8 A |
+| 100 ms | 4 V | 0.4 A |
+| 1,000 ms | 0.4 V | 0.04 A |
+
+The EMF and the current scale inversely with Δt, but the product ε × Δt stays at N ΔΦ = **0.40 V·s**. That means the total charge driven round the circuit is fixed too: Q = N ΔΦ ÷ R = 0.40 ÷ 10 = **0.040 C**, whether the change takes 1 ms or 1 s.
+
+## Measuring flux with a search coil
+
+That fixed volt-second product is the basis of flux measurement. A small search coil is connected to an integrating fluxmeter, the coil is pulled out of the field (or the field is switched off), and the meter integrates the voltage. Dividing the integral by the number of turns gives the flux, and dividing again by the coil area gives B. For the default coil, an integral of 0.40 V·s means ΔΦ = 0.40 ÷ 200 = 0.0020 Wb and B = 0.0020 ÷ 0.005 m² = 0.4 T. The same principle is used in Rogowski coils, which integrate the EMF from a changing current to measure large AC or pulsed currents without a magnetic core.
+
+## Sinusoidal flux: the generator case
+
+If the same coil rotates in the 0.4 T field at 50 Hz, the flux varies sinusoidally and the peak EMF is N B A ω = 200 × 0.4 × 0.005 × 314.16 = **125.7 V**, or 88.9 V rms. That is more than six times the 20 V average from the 20 ms ramp, because the flux swings from +BA to −BA every half cycle and does so in 10 ms.
+
+## Common mistakes
+
+- **Leaving the area in cm².** 50 cm² is 0.005 m²; using 50 gives an EMF 10,000 times too large.
+- **Missing a field reversal.** Going from +0.4 T to −0.4 T is a change of 0.8 T, so the EMF doubles to 40 V for the same 20 ms.
+- **Ignoring the angle.** If the field is 60° from the coil normal, only cos 60° = 0.5 of it links the coil and the EMF falls to 10 V.
+- **Treating the average as the peak.** The calculator gives the average over Δt. A fast, non-linear change can have a much higher instantaneous peak.
+- **Forgetting the coil's own resistance and inductance.** R must include the winding, and a coil with a large L/R time constant will not reach ε ÷ R during a short pulse.

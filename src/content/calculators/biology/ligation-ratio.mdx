@@ -2,10 +2,10 @@
 title: "Ligation Calculator (Insert : Vector Ratio)"
 description: Calculate how many ng of insert to use for a ligation at a chosen molar ratio of insert to vector.
 category: biology
-intro: "In molecular cloning, the ratio of insert to vector DNA strongly affects ligation success. The right molar ratio — often 3:1 — needs the DNA lengths and amounts, not just their masses."
+intro: "Ligation joins an insert to a cut vector, and success depends on how many molecules of each are in the tube rather than on their masses. This ligation calculator works out how many nanograms of insert give a chosen insert to vector molar ratio, such as 3:1, from the two DNA lengths.\n\nMolecular biologists and students use it when setting up cloning reactions, so that short inserts are not starved and long inserts do not crowd out the vector."
 keywords: [ligation calculator, insert vector ratio, molar ratio, cloning, 3:1 ratio, ng insert]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: vng, label: Vector amount, suffix: ng, default: 50, min: 0 }
   - { id: vbp, label: Vector length, suffix: bp, default: 3000, min: 1 }
@@ -25,6 +25,10 @@ faq:
     a: "Start with 3:1 for most cloning, and try 1:1 and 5:1 if colonies are few."
   - q: "Why use molar ratios instead of mass?"
     a: "Because ligation depends on the number of DNA ends, not their mass. A small insert has many more molecules per ng."
+  - q: "How do I convert ng of DNA to femtomoles?"
+    a: "Divide the mass by the molar mass of the fragment, which is about 617.96 g/mol per base pair plus 36.04 for double stranded DNA. For example, 50 ng of a 3,000 bp vector is about 27 fmol."
+  - q: "What insert to vector ratio is used for Gibson or HiFi assembly?"
+    a: "These overlap assembly methods usually use about a 2:1 molar excess of each insert over the vector, rising to about 5:1 for fragments shorter than 200 bp."
 related: [biology/dna-copy-number, biology/dna-concentration]
 ---
 
@@ -76,3 +80,36 @@ ng insert = 50 × (1,000 ÷ 3,000) × 3 = **50 ng**
 - Gel-purify the vector and insert to remove small fragments.
 - Use fresh ligase buffer — ATP degrades with freeze–thaw cycles.
 - Keep total DNA around 50–200 ng in a 10–20 µL reaction.
+
+## The same example in femtomoles
+
+The defaults (50 ng of a 3,000 bp vector, a 1,000 bp insert, 3:1) give **50 ng of insert**. Equal masses can be a 3:1 molar ratio because the insert is a third the length. Using the double stranded DNA molar mass of 617.96 g/mol per base pair plus 36.04:
+
+- Vector: 50 ng ÷ 1,853,916 g/mol = **27.0 fmol**
+- Insert: 50 ng ÷ 617,996 g/mol = **80.9 fmol**
+- Ratio: 80.9 ÷ 27.0 = 3.00
+
+## Same insert, different vectors
+
+For a 1,000 bp insert at 3:1 with 50 ng of vector, the insert mass falls as the vector gets longer, because 50 ng of a big plasmid is fewer molecules:
+
+| Vector | Length | 50 ng is | Insert for 3:1 |
+|---|---|---|---|
+| pUC19 | 2,686 bp | 30.1 fmol | 55.8 ng |
+| pET-28a(+) | 5,369 bp | 15.1 fmol | 27.9 ng |
+| pcDNA3.1(+) | 5,428 bp | 14.9 fmol | 27.6 ng |
+| 10 kb backbone | 10,000 bp | 8.1 fmol | 15.0 ng |
+
+Use the length of the cut backbone that actually goes into the reaction. If a 600 bp stuffer fragment is removed during digestion, the backbone is shorter than the full plasmid map.
+
+## Setting up the reaction
+
+Convert the mass to a volume from the measured concentration. At 25 ng/µL the 50 ng of insert is 2.0 µL, an easy volume to pipette. At 120 ng/µL it would be only 0.42 µL, so dilute the insert 1:10 first and add 4.2 µL. A typical 20 µL T4 ligation then takes 2 µL of 10× buffer, the vector and insert, 1 µL of ligase and water to volume. Thaw the buffer on ice and mix it well, since its ATP and DTT settle out and break down with repeated thawing.
+
+## Common mistakes
+
+- **Using a 3:1 mass ratio.** Three times the vector mass is a 3:1 molar ratio only when the insert and vector are the same length.
+- **Entering the uncut plasmid size.** Remove any fragment cut out during digestion from the vector length.
+- **Trusting a UV reading of gel extracted DNA.** Guanidine salts and agarose absorb in the UV and can make concentrations look two or three times higher; check on a gel against a ladder.
+- **Adding far too much DNA.** Above about 200 ng in 20 µL, inserts join into concatemers and multiple insert clones appear.
+- **Skipping the vector only control.** Without it you cannot tell real recombinants from vector that recircularised.

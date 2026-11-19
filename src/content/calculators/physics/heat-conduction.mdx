@@ -2,10 +2,10 @@
 title: Heat Conduction Calculator (Fourier's Law, U-Value & R-Value)
 description: Calculate heat flow through a wall, slab or insulation layer with Fourier's law, plus heat flux, U-value, R-value and the energy lost per day.
 category: physics
-intro: "Heat flows through solids from hot to cold at a rate set by the material's thermal conductivity, thickness and area. Fourier's law is the basis of insulation design and heat exchanger calculations — see [what thermal conductivity is](https://www.instrumentationblog.in/what-is-thermal-conductivity/) and the main [types of heat exchangers](https://www.instrumentationblog.in/types-of-heat-exchangers/). This heat conduction calculator gives the heat flow, the heat flux, the U-value and R-value of the layer and the energy lost per day, and solves for any one value you leave blank."
+intro: "Heat conduction is the flow of heat through a solid from its hot face to its cold face, at a rate set by thermal conductivity, area, temperature difference and thickness. This heat conduction calculator applies Fourier's law to give heat flow, heat flux, U-value, R-value and energy per day. See [what thermal conductivity is](https://www.instrumentationblog.in/what-is-thermal-conductivity/).\n\nBuilding engineers and insulation contractors use it to size insulation, and process engineers use it on tank, oven and [heat exchanger](https://www.instrumentationblog.in/types-of-heat-exchangers/) walls."
 keywords: [heat conduction calculator, fouriers law calculator, heat transfer through wall, thermal conductivity calculator, u value calculator, r value calculator, conductive heat loss calculator, heat flux calculator]
 published: 2026-10-27
-updated: 2026-11-12
+updated: 2026-11-19
 variables:
   - { id: k, label: Thermal conductivity (k), suffix: W/m·K, default: 0.04, min: 0 }
   - { id: A, label: Area, family: area, unit: m2, imperialUnit: ft2, default: 10, min: 0 }
@@ -31,6 +31,8 @@ faq:
     a: Add the R-values of all layers in series, d ÷ k for each, plus the inside and outside surface resistances (typically 0.13 and 0.04 m²·K/W for a wall), then U = 1 ÷ total R. Studs, ties and other thermal bridges increase the real U-value.
   - q: How much heat does a wall lose in a day?
     a: Multiply the heat flow in watts by 24 hours and divide by 1,000 to get kWh per day. 80 W of steady loss is 1.92 kWh per day; over a heating season use the degree-days for your location instead of a fixed temperature difference.
+  - q: "Does doubling insulation thickness halve the heat loss?"
+    a: "For the layer alone, yes. Including the surface resistances of a wall, doubling 100 mm of k = 0.04 insulation cuts the U-value from 0.375 to 0.193 W/m²·K, a 48.4% reduction. Around pipes the gain is smaller because the outer area grows with radius."
 related: [engineering/pipe-heat-loss, engineering/convection-heat-transfer, physics/stefan-boltzmann-law, engineering/heat-duty]
 ---
 
@@ -117,3 +119,34 @@ U = 1 ÷ 3.219 = **0.311 W/m²·K**. Surface resistances are the usual values fo
 - **Steady state:** Fourier's law as used here gives the steady heat flow once temperatures have settled; heavy walls take hours to respond to a change in temperature.
 - **Pipes and cylinders:** for insulation around a pipe the area grows with radius, so use the logarithmic formula in the [pipe heat loss calculator](/engineering/pipe-heat-loss/).
 - **Surfaces:** the air films on each side add resistance; to calculate them, use the [convection heat transfer calculator](/engineering/convection-heat-transfer/).
+
+## Effect of insulation thickness
+
+For the default case (k = 0.04 W/m·K, 10 m², 20 K difference), heat flow falls in proportion to thickness, but the real U-value including the inside and outside surface resistances (0.17 m²·K/W) falls a little more slowly:
+
+| Thickness | Heat flow | U of layer (W/m²·K) | U with surfaces | Energy per day |
+|---|---|---|---|---|
+| 25 mm | 320.0 W | 1.600 | 1.258 | 7.68 kWh |
+| 50 mm | 160.0 W | 0.800 | 0.704 | 3.84 kWh |
+| 100 mm | 80.0 W | 0.400 | 0.375 | 1.92 kWh |
+| 150 mm | 53.3 W | 0.267 | 0.255 | 1.28 kWh |
+| 200 mm | 40.0 W | 0.200 | 0.193 | 0.96 kWh |
+| 300 mm | 26.7 W | 0.133 | 0.130 | 0.64 kWh |
+
+Beyond about 200 mm each extra centimetre saves only a small amount, which is where the cost of insulation starts to outweigh the energy saved.
+
+## Solving for thickness: a cold store wall
+
+Leave the thickness blank to size insulation for a heat flow limit. Keeping the default panel to 40 W needs d = k A ΔT ÷ Q = 0.04 × 10 × 20 ÷ 40 = **200 mm**. For a cold room held at −20 °C with 35 °C outside (ΔT = 55 K), a 50 m² wall of 100 mm PIR panel (k = 0.023) conducts 0.023 × 50 × 55 ÷ 0.1 = **632.5 W**, or 15.2 kWh of heat a day that the refrigeration plant must remove. Moving to 150 mm panel cuts this to 421.7 W.
+
+## Measuring thermal conductivity and U-value
+
+Conductivity of insulation is measured on flat samples between a hot and a cold plate: the guarded hot plate method (ISO 8302) and the faster heat flow meter apparatus (ISO 8301, ASTM C518). Transient hot wire probes suit liquids, powders and quick checks. On a finished building, the in-situ U-value is measured with a heat flux sensor fixed to the inside surface and thermocouples on both faces, logged over at least 72 hours to average out the thermal mass (ISO 9869).
+
+## Common mistakes
+
+- **Adding U-values of layers.** Layers in series add their R-values; U is the inverse of the total R, never the sum of the U-values.
+- **Using dry catalogue k for wet insulation.** Water conducts about 20 times better than still air, so damp mineral wool or ice in a cold store panel can raise heat flow sharply.
+- **Leaving out thermal bridges.** Studs, steel fixings and slab edges carry heat around the insulation and can add 10% to 30% to the real U-value.
+- **Taking the temperature difference from air temperatures without surface resistances.** With air temperatures on each side, include the surface films, or the heat flow is overstated.
+- **Converting ΔT as if it were a temperature.** A 20 °C difference is 20 K, not 293 K, and 36 °F rather than 68 °F; only the difference enters Fourier's law.

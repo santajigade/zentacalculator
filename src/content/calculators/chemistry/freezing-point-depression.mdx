@@ -1,11 +1,11 @@
 ---
-title: Freezing Point Depression Calculator
-description: Calculate how much a solute lowers the freezing point of a solvent with ΔTf = i·Kf·m — for water, benzene, cyclohexane and more.
+title: "Freezing Point Depression Calculator (ΔTf = i Kf m)"
+description: "Calculate how far a dissolved solute lowers a solvent's freezing point with ΔTf = i × Kf × m, with Kf values, worked examples and salt and glycol tables."
 category: chemistry
-intro: "Dissolved substances lower the freezing point of a solvent — which is why salt melts ice on roads and antifreeze protects car engines. This free freezing point depression calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Dissolving a solute in a solvent lowers its freezing point by an amount that depends on how many particles are dissolved, not on what they are. This freezing point depression calculator applies ΔTf = i × Kf × m for water, benzene, cyclohexane and other solvents.\n\nChemistry students use it for colligative property problems and molar mass by cryoscopy, and it helps with de-icing, antifreeze and ice cream work."
 keywords: [freezing point depression calculator, delta tf, kf constant, colligative properties, van t hoff factor, molality freezing point, antifreeze]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - id: Kf
     label: Solvent
@@ -27,13 +27,15 @@ equations:
 faq:
   - q: What is freezing point depression?
     a: Dissolving a solute lowers the temperature at which a solvent freezes. The drop depends on the number of solute particles, not their identity.
-  - q: Why does salt melt ice on roads?
-    a: Salt dissolves in the thin layer of water on ice, lowering its freezing point so the ice melts at temperatures below 0 °C — down to about −10 °C in practice for rock salt.
+  - q: "Why does salt melt ice on roads?"
+    a: "Salt dissolves in the thin film of water on ice and lowers its freezing point, so the ice melts below 0 °C. Rock salt works down to about −10 °C in practice; calcium chloride works at lower temperatures."
   - q: How can I find the molar mass of an unknown solute?
     a: Measure ΔTf, calculate molality m = ΔTf ÷ (i·Kf), then molar mass = grams of solute ÷ (m × kg of solvent).
   - q: Does the formula work for concentrated solutions?
     a: It is accurate for dilute solutions. At high concentrations, ions interact and the effective i falls, so measured depressions are smaller.
-related: [chemistry/boiling-point-elevation, chemistry/molality, chemistry/osmotic-pressure, chemistry/molarity]
+  - q: "What is the Kf of water?"
+    a: "The cryoscopic constant of water is 1.86 °C·kg/mol, so each mole of dissolved particles per kilogram of water lowers the freezing point by about 1.86 °C."
+related: [chemistry/boiling-point-elevation, chemistry/molality, chemistry/osmotic-pressure, chemistry/raoults-law, chemistry/moles]
 ---
 
 ## How to use the freezing point depression calculator
@@ -65,8 +67,8 @@ Seawater (about 35 g/kg of salts) actually freezes at about −1.9 °C; the idea
 | Solute | Ideal i | Typical measured i (dilute) |
 |---|---|---|
 | Glucose, sucrose, urea | 1 | 1.0 |
-| NaCl, KCl | 2 | 1.8–1.9 |
-| CaCl₂, MgCl₂ | 3 | 2.5–2.7 |
+| NaCl, KCl | 2 | 1.8 to 1.9 |
+| CaCl₂, MgCl₂ | 3 | 2.5 to 2.7 |
 | AlCl₃ | 4 | about 3.2 |
 
 ## Uses
@@ -75,3 +77,51 @@ Seawater (about 35 g/kg of salts) actually freezes at about −1.9 °C; the idea
 - **Antifreeze**: ethylene glycol in car radiators.
 - **Ice cream making**: salt and ice reach about −10 to −20 °C to freeze the mix.
 - **Molar mass determination** in the lab (cryoscopy).
+
+## Worked example with the default values
+
+Water (K<sub>f</sub> = 1.86 °C·kg/mol), i = 2 for NaCl and a molality of 0.5 mol/kg, which is about 29.2 g of NaCl per kg of water:
+
+- ΔT<sub>f</sub> = 2 × 1.86 × 0.5 = **1.860 °C**
+- New freezing point = 0 − 1.86 = **-1.86 °C**
+
+Using the measured i of about 1.85 for NaCl at this concentration gives a depression nearer 1.72 °C, slightly less than the ideal figure.
+
+## Worked example: molar mass by cryoscopy
+
+2.50 g of an unknown non-electrolyte (i = 1) dissolved in 50.0 g of benzene lowers its freezing point by 1.28 °C:
+
+1. Molality m = ΔT<sub>f</sub> ÷ K<sub>f</sub> = 1.28 ÷ 5.12 = **0.2500 mol/kg**
+2. Moles of solute = 0.2500 × 0.0500 kg = 0.01250 mol
+3. Molar mass = 2.50 ÷ 0.01250 = **200 g/mol**
+
+Solvents with a large K<sub>f</sub>, such as camphor or cyclohexane, give bigger, easier to measure depressions, which is why they are chosen for this method.
+
+## Effect of 0.1 mol/kg of a non-electrolyte in each solvent
+
+| Solvent | K<sub>f</sub> (°C·kg/mol) | Normal freezing point | ΔT<sub>f</sub> | New freezing point |
+|---|---|---|---|---|
+| Water | 1.86 | 0 °C | 0.186 °C | -0.19 °C |
+| Benzene | 5.12 | 5.5 °C | 0.512 °C | 4.99 °C |
+| Acetic acid | 3.9 | 16.6 °C | 0.390 °C | 16.21 °C |
+| Cyclohexane | 20 | 6.5 °C | 2.000 °C | 4.50 °C |
+| Camphor | 37.7 | 179 °C | 3.770 °C | 175.23 °C |
+
+## Ethylene glycol antifreeze (ideal estimate)
+
+| Glycol by mass | Molality | Ideal freezing point |
+|---|---|---|
+| 10% | 1.79 | -3.3 °C |
+| 20% | 4.03 | -7.5 °C |
+| 30% | 6.90 | -12.8 °C |
+| 40% | 10.74 | -20.0 °C |
+
+Real mixtures freeze lower than this at higher concentrations (a 40% mix reaches about −24 °C) because glycol solutions deviate from ideal behaviour, so use the coolant maker's chart for engine protection.
+
+## Common mistakes
+
+- **Using molarity instead of molality.** The formula needs moles per kilogram of solvent, not per litre of solution.
+- **Forgetting the van 't Hoff factor.** Salts split into ions; NaCl gives about twice the depression of sugar at the same molality.
+- **Entering the new freezing point as ΔT<sub>f</sub>.** ΔT<sub>f</sub> is a positive drop; the new freezing point is the normal value minus it.
+- **Picking the wrong K<sub>f</sub>.** K<sub>f</sub> belongs to the solvent, not the solute; switching from water to benzene almost triples the effect.
+- **Applying it to concentrated brines.** Ion pairing lowers the effective i, so the ideal result overstates the depression above about 1 mol/kg.

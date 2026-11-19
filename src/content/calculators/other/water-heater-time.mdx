@@ -2,10 +2,10 @@
 title: Water Heater (Geyser) Heating Time Calculator
 description: Calculate how long an electric water heater takes to heat a tank of water — and the energy used.
 category: other
-intro: "How long a geyser takes to heat water depends on the tank size, the temperature rise and the heater's power. This free water heater heating time calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "An electric geyser heats water at a rate set by its element power, so the wait depends on how much water it holds and how far it must be warmed. This water heater heating time calculator finds the energy and the minutes needed from the tank volume, temperatures, element rating and efficiency.\n\nHouseholds use it to plan when to switch the geyser on and what it costs, and electricians and plumbers use it to choose between tank sizes and element ratings."
 keywords: [water heater heating time, geyser calculator, how long to heat water, tank heating time, immersion heater]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: V, label: Tank volume, family: volume, unit: L, imperialUnit: galUS, default: 25, min: 0 }
   - { id: t1, label: Cold water temperature, family: temperature, unit: C, imperialUnit: F, default: 20 }
@@ -28,6 +28,10 @@ faq:
     a: "About 30–40 minutes with a 2 kW element, heating from 15 °C to 55 °C."
   - q: "How much electricity does a water heater use?"
     a: "About 0.05 kWh per litre for a 40 °C rise, before standing losses."
+  - q: "Why does my geyser take longer to heat in winter?"
+    a: "The cold water is colder, so the temperature rise is bigger. Heating 25 L to 55 °C from 10 °C instead of 20 °C takes about 44 minutes instead of 34 with a 2 kW element."
+  - q: "Does low voltage make a water heater slower?"
+    a: "Yes. Element power falls with the square of voltage, so a 2 kW, 230 V element gives about 1.67 kW at 210 V and takes about 20% longer, while using about the same energy."
 related: [food/turkey-thawing, chemistry/specific-heat, everyday-life/electricity-cost, ecology/shower-water]
 ---
 
@@ -76,3 +80,35 @@ Stored hot water loses heat through the tank walls. Well-insulated tanks lose 1�
 ## Heat pumps and solar
 
 Heat-pump water heaters use about a third of the electricity of a resistance heater for the same hot water. Solar water heaters can cover most needs in sunny climates.
+
+## Reading the default result
+
+The defaults (a 25 L tank from 20 °C to 55 °C, a 2 kW element, 90% efficiency) give **1.13 kWh** and **33.9 minutes**. The water itself needs 25 × 4.186 × 35 ÷ 3,600 = 1.017 kWh, and the efficiency adds the heat lost from the tank and pipes during heating.
+
+## Seasonal inlet temperature
+
+Mains water is much colder in winter, which is why the same geyser seems slow in January. For the 25 L, 2 kW heater set to 55 °C, at a tariff of 8 per kWh:
+
+| Cold water | Rise | Energy | Time | Cost per heat up |
+|---|---|---|---|---|
+| 10 °C | 45 °C | 1.45 kWh | 44 min | 11.63 |
+| 15 °C | 40 °C | 1.29 kWh | 39 min | 10.34 |
+| 20 °C | 35 °C | 1.13 kWh | 34 min | 9.04 |
+| 25 °C | 30 °C | 0.97 kWh | 29 min | 7.75 |
+| 30 °C | 25 °C | 0.81 kWh | 24 min | 6.46 |
+
+## Is the tank big enough for a shower?
+
+Hot water from the tank is mixed with cold at the tap. A shower at 8 L/min for 8 minutes at 40 °C, with 55 °C stored water and 15 °C cold water, needs a hot share of (40 − 15) ÷ (55 − 15) = 62.5%, so it draws **40 L of hot water**. A 25 L tank runs short, and in practice only about 70 to 80% of a tank comes out hot before mixing with incoming cold water cools it. Either set the thermostat higher (with a mixing valve) or choose a larger tank.
+
+## Low supply voltage
+
+An element is a fixed resistance, so its power falls with the square of voltage. A 2 kW element rated at 230 V has R = 230² ÷ 2000 = 26.45 Ω. At 210 V it delivers only 1.67 kW, and the default heat up takes **40.7 minutes** instead of 33.9. The energy used barely changes; only the waiting time grows. To check the real power, switch off everything else and time the energy meter pulses with the [energy meter constant calculator](/electrical/energy-meter-constant/).
+
+## Common mistakes
+
+- **Using the summer inlet temperature all year.** A 10 °C winter supply needs 29% more energy than the default 20 °C.
+- **Typing the element rating in watts.** 2000 entered as kW gives a time a thousand times too short.
+- **Treating the whole tank as usable hot water.** Mixing with incoming cold water means only part of the volume comes out at full temperature.
+- **Ignoring scale on the element.** In hard water areas a crusted element heats slowly and can burn out; descale or fit a softener.
+- **Leaving the geyser on all day.** Standing losses continue whether or not water is used; a timer cuts them.

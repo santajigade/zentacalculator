@@ -2,10 +2,10 @@
 title: EMI Calculator (Home, Car and Personal Loan)
 description: Calculate your loan EMI, total interest and total payment for home, car, personal or education loans — in rupees, with a chart.
 category: finance
-intro: "An EMI is the fixed monthly payment that repays a loan and its interest over the loan term. It depends on the loan amount, interest rate and tenure."
+intro: "An EMI (equated monthly instalment) is the fixed amount an Indian bank or NBFC debits every month until a home, car, personal or education loan and its interest are repaid. This EMI calculator gives the instalment, total interest and total payment from the loan amount, rate and tenure.\n\nBorrowers use it to compare offers and plan prepayments, and loan advisers use it to check how much EMI a salary can support before a bank sanctions the loan."
 keywords: [emi calculator, home loan emi calculator, car loan emi, personal loan emi, loan emi, emi formula, sbi home loan emi, monthly installment]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 featured: true
 variables:
   - { id: P, label: Loan amount, family: currency, prefix: '₹', default: 3000000, min: 0, decimals: 0 }
@@ -32,6 +32,10 @@ faq:
     a: Banks usually keep the EMI the same and shorten the tenure, which saves the most interest. You can ask them to reduce the EMI instead.
   - q: Are processing fees included?
     a: No. Processing fees, insurance and GST on fees are extra. Add them to compare the real cost of different offers.
+  - q: "What happens to my EMI when the RBI repo rate changes?"
+    a: "For a floating rate loan the bank resets the rate, usually from the next quarter, and either changes the EMI or the tenure. On the default loan, a rise from 8.5% to 9.0% after 3 years lifts the EMI to about ₹26,890, or keeps it at ₹26,035 and adds about 17 months."
+  - q: "How much home loan can I get on my salary?"
+    a: "Banks usually allow total EMIs of about 50% of net monthly pay. With ₹1,00,000 take home and no other loans, a ₹50,000 EMI at 8.5% for 20 years supports a loan of about ₹57,61,542."
 related: [finance/loan-payment, finance/mortgage, finance/simple-interest, finance/compound-interest, finance/sip]
 ---
 
@@ -98,3 +102,42 @@ A longer tenure lowers the EMI but the total interest climbs steeply. Choose the
 - Most lenders want total EMIs below about 40–50% of your take-home pay.
 - Interest on a home loan may be deductible under the old tax regime. Check current rules with a tax adviser.
 - This is an estimate. Your bank's schedule may differ slightly because of rounding and the date the loan starts.
+
+## Where each EMI goes: interest first, principal later
+
+For the default ₹30,00,000 loan at 8.5% over 20 years the EMI is **₹26,035**. In the first month the interest is ₹30,00,000 × 8.5% ÷ 12 = ₹21,250, so only ₹4,785 of the EMI reduces the loan. The principal part overtakes the interest part only in month 143, more than 11 years in.
+
+| Loan year | Interest paid | Principal repaid | Interest share | Balance at year end |
+|---|---|---|---|---|
+| Year 1 | ₹2,52,709 | ₹59,707 | 81% | ₹29,40,293 |
+| Year 5 | ₹2,28,632 | ₹83,785 | 73% | ₹26,43,815 |
+| Year 10 | ₹1,84,452 | ₹1,27,964 | 59% | ₹20,99,815 |
+| Year 15 | ₹1,16,977 | ₹1,95,440 | 37% | ₹12,68,962 |
+| Year 20 | ₹13,921 | ₹2,98,495 | 4% | ₹0 |
+
+This is why a home loan statement after five years can still show most of the original amount outstanding, and why the interest certificate your bank issues each April is largest in the early years.
+
+## When the repo rate moves: higher EMI or longer tenure
+
+Most Indian home loans are floating and linked to an external benchmark such as the RBI repo rate, so the rate is reset when the benchmark changes. Suppose the rate rises from 8.5% to 9.0% after 36 EMIs, when the balance is ₹28,04,580. The bank can do one of two things:
+
+- **Raise the EMI** to ₹26,890 for the remaining 204 months. Extra interest over the rest of the loan: ₹1,74,568.
+- **Keep the EMI** at ₹26,035 and stretch the loan by 17 months. Extra interest: ₹4,37,739.
+
+Stretching the tenure costs more in total, yet many lenders default to it. RBI rules on resetting floating rate EMI loans require the lender to tell you about the reset and let you choose a higher EMI, a longer tenure or a mix of both, and to offer a switch to a fixed rate.
+
+## A small prepayment early on
+
+Floating rate loans taken by individuals carry no foreclosure or part prepayment charges. Paying ₹2,00,000 once, just after the 12th EMI, while keeping the EMI unchanged, closes the loan in 206 months instead of 240, about 2.8 years sooner, and saves **₹6,87,516** of interest. The same amount paid in year 15 saves far less because little interest is left to avoid.
+
+## How banks check what EMI you can afford
+
+Lenders look at the fixed obligation to income ratio (FOIR): all EMIs, including the new one, as a share of net monthly income. Many cap it around 50% for salaried borrowers. With a take home pay of ₹1,00,000 and an existing car EMI of ₹10,000, a 50% FOIR leaves ₹40,000 for the new EMI, which at 8.5% over 20 years supports a loan of about **₹46,09,234**. Your CIBIL score, age and employer category then decide the rate and the final sanction.
+
+## Common mistakes
+
+- **Comparing EMIs at different tenures.** A lower EMI over 25 years can cost lakhs more than a slightly higher EMI over 20; compare total interest instead.
+- **Ignoring pre-EMI on an under-construction flat.** Until full disbursement you pay interest only on the amount released, and none of it reduces the principal.
+- **Using the flat rate an NBFC or dealer quotes.** A "flat" 7% on a car loan charges interest on the original amount throughout and works out to about 12.5% on the reducing balance this calculator uses.
+- **Forgetting loan insurance bundled into the amount.** A single premium policy added to the loan raises the EMI and is charged interest for the full term.
+- **Not checking the reset after a rate hike.** If the bank silently extends the tenure, a loan can run past your retirement age; ask for the revised schedule.

@@ -2,10 +2,10 @@
 title: DP Flow Square Root Calculator
 description: Convert differential pressure to flow for orifice, venturi and other DP flow meters using square-root extraction.
 category: engineering
-intro: "Differential pressure flow meters such as orifice plates produce a DP proportional to flow squared, so the signal needs square-root extraction to read flow. Learn about [square root extraction in DP flow measurement](https://www.instrumentationblog.in/square-root-extraction-dp-flow/) and the [common mistakes in DP flow measurement](https://www.instrumentationblog.in/mistakes-in-dp-flow-measurement/). This free DP flow square root calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Orifice plates, venturis and other differential pressure meters produce a DP that rises with the square of flow, so the signal must be square rooted before it reads as flow. This DP flow square root calculator converts a measured DP into percent and actual flow, or a flow into the DP it should give. Learn about [square root extraction in DP flow measurement](https://www.instrumentationblog.in/square-root-extraction-dp-flow/).\n\nInstrument technicians use it during loop checks and calibration, and process engineers to sanity check a flow reading against the transmitter DP."
 keywords: [square root extraction, dp flow, differential pressure to flow, flow transmitter, orifice dp, sqrt dp]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: dPm, label: DP at maximum flow, family: pressure, unit: mbar, imperialUnit: inH2O, default: 250, min: 0 }
   - { id: Qm, label: Maximum flow, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
@@ -29,6 +29,8 @@ faq:
     a: "From Bernoulli's equation, the pressure difference across a restriction is proportional to velocity squared, so flow is proportional to the square root of DP."
   - q: "What DP corresponds to 50% flow?"
     a: "25% of the DP range."
+  - q: "Does fluid density affect the square root flow reading?"
+    a: "Yes. Volumetric flow is proportional to √(ΔP ÷ ρ), so the meter is only right at its design density. A fluid 5% denser than design makes the volumetric reading about 2.5% high unless the DCS applies a density correction."
 related: [engineering/orifice-flow, engineering/4-20ma-scaling]
 ---
 
@@ -95,3 +97,37 @@ The square root can be done in the transmitter (output linear with flow) or in t
 ## With a 4–20 mA signal
 
 If the transmitter output is linear with DP, mA = 4 + 16 × DP%. For 50% flow (25% DP) that is **8 mA**, not 12 mA. If the transmitter extracts the square root itself, 50% flow reads 12 mA. Use the [4–20 mA calculator](/engineering/4-20ma-scaling/) for the conversion.
+
+## Second example: reading the output current
+
+With the same 0 to 250 mbar, 0 to 100 m³/h range, suppose the transmitter sees **160 mbar**. DP is 64% of range, so flow is √0.64 = **80%**, or 80 m³/h. A transmitter set to linear DP output sends 14.24 mA, while one set to square root output sends 16.80 mA. If the DCS then applies a second square root to the 16.80 mA signal, it displays 89.4% flow, 9.4 m³/h too high, which is the classic double extraction error.
+
+## How a small DP error grows at low flow
+
+Take a zero error of only 0.1% of span (0.25 mbar). Its effect on the flow reading depends on where in the range you are:
+
+| Flow | DP at that flow | Flow error | Error as % of reading |
+|---|---|---|---|
+| 10% | 2.50 mbar | 0.488 m³/h | 4.88% |
+| 20% | 10.00 mbar | 0.248 m³/h | 1.24% |
+| 30% | 22.50 mbar | 0.166 m³/h | 0.55% |
+| 50% | 62.50 mbar | 0.100 m³/h | 0.20% |
+| 70% | 122.50 mbar | 0.071 m³/h | 0.10% |
+| 100% | 250.00 mbar | 0.050 m³/h | 0.05% |
+
+The same 0.25 mbar that is invisible at full flow becomes a 4.88% error at 10% flow. This is the reason for low flow cutoff and for keeping the normal operating point above about 30% of the meter range.
+
+## Checking the loop in the field
+
+- Isolate the transmitter on its 3 or 5 valve manifold, open the equalising valve and confirm the output reads zero DP, then zero flow in the DCS.
+- Inject DP with a hand pump and calibrator at 0, 25, 50, 75 and 100% of DP and record both the mA and the displayed flow. The displayed flow should be 0, 50, 70.7, 86.6 and 100%.
+- Confirm the DP range matches the orifice sizing sheet. If the plate was sized for 250 mbar at 100 m³/h, a transmitter ranged at 0 to 200 mbar would saturate before maximum flow.
+- On liquid service vent gas from the impulse lines; on gas service drain liquid, since a trapped leg adds a fixed DP offset.
+
+## Common mistakes
+
+- **Square rooting in two places.** Decide whether the transmitter or the DCS extracts the root, and document it on the loop sheet.
+- **Swapping the HP and LP lines.** A reversed DP reads negative or clamps at zero, so the meter shows no flow while the line is running.
+- **Ignoring a change in fluid density.** Volumetric flow follows √(ΔP ÷ ρ). A fluid 5% denser than the design value makes the reading about 2.5% high.
+- **Setting the cutoff too high.** A 10% flow cutoff hides real low flow during start up; set it just above the noise level.
+- **Ranging the transmitter on site without the orifice calculation.** The DP at maximum flow comes from the plate bore and fluid data, not from a round number.

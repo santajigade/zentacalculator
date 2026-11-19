@@ -2,10 +2,10 @@
 title: Loan Payment (EMI) Calculator
 description: Work out the monthly payment (EMI), total interest and total cost of any loan — home, car or personal.
 category: finance
-intro: "A loan's monthly payment depends on the amount borrowed, the interest rate and the term. Knowing it helps you budget before you borrow. This free loan payment calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A loan's monthly payment depends on three things: the amount borrowed, the interest rate and the number of months. This loan payment calculator gives the equal monthly instalment (EMI) on a reducing balance, the total repaid and the total interest, and can solve for the amount, rate or term instead.\n\nBorrowers use it to budget before signing for a home, car or personal loan, and to compare offers by their full cost."
 keywords: [emi, loan payment, monthly payment, mortgage, car loan, personal loan, amortization, home loan]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 featured: true
 variables:
   - { id: P, label: Loan amount, family: currency, default: 200000, min: 0, decimals: 2 }
@@ -32,6 +32,10 @@ faq:
     a: A table showing each payment split into interest and principal, and the balance left after it. The table above summarises it by year.
   - q: Is it better to take a shorter or longer loan?
     a: A shorter loan has higher payments but much lower total interest. Choose the shortest term whose payment you can comfortably afford.
+  - q: "Is it better to reduce the EMI or the tenure after a prepayment?"
+    a: "Reducing the tenure saves more interest. On a 200,000 loan at 9% over 5 years, prepaying 20,000 after a year saves about 8,014 by shortening the term, against about 3,890 by lowering the EMI."
+  - q: "How does a processing fee affect the interest rate?"
+    a: "The fee reduces the money you receive while the payments stay the same, so the effective rate rises. A 2% fee on a 9% five year loan gives an effective rate of about 9.87%."
 related: [finance/simple-interest, finance/compound-interest]
 ---
 
@@ -109,3 +113,40 @@ Some lenders quote a **flat rate**, charging interest on the full original amoun
 - Compare offers by **total cost**, not just the monthly payment.
 - Check for prepayment penalties if you plan to pay early.
 - Keep total loan payments within a comfortable share of your income.
+
+## Worked example: a prepayment after one year
+
+Using the default loan (200,000 at 9% for 5 years, EMI 4,151.67), the balance after 12 payments is 166,834.00. A one-time prepayment of 20,000 at that point lowers it to 146,834.00. The lender then offers two choices:
+
+- **Keep the EMI, shorten the term.** n = ln(1 ÷ (1 − B × i ÷ EMI)) ÷ ln(1 + i) = 41.25 months, so the loan ends after 54 payments instead of 60 (the last one is 1,047.68). Interest saved: **8,014.02**.
+- **Keep the term, cut the EMI.** The remaining 48 payments fall to 3,653.97. Interest saved: **3,889.64**.
+
+Shortening the term saves more, because the principal is cleared sooner. Cutting the EMI suits someone whose budget is tight.
+
+## How the rate changes the payment
+
+For 200,000 over 5 years:
+
+| Annual rate | Monthly payment | Total interest |
+|---|---|---|
+| 7% | 3,960.24 | 37,614.38 |
+| 8% | 4,055.28 | 43,316.73 |
+| 9% | 4,151.67 | 49,100.26 |
+| 10% | 4,249.41 | 54,964.54 |
+| 11% | 4,348.48 | 60,909.08 |
+| 12% | 4,448.89 | 66,933.37 |
+| 14% | 4,653.65 | 79,219.01 |
+
+Each extra percentage point adds roughly 95 to 100 a month on this loan, and about 5,700 to 5,800 in interest over the term.
+
+## Fees change the real rate
+
+A 2% processing fee of 4,000 means you receive 196,000 but still repay 4,151.67 for 60 months. Solving for the rate that makes those payments worth 196,000 gives an effective annual rate of **9.87%**, not 9%. Compare loans on this effective rate (the APR), which also captures insurance or other charges deducted at the start.
+
+## Common mistakes
+
+- **Typing a monthly rate into an annual field.** 0.75% a month is 9% a year; entering 0.75 as the annual rate gives a payment far too small.
+- **Assuming a floating rate rise changes the EMI.** Many home lenders keep the EMI and extend the term instead, which can add years of payments; ask which option applies.
+- **Ignoring insurance bundled into the loan.** A single premium added to the principal earns interest for the whole term.
+- **Prepaying late in the term.** By year five most of each EMI is already principal, so a prepayment then saves little interest.
+- **Comparing loans of different terms by EMI alone.** A lower EMI over a longer term can cost more in total; compare total interest and the APR.

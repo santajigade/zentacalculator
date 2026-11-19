@@ -2,10 +2,10 @@
 title: Video File Size Calculator (Bitrate)
 description: Calculate video file size from bitrate and duration — or the bitrate for a target file size.
 category: other
-intro: "Video file size depends on bitrate and duration. It helps plan storage, uploads and streaming."
+intro: "A video file grows with its bitrate, the number of bits recorded each second, multiplied by how long you record. This video file size calculator turns a bitrate in Mbps and a duration into gigabytes, or works backwards to the bitrate or recording time that fits a given size.\n\nVideographers use it to buy enough memory cards, editors to plan drive space for a project, and streamers to estimate upload times and storage costs."
 keywords: [video file size calculator, bitrate calculator, mbps video, recording size, storage for video, 4k file size]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: br, label: Total bitrate (video + audio), suffix: Mbps, default: 20, min: 0 }
   - { id: t, label: Duration, family: seconds, unit: min, default: 60, min: 0 }
@@ -23,6 +23,10 @@ faq:
     a: "At 20 Mbps, about 9 GB. Streaming-quality 1080p at 5 Mbps is about 2.25 GB."
   - q: "How many minutes of 4K fit on a 64 GB card?"
     a: "At 100 Mbps, about 85 minutes."
+  - q: "Why is my video file smaller than the calculator says?"
+    a: "Most cameras and encoders use variable bitrate, so static scenes use fewer bits than the stated rate. The calculator gives the size at a constant bitrate, which is the safe figure for planning storage."
+  - q: "How long does it take to upload a video file?"
+    a: "Upload time = file size in bits ÷ upload speed. A 9 GB file is 72,000 megabits, so at 20 Mbps it takes 3,600 seconds, about one hour, before any slowdown."
 related: [other/download-time, other/data-storage-converter]
 ---
 
@@ -77,3 +81,36 @@ Card capacity (GB) × 8,000 ÷ bitrate (Mbps) ÷ 60 = minutes. A 128 GB card at 
 ## Audio
 
 Audio is usually small next to video: 128–320 kbps for stereo, adding about 1–2.4 MB per minute.
+
+## Default result, in GB and GiB
+
+The defaults (20 Mbps for 60 minutes) give 20 × 10⁶ × 3,600 ÷ 8 = **9.0 GB**. Your computer may show the same file as 8.38 GB, because Windows and many apps divide by 1,024³ (GiB) while card makers and this calculator use 10⁹ bytes.
+
+## Worked example: a two-camera 4K event
+
+A 2 hour wedding is filmed on two cameras, each recording 4K at 100 Mbps. Each camera writes 100 × 10⁶ × 7,200 ÷ 8 = **90 GB**, so the shoot needs 180 GB plus spare cards. A separate stereo audio recorder at 320 kbps adds only 288 MB. Uploading both camera files to a client over a 40 Mbps connection takes about **10 hours**, which is why many editors deliver a compressed copy and keep the camera originals on a drive.
+
+## Recording time on common cards
+
+Minutes of continuous recording at a constant bitrate (decimal GB as printed on the card):
+
+| Card | 20 Mbps | 50 Mbps | 100 Mbps | 150 Mbps |
+|---|---|---|---|---|
+| 64 GB (59.6 GiB) | 427 min | 171 min | 85 min | 57 min |
+| 128 GB (119.2 GiB) | 853 min | 341 min | 171 min | 114 min |
+| 256 GB (238.4 GiB) | 1,707 min | 683 min | 341 min | 228 min |
+| 512 GB (476.8 GiB) | 3,413 min | 1,365 min | 683 min | 455 min |
+
+Leave around 5% free; cameras stop when the card reports full and the file system needs some space.
+
+## Finding the real bitrate of a file
+
+Camera manuals list the bitrate for each resolution and frame rate mode. For an existing file, a tool such as MediaInfo or `ffprobe` reports the overall bitrate, which already includes audio and container overhead. Streaming platforms publish recommended upload bitrates; for YouTube these are around 8 Mbps for 1080p at 30 fps and 35 to 45 Mbps for 4K at 30 fps. Variable bitrate files spend more bits on fast motion, so a short busy clip can run well above the stated average.
+
+## Common mistakes
+
+- **Mixing Mbps and MB/s.** 100 Mbps is only 12.5 MB/s; dividing by 8 is the step most often forgotten.
+- **Expecting the full card capacity.** A 128 GB card shows about 119 GiB on a computer, and part of it is used by the file system.
+- **Using the average for a variable bitrate.** Size cards for the maximum bitrate of the mode if a shoot cannot be interrupted.
+- **Forgetting the 4 GiB FAT32 limit.** On FAT32 cards cameras split long recordings; at 20 Mbps a new file starts about every 29 minutes, which is normal and not lost footage.
+- **Planning only for camera files.** Editing proxies, render caches and exports often need as much space again as the original footage.

@@ -2,10 +2,10 @@
 title: Rebar Weight Calculator
 description: "Calculate the weight of steel reinforcement bars (rebar) from diameter, length and quantity. Free online rebar weight calculator with formula and examples."
 category: construction
-intro: "Reinforcement steel is ordered by weight, while drawings specify lengths and diameters. The weight per metre follows from the bar diameter — D²/162 kg/m for steel. This free rebar weight calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Reinforcement steel is bought and billed by weight, but drawings give bar diameters, lengths and counts. This rebar weight calculator converts them using the standard D² ÷ 162.2 kg per metre rule, which follows from steel's density of 7,850 kg/m³.\n\nSite engineers and quantity surveyors use it to prepare bar bending schedules and orders, and contractors use it to check deliveries and bills."
 keywords: [rebar weight, steel bar weight, d2/162, tmt bar weight, reinforcement steel, kg per metre]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 featured: true
 variables:
   - id: d
@@ -38,6 +38,8 @@ faq:
     a: "0.888 kg/m."
   - q: "How many 12 m bars of 10 mm make a tonne?"
     a: "About 135 bars."
+  - q: "How do I check if TMT bars are underweight?"
+    a: "Cut a 1 m sample, weigh it and compare with d² ÷ 162.2. IS 1786 batch tolerance is about ±7% up to 10 mm, ±5% for 12 and 16 mm and ±3% above 16 mm. A 12 mm bar should weigh 0.844 to 0.932 kg per metre."
 related: [construction/steel-plate-weight, construction/concrete-slab]
 ---
 
@@ -106,3 +108,35 @@ Add for lap lengths (often 40–50 × bar diameter), bends and offcuts. Allow 3�
 | 20 mm | 2.466 | 29.59 kg |
 | 25 mm | 3.853 | 46.24 kg |
 | 32 mm | 6.313 | 75.76 kg |
+
+## Worked example: steel for a slab mesh
+
+A 4 m × 5 m slab has 10 mm bars at 150 mm spacing in both directions with 25 mm end cover. Bars along the 4 m side are spaced over the 5 m width: (5 − 0.05) ÷ 0.15 + 1 = **34 bars** of 3.95 m. Bars along the 5 m side number (4 − 0.05) ÷ 0.15 + 1 = **27 bars** of 4.95 m. The total length is 34 × 3.95 + 27 × 4.95 = 267.95 m, and at 0.617 kg/m the mesh weighs **165.2 kg**. Adding 5% for bends, chairs and offcuts brings the order to about 173 kg. Laps add more where bars must be joined: a 50 d lap on a 16 mm bar is 0.80 m, or 1.26 kg of extra steel at every joint.
+
+## Checking delivered bars by weight
+
+Mills roll bars to a nominal mass, and IS 1786 allows a batch tolerance on mass per metre. A quick site check is to cut a 1 m piece, weigh it and compare:
+
+| Bar | Nominal kg/m | Batch tolerance | Acceptable kg/m |
+|---|---|---|---|
+| 8 mm | 0.395 | ±7% | 0.367 to 0.422 |
+| 10 mm | 0.617 | ±7% | 0.573 to 0.660 |
+| 12 mm | 0.888 | ±5% | 0.843 to 0.932 |
+| 16 mm | 1.578 | ±5% | 1.499 to 1.657 |
+| 20 mm | 2.466 | ±3% | 2.392 to 2.540 |
+| 25 mm | 3.853 | ±3% | 3.738 to 3.969 |
+| 32 mm | 6.313 | ±3% | 6.124 to 6.503 |
+
+For example, a 1 m piece of 12 mm bar weighing 0.842 kg is -5.2% below the nominal 0.888 kg/m, outside the 5% band, so the batch should be rejected or billed by actual weight. Underweight bars also mean less steel area in the structure.
+
+## Weight by the bundle
+
+The default inputs, 10 bars of 12 mm at 12 m each, give **106.5 kg**. Steel is often priced per tonne, so divide by 1,000 and multiply by the rate. Suppliers may bill on theoretical weight (this formula) or on weighbridge weight; agree which in the order.
+
+## Common mistakes
+
+- **Putting the diameter in cm or inches.** The 162.2 divisor needs millimetres; 1.2 entered for 12 mm gives a weight 100 times too small.
+- **Using 162 for big orders.** The rounded divisor overstates the weight by about 0.1%, which is around 1 kg per tonne; small, but worth noting on large bills.
+- **Ignoring laps and hooks.** Standard hooks and bends add length beyond the clear span; take cutting lengths from the bar bending schedule.
+- **Counting bars as span ÷ spacing.** You need one more bar than the number of gaps.
+- **Measuring over the ribs.** TMT bars are sold by nominal diameter; calipers over the ribs read larger and overestimate weight.

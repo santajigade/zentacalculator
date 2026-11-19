@@ -2,10 +2,10 @@
 title: SCSS Calculator (Senior Citizens Savings Scheme)
 description: Calculate quarterly interest and total returns from the Senior Citizens Savings Scheme at the current 8.2% rate — with the ₹30 lakh limit.
 category: finance
-intro: "The Senior Citizens Savings Scheme is a government scheme for people over 60 that pays fixed interest every quarter. This free SCSS calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "The Senior Citizens Savings Scheme (SCSS) is a government backed five year deposit sold through post offices and authorised banks that pays a fixed rate of simple interest every quarter. This SCSS calculator gives the quarterly, monthly equivalent, yearly and five year interest on a deposit.\n\nRetirees and their families use it to plan a steady income from a gratuity or provident fund payout and to compare SCSS with bank FDs and the Post Office MIS."
 keywords: [scss calculator, senior citizen savings scheme calculator, scss interest rate, scss quarterly interest, post office scss, scss 8.2]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: P, label: Deposit amount, family: currency, prefix: '₹', default: 1500000, min: 1000, max: 3000000, decimals: 0, help: '₹1,000 to ₹30,00,000 per individual.' }
   - { id: r, label: Interest rate, family: percent, unit: '%', default: 8.2, min: 0.0001, max: 0.3 }
@@ -27,6 +27,10 @@ faq:
     a: Residents aged 60 and above. Retirees aged 55–60 (and some defence retirees aged 50–60) can invest retirement benefits within a set period of retirement.
   - q: Is SCSS interest taxable?
     a: Yes, at your slab rate, with TDS above the yearly threshold. Deposits qualify for deduction under section 80C in the old regime.
+  - q: "How much can I deposit in SCSS to avoid TDS?"
+    a: "TDS applies when interest from the account exceeds ₹1,00,000 in a year. At 8.2% that is a deposit of about ₹12,19,512. Above that, submit Form 15H if your total tax is nil."
+  - q: "When is the first SCSS interest paid?"
+    a: "On the first working day of the next quarter (1 April, 1 July, 1 October or 1 January), covering only the days since the deposit. A ₹15,00,000 deposit on 10 November gets about ₹17,523 on 1 January."
 related: [finance/gst, finance/sukanya-samriddhi, finance/post-office-mis, finance/fd, finance/annuity-payout, finance/swp]
 ---
 
@@ -67,3 +71,52 @@ Interest is paid on the first working day of April, July, October and January. I
 | 80C benefit | Yes (old regime) | No | Only 5-year tax saver |
 
 Compare monthly income options with the [Post Office MIS calculator](/finance/post-office-mis/).
+
+## Worked example: ₹15 lakh at 8.2%
+
+With the default deposit of ₹15,00,000:
+
+- Quarterly interest = ₹15,00,000 × 8.2% ÷ 4 = **₹30,750**
+- Monthly equivalent = ₹30,750 ÷ 3 = **₹10,250**
+- Yearly interest = **₹1,23,000**, and over 5 years **₹6,15,000**, with the full ₹15,00,000 returned at maturity
+
+The first credit is usually smaller. A deposit made on 10 November earns interest only from that date to 31 December, about ₹15,00,000 × 8.2% × 52 ÷ 365 = ₹17,523, paid on 1 January. Full quarterly credits follow on the first working day of each April, July, October and January.
+
+## Tax and TDS on SCSS interest
+
+SCSS interest is fully taxable at your slab rate. Tax is deducted at source at 10% once the year's interest from the account exceeds the senior citizen threshold of ₹1,00,000. The default deposit earns ₹1,23,000 a year, so about ₹12,300 would be deducted unless you submit Form 15H, which you can do only if your total tax for the year is nil. To keep a single account below the threshold, the deposit must not exceed about ₹12,19,512 at 8.2%.
+
+Take home income on the default deposit (tax including 4% cess, ignoring other income and deductions):
+
+| Your slab rate | Yearly interest | Tax | Net income | Net yield |
+|---|---|---|---|---|
+| 0% | ₹1,23,000 | ₹0 | ₹1,23,000 | 8.20% |
+| 5% | ₹1,23,000 | ₹6,396 | ₹1,16,604 | 7.77% |
+| 20% | ₹1,23,000 | ₹25,584 | ₹97,416 | 6.49% |
+| 30% | ₹1,23,000 | ₹38,376 | ₹84,624 | 5.64% |
+
+Under the old regime, the deposit itself can be claimed in the ₹1.5 lakh investment deduction and senior citizens can deduct up to ₹50,000 of deposit interest. The new regime allows neither, but its rebate means many retirees with modest total income pay no tax anyway.
+
+## Getting the most from the scheme
+
+- **Split between spouses.** Each spouse aged 60 or more can hold their own account up to ₹30 lakh, doubling the family limit to ₹60 lakh.
+- **Reinvest the interest.** SCSS pays simple interest. If each quarterly credit is reinvested at the same rate, the effective yield rises to about 8.46% a year.
+- **Lock in a high rate.** The rate on the date of deposit stays fixed for the whole 5 years, even if later quarters announce a lower rate.
+- **Extend on maturity.** The account can be extended in blocks of 3 years at the rate ruling on the maturity date; apply within a year of maturity.
+
+## Premature closure on a ₹15,00,000 deposit
+
+| Closure | Deduction | Amount deducted | Paid out |
+|---|---|---|---|
+| After 1 year, before 2 years | 1.5% | ₹22,500 | ₹14,77,500 |
+| After 2 years, before 5 years | 1% | ₹15,000 | ₹14,85,000 |
+
+Closing before 1 year means any interest already paid is recovered from the deposit. Closure on the holder's death carries no penalty.
+
+## Common mistakes
+
+- **Treating the monthly figure as a monthly payout.** SCSS pays every quarter; the monthly equivalent is only for budgeting.
+- **Assuming interest compounds.** Unclaimed quarterly interest earns nothing extra, so link a savings account for automatic credit.
+- **Forgetting Form 15H.** Without it, eligible retirees with nil tax still lose 10% to TDS and must claim a refund.
+- **Depositing more than ₹30 lakh across banks.** The limit covers all SCSS accounts a person holds together, and the excess is refunded without SCSS interest.
+- **Missing the retirement window.** Retirees aged 55 to 60 must invest within three months of receiving their retirement benefits.

@@ -2,10 +2,10 @@
 title: EPF Calculator (Provident Fund Maturity)
 description: Estimate your EPF balance at retirement from basic salary, age, yearly salary increase and the current 8.25% EPF interest rate.
 category: finance
-intro: "The Employees' Provident Fund builds a retirement corpus from monthly contributions by you and your employer, earning interest declared each year. This free EPF calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "The Employees' Provident Fund builds a retirement corpus from monthly deposits by you and your employer, and EPFO credits interest on the balance every year. This EPF calculator projects your balance at age 58 from your basic pay, current balance, salary growth and the declared interest rate.\n\nSalaried employees use it to see whether EPF alone will fund retirement, and to decide whether extra Voluntary Provident Fund deposits are worth making."
 keywords: [epf calculator, pf calculator, provident fund calculator, epf interest rate, epf maturity, epfo, pf balance at retirement, employee provident fund]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: B, label: Monthly basic + DA, family: currency, prefix: '₹', default: 30000, min: 0, decimals: 0 }
   - { id: A, label: Your age, family: none, suffix: years, default: 30, min: 15, max: 57 }
@@ -32,6 +32,10 @@ faq:
     a: Mostly. Interest on your own contributions above ₹2.5 lakh a year (₹5 lakh if the employer does not contribute) is taxable. Withdrawals after 5 years of continuous service are tax-free.
   - q: When can I withdraw my EPF?
     a: In full at retirement (58), or after 2 months of unemployment. Partial withdrawals are allowed for a house, education, marriage and medical needs.
+  - q: "Is VPF worth it compared with PPF?"
+    a: "VPF earns the EPF rate, which has been well above the PPF rate, and comes straight out of salary. PPF has a ₹1.5 lakh yearly limit but stays fully tax-free, while VPF interest on employee deposits above ₹2.5 lakh a year is taxable."
+  - q: "What happens to my EPF if I change jobs?"
+    a: "Transfer it to the new employer through the EPFO portal using the same UAN. The balance and your service period carry over, so interest keeps compounding and the 5 year tax rule counts your total service."
 related: [finance/fd, finance/sukanya-samriddhi, finance/ppf, finance/gratuity, finance/nps, finance/retirement-corpus, finance/income-tax-india]
 ---
 
@@ -88,3 +92,38 @@ You can contribute more than 12% through the **Voluntary Provident Fund (VPF)**.
 - This is an estimate. The interest rate is set every year and your salary may grow faster or slower.
 - EPS gives a separate monthly pension and is not included here.
 - Do not withdraw EPF when you change jobs — transfer it with your UAN so it keeps compounding.
+
+## Where the ₹5,950 a month comes from
+
+On the default basic + DA of ₹30,000, you put in 12% = ₹3,600. Your employer also pays 12% = ₹3,600, but ₹1,250 of that (8.33%, capped at ₹1,250 because the pension wage ceiling is ₹15,000) goes to the Employees' Pension Scheme. Only ₹2,350 of the employer share reaches EPF, so the monthly credit is 3,600 + 2,350 = **₹5,950**. In the first year, the running balance method gives about ₹19,691 of interest on the opening ₹2,00,000 plus twelve deposits.
+
+## Worked example: adding VPF, and leaving the balance alone
+
+Take the same 30 year old and add a Voluntary Provident Fund deposit of ₹3,000 a month (10% of basic), rising with salary at 5% a year. Over 28 years the extra deposits total ₹21,02,493, and the projected corpus at 58 rises from ₹1,38,88,244 to **₹1,99,62,575**.
+
+The opening balance matters just as much. Left untouched at 8.25%, today's ₹2,00,000 alone grows to **₹18,40,820** by 58. Withdrawing it on a job change gives up that growth, which is why a transfer through your UAN is almost always the better choice.
+
+## Corpus at 58 by interest rate
+
+The rate is declared each year, so test a range. Default inputs (₹30,000 basic, age 30, ₹2,00,000 balance, 5% raises):
+
+| Interest rate | EPF at 58 |
+|---|---|
+| 7.5% | ₹1,23,15,119 |
+| 8% | ₹1,33,38,789 |
+| 8.25% | ₹1,38,88,244 |
+| 8.5% | ₹1,44,64,495 |
+
+Recent declared rates were 8.50% for 2019-20 and 2020-21, 8.10% for 2021-22, 8.15% for 2022-23 and 8.25% for 2023-24 and 2024-25.
+
+## Checking the estimate against your passbook
+
+Download the passbook from the EPFO member portal with your UAN. It shows the employee share, the employer EPF share and the pension share separately, plus the interest credited for each financial year. If the yearly employee deposits do not equal 12% of the basic on your salary slip, ask HR why. Interest for a year usually appears some months after the rate is announced, so a balance that looks short in April is often just waiting for that credit.
+
+## Common mistakes
+
+- **Using gross or CTC salary.** EPF is 12% of basic plus dearness allowance only; HRA, special allowance and bonus are excluded.
+- **Counting the pension share as EPF.** The ₹1,250 a month that goes to EPS builds a pension entitlement, not a withdrawable balance.
+- **Withdrawing before 5 years of service.** The amount becomes taxable, and TDS of 10% applies when the withdrawal is ₹50,000 or more and PAN is linked.
+- **Reading the result in today's money.** A crore at 58 buys far less than a crore today; compare it with an inflation-adjusted retirement target.
+- **Assuming the rate never changes.** It has moved between 8.10% and 8.50% in recent years, and a 0.25 point shift changes the corpus by several lakh.

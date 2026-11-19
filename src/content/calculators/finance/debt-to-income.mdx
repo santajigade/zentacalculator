@@ -2,10 +2,10 @@
 title: Debt-to-Income Ratio Calculator (DTI and FOIR)
 description: Calculate your debt-to-income ratio (DTI or FOIR) from monthly debts and income — and see how lenders judge it for home and personal loans.
 category: finance
-intro: "The debt-to-income ratio compares your monthly loan payments with your income. Lenders use it — called FOIR in India — to decide how much they will lend."
+intro: "The debt-to-income ratio (DTI) is the share of your gross monthly income that goes to fixed debt payments such as loan EMIs, car loans and minimum card dues. This debt-to-income ratio calculator gives the ratio and the payment room left below the common 36% limit.\n\nHome buyers and loan applicants use it to see how a lender will judge them, and Indian borrowers apply the same arithmetic to take-home pay as FOIR."
 keywords: [debt to income ratio, dti calculator, foir calculator, debt to income, loan eligibility, mortgage dti, emi to income ratio]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: debt, label: Total monthly debt payments (EMIs), family: currency, default: 1500, min: 0, decimals: 2 }
   - { id: inc, label: Gross monthly income, family: currency, default: 6000, min: 0.01, decimals: 2 }
@@ -23,6 +23,8 @@ faq:
     a: Monthly payments on home, car, personal and education loans, minimum credit card payments and other regular obligations. Everyday living expenses are not included.
   - q: How can I lower my DTI?
     a: Pay off small loans or credit cards, avoid new debt before applying, and include all regular income such as rent received or a co-applicant’s salary.
+  - q: "Does my debt-to-income ratio affect my credit score?"
+    a: "No. Credit bureaus do not record your income, so DTI is not part of the score. Lenders calculate it separately, while the score looks at repayment history, credit utilisation and similar factors."
 related: [finance/pe-ratio, finance/emi, finance/loan-payment, finance/mortgage, finance/credit-card-payoff]
 ---
 
@@ -69,4 +71,48 @@ So with a take-home of ₹1,00,000 and a 50% FOIR, total EMIs can be up to ₹50
 Monthly EMIs of 1,500 and a gross income of 6,000:
 
 - DTI = 1,500 ÷ 6,000 = **25%**
-- Room at 36% = 2,160 − 1,500 = **540 a month** for new payments
+- Room at 36% = 2,160 − 1,500 = **660 a month** for new payments
+
+## Worked example: front-end ratio and a new car loan
+
+The default 1,500 of monthly debt is made up of a 1,100 mortgage payment, a 280 car loan and a 120 minimum card payment, against 6,000 of gross income:
+
+- Back-end DTI = 1,500 ÷ 6,000 = **25%**
+- Front-end (housing) ratio = 1,100 ÷ 6,000 = **18.3%**, inside the 28% guideline
+- Adding a second car loan of 450 a month raises DTI to 1,950 ÷ 6,000 = **32.5%**, still under 36%
+- The most a lender capping at 43% would allow in new payments is 0.43 × 6,000 − 1,500 = **1,080 a month**
+
+## Maximum total debt payment by income
+
+Monthly payment ceilings for common lender limits (any currency):
+
+| Gross monthly income | 28% | 36% | 43% | 50% |
+|---|---|---|---|---|
+| 3,000 | 840 | 1,080 | 1,290 | 1,500 |
+| 5,000 | 1,400 | 1,800 | 2,150 | 2,500 |
+| 8,000 | 2,240 | 2,880 | 3,440 | 4,000 |
+| 12,000 | 3,360 | 4,320 | 5,160 | 6,000 |
+
+Subtract what you already pay to see the room for a new loan.
+
+## FOIR on take-home pay: an Indian home loan
+
+Indian lenders apply FOIR to net salary after tax and PF. Take a gross salary of ₹1,00,000 with a take-home of ₹82,000 and existing EMIs of ₹15,000:
+
+- Current FOIR = 15,000 ÷ 82,000 = **18.3%**
+- At a 50% FOIR cap the total EMI allowed is ₹41,000, leaving **₹26,000** for a new EMI
+- At 8.5% for 20 years that EMI supports a home loan of about **₹29,96,002**
+
+Closing the ₹15,000 of existing EMIs before applying would add roughly ₹17,28,463 to the eligible loan.
+
+## What lenders actually count
+
+Lenders work from your credit report and payslips or tax returns. Every EMI and credit card on the report counts, including loans you have guaranteed or co-signed. For self-employed applicants and bonus-heavy salaries they average income over two years, so a single strong year rarely raises eligibility on its own.
+
+## Common mistakes
+
+- **Mixing gross and net income.** US style DTI uses gross pay, while Indian FOIR uses take-home pay; the same debts give a higher FOIR than DTI.
+- **Leaving out small or shared debts.** Minimum card payments, buy now pay later plans and co-signed loans all appear on the credit report.
+- **Adding living costs.** Groceries, utilities and insurance premiums are not debt payments and do not belong in the ratio.
+- **Forgetting the new loan.** The ratio a lender checks includes the EMI of the loan you are applying for.
+- **Using one month of variable income.** Commission or freelance income is usually averaged, so use a 12 to 24 month average.

@@ -2,10 +2,10 @@
 title: Induction Motor Slip and Synchronous Speed Calculator
 description: Calculate synchronous speed, slip and rotor frequency of an induction motor from supply frequency, number of poles and rated speed.
 category: electrical
-intro: "An induction motor always turns a little slower than its rotating magnetic field — that difference is called slip, and it is what produces torque. Read how [an AC induction motor works](https://www.instrumentationblog.in/how-ac-induction-motor-works/) and see [induction motor slip explained](https://www.instrumentationblog.in/induction-motor-slip-explained/) in more detail. This free induction motor slip and synchronous speed calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "An induction motor always turns a little slower than its rotating magnetic field, and that difference, called slip, is what induces rotor current and torque. This induction motor slip calculator gives synchronous speed, slip and rotor frequency. See [induction motor slip explained](https://www.instrumentationblog.in/induction-motor-slip-explained/).\n\nElectricians use it to read nameplates and identify pole numbers, and maintenance engineers use it to judge motor load and diagnose rotor faults."
 keywords: [motor slip calculator, synchronous speed calculator, induction motor slip, 120f/p, motor rpm calculation, rotor frequency, number of poles]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-19
 variables:
   - { id: f, label: Supply frequency, family: frequency, unit: Hz, default: 50, min: 0 }
   - id: p
@@ -37,6 +37,8 @@ faq:
     a: "Pick the synchronous speed just above the nameplate speed. A 2,940 rpm motor on 50 Hz is 2-pole (3,000 rpm); a 960 rpm motor is 6-pole (1,000 rpm)."
   - q: "How can I estimate motor load from its speed?"
     a: "Use the slip method: load ≈ (Ns − measured speed) ÷ (Ns − nameplate speed). A 4-pole 50 Hz motor rated at 1,460 rpm that runs at 1,480 rpm is at about (1,500 − 1,480) ÷ (1,500 − 1,460) = 50% load."
+  - q: "What is the rotor frequency when the motor starts?"
+    a: "At standstill the slip is 1 (100%), so the rotor frequency equals the supply frequency, 50 Hz on a 50 Hz supply. It falls to the small running value, 1.33 Hz for a 4-pole motor at 1,460 rpm, as the motor reaches speed."
 related: [electrical/earthing-resistance, electrical/three-phase-motor-power, engineering/torque-power-speed, electrical/kw-to-amps, electrical/voltage-unbalance]
 ---
 
@@ -97,3 +99,30 @@ Synchronous speed scales with frequency. A 4-pole motor rated 1,750 rpm at 60 Hz
 - **Mistaking a high slip for a fault.** Small and high-torque motors (NEMA design D) are designed with 5 to 13% slip.
 - **Expecting synchronous speed at no load.** Even unloaded, a motor needs a little slip to cover friction and windage losses, usually under 1%.
 - **Reading speed under a VFD without the output frequency.** Use the drive's output frequency, not the 50 or 60 Hz mains, to work out N<sub>s</sub>.
+- **Rounding the measured speed.** At 1,460 rpm a 5 rpm reading error changes the slip by 12.5% of its value, so use a tachometer that resolves 1 rpm.
+
+## Slip and rotor frequency on a VFD
+
+A drive changes the synchronous speed, but at the same load torque the motor keeps roughly the same slip in rpm. For the default motor (40 rpm slip at rated torque), the table shows why slip as a percentage climbs at low frequency while the rotor frequency stays put:
+
+| Drive output | N<sub>s</sub> | Shaft speed | Slip | Rotor frequency |
+|---|---|---|---|---|
+| 10 Hz | 300 rpm | 260 rpm | 13.33% | 1.33 Hz |
+| 20 Hz | 600 rpm | 560 rpm | 6.67% | 1.33 Hz |
+| 25 Hz | 750 rpm | 710 rpm | 5.33% | 1.33 Hz |
+| 35 Hz | 1,050 rpm | 1,010 rpm | 3.81% | 1.33 Hz |
+| 50 Hz | 1,500 rpm | 1,460 rpm | 2.67% | 1.33 Hz |
+| 60 Hz | 1,800 rpm | 1,760 rpm | 2.22% | 1.33 Hz |
+
+At 10 Hz the same 40 rpm is a 13.3% slip. This is why sensorless drives use slip compensation: without it a conveyor set for 10 Hz runs noticeably slower than 300 rpm under load.
+
+## Measuring slip in the field
+
+- **Optical tachometer.** Stick reflective tape on the shaft or coupling and read the speed directly. Accuracy of 1 rpm is enough for load estimates.
+- **Stroboscope.** Set it to the synchronous flash rate (1,500 per minute here); the mark appears to drift backwards at the slip speed, 40 rpm.
+- **Current signature.** A spectrum of one phase current shows broken bar sidebands at (1 ± 2s) × f, which for the default motor are **47.33 Hz** and **52.67 Hz** either side of 50 Hz. The spacing itself gives the slip without touching the shaft.
+- **Search coil.** A coil held near the motor end picks up the rotor frequency, here 1.33 Hz; counting its beats over a minute gives slip directly.
+
+## Slip, torque and voltage
+
+In the normal running range torque is nearly proportional to slip. A 7.5 kW version of the default motor delivers T = 9,549 × 7.5 ÷ 1,460 = **49.1 N·m** at 2.67% slip, so half that torque needs roughly half the slip. Slip also rises as voltage falls, roughly with 1 ÷ V². At 80% voltage the same load pushes slip to about 4.17% and speed down to 1,438 rpm, and the extra rotor current raises the winding temperature.

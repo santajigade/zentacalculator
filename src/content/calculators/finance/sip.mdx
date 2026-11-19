@@ -2,10 +2,10 @@
 title: SIP Calculator (Monthly Investment)
 description: See how a fixed monthly investment (SIP) grows over time with compounding — or find the monthly amount for a target.
 category: finance
-intro: "A Systematic Investment Plan invests a fixed amount every month in a mutual fund. Regular investing and compounding can build a large corpus over time. This free SIP calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A Systematic Investment Plan puts a fixed sum into a mutual fund every month, so each instalment buys units at that month's price and then compounds. This SIP calculator projects the future value, the total invested and the gain from the monthly amount, expected return and period.\n\nSalaried investors use it to set a monthly amount for goals such as a home deposit, education or retirement, and to see how much starting earlier helps."
 keywords: [sip calculator, systematic investment plan, monthly investment, mutual fund sip, future value of annuity, recurring investment]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 featured: true
 variables:
   - { id: M, label: Monthly investment, family: currency, default: 5000, min: 0, decimals: 2 }
@@ -32,6 +32,8 @@ faq:
     a: Many mutual funds allow SIPs from 100 to 500 a month, so you can start small and increase later.
   - q: Can I withdraw from a SIP anytime?
     a: Yes, for most open-ended funds, though an exit load may apply in the first year. ELSS tax-saving funds have a 3-year lock-in for each instalment.
+  - q: "How are SIP returns measured, XIRR or CAGR?"
+    a: "XIRR. A SIP has many cash flows at different dates, so a single CAGR from the first instalment overstates the time the money was invested. XIRR finds the one annual rate that matches every instalment and the final value."
 related: [finance/future-value, finance/compound-interest, finance/savings-goal, finance/inflation]
 ---
 
@@ -111,3 +113,36 @@ Increasing your SIP by 10% every year can nearly double the final corpus over 20
 - Returns are not guaranteed and markets can fall.
 - Adjust the target for inflation with the [inflation calculator](/finance/inflation/).
 - Fund expenses and taxes reduce the final amount.
+
+## How sensitive the result is to the return
+
+The default plan (5,000 a month for 10 years at 12%) grows to **1,161,695** from 600,000 invested, a gain of 561,695. The return is the input you control least, so it is worth seeing the same plan at other rates:
+
+| Annual return | Future value | Gain | Multiple of money invested |
+|---|---|---|---|
+| 6% | 823,494 | 223,494 | 1.37× |
+| 8% | 920,828 | 320,828 | 1.53× |
+| 10% | 1,032,760 | 432,760 | 1.72× |
+| 12% | 1,161,695 | 561,695 | 1.94× |
+| 14% | 1,310,457 | 710,457 | 2.18× |
+
+Four percentage points of return separate a plan that grows modestly from one that nearly doubles your money. Use a conservative figure for planning and treat anything above it as a bonus.
+
+## What the corpus is worth in today's money
+
+At 6% inflation, 1,161,695 in 10 years buys what **648,685** buys today, only a little more than the 600,000 you put in. Real growth is what matters for a goal, so inflate the goal amount first with the [inflation calculator](/finance/inflation/), then solve for the monthly SIP.
+
+## Costs and tax in India
+
+- **Expense ratio.** A regular plan often costs about 1% a year more than the direct plan of the same fund. At 11% instead of 12% the default plan ends at 1,094,936, 66,759 less.
+- **Tax on equity funds.** Under the rates in force since July 2024, units held over 12 months are long term, with gains above 1.25 lakh a year taxed at 12.5%; units held 12 months or less are taxed at 20%. Each instalment has its own holding period, so in a redemption the most recent 12 instalments are still short term. If the whole gain of 561,695 were long term, the tax would be about 56,770 including 4% cess.
+- **Debt funds** bought after 1 April 2023 are taxed at your slab rate whatever the holding period.
+
+Check the current Budget for any change before redeeming a large amount.
+
+## Common mistakes
+
+- **Projecting a recent bull market return.** Trailing 3 year returns after a rally can be far above the long run average.
+- **Reading the rate as an annual effective return.** The formula compounds 12% ÷ 12 each month, which is an effective 12.68% a year, so a fund's annual CAGR of 12% corresponds to a slightly lower monthly figure.
+- **Judging a SIP by absolute return.** Money invested in the last few months has had little time to grow; compare SIPs by XIRR, which weights each instalment by its time in the market.
+- **Forgetting the exit load.** Many equity funds charge about 1% on units redeemed within a year of purchase, which applies to each recent instalment.

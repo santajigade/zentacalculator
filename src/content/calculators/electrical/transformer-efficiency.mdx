@@ -2,10 +2,10 @@
 title: Transformer Efficiency Calculator (Iron and Copper Losses)
 description: Calculate transformer efficiency at any load and power factor from no-load (core) and full-load (copper) losses — plus the load for maximum efficiency.
 category: electrical
-intro: "Transformers lose a little energy as core (iron) loss whenever they are energised and as copper loss that grows with load. Efficiency depends on the balance between the two, as covered in this [transformer efficiency calculation](https://www.instrumentationblog.in/transformer-efficiency-calculation/) guide."
+intro: "A transformer wastes a small, fixed core (iron) loss whenever it is energised and a copper loss that grows with the square of load. This transformer efficiency calculator gives the efficiency at any load and power factor and the load at which efficiency peaks. See this [transformer efficiency calculation](https://www.instrumentationblog.in/transformer-efficiency-calculation/) guide.\n\nUtility and plant engineers use it to compare tender offers, check loading and estimate the yearly cost of losses."
 keywords: [transformer efficiency calculator, transformer losses, iron loss copper loss, maximum efficiency transformer, no load loss, load loss, all day efficiency]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: S, label: Transformer rating, suffix: kVA, default: 1000, min: 0 }
   - { id: x, label: Load (fraction of rated), family: percent, unit: '%', default: 75, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: Copper loss is I²R, and current is proportional to load.
   - q: What are typical efficiencies?
     a: Large power and distribution transformers are 98–99.7% efficient at rated load. Small control transformers may be 90–96%.
+  - q: "How are no-load and full-load losses measured?"
+    a: "No-load (core) loss comes from the open circuit test at rated voltage and frequency. Full-load (copper) loss comes from the short circuit test at rated current, corrected to 75 °C. Both are on the factory test certificate."
+  - q: "What is all-day efficiency?"
+    a: "The ratio of energy delivered to energy input over 24 hours. It counts core loss for every hour and copper loss at each actual load, so it suits distribution transformers that run lightly loaded for much of the day."
 related: [electrical/transformer-current, electrical/transformer-turns-ratio, electrical/transformer-short-circuit, electrical/kva-to-kw]
 ---
 
@@ -71,3 +75,41 @@ Because core loss is constant, a lightly loaded transformer runs 24 hours a day 
 ## All-day (energy) efficiency
 
 For distribution transformers, compare energy rather than power: total kWh delivered ÷ (kWh delivered + core loss × 24 h + Σ copper loss × hours at each load). This is how loss capitalisation and energy-efficiency standards rank transformers.
+
+## Worked example with the default values
+
+A 1,000 kVA transformer with 1.4 kW no-load loss and 9.5 kW full-load copper loss runs at 75% load and PF 0.9:
+
+- Output = 0.75 × 1,000 × 0.9 = **675 kW**
+- Losses = 1.4 + 0.75² × 9.5 = 1.4 + 5.3438 = **6.7438 kW**
+- Efficiency = 675 ÷ (675 + 6.7438) = **99.01%**
+- Maximum efficiency at x = √(1.4 ÷ 9.5) = **38.4%** load, where it reaches 99.20% at PF 0.9
+
+## Worked example: all-day efficiency for a daily load profile
+
+The same unit feeds a plant whose load follows this pattern each day at PF 0.9:
+
+| Hours | Load | Energy delivered | Copper loss energy |
+|---|---|---|---|
+| 6 h | 20% | 1,080 kWh | 2.28 kWh |
+| 10 h | 75% | 6,750 kWh | 53.44 kWh |
+| 6 h | 50% | 2,700 kWh | 14.25 kWh |
+| 2 h | 100% | 1,800 kWh | 19.00 kWh |
+
+Delivered energy is 12,330 kWh, copper loss is 88.97 kWh and core loss is 24 × 1.4 = 33.6 kWh. The all-day efficiency is 12,330 ÷ (12,330 + 88.97 + 33.6) = **99.02%**. Over a year at ₹8 per kWh the core loss costs about ₹98,112 and the copper loss about ₹2,59,785.
+
+## How the losses are measured
+
+The two loss figures come from routine factory tests to IEC 60076-1 or IS 2026. The **open circuit test** energises one winding at rated voltage with the other open; the input power is the core loss. The **short circuit test** shorts one winding and raises the voltage on the other until rated current flows; the input power, corrected to 75 °C reference temperature, is the full-load copper loss. Both values are printed on the test certificate, and tender specifications cap them with penalties for any excess.
+
+## Choosing a lower loss design
+
+For a lightly loaded or always energised unit, core loss matters most. An amorphous core version with 0.5 kW no-load loss would save 7,884 kWh a year, and its efficiency at the default load rises to 99.14%. Buyers compare offers by capitalising each kW of no-load and load loss at a rupee value per kW and adding it to the price.
+
+## Common mistakes
+
+- **Using kVA as output power.** Output in kW is kVA × load × PF; a low power factor lowers efficiency even when the losses stay the same.
+- **Scaling copper loss linearly.** Load loss follows the square of current, so at half load it is a quarter of the full-load figure, not half.
+- **Forgetting that core loss never stops.** An energised transformer on no load is 0% efficient, still drawing 1.4 kW.
+- **Taking copper loss at ambient temperature.** Winding resistance rises about 0.4% per °C; use the 75 °C corrected figure.
+- **Entering losses in watts with the kW unit selected.** A 1,400 W core loss entered as 1,400 kW gives a nonsense efficiency.

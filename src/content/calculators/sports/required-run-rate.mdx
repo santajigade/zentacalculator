@@ -2,10 +2,10 @@
 title: Required Run Rate Calculator (Cricket)
 description: "Calculate the runs per over needed to chase a target with the balls remaining. Free online required run rate calculator with formula and examples."
 category: sports
-intro: "The required run rate is how many runs per over a chasing team needs to win."
+intro: "The required run rate is the number of runs per over a chasing side must score from now on to reach its target. This required run rate calculator takes the target, the current score and the balls left, and returns runs needed, the asking rate per over and runs per ball.\n\nCaptains and batters use it to pace a chase, commentators quote it every over, and fantasy and analytics fans use it to judge how a match is turning."
 keywords: [required run rate, rrr, cricket chase, runs needed per over, target calculator]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: tgt, label: Target, default: 181, min: 0 }
   - { id: runs, label: Current score, default: 92, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: "Revised targets use the DLS method, which is not covered by this calculator."
   - q: "What is the difference between current and required run rate?"
     a: "Current run rate is how fast a team has scored so far; required run rate is how fast it must score from now on to win."
+  - q: "How do I convert overs like 12.4 into balls?"
+    a: "Multiply the full overs by 6 and add the balls: 12.4 overs is 12 × 6 + 4 = 76 balls. In a 20 over innings that leaves 44 balls."
+  - q: "How much does a maiden over raise the required rate?"
+    a: "With 89 needed off 54 balls the rate is 9.89. A maiden leaves 89 off 48 balls, which lifts it to 11.12 an over."
 related: [sports/cricket-run-rate, sports/net-run-rate]
 ---
 
@@ -67,6 +71,39 @@ Run rate alone ignores wickets. 60 off 30 balls with 8 wickets left is a very di
 
 In rain-affected matches, the Duckworth–Lewis–Stern method sets a revised target based on resources (overs and wickets) remaining. The required run rate is then calculated against the revised target.
 
-## Example
+## How the asking rate climbs
 
-Target 181, score 92 after 11 overs (54 balls left): 89 runs needed at **9.89 per over**, or 1.65 runs per ball.
+The defaults (target 181, score 92, 54 balls left) give **89 runs needed at 9.89 per over**, or 1.65 per ball. The next few overs decide whether that stays realistic. Here is the asking rate after three more overs at different scoring speeds:
+
+| Next 3 overs at | Runs still needed | Overs left | New required rate |
+|---|---|---|---|
+| 6 per over | 71 | 6 | 11.83 |
+| 8 per over | 65 | 6 | 10.83 |
+| 10 per over | 59 | 6 | 9.83 |
+| 12 per over | 53 | 6 | 8.83 |
+
+Scoring at 6 an over for three overs pushes the target above 11 an over, while matching the asking rate keeps it level. This is why chasing sides try never to let the gap between current and required rate grow.
+
+## Boundaries versus strike rotation
+
+Boundaries take a big share of the load. If the batters hit a number of fours in the remaining 54 balls, the other balls must supply the rest:
+
+| Boundaries hit | Runs from other balls | Other balls | Runs per other ball |
+|---|---|---|---|
+| 6 fours (24 runs) | 65 | 48 | 1.35 |
+| 9 fours (36 runs) | 53 | 45 | 1.18 |
+| 12 fours (48 runs) | 41 | 42 | 0.98 |
+
+Even with 12 fours, the remaining balls still need almost a run each, so dot balls are as costly as missed boundaries.
+
+## Overs notation and balls remaining
+
+Scorecards write overs as overs and balls, so 12.4 overs means 12 overs and 4 balls, which is 76 balls, not 12.4 × 6. In a 20 over chase that leaves 44 balls. In a one-day match a side on 150 after 30 overs chasing 300 needs 150 off 120 balls, an asking rate of **7.50**. Always enter balls remaining rather than a decimal overs figure.
+
+## Common mistakes
+
+- **Treating 12.4 overs as a decimal.** Four balls is two thirds of an over, not 0.4 of one.
+- **Using the opposition total as the target.** The target is their total plus one; their total only ties the match.
+- **Counting wides and no-balls as balls used.** Each gives a run and the ball is bowled again, so balls remaining does not fall.
+- **Ignoring a revised target.** After a rain break, use the DLS target and the reduced overs, not the original figures.
+- **Reading the rate without wickets.** 9.89 an over with eight wickets left is a fair chase; with two left it is a long shot.

@@ -2,10 +2,10 @@
 title: Wire Resistance Calculator (Copper and Aluminium)
 description: Calculate the resistance of a copper or aluminium wire or cable from length, cross-section and temperature — plus resistance per km.
 category: electrical
-intro: "Every conductor has resistance that rises with length and temperature and falls with cross-section. It sets voltage drop, cable heating and the burden on instrument loops. This wire resistance calculator handles copper and aluminium at any temperature — see [what resistance is](https://www.instrumentationblog.in/what-is-resistance/) and [electrical conductivity explained](https://www.instrumentationblog.in/electrical-conductivity-explained/)."
+intro: "Every conductor has resistance that rises with length and temperature and falls with cross-section. This wire resistance calculator works it out for copper, aluminium and other metals at any temperature, and gives the figure per kilometre. See [what resistance is](https://www.instrumentationblog.in/what-is-resistance/) and [electrical conductivity explained](https://www.instrumentationblog.in/electrical-conductivity-explained/).\n\nElectricians use it to check voltage drop and cable heating, and instrument engineers use it to budget 4 to 20 mA loops and RTD lead errors."
 keywords: [wire resistance calculator, cable resistance calculator, copper wire resistance, resistance per km, conductor resistance at temperature, aluminium cable resistance, resistivity calculator]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-19
 variables:
   - id: rho
     label: Conductor material
@@ -35,6 +35,10 @@ faq:
     a: For a circuit, use the total conductor length — twice the one-way distance for a two-wire circuit.
   - q: Why is aluminium cable larger than copper?
     a: Aluminium's resistivity is about 64% higher, so it needs roughly 1.6 times the cross-section for the same resistance.
+  - q: "What resistance does a 4 to 20 mA loop cable add?"
+    a: "Use the total conductor length, out and back. A 1.5 mm² copper pair to a transmitter 500 m away has 1,000 m of conductor, about 11.5 Ω at 20 °C, which drops 0.23 V at 20 mA."
+  - q: "Why does my measured cable resistance differ from the calculation?"
+    a: "Temperature is the usual cause, at about 0.4% per °C, followed by stranding, which adds a few percent. Also check the meter: below a few ohms you need a four-wire low-resistance ohmmeter, not a multimeter."
 related: [electrical/earthing-resistance, electrical/cable-voltage-drop, physics/ohms-law, engineering/loop-resistance, electrical/ct-burden]
 ---
 
@@ -82,3 +86,40 @@ Real stranded conductors are slightly higher than the solid-wire calculation bec
 - Voltage drop — see the [cable voltage drop calculator](/electrical/cable-voltage-drop/).
 - 4–20 mA loop budgets — see the [loop resistance calculator](/engineering/loop-resistance/).
 - RTD lead-wire error: 2-wire RTDs read high by the lead resistance (about 0.39 °C per 0.15 Ω for a Pt100).
+
+## Worked example with the default values
+
+The defaults describe **100 m of 1.5 mm² annealed copper** at 20 °C. Converting the area to SI, 1.5 mm² is 1.5 × 10⁻⁶ m², so:
+
+- R₂₀ = 1.724 × 10⁻⁸ × 100 ÷ 1.5 × 10⁻⁶ = **1.1493 Ω**
+- Resistance per km = 1.1493 ÷ 100 × 1,000 = **11.49 Ω/km**
+
+If the same cable runs fully loaded at 70 °C, the resistance becomes 1.1493 × (1 + 0.00393 × 50) = **1.3752 Ω**, about 20% higher. That is why voltage drop and loss figures for power cables are usually stated at the maximum conductor temperature, not at 20 °C.
+
+## Loop example: a field transmitter 500 m away
+
+A 4 to 20 mA transmitter 500 m from the control room on a 1.5 mm² copper pair has 1,000 m of conductor in the loop. At 20 °C that is 11.49 Ω, and on a hot cable tray at 40 °C it is 12.40 Ω. At the full 20 mA the cable drops 0.248 V, which must fit in the supply budget along with the transmitter minimum voltage and the input resistor.
+
+## Resistance of 2.5 mm² conductor at different temperatures
+
+| Temperature | Copper | Aluminium |
+|---|---|---|
+| 0 °C | 6.354 Ω/km | 10.393 Ω/km |
+| 20 °C | 6.896 Ω/km | 11.304 Ω/km |
+| 40 °C | 7.438 Ω/km | 12.215 Ω/km |
+| 70 °C | 8.251 Ω/km | 13.582 Ω/km |
+| 90 °C | 8.793 Ω/km | 14.493 Ω/km |
+
+To match a 16 mm² copper conductor with aluminium you need 16 × 2.826e-08 ÷ 1.724e-08 = **26.2 mm²**, so the next standard size, 35 mm², is the usual like-for-like swap once current rating is also checked.
+
+## How conductor resistance is measured
+
+Cable makers test conductor resistance with a DC micro-ohmmeter using a four-wire (Kelvin) connection, so the test lead resistance does not add to the reading. The sample is left to settle at room temperature, and the reading is corrected to 20 °C before comparing it with the IEC 60228 maximum. On site, a low-resistance ohmmeter across a looped pair at the far end gives the round-trip value; an ordinary multimeter is not accurate below about 1 Ω.
+
+## Common mistakes
+
+- **Using the one-way length.** A two-wire circuit has twice the route length of conductor; a three-phase balanced circuit uses the one-way length per phase.
+- **Forgetting the mm² to m² conversion.** Leaving the area in mm² while ρ is in Ω·m gives a result a million times too large.
+- **Applying the copper coefficient to nichrome.** The calculator uses 0.00393 /°C, which suits copper and aluminium; nichrome changes only about 0.0001 /°C, so its temperature correction here overstates the rise.
+- **Ignoring AC effects on large cables.** Skin and proximity effect raise AC resistance noticeably above about 150 mm² at 50 Hz; datasheets list a separate AC value.
+- **Comparing a calculated value with the standard limit.** IEC 60228 figures are maximums for stranded conductors, so a real cable can sit a few percent above the solid-wire calculation and still pass.

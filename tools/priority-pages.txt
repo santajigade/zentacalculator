@@ -1,35 +1,5 @@
 # Priority pages for Part C: Google crawled them but did not index them (Search Console export, 2026-11-16).
 # Expand these first (if still in tools/upgrade-backlog.txt), then continue from the top of the backlog.
-electrical/wire-resistance
-ecology/rainwater-harvesting
-sports/required-run-rate
-engineering/dp-level-range
-engineering/torque-power-speed
-finance/epf
-other/video-file-size
-other/aquarium-volume
-engineering/hydrostatic-pressure
-finance/loan-payment
-biology/protein-molecular-weight
-engineering/dp-flow-square-root
-biology/ligation-ratio
-other/water-heater-time
-finance/sip
-finance/emi
-ecology/pond-liner
-other/paper-weight-gsm
-statistics/margin-of-error
-finance/scss
-finance/hra-exemption
-electrical/induction-motor-slip
-electrical/transformer-efficiency
-construction/rebar-weight
-finance/commission
-finance/nps
-finance/debt-to-income
-conversion/guntha-to-sq-ft
-construction/steel-plate-weight
-physics/heat-conduction
 other/lpg-cylinder
 construction/wallpaper
 finance/sales-tax-vat

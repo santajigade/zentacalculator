@@ -1,11 +1,11 @@
 ---
 title: HRA Exemption Calculator
-description: Work out how much of your house rent allowance is tax-exempt under Section 10(13A) — metro and non-metro — and how much is taxable.
+description: "Work out the tax-exempt part of your house rent allowance under the old regime, with the 50% limit for eight metro cities and 40% elsewhere."
 category: finance
-intro: "House Rent Allowance is partly tax-exempt under the old tax regime in India. The exempt amount is the lowest of three limits based on salary, rent paid and city. This free HRA exemption calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "House Rent Allowance paid by an employer is partly tax-free under the old tax regime, and the exempt part is the lowest of three limits set by salary, rent and city. This HRA exemption calculator finds the exempt and taxable HRA and solves for whichever value you leave blank.\n\nSalaried employees use it before choosing a regime and submitting rent proofs, and payroll teams use it to set monthly TDS."
 keywords: [hra calculator, hra exemption calculator, house rent allowance, section 10(13a), hra tax exemption, hra metro, rent receipts, old regime hra]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: B, label: Basic salary + DA (per year), family: currency, prefix: '₹', default: 600000, min: 0, decimals: 0 }
   - { id: H, label: HRA received (per year), family: currency, prefix: '₹', default: 240000, min: 0, decimals: 0 }
@@ -26,12 +26,14 @@ faq:
     a: The exemption is the lowest of three amounts — actual HRA received, rent paid minus 10% of basic + DA, and 50% of basic + DA in a metro (40% elsewhere).
   - q: Can I claim HRA in the new tax regime?
     a: No. HRA exemption is available only under the old regime.
-  - q: Which cities count as metro for HRA?
-    a: Only Delhi, Mumbai, Kolkata and Chennai. Bengaluru, Hyderabad, Pune and others use the 40% limit.
+  - q: "Which cities get the 50% HRA limit?"
+    a: "From tax year 2026-27 (1 April 2026), the Income-tax Rules 2026 give the 50% limit to eight cities: Delhi, Mumbai, Kolkata, Chennai, Bengaluru, Hyderabad, Pune and Ahmedabad. Every other city uses 40%. Choose the Metro option for any of the eight."
   - q: Do I need my landlord’s PAN?
     a: Yes, if the rent you pay is more than ₹1 lakh a year. Keep rent receipts or a rent agreement as proof.
   - q: Can I claim HRA if I pay rent to my parents?
     a: Yes, if you genuinely pay rent and they own the house. They must show it as rental income.
+  - q: "Does the 50% HRA limit for Bengaluru and Pune apply to 2025-26?"
+    a: "No. The four new cities get 50% only from 1 April 2026 (tax year 2026-27). For salary up to 31 March 2026, Bengaluru, Hyderabad, Pune and Ahmedabad still use the 40% limit."
 related: [finance/income-tax-india, finance/salary-increase, finance/gratuity, finance/emi]
 ---
 
@@ -87,3 +89,43 @@ Below ₹5,000 a month (10% of basic) there is no exemption at all. Above ₹25,
 - HRA exemption applies only in the **old regime**. Use the [income tax calculator](/finance/income-tax-india/) to see if the old regime still saves you tax.
 - If you do not receive HRA but pay rent, you may be able to claim a smaller deduction under section 80GG in the old regime.
 - You cannot claim HRA for a house you own and live in.
+
+## Which cities use the 50% limit from 2026-27
+
+Until 31 March 2026 only Delhi, Mumbai, Kolkata and Chennai counted as metros for HRA. The Income-tax Act 2025 and the Income-tax Rules 2026, which apply from 1 April 2026, extend the 50% limit to **Bengaluru, Hyderabad, Pune and Ahmedabad** as well. The Metro option in the calculator applies the 50% limit, so select it if you live in any of these eight cities, even though the option label names only the original four. The exemption is still available only under the old regime; the new regime, which is the default, gives no HRA exemption at all.
+
+## Worked example: when the city limit decides the answer
+
+With the default inputs the city does not matter: rent minus 10% of basic (₹2,40,000 minus ₹60,000 = ₹1,80,000) is the lowest limit, in a metro or not. The city limit bites only when rent is high compared with salary. Take a Pune employee with basic + DA of ₹12,00,000, HRA of ₹6,00,000 and rent of ₹55,000 a month (₹6,60,000 a year):
+
+1. Actual HRA = ₹6,00,000
+2. Rent minus 10% of basic = 6,60,000 minus 1,20,000 = ₹5,40,000
+3. City limit = 40% of basic = ₹4,80,000 (up to 2025-26), or 50% = ₹6,00,000 (from 2026-27)
+
+The exempt HRA rises from **₹4,80,000** to **₹5,40,000**, so ₹60,000 less salary is taxed. In the 30% slab with 4% cess that saves about **₹18,720** a year.
+
+## Exemption by salary level
+
+Rent fixed at ₹40,000 a month (₹4,80,000 a year), with HRA at 50% of basic, a common structure in large cities:
+
+| Basic + DA (year) | HRA received | Exempt, 50% city | Exempt, 40% city |
+|---|---|---|---|
+| ₹3,00,000 | ₹1,50,000 | ₹1,50,000 | ₹1,20,000 |
+| ₹6,00,000 | ₹3,00,000 | ₹3,00,000 | ₹2,40,000 |
+| ₹9,00,000 | ₹4,50,000 | ₹3,90,000 | ₹3,60,000 |
+| ₹12,00,000 | ₹6,00,000 | ₹3,60,000 | ₹3,60,000 |
+| ₹18,00,000 | ₹9,00,000 | ₹3,00,000 | ₹3,00,000 |
+
+At lower salaries the HRA or the city limit is the cap, so a 40% city exempts less. As salary rises, the 10% of basic taken off the rent grows until rent minus 10% becomes the lowest limit, and from there the city no longer matters.
+
+## Changing city or rent during the year
+
+The rule is applied month by month, so split the year at the change and add the parts. An employee on ₹50,000 basic and ₹25,000 HRA a month pays ₹15,000 rent for 5 months in a 40% city, then ₹30,000 for 7 months in a 50% city. The first period gives ₹50,000 exempt and the second ₹1,75,000, a total of **₹2,25,000**. Running the whole year with the later rent and city would overstate it.
+
+## Common mistakes
+
+- **Claiming HRA in the new regime.** It is not allowed there; compare both regimes first with the [income tax calculator](/finance/income-tax-india/).
+- **Using gross salary instead of basic + DA.** Only basic pay and dearness allowance that counts for retirement benefits go into the 10% and 40% or 50% limits.
+- **Including months with no rent.** Months spent in your own house or with no rent paid earn no exemption, even if HRA was received.
+- **Paying rent to a spouse.** Tax officers routinely reject it; rent to parents is accepted only when they own the house and declare the income, and the 2026 rules ask you to disclose your relationship with the landlord.
+- **Submitting proofs late.** If your employer has no rent proof by the cut-off, TDS is deducted on the full HRA and you must claim the exemption in your return.

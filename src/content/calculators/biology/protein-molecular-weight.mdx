@@ -2,10 +2,10 @@
 title: Protein Molecular Weight Estimator
 description: "Estimate a protein's molecular weight in kDa from its number of amino acids. Free online protein molecular weight estimator with formula and examples."
 category: biology
-intro: "A protein's molecular weight can be estimated from its number of amino acids, at about 110 daltons per residue. It is a quick check when planning gels, purifications and assays. This free protein molecular weight estimator shows the formula and steps."
+intro: "A protein's mass can be estimated from its length alone, because the average amino acid residue weighs about 110 daltons once the water lost in each peptide bond is taken off. This protein molecular weight calculator multiplies the residue count by that average to give the size in kDa.\n\nBiochemists and students use it to predict where a band should run on an SDS gel, to pick a dialysis cutoff, and to convert mg/mL into molar concentration."
 keywords: [protein molecular weight, kda calculator, amino acids to kda, protein size, average amino acid mass]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: aa, label: Number of amino acids, default: 350, min: 0 }
   - { id: avg, label: Average residue mass, suffix: Da, default: 110, min: 0 }
@@ -23,6 +23,10 @@ faq:
     a: "About 55 kDa."
   - q: "How many amino acids in a 30 kDa protein?"
     a: "About 270 (30,000 ÷ 110)."
+  - q: "How do I convert a protein concentration from mg/mL to µM?"
+    a: "Divide mg/mL by the molecular weight in kDa and multiply by 1,000. For a 38.5 kDa protein, 1 mg/mL is about 26.0 µM."
+  - q: "How much mass does a His-tag add?"
+    a: "Six histidine residues add about 823 Da. With the usual linker and protease cleavage site the whole tag region is closer to 2 kDa."
 related: [biology/protein-concentration-a280, biology/dna-copy-number]
 ---
 
@@ -75,3 +79,62 @@ Mass spectrometry gives the most accurate molecular weight.
 ## Daltons and kilodaltons
 
 1 kDa = 1,000 Da. A dalton is about the mass of one hydrogen atom (1 g/mol).
+
+## Exact mass from the sequence
+
+The 110 Da average is good for whole proteins, but the true mass is the sum of the residue masses plus one water (18.02 Da) for the free ends. Average residue masses (amino acid minus water):
+
+| Residue | Mass (Da) |
+|---|---|
+| Gly (G) | 57.05 |
+| Ala (A) | 71.08 |
+| Ser (S) | 87.08 |
+| Pro (P) | 97.12 |
+| Val (V) | 99.13 |
+| Thr (T) | 101.11 |
+| Cys (C) | 103.14 |
+| Leu / Ile (L, I) | 113.16 |
+| Asn (N) | 114.10 |
+| Asp (D) | 115.09 |
+| Gln (Q) | 128.13 |
+| Lys (K) | 128.17 |
+| Glu (E) | 129.12 |
+| Met (M) | 131.19 |
+| His (H) | 137.14 |
+| Phe (F) | 147.18 |
+| Arg (R) | 156.19 |
+| Tyr (Y) | 163.18 |
+| Trp (W) | 186.21 |
+
+For the short peptide GAVLK, the sum is 468.60 + 18.02 = **486.61 Da**, while the 110 Da rule gives 550 Da, 13% too high. Short peptides rich in small residues such as glycine and alanine are where the estimate fails; for a full sequence, use a sequence tool such as ExPASy ProtParam.
+
+## Tags, signal peptides and complexes
+
+The default 350 residue protein comes out at **38.5 kDa**. Real constructs rarely match the bare gene:
+
+- A His<sub>6</sub> tag adds 823 Da; with a typical 14 residue linker and protease site the tag region is about 20 residues, giving 40.7 kDa.
+- A secreted protein loses its signal peptide. Removing a 25 residue signal leaves a mature chain of about 35.8 kDa.
+- A homodimer is 77 kDa in native gel filtration, but still runs at 38.5 kDa on a reducing SDS gel because the subunits separate.
+
+## Converting mass concentration to molarity
+
+Assays, binding studies and crystallisation screens need molar concentrations, and the molecular weight is the conversion factor: µM = (mg/mL) ÷ kDa × 1,000. For the default 38.5 kDa protein, 1 mg/mL is **26.0 µM**.
+
+| Protein size | 1 mg/mL equals | 10 µM equals |
+|---|---|---|
+| 10 kDa | 100.0 µM | 0.100 mg/mL |
+| 25 kDa | 40.0 µM | 0.250 mg/mL |
+| 38.5 kDa | 26.0 µM | 0.385 mg/mL |
+| 50 kDa | 20.0 µM | 0.500 mg/mL |
+| 100 kDa | 10.0 µM | 1.000 mg/mL |
+| 150 kDa | 6.7 µM | 1.500 mg/mL |
+
+The same rule picks a membrane for concentrating or dialysing: choose a molecular weight cutoff of a third to a half of the protein mass, so a 10 kDa cutoff device suits a 38.5 kDa protein.
+
+## Common mistakes
+
+- **Using 128 Da per residue.** That is the average free amino acid; inside a chain each residue has lost a water, so the estimate comes out about 16% high.
+- **Counting the stop codon.** A 1,053 bp coding sequence gives 350 residues, not 351; the stop codon codes for no amino acid.
+- **Forgetting cleaved and added parts.** Signal peptides, propeptides and the initiator methionine may be removed, while tags and fusion partners such as GST (about 26 kDa) add a lot of mass.
+- **Reading native size from an SDS gel.** SDS separates subunits, so oligomers appear at the monomer mass.
+- **Expecting glycoproteins to match.** Glycosylation can add 10 to 50% to the mass and makes bands run broad and high.

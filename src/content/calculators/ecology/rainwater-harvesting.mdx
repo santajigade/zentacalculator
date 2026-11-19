@@ -2,10 +2,10 @@
 title: Rainwater Harvesting Calculator
 description: Calculate how much rainwater you can collect from a roof based on area, rainfall and runoff coefficient.
 category: ecology
-intro: "A roof can collect a surprising amount of rainwater. The volume depends on roof area, rainfall and how efficiently the system collects it. This free rainwater harvesting calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A roof can collect a surprising amount of rain: every square metre gives about one litre for each millimetre that falls. This rainwater harvesting calculator multiplies roof area, annual rainfall and a runoff coefficient to give the yearly and average daily yield.\n\nHomeowners use it to size a storage tank or recharge pit, and architects use it to show compliance where local rules make rooftop harvesting compulsory for new buildings."
 keywords: [rainwater harvesting calculator, roof rainwater, rainwater collection, tank size, runoff coefficient]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 featured: true
 variables:
   - { id: A, label: Roof (catchment) area, family: area, unit: m2, imperialUnit: ft2, default: 100, min: 0 }
@@ -32,6 +32,10 @@ faq:
     a: "It depends on rainfall pattern and use. In monsoon climates, size the tank for the dry months you need to cover."
   - q: "Is rainwater safe to drink?"
     a: "Not without treatment. Filter and disinfect it, and test regularly, before drinking."
+  - q: "Should I use the sloped or flat roof area?"
+    a: "Use the flat plan area, the footprint seen from above. Rain falls vertically, so the slope of the roof does not change how much it collects."
+  - q: "How big a tank does a 100 m² roof need?"
+    a: "It depends on the rainfall pattern and use. With 800 mm a year concentrated in the monsoon and a demand of 150 L a day, a monthly balance gives about 25 m³ for no shortfall; a smaller tank with overflow to a recharge pit is a common compromise."
 related: [ecology/garden-irrigation, construction/rectangular-tank]
 ---
 
@@ -83,3 +87,40 @@ The first few millimetres of rain wash dust, leaves and bird droppings off the r
 - Garden watering and toilet flushing need little treatment.
 - Drinking requires filtration and disinfection.
 - Groundwater recharge through pits or wells helps raise local water tables.
+
+## Sizing a tank from monthly rainfall
+
+An annual total hides the real problem in a monsoon climate: most rain falls in four months. Take the default roof (100 m², k = 0.85) and an illustrative 800 mm year, with a household using **150 L a day** for toilets, washing and garden:
+
+| Month | Rain | Collected | Used | Surplus or deficit |
+|---|---|---|---|---|
+| Jan | 5 mm | 425 L | 4,650 L | -4,225 L |
+| Feb | 5 mm | 425 L | 4,200 L | -3,775 L |
+| Mar | 10 mm | 850 L | 4,650 L | -3,800 L |
+| Apr | 20 mm | 1,700 L | 4,500 L | -2,800 L |
+| May | 40 mm | 3,400 L | 4,650 L | -1,250 L |
+| Jun | 150 mm | 12,750 L | 4,500 L | +8,250 L |
+| Jul | 220 mm | 18,700 L | 4,650 L | +14,050 L |
+| Aug | 180 mm | 15,300 L | 4,650 L | +10,650 L |
+| Sep | 110 mm | 9,350 L | 4,500 L | +4,850 L |
+| Oct | 40 mm | 3,400 L | 4,650 L | -1,250 L |
+| Nov | 15 mm | 1,275 L | 4,500 L | -3,225 L |
+| Dec | 5 mm | 425 L | 4,650 L | -4,225 L |
+
+The roof yields 68,000 L against an annual use of 54,750 L, so supply covers demand over the year. Running the monthly balance through two cycles shows that a tank of about **24.6 m³** (24,550 L) is needed to carry the monsoon surplus into the dry months with no shortfall. Most households settle for a smaller tank, accept municipal top-up from February to May, and send the overflow to a recharge pit.
+
+## How the catchment is measured
+
+Use the **plan area** of the roof, the footprint seen from above, not the sloped surface area: rain falls vertically, so a steep roof catches no more than a flat one of the same footprint. Only count roof sections whose gutters lead to the downpipe that feeds the tank. Take rainfall from the nearest India Meteorological Department or national weather station record, and design on a dry year rather than the average; at 75% of normal rainfall this roof gives about 51,000 L.
+
+## First flush and filter losses
+
+A first-flush diverter on this roof should hold 100 to 200 L (1 to 2 L per m²). It refills at every storm, so on a roof that sees many small showers the discarded volume adds up. Leaf screens and sand filters also spill water in heavy downpours. The runoff coefficient covers splash and evaporation, but not these losses.
+
+## Common mistakes
+
+- **Using the sloped roof area.** It overstates the yield; the horizontal footprint is the catchment.
+- **Sizing the tank for the annual volume.** A 68 m³ tank would rarely fill and costs far more than needed; size it on the monthly balance.
+- **Designing on average rainfall.** One year in four is well below average, so check the dry year too.
+- **Mixing units.** One mm of rain on one m² is one litre; in inches and square feet, one inch on 1,000 ft² is about 623 US gallons.
+- **Counting a green or gravel roof as a hard roof.** Their coefficient of about 0.5 can halve the expected yield.

@@ -2,10 +2,10 @@
 title: Commission Calculator
 description: Calculate sales commission and total pay from sales, commission rate and base salary — or the sales needed to reach an earnings target.
 category: finance
-intro: "Sales commission is a percentage of sales paid to the person who made them. It may be a flat rate or tiered."
+intro: "Sales commission is the share of sales value paid to the person who closed the deal, either as a flat percentage or in tiers that rise with volume. This commission calculator gives the commission and total pay from sales, rate and base pay, or the sales needed for an earnings target.\n\nSalespeople use it to plan targets and check payslips, and managers and business owners use it to design and cost incentive plans."
 keywords: [commission calculator, sales commission, commission rate, real estate commission, broker commission, how to calculate commission, commission percentage]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: S, label: Sales amount, family: currency, default: 50000, min: 0, decimals: 2 }
   - { id: r, label: Commission rate, family: percent, unit: '%', default: 5, min: 0, max: 1 }
@@ -24,6 +24,10 @@ faq:
     a: Enter your target as Total earnings, then press × on Sales amount.
   - q: What is a typical real estate commission?
     a: It varies by country. In India brokers often charge 1–2% of the property price; in the US total commissions have traditionally been around 5–6%, split between agents.
+  - q: "What is the difference between a marginal and a retroactive commission tier?"
+    a: "In a marginal tier the higher rate applies only to sales above the threshold. In a retroactive tier it applies to all sales once the threshold is passed. On 80,000 of sales with 5% to 50,000 and 8% above, that is 4,900 versus 6,400."
+  - q: "Is commission calculated before or after GST?"
+    a: "Normally before. Commission is paid on the taxable value of the sale, so divide a GST-inclusive amount by 1.18 (for 18% GST) before applying the rate."
 related: [finance/profit-margin, finance/salary-increase, finance/break-even, finance/roas]
 ---
 
@@ -70,3 +74,46 @@ For tiers, run the calculator once per tier and add the results.
 ## Commission on margin
 
 Paying on gross margin rather than revenue stops salespeople discounting heavily to close deals. Check whether your plan pays on invoice value, collected cash or margin.
+
+## Worked example with the default values
+
+Sales of 50,000 at a 5% rate with a base of 2,000 for the period:
+
+- Commission = 50,000 × 0.05 = **2,500**
+- Total earnings = 2,000 + 2,500 = **4,500**
+
+To earn 6,000 in total with the same base and rate, the commission must cover 4,000, so sales must reach 4,000 ÷ 0.05 = **80,000**. Enter 6,000 as total earnings and press × on sales amount to get the same answer.
+
+## Sales needed for a commission target
+
+| Rate | For 3,000 commission | For 5,000 | For 10,000 |
+|---|---|---|---|
+| 2% | 150,000 | 250,000 | 500,000 |
+| 3% | 100,000 | 166,667 | 333,333 |
+| 5% | 60,000 | 100,000 | 200,000 |
+| 8% | 37,500 | 62,500 | 125,000 |
+| 10% | 30,000 | 50,000 | 100,000 |
+| 15% | 20,000 | 33,333 | 66,667 |
+
+At low rates the required sales climb steeply, which is why low-rate plans such as property or wholesale usually come with a base salary.
+
+## Marginal versus retroactive tiers
+
+Plans with tiers work in one of two ways, and the difference is large. On 80,000 of sales with 5% up to 50,000 and 8% above:
+
+- **Marginal (step) tier:** 5% on the first 50,000 and 8% on the next 30,000 = **4,900**.
+- **Retroactive tier:** once sales pass 50,000 the 8% applies to everything, 80,000 × 8% = **6,400**.
+
+A retroactive plan creates a sharp jump at the threshold, so a sale that crosses it can be worth far more than its own value. Read the plan document to see which rule applies.
+
+## When commission is earned and paid
+
+Most plans pay on invoiced sales, but many pay only once the customer has paid, and some claw back commission on returns or cancellations. On a GST invoice, commission is normally calculated on the value before tax: an invoice of 59,000 including 18% GST has a taxable value of 50,000, so 5% commission is 2,500, not 2,950. Commission on gross margin is another variant: a 50,000 sale costing 35,000 leaves 15,000 of margin, and 20% of that pays 3,000.
+
+## Common mistakes
+
+- **Entering 5 instead of 5%.** The rate field is a percentage; a rate typed as a decimal elsewhere must be converted.
+- **Applying the top tier to all sales.** Unless the plan says retroactive, only the sales above the threshold earn the higher rate.
+- **Including tax in the sales figure.** Use the net sale value excluding GST or sales tax unless the plan says otherwise.
+- **Ignoring returns.** Commission paid on cancelled orders is usually recovered from later pay.
+- **Comparing plans on rate alone.** A 3% plan on large invoices with a base salary can pay more than 10% on small ones.

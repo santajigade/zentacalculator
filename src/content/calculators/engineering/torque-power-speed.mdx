@@ -2,10 +2,10 @@
 title: Torque, Power & Speed Calculator
 description: Convert between shaft power, torque and rotational speed (rpm) for motors, gearboxes and engines.
 category: engineering
-intro: "Torque, speed and power are linked for any rotating shaft: power equals torque times angular speed. This lets you find motor torque from its kW and rpm, or the power needed to turn a load at a given speed. This free torque, power & speed calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Torque, speed and power are linked for any rotating shaft: power equals torque times angular speed. This torque calculator finds motor torque from kW and rpm, the power needed to turn a load at a given speed, or the speed for a given torque and power.\n\nMechanical and electrical engineers use it to size motors and gearboxes for conveyors, pumps and mixers, and to check that a drive can start and hold its load."
 keywords: [torque calculator, power to torque, kw to nm, rpm, shaft torque, motor torque, hp to torque]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: P, label: Power, family: power, unit: kW, imperialUnit: hp, default: 11, min: 0 }
   - { id: n, label: Speed, suffix: rpm, default: 1460, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: "T = 9,549 × P (kW) ÷ rpm. An 11 kW motor at 1,460 rpm gives about 72 N·m."
   - q: "Why do slower motors give more torque?"
     a: "For the same power, torque is inversely proportional to speed, so halving the speed doubles the torque."
+  - q: "Is the kW on a motor nameplate the input or output power?"
+    a: "For IEC and NEMA motors the rated kW or hp is the mechanical output at the shaft. Electrical input is higher: divide the rating by the efficiency, for example 11 kW ÷ 0.91 is about 12.1 kW."
+  - q: "Does a VFD change the torque a motor can give?"
+    a: "Up to base speed the motor can give rated torque (71.9 N·m for 11 kW at 1,460 rpm) while power falls with speed. Above base speed torque falls in proportion, so power stays at about the rated kW."
 related: [electrical/three-phase-motor-power, engineering/hydraulic-cylinder-force]
 ---
 
@@ -92,3 +96,37 @@ Induction motors typically produce 150–250% of rated torque at start and up to
 ## Why it matters
 
 Low-speed applications such as conveyors, mixers and winches need high torque. Selecting the motor on kW alone can leave it unable to start the load — always check torque at the driven speed.
+
+## The default case step by step
+
+The defaults are an **11 kW motor at 1,460 rpm**. Converting speed to angular velocity, ω = 2π × 1,460 ÷ 60 = 152.89 rad/s, and T = P ÷ ω = 11,000 ÷ 152.89 = **71.95 N·m**, or 7.34 kgf·m. Using the synchronous speed of 1,500 rpm instead would give 70.03 N·m, about 3% low, so always use the full-load speed from the nameplate.
+
+## Choosing a motor for a conveyor
+
+A belt conveyor drum needs **1,800 N·m at 40 rpm**. The power at the drum is 2π × 40 × 1,800 ÷ 60 = 7.54 kW. Through a helical gearbox at 94% efficiency the motor must deliver 8.02 kW, so the next standard rating, 11 kW, is chosen. With a 1,460 rpm motor the gear ratio is 1,460 ÷ 40 = 36.5:1, and the motor supplies 1,800 ÷ (36.5 × 0.94) = **52.5 N·m**, well inside its 71.9 N·m rating. Check starting torque as well: a loaded conveyor may need 150% of running torque to break away.
+
+## Torque on a variable frequency drive
+
+Below base speed a VFD holds rated torque and power falls with speed; above base speed it holds power and torque falls. For the default 11 kW, 4-pole motor (slip taken as 40 rpm):
+
+| Frequency | Shaft speed | Available torque | Shaft power |
+|---|---|---|---|
+| 10 Hz | 260 rpm | 71.9 N·m | 1.96 kW |
+| 25 Hz | 710 rpm | 71.9 N·m | 5.35 kW |
+| 50 Hz | 1,460 rpm | 71.9 N·m | 11.00 kW |
+| 60 Hz | 1,760 rpm | 60.0 N·m | 11.05 kW |
+| 75 Hz | 2,210 rpm | 48.0 N·m | 11.10 kW |
+
+A self-cooled motor run at full torque near 10 Hz may also need derating, because its shaft fan moves little air at low speed.
+
+## How torque is measured
+
+On a test bed, an in-line rotary torque transducer with strain gauges, or a dynamometer, gives torque directly, and power follows from the measured speed. In the plant, most VFDs estimate shaft torque from the motor current and flux model to within a few percent, which is good enough for trending load. A clamp meter reading on a direct-on-line motor only hints at load, because current includes a large magnetising part at light load.
+
+## Common mistakes
+
+- **Using synchronous speed.** 1,500 rpm instead of 1,460 rpm understates torque by about 3%.
+- **Mixing rpm and rad/s.** P = T × ω needs ω in rad/s; with rpm the factor 2π ÷ 60 must be included.
+- **Treating nameplate kW as input power.** IEC motor ratings are shaft output; electrical input is higher by the motor efficiency.
+- **Leaving out gearbox losses.** Worm gearboxes can be only 50% to 85% efficient, far below a helical unit.
+- **Confusing horsepower types.** Metric horsepower is 735.5 W and mechanical (imperial) horsepower is 745.7 W.

@@ -2,10 +2,10 @@
 title: Paper Weight Calculator (GSM)
 description: "Calculate the weight of paper sheets or a ream from GSM and paper size. Free online paper weight calculator with formula and examples."
 category: other
-intro: "Paper thickness is described by GSM — grams per square metre. Knowing it lets you calculate the weight of a ream or a print job. This free paper weight calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "GSM, or grams per square metre, is the mass of one square metre of a paper or board, so the weight of any sheet is simply its area times its GSM. This paper weight calculator gives the weight of one sheet and of a stack for A and US sizes.\n\nPrinters use it to estimate job weights and paper orders, while offices and online sellers use it to work out postage and courier charges before packing."
 keywords: [gsm calculator, paper weight, ream weight, a4 paper weight, paper gsm to kg, printing paper]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - id: area
     label: Paper size
@@ -35,6 +35,10 @@ faq:
     a: "About 5 g."
   - q: "How much does a ream of A4 paper weigh?"
     a: "500 sheets of 80 gsm A4 weigh about 2.5 kg."
+  - q: "How can I find the GSM of paper without the packaging?"
+    a: "Weigh 10 sheets and divide by their total area in square metres. Ten A4 sheets weighing 62.4 g give 62.4 ÷ 0.6237 = 100 GSM."
+  - q: "Is higher GSM paper always thicker?"
+    a: "Usually, but not exactly. Thickness depends on density too, so a coated 100 GSM paper can be thinner than an uncoated 90 GSM bond."
 related: [other/print-size-dpi]
 ---
 
@@ -89,3 +93,50 @@ US paper is labelled by the weight of 500 sheets in its basic size, which differ
 ## Postage
 
 Postage often depends on weight. Ten A4 sheets at 80 gsm weigh about 50 g, plus about 5–10 g for a C4 envelope.
+
+## Worked example: a ream and a carton
+
+The default inputs are a ream of 500 A4 sheets (0.06237 m² each) at 80 GSM:
+
+- One sheet: 80 × 0.06237 = **4.99 g**
+- One ream: 4.9896 × 500 ÷ 1000 = **2.495 kg**
+- A carton of 5 reams: 12.47 kg of paper, plus about 0.5 kg for the wrappers and box
+
+## Worked example: weight of a printed booklet
+
+A 24 page A4 saddle stitched booklet is printed on A3 sheets folded in half. Each A3 sheet gives 4 pages, so it needs 6 sheets: 5 inner sheets on 100 GSM and 1 cover sheet on 250 GSM.
+
+- Inner: 5 × 0.12474 × 100 = 62.4 g
+- Cover: 1 × 0.12474 × 250 = 31.2 g
+- One booklet: **93.6 g**, so a run of 200 weighs 18.7 kg before packing
+
+Count leaves (sheets), not pages: one A4 leaf printed both sides carries 2 pages.
+
+## Finding the GSM of an unknown paper
+
+Weigh 10 sheets on a kitchen or postal scale and divide by the total area. If 10 A4 sheets weigh 62.4 g, the paper is 62.4 ÷ (10 × 0.06237) = **100 GSM**. Weighing 10 or more sheets keeps the 1 g resolution of a cheap scale from spoiling the result.
+
+GSM is not thickness. Thickness (caliper) also depends on how dense the paper is: uncoated office paper is around 0.8 g/cm³, so 80 GSM is roughly 100 µm thick and a ream stands about 50 mm tall, while a glossy coated paper of the same GSM is thinner and feels lighter in the hand.
+
+## Weight table for common GSM values
+
+| GSM | A4 sheet | A4 ream (500) | A3 ream (500) | Typical caliper |
+|---|---|---|---|---|
+| 70 | 4.37 g | 2.18 kg | 4.37 kg | 88 µm |
+| 75 | 4.68 g | 2.34 kg | 4.68 kg | 94 µm |
+| 80 | 4.99 g | 2.49 kg | 4.99 kg | 100 µm |
+| 90 | 5.61 g | 2.81 kg | 5.61 kg | 112 µm |
+| 100 | 6.24 g | 3.12 kg | 6.24 kg | 125 µm |
+| 120 | 7.48 g | 3.74 kg | 7.48 kg | 150 µm |
+| 170 | 10.60 g | 5.30 kg | 10.60 kg | 212 µm |
+| 300 | 18.71 g | 9.36 kg | 18.71 kg | 375 µm |
+
+Caliper assumes 0.8 g/cm³; coated papers and boards vary, so check the mill data sheet.
+
+## Common mistakes
+
+- **Treating US "lb" as GSM.** 20 lb bond and 80 lb text are basis weights of a ream in different base sizes; 20 lb bond is about 75 GSM, not 20.
+- **Counting pages instead of sheets.** A 100 page document printed double sided uses 50 sheets.
+- **Forgetting the cover stock.** Cards and covers at 250 to 350 GSM can weigh as much as several inner sheets.
+- **Ignoring packaging.** Envelopes, wrappers and cartons often push a parcel into the next postage band.
+- **Expecting exact figures.** Mills allow a GSM tolerance of a few percent, and paper gains weight in humid storage.

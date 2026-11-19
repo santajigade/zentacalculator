@@ -1,11 +1,11 @@
 ---
-title: UPS Size Calculator (kVA)
-description: Calculate the UPS kVA rating needed for your load from watts, power factor and a growth margin — for homes, offices, servers and control panels.
+title: "UPS Size Calculator: kVA and kW Rating for Your Load"
+description: "Find the UPS kVA and kW rating for your load from total watts, UPS power factor and a growth margin, with worked examples and a standard size table."
 category: electrical
-intro: "A UPS must be big enough in both kVA and kW for everything connected to it, with room to grow. Learn more about [UPS capacity (kVA) calculation](https://www.instrumentationblog.in/ups-capacity-kva-calculation/) and which [UPS topology](https://www.instrumentationblog.in/ups-topology-comparison/) suits your load. This free UPS size calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A UPS has two limits, its kVA (apparent power) and its kW (real power), and the load must stay within both. This UPS size calculator adds a growth margin to your load and divides by the UPS output power factor to give the minimum kVA and kW rating. See [UPS capacity (kVA) calculation](https://www.instrumentationblog.in/ups-capacity-kva-calculation/).\n\nIT managers, electrical contractors and panel designers use it to choose a UPS for server racks, offices, control panels and home setups."
 keywords: [ups size calculator, ups kva calculation, ups sizing, how to size a ups, ups capacity calculator, va to watts, online ups sizing]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: P, label: Total load, family: power, unit: W, default: 4000, min: 0 }
   - { id: pf, label: UPS output power factor, default: 0.9, min: 0.1, max: 1, help: 'Modern online UPSs are usually rated at 0.9 or 1.0 PF; older units at 0.8.' }
@@ -16,22 +16,22 @@ equations:
   - S = P * (1 + m) / pf / 1000
   - Pw = P * (1 + m)
 faq:
-  - q: How do I calculate UPS size?
-    a: Add up the load in watts, add a margin of 20–30% for growth, and divide by the UPS power factor. 4 kW × 1.25 ÷ 0.9 ≈ 5.6 kVA, so choose a 6 kVA UPS.
+  - q: "How do I calculate UPS size?"
+    a: "Add up the load in watts, add a 20 to 30% margin for growth, and divide by the UPS power factor. 4 kW × 1.25 ÷ 0.9 = 5.56 kVA, so choose a 6 kVA UPS."
   - q: Should I size by kVA or kW?
     a: Both. The load must not exceed either the kVA or the kW rating of the UPS. Check the datasheet for both figures.
-  - q: How much margin should I add?
-    a: 20–30% is common. It allows for future loads and keeps the UPS from running near full load, which improves reliability and battery runtime.
+  - q: "How much margin should I add?"
+    a: "20 to 30% is common. It allows for future loads and keeps the UPS from running near full load, which improves reliability and battery runtime."
   - q: Does UPS size decide backup time?
     a: No. Backup time depends on the battery bank. See the battery backup calculator.
-related: [electrical/ct-burden, electrical/generator-size, everyday-life/inverter-battery-backup, electrical/kva-to-kw, electrical/amps-to-watts, everyday-life/electricity-cost]
+  - q: "Can I run a UPS at full load?"
+    a: "It can carry its rated load, but continuous operation near 100% leaves no room for inrush or new equipment and shortens battery runtime. Planning for 70 to 80% loading is a common rule."
+related: [everyday-life/inverter-battery-backup, electrical/battery-bank-size, electrical/kva-to-kw, electrical/generator-size, electrical/amps-to-watts, other/battery-life]
 ---
 
 ## How to use the UPS size calculator
 
 Add up the **load** of everything the UPS will power, in watts. Enter the UPS's **output power factor** and a **margin** for growth. You get the minimum kVA and kW rating; choose the next standard size up.
-
-For more background, read [How to Calculate Battery Backup Time](https://www.instrumentationblog.in/calculate-battery-backup-time/).
 
 ## UPS size formula
 
@@ -41,16 +41,16 @@ For more background, read [How to Calculate Battery Backup Time](https://www.ins
 
 | Equipment | Typical power |
 |---|---|
-| Desktop PC with monitor | 150–300 W |
-| Laptop | 45–100 W |
-| Network switch (24-port) | 30–60 W |
-| Wi-Fi router | 10–20 W |
-| 1U server | 250–500 W |
-| Laser printer (printing) | 400–800 W |
-| PLC control panel | 100–500 W |
-| LED lighting per room | 30–60 W |
+| Desktop PC with monitor | 150 to 300 W |
+| Laptop | 45 to 100 W |
+| Network switch (24-port) | 30 to 60 W |
+| Wi-Fi router | 10 to 20 W |
+| 1U server | 250 to 500 W |
+| Laser printer (printing) | 400 to 800 W |
+| PLC control panel | 100 to 500 W |
+| LED lighting per room | 30 to 60 W |
 
-Use measured or nameplate input power. Avoid connecting laser printers, heaters and motors to small UPSs — their inrush current can overload them.
+Use measured or nameplate input power. Avoid connecting laser printers, heaters and motors to small UPSs, because their inrush current can overload them.
 
 ## Standard UPS ratings
 
@@ -61,9 +61,56 @@ Use measured or nameplate input power. Avoid connecting laser printers, heaters 
 | Type | Best for |
 |---|---|
 | Offline (standby) | Home PCs, small loads |
-| Line-interactive | Offices, network racks — handles voltage swings |
+| Line-interactive | Offices, network racks; handles voltage swings |
 | Online double-conversion | Servers, industrial control, medical, sensitive loads |
 
 ## Backup time
 
 The UPS rating sets how much load it can carry; the battery sets how long. See the [battery backup calculator](/everyday-life/inverter-battery-backup/) to size the batteries.
+
+## Worked example with the default values
+
+A 4 kW load, a UPS output power factor of 0.9 and a 25% margin:
+
+- Design load = 4,000 × (1 + 0.25) = **5.0 kW**, the minimum watt rating
+- Minimum kVA = 5,000 ÷ 0.9 ÷ 1,000 = **5.56 kVA**
+
+The next standard size is **6 kVA**, which at PF 0.9 is rated 5.4 kW. The present 4 kW load then uses 74% of the UPS, leaving room for growth.
+
+## Example: sizing for a server rack
+
+| Equipment | Qty | Each | Total |
+|---|---|---|---|
+| 1U servers | 4 | 350 W | 1,400 W |
+| 24-port switch | 2 | 45 W | 90 W |
+| Firewall | 1 | 60 W | 60 W |
+| Storage array | 1 | 500 W | 500 W |
+| Monitor and KVM | 1 | 40 W | 40 W |
+
+The rack draws **2,090 W**. With a 25% margin and a PF 0.9 UPS the minimum is 2.90 kVA, so a 3 kVA unit fits. An older PF 0.8 UPS would need 3.27 kVA for the same load, which shows why the power factor rating matters as much as the kVA figure.
+
+## UPS size by load (25% margin)
+
+| Load | Design kW | PF 0.8 | PF 0.9 | PF 1.0 | Size at PF 0.9 |
+|---|---|---|---|---|---|
+| 500 W | 0.62 kW | 0.78 kVA | 0.69 kVA | 0.62 kVA | 1 kVA |
+| 1,000 W | 1.25 kW | 1.56 kVA | 1.39 kVA | 1.25 kVA | 2 kVA |
+| 2,000 W | 2.50 kW | 3.12 kVA | 2.78 kVA | 2.50 kVA | 3 kVA |
+| 4,000 W | 5.00 kW | 6.25 kVA | 5.56 kVA | 5.00 kVA | 6 kVA |
+| 8,000 W | 10.00 kW | 12.50 kVA | 11.11 kVA | 10.00 kVA | 15 kVA |
+| 15,000 W | 18.75 kW | 23.44 kVA | 20.83 kVA | 18.75 kVA | 30 kVA |
+| 30,000 W | 37.50 kW | 46.88 kVA | 41.67 kVA | 37.50 kVA | 60 kVA |
+
+## Practical notes
+
+- **Measure where you can.** A clamp meter or a PDU with metering shows real running watts, which are often 50 to 70% of nameplate figures for IT equipment.
+- **Check inrush and start-up loads.** Motors, compressors, laser printers and transformers can draw several times their running power for a moment; a UPS overloaded at switch-on drops to bypass or shuts down.
+- **Three-phase UPS.** For units above about 10 kVA, also check that the load is balanced across phases so no single phase exceeds one third of the rating.
+- **Battery is separate.** At the default 4 kW load, 15 minutes of backup needs roughly 1.11 kWh from the battery allowing for 90% inverter efficiency; size it with the [battery backup calculator](/everyday-life/inverter-battery-backup/).
+
+## Common mistakes
+
+- **Adding VA ratings of power supplies.** A PC power supply labelled 500 W rarely draws 500 W; use measured or typical input power, or the sum is far too high.
+- **Sizing by kVA alone.** A 6 kVA UPS rated at PF 0.8 supplies only 4.8 kW, less than a 5 kW load even though the kVA looks ample.
+- **Running at 100% from day one.** A fully loaded UPS has no room for growth, runs hotter and gives shorter battery runtime.
+- **Ignoring redundancy.** For N+1 designs, the load must fit on the remaining modules after one fails, not on the total installed capacity.

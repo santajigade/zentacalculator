@@ -2,10 +2,10 @@
 title: DP Level Transmitter Range Calculator (Wet Leg and Dry Leg)
 description: Calculate LRV and URV for a differential pressure level transmitter on open, dry-leg or wet-leg tanks — with zero elevation and suppression.
 category: engineering
-intro: "A DP transmitter measures level as the pressure of the liquid column, so its calibration range depends on liquid density, tap positions and any fill in the impulse lines. Getting LRV and URV right is the key step — see [wet leg and dry leg level measurement](https://www.instrumentationblog.in/wet-leg-dry-leg-level-measurement/) and [zero elevation and zero suppression](https://www.instrumentationblog.in/zero-elevation-and-zero-suppression/). This DP level range calculator works out both."
+intro: "A DP transmitter measures level as the pressure of a liquid column, so its range depends on liquid density, tap positions and any fill in the impulse lines. This DP level range calculator works out LRV, URV and span for open tanks, dry legs and wet legs. See [wet leg and dry leg level measurement](https://www.instrumentationblog.in/wet-leg-dry-leg-level-measurement/).\n\nInstrument engineers use it to write calibration data sheets, and technicians use it to range a transmitter on the bench or by HART."
 keywords: [dp level transmitter calculation, wet leg calculation, dry leg level measurement, lrv urv calculation, zero suppression elevation, differential pressure level range, dp transmitter calibration range]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-19
 variables:
   - { id: sg, label: Process liquid specific gravity, default: 1.0, min: 0 }
   - { id: H, label: Measuring span (min to max level), family: length, unit: mm, imperialUnit: in, default: 3000, min: 0 }
@@ -34,6 +34,10 @@ faq:
     a: With a wet leg, the reference side has a constant head that makes the DP negative at low level — the LRV is negative and the range is "elevated".
   - q: Does the span depend on the wet leg?
     a: No. Span is always the process liquid SG × measuring height; the wet leg only shifts the range.
+  - q: "How do I convert the LRV and URV from mmH₂O to kPa or mbar?"
+    a: "Multiply mmH₂O by 0.00981 for kPa or by 0.0981 for mbar. The default range of 500 to 3,500 mmH₂O is 4.90 to 34.32 kPa."
+  - q: "What current should the transmitter give at a known level?"
+    a: "Find the DP at that level, then mA = 4 + 16 × (DP − LRV) ÷ span. For the defaults, a level 2,000 mm above the minimum gives 2,500 mmH₂O and 14.67 mA."
 related: [engineering/instrument-accuracy, engineering/hydrostatic-pressure, engineering/4-20ma-scaling, engineering/vertical-tank-volume, engineering/horizontal-tank-volume]
 ---
 
@@ -71,3 +75,41 @@ Process SG 1.0, span 3,000 mm, minimum level 500 mm above the HP tap, wet leg fi
 - Wet legs must stay full — a partly drained leg causes large level errors.
 - With diaphragm seals, use the capillary fill fluid SG and the vertical distance between seals.
 - Density changes shift the reading; for varying density see [DP level measurement with varying density](https://www.instrumentationblog.in/dp-level-measurement-varying-density/).
+
+## Worked example with the default values
+
+The defaults are an **open tank** with water (SG 1), a measuring span of 3,000 mm and the minimum level 500 mm above the HP tap:
+
+- LRV = 1 × 500 = **500 mmH₂O** (4.90 kPa), a suppressed zero
+- URV = 1 × (500 + 3,000) = **3,500 mmH₂O** (34.32 kPa)
+- Span = **3,000 mmH₂O**
+
+With the level 2,000 mm above the minimum, the transmitter sees 2,500 mmH₂O and outputs 4 + 16 × (2,500 − 500) ÷ 3,000 = **14.67 mA**, which is 66.7% of range.
+
+## Range for different liquids (same tank)
+
+Open tank, 3,000 mm span, minimum level 500 mm above the HP tap. Values in mmH₂O:
+
+| Liquid SG | LRV | URV | Span | URV in mbar |
+|---|---|---|---|---|
+| 0.70 | 350 | 2,450 | 2,100 | 240.3 mbar |
+| 0.85 | 425 | 2,975 | 2,550 | 291.7 mbar |
+| 1.00 | 500 | 3,500 | 3,000 | 343.2 mbar |
+| 1.20 | 600 | 4,200 | 3,600 | 411.9 mbar |
+| 1.50 | 750 | 5,250 | 4,500 | 514.8 mbar |
+
+## Ranging the transmitter in practice
+
+On the bench, connect a calibrator to the HP port with the LP port vented, apply the LRV pressure and set 4 mA, then apply the URV and set 20 mA. With a HART communicator the same values are simply typed in, but a check at both ends against a reference is still good practice. After installation, a wet leg must be filled completely and vented before the zero is checked, and on steam drums the condensate pot must be allowed to fill before commissioning.
+
+## Effect of a density change
+
+The range is only correct at the design SG. If this transmitter is ranged for water but the liquid is actually SG 0.95, a true level 2,000 mm above the minimum gives 2,375 mmH₂O, which the transmitter reads as **1,875 mm**, an error of 125 mm. The suppressed zero makes it worse, because the 500 mm below the minimum level is also lighter than assumed.
+
+## Common mistakes
+
+- **Measuring h₀ from the tank bottom.** It must be from the HP tap centreline (or diaphragm centre) to the minimum level.
+- **Getting the wet-leg sign wrong.** The filled reference leg pushes on the LP side, so it is subtracted and the LRV goes negative.
+- **Using the process SG for capillary seals.** With remote seals the elevation uses the fill fluid SG times the vertical distance between the seals.
+- **Mixing pressure units.** Calibrators may read mmH₂O at 4 °C or 20 °C, inH₂O or mbar; 1 mmH₂O is 0.0981 mbar at the conventional reference.
+- **Forgetting that the wet leg changes with temperature.** A hot or partly evaporated leg shifts the zero, so check it after start-up.

@@ -2,10 +2,10 @@
 title: NPS Calculator (National Pension System)
 description: Estimate your NPS corpus at 60, the lump sum you can withdraw and the monthly pension from the annuity — using current exit rules.
 category: finance
-intro: "The National Pension System builds a retirement corpus from regular contributions. At retirement, part can be withdrawn and the rest buys an annuity for a monthly pension. This free NPS calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "The National Pension System (NPS) is a market-linked retirement scheme regulated by PFRDA. Contributions grow until age 60, when part of the corpus can be withdrawn and the rest must buy an annuity. This NPS calculator estimates the corpus, the lump sum and the monthly pension.\n\nSalaried employees and self-employed savers use it to choose a monthly contribution, test return assumptions and see how the annuity share changes the pension before they commit."
 keywords: [nps calculator, national pension system calculator, nps pension calculator, nps returns, nps annuity, nps lump sum, nps tier 1, nps 80% withdrawal]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: M, label: Monthly contribution, family: currency, prefix: '₹', default: 5000, min: 0, decimals: 0 }
   - { id: A, label: Your age, family: none, suffix: years, default: 30, min: 18, max: 59 }
@@ -33,6 +33,10 @@ faq:
     a: It depends on your equity share. Equity schemes have historically returned around 10–12% a year over long periods, government bond schemes around 8–9%. Returns are not guaranteed.
   - q: What tax benefits does NPS give?
     a: Your own contribution qualifies under 80C and an extra ₹50,000 under 80CCD(1B) in the old regime. Employer contributions up to 14% of basic are deductible in the new regime too.
+  - q: "How much should I invest in NPS for a ₹50,000 monthly pension?"
+    a: "From age 30 at a 10% return, with 40% of the corpus in a 6% annuity, you need a corpus of about ₹2,50,00,000, which takes roughly ₹10,968 a month. With only the 20% minimum annuity the monthly amount doubles."
+  - q: "What happens if I miss a year of NPS contributions?"
+    a: "A Tier I account that receives less than ₹1,000 in a financial year becomes inactive (frozen). It is reactivated by paying the minimum amount for the missed years plus a small penalty; the money already invested keeps earning returns meanwhile."
 related: [finance/epf, finance/ppf, finance/sip, finance/retirement-corpus, finance/swp]
 ---
 
@@ -94,3 +98,50 @@ Younger investors can usually afford more equity for higher long-term growth.
 - Annuity rates change with interest rates. Check current quotes from annuity providers before you retire.
 - Pension from an annuity does not rise with inflation unless you choose a rising annuity.
 - Returns are market-linked and not guaranteed.
+
+## How the return assumption changes the result
+
+The default plan (₹5,000 a month from age 30, 20% annuity at 6%) is very sensitive to the yearly return, because the money compounds for 30 years:
+
+| Return | Corpus at 60 | 80% lump sum | Pension from 20% |
+|---|---|---|---|
+| 8% | ₹75,01,476 | ₹60,01,181 | ₹7,501 |
+| 9% | ₹92,22,370 | ₹73,77,896 | ₹9,222 |
+| 10% | ₹1,13,96,627 | ₹91,17,301 | ₹11,397 |
+| 11% | ₹1,41,51,139 | ₹1,13,20,911 | ₹14,151 |
+| 12% | ₹1,76,49,569 | ₹1,41,19,655 | ₹17,650 |
+
+Two percentage points either side of 10% cuts the corpus by about a third or raises it by more than half. A mix with 50% equity has historically earned less than an equity-heavy mix, so pick the return that matches your asset allocation rather than the best past figure.
+
+## Lump sum or bigger pension
+
+The same ₹1,13,96,627 corpus can be split in different ways at exit:
+
+| Annuity share | Lump sum | Annuity purchase | Monthly pension at 6% |
+|---|---|---|---|
+| 20% | ₹91,17,301 | ₹22,79,325 | ₹11,397 |
+| 40% | ₹68,37,976 | ₹45,58,651 | ₹22,793 |
+| 60% | ₹45,58,651 | ₹68,37,976 | ₹34,190 |
+| 100% | ₹0 | ₹1,13,96,627 | ₹56,983 |
+
+Putting more into the annuity gives a steady income for life but locks the money in; the lump sum can be invested in a [systematic withdrawal plan](/finance/swp/) instead.
+
+## Reading the result in today's money
+
+All figures are in rupees of the year you retire. At 6% inflation, the ₹11,397 monthly pension in the default example buys what about **₹1,984** buys today, and the ₹1,13,96,627 corpus is worth about ₹19,84,268 in today's terms. That is why the contribution usually needs to rise with salary; check a step-up plan with the [retirement corpus calculator](/finance/retirement-corpus/).
+
+## Working back from a target pension
+
+For a ₹50,000 monthly pension with 40% of the corpus in a 6% annuity, the corpus must be ₹50,000 × 12 ÷ (0.40 × 0.06) = **₹2,50,00,000**. Starting at 30 with a 10% return, that needs about **₹10,968 a month**. With only the 20% minimum annuity the corpus must double to ₹5,00,00,000, or ₹21,936 a month.
+
+## Tax benefit in practice
+
+Under the old tax regime, ₹50,000 a year put into NPS under section 80CCD(1B), over and above the 80C limit, saves ₹15,600 for someone in the 30% slab (31.2% with cess). Under the new regime only the employer's contribution under 80CCD(2) is deductible, so ask your employer about routing part of the salary into NPS.
+
+## Common mistakes
+
+- **Treating the annuity rate as fixed.** The 6% default is today's level; the rate you get depends on interest rates in the year you retire.
+- **Forgetting inflation.** A pension that looks comfortable in future rupees can be modest in today's money.
+- **Assuming the whole lump sum is tax-free.** Up to 60% of the corpus is tax-free; check the tax treatment of any amount above that.
+- **Using an equity return with Auto choice.** Auto choice cuts equity steadily after age 35, so the average return over the plan is lower than a pure equity figure.
+- **Missing the minimum contribution.** A Tier I account needs at least ₹1,000 a year to stay active.

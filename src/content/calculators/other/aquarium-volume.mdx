@@ -2,10 +2,10 @@
 title: Aquarium Volume Calculator
 description: Calculate fish tank volume in litres and gallons from its dimensions — plus the approximate weight when filled.
 category: other
-intro: "An aquarium's water volume decides how many fish it can hold, the filter and heater size, and treatment doses. This free aquarium volume calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "An aquarium's water volume sets how many fish it can hold, the size of filter and heater it needs and every medicine or conditioner dose. This aquarium volume calculator works out litres and gallons from the length, width and water height, and the weight of the water.\n\nFishkeepers use it before buying a tank or stand, and to dose treatments correctly, since an overdose based on a guessed volume can kill fish."
 keywords: [aquarium volume calculator, fish tank litres, tank gallons, aquarium size, fish tank weight]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 variables:
   - { id: L, label: Length, family: length, unit: cm, imperialUnit: in, default: 100, min: 0 }
   - { id: W, label: Width (front to back), family: length, unit: cm, imperialUnit: in, default: 40, min: 0 }
@@ -26,6 +26,8 @@ faq:
     a: "63 litres, or about 17 US gallons."
   - q: "How much does a 100 litre aquarium weigh?"
     a: "About 120–140 kg when filled, including glass and substrate."
+  - q: "Should I dose medicine on the tank volume or the water volume?"
+    a: "Use the real water volume: inside dimensions, actual water height, minus substrate and rock, plus any sump. For the default 180 L tank that is closer to 156 L, so dosing on 180 L would give about 15% too much."
 related: [construction/rectangular-tank, ecology/pond-liner]
 ---
 
@@ -72,3 +74,37 @@ The old “one inch of fish per gallon” rule is unreliable. Consider adult fis
 
 - **Cylinder**: π × r² × height.
 - **Bow-front**: approximate with a rectangle using the average depth.
+
+## Worked example: from glass size to real water volume
+
+The default tank measures 100 × 40 cm and is filled to 45 cm: 100 × 40 × 45 ÷ 1,000 = **180 L**, or 47.6 US gallons (39.6 UK gallons). That figure uses outside dimensions. With 10 mm glass the inside is 98 × 38 cm, so the water is 167.6 L. A 5 cm gravel bed occupies 18.6 L, but water fills about 40% of the gaps between grains, so it displaces roughly 11.2 L. The water you actually dose is about **156 L**, around 13% less than the label volume.
+
+## Equipment for the default tank
+
+- Heater at about 1 W per litre: 180 W, so a 200 W heater (or two 100 W units for redundancy).
+- Filter turnover of 4 to 6 times per hour: 720 to 1080 L/h rated flow.
+- A 20% weekly water change: about 31 L, based on the real water volume.
+
+## Litres per centimetre of water height
+
+Useful when topping up or when the water line is below the rim:
+
+| Footprint (inside) | Per cm | Per cm (US gal) | Per 10 cm |
+|---|---|---|---|
+| 60 × 30 cm | 1.80 L | 0.476 US gal | 18 L |
+| 80 × 35 cm | 2.80 L | 0.740 US gal | 28 L |
+| 100 × 40 cm | 4.00 L | 1.057 US gal | 40 L |
+| 120 × 45 cm | 5.40 L | 1.427 US gal | 54 L |
+| 150 × 50 cm | 7.50 L | 1.981 US gal | 75 L |
+
+## Weight and the floor
+
+Allowing 1.3 kg per litre of tank volume for water, glass, substrate and rock, the default tank weighs about 234 kg. Spread over a 1 × 0.4 m stand, that is 585 kg per square metre, far above the roughly 200 kg/m² (2 kN/m²) that residential floors are typically designed to carry spread evenly. Place large tanks across the floor joists or near a load-bearing wall, and use a stand built for the full weight.
+
+## Common mistakes
+
+- **Using outside dimensions.** Glass thickness, the top rim and bracing reduce the water volume, often by 5 to 10% on mid-sized tanks.
+- **Using tank height instead of water height.** Most tanks are filled 2 to 3 cm below the rim.
+- **Confusing US and UK gallons.** A UK gallon is 4.546 L and a US gallon 3.785 L; dosing labels from different countries differ by 20%.
+- **Dosing on the gross volume.** Substrate, rock and a sump change the real volume; medicines are best dosed on the water actually present.
+- **Forgetting the sump.** If the tank drains to a sump, add its running water volume to the total for dosing and heating.

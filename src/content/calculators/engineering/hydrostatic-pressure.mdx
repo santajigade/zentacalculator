@@ -2,10 +2,10 @@
 title: Hydrostatic Pressure & Tank Level Calculator
 description: Convert liquid level to hydrostatic pressure and pressure to level for any liquid density — ideal for level transmitter ranging.
 category: engineering
-intro: "The pressure at the bottom of a liquid column depends only on its height and density — the principle behind most tank level transmitters. See [hydrostatic level measurement](https://www.instrumentationblog.in/hydrostatic-level-measurement/), [DP transmitter level measurement](https://www.instrumentationblog.in/dp-transmitter-level-measurement/) and when to use [zero elevation and zero suppression](https://www.instrumentationblog.in/zero-elevation-and-zero-suppression/). This free hydrostatic pressure & tank level calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "The pressure at the bottom of a liquid column depends only on its height and density, which is how most tank level transmitters work. This hydrostatic pressure calculator applies P = ρgh to give the pressure for a level, or the level for a measured pressure.\n\nInstrument engineers use it to range level transmitters and check readings; see [hydrostatic level measurement](https://www.instrumentationblog.in/hydrostatic-level-measurement/) and [zero elevation and zero suppression](https://www.instrumentationblog.in/zero-elevation-and-zero-suppression/)."
 keywords: [hydrostatic pressure, tank level, level transmitter, pressure to level, rho g h, head pressure, mH2O, differential pressure level]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-19
 featured: true
 variables:
   - { id: h, label: Liquid level (height), family: length, unit: m, imperialUnit: ft, default: 5, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: "About 0.98 bar (98 kPa or 14.2 psi)."
   - q: "Does tank shape affect hydrostatic pressure?"
     a: "No. Pressure depends only on liquid height and density, not on the shape or volume of the tank."
+  - q: "How do I set the range of a level transmitter mounted below the tank?"
+    a: "Add the liquid head between the tank nozzle and the transmitter to both ends of the range. For water and a 1.2 m drop, a 0 to 5 m tank becomes 0.1177 to 0.6080 bar."
 related: [engineering/horizontal-tank-volume, engineering/vertical-tank-volume, engineering/4-20ma-scaling, engineering/pipe-flow-velocity]
 ---
 
@@ -95,3 +97,41 @@ When two immiscible liquids are present (oil on water), a DP transmitter measure
 3. Enter these as the 4 mA and 20 mA values — then use the [4–20 mA scaling calculator](/engineering/4-20ma-scaling/) to check readings.
 
 A useful rule: **1 m of water ≈ 0.098 bar ≈ 1.42 psi ≈ 9.81 kPa**.
+
+## Default result in other units
+
+The default 5 m of water at 1,000 kg/m³ gives 49,033 Pa = **0.4903 bar** = 49.03 kPa = 7.11 psi gauge. On an absolute scale, adding standard atmospheric pressure of 1.01325 bar gives 1.504 bar(a), which is the figure needed for a sealed absolute transmitter or for gas solubility work.
+
+## Worked example: transmitter below the tank nozzle
+
+A gauge transmitter sits 1.2 m below the bottom nozzle of an open water tank, with the impulse line full of water. At empty tank it already sees 1.2 m of head: 1,000 × 9.80665 × 1.2 = 11,768 Pa = **0.1177 bar**. At the 5 m maximum it sees 6.2 m, **0.6080 bar**. So the range is set to 0.1177 to 0.6080 bar, an elevated zero. Ranging it 0 to 0.4903 bar instead would make an empty tank read 24% full.
+
+## Wrong density, wrong level
+
+If the same 0.4903 bar is produced by a brine of 1,200 kg/m³, the true level is 49,033 ÷ (1,200 × 9.80665) = **4.17 m**, not 5 m. A transmitter ranged for water over-reads by 20%. Whenever the product changes, recalculate the range with the new density.
+
+## Water depth to pressure table
+
+For water at 1,000 kg/m³ and standard gravity:
+
+| Depth | Gauge pressure | Gauge (bar) | Gauge (psi) | Absolute (bar) |
+|---|---|---|---|---|
+| 0.5 m | 4.90 kPa | 0.0490 bar | 0.71 psi | 1.062 bar |
+| 1 m | 9.81 kPa | 0.0981 bar | 1.42 psi | 1.111 bar |
+| 2 m | 19.61 kPa | 0.1961 bar | 2.84 psi | 1.209 bar |
+| 5 m | 49.03 kPa | 0.4903 bar | 7.11 psi | 1.504 bar |
+| 10 m | 98.07 kPa | 0.9807 bar | 14.22 psi | 1.994 bar |
+| 20 m | 196.13 kPa | 1.9613 bar | 28.45 psi | 2.975 bar |
+| 50 m | 490.33 kPa | 4.9033 bar | 71.12 psi | 5.917 bar |
+
+## Does local gravity matter?
+
+Gravity varies from about 9.78 m/s² at the equator to 9.832 m/s² at the poles. The 5 m water column gives 48,900 Pa at the equator and 49,160 Pa at the poles, a 0.5% spread. That is below the accuracy of most level loops, so standard gravity is used, but custody transfer tank gauging applies local g.
+
+## Common mistakes
+
+- **Measuring from the tank bottom instead of the tapping point.** Level below the transmitter tapping is invisible to it; h is the height above the measuring point.
+- **Ignoring the gas pressure in a closed tank.** A gauge transmitter at the bottom of a pressurised vessel reads blanket pressure plus liquid head; use a DP transmitter referenced to the top.
+- **Treating mH2O and metres of liquid as the same.** 1 mH2O is defined with water at 1,000 kg/m³; 1 m of diesel produces only about 0.84 mH2O.
+- **Mixing gauge and absolute.** Adding or forgetting 1.013 bar shifts the reading by about 10.3 m of apparent water level, double the whole 5 m range.
+- **Leaving gas in a liquid filled impulse line.** A bubble in the leg changes the head between tank and transmitter and gives an offset that drifts with temperature.

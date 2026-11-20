@@ -2,10 +2,10 @@
 title: Buoyancy Calculator (Archimedes' Principle)
 description: Calculate the buoyant force on an object in water or another fluid, its apparent weight and density, and whether and how deep it will float.
 category: physics
-intro: "An object in a fluid is pushed upward by a force equal to the weight of the fluid it displaces — Archimedes' principle. It explains why ships float, why balloons rise and why things feel lighter underwater. This buoyancy calculator gives the buoyant force, the object's weight and apparent weight, its average density and, if it floats, how much of it sits below the surface."
+intro: "Any object in a fluid is pushed upward by a force equal to the weight of the fluid it displaces, which is Archimedes' principle. This buoyancy calculator gives that buoyant force, the weight and apparent weight, the average density and, for a floating object, the share of its volume below the surface.\n\nStudents use it for physics problems, divers and boat builders use it to size weights, floats and lift bags, and engineers use it for displacer level instruments."
 keywords: [buoyancy calculator, buoyant force calculator, archimedes principle calculator, will it float calculator, apparent weight in water, upthrust calculator, displacement calculator]
 published: 2026-10-27
-updated: 2026-11-11
+updated: 2026-11-20
 variables:
   - { id: V, label: Volume of the object (fully submerged), family: volume, unit: L, imperialUnit: ft3, default: 10, min: 0, help: 'For a partly submerged object, enter only the volume below the surface to get the buoyant force on it.' }
   - { id: rf, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0, help: 'Fresh water 1000, seawater 1025, air 1.2 kg/m³.' }
@@ -30,6 +30,10 @@ faq:
     a: The fraction submerged equals the object's density divided by the fluid's density. Ice at 917 kg/m³ floats with about 89% of its volume below the surface in seawater and about 92% in fresh water.
   - q: Why do steel ships float?
     a: The hull encloses a large volume of air, so the average density of the ship — steel, air and cargo together — is less than that of water. Loading the ship lowers it in the water until the displaced water again equals its total weight.
+  - q: "Does buoyant force increase with depth?"
+    a: "Not for a rigid object in water, because water is nearly incompressible and the displaced volume stays the same. Compressible things such as a diver's wetsuit, lungs or an air-filled bag shrink with depth, so their buoyancy falls as they go deeper."
+  - q: "How much weight can a floating object carry?"
+    a: "The extra load is the mass of fluid it would displace fully submerged minus its own mass. The default 10 L, 8 kg object displaces 10 kg of fresh water, so it can carry about 2 kg before it sinks."
 related: [physics/density, physics/pressure, engineering/hydrostatic-pressure, physics/weight]
 ---
 
@@ -86,3 +90,39 @@ Weighing an object in air and then fully under water gives its density without m
 - **Balloons and airships** float in air for the same reason: the lift is (ρ<sub>air</sub> − ρ<sub>gas</sub>) × g × V, about 10.2 N (a lift of roughly 1 kg) per cubic metre of helium at 20 °C and sea-level pressure.
 - **Level measurement:** displacer level transmitters work on buoyancy — the apparent weight of a long float falls as the liquid rises around it.
 - Water density changes with temperature and salinity, so a ship floats a little higher in cold seawater than in warm fresh water; load lines on the hull mark the allowed draught for each.
+
+## Reading the default result
+
+With the defaults the object displaces 10 L of fresh water, so the water pushes up with **98.07 N** while gravity pulls down with **78.45 N**. The apparent weight of **-19.61 N** is negative, which means a hand would have to push down with 19.61 N to hold it under. Let go and it rises until only 80% of its volume, 8 L, is below the surface. The same object could carry another **2 kg** before it sank completely.
+
+## Finding density by weighing in water
+
+A rock reads 2.65 kg on a hanging scale in air and 1.65 kg fully under fresh water. The loss of 1.00 kg is the mass of water displaced, so its volume is 1.00 L and its density is 2.65 ÷ 0.001 = **2,650 kg/m³**, typical of quartz and granite. Enter a volume of 1 L, a fluid density of 1,000 and a mass of 2.65 kg to check it: the apparent weight comes out at 16.18 N, which is 1.65 kg × g.
+
+## Sizing a lift bag
+
+A 50 kg steel anchor lies on the seabed. Its volume is 50 ÷ 7,850 = 6.37 L, so seawater supports only 64.0 N of its 490.3 N weight and it still pulls down with **426.3 N**. A lift bag must displace at least 426.3 ÷ (1,025 × 9.81) = **42.4 L** of seawater to make it neutral, so divers use a 50 L or larger bag and let air out as it rises, because the air in the bag expands as the pressure falls.
+
+## Payload of a drum raft
+
+Four 200 L drums (18 kg each) under a 40 kg deck can displace 800 kg of fresh water when fully submerged. Subtracting the raft's own mass leaves the load it can carry before the drums go under:
+
+| Water | Density | Mass displaced (drums under) | Payload before sinking |
+|---|---|---|---|
+| Fresh water | 1,000 kg/m³ | 800 kg | 688 kg |
+| Seawater | 1,025 kg/m³ | 820 kg | 708 kg |
+| Dead Sea brine | 1,240 kg/m³ | 992 kg | 880 kg |
+
+In practice keep the drums no more than about half submerged, which roughly halves the payload, so the raft keeps freeboard and stability in waves.
+
+## Buoyancy in level and density instruments
+
+A [displacer level transmitter](https://www.instrumentationblog.in/displacer-level-transmitter-working-principle/) hangs a long cylinder in the vessel; as the liquid rises the buoyant force on it grows, and a torque tube or spring measures the drop in apparent weight. Hydrometers use the opposite idea: a fixed weight floats deeper in a lighter liquid, and the stem scale reads density or specific gravity directly.
+
+## Common mistakes
+
+- **Entering the object's mass in place of its displaced volume.** Buoyancy depends only on the volume below the surface, not on what the object is made of.
+- **Using the whole volume for a floating object.** A partly floating body displaces only its submerged part; enter that volume to get the force actually acting.
+- **Forgetting the fluid changes.** Seawater gives about 2.5% more lift than fresh water, so ballast trimmed in a lake is too light at sea.
+- **Mixing litres and cubic metres.** 1 L is 0.001 m³; a slip here makes the force 1,000 times wrong.
+- **Treating hollow objects by their material density.** A steel tank floats if its average density, including the air inside, is below the fluid's, which is what the calculator's mass and volume give.

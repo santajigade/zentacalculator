@@ -2,10 +2,10 @@
 title: Wallpaper Calculator
 description: Estimate how many rolls of wallpaper you need from room perimeter, wall height and roll size — including pattern repeat waste.
 category: construction
-intro: "Wallpaper is sold in rolls of fixed width and length. The number of rolls depends on the room's perimeter, wall height and the pattern repeat."
+intro: "Wallpaper is sold in rolls of fixed width and length, so the job is really counting full-height strips, called drops, and how many fit in each roll. This wallpaper calculator works out drops, drops per roll and rolls needed from the wall length, height, roll size and pattern repeat.\n\nHomeowners use it before ordering so every roll comes from one batch, and decorators use it to quote materials and check how much a large repeat adds."
 keywords: [wallpaper calculator, how many rolls of wallpaper, wallpaper rolls, room wallpaper, pattern repeat]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: P, label: Wall length to cover, family: length, unit: m, imperialUnit: ft, default: 14, min: 0 }
   - { id: H, label: Wall height, family: length, unit: m, imperialUnit: ft, default: 2.5, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: "With 2.5 m walls and no repeat, about 31 drops — 11 standard rolls at 3 drops per roll."
   - q: "How many drops are in a roll?"
     a: "For 2.5 m walls, a 10 m roll gives 3 full drops (plus a short offcut)."
+  - q: "How many rolls do I need for one feature wall?"
+    a: "For a 3.6 m wide wall, 2.5 m high, with standard 53 cm by 10 m rolls and no repeat, you need 7 drops at 3 drops per roll, so 3 rolls."
+  - q: "Does a large pattern repeat always mean more rolls?"
+    a: "Not always. At 2.5 m height a 10 m roll still gives 3 drops with a repeat of up to 73 cm, so the order stays at 9 rolls for 14 m of wall. On a 2.7 m wall the same 64 cm repeat drops it to 2 drops per roll and 14 rolls."
 related: [construction/paint-calculator, construction/drywall]
 ---
 
@@ -85,3 +89,51 @@ Most decorators do **not** subtract windows and doors from small rooms, because 
 ## Batch numbers
 
 Buy all rolls with the same batch number, as colours can vary between print runs. Buy one extra roll for repairs.
+
+## Worked example with the default values
+
+The defaults are **14 m of wall**, **2.5 m high**, standard **53 cm × 10 m** rolls and no pattern repeat:
+
+- Drops = 14 ÷ 0.53 = 26.42, rounded up to **27**
+- Each drop is cut 2.5 + 0.1 = 2.6 m long, so a roll gives 10 ÷ 2.6 = 3.85, rounded down to **3 drops**
+- Rolls = 27 ÷ 3 = 9.0, rounded up to **9 rolls**
+
+For a room, the wall length is the perimeter: a 4.2 m × 3.4 m bedroom has 2 × (4.2 + 3.4) = 15.2 m of wall. A single 3.6 m feature wall at 2.5 m needs 7 drops and **3 rolls**.
+
+## How the pattern repeat changes the order
+
+Take a 2.7 m wall with a 64 cm repeat. Each drop is cut 2.7 + 0.64 + 0.1 = 3.44 m, so a 10 m roll gives only **2 drops** and 14 m of wall needs **14 rolls**, against 9 rolls for plain paper. The calculator adds one full repeat to every drop, which is a safe allowance; a careful hanger who matches each new drop to the last can sometimes save a roll on a big job.
+
+At 2.5 m wall height, 14 m of wall:
+
+| Pattern repeat | Cut length per drop | Drops per roll | Rolls |
+|---|---|---|---|
+| 0 cm | 2.60 m | 3 | 9 |
+| 53 cm | 3.13 m | 3 | 9 |
+| 64 cm | 3.24 m | 3 | 9 |
+| 75 cm | 3.35 m | 2 | 14 |
+
+## Rolls needed by perimeter and wall height
+
+Plain paper, 53 cm × 10 m rolls:
+
+| Wall length | 2.4 m | 2.5 m | 2.7 m | 3.0 m |
+|---|---|---|---|---|
+| 8 m | 4 | 6 | 6 | 6 |
+| 12 m | 6 | 8 | 8 | 8 |
+| 16 m | 8 | 11 | 11 | 11 |
+| 20 m | 10 | 13 | 13 | 13 |
+
+The big step is between 2.4 m and 2.5 m. A 2.4 m wall is cut at exactly 2.5 m, so a 10 m roll gives 4 drops with nothing to spare, and one miscut costs a drop. From 2.5 m up to about 3.2 m a roll gives 3 drops, and above that only 2, so the number of rolls climbs in steps rather than smoothly with height.
+
+## Measuring a room for wallpaper
+
+Measure each wall along the skirting with a tape, and the height from the top of the skirting to the ceiling or coving at two or three points, using the largest. Walls in older houses are rarely the same height all round. Measure chimney breasts and alcoves along every face, because each return needs its own drops. Read the roll width, length and repeat from the label: the repeat is printed as a figure in cm next to a match symbol.
+
+## Common mistakes
+
+- **Dividing wall area by roll area.** That ignores the offcut left on every roll and usually under-orders by one or two rolls.
+- **Using the room width instead of the perimeter.** Enter the total length of every wall to be papered, including returns into window reveals.
+- **Forgetting the repeat on an offset (half drop) match.** Use the full repeat printed on the label, not half of it.
+- **Ordering exact numbers from different batches.** A later roll from another print run can differ in shade; order a spare from the same batch.
+- **Leaving no trim allowance on uneven ceilings.** The 10 cm in the calculator covers normal trimming; add more height if the ceiling line slopes.

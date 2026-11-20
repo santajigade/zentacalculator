@@ -2,10 +2,10 @@
 title: PLC Analog Scaling Calculator (Raw Counts to Engineering Units)
 description: Convert PLC analog input raw counts to engineering units and back — for Siemens 0–27648, 0–4095, 0–32767 and any custom raw range.
 category: engineering
-intro: "A PLC analog input card turns a 4–20 mA or 0–10 V signal into a raw integer that the program must scale into bar, °C or m³/h. This PLC analog scaling calculator converts raw counts to engineering units in either direction and shows the resolution — see [PLC analog scaling from raw counts](https://www.instrumentationblog.in/plc-analog-scaling-raw-count/) and [analog signal resolution in PLCs](https://www.instrumentationblog.in/analog-signal-resolution-in-plc/)."
+intro: "A PLC analog input card converts a 4 to 20 mA or 0 to 10 V signal into a raw integer, and the program must scale it to bar, °C or m³/h. This PLC analog scaling calculator converts raw counts to engineering units and back, with percent of range and the resolution of one count.\n\nControls engineers use it when writing scaling blocks, and technicians use it during [PLC analog scaling from raw counts](https://www.instrumentationblog.in/plc-analog-scaling-raw-count/) checks and loop testing. See also [analog signal resolution in PLCs](https://www.instrumentationblog.in/analog-signal-resolution-in-plc/)."
 keywords: [plc analog scaling calculator, raw count to engineering units, analog input scaling formula, siemens 27648 scaling, plc scaling 4-20ma, scale analog input plc]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-20
 variables:
   - { id: Cmin, label: Raw count at range low, default: 0 }
   - { id: Cmax, label: Raw count at range high, default: 27648, help: 'Siemens S7-1200/1500: 27648. 12-bit cards: 4095. Check the card manual.' }
@@ -28,6 +28,10 @@ faq:
     a: Clear the raw count, enter the value in engineering units and calculate — raw = raw_min + (EU − EU_min) ÷ (EU_max − EU_min) × (raw_max − raw_min).
   - q: Does the raw range change for 4–20 mA versus 0–20 mA?
     a: On many cards, yes — some map 4–20 mA to the full raw range while others give a non-zero count at 4 mA (for example 3277–16384 on older 16384-count cards). Always check the input card manual.
+  - q: "What does the PLC show if I scale with 32767 instead of 27648?"
+    a: "Every reading is low by the ratio 27,648 ÷ 32,767, about 15.6%. A 0 to 10 bar signal at 20,736 counts would display 6.328 bar instead of 7.5 bar."
+  - q: "How do I scale a range that starts below zero?"
+    a: "Enter the negative value as engineering units at range low. For −50 to 150 °C on a 0 to 27,648 input, 85 °C corresponds to 18,662 counts and zero counts is −50 °C."
 related: [engineering/4-20ma-scaling, electronics/adc-resolution, engineering/signal-converter, engineering/five-point-calibration]
 ---
 
@@ -67,3 +71,43 @@ Raw ranges depend on card model and configuration — confirm with the manufactu
 - Scale in **floating point** (REAL) to avoid integer truncation.
 - Clamp or alarm values outside the range: below about 3.8 mA or above 20.5 mA usually means a sensor fault (NAMUR NE 43).
 - If the transmitter already does square-root extraction, scale linearly; otherwise apply the root after scaling.
+
+## Going the other way: engineering units to counts
+
+A temperature transmitter ranged −50 to 150 °C feeds the same 0 to 27,648 input. To find the count the PLC should show at **85 °C**, clear the raw count and enter 85 as the value:
+
+- Raw = 0 + (85 − (−50)) ÷ (150 − (−50)) × 27,648 = **18,662 counts**
+
+This is the number to compare with the PLC watch table while a calibrator simulates 85 °C at the transmitter, and the value to type into a test sequence that writes simulated inputs.
+
+## Cards with a live zero
+
+Some cards report a non-zero count at 4 mA. Suppose a card is configured so 4 mA reads 6,400 and 20 mA reads 32,000, and it carries a 0 to 6 m level signal. Set raw low to 6,400 and raw high to 32,000; a reading of 19,200 counts is then (19,200 − 6,400) ÷ 25,600 × 6 = **3.00 m**. Entering 0 as raw low by mistake would show 3.60 m instead, an error of 0.60 m that is largest at the bottom of the range.
+
+## 4 to 20 mA on a 0 to 27,648 input, 0 to 10 bar
+
+| Loop current | Raw count | Scaled value | Meaning |
+|---|---|---|---|
+| 3.6 mA | -691 | -0.2500 bar | NE 43 low fault |
+| 3.8 mA | -346 | -0.1250 bar | under range limit |
+| 4.0 mA | 0 | 0.0000 bar | 0% |
+| 8.0 mA | 6,912 | 2.5000 bar | 25% |
+| 12.0 mA | 13,824 | 5.0000 bar | 50% |
+| 16.0 mA | 20,736 | 7.5000 bar | 75% |
+| 20.0 mA | 27,648 | 10.0000 bar | 100% |
+| 20.5 mA | 28,512 | 10.3125 bar | over range limit |
+| 21.0 mA | 29,376 | 10.6250 bar | NE 43 high fault |
+
+Counts below zero and above 27,648 are real readings on Siemens cards, which report down to about −4,864 and up to 32,511 before flagging under or overflow (32,767 or −32,768). Use them for fault alarms instead of clamping them away.
+
+## Checking the scaling during commissioning
+
+Disconnect the transmitter and drive the input with a loop calibrator in source mode, or put the calibrator in simulate mode in series with a loop powered input. Step through 4, 8, 12, 16 and 20 mA and record the raw count and the scaled value from the PLC watch table. Every point should land within a few counts of the values in the table above. A constant offset points to a wrong raw low value; an error that grows with signal points to a wrong raw high value or a wrong engineering span.
+
+## Common mistakes
+
+- **Using 32,767 as raw high on a Siemens card.** The default reading of 20,736 counts would then show 6.328 bar instead of 7.5 bar, about 16% low across the whole range.
+- **Doing the division in integers.** (20,736 ÷ 27,648) in integer maths is 0, so the result sticks at the bottom of the range until the count reaches full scale. Convert to REAL before dividing.
+- **Scaling the transmitter range twice.** If the transmitter or the card already outputs engineering units (HART variable or a card set to scale internally), scaling again in the program distorts the value.
+- **Mismatching the range in the PLC and the transmitter.** A transmitter re-ranged to 0 to 16 bar in the field while the PLC still scales 0 to 10 bar reads 37.5% low everywhere.
+- **Clamping before alarming.** Limiting the value to 0 to 100% first hides the 3.6 mA and 21 mA fault currents that the diagnostics need to see.

@@ -2,10 +2,10 @@
 title: CAGR Calculator
 description: Calculate the compound annual growth rate (CAGR) between two values — or project a future value from a growth rate.
 category: finance
-intro: "CAGR is the steady yearly growth rate that would take an investment from its starting value to its final value. It is the standard way to compare returns over different periods."
+intro: "CAGR, the compound annual growth rate, is the single steady yearly rate that would take a value from its starting figure to its ending figure. This CAGR calculator finds that rate, or projects a future value or the years needed when you know the rate.\n\nInvestors use it to compare funds and shares held for different periods, and business owners and analysts use it to report revenue, profit or user growth over several years."
 keywords: [cagr, compound annual growth rate, annualized return, investment growth, growth rate]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: s, label: Starting value, family: currency, default: 10000, min: 0, decimals: 2 }
   - { id: ev, label: Ending value, family: currency, default: 18000, min: 0, decimals: 2 }
@@ -25,6 +25,10 @@ faq:
     a: It depends on the asset. Over long periods, 6–8% is typical for bonds and deposits, and 10–12% for diversified equity funds. Compare against a relevant benchmark rather than a fixed number.
   - q: Can CAGR be negative?
     a: Yes. If the ending value is below the starting value the CAGR is negative, showing the average yearly decline.
+  - q: "How many years should I use for CAGR from yearly figures?"
+    a: "Count the gaps, not the values. Figures for 2021, 2022, 2023, 2024 and 2025 cover 4 years of growth, so use t = 4."
+  - q: "How long does money take to double at a given CAGR?"
+    a: "Divide ln 2 by ln(1 + CAGR). At 12.47% it takes 5.90 years; the rule of 72 gives a quick estimate of 72 divided by the rate in percent."
 related: [finance/ad-metrics, finance/doubling-time, statistics/geometric-mean, finance/compound-interest, math/percentage-change]
 ---
 
@@ -84,9 +88,50 @@ If you invested through a SIP, CAGR on the total invested understates or oversta
 - **Using months as years.** Enter 18 months as 1.5 years, or switch the unit to months.
 - **Dividing the total return by years.** A 100% gain over 10 years is a 7.18% CAGR, not 10% a year.
 - **Ignoring dividends.** For stocks, include reinvested dividends in the ending value to get total-return CAGR.
+- **Counting the wrong number of years.** Five yearly figures from 2021 to 2025 span 4 years of growth, not 5.
+- **Computing CAGR across a sign change.** If the start is zero or the values go from a loss to a profit, CAGR has no meaning; report the absolute change instead.
 
 ## Limits of CAGR
 
 - It hides volatility: two investments with the same CAGR can have very different ups and downs.
 - It ignores money added or withdrawn during the period.
 - Past growth rates do not guarantee future results.
+
+## Year-by-year path of the default example
+
+At the default CAGR of 12.47%, the 10,000 grows like this. The final year lands exactly on 18,000, which is the definition of CAGR:
+
+| Year | Value | Gain so far |
+|---|---|---|
+| 0 | 10,000.00 | 0.00 |
+| 1 | 11,247.46 | 1,247.46 |
+| 2 | 12,650.54 | 2,650.54 |
+| 3 | 14,228.64 | 4,228.64 |
+| 4 | 16,003.61 | 6,003.61 |
+| 5 | 18,000.00 | 8,000.00 |
+
+The real investment almost certainly took a bumpier route; CAGR only fixes the two ends. At this rate money doubles in ln 2 ÷ ln(1.1247) = **5.90 years**, close to the rule of 72 estimate of 72 ÷ 12.47 = 5.77 years.
+
+## Business example: revenue over four years
+
+A company reports revenue of 120, 150, 138, 171 and 210 (in lakh or millions) for five consecutive years. That is 4 years of growth, so CAGR = (210 ÷ 120)<sup>1/4</sup> − 1 = **15.02%**. The four year-on-year changes are +25.0%, -8.0%, +23.9%, +22.8%, whose simple average is 15.93%, higher than the CAGR because the dip and recovery inflate the average.
+
+## Years to multiply your money
+
+Set the CAGR and leave the period blank to find how long a target takes. The table shows years needed to double, triple and five-fold a value:
+
+| CAGR | 2× | 3× | 5× |
+|---|---|---|---|
+| 4% | 17.7 | 28.0 | 41.0 |
+| 6% | 11.9 | 18.9 | 27.6 |
+| 8% | 9.0 | 14.3 | 20.9 |
+| 10% | 7.3 | 11.5 | 16.9 |
+| 12% | 6.1 | 9.7 | 14.2 |
+| 15% | 5.0 | 7.9 | 11.5 |
+| 20% | 3.8 | 6.0 | 8.8 |
+
+For example, growing 10,000 to 50,000 at 12% takes ln 5 ÷ ln 1.12 = **14.2 years**.
+
+## Periods shorter than a year
+
+CAGR annualises, so a short period is scaled up. A gain from 10,000 to 11,500 in 18 months is a 15% total return but a CAGR of 9.77%. Fund factsheets in India show absolute returns for periods under one year for exactly this reason: annualising a few weeks of movement gives misleading figures.

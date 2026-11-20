@@ -2,10 +2,10 @@
 title: Volume Converter
 description: Convert litres, gallons (US and UK), millilitres, cubic metres, cubic feet and cubic inches — type in any field.
 category: conversion
-intro: "Volume is measured in litres, millilitres, cubic metres, gallons, cubic feet and many cooking units. This converter switches between all of them in one place."
+intro: "Volume is the space a liquid, gas or solid takes up, and it is quoted in litres, millilitres, cubic metres, US and UK gallons, cubic feet and cubic inches. This volume converter changes a value typed into any one field into all the others at once.\n\nPlumbers and tank installers use it to rate tanks and pumps, cooks and brewers use it to scale recipes, and engineers use it to move between metric data sheets and imperial drawings."
 keywords: [volume converter, liters to gallons, cubic meters, cubic feet, ml to liters, gallon converter]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 featured: true
 variables:
   - { id: u0, label: Litres, family: volume, unit: L, default: 1, min: 0 }
@@ -31,6 +31,10 @@ faq:
     a: "Yes, 1 mL = 1 cm³."
   - q: "How many mL are in a cup?"
     a: "236.6 mL in a US cup; 250 mL in a metric cup."
+  - q: "How many cubic feet are in 1,000 litres?"
+    a: "1,000 litres is 1 m³, which is 35.31 ft³. That is also 264.2 US gallons or 220.0 UK gallons."
+  - q: "Why is a US fluid ounce bigger than a UK fluid ounce?"
+    a: "They are defined from different gallons and different fractions. A US fluid ounce is 1/128 of a US gallon, 29.57 mL; a UK fluid ounce is 1/160 of a UK gallon, 28.41 mL."
 related: [conversion/gallons-to-liters, conversion/liters-to-gallons, math/cylinder-volume, engineering/horizontal-tank-volume]
 ---
 
@@ -109,3 +113,42 @@ Metric recipes often use a 250 mL cup and a 15 mL tablespoon. See the [cooking c
 - 1 litre = 1,000 cm³ = 1 kg of water (approximately)
 - 1 m³ of water weighs about 1 tonne
 - 1 barrel of oil = 42 US gallons ≈ 159 litres
+
+## Worked example with the default value
+
+The converter opens with **1 litre**. Because 1 L is exactly 0.001 m³, every other field follows from one division:
+
+- Millilitres: 0.001 ÷ 10⁻⁶ = **1,000 mL**
+- Cubic metres: **0.001 m³**
+- US gallons: 0.001 ÷ 0.003785411784 = **0.264172 US gal**
+- UK gallons: 0.001 ÷ 0.00454609 = **0.219969 UK gal**
+- Cubic feet: 0.001 ÷ 0.0283168 = **0.0353147 ft³**
+- Cubic inches: 0.001 ÷ 0.000016387 = **61.0237 in³**
+
+## Sizing a water tank
+
+A rectangular tank measuring 2 m × 1.5 m × 1.2 m holds 2 × 1.5 × 1.2 = **3.60 m³**. Typing 3.6 into the cubic metre field gives **3,600 L**, **951 US gallons**, **792 UK gallons** or **127.1 ft³**. Filled from a garden hose delivering 15 L/min, it takes 3,600 ÷ 15 = 240 minutes, about **4.0 hours**. Measure the inside dimensions, not the outside: a 50 mm wall on a plastic tank of this size cuts the usable volume by several percent.
+
+## Common containers in every unit
+
+| Container | Litres | m³ | US gal | UK gal | ft³ |
+|---|---|---|---|---|---|
+| Standard oil barrel (42 US gal) | 159 L | 0.159 m³ | 42.0 | 35.0 | 5.6 |
+| Steel drum (55 US gal) | 208 L | 0.208 m³ | 55.0 | 45.8 | 7.4 |
+| IBC tote | 1,000 L | 1.000 m³ | 264.2 | 220.0 | 35.3 |
+| Small overhead tank (500 L) | 500 L | 0.500 m³ | 132.1 | 110.0 | 17.7 |
+| Road tanker (30,000 L) | 30,000 L | 30.000 m³ | 7,925.2 | 6,599.1 | 1,059.4 |
+| 20 ft shipping container (inside) | 33,196 L | 33.196 m³ | 8,769.4 | 7,302.1 | 1,172.3 |
+| Olympic pool (50 × 25 × 2 m) | 2,500,000 L | 2,500.000 m³ | 660,430.1 | 549,923.1 | 88,286.7 |
+
+## Where the definitions come from
+
+The litre is defined as exactly one cubic decimetre. The US gallon is defined as exactly 231 cubic inches, and the inch as exactly 25.4 mm, which fixes the US gallon at 3.785411784 L. The UK gallon is defined directly as exactly 4.54609 L. Fluid ounces also differ: a US fluid ounce is 29.574 mL (1/128 US gal), while a UK fluid ounce is 28.413 mL (1/160 UK gal), so the US fluid ounce is the larger of the two even though the UK gallon is bigger.
+
+## Common mistakes
+
+- **Mixing up US and UK gallons.** Product labels in the UK, Canada (older documents) and some Gulf countries may use imperial gallons; US data sheets always mean US gallons. The error is about 20%.
+- **Converting cubic metres as if they were linear.** 1 m is 100 cm, but 1 m³ is 1,000,000 cm³. Cube the length factor whenever you convert a volume.
+- **Treating litres of any liquid as kilograms.** Only water near 4 °C is close to 1 kg/L. Diesel is about 0.83 kg/L and honey about 1.4 kg/L, so convert by mass with the density.
+- **Using nominal tank capacity.** Tanks are sold by brim or nominal volume; the working volume below the overflow is often 5% to 10% less.
+- **Confusing gas volumes at different conditions.** A cubic metre of gas at 10 bar holds ten times the gas of a cubic metre at 1 bar. Normal or standard cubic metres need the pressure and temperature stated.

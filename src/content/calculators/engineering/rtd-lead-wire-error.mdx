@@ -2,10 +2,10 @@
 title: RTD Lead Wire Error Calculator (2-, 3- and 4-Wire Pt100)
 description: Calculate the temperature error caused by lead wire resistance in 2-wire and 3-wire Pt100 or Pt1000 RTD circuits from cable length and size.
 category: engineering
-intro: "Every metre of copper between an RTD and its transmitter adds resistance that the instrument reads as extra temperature. This RTD lead wire error calculator shows how big that error is for 2-wire and 3-wire connections — see the [difference between 2-wire, 3-wire and 4-wire RTDs](https://www.instrumentationblog.in/difference-between-2-wire-rtd-3-wire-rtd-and-4-wire-rtd/) and [how to test an RTD](https://www.instrumentationblog.in/how-to-test-an-rtd-pt100/)."
+intro: "Every metre of copper between an RTD and its transmitter adds resistance that the instrument reads as extra temperature. This RTD lead wire error calculator shows the error for 2-wire and 3-wire Pt100 or Pt1000 circuits from cable length, conductor size and lead mismatch.\n\nInstrument engineers use it to choose the wiring method and cable size, and technicians use it to explain offsets. See the [difference between 2-wire, 3-wire and 4-wire RTDs](https://www.instrumentationblog.in/difference-between-2-wire-rtd-3-wire-rtd-and-4-wire-rtd/) and [how to test an RTD](https://www.instrumentationblog.in/how-to-test-an-rtd-pt100/)."
 keywords: [rtd lead wire error calculator, 2 wire rtd error, 3 wire rtd lead resistance, pt100 cable length error, rtd lead resistance compensation, pt1000 lead error]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-20
 variables:
   - id: R0
     label: RTD type
@@ -37,6 +37,10 @@ faq:
     a: Practically yes. Current flows in one pair and voltage is sensed on the other pair, which carries almost no current, so lead resistance does not enter the reading.
   - q: Does a Pt1000 reduce lead wire error?
     a: Yes, by a factor of ten. The same lead resistance is ten times smaller compared with the sensor's 3.85 Ω/°C sensitivity, which is why Pt1000 is often used with 2-wire connections.
+  - q: "How do I measure the lead resistance of an installed RTD?"
+    a: "Disconnect the sensor at the transmitter and measure between the two same colour wires of a 3-wire RTD. That path does not include the element, so it is the resistance of two leads; half is one lead."
+  - q: "Does a hot cable increase the RTD lead error?"
+    a: "Yes. Copper rises about 0.39% per °C, so 50 m of 0.5 mm² cable at 60 °C gives a 2-wire Pt100 error of about 10.4 °C instead of 9.0 °C at 20 °C."
 related: [engineering/pt100-resistance, electrical/wire-resistance, engineering/loop-resistance, engineering/instrument-accuracy]
 ---
 
@@ -79,3 +83,46 @@ For a Pt1000 divide these errors by ten.
 - Head-mounted transmitters remove the long RTD cable entirely — the 4–20 mA loop carries the signal instead.
 - Copper resistance rises about 0.39% per °C, so cable running through hot areas adds more error than this 20 °C figure.
 - A 2-wire error can be trimmed out at one temperature by a fixed offset, but it is only correct while the cable temperature stays the same.
+
+## What changes with a Pt1000 or a hot cable
+
+Keep the default 50 m of 0.5 mm² cable but fit a Pt1000. Its sensitivity is 3.85 Ω/°C, so the same 3.448 Ω of lead resistance reads only **0.896 °C** high in 2-wire, which many applications can accept without a third wire.
+
+Lead resistance also follows the cable temperature. If the run passes over a furnace and averages 60 °C instead of 20 °C, one lead rises to 1.724 × (1 + 0.00393 × 40) = 1.995 Ω, and the 2-wire Pt100 error becomes **10.36 °C** instead of 8.96 °C. Because the cable temperature changes with weather and process, this part of the error cannot be trimmed out with a fixed offset.
+
+## The error is larger at high temperature
+
+The calculator uses the mean coefficient 0.00385, i.e. 0.385 Ω/°C. The real Pt100 slope from the Callendar-Van Dusen equation falls as temperature rises, so the same lead resistance is worth more degrees on a hot process. For the default 3.448 Ω 2-wire lead resistance:
+
+| Process temperature | Pt100 slope dR/dT | 2-wire error |
+|---|---|---|
+| 0 °C | 0.3908 Ω/°C | 8.82 °C |
+| 100 °C | 0.3793 Ω/°C | 9.09 °C |
+| 200 °C | 0.3677 Ω/°C | 9.38 °C |
+| 400 °C | 0.3446 Ω/°C | 10.00 °C |
+| 600 °C | 0.3215 Ω/°C | 10.72 °C |
+
+## 3-wire error from lead mismatch
+
+A 3-wire circuit leaves only the difference between two leads. The table gives the temperature error for a Pt100 at several mismatch levels.
+
+| Mismatch | 50 m, 0.5 mm² | 100 m, 1.0 mm² | 200 m, 0.5 mm² |
+|---|---|---|---|
+| 1% | 0.045 °C | 0.045 °C | 0.179 °C |
+| 2% | 0.090 °C | 0.090 °C | 0.358 °C |
+| 5% | 0.224 °C | 0.224 °C | 0.896 °C |
+| 10% | 0.448 °C | 0.448 °C | 1.791 °C |
+
+Mismatch of 1% to 2% is normal along one multicore cable. Each screw terminal, fuse terminal or marshalling link can add 5 to 20 mΩ to one lead only, which on short runs is a larger share than the cable itself.
+
+## Measuring lead resistance on site
+
+Isolate the RTD at the transmitter. On a 3-wire sensor, measure between the two wires of the same colour (usually two reds or two whites): the sensor element is not in that path, so the reading is the resistance of two leads in series. Half of it is one lead. Then measure from each of those wires to the third wire; the difference between the two readings is the lead mismatch. For a 2-wire sensor, short the leads at the sensor head and measure the loop from the transmitter end.
+
+## Common mistakes
+
+- **Using one-way length for the 2-wire error.** Current flows out and back, so both leads add; the calculator doubles R<sub>lead</sub> for that reason.
+- **Assuming 3-wire cancels everything.** It cancels only equal leads. Different core sizes, a corroded terminal or a junction box splice break the balance.
+- **Wiring a 4-wire sensor as 3-wire and leaving one core loose.** The spare core should be cut back and insulated at both ends, not landed on a terminal it shares with another lead.
+- **Applying a lead offset trim to a 3-wire input.** The transmitter already compensates, so a manual trim of the measured lead resistance subtracts it twice.
+- **Mixing Pt100 and Pt1000 settings.** A Pt1000 read on a Pt100 input shows about 10 times the resistance and the reading goes far over range; the reverse reads near −200 °C.

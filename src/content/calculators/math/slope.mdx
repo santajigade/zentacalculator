@@ -2,10 +2,10 @@
 title: "Slope Calculator – Slope, Y-Intercept & Line Equation (2 Points)"
 description: "Free slope calculator: find the slope m = (y₂ − y₁) ÷ (x₂ − x₁) from two points, plus the y-intercept, line equation, percent grade, angle and distance."
 category: math
-intro: "Slope measures how steep a line is — the rise divided by the run between two points. This slope calculator finds the slope from two points and also gives the y-intercept, the equation y = mx + b, the percent grade, the angle and the distance, with every step shown."
+intro: "Slope measures how steep a line is: the rise divided by the run between two points. This slope calculator finds it from two points and also returns the y-intercept, the line equation y = mx + b, the percent grade, the angle and the distance.\n\nStudents use it to check algebra and graphing homework, while builders, surveyors and plumbers use the same rise over run to set ramps, drains and road grades."
 keywords: [slope calculator, slope from two points, slope intercept form, y-intercept calculator, rise over run, gradient calculator, slope formula, percent grade]
 published: 2026-10-27
-updated: 2026-11-06
+updated: 2026-11-20
 variables:
   - { id: x1, label: x₁, default: 1 }
   - { id: y1, label: y₁, default: 2 }
@@ -35,6 +35,10 @@ faq:
     a: b = y₁ − m × x₁. For slope 4/3 through (1, 2), b = 2 − 4/3 = 2/3.
   - q: "How do I write the equation of a line from two points?"
     a: "Find the slope m = (y₂ − y₁) ÷ (x₂ − x₁), then the intercept b = y₁ − m x₁. The line is y = mx + b. For (1, 2) and (4, 6) it is y = 1.333x + 0.667."
+  - q: "How do I convert a slope ratio like 1:12 into a percentage?"
+    a: "Divide the rise by the run and multiply by 100. A 1:12 ramp has a slope of 1 ÷ 12 = 0.0833, which is an 8.33% grade or 4.76°."
+  - q: "Does it matter which point I call the first point?"
+    a: "No. Swapping the points changes the sign of both the rise and the run, so the slope stays the same. For (1, 2) and (4, 6) it is 1.333 either way."
 related: [math/distance-midpoint, math/linear-interpolation, construction/roof-pitch, math/right-triangle-trig, math/pythagorean-theorem]
 ---
 
@@ -91,6 +95,48 @@ The midpoint between (x₁, y₁) and (x₂, y₂) is ((x₁ + x₂) ÷ 2, (y₁
 - **Drainage pipes**: typically 1–2% fall so water flows.
 - **Wheelchair ramps**: maximum 1 : 12 (8.33%) in many building codes.
 - **Graphs**: slope shows a rate of change, such as speed on a distance-time graph.
+
+## Does the order of the points matter?
+
+No. Taking the points the other way round gives (2 − 6) ÷ (1 − 4) = 1.3333, the same 1.3333 as before, because both the rise and the run change sign. What matters is that you subtract in the **same order** on the top and the bottom.
+
+## Second example: the fall of a drain pipe
+
+A site level reads the pipe invert at **100.00 m** at the manhole and **99.50 m** at a point 25 m downstream. Take x as distance and y as level, so the points are (0, 100.00) and (25, 99.50):
+
+- Slope m = (99.50 − 100.00) ÷ 25 = **-0.020**, a fall of 2% or 1 in 50
+- Angle = tan⁻¹(-0.020) = **-1.146°**
+- Length along the pipe = √(25² + 0.50²) = 25.005 m, almost the same as the plan distance
+
+The negative sign simply says the pipe falls in the direction of flow, which is what you want.
+
+## Slope ratios, grade and angle
+
+| Ratio (rise : run) | Slope | Grade | Angle |
+|---|---|---|---|
+| 1 : 1 | 1 | 100% | 45.00° |
+| 1 : 1.5 | 0.6667 | 66.7% | 33.69° |
+| 1 : 2 | 0.5 | 50% | 26.57° |
+| 1 : 3 | 0.3333 | 33.3% | 18.43° |
+| 1 : 4 | 0.25 | 25% | 14.04° |
+| 1 : 12 | 0.08333 | 8.33% | 4.76° |
+| 1 : 20 | 0.05 | 5% | 2.86° |
+| 1 : 50 | 0.02 | 2% | 1.15° |
+| 1 : 100 | 0.01 | 1% | 0.57° |
+
+Ratios are common on drawings: embankments are written as 1 : 2 or 1 : 3, and access ramps as 1 : 12. A ramp rising 600 mm at 1 : 12 needs 7.2 m of run and a sloping length of 7.22 m.
+
+## How slope is measured on site
+
+Surveyors find slope with a level and staff: they read the height at two points, measure the horizontal distance between them, and divide. Laser levels and digital inclinometers show the angle or percent grade directly, and road designers take grades from the vertical profile of a survey. On a graph, pick two points far apart on the line so reading errors in the coordinates have less effect on the slope.
+
+## Common mistakes
+
+- **Dividing run by rise.** For the default points that gives 0.75 instead of 1.333; slope is always change in y over change in x.
+- **Mixing the order of subtraction.** Using y₂ − y₁ on top but x₁ − x₂ underneath flips the sign of the answer.
+- **Reading percent grade as degrees.** A 10% grade is only 5.71°, and a 100% grade is 45°.
+- **Using the sloping length as the run.** The run is the horizontal distance; on steep ground the length along the surface is noticeably longer.
+- **Expecting a number for a vertical line.** When x₁ equals x₂ the run is zero and the slope is undefined, so the calculator cannot return a value.
 
 ## Related calculators
 

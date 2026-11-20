@@ -2,10 +2,10 @@
 title: 4–20 mA Loop Resistance Calculator (Maximum Loop Load)
 description: Check whether a 4–20 mA loop has enough voltage — maximum loop resistance from supply and transmitter lift-off voltage, with cable and barrier resistance.
 category: engineering
-intro: "A loop-powered transmitter needs a minimum voltage at its terminals, and every resistor, barrier and cable in the loop uses some of the supply. Checking the [instrument loop impedance](https://www.instrumentationblog.in/instrument-loop-impedance-4-20ma-accuracy/) makes sure the [4–20 mA loop](https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/) still works at full scale and at [NAMUR NE 43](https://www.instrumentationblog.in/namur-ne43-standard-explained/) fault currents. This free 4–20 mA loop resistance calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A loop powered transmitter needs a minimum voltage at its terminals, and every resistor, barrier and cable in the [4 to 20 mA loop](https://www.instrumentationblog.in/4-to-20-ma-current-loop-explained/) uses part of the supply. This 4 to 20 mA loop resistance calculator gives the maximum allowed load, the actual load, the margin and the voltage left at the transmitter.\n\nInstrument designers use it to check [instrument loop impedance](https://www.instrumentationblog.in/instrument-loop-impedance-4-20ma-accuracy/) before choosing supplies, barriers and cable, so loops still work at [NAMUR NE 43](https://www.instrumentationblog.in/namur-ne43-standard-explained/) fault currents."
 keywords: [4-20ma loop resistance calculator, loop load calculation, maximum loop resistance, transmitter lift off voltage, loop power supply, 250 ohm resistor, 2 wire transmitter load]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: Vs, label: Loop supply voltage, family: voltage, unit: V, default: 24, min: 0 }
   - { id: Vt, label: Transmitter minimum voltage (lift-off), family: voltage, unit: V, default: 10.5, min: 0 }
@@ -32,6 +32,10 @@ faq:
     a: The transmitter runs out of voltage at high currents, so readings clip near the top of the range — often seen as a reading that never reaches 100%.
   - q: Does HART need a minimum resistance?
     a: Yes. HART communication needs at least 230–250 Ω of loop resistance between the power supply and the transmitter.
+  - q: "How long can a 4 to 20 mA cable run be?"
+    a: "With a 24 V supply, a 10.5 V transmitter, 22 mA and a 250 Ω input, the budget left for cable is 364 Ω. On 1.5 mm² copper (12.1 Ω/km per conductor) that allows about 15 km one way, so length is limited by noise and installation rather than resistance."
+  - q: "What supply voltage does my loop need?"
+    a: "V supply = transmitter minimum voltage + maximum current × total loop resistance. For the default loop that is 10.5 + 0.022 × 262.1 = 16.27 V; add the supply tolerance on top."
 related: [electronics/zener-resistor, engineering/4-20ma-scaling, electrical/cable-voltage-drop, physics/ohms-law, electronics/current-divider]
 ---
 
@@ -78,3 +82,41 @@ For more background, read [2-Wire, 3-Wire and 4-Wire Transmitters](https://www.i
 ## Troubleshooting a low-voltage loop
 
 If the reading clips before 100%, measure the voltage at the transmitter terminals while forcing 20–22 mA. If it is below the lift-off voltage, raise the supply, remove a series device, or use a lower-resistance input.
+
+## Voltage left at the transmitter
+
+The margin in ohms is easier to judge as volts at the transmitter terminals. With the default loop drawing 22 mA through 262.1 Ω, the receiver and cable drop 5.766 V, so the transmitter sees
+
+- V = 24 − 0.022 × 262.1 = **18.23 V**, comfortably above its 10.5 V minimum
+
+Turned around, the smallest supply this loop could run on is 10.5 + 0.022 × 262.1 = **16.27 V**.
+
+## Adding an intrinsic safety barrier
+
+Put a shunt diode (Zener) barrier of about 340 Ω end to end into the same loop and the load becomes 262.1 + 340 = **602.1 Ω**. The margin shrinks to **11.5 Ω** and the transmitter is left with 10.75 V. That still works on a full 24 V, but a supply at its −10% tolerance (21.6 V) allows only 505 Ω, giving a margin of **-98 Ω**: the loop fails at high current. A galvanic isolator with a powered input, or a 26 V supply, fixes it.
+
+## Maximum one-way cable length by supply voltage
+
+Transmitter minimum 10.5 V, 22 mA, 250 Ω input, no barrier. Lengths are one way, for the conductor resistance of 0.5, 1.0 and 1.5 mm² copper.
+
+| Supply | R<sub>max</sub> | 0.5 mm² (36 Ω/km) | 1.0 mm² (18.1 Ω/km) | 1.5 mm² (12.1 Ω/km) |
+|---|---|---|---|---|
+| 18 V | 341 Ω | 1.26 km | 2.51 km | 3.76 km |
+| 20 V | 432 Ω | 2.53 km | 5.02 km | 7.51 km |
+| 24 V | 614 Ω | 5.05 km | 10.05 km | 15.03 km |
+| 26 V | 705 Ω | 6.31 km | 12.56 km | 18.78 km |
+| 30 V | 886 Ω | 8.84 km | 17.58 km | 26.30 km |
+
+Cable is rarely the limit in a plain loop; the receiver resistor and series devices use most of the budget. On an 18 V supply the 250 Ω input alone already exceeds what the transmitter can drive at 22 mA.
+
+## Checking the loop on site
+
+With the loop running, use the transmitter's loop test or HART command to force 22 mA (or 20.5 mA if 22 is not available). Measure the voltage across the transmitter terminals with a multimeter. It must stay at or above the datasheet minimum. Then measure across the receiver input; 250 Ω should show 5.5 V at 22 mA, and a much higher figure means a wrong resistor or a second receiver wired in series.
+
+## Common mistakes
+
+- **Using 20 mA as the design current.** The loop may pass at 20 mA and still collapse at the 21 mA or more used for fault signalling, so the alarm never reaches the DCS.
+- **Taking the lift-off voltage for the basic model.** Display, HART and explosion proof options often raise the minimum voltage by 1 to 2 V; read the figure for the exact ordered version.
+- **Forgetting series devices added later.** A field indicator, a trip amplifier or a second recorder each takes 1 to 5 V.
+- **Designing on the nominal supply.** Use the lowest supply voltage after tolerance and diode drops from redundant supply modules.
+- **Removing the 250 Ω to gain margin on a HART loop.** HART needs roughly 230 to 600 Ω of loop resistance; below that the handheld cannot communicate.

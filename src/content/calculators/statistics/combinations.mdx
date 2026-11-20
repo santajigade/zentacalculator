@@ -2,10 +2,10 @@
 title: Combination Calculator (nCr)
 description: Calculate the number of combinations — ways to choose r items from n when order doesn't matter. Lottery odds included.
 category: statistics
-intro: "A combination counts the ways to choose items when order does not matter — like lottery numbers or team selections."
+intro: "A combination counts the ways to choose items from a set when order does not matter, such as lottery numbers, a committee or a sample of parts. This combination calculator works out nCr for any n and r and also gives the chance of picking one particular combination.\n\nStudents use it for probability homework, players use it to understand lottery odds, and quality inspectors and researchers use it to work out how likely a random sample is to catch a problem."
 keywords: [combination calculator, ncr, n choose r, binomial coefficient, lottery odds, combinatorics]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-20
 featured: true
 variables:
   - { id: n, label: Total items (n), default: 49, min: 0 }
@@ -34,6 +34,10 @@ faq:
     a: "10,000 (0000 to 9999). Order matters and digits repeat, so it is 10⁴, not a combination."
   - q: "What is the probability of getting exactly two aces in a 5-card hand?"
     a: "C(4,2) × C(48,3) ÷ C(52,5) = 6 × 17,296 ÷ 2,598,960 ≈ 3.99%, or about 1 in 25 hands."
+  - q: "What are the odds of matching exactly 3 numbers in a 6/49 lottery?"
+    a: "C(6,3) × C(43,3) = 246,820 winning tickets out of 13,983,816, so about 1 in 57."
+  - q: "What is the chance a sample of 5 misses all 3 defects in a lot of 50?"
+    a: "C(47,5) ÷ C(50,5) = 72.4%. A sample that small passes a lot with 6% defective most of the time."
 related: [statistics/permutations, statistics/binomial-probability, statistics/probability]
 ---
 
@@ -143,8 +147,41 @@ Example: the chance of **exactly two aces** in a 5-card hand:
 | Pizzas with any number of 10 toppings | 2¹⁰ | 1,024 |
 | Choose 3 committee members from 12 | C(12,3) | 220 |
 
+## Worked example: the default 6 from 49
+
+The defaults are n = 49 and r = 6. Writing out the factorials is not needed, because most of 49! cancels against 43!:
+
+- 49C6 = (49 × 48 × 47 × 46 × 45 × 44) ÷ (6 × 5 × 4 × 3 × 2 × 1) = 10,068,347,520 ÷ 720 = **13,983,816**
+- Chance of one ticket matching all six = 1 ÷ 13,983,816 = **0.00000715%**, the value the calculator shows in percent
+
+## Odds of each prize tier in a 6/49 lottery
+
+To match exactly k of the 6 drawn numbers, choose k from the 6 winners and the rest from the 43 losers:
+
+| Numbers matched | Calculation | Winning tickets | Odds |
+|---|---|---|---|
+| 6 | C(6,6) × C(43,0) | 1 | 1 in 13,983,816 |
+| 5 | C(6,5) × C(43,1) | 258 | 1 in 54,201 |
+| 4 | C(6,4) × C(43,2) | 13,545 | 1 in 1,032 |
+| 3 | C(6,3) × C(43,3) | 246,820 | 1 in 57 |
+| 2 | C(6,2) × C(43,4) | 1,851,150 | 1 in 8 |
+
+Matching 3 numbers happens about once in 57 tickets, which is why the smallest prizes are paid so often while the jackpot rarely is.
+
+## Using combinations in acceptance sampling
+
+An inspector draws 5 parts at random from a lot of 50 that, unknown to them, contains 3 defective parts. The chance that the sample contains no defects is the number of all-good samples divided by all samples:
+
+- P(no defect found) = C(47,5) ÷ C(50,5) = 1,533,939 ÷ 2,118,760 = **72.4%**
+- P(exactly one defect found) = C(3,1) × C(47,4) ÷ C(50,5) = **25.3%**
+- Doubling the sample to 10 parts lowers the miss chance to 50.4%
+
+This is the hypergeometric distribution, and the same counting answers questions about card hands, jury selection and drawing coloured balls without replacement.
+
 ## Common mistakes
 
 - **Using permutations when order does not matter.** Picking 3 people for a committee is C(n,3). Electing a president, secretary and treasurer is P(n,3).
 - **Forgetting repetition.** If an item can be chosen more than once (scoops of the same flavour), use combinations with repetition.
 - **Double counting** in "at least one" problems. It is usually easier to work out 1 − P(none).
+- **Computing huge factorials on a basic calculator.** 49! has 63 digits and overflows many calculators; cancel the common factors first, as in the worked example.
+- **Treating r larger than n as valid.** You cannot choose 7 items from 5 without repetition, so nCr is 0; use combinations with repetition if items can be reused.

@@ -1,11 +1,11 @@
 ---
-title: Transformer Turns Ratio Calculator
-description: Calculate transformer secondary voltage, turns ratio and primary or secondary current from the number of turns or voltages.
+title: "Transformer Turns Ratio Calculator: Secondary Voltage and Current"
+description: "Find a transformer turns ratio, secondary voltage and primary current from winding turns or voltages, with worked examples, tap and vector group tables."
 category: electrical
-intro: "A transformer changes voltage in proportion to the number of turns on its windings, and changes current the other way. This guide to the [transformer turns ratio and secondary voltage](https://www.instrumentationblog.in/transformer-turns-ratio-secondary-voltage/) explains the relationship, and turns ratio is one of the standard [transformer routine tests](https://www.instrumentationblog.in/transformer-routine-and-type-tests/)."
+intro: "The turns ratio of a transformer, Np divided by Ns, sets how much it steps voltage down or up, and current changes the opposite way. This transformer turns ratio calculator gives the ratio, secondary voltage and primary current; see the [turns ratio and secondary voltage](https://www.instrumentationblog.in/transformer-turns-ratio-secondary-voltage/) guide.\n\nElectricians, panel builders and students use it to check control and supply transformers, and test engineers compare it with the turns ratio reading from [transformer routine tests](https://www.instrumentationblog.in/transformer-routine-and-type-tests/)."
 keywords: [transformer turns ratio calculator, secondary voltage calculator, transformer ratio, np ns vp vs, transformer winding turns, step down transformer]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: Vp, label: Primary voltage, family: voltage, unit: V, default: 230, min: 0 }
   - { id: Np, label: Primary turns, default: 1000, min: 0 }
@@ -27,12 +27,16 @@ faq:
     a: Power in equals power out (ignoring losses), so if voltage is stepped down by 20 times, current is stepped up by 20 times.
   - q: How is the turns ratio tested on site?
     a: With a transformer turns ratio (TTR) tester. The measured ratio should be within ±0.5% of the nameplate ratio on each tap.
-related: [electrical/transformer-current, electrical/transformer-efficiency, electrical/transformer-short-circuit, physics/ohms-law]
+  - q: "Does the turns ratio change with frequency?"
+    a: "No. The ratio is fixed by the windings, so the voltage ratio holds at any frequency the core is designed for. Running a 50 Hz transformer at a lower frequency with the same voltage raises the core flux and can saturate it."
+  - q: "How many turns do I need for a 12 V secondary from 230 V?"
+    a: "In the ideal case Ns = Np × 12 ÷ 230. With 1,000 primary turns that is 52.2 turns, and about 3% extra (54 turns) is usually added to cover the voltage drop on full load."
+related: [electrical/transformer-current, electrical/transformer-size, electrical/autotransformer, electrical/line-phase-voltage, electrical/transformer-efficiency]
 ---
 
 ## How to use the transformer turns ratio calculator
 
-Enter the **primary voltage**, **primary turns** and **secondary turns**, plus the **secondary load current**. You get the turns ratio, secondary voltage and primary current. Fill any consistent set — for example, both voltages and primary turns to find secondary turns.
+Enter the **primary voltage**, **primary turns** and **secondary turns**, plus the **secondary load current**. You get the turns ratio, secondary voltage and primary current. Fill any consistent set: for example, both voltages and primary turns to find secondary turns.
 
 For more background, read [Isolation Transformer Working and Uses](https://www.instrumentationblog.in/isolation-transformer-working-uses/).
 
@@ -66,4 +70,55 @@ A Dyn11 11 kV/433 V distribution transformer has a phase-winding turns ratio of 
 
 ## Real transformers
 
-On load, the secondary voltage drops slightly because of winding resistance and leakage reactance (regulation, typically 2–5%). Transformers are often wound with a few percent extra turns to compensate.
+On load, the secondary voltage drops slightly because of winding resistance and leakage reactance (regulation, typically 2% to 5%). Transformers are often wound with a few percent extra turns to compensate.
+
+## Worked example with the default values
+
+The defaults are a **230 V primary with 1,000 turns**, a **52 turn secondary** and a **5 A load**:
+
+1. Turns ratio a = 1,000 ÷ 52 = **19.231**
+2. Secondary voltage Vs = 230 ÷ 19.231 = **11.96 V**
+3. Primary current Ip = 5 ÷ 19.231 = **0.260 A**
+4. Power check: 11.96 V × 5 A = 59.8 VA on the secondary, and 230 V × 0.260 A = 59.8 VA on the primary, equal as they must be for an ideal transformer.
+
+A real 12 V winding is usually given about 3% extra turns so that it still delivers 12 V on full load. Here that means 53.6, rounded to 54 turns, and the no-load voltage then rises to around 12.3 V with the original 52 turns.
+
+## Common single-phase ratios
+
+Ideal ratios for a 230 V primary wound with 1,000 turns:
+
+| Transformer | Turns ratio | Secondary turns | Primary current |
+|---|---|---|---|
+| 230 V to 6 V | 38.333 | 26.1 | 1 A secondary draws 26.1 mA |
+| 230 V to 9 V | 25.556 | 39.1 | 1 A secondary draws 39.1 mA |
+| 230 V to 12 V | 19.167 | 52.2 | 1 A secondary draws 52.2 mA |
+| 230 V to 18 V | 12.778 | 78.3 | 1 A secondary draws 78.3 mA |
+| 230 V to 24 V | 9.583 | 104.3 | 1 A secondary draws 104.3 mA |
+| 230 V to 48 V | 4.792 | 208.7 | 1 A secondary draws 208.7 mA |
+| 230 V to 110 V | 2.091 | 478.3 | 1 A secondary draws 478.3 mA |
+
+## Taps on a distribution transformer
+
+An 11 kV/433 V Dyn11 unit has a secondary phase voltage of 433 ÷ √3 = 250.0 V, so the phase turns ratio is 44.00. Off-circuit taps on the HV winding change that ratio. With the supply held at exactly 11 kV, each tap gives:
+
+| HV tap | Phase turns ratio | LV line voltage |
+|---|---|---|
+| +5.0% | 46.20 | 412.4 V |
+| +2.5% | 45.10 | 422.4 V |
+| +0.0% | 44.00 | 433.0 V |
+| -2.5% | 42.90 | 444.1 V |
+| -5.0% | 41.80 | 455.8 V |
+
+Raising the HV tap adds primary turns and so lowers the secondary voltage. When the incoming supply is high, the operator moves to a plus tap to bring the LV back to nominal.
+
+## How the turns ratio is measured
+
+A transformer turns ratio (TTR) tester applies a low AC voltage, typically 8 V to 100 V, to the HV winding and measures the voltage induced on the LV winding with a bridge or precision voltmeter. It reports the ratio, the phase angle deviation and the excitation current for each tap and each phase. IEC 60076-1 allows a ratio deviation of 0.5% of the declared ratio (or a tenth of the impedance voltage, whichever is smaller) at the principal tap. A wrong ratio on one phase points to shorted turns or a tap changer contact fault.
+
+## Common mistakes
+
+- **Mixing line and phase voltages.** On a Dy or Yd transformer the winding ratio differs from the line voltage ratio by √3, as the table above shows.
+- **Measuring the ratio on load.** Regulation lowers the secondary voltage under load, so a ratio taken from loaded voltages reads a few percent high.
+- **Forgetting the current goes the other way.** A 19:1 step-down transformer draws about one nineteenth of the secondary current from the primary, not 19 times more.
+- **Using the ratio for a DC supply.** A transformer only works on AC; DC through the primary just heats the winding and saturates the core.
+- **Ignoring magnetising current.** Even with no load the primary draws a small current to magnetise the core, so a very light load gives a primary current above Is ÷ a.

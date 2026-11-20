@@ -2,10 +2,10 @@
 title: LPG Gas Cylinder Duration Calculator
 description: Estimate how many days an LPG gas cylinder will last from its weight and your daily cooking use.
 category: other
-intro: "How long an LPG cylinder lasts depends on its gas weight and how much gas your burners use each day. This free LPG gas cylinder duration calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "How long an LPG cylinder lasts depends on how much gas it holds and how many grams your burners burn each day. This LPG gas cylinder duration calculator turns burner hours and consumption into daily use and the number of days until the cylinder is empty.\n\nHouseholds use it to plan the next refill booking, and small restaurants and canteens use it to compare cylinder sizes and spot a burner that is using more gas than it should."
 keywords: [lpg cylinder duration, how long does gas cylinder last, cooking gas usage, lpg consumption, 14.2 kg cylinder]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: kg, label: Gas in cylinder, family: mass, unit: kg, imperialUnit: lb, default: 14.2, min: 0 }
   - { id: hrs, label: Burner use per day, suffix: hours, default: 2, min: 0.0001 }
@@ -24,6 +24,10 @@ faq:
     a: "Use lids, keep burners clean, use a pressure cooker and match flame size to the pan."
   - q: "How much LPG does a burner use per hour?"
     a: "About 150–250 g per hour on high flame for a domestic burner."
+  - q: "How do I check how much gas is left in my cylinder?"
+    a: "Weigh the cylinder and subtract the tare weight stamped on its collar. A reading of 27 kg with a tare of 15.5 kg means 11.5 kg of gas, about 38 days at 300 g a day."
+  - q: "How do I convert a burner kW rating to grams per hour?"
+    a: "Multiply the kW by about 78. LPG gives roughly 46 MJ per kg, so a 2 kW burner on full flame uses about 157 g of gas per hour."
 related: [other/due-date, everyday-life/electricity-cost, conversion/energy-converter]
 ---
 
@@ -71,3 +75,38 @@ A typical domestic burner uses about 150–250 g of LPG per hour on high flame. 
 ## Safety
 
 Check the hose and regulator regularly for cracks, turn off the regulator when not in use and never test for leaks with a flame — use soapy water.
+
+## Worked example with the default values
+
+The defaults are a **14.2 kg** domestic cylinder, **2 burner hours a day** and a burner that uses **150 g per hour**:
+
+- Gas used per day = 2 × 150 ÷ 1,000 = **0.3 kg** (300 g)
+- Days the cylinder lasts = 14.2 ÷ 0.3 = 47.33, shown as **47 days**
+
+Most kitchens run more than one burner. If the big burner runs 1.5 hours a day at 200 g/h and the small one 1 hour at 100 g/h, daily use is 400 g and the same cylinder lasts about **35 days**. Enter the combined grams per hour and 1 hour a day, or work out each burner and add them.
+
+## Burner rating and days per cylinder
+
+Stove makers often state heat input in kW rather than grams per hour. LPG releases roughly 46 MJ per kg, so each kW of heat input burns about 78 g per hour. A full 14.2 kg cylinder holds about 653 MJ, or 181 kWh of heat. At 2 hours a day of full flame:
+
+| Burner heat input | Gas per hour | Gas per day | 14.2 kg lasts |
+|---|---|---|---|
+| 1.0 kW | 78 g/h | 157 g | 91 days |
+| 1.5 kW | 117 g/h | 235 g | 60 days |
+| 2.0 kW | 157 g/h | 313 g | 45 days |
+| 2.5 kW | 196 g/h | 391 g | 36 days |
+| 3.0 kW | 235 g/h | 470 g | 30 days |
+
+A commercial 19 kg cylinder feeding a 250 g/h burner for 8 hours a day lasts only about **9.5 days**, which is why eateries keep a spare cylinder connected through a changeover valve.
+
+## Checking how much gas is left
+
+The only reliable way is to weigh the cylinder. The tare (empty) weight is stamped on the collar or handle. For example, a cylinder that weighs 27 kg on a bathroom scale with a stamped tare of 15.5 kg holds 11.5 kg of gas, enough for about 38 more days at 300 g a day. Weighing it again after a week gives your real consumption, which is a better input than any rating plate: enter the grams used per day directly and leave the burner fields as they are.
+
+## Common mistakes
+
+- **Using the full rated consumption for simmering.** A burner on low flame may use a third of its rated gas, so rating plate figures overstate use for slow cooking.
+- **Counting burner hours once when two burners run together.** Twenty minutes on two burners is forty burner minutes.
+- **Mixing up gross and gas weight.** The 14.2 kg figure is the gas only; a full domestic cylinder weighs far more because of the steel shell.
+- **Expecting the same days in winter.** Cold weather slows vaporisation, so the flame weakens near the end and some liquid can stay in the cylinder, especially with butane-rich gas.
+- **Ignoring a dirty or mis-set burner.** A yellow, lazy flame burns gas without heating the pan well, so cooking takes longer and daily use rises.

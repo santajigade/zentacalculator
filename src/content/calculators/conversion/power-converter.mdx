@@ -2,10 +2,10 @@
 title: Power Converter (kW to HP, BTU/h)
 description: Convert power between kW, W, horsepower (hp and metric PS), BTU/h and tons of refrigeration.
 category: conversion
-intro: "Power ratings come in watts, kilowatts, horsepower, BTU per hour and tons of refrigeration. Converting them lets you compare motors, heaters and air conditioners on the same basis."
+intro: "Power ratings come in watts, kilowatts, horsepower, metric PS, BTU per hour and tons of refrigeration. This power converter calculator turns a figure in any one of them into all the others at once, using exact conversion factors.\n\nHVAC technicians, mechanical engineers and buyers use it to compare chillers, heaters, motors and air conditioners that are rated in different units, and to check cooling capacity against electrical input."
 keywords: [kw to hp, hp to kw, power converter, btu/h to kw, tons of refrigeration, horsepower converter]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: u0, label: Kilowatts (kW), family: power, unit: kW, default: 1, min: 0 }
   - { id: u1, label: "Horsepower (hp, mechanical)", family: power, unit: hp, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: "12,000 BTU/h, or 3.517 kW."
   - q: "How many kW is a 5 hp motor?"
     a: "5 hp is 3.73 kW."
+  - q: "How do I convert kcal/h to kW?"
+    a: "Multiply by 1.163 and divide by 1,000. One kW is about 859.8 kcal/h, so a 50,000 kcal/h burner is 58.15 kW."
+  - q: "How much electricity does a 1.5 ton air conditioner use?"
+    a: "Its cooling output is 5.28 kW. Divide by the COP to get the input: at a COP of 3.5 it draws about 1.51 kW while the compressor runs. Inverter units draw less at part load."
 related: [conversion/energy-converter, electrical/three-phase-motor-power, engineering/pump-power]
 ---
 
@@ -107,3 +111,42 @@ Mechanical (imperial) horsepower is 745.7 W. Metric horsepower (PS, CV, pk) is 7
 ## Air conditioner sizes
 
 AC capacity is often given in tons or BTU/h of **cooling**. The electrical power drawn is much lower — divide the cooling kW by the unit's efficiency (EER/COP, often 3–4).
+
+## Worked example with the default value
+
+The calculator starts at **1 kW**, which is 1000 W:
+
+- 1000 ÷ 745.6999 = **1.3410 hp**
+- 1000 ÷ 735.4987 = **1.3596 PS**
+- 1000 ÷ 0.29307107 = **3,412.1 BTU/h**
+- 1000 ÷ 3516.85 = **0.28435 TR**, and 0.001 MW
+
+## Example: a small chiller, from tons to kW and back
+
+A cold store uses a **7.5 TR** chiller. Its cooling output is 7.5 × 3.5169 = **26.38 kW**, or 90,000 BTU/h. With a coefficient of performance (COP) of 3.2, the compressor draws about 26.38 ÷ 3.2 = **8.24 kW** of electricity, roughly 11.1 hp, so the motor and cable are sized for about a third of the cooling figure.
+
+To check what the chiller actually delivers, measure the chilled water flow and temperature drop. With 4.5 m³/h and a 5 K difference, cooling = 4.5 ÷ 3600 × 1000 × 4.186 × 5 = **26.16 kW**, which is 7.44 TR. That is close to the rating, so the unit is working near full capacity. A 2,000 W fan heater in the same room adds 6,824 BTU/h of load.
+
+## Other power units you may meet
+
+| Unit | Equal to | Units per kW |
+|---|---|---|
+| Boiler horsepower | 9,810 W | 0.1019 |
+| kcal per hour | 1.163 W | 859.8 |
+| Foot-pound per second | 1.356 W | 737.6 |
+| Electrical horsepower | 746 W | 1.34 |
+| Calorie per second (thermochemical) | 4.184 W | 239 |
+
+Boiler horsepower is a steam rating, about 13 times a mechanical horsepower, so never mix the two.
+
+## How power is measured
+
+Electrical input is read with a power analyser or a clamp wattmeter that measures voltage, current and power factor together. Shaft power is measured with a torque transducer or dynamometer and the speed, using P = 2π × N × T. Heating and cooling capacity is worked out from mass flow, specific heat and temperature change, as in the chiller check above, which is why air conditioner ratings are given in BTU/h or TR rather than watts of electricity.
+
+## Common mistakes
+
+- **Writing BTU when you mean BTU/h.** BTU is energy; BTU/h is power. A "12,000 BTU" air conditioner is 12,000 BTU/h.
+- **Treating cooling capacity as electrical load.** A 1.5 TR unit gives 5.28 kW of cooling but, at a COP of 3.5, draws only about 1.51 kW.
+- **Using kVA as kW.** Generator and UPS ratings in kVA must be multiplied by the power factor before comparing with kW loads.
+- **Mixing hp and PS.** Metric PS is 1.4% smaller than mechanical hp, so 100 PS is 98.6 hp.
+- **Confusing boiler horsepower with engine horsepower.** One boiler hp is 9.81 kW, not 0.746 kW.

@@ -1,11 +1,11 @@
 ---
-title: Protein Concentration Calculator (A280)
-description: Calculate protein concentration from A280 absorbance using the molar extinction coefficient and molecular weight.
+title: "Protein Concentration Calculator (A280): mg/mL and µM"
+description: "Find protein concentration in µM and mg/mL from A280 absorbance using the extinction coefficient, molecular weight and path length, with BSA examples."
 category: biology
-intro: "Proteins absorb ultraviolet light at 280 nm because of their tryptophan and tyrosine residues. With the extinction coefficient, a single absorbance reading gives protein concentration."
+intro: "Proteins absorb ultraviolet light at 280 nm because of their tryptophan and tyrosine residues, so one absorbance reading and the extinction coefficient give the amount of protein. This protein concentration calculator applies the Beer-Lambert law to report molar and mass concentration.\n\nBiochemists, protein purification labs and core facilities use it to check yields after a column, set up enzyme assays and load gels with a known amount."
 keywords: [protein concentration, a280, extinction coefficient, protein quantification, beer lambert protein, mg/ml]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: A, label: A280 reading, default: 0.8, min: 0 }
   - { id: eps, label: Molar extinction coefficient, suffix: M⁻¹cm⁻¹, default: 43824, min: 0.0001 }
@@ -27,7 +27,11 @@ faq:
     a: "About 0.66."
   - q: "Why use A280 to measure protein?"
     a: "Tryptophan and tyrosine absorb UV light at 280 nm, so absorbance is proportional to concentration."
-related: [biology/hemocytometer, biology/dna-concentration, chemistry/beer-lambert, biology/protein-molecular-weight]
+  - q: "What is the difference between the molar and mass extinction coefficient?"
+    a: "The molar value ε is in M⁻¹cm⁻¹ and gives molarity. The mass value, A₂₈₀ of a 1 mg/mL solution, equals ε ÷ MW: 0.659 for BSA and 2.65 for lysozyme. Either gives the same mg/mL result."
+  - q: "Can I use A280 for a protein mixture such as cell lysate?"
+    a: "Only roughly. A mixture has no single extinction coefficient and lysates contain nucleic acids, so a dye assay such as Bradford or BCA with a standard curve is more reliable."
+related: [chemistry/beer-lambert, biology/protein-molecular-weight, biology/dna-concentration, chemistry/dilution, chemistry/molarity]
 ---
 
 ## How to use the protein concentration calculator
@@ -38,7 +42,7 @@ Enter the **A280** reading, the protein's **extinction coefficient** and **molec
 
 <p class="formula">c = A280 ÷ (ε × l)</p>
 
-## Example — BSA
+## Example: BSA
 
 A280 = 0.8, ε = 43,824 M⁻¹cm⁻¹, 1 cm:
 
@@ -53,7 +57,7 @@ A280 = 0.8, ε = 43,824 M⁻¹cm⁻¹, 1 cm:
 | Lysozyme (hen egg) | 14,313 | 37,970 | 2.65 |
 | IgG (typical) | 150,000 | 210,000 | 1.40 |
 | GFP | 26,900 | 21,890 | 0.81 |
-| Insulin | 5,808 | 5,960 | 1.03 |
+| Insulin | 5,808 | 6,335 | 1.09 |
 
 ## Calculating ε from sequence
 
@@ -67,10 +71,53 @@ Proteins without tryptophan or tyrosine absorb very little at 280 nm and need an
 
 | Assay | Range | Notes |
 |---|---|---|
-| A280 | about 0.1–100 mg/mL | Fast, non-destructive; needs pure protein |
-| Bradford | 1–1,500 µg/mL | Simple; sensitive to detergents |
-| BCA | 20–2,000 µg/mL | Tolerates detergents; sensitive to reducing agents |
+| A280 | about 0.1 to 100 mg/mL | Fast, non-destructive; needs pure protein |
+| Bradford | 1 to 1,500 µg/mL | Simple; sensitive to detergents |
+| BCA | 20 to 2,000 µg/mL | Tolerates detergents; sensitive to reducing agents |
 
 ## Nucleic acid contamination
 
 Nucleic acids absorb strongly at 260 nm and also at 280 nm. An A260/A280 ratio around 0.57 suggests pure protein; higher values indicate nucleic acid contamination.
+
+## Worked example with the default values
+
+The defaults are BSA read at **A280 = 0.8** in a **1 cm** cuvette, with ε = 43,824 M⁻¹cm⁻¹ and MW = 66,463 Da:
+
+1. Molar concentration c = 0.8 ÷ (43,824 × 1) = 1.8255e-05 M = **18.25 µM**
+2. Mass concentration = 18.25 µM × 66,463 g/mol ÷ 10⁶ = **1.213 mg/mL**
+
+The absorbance of a 1 mg/mL solution, often written A₂₈₀(0.1%), is ε ÷ MW = 0.659, so dividing the reading by 0.659 gives the same 1.213 mg/mL directly.
+
+## Diluted and microvolume readings
+
+If that reading of 0.8 came from a 1 in 10 dilution, the stock is 1.213 × 10 = **12.13 mg/mL**. Microvolume spectrophotometers avoid the dilution by using a short path: the same stock on a 0.1 mm (0.01 cm) pedestal reads about 0.080, and on a 1 mm path 0.80. Always enter the true path length, or a normalised 1 cm value if the instrument already converts it.
+
+## A280 to concentration for BSA and lysozyme
+
+| A280 (1 cm) | BSA (µM) | BSA (mg/mL) | Lysozyme (mg/mL) |
+|---|---|---|---|
+| 0.1 | 2.28 µM | 0.152 mg/mL | 0.038 mg/mL |
+| 0.2 | 4.56 µM | 0.303 mg/mL | 0.075 mg/mL |
+| 0.4 | 9.13 µM | 0.607 mg/mL | 0.151 mg/mL |
+| 0.8 | 18.25 µM | 1.213 mg/mL | 0.302 mg/mL |
+| 1 | 22.82 µM | 1.517 mg/mL | 0.377 mg/mL |
+| 1.5 | 34.23 µM | 2.275 mg/mL | 0.565 mg/mL |
+
+The same absorbance means very different amounts of protein: lysozyme is rich in tryptophan, so it absorbs about 4.0 times more per milligram than BSA. Using a generic factor of 1 A per mg/mL would overstate BSA by about 52% here.
+
+The sequence formula above reproduces the table values: lysozyme has 6 Trp, 3 Tyr and 4 cystines, giving 6 × 5,500 + 3 × 1,490 + 4 × 125 = 37,970 M⁻¹cm⁻¹, and insulin has 4 Tyr and 3 cystines, giving 6,335.
+
+## Practical notes
+
+- Blank the instrument with the exact buffer the protein is in; imidazole, some detergents and reducing agents absorb near 280 nm.
+- Keep readings between about 0.1 and 1.0 for a standard spectrophotometer; dilute stronger samples.
+- Read A320 or A340 as well. Absorbance there comes from light scattered by aggregates, and subtracting it gives a better A280.
+- Use the ε for the protein state you have: values computed with all cysteines reduced are slightly lower than those that count disulfide bonds.
+
+## Common mistakes
+
+- **Forgetting the dilution factor.** The calculator gives the concentration in the cuvette; multiply by the dilution to get the stock.
+- **Using the extinction coefficient of the wrong construct.** His tags, GFP fusions or missing domains change ε and MW, so compute them from the actual sequence.
+- **Reading cloudy samples.** Aggregates scatter light and raise A280, so spin or filter the sample first.
+- **Ignoring nucleic acid contamination.** DNA and RNA absorb at 280 nm too; an A260/A280 ratio well above 0.6 means the A280 result is too high.
+- **Mixing up M⁻¹cm⁻¹ and mL·mg⁻¹cm⁻¹.** A mass extinction coefficient near 1 entered in the molar box gives a concentration tens of thousands of times too high.

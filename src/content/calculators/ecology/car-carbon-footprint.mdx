@@ -2,10 +2,10 @@
 title: Car Carbon Footprint Calculator
 description: "Estimate CO₂ emissions from driving based on distance, fuel consumption and fuel type. Free online car carbon footprint calculator with formula and examples."
 category: ecology
-intro: "Burning fuel releases carbon dioxide in proportion to the amount used. Your car's yearly footprint depends on distance driven and fuel economy. This free car carbon footprint calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Every litre of fuel a car burns turns its carbon into carbon dioxide, so tailpipe CO₂ follows directly from distance and fuel economy. This car carbon footprint calculator gives fuel used, tonnes of CO₂ a year and grams per kilometre for petrol, diesel and LPG.\n\nDrivers use it to see what a new car or a longer commute adds, and companies use it to report fleet emissions and set reduction targets."
 keywords: [car carbon footprint, co2 emissions car, driving emissions, petrol co2 per litre, diesel emissions, g co2 per km]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 featured: true
 variables:
   - id: ef
@@ -33,6 +33,10 @@ faq:
     a: "Drive less, combine trips, keep tyres inflated, drive smoothly, and choose a more efficient or electric vehicle."
   - q: "How do I convert g/km to kg per year?"
     a: "Multiply g/km by kilometres driven and divide by 1,000."
+  - q: "Why does diesel emit more CO₂ per litre than petrol?"
+    a: "Diesel is denser and contains more carbon in each litre, about 0.72 kg against 0.64 kg for petrol. A diesel car usually burns fewer litres per km, so its CO₂ per km can still be lower."
+  - q: "How do I convert km per litre to L/100 km?"
+    a: "Divide 100 by the km per litre figure. A car doing 18 km/L uses 100 ÷ 18 = 5.56 L/100 km, which is the value to enter."
 related: [ecology/water-leak, ecology/ev-vs-petrol, ecology/tree-offset, everyday-life/fuel-cost]
 ---
 
@@ -89,3 +93,43 @@ These come from the carbon content of the fuel. Including production and transpo
 ## Putting it in context
 
 A typical petrol car driven 12,000 km a year emits about 2 tonnes of CO₂. Global average emissions are roughly 4–5 tonnes per person per year from all sources.
+
+## Worked example with the default values
+
+The defaults are a petrol car using 7 L/100 km over 12,000 km a year:
+
+- Fuel used = 12,000 × 7 ÷ 100 = **840 L**
+- CO₂ = 840 × 2.31 = 1,940.4 kg = **1.94 t**
+- CO₂ per km = 7 × 2.31 × 10 = **162 g/km**
+
+Over a 15-year life at the same use, that car emits about 29 tonnes from the tailpipe. Adding roughly 20% for producing and delivering the fuel raises one year to about 2.33 t.
+
+## Where the emission factor comes from
+
+The factor is set by chemistry. Petrol has a density of about 0.745 kg/L and is about 86% carbon by mass; each kilogram of carbon becomes 44.01 ÷ 12.011 = 3.664 kg of CO₂. So one litre gives 0.745 × 0.86 × 3.664 = **2.35 kg**, close to the 2.31 used here (blends with ethanol come in a little lower). Diesel is denser, 0.835 kg/L at about 86.5% carbon, giving 2.65 kg/L. That is why a diesel can burn less fuel yet emit a similar mass of CO₂.
+
+## Same distance, different cars
+
+12,000 km a year with typical real-world consumption:
+
+| Car | Consumption | CO₂ per km | CO₂ per year |
+|---|---|---|---|
+| Petrol hatchback | 6 L/100 km | 139 g/km | 1.66 t |
+| Petrol SUV | 9 L/100 km | 208 g/km | 2.49 t |
+| Diesel sedan | 5 L/100 km | 134 g/km | 1.61 t |
+| Diesel SUV | 7.5 L/100 km | 201 g/km | 2.41 t |
+| LPG car | 8.5 L/100 km | 128 g/km | 1.54 t |
+
+## Measuring your own fuel consumption
+
+Dashboard figures are often 5% to 10% optimistic, and official WLTP or ARAI ratings are measured on a test cycle without traffic, air conditioning or roof loads. The brim-to-brim method gives a real number: fill the tank until the pump clicks off, reset the trip meter, drive normally, then fill again at the same pump. If you drove 642 km and the second fill took 41.3 L, consumption is 41.3 ÷ 642 × 100 = **6.43 L/100 km**. Repeat over two or three tanks and average them.
+
+If your figures are in miles per gallon, convert first: L/100 km = 235.2 ÷ US mpg, or 282.5 ÷ UK mpg. The default 7 L/100 km is 33.6 US mpg or 40.4 UK mpg.
+
+## Common mistakes
+
+- **Entering km per litre as L/100 km.** Indian buyers often think in km/L. 15 km/L is 100 ÷ 15 = 6.67 L/100 km, not 15.
+- **Using the official rating instead of real use.** Short trips, idling in traffic and air conditioning can push real consumption 20% to 40% above the brochure figure.
+- **Mixing US and UK mpg.** A UK mpg figure is about 20% higher than the US figure for the same car, because the imperial gallon is larger.
+- **Counting CNG or electricity as zero.** CNG is not in the list above but still emits about 2.7 kg CO₂ per kg of gas, and an EV's footprint depends on the grid that charges it.
+- **Comparing tailpipe figures with life-cycle figures.** Published life-cycle numbers include fuel production and car manufacture, so they are always higher than this tank-to-wheel result.

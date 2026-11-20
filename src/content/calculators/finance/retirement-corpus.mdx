@@ -2,10 +2,10 @@
 title: Retirement Corpus Calculator
 description: Estimate how much money you need at retirement based on today's expenses, inflation and a safe withdrawal rate.
 category: finance
-intro: "Your retirement corpus is the amount you need saved to fund your living costs after you stop working, allowing for inflation."
+intro: "Your retirement corpus is the sum you need saved on the day you stop working, so that withdrawals can pay your living costs for the rest of your life. This retirement corpus calculator inflates today's annual expenses to your retirement year and divides them by a safe withdrawal rate.\n\nSalaried savers and people planning early retirement use it to set a savings target, and financial planners use it to show clients how inflation and the withdrawal rate change that target."
 keywords: [retirement calculator, retirement corpus, how much to retire, 4% rule, safe withdrawal rate, retirement planning, fire]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: E, label: Annual expenses today, family: currency, default: 600000, min: 0, decimals: 2 }
   - { id: inf, label: Expected inflation, family: percent, unit: '%', default: 6, min: 0, max: 0.5 }
@@ -28,6 +28,10 @@ faq:
     a: The 4% rule comes from US data with about 2–3% inflation. With higher inflation, many Indian planners prefer 3–3.5%, which means a larger corpus.
   - q: Should I include my house in the corpus?
     a: Only if you plan to sell it or rent it out. A house you live in does not pay your bills.
+  - q: "What is the retirement corpus worth in today's money?"
+    a: "Divide the corpus by (1 + inflation) to the power of the years. The default corpus of 64,378,061 is worth 15,000,000 today, which is simply 25 times the current 600,000 of expenses at a 4% withdrawal rate."
+  - q: "How much does a 1% change in inflation change the corpus?"
+    a: "A lot, because it compounds over every year to retirement. For 600,000 of expenses and 25 years at a 4% withdrawal rate, 5% inflation needs 50,795,324 while 7% needs 81,411,490."
 related: [finance/inflation, finance/sip, finance/savings-goal]
 ---
 
@@ -100,3 +104,35 @@ Combining several sources reduces the risk of any one falling short. See the [SW
 - Pensions or rental income reduce the corpus needed — subtract them from expenses.
 
 This is a planning estimate, not financial advice. Consider speaking to a qualified financial planner.
+
+## What the default answer means
+
+With the defaults (600,000 a year of expenses, 6% inflation, 25 years, 4% withdrawal) the calculator shows expenses at retirement of **2,575,122** a year and a corpus of **64,378,061**. That looks enormous, but in today's money it is 64,378,061 ÷ 1.06^25 = **15,000,000**, exactly 25 times today's expenses. The rest of the number is inflation, not extra spending.
+
+## From corpus to monthly saving
+
+A target is only useful once it becomes a monthly figure. Using the same formula as the [SIP calculator](/finance/sip/), building 64,378,061 over 25 years at an assumed 12% a year needs about **33,925 a month**. If you already hold 2,000,000 that grows at 10% a year, it reaches 21,669,412 by retirement, the gap falls to 42,708,649, and the monthly saving drops to about **22,506**. These returns are assumptions for illustration, not forecasts.
+
+## How sensitive the corpus is
+
+Corpus needed for 600,000 of expenses today, 25 years to retirement:
+
+| Inflation | Expenses at retirement | Corpus at 4% | Corpus at 3.5% | Corpus at 3% |
+|---|---|---|---|---|
+| 5% | 2,031,813 | 50,795,324 | 58,051,799 | 67,727,099 |
+| 6% | 2,575,122 | 64,378,061 | 73,574,927 | 85,837,414 |
+| 7% | 3,256,460 | 81,411,490 | 93,041,702 | 108,548,653 |
+
+One point of inflation either way moves the 4% corpus from 50,795,324 to 81,411,490, a bigger swing than most people expect. Choosing the withdrawal rate matters just as much: going from 4% to 3% raises the target by a third.
+
+## Building a realistic expense figure
+
+Planners usually start from 12 months of bank and card statements rather than a guess. Split spending into essentials (food, utilities, insurance, rent or maintenance), lifestyle (travel, dining) and one-off items such as a car or a wedding. Remove costs that end at retirement, add expected medical cover, and treat big one-off goals as separate targets rather than folding them into the yearly figure.
+
+## Common mistakes
+
+- **Using today's expenses as the final figure.** The corpus must be built on expenses in the retirement year, which is what the inflation step does.
+- **Mixing real and nominal returns.** If you plan with inflated expenses, compare them with nominal investment returns, not returns after inflation.
+- **Counting EPF or pension twice.** Either subtract the pension from yearly expenses or subtract its value from the corpus, not both.
+- **Treating 4% as guaranteed.** It is a historical guideline from US markets; a poor run of returns early in retirement can shorten the life of the corpus.
+- **Leaving out healthcare.** Medical costs and insurance premiums often rise faster than general inflation and grow with age.

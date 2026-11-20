@@ -2,10 +2,10 @@
 title: Sales Tax / VAT / GST Calculator
 description: Add or remove sales tax, VAT or GST from a price — find the net price, tax amount and gross price in one step.
 category: finance
-intro: "Sales tax, VAT and GST are added to the price of goods and services. This calculator adds tax to a net price or removes it from a gross price. This free sales tax / VAT / GST calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Sales tax, VAT and GST are percentages charged on the price of goods and services, either added at the till or already built into the shelf price. This sales tax / VAT / GST calculator adds tax to a net price or strips it out of a gross price, and shows the tax amount.\n\nShop owners and freelancers use it to price products and write invoices, and buyers use it to check receipts and compare prices quoted with and without tax."
 keywords: [vat calculator, gst calculator, sales tax calculator, add tax, remove tax, price before tax, reverse vat]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 featured: true
 variables:
   - { id: N, label: Price before tax (net), family: currency, default: 100, min: 0, decimals: 2 }
@@ -26,6 +26,10 @@ faq:
     a: Usually after. Tax is calculated on the price you actually pay, so apply the discount first.
   - q: How do I find the tax rate from two prices?
     a: Rate = (gross − net) ÷ net. Enter both prices in the calculator and the rate is worked out.
+  - q: "If I add 18% and then take 18% off, why do I not get back to the same price?"
+    a: "Because the second 18% is taken from a bigger number. 100 plus 18% is 118, but 118 less 18% is 96.76. To undo the tax, divide 118 by 1.18, which gives 100 exactly."
+  - q: "What fraction of a VAT-inclusive price is VAT?"
+    a: "The tax share is rate divided by (1 + rate). At 20% VAT that is 0.2 / 1.2, exactly one sixth of the gross price; at 18% GST it is about 15.25%."
 related: [finance/discount, finance/profit-margin, math/percentage]
 ---
 
@@ -87,3 +91,38 @@ Businesses often round tax per line item, while shops may round on the total. Th
 | United States | Sales tax | Varies by state and city |
 
 Rates and product rules change — confirm with your tax authority before invoicing.
+
+## Worked example with the default values
+
+The defaults are a net price of **100** and a tax rate of **18%**:
+
+- Gross = 100 × (1 + 0.18) = **118.00**
+- Tax = 118.00 − 100 = **18.00**
+
+Removing tax works the other way. A price of 59.99 including 20% VAT has a net value of 59.99 ÷ 1.2 = **49.99** and VAT of **10.00**. Leave the net price blank and type 59.99 into the gross field to get the same split.
+
+## How much of a tax-inclusive price is tax
+
+When a price already includes tax, the tax share of that price is rate ÷ (1 + rate), which is always smaller than the rate itself. Accountants call it the tax fraction; for 20% VAT it is exactly one sixth.
+
+| Tax rate | Multiplier to add tax | Tax share of the gross price | Net for a gross of 100 |
+|---|---|---|---|
+| 5% | 1.05 | 4.76% | 95.2381 |
+| 10% | 1.10 | 9.09% | 90.9091 |
+| 18% | 1.18 | 15.25% | 84.7458 |
+| 20% | 1.20 | 16.67% | 83.3333 |
+| 25% | 1.25 | 20.00% | 80.0000 |
+
+## Discounts and invoices in practice
+
+Tax is normally charged on the price actually paid, so apply the discount first. An item listed at 2,500 with a 10% discount costs 2,250 before tax, then 405.00 of tax at 18%, for a total of **2,655.00**.
+
+On invoices, the rounding rule matters. Take three lines at 18%: 3 × 12.35, 7 × 4.99 and 2 × 19.95, a net total of 111.88. Rounding the tax on each line gives 6.67 + 6.29 + 7.18 = **20.14**, while rounding once on the total gives **20.14**. Both are accepted in most systems, but an invoice must use one rule consistently and the tax figure must match the sum shown.
+
+## Common mistakes
+
+- **Taking the rate off the gross price.** 118 less 18% is 96.76, not 100; divide by 1.18 instead.
+- **Applying tax before a discount.** Unless local rules say otherwise, tax follows the discounted price.
+- **Entering 18 instead of 18% in a spreadsheet.** A rate of 18 multiplies the price by 19; the calculator takes the percent sign for you.
+- **Charging tax on a price that already includes it.** Adding 18% to a gross of 118 gives 139.24, taxing the tax; check which price you start from.
+- **Treating a tax-inclusive quote as net.** Check whether a supplier quote says "plus VAT" or "incl. GST" before comparing two offers.

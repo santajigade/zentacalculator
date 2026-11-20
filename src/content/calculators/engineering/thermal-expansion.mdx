@@ -2,10 +2,10 @@
 title: Thermal Expansion Calculator
 description: Calculate how much a pipe, rail or bar expands with temperature for steel, stainless steel, aluminium, copper and PVC.
 category: engineering
-intro: "Most materials grow when heated and shrink when cooled. Pipes, rails, bridges and machine parts must allow for this movement, or the stresses can bend, crack or break them. This free thermal expansion calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Most materials grow when heated and shrink when cooled, by an amount set by the coefficient of linear expansion, the length and the temperature change. This thermal expansion calculator works out that movement for steel, stainless steel, copper, aluminium, PVC, HDPE and glass.\n\nPiping designers use it to size expansion loops and bellows, while maintenance and installation teams use it to set gaps, guides and anchor points on hot lines."
 keywords: [thermal expansion, linear expansion, pipe expansion, coefficient of expansion, steel expansion, expansion loop]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - id: a
     label: Material
@@ -36,6 +36,10 @@ faq:
     a: "12 × 10⁻⁶ × 100 × 50 = 0.06 m, or 60 mm."
   - q: "Why do bridges have expansion joints?"
     a: "To allow the deck to lengthen and shorten with temperature without building up damaging stress."
+  - q: "How much force does a restrained steel pipe produce when heated?"
+    a: "The stress is E × α × ΔT, about 144 MPa for a 60 K rise in carbon steel, whatever the length. On a DN100 schedule 40 pipe that is about 295 kN on each anchor."
+  - q: "Which temperature difference should I use for pipe expansion?"
+    a: "Use the difference between the coldest and hottest metal temperatures the line will see, including winter shutdown and steam out or cleaning cycles, not just installation to normal operation."
 related: [conversion/temperature-converter, engineering/pt100-resistance]
 ---
 
@@ -101,3 +105,42 @@ Two metals with different α bonded together bend when heated. Thermostats, circ
 ## Allowing for expansion
 
 Long hot lines need expansion loops, bellows or offsets, and guides and anchors placed to direct the movement. Restraining expansion completely creates very large forces that can damage supports, flanges and connected equipment.
+
+## Design for the full temperature range
+
+Pipe stress work uses the whole swing from the coldest to the hottest condition, not the difference from installation. Take an 80 m carbon steel line installed at 10 °C, operating at 180 °C and shut down in winter at −5 °C:
+
+- Growth from installation to operating: 12 × 10⁻⁶ × 80 × 170 = **163.2 mm**
+- Shrinkage from installation to winter shutdown: 12 × 10⁻⁶ × 80 × 15 = **14.4 mm**
+- Total movement the loop or bellows must take: **177.6 mm**
+
+Contraction matters as much as growth for plastics. A 50 m HDPE water main laid in summer and cooled by 30 K shortens by **300 mm** (enter ΔT = −30), which is enough to pull a push-fit joint apart if the pipe is not anchored or snaked in the trench. For steam lines, the layout of loops and anchors is covered in [pipe expansion loops in steam piping](https://www.instrumentationblog.in/pipe-expansion-loop-in-steam-piping/).
+
+## Force from a fully restrained pipe
+
+If the default 60 K rise is fully prevented, the stress is σ = E α ΔT = 200,000 MPa × 12 × 10⁻⁶ × 60 = **144 MPa**, independent of the pipe length. For a DN100 schedule 40 steel pipe (114.3 mm OD, 102.26 mm ID, metal area 2,048 mm²) that stress pushes on the anchors with about **295 kN**. Anchors and nozzle connections are rarely designed for such loads, which is why the movement is allowed to happen and guided instead.
+
+## Expansion of a 100 m run
+
+| Material | ΔT 20 K | ΔT 50 K | ΔT 100 K | ΔT 150 K |
+|---|---|---|---|---|
+| Carbon steel | 24 mm | 60 mm | 120 mm | 180 mm |
+| Stainless steel 304/316 | 35 mm | 86 mm | 173 mm | 260 mm |
+| Copper | 33 mm | 82 mm | 165 mm | 247 mm |
+| Aluminium | 46 mm | 116 mm | 231 mm | 346 mm |
+| Cast iron | 21 mm | 52 mm | 105 mm | 158 mm |
+| PVC | 104 mm | 260 mm | 520 mm | 780 mm |
+| HDPE | 400 mm | 1,000 mm | 2,000 mm | 3,000 mm |
+| Glass | 18 mm | 45 mm | 90 mm | 135 mm |
+
+## How expansion is measured
+
+Coefficients are measured with a push rod dilatometer (ASTM E228), which heats a small sample in a furnace and records its length change with a displacement transducer, or with interferometry for low expansion materials such as glass and Invar. On a running plant, movement is checked with travel indicators on spring hangers and with marks on pipe shoes at guides, read cold and hot. The readings are compared with the stress analysis; a shoe that has walked off its support or a hanger at the end of its travel points to a blocked guide or a missing anchor.
+
+## Common mistakes
+
+- **Using installation to operating ΔT only.** The lowest ambient or shutdown temperature adds contraction, and the loop must absorb the full range.
+- **Taking α at room temperature for a hot line.** The mean coefficient of carbon steel rises from about 11.7 × 10⁻⁶ near 20 °C to about 13 × 10⁻⁶ at 300 °C, so tables of mean α to the operating temperature give better answers for steam and hot oil.
+- **Converting a °F difference with the temperature formula.** A 100 °F rise is 55.6 K, not 37.8 °C.
+- **Treating plastics like metal.** HDPE moves more than 16 times as much as carbon steel and also creeps, so supports and anchors follow different rules.
+- **Ignoring differential expansion.** A stainless liner in a carbon steel shell, or an aluminium cover on a steel frame, moves by the difference in α, which loosens bolts or bows the assembly.

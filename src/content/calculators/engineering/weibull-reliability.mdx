@@ -2,10 +2,10 @@
 title: Weibull Reliability Calculator (R(t), Failure Rate, MTTF, B10)
 description: Calculate Weibull reliability, probability of failure, hazard rate, mean life (MTTF) and B10 life from the shape parameter β and characteristic life η.
 category: engineering
-intro: "The Weibull distribution is the standard model for component life because its shape parameter β covers early failures (β < 1), random failures (β = 1) and wear-out (β > 1). This Weibull reliability calculator gives the reliability and probability of failure at a chosen time, the instantaneous failure rate, the mean time to failure and the B10 life from β and the characteristic life η."
+intro: "The Weibull distribution models component life with two numbers: the shape parameter β, which tells early failures from random failures and wear-out, and the characteristic life η. This Weibull reliability calculator gives the reliability, failure probability, hazard rate, mean life and B10 life at any operating time.\n\nReliability and maintenance engineers use it to set replacement intervals, compare suppliers and size spare part stocks from field or test failure data."
 keywords: [weibull reliability calculator, weibull distribution calculator, weibull failure rate, weibull mttf, b10 life calculator, weibull shape parameter beta, characteristic life eta]
 published: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-20
 variables:
   - { id: beta, label: Shape parameter β, default: 1.5, min: 0.01 }
   - { id: eta, label: Characteristic life η (scale), family: seconds, unit: h, default: 10000, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: MTTF = η × Γ(1 + 1/β), where Γ is the gamma function. For β = 1 it equals η; for β = 2 it is 0.886 η; for β = 3.5 it is about 0.9 η.
   - q: What is B10 life?
     a: The time by which 10% of the population has failed (90% reliability), B10 = η × (−ln 0.9)^(1/β). It is the usual rating life for rolling bearings.
+  - q: "What is the chance a part that has already run for a while survives longer?"
+    a: "Use conditional reliability, R(t + Δt) ÷ R(t). For β = 1.5 and η = 10,000 h, a seal that has run 5,000 h has a 89.5% chance of lasting another 1,000 h, compared with 96.9% for a new one."
+  - q: "How many failures do I need to estimate the Weibull parameters?"
+    a: "A rough β and η can come from 3 to 5 failures, but the estimate of β is uncertain until you have about 10 to 20. Include the units that are still running as suspensions, or η will be underestimated."
 related: [engineering/availability-mtbf, engineering/bearing-life, statistics/exponential-distribution, engineering/pfd-avg]
 ---
 
@@ -67,3 +71,49 @@ A pump seal with β = 1.5 and η = 10,000 h, after t = 5,000 h:
 - Fit β and η from field data with a Weibull probability plot (median ranks) or maximum likelihood; at least 5–10 failures give a usable β.
 - A three-parameter Weibull adds a failure-free time γ: replace t with (t − γ) when no failures can occur before γ.
 - For β = 1 the result equals the exponential model used for MTBF and SIL calculations, with η = MTBF.
+
+## Reliability over the next mission, not from new
+
+Reliability from new is not the same as the chance that a unit already in service survives a little longer. For the default seal (β = 1.5, η = 10,000 h) that has run 5,000 h, the chance of lasting a further 1,000 h is
+
+- R(6,000) ÷ R(5,000) = 0.6283 ÷ 0.7022 = **89.48%**
+
+A new seal over its first 1,000 h has R(1,000) = **96.89%**. The older seal is less likely to finish the next 1,000 h because β > 1 means the hazard rate climbs with age. With β = 1 the two numbers would be identical, which is the memoryless property of the exponential model. To reach 99% reliability from new (B1 life), the seal must be replaced by 466 h.
+
+## Estimating β and η from failure records
+
+Six seals from the same pump type failed at the hours below. Rank them, give each a median rank F = (i − 0.3) ÷ (n + 0.4) (Benard's approximation) and fit a straight line of ln(−ln(1 − F)) against ln(t).
+
+| Order i | Failure time | Median rank F |
+|---|---|---|
+| 1 | 2,100 h | 10.9% |
+| 2 | 3,900 h | 26.6% |
+| 3 | 5,600 h | 42.2% |
+| 4 | 7,300 h | 57.8% |
+| 5 | 9,800 h | 73.4% |
+| 6 | 13,500 h | 89.1% |
+
+The least squares slope is **β ≈ 1.59** and the line crosses 63.2% at **η ≈ 8,153 h**. Those two numbers go straight into the calculator. With only six points the β estimate has a wide confidence band, so treat a value near 1 with caution before deciding whether failures are random or age related. Units removed for other reasons while still working are suspensions and need a rank adjustment (Johnson's method) or a maximum likelihood fit; leaving them out makes η look shorter than it is.
+
+## Life at 1%, 10% and 50% failed
+
+The B lives below are fractions of η, from B<sub>p</sub> = η (−ln(1 − p))<sup>1/β</sup>. Multiply by your η to get hours.
+
+| β | B1 | B10 | B50 (median) | MTTF |
+|---|---|---|---|---|
+| 0.7 | 0.0014 η | 0.0402 η | 0.5924 η | 1.2658 η |
+| 1 | 0.0101 η | 0.1054 η | 0.6931 η | 1.0000 η |
+| 1.5 | 0.0466 η | 0.2231 η | 0.7832 η | 0.9027 η |
+| 2 | 0.1003 η | 0.3246 η | 0.8326 η | 0.8862 η |
+| 3 | 0.2158 η | 0.4723 η | 0.8850 η | 0.8930 η |
+| 4 | 0.3166 η | 0.5697 η | 0.9124 η | 0.9064 η |
+
+For β below about 3.6 the mean life sits above the median, because a few long survivors pull the average up. For a small β the B1 life is a tiny fraction of η, which is why early failures dominate the warranty cost of such parts.
+
+## Common mistakes
+
+- **Reading η as the mean life.** η is the 63.2% failure point. The mean is η Γ(1 + 1/β), which is 9,027 h for the defaults, not 10,000 h.
+- **Mixing failure modes in one fit.** Seal leaks and bearing seizures on the same pump have different β values. Fitting them together gives a bent plot and a β that describes neither.
+- **Using calendar time for a part that ages with running hours or cycles.** Standby hours on a spare pump do not wear the seal the same way, so use operating hours, starts or cycles as the time axis.
+- **Quoting the hazard rate at one time as a constant failure rate.** With β = 1.5 the rate at 5,000 h is 106.1 per 10⁶ h, but at 1,000 h it is only 47.4. A single λ is valid only when β is close to 1.
+- **Replacing parts with β ≤ 1 on a fixed schedule.** It adds early failures instead of removing wear-out ones, and costs parts and downtime for no gain.

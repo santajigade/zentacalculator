@@ -2,10 +2,10 @@
 title: Age Calculator
 description: Calculate exact age in years, months and days from a date of birth — or age on any date.
 category: everyday-life
-intro: "Your exact age in years, months and days is needed for forms, exams and eligibility checks. This calculator also tells you how long until your next birthday."
+intro: "Your exact age is the time from your date of birth to a chosen date, counted in completed years, months, weeks and days. This age calculator gives all four, for today or for any past or future date you pick.\n\nParents use it to check school admission cut-offs, job and exam applicants use it to confirm age limits on a notified date, and anyone can use it to find milestones or anniversaries."
 keywords: [age calculator, how old am i, date of birth, age in days, age in months, birthday calculator]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 featured: true
 variables:
   - { id: dob, label: Date of birth, family: date, default: -12784 }
@@ -30,6 +30,10 @@ faq:
     a: "Enter your date of birth and the calculator shows your age in days. A 30-year-old is roughly 10,950 days old, depending on leap years."
   - q: "How is age calculated exactly?"
     a: "Completed years are counted when the birthday date is reached. Months are counted the same way, and days are the exact number of calendar days between the dates."
+  - q: "Does the age in days include the birth day?"
+    a: "No. It is the number of days between the two dates. Born 15 March 1990, on 20 November 2026 you are 13,399 days old; counting both the first and last day gives 13,400."
+  - q: "How do I check my age for a job or exam age limit?"
+    a: "Set the \"Age on this date\" field to the date stated in the notification, such as 1 August of the exam year, and read the completed years and months. Relaxations for categories are added to the limit, not to your age."
 related: [everyday-life/habit-cost, everyday-life/days-between-dates, everyday-life/days-until, other/dog-age]
 ---
 
@@ -90,3 +94,43 @@ Enter the older person's date of birth and set the second date to the younger pe
 ## Ages around the world
 
 Most countries count age from zero at birth. Traditional East Asian age reckoning added a year at birth and at each New Year, but South Korea officially switched to the international method for legal purposes in 2023.
+
+## What the defaults show
+
+When the page opens, the date of birth is set 12,784 days before today and the second date is today, so the days field always reads **12,784 days** and the weeks field **1,826.3 weeks**. That is about 35 years; the completed years and months depend on how many 29 Februarys fall inside the window, so they can shift by one around the boundary.
+
+## Worked example on fixed dates
+
+Take a birth date of **15 March 1990** and an "age on" date of **20 November 2026**. These dates are fixed so the example does not change with today's date:
+
+- Completed years: the 2026 birthday (15 March) has passed, so **36 years**
+- Completed months: 36 × 12 + 8 = **440 months**, the last monthly anniversary being 15 November 2026
+- Days since that anniversary: **5 days**, so the age reads 36 years, 8 months and 5 days
+- Total days: **13,399**, which is 1,914.1 weeks; 9 leap days fall in the period
+- Days to the next birthday on 15 March 2027: **115**
+
+## Age on admission and recruitment cut-off dates
+
+The same child, born on 20 September 2020, can fall either side of an age rule depending on the cut-off the school or board uses:
+
+| Cut-off date | Age on that date | Days since birth |
+|---|---|---|
+| 31 March 2026 | 5 years 6 months | 2,018 |
+| 1 April 2026 | 5 years 6 months | 2,019 |
+| 1 June 2026 | 5 years 8 months | 2,080 |
+| 30 September 2026 | 6 years 0 months | 2,201 |
+| 31 December 2026 | 6 years 3 months | 2,293 |
+
+A rule of "6 years on 31 March 2026" excludes this child, while a 31 December cut-off includes them. Always read the age limit together with its date.
+
+## How the counting works in practice
+
+Completed years and months are counted the way people and most laws count them: a year is complete when the birthday is reached, and a month is complete when the same day number comes round. When the birth day number does not exist in a shorter month, such as the 31st in April, this calculator completes that month on the 1st of the following month, the same rule it uses for 29 February birthdays. The day total is the plain calendar difference and does not include the birth day itself; counting both end dates, as some leave and contract rules do, adds one, giving 13,400 days in the example above.
+
+## Common mistakes
+
+- **Subtracting birth year from current year.** On 14 March 2026, 2026 − 1990 gives 36, but someone born on 15 March 1990 is still 35 until the next day; the month and day must be compared too.
+- **Using 365 days a year.** 13,399 ÷ 365 gives 36.71, which overstates age slightly because of the 9 leap days; use calendar dates, not division.
+- **Checking age on the application date.** Exam and job notices fix age on a stated date, often 1 January or 1 August; entering today can put you on the wrong side of the limit.
+- **Mixing day and month order.** 04/05/2010 is 4 May in India and the UK but 5 April in the US. Pick the date from the calendar rather than typing it.
+- **Forgetting time zones for very recent births.** A baby born late at night in one country may have a different birth date abroad; use the date on the birth certificate.

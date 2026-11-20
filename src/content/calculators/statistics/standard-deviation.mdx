@@ -2,10 +2,10 @@
 title: Standard Deviation Calculator
 description: Paste your data to get sample and population standard deviation, variance, mean and count — with steps.
 category: statistics
-intro: "Standard deviation measures how spread out values are around their mean. A small standard deviation means the data are tightly clustered."
+intro: "Standard deviation measures how far values typically sit from their mean; a small value means the data are tightly clustered. This standard deviation calculator takes a pasted list and returns the sample and population results, variance, mean and count together.\n\nStudents check homework with it, analysts use it to describe spread in survey and sales data, and engineers rely on it to judge the repeatability of measurements and the capability of a process."
 keywords: [standard deviation calculator, sample standard deviation, population standard deviation, variance, sd, stdev]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-20
 featured: true
 dataset:
   label: Your data
@@ -41,6 +41,10 @@ faq:
     a: "No. It is a square root of an average squared distance, so it is always zero or positive."
   - q: "How do I combine two standard deviations?"
     a: "For independent sources, add the variances and take the square root: √(0.3² + 0.4²) = 0.5. Never add the standard deviations directly."
+  - q: "How can I estimate standard deviation from the range?"
+    a: "Divide the range by the d₂ constant for your sample size: 1.128 for 2 values, 2.326 for 5 and 3.078 for 10. It is a quick estimate used on control charts; the full calculation is more precise."
+  - q: "What is the coefficient of variation of my data?"
+    a: "Divide the standard deviation by the mean and multiply by 100. For the default data it is 2.0310 ÷ 5.875 = 34.6%. It only makes sense for data measured from a true zero, such as length or weight."
 related: [statistics/mean-median-mode, statistics/z-score, statistics/standard-error]
 ---
 
@@ -132,9 +136,41 @@ A shaft specified at 10.0 ± 0.3 mm with σ = 0.08 mm gives C<sub>p</sub> = 0.6 
 
 Independent random errors combine as the **root sum of squares**, not by simple addition. A sensor with σ = 0.3 and a transmitter with σ = 0.4 give a combined σ of √(0.3² + 0.4²) = **0.5**, not 0.7.
 
+## Reading the default results
+
+For the default list the calculator shows s = 2.0310, σ = 1.8998 and a mean of 5.875. Two more useful figures follow directly. The coefficient of variation is 2.0310 ÷ 5.875 = **34.6%**, so the values vary by about a third of their average. The standard error of the mean is 2.0310 ÷ √8 = **0.718**, which tells you how uncertain the mean of 5.875 is, rather than how scattered the individual values are.
+
+## Worked example: repeatability of a pressure gauge
+
+A technician applies a steady 6.000 bar from a dead-weight tester and records ten readings: 6.02, 5.98, 6.01, 6.03, 5.99, 6.00, 6.04, 5.97, 6.01, 6.02 bar.
+
+- Mean = **6.007 bar**, so the average error is +7 mbar
+- Sample standard deviation s = **22.1 mbar**, the repeatability of the gauge
+- Standard error of the mean = 22.1 ÷ √10 = 7.0 mbar
+- About 95% of single readings fall within ±2s = ±44 mbar of the mean
+
+If the gauge is specified as ±0.5% of a 10 bar span (±50 mbar), the ±44 mbar scatter plus the +7 mbar bias already reaches about 51 mbar, right at the edge of the tolerance, so the gauge is a candidate for recalibration or replacement.
+
+## Quick estimate from the range
+
+On a shop floor, σ is often estimated from the range of a small subgroup: σ ≈ R ÷ d₂. The d₂ constants below are computed as the expected range of n values from a standard normal distribution.
+
+| Subgroup size n | d₂ |
+|---|---|
+| 2 | 1.128 |
+| 3 | 1.693 |
+| 4 | 2.059 |
+| 5 | 2.326 |
+| 6 | 2.534 |
+| 8 | 2.847 |
+| 10 | 3.078 |
+
+For the ten gauge readings, R = 70 mbar gives σ ≈ 70 ÷ 3.078 = **22.7 mbar**, close to the 22.1 mbar from the full calculation. For the default list, R = 6 and n = 8 give 2.11, against s = 2.03. The range method wastes information, so use it only for quick checks and control charts with small subgroups.
+
 ## Common mistakes
 
 - **Using the population formula on a sample.** It underestimates the spread, especially with fewer than about 30 values.
 - **Adding standard deviations.** Add variances, then take the square root.
 - **Applying the 68 to 95 to 99.7 rule to skewed data.** It only holds for roughly normal data. For incomes, waiting times or particle sizes, use percentiles instead.
 - **Letting one outlier decide the result.** Check the data for typing errors before you report it.
+- **Using the shortcut Σx² − n x̄² with rounded numbers.** For large values close together, such as 1,000.12 and 1,000.15, the two terms nearly cancel and small rounding wipes out the answer; work from deviations about the mean and keep full precision.

@@ -2,10 +2,10 @@
 title: Concrete Mix Calculator (Cement, Sand, Aggregate)
 description: Calculate cement bags, sand and coarse aggregate for nominal concrete mixes like M15, M20 and M25.
 category: construction
-intro: "A concrete mix ratio such as 1:1.5:3 sets how much cement, sand and aggregate go into each batch. Converting wet volume into dry material quantities is the key step in ordering."
+intro: "A nominal mix ratio such as 1 : 1.5 : 3 tells you the parts of cement, sand and coarse aggregate in each batch. This concrete mix calculator turns a wet volume into cement bags, sand and aggregate for M10 to M25, using the usual 1.54 dry volume factor.\n\nSite engineers, contractors and home builders use it to order materials and plan batches for slabs, footings and floors before the trucks are booked."
 keywords: [concrete mix calculator, m20 mix ratio, cement sand aggregate, concrete material calculation, 1:1.5:3]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: V, label: Wet concrete volume, family: volume, unit: m3, imperialUnit: ft3, default: 1, min: 0 }
   - id: mix
@@ -34,6 +34,10 @@ faq:
     a: "Typically a water–cement ratio of about 0.45–0.55 by weight for these mixes. Too much water weakens concrete."
   - q: "How many cement bags are needed for 1 m³ of M20 concrete?"
     a: "About 8 bags of 50 kg for a nominal 1 : 1.5 : 3 mix."
+  - q: "How many cubic feet of sand and aggregate are needed for 1 m³ of M20?"
+    a: "About 14.8 cft of sand and 29.7 cft of coarse aggregate, with 8.1 bags of cement, using the 1.54 dry volume factor."
+  - q: "How much concrete does one bag of cement make in M20?"
+    a: "One bag makes about 0.124 m³ (4.4 cft) of finished M20 concrete, mixed with 1.5 boxes of sand and 3 boxes of aggregate measured in a 35 L box."
 related: [construction/concrete-slab, construction/mortar-mix, construction/rebar-weight]
 ---
 
@@ -81,3 +85,40 @@ Strength depends heavily on the water–cement ratio. Typical values are 0.45–
 ## Curing
 
 Concrete gains about 70% of its 28-day strength in 7 days if kept moist. Cure by ponding, wet hessian or curing compound for at least 7 days (10–14 days in hot, dry weather).
+
+## Worked example: the default 1 m³ of M20
+
+- Dry volume = 1 × 1.54 = **1.54 m³**, split into 5.5 parts of 0.280 m³
+- Cement = 0.280 m³ × 1,440 kg/m³ = 403 kg = **8.06 bags**
+- Sand = 0.280 × 1.5 = **0.42 m³** (14.8 cft)
+- Aggregate = 0.280 × 3 = **0.84 m³** (29.7 cft)
+- Water at a water-cement ratio of 0.5 = 403 × 0.5 = about **202 litres**
+
+## Slab example
+
+A 4 m × 3 m roof slab 125 mm thick holds 1.50 m³ of concrete. In M20 it needs 12.10 bags of cement, 0.630 m³ of sand and 1.260 m³ of 20 mm aggregate. With 5% for spillage and uneven formwork, order **13 bags**, 0.66 m³ (23.4 cft) of sand and 1.32 m³ (46.7 cft) of aggregate.
+
+## Materials per cubic metre in cubic feet
+
+Sand and aggregate are often sold by the cubic foot (cft) or by the tractor or truck load, so here are the same quantities in cft, with the water for a typical water-cement ratio for each grade:
+
+| Grade | Cement bags | Sand | Aggregate | Water (w/c) |
+|---|---|---|---|---|
+| M10 | 4.44 | 16.3 cft | 32.6 cft | 133 L (0.6) |
+| M15 | 6.34 | 15.5 cft | 31.1 cft | 174 L (0.55) |
+| M20 | 8.06 | 14.8 cft | 29.7 cft | 202 L (0.5) |
+| M25 | 11.09 | 13.6 cft | 27.2 cft | 249 L (0.45) |
+
+## Batching on site with a measuring box
+
+One 50 kg bag of cement has a loose volume of about 50 ÷ 1,440 = 34.7 litres, so sites use a wooden box of about 35 litres (for example 300 × 300 × 390 mm) to measure sand and aggregate. For M20 that means 1 bag, 1.5 boxes of sand and 3 boxes of aggregate per batch. Measuring by headpans or shovels instead varies by 20% or more and is the main reason site concrete misses its grade.
+
+If the sand is damp it bulks by 20% to 30%, so a box of wet sand holds less actual sand; add roughly a quarter more or check the bulking with a measuring jar test.
+
+## Common mistakes
+
+- **Skipping the dry volume factor.** Ordering 1 m³ of materials for 1 m³ of concrete leaves you about a third short.
+- **Adding water for workability.** Each extra 5 litres per bag lowers strength noticeably; use a plasticiser instead.
+- **Ignoring bulking of sand.** Wet sand measured by volume gives a lean, harsh mix.
+- **Using nominal mixes above M25.** IS 456 expects design mixes for higher grades, proportioned from trial batches.
+- **Ordering exact quantities.** Allow 3% to 5% wastage and keep a spare bag for the last batch.

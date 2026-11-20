@@ -2,10 +2,10 @@
 title: Protein Intake Calculator
 description: "Work out how many grams of protein you need per day based on body weight and activity or goal. Free online protein intake calculator with formula and examples."
 category: health
-intro: "Daily protein needs depend on body weight and activity level. Athletes and older adults generally need more. This free protein intake calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Daily protein needs scale with body weight and rise with training, ageing and dieting. This protein intake calculator multiplies your weight by a grams-per-kilogram factor for your activity or goal and splits the total across four meals.\n\nGym goers, endurance athletes, older adults and people planning vegetarian meals use it to set a realistic daily target and check whether their usual meals reach it."
 keywords: [protein intake, how much protein, protein per day, grams of protein, protein calculator, muscle gain]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: m, label: Body weight, family: mass, unit: kg, imperialUnit: lb, default: 70, min: 0 }
   - id: f
@@ -34,6 +34,10 @@ faq:
     a: It prevents deficiency for most healthy adults, but active people, older adults and those losing weight often benefit from more.
   - q: Do I need protein powder?
     a: No. It is a convenient option, but food can provide all the protein you need.
+  - q: "How much protein is in a typical vegetarian Indian diet?"
+    a: "A day of dal, rice, roti, vegetables and some milk or curd often provides about 45 g to 55 g. That meets 0.8 g/kg for a 60 kg adult, but active people usually need extra paneer, soy, curd, legumes or eggs."
+  - q: "Should I use my current weight or goal weight?"
+    a: "Use current weight if you are near a healthy weight. If you carry a lot of body fat, a target based on goal or lean body weight gives a more realistic number."
 related: [other/dog-food-calories, health/macros, health/bmr, health/lean-body-mass]
 ---
 
@@ -96,3 +100,40 @@ Vegetarians and vegans can meet their needs by mixing sources through the day: l
 - Lunch: 150 g chicken or 200 g paneer with rice — about 40 g
 - Snack: Greek yoghurt and a handful of nuts — about 20 g
 - Dinner: 150 g fish or 1.5 cups of cooked lentils with vegetables — about 30 g
+
+## Reading the default result
+
+The defaults are a 70 kg adult (154 lb) who lifts weights, so the factor is 1.6 g/kg: 70 × 1.6 = **112 g a day**, or **28 g** in each of four meals. On a 2,000 kcal diet those 112 g supply 448 kcal, about 22% of energy, well inside the 10% to 35% range the US Dietary Reference Intakes give for adults.
+
+## Food needed to reach the default target
+
+How much of a single food would supply the whole 112 g shows why most people mix sources:
+
+| Food (per 100 g) | Protein | Protein per 100 kcal | Amount for 112 g |
+|---|---|---|---|
+| Chicken breast, cooked | 31 g | 18.8 g | 361 g |
+| Paneer | 18 g | 6.8 g | 622 g |
+| Firm tofu | 14 g | 9.7 g | 800 g |
+| Eggs (2 large, 100 g) | 13 g | 8.4 g | 862 g |
+| Cooked lentils | 9 g | 7.8 g | 1,244 g |
+| Greek yogurt, plain | 10 g | 16.9 g | 1,120 g |
+| Milk, toned | 3.3 g | 5.7 g | 3,394 g |
+| Peanuts | 26 g | 4.6 g | 431 g |
+
+Lean animal foods and tofu give the most protein per calorie; nuts and paneer bring a lot of fat with it, which matters on a calorie-limited diet.
+
+## Spreading protein over the day
+
+Research on muscle protein synthesis suggests roughly 0.4 g/kg per meal, about 28 g for a 70 kg person, eaten three to four times a day. A typical Indian vegetarian day of tea with milk, two rotis with dal, rice with sambar and a small curd bowl often lands near 45 g to 55 g, so adding paneer, soy chunks, extra curd or a second dal is the usual way to close the gap.
+
+## Choosing the right factor
+
+Use your current weight unless you carry a lot of body fat; in that case many dietitians base the target on a goal or lean body weight, otherwise the number comes out very high. An 85 kg person cutting fat at 2.0 g/kg would get 170 g, which is hard to eat and rarely necessary. The lean body mass calculator helps estimate that alternative base weight.
+
+## Common mistakes
+
+- **Counting the weight of the food as protein.** 100 g of chicken holds about 31 g of protein, not 100 g.
+- **Using raw and cooked values interchangeably.** Cooking drives off water, so 100 g of cooked lentils has far less protein than 100 g dry.
+- **Eating most of it at dinner.** A 10 g breakfast and a 70 g dinner reaches the total but spreads it poorly.
+- **Picking the highest factor by default.** 1.6 g/kg covers most people who train; more mainly helps during a calorie deficit.
+- **Ignoring medical advice.** People with kidney disease, and pregnant or breastfeeding women, should set their target with a doctor or dietitian.

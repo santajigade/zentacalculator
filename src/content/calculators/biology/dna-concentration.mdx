@@ -2,10 +2,10 @@
 title: DNA / RNA Concentration Calculator (A260)
 description: Calculate nucleic acid concentration from A260 absorbance for dsDNA, ssDNA and RNA, including dilution and purity ratio.
 category: biology
-intro: "DNA and RNA absorb ultraviolet light at 260 nm, so a spectrophotometer reading gives their concentration directly. The A260/A280 ratio also tells you how pure the sample is. This free DNA / RNA concentration calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "DNA and RNA absorb ultraviolet light at 260 nm, so a spectrophotometer reading gives their concentration directly, and the A260/A280 ratio shows how pure the sample is. This DNA / RNA concentration calculator applies the right factor for dsDNA, ssDNA or RNA.\n\nMolecular biologists use it after every extraction or clean-up to work out how much sample to add to a PCR, a ligation, cDNA synthesis or a sequencing library."
 keywords: [dna concentration, a260, rna concentration, nanodrop, 260/280 ratio, nucleic acid quantification]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-20
 featured: true
 variables:
   - id: f
@@ -38,6 +38,10 @@ faq:
     a: "Absorbance measures all nucleic acid and some contaminants, while dye-based Qubit assays measure only the target type, so Qubit is often lower."
   - q: "Why is my 260/280 ratio above 2.0 for DNA?"
     a: "Usually RNA contamination, since RNA has a ratio near 2.0 to 2.1. Treat the sample with RNase or check it on a gel."
+  - q: "How do I correct a reading taken with a 1 mm path length?"
+    a: "Multiply the absorbance by 10 to get the 1 cm equivalent before applying the factor. A dsDNA reading of 0.3 at 1 mm is 3 at 1 cm, or 150 ng/µL. Most micro-volume instruments do this for you."
+  - q: "How much sample volume do I need for a set mass of DNA?"
+    a: "Divide the mass by the concentration. For 500 ng from a 225 ng/µL stock you need 500 ÷ 225 = 2.22 µL."
 related: [biology/dna-copy-number, biology/protein-concentration-a280, chemistry/beer-lambert]
 ---
 
@@ -132,3 +136,31 @@ Total yield = concentration × volume. 120 ng/µL in 50 µL is **6 µg** of DNA.
 - **Using the dsDNA factor for RNA or oligos.** Use 50 for dsDNA, 40 for RNA and 33 for ssDNA, or the exact extinction coefficient for short oligos.
 - **Forgetting the dilution factor** when the sample was diluted for the reading.
 - **Not mixing before sampling.** Genomic DNA is viscous and settles. Mix gently and take the reading twice.
+
+## From concentration to pipetting volume
+
+At the default result of **225 ng/µL**, a 50 µL elution holds 225 × 50 ÷ 1,000 = **11.25 µg**. The volume to pipette for a set mass is mass ÷ concentration:
+
+| DNA needed | Volume of 225 ng/µL stock |
+|---|---|
+| 50 ng | 0.22 µL |
+| 100 ng | 0.44 µL |
+| 250 ng | 1.11 µL |
+| 500 ng | 2.22 µL |
+| 1,000 ng | 4.44 µL |
+| 2,000 ng | 8.89 µL |
+
+Volumes below about 1 µL are hard to pipette accurately, so dilute the stock first when you need small amounts.
+
+## Second example: RNA for cDNA synthesis
+
+An RNA prep measured undiluted on a micro-volume instrument reads A260 = 0.62 and A280 = 0.3:
+
+- Concentration = 0.62 × 40 × 1 = **24.8 ng/µL** (choose the RNA factor)
+- A260/A280 = 0.62 ÷ 0.3 = **2.07**, normal for clean RNA
+
+A reverse transcription that takes 1 µg of RNA would need 1,000 ÷ 24.8 = 40.3 µL, more than most 20 µL reactions allow. The choice is to use less RNA, which is fine for many kits, or to concentrate the sample by precipitation or a column with a small elution volume.
+
+## Readings from a short path length
+
+The factors on this page assume a 1 cm path. A reading of 0.3 taken through a 1 mm path, if the instrument does not normalise it, corresponds to 0.3 × 10 = 3 at 1 cm, which is 150 ng/µL of dsDNA. Enter the 1 cm equivalent as the A260, or put 10 in the dilution box.

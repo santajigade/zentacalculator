@@ -2,10 +2,10 @@
 title: Coffee Ratio Calculator (Coffee to Water)
 description: Find the right amount of coffee and water for any brew ratio — pour-over, French press, drip or cold brew.
 category: food
-intro: "The ratio of coffee to water decides how strong your brew tastes. Most methods use between 1:15 and 1:17 by weight. This free coffee ratio calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "The brew ratio is the weight of ground coffee compared with the weight of water, and it largely sets how strong the cup tastes. This coffee ratio calculator gives the grams of coffee for any amount of water, or the water for the coffee you have, at ratios from 1:2 to 1:17.\n\nHome brewers use it to repeat a cup they liked, and cafes use it to scale a recipe from one mug to a full batch brewer."
 keywords: [coffee ratio, coffee to water ratio, how much coffee, 1:16 ratio, french press ratio, pour over]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - id: r
     label: Brew method / ratio
@@ -30,6 +30,8 @@ faq:
     a: "Yes — scoops vary with grind size and roast."
   - q: "How much coffee for 1 litre?"
     a: "About 60–65 g at a 1:16 ratio."
+  - q: "Why does my coffee yield less than the water I poured?"
+    a: "Ground coffee soaks up about twice its weight in water. With 31.25 g of coffee and 500 mL of water, about 62 mL stays in the bed, so you get roughly 438 mL in the cup."
 related: [food/meat-per-person, food/cooking-converter]
 ---
 
@@ -81,3 +83,36 @@ Most brewing guides recommend 90–96 °C, just off the boil. Too hot extracts b
 ## Scoops
 
 A standard coffee scoop holds about 2 tablespoons, roughly 10 g of ground coffee. Weighing is more consistent.
+
+## Worked example with the defaults
+
+At the default pour-over ratio of 1:16, 500 mL of water needs 500 ÷ 16 = **31.25 g** of coffee, which most people round to 31 g. The grounds hold back about 2 g of water per gram, so the cup ends up at roughly 500 − 2 × 31.25 = **438 mL** of coffee. If a refractometer reads 1.35% total dissolved solids, the extraction yield is 0.0135 × 438 ÷ 31.25 = **18.9%**, inside the 18% to 22% range the Specialty Coffee Association treats as balanced.
+
+## Dose for common batch sizes
+
+| Method | Ratio | 250 mL | 500 mL | 1 L |
+|---|---|---|---|---|
+| Espresso style concentrate | 1 : 2 | 125.0 g | 250.0 g | 500.0 g |
+| Cold brew concentrate | 1 : 8 | 31.2 g | 62.5 g | 125.0 g |
+| AeroPress | 1 : 12 | 20.8 g | 41.7 g | 83.3 g |
+| French press | 1 : 15 | 16.7 g | 33.3 g | 66.7 g |
+| Pour-over | 1 : 16 | 15.6 g | 31.2 g | 62.5 g |
+| Drip machine | 1 : 17 | 14.7 g | 29.4 g | 58.8 g |
+
+For espresso the 1:2 ratio describes coffee in to drink out, for example 18 g of coffee giving 36 g of espresso, not 1:2 with water poured in.
+
+## Cold brew and dilution
+
+Cold brew is made strong and diluted later. 1,000 mL of water at 1:8 takes 125 g of coarse coffee; after steeping 12 to 18 hours the grounds keep about 2.5 g of water per gram, leaving roughly 688 mL of concentrate. Mixing it 1:1 with water or milk brings the cup back to about a 1:16 strength.
+
+## Getting the ratio right in practice
+
+Weigh both coffee and water on a kitchen scale reading to 0.1 g and tare between steps. Grind just before brewing, because ground coffee loses aroma within minutes. Change one thing at a time: keep the ratio fixed while you adjust grind, and only then move the ratio a step, say from 1:16 to 1:15, if the cup is still thin.
+
+## Common mistakes
+
+- **Scooping instead of weighing.** A level tablespoon of a light, coarse grind can weigh 30% less than one of a dark, fine grind.
+- **Counting the water that boils off or stays in the kettle.** Weigh the water that actually goes onto the coffee.
+- **Fixing sourness with more coffee.** Sour usually means under-extraction; grind finer or brew longer before changing the ratio.
+- **Reading the ratio by cup volume.** Machines rate a cup at 125 to 150 mL, so a 10 cup carafe is not 10 mugs.
+- **Applying a pour-over ratio to cold brew concentrate.** Brewing at 1:16 cold gives a weak, flat result.

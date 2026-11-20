@@ -2,10 +2,10 @@
 title: Acres to Hectares Converter
 description: Convert acres to hectares and hectares to acres — plus square metres and square feet.
 category: conversion
-intro: "Acres are used for land in the US, UK and India, while hectares are the metric standard used in most of the world. One hectare is about 2.47 acres. This free acres to hectares converter converts instantly in both directions and includes a quick reference table."
+intro: "Acres measure land in the US, UK and India, while the hectare is the metric land unit used in most of the world. One hectare is about 2.47 acres. This acres to hectares calculator converts in both directions and also shows square metres and square feet.\n\nFarmers, land buyers, surveyors and agronomists use it to compare land records, sale listings, crop yields per hectare and subsidy limits that are quoted in different units."
 keywords: [acres to hectares, hectares to acres, acre to ha, land measurement, farm size]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: u0, label: Acres, family: area, unit: acre, default: 1, min: 0 }
   - { id: u1, label: Hectares, family: area, unit: ha, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: "10 acres is 4.047 hectares."
   - q: "How many square feet are in an acre?"
     a: "43,560 square feet."
+  - q: "Is the rule of 2.5 acres per hectare accurate enough?"
+    a: "For a quick estimate, yes, but it overstates by about 1.2%. On 100 ha that is 2.9 acres too many, so use 2.47105 for anything you buy, sell or report."
+  - q: "What is an are and how does it relate to a hectare?"
+    a: "An are is 100 m², a square 10 m on each side. One hectare is 100 ares, and one acre is about 40.47 ares. Land records in several countries and Indian states list area in hectares and ares."
 related: [conversion/mm-to-inches, conversion/area-converter, conversion/sq-ft-to-sq-m]
 ---
 
@@ -116,3 +120,39 @@ An acre is 43,560 ft² or about 4,047 m² — about 57% of a full-size (105 × 6
 ## Where each is used
 
 Hectares are the international standard for agriculture and forestry. Acres remain common in the USA, the UK, Canada, Australia and India.
+
+## Worked example with the default value
+
+The default is **1 acre**. Because one acre is exactly 4,046.8564224 m²:
+
+- Hectares = 4,046.8564 ÷ 10,000 = **0.404686 ha**
+- Square metres = **4,046.86 m²**
+- Square feet = 4,046.8564 ÷ 0.09290304 = **43,560 ft²**
+
+A **12.5 acre** farm is 12.5 × 0.4046856 = **5.0586 ha**, which a land record written in hectares and ares (1 are = 100 m²) shows as about 506 ares. Going the other way, a rectangular field of 120 m by 85 m covers 10,200 m², which is **1.02 ha** or **2.5205 acres**.
+
+## Side of a square plot for a given area
+
+| Area | Hectares | Side of square (m) | Side of square (ft) |
+|---|---|---|---|
+| 0.25 acre | 0.1012 ha | 31.8 m | 104 ft |
+| 0.5 acre | 0.2023 ha | 45.0 m | 148 ft |
+| 1 acre | 0.4047 ha | 63.6 m | 209 ft |
+| 2 acre | 0.8094 ha | 90.0 m | 295 ft |
+| 5 acre | 2.0234 ha | 142.2 m | 467 ft |
+| 10 acre | 4.0469 ha | 201.2 m | 660 ft |
+| 25 acre | 10.1171 ha | 318.1 m | 1044 ft |
+
+This helps you picture a listing: a 1 acre square plot is about 64 m on each side, and a 10 acre square is roughly 200 m across.
+
+## How land area is measured in practice
+
+Land is rarely a neat rectangle, so surveyors split a plot into triangles or use the coordinate (shoelace) method on corner points taken with a total station or a survey grade GNSS receiver. The area is computed in square metres on the projected map grid and then expressed in hectares, acres or local units. Handheld phone GPS apps are fine for a rough check but can be off by several percent on a small plot, since each corner can be a few metres out. In many Indian states the official record, such as the Maharashtra 7/12 extract, states area in hectares and ares, so converting a seller's acre figure is the first step in checking it.
+
+## Common mistakes
+
+- **Using 2.5 acres per hectare.** The shortcut is 1.2% high: 100 ha is 247.1 acres, not 250.
+- **Confusing ares with acres.** An are is 100 m², about one fortieth of an acre, so "20 are" is 0.2 ha, not 20 acres.
+- **Comparing gross and net area.** A layout's gross acreage includes roads and open space; the plots for sale may cover only 60% to 70% of it.
+- **Converting a side length with the area factor.** To convert plot dimensions, convert each side in metres or feet first, then multiply.
+- **Worrying about the US survey acre.** Older US deeds use the survey acre, 4,046.873 m², only 4 parts per million larger, which matters for nothing but very large tracts.

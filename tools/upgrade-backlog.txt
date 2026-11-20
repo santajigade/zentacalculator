@@ -1,10 +1,5 @@
 # Pages to expand (Part C of the daily task). Take from the top; delete a line once the page is done.
 # Order: priority category, then thinnest body first.
-engineering/weibull-reliability
-engineering/plc-analog-scaling
-engineering/loop-resistance
-engineering/rtd-lead-wire-error
-engineering/thermal-expansion
 engineering/acceleration-factor
 engineering/beam-deflection
 engineering/minor-losses
@@ -15,12 +10,10 @@ engineering/pitot-tube-velocity
 engineering/heat-duty
 engineering/darcy-weisbach-head-loss
 engineering/orifice-flow
-engineering/pump-power
 engineering/pt100-resistance
 engineering/flow-meter-k-factor
 engineering/pipe-flow-velocity
 engineering/dew-point
-engineering/control-valve-kv-cv
 engineering/npsh-available
 engineering/pressure-vessel-thickness
 engineering/air-receiver-size
@@ -46,7 +39,6 @@ electrical/transformer-short-circuit
 electrical/per-unit
 electrical/earth-fault-loop-impedance
 electrical/generator-power-angle
-electrical/transformer-turns-ratio
 electrical/motor-starting-current
 electrical/amps-to-watts
 electrical/motor-starting-voltage-dip
@@ -77,7 +69,6 @@ electronics/air-core-inductor
 electronics/differential-amplifier
 electronics/adc-resolution
 electronics/antenna-length
-electronics/boost-converter
 electronics/mosfet-power-loss
 electronics/sallen-key-low-pass
 electronics/buck-converter
@@ -146,7 +137,6 @@ physics/snells-law
 physics/impulse
 physics/gravitational-force
 physics/angular-velocity
-physics/buoyancy
 physics/friction-force
 chemistry/theoretical-yield
 chemistry/percent-composition
@@ -214,9 +204,6 @@ statistics/relative-risk
 statistics/two-sample-t-test
 statistics/control-chart
 statistics/one-sample-t-test
-statistics/combinations
-statistics/sample-size
-statistics/standard-deviation
 math/arithmetic-sequence
 math/system-of-equations
 math/distance-midpoint
@@ -243,7 +230,6 @@ math/sphere
 math/circle
 math/arc-length
 math/trapezoid-area
-math/slope
 math/ratio
 math/fraction-calculator
 math/percentage-change
@@ -260,7 +246,6 @@ math/average
 math/cubic-equation
 math/sss-triangle
 math/matrix-determinant
-biology/protein-concentration-a280
 biology/logistic-growth
 biology/magnification
 biology/pcr-amplification
@@ -275,8 +260,6 @@ biology/bacterial-growth
 biology/serial-dilution
 biology/centrifuge-rcf
 biology/primer-tm
-biology/cell-doubling-time
-biology/dna-concentration
 construction/mortar-mix
 construction/drywall
 construction/square-footage
@@ -288,9 +271,7 @@ construction/tile-calculator
 construction/concrete-column
 construction/excavation
 construction/flooring
-construction/concrete-mix
 construction/paint-calculator
-construction/wallpaper
 construction/fence
 construction/brick-calculator
 construction/concrete-slab
@@ -313,7 +294,6 @@ ecology/wind-turbine-power
 ecology/ev-vs-petrol
 ecology/ev-charging-time
 ecology/flight-emissions
-ecology/car-carbon-footprint
 finance/kvp
 finance/real-return
 finance/nsc
@@ -334,14 +314,11 @@ finance/swp
 finance/profit-margin
 finance/simple-interest
 finance/step-up-sip
-finance/hourly-to-salary
 finance/discount
 finance/gratuity
 finance/fd
 finance/gst
-finance/sales-tax-vat
 finance/present-value
-finance/retirement-corpus
 finance/dividend-yield
 finance/roi
 finance/mortgage
@@ -349,7 +326,6 @@ finance/ppf
 finance/savings-goal
 finance/inflation
 finance/credit-card-payoff
-finance/cagr
 finance/income-tax-india
 finance/break-even
 health/ldl-cholesterol
@@ -373,7 +349,6 @@ health/waist-to-height
 health/vo2-max
 health/alcohol-units
 health/ideal-weight
-health/protein-intake
 health/weight-loss-time
 health/bmr
 conversion/feet-to-inches
@@ -391,7 +366,6 @@ conversion/gaj-to-sq-ft
 conversion/sq-m-to-sq-ft
 conversion/feet-to-meters
 conversion/psi-to-bar
-conversion/volume-converter
 conversion/temperature-converter
 conversion/fahrenheit-to-celsius
 conversion/mm-to-inches
@@ -400,10 +374,8 @@ conversion/liters-to-gallons
 conversion/cm-to-inches
 conversion/energy-converter
 conversion/area-converter
-conversion/acres-to-hectares
 conversion/pressure-converter
 conversion/km-to-miles
-conversion/power-converter
 conversion/torque-converter
 conversion/lbs-to-kg
 conversion/length-converter
@@ -417,7 +389,6 @@ everyday-life/typing-speed
 everyday-life/fuel-economy
 everyday-life/habit-cost
 everyday-life/grade-needed
-everyday-life/cgpa-to-percentage
 everyday-life/days-until
 everyday-life/tv-size
 everyday-life/reading-time
@@ -432,14 +403,12 @@ everyday-life/rent-split
 everyday-life/inverter-battery-backup
 everyday-life/cost-per-use
 everyday-life/electricity-cost
-everyday-life/age-calculator
 food/butter-converter
 food/pizza-size
 food/calories-from-macros
 food/food-cost
 food/party-drinks
 food/liquid-weight
-food/coffee-ratio
 food/oven-temperature
 food/grams-to-cups
 food/bakers-percentage
@@ -482,7 +451,5 @@ other/battery-life
 other/print-size-dpi
 other/data-storage-converter
 other/dog-food-calories
-other/lpg-cylinder
 other/ovulation
 other/password-strength
-other/due-date

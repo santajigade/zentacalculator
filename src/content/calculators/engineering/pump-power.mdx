@@ -2,10 +2,10 @@
 title: Pump Power Calculator
 description: Calculate hydraulic power and shaft power of a pump from flow rate, head, fluid density and efficiency.
 category: engineering
-intro: "The power a pump needs depends on how much liquid it moves, how high it lifts it and how efficient it is. This sets the motor size and the energy cost — and the type of pump matters too, as compared in [centrifugal vs positive displacement pumps](https://www.instrumentationblog.in/centrifugal-vs-positive-displacement-pump/). This free pump power calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Pump power is the energy per second a pump adds to a liquid, set by flow, total head, density and efficiency. This pump power calculator gives the hydraulic power and the shaft power the motor must supply, or the flow and head a given motor can deliver.\n\nProcess, HVAC and water engineers use it to size motors and estimate running costs; the pump type also matters, as compared in [centrifugal vs positive displacement pumps](https://www.instrumentationblog.in/centrifugal-vs-positive-displacement-pump/)."
 keywords: [pump power, hydraulic power, shaft power, pump head, pump efficiency, kw, hp, pump sizing]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-20
 variables:
   - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
   - { id: H, label: Total head, family: length, unit: m, imperialUnit: ft, default: 30, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: "Hydraulic power = ρ × g × Q × H. Divide by pump efficiency for shaft power. 50 m³/h at 30 m of head with 70% efficiency needs about 5.8 kW."
   - q: "What is a typical centrifugal pump efficiency?"
     a: "About 50–75% for small pumps and 75–90% for large pumps at their best efficiency point."
+  - q: "How do I measure the actual head of a running pump?"
+    a: "Read the discharge and suction pressures, subtract, convert to metres of liquid with the density (1 bar is 10.22 m of water) and add the height difference between the gauges."
+  - q: "Does pump power change with liquid density?"
+    a: "Yes, at the same flow and head it rises in proportion. The default duty needs 5.83 kW for water and 7.00 kW for brine at 1,200 kg/m³."
 related: [engineering/heat-duty, engineering/darcy-weisbach-head-loss, electrical/three-phase-motor-power, engineering/pipe-flow-velocity]
 ---
 
@@ -93,3 +97,43 @@ To avoid cavitation, the net positive suction head available (NPSHa) must exceed
 ## Finding total head
 
 Total head = static lift + pressure difference (as head) + friction losses. Use the [Darcy–Weisbach calculator](/engineering/darcy-weisbach-head-loss/) for the pipe friction part. To convert pressure to head, 1 bar ≈ 10.2 m of water.
+
+## Default result in detail
+
+With the defaults (50 m³/h, 30 m, 998 kg/m³, 70%), the calculator works in SI units: Q = 50 ÷ 3,600 = 0.01389 m³/s, and with g = 9.80665 m/s²:
+
+- P<sub>h</sub> = 998 × 9.80665 × 0.01389 × 30 = **4.078 kW**
+- P<sub>shaft</sub> = 4.078 ÷ 0.70 = **5.826 kW** (7.81 hp)
+
+With a 90% efficient motor the electrical input is 6.47 kW. Running 6,000 hours a year at 8 per kWh, the pump uses 38,837 kWh and costs about **310,700** a year to run. If the same pump handles brine at 1,200 kg/m³ at the same flow and head, shaft power rises in proportion to density, to 7.00 kW, so check the motor for the densest fluid it will see.
+
+## Shaft power table for water
+
+Shaft power in kW for water (998 kg/m³) at 70% pump efficiency:
+
+| Flow | 10 m | 20 m | 30 m | 50 m | 80 m |
+|---|---|---|---|---|---|
+| 5 m³/h | 0.19 | 0.39 | 0.58 | 0.97 | 1.55 |
+| 10 m³/h | 0.39 | 0.78 | 1.17 | 1.94 | 3.11 |
+| 25 m³/h | 0.97 | 1.94 | 2.91 | 4.85 | 7.77 |
+| 50 m³/h | 1.94 | 3.88 | 5.83 | 9.71 | 15.53 |
+| 100 m³/h | 3.88 | 7.77 | 11.65 | 19.42 | 31.07 |
+| 200 m³/h | 7.77 | 15.53 | 23.30 | 38.84 | 62.14 |
+
+## Checking a pump in the field
+
+On site you rarely know the head directly; you measure it. Fit gauges on the suction and discharge flanges, read the flow from a flowmeter, and log the motor input with a power analyser. In a test with suction at −0.3 bar g, discharge at 2.6 bar g, the discharge gauge 0.5 m above the suction gauge and 45 m³/h of water:
+
+- Head = (2.6 − (−0.3)) × 10⁵ ÷ (998 × 9.80665) + 0.5 = **30.13 m**
+- Hydraulic power = 998 × 9.80665 × 0.0125 × 30.13 = **3.69 kW**
+- With 5.9 kW measured at the motor terminals, wire-to-water efficiency is **62.5%**
+
+Compare this with the curve value at the measured flow. A drop of more than 5 to 10 points usually means impeller wear, internal recirculation or a worn wear ring. One bar of pressure on water is 10.22 m of head, a useful figure when reading gauges.
+
+## Common mistakes
+
+- **Using pressure instead of head for a dense liquid.** Head in metres of liquid is what the pump curve shows; convert pressure with the actual density, not the water figure.
+- **Leaving flow in m³/h.** The formula needs m³/s; forgetting to divide by 3,600 makes the power 3,600 times too large.
+- **Sizing on the duty point only.** A centrifugal pump running further out on its curve at low system head draws more power than at duty; check the end-of-curve power.
+- **Taking motor nameplate kW as power drawn.** The nameplate is the shaft output rating; a lightly loaded motor draws much less, and efficiency falls at low load.
+- **Forgetting viscosity.** Oils above about 20 cSt reduce centrifugal pump head and efficiency; use the corrected efficiency, not the water curve.

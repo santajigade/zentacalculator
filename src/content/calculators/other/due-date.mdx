@@ -2,10 +2,10 @@
 title: Pregnancy Due Date Calculator
 description: Estimate your baby's due date and how many weeks pregnant you are from the first day of your last period.
 category: other
-intro: "A pregnancy due date is usually calculated as 280 days from the first day of the last menstrual period."
+intro: "A pregnancy due date is usually estimated as 280 days, or 40 weeks, from the first day of the last menstrual period. This pregnancy due date calculator applies that rule, adjusts it for longer or shorter cycles, and shows how many weeks pregnant you are today.\n\nExpectant parents use it to plan leave and appointments, and it gives a quick cross-check of the date a midwife or doctor sets, which is often refined later by an early ultrasound scan."
 keywords: [due date calculator, pregnancy calculator, how many weeks pregnant, estimated due date, naegele rule, lmp]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-20
 featured: true
 variables:
   - { id: lmp, label: First day of last menstrual period, family: date, default: -70 }
@@ -35,6 +35,10 @@ faq:
     a: "Yes. An early dating scan is more accurate than the period date, so your doctor may adjust the due date after it."
   - q: "How do I calculate a due date from the conception date?"
     a: "Add 266 days (38 weeks) to the conception date. Conception on 15 January gives a due date of about 8 October."
+  - q: "How many weeks pregnant am I if my last period started 70 days ago?"
+    a: "Exactly 10 weeks 0 days by gestational age, with a 28-day cycle. The due date is then 210 days away. Gestational age counts from the period, so the embryo itself is about 8 weeks old."
+  - q: "What date am I 37 weeks pregnant?"
+    a: "Take 21 days off the due date. With a due date of 11 Dec 2026, 37 weeks is reached on 20 Nov 2026. From then on a birth is counted as term."
 related: [other/ovulation, everyday-life/days-until]
 ---
 
@@ -110,8 +114,51 @@ If you know the conception date (for example from ovulation tracking), add **266
 
 Naegele's rule assumes a 28-day cycle. If your cycle is longer or shorter, ovulation shifts by the same number of days, so the due date does too. With a 32-day cycle, add 4 days. With a 25-day cycle, take away 3 days. The calculator does this when you enter your cycle length.
 
+## What the default values show
+
+The calculator opens with a last period that started 70 days before today and a 28-day cycle. Seventy days is exactly **10.0 weeks**, so the result reads 10.0 weeks pregnant, and the due date falls 280 − 70 = **210 days** from today. Change the date to your own and the three results update together.
+
+## Worked example with a longer cycle
+
+Suppose the last period began on **3 Mar 2026** and cycles are usually **31 days**. Ovulation is then expected about 3 days later than in a 28-day cycle, so:
+
+- Due date = 3 Mar 2026 + 280 + (31 − 28) days = **11 Dec 2026**
+- Likely conception, about 14 days before the next period: **20 Mar 2026**, which is 266 days before the due date
+- On 1 Jun 2026: (90 − 3) days ÷ 7 = **12.4 weeks**, or 12 weeks 3 days, with **193 days** to go
+- 37 weeks (early term) is reached on 20 Nov 2026, three weeks before the due date
+
+## How cycle length moves the date
+
+Same last period (3 Mar 2026), different cycle lengths:
+
+| Cycle length | Expected ovulation | Estimated due date | Shift from 28 days |
+|---|---|---|---|
+| 24 days | 13 Mar 2026 | 4 Dec 2026 | -4 days |
+| 26 days | 15 Mar 2026 | 6 Dec 2026 | -2 days |
+| 28 days | 17 Mar 2026 | 8 Dec 2026 | +0 days |
+| 30 days | 19 Mar 2026 | 10 Dec 2026 | +2 days |
+| 32 days | 21 Mar 2026 | 12 Dec 2026 | +4 days |
+| 35 days | 24 Mar 2026 | 15 Dec 2026 | +7 days |
+
+## Milestone dates for the worked example
+
+| Week | Date | What it marks |
+|---|---|---|
+| 12 | 29 May 2026 | End of week 12, typical dating scan window closes |
+| 20 | 24 Jul 2026 | Week 20, midpoint, around the anatomy scan |
+| 28 | 18 Sep 2026 | Week 28, start of the third trimester |
+| 37 | 20 Nov 2026 | Week 37, early term begins |
+| 40 | 11 Dec 2026 | Week 40, estimated due date |
+| 42 | 25 Dec 2026 | Week 42, late term ends |
+
+## How the date is confirmed in practice
+
+At the first scan, usually between about 8 and 14 weeks, the sonographer measures the crown to rump length of the embryo. In the first trimester this length tracks age closely, to within about 5 to 7 days, which is better than a period date that relies on memory and a regular cycle. Professional guidance such as that from ACOG suggests keeping the period-based date unless the scan differs by more than a set margin (about 5 to 7 days in the first trimester), so a small difference usually leaves the date unchanged. After that point the agreed date is not normally moved again, even if later scans measure the baby larger or smaller.
+
 ## Common mistakes
 
 - **Counting from the date of the positive test** or from the end of the period. Use the **first day** of the last period.
 - **Treating the due date as a deadline.** Only about 1 in 25 babies arrive on the day. Most are born within two weeks either side.
 - **Keeping the period-based date after a dating scan.** If an early ultrasound gives a different date, your doctor or midwife will usually use the scan date. Always follow their advice.
+- **Taking a light bleed in early pregnancy for a period.** Spotting around the time a period was due can make the last period look 4 weeks later than it was, so the scan then measures much larger than expected.
+- **Adding the cycle correction to an IVF pregnancy.** With IVF the transfer date fixes the embryo age, so the cycle length you enter here does not apply.

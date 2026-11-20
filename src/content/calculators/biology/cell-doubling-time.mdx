@@ -2,10 +2,10 @@
 title: Cell Doubling Time Calculator
 description: Calculate population doubling time and growth rate from starting and final cell counts over a time interval.
 category: biology
-intro: "Doubling time is how long a cell population takes to double in number. It is the standard way to compare how fast cultured cells, bacteria or tumours grow. This free cell doubling time calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Doubling time is how long a cell population takes to double in number during steady, exponential growth. This cell doubling time calculator works it out from a starting count, a final count and the time between them, and also gives the number of doublings.\n\nCell culture scientists use it to plan seeding and passaging, compare media or treatments, and spot slow or stressed lines early; microbiologists use the same maths for bacterial generation time."
 keywords: [doubling time, cell doubling time, population doubling, cell culture growth, generation time]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-20
 featured: true
 variables:
   - { id: N0, label: Initial cell count, default: 100000, min: 0 }
@@ -33,6 +33,10 @@ faq:
     a: "For cultures where every cell divides, yes. Generation time usually refers to bacteria, doubling time to mammalian cell lines."
   - q: "How many cells should I seed to have a set number later?"
     a: "Divide the target by 2 to the power of (time ÷ doubling time). For 2 × 10⁶ cells in 48 hours with a 24 hour doubling time, seed 2 × 10⁶ ÷ 4 = 5 × 10⁵ cells, plus extra for the lag phase."
+  - q: "How do I convert doubling time to specific growth rate?"
+    a: "Divide ln 2 (0.693) by the doubling time. A 24 hour doubling time is 0.0289 per hour, or 0.693 per day."
+  - q: "How many population doublings is a 1:3 split?"
+    a: "log₂(3) = 1.58 doublings each time the cells regrow to the density they were split from. A 1:2 split is 1 doubling and a 1:8 split is 3."
 related: [biology/bacterial-growth, biology/specific-growth-rate, biology/hemocytometer]
 ---
 
@@ -115,9 +119,37 @@ Work backwards from the number you need:
 
 To have 2 × 10⁶ cells in 48 hours with a 24 hour doubling time, seed 2 × 10⁶ ÷ 2² = **5 × 10⁵ cells**. Most lines show a lag of 12 to 24 hours after passaging, so add that to the time or seed a little more.
 
+## Growth rate from doubling time
+
+Doubling time and the specific growth rate μ are two views of the same exponential curve: μ = ln 2 ÷ T<sub>d</sub>. The default result of 24 h is a growth rate of **0.0289 per hour** (0.693 per day). The table also shows how many times one cell would multiply in a week of unchecked growth, which explains why cultures must be split long before that.
+
+| Doubling time | μ (per hour) | μ (per day) | Fold increase in 7 days |
+|---|---|---|---|
+| 20 min | 2.1004 | 50.4 | very large |
+| 1 h | 0.6931 | 16.6 | very large |
+| 6 h | 0.1155 | 2.77 | 2.68e+08 |
+| 12 h | 0.0578 | 1.39 | 1.64e+04 |
+| 18 h | 0.0385 | 0.92 | 645 |
+| 24 h | 0.0289 | 0.69 | 128 |
+| 36 h | 0.0193 | 0.46 | 25.4 |
+| 48 h | 0.0144 | 0.35 | 11.3 |
+
+## Worked example: fitting more than two counts
+
+A culture is counted every 24 hours: 100,000, 185,000, 410,000, 760,000 cells at 0, 24, 48 and 72 h. Using only the first and last counts gives 72 ÷ log₂(7.6) = **24.6 h**. A least-squares line through ln(count) against time has a slope of 0.02867 per hour, so T<sub>d</sub> = 0.6931 ÷ 0.02867 = **24.2 h**. The fit uses all four counts, so one noisy count moves it less. Plot ln(count) against time first: a straight line confirms exponential growth, while a curve flattening at the end shows the culture is reaching confluence.
+
+## Tracking population doublings across passages
+
+When cells are split at a fixed ratio and allowed to regrow to the same density, each passage adds log₂(split ratio) doublings. A 1:4 split adds 2 doublings and a 1:3 split adds 1.58. Five passages at 1:4 therefore add **10 population doublings** to the culture's PDL. Recording this alongside passage number matters for primary cells, which slow down and stop as they approach their limit.
+
+## How the counts are made
+
+Viable cells are usually counted after trypsinising a sample flask, either with a hemocytometer and trypan blue or with an automated counter that images stained cells. Count replicate flasks rather than one, mix the suspension well before loading, and keep the counting method the same at every time point. For bacteria, optical density at 600 nm or colony counts on plates take the place of direct counts.
+
 ## Common mistakes
 
 - **Counting during the lag phase.** Counts in the first day after seeding make the doubling time look too long. Start timing once growth is steady.
 - **Including dead cells.** Count only viable cells, for example with trypan blue, or the growth rate will be wrong.
 - **Letting cultures reach confluence.** Growth slows as cells fill the surface, so the last count gives a falsely long doubling time.
 - **Using only two time points.** Count at three or more times and fit a line to ln(count) against time for a more reliable result.
+- **Mixing up doubling time and growth rate.** A higher growth rate means a shorter doubling time; convert with μ = 0.693 ÷ T<sub>d</sub> before comparing values from different papers.

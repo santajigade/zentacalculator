@@ -2,10 +2,10 @@
 title: CT Burden Calculator (VA)
 description: Calculate current transformer (CT) burden in VA from secondary current, lead length, cable size and relay or meter burden — and check it against the CT rating.
 category: electrical
-intro: "A current transformer (CT) can only hold its accuracy while the load on its secondary — the burden — stays within its VA rating. Long leads and thin cable add more burden than people expect, especially with 5 A secondaries. This CT burden calculator adds up leads and devices; see [CT burden calculation](https://www.instrumentationblog.in/ct-burden-calculation-va/) and the [current transformer working principle](https://www.instrumentationblog.in/current-transformer-working-principle/)."
+intro: "A current transformer (CT) only holds its accuracy while the load on its secondary, the burden, stays within its VA rating, and long leads with thin cable add more burden than people expect on 5 A secondaries. This CT burden calculator adds up leads and devices; see the [CT burden calculation](https://www.instrumentationblog.in/ct-burden-calculation-va/).\n\nProtection and metering engineers use it to choose the CT rating, cable size and 1 A or 5 A secondary before ordering switchgear or extending a panel."
 keywords: [ct burden calculator, current transformer burden calculation, ct va calculation, ct lead burden, 1a vs 5a ct, ct sizing]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-21
 variables:
   - id: Is
     label: CT secondary rating
@@ -32,6 +32,10 @@ faq:
     a: Accuracy degrades and protection CTs may saturate during faults, causing relays to under-reach or operate slowly.
   - q: Is it dangerous to open a CT secondary?
     a: Yes. An open-circuited CT secondary can develop thousands of volts. Always short the secondary before disconnecting a meter or relay.
+  - q: "How does extra burden affect a protection CT?"
+    a: "It lowers the effective accuracy limit factor: ALF × (Rct + Rrated) ÷ (Rct + Ractual). A 5P20 15 VA CT with 0.3 Ω winding resistance on the default 19.2 VA circuit drops to about 16.9."
+  - q: "How do I measure CT burden on site?"
+    a: "Short the CT at its test block, inject rated current into the secondary wiring and read the voltage. VA = V × I, so about 3.84 V at 5 A means 19.2 VA."
 related: [electrical/transformer-current, electrical/transformer-short-circuit, physics/ohms-law, electrical/wire-resistance]
 ---
 
@@ -72,3 +76,38 @@ with copper resistivity ρ = 1.72 × 10⁻⁸ Ω·m at 20 °C.
 ## Safety
 
 Never open-circuit a live CT secondary — short it first with the test block or shorting link.
+
+## Worked example with the default values
+
+A 5 A CT feeds a relay and meter with a combined burden of 2 VA through 50 m of 2.5 mm² copper:
+
+- Lead loop resistance = 2 × 50 × 1.72 × 10⁻⁸ ÷ 2.5 × 10⁻⁶ = **0.688 Ω**
+- Lead burden = 5² × 0.688 = **17.2 VA**
+- Total burden = 17.2 + 2 = **19.2 VA**
+
+The leads use almost 90% of the total. A 15 VA CT is overloaded, and the options are clear when you rerun the numbers:
+
+| Change | Loop resistance | Total burden |
+|---|---|---|
+| As designed, 5 A, 2.5 mm² | 0.688 Ω | 19.2 VA |
+| 5 A, 4 mm² cable | 0.430 Ω | 12.75 VA |
+| 5 A, 6 mm² cable | 0.287 Ω | 9.17 VA |
+| 1 A secondary, 2.5 mm² | 0.688 Ω | 2.69 VA |
+
+Switching to a 1 A CT cuts the total to **2.69 VA** without touching the cable, which is why remote panels and long switchyard runs nearly always use 1 A secondaries. Check that the relay input is also set or rated for 1 A.
+
+## Effect on a protection CT
+
+For a 5P20 CT the accuracy limit factor holds only at rated burden. With a secondary winding resistance of 0.3 Ω, a 15 VA rating means 0.60 Ω of external burden, while the default circuit is 0.768 Ω. The effective factor falls to 20 × (0.3 + 0.60) ÷ (0.3 + 0.768) ≈ **16.9**, so the CT saturates at about 17 times rated current instead of 20. For a feeder with high fault levels that can delay an overcurrent relay or make a differential scheme unstable.
+
+## Measuring the burden on site
+
+Short and isolate the CT at its test block, then inject rated secondary current into the burden side with a secondary injection set and read the voltage across it. Burden in VA is V × I: for the default circuit you should read about 3.84 V at 5 A. Alternatively measure the loop resistance with a low resistance ohmmeter and add the device burdens from their datasheets. Leads warm up in a hot panel or cable tray; at 75 °C copper is about 21% higher, which takes the default total to 22.9 VA.
+
+## Common mistakes
+
+- **Using the one way length.** Current goes out on one core and back on another, so the loop is twice the route length.
+- **Forgetting the earth fault case with star connected CTs.** Under balanced load the common return carries almost nothing, but for a phase to earth fault the full current flows out and back, so size for 2 × L.
+- **Adding device VA quoted at 1 A to a 5 A circuit.** A relay burden of 0.1 VA at 1 A is a resistance of 0.1 Ω, which is 2.5 VA at 5 A; convert to ohms first.
+- **Leaving out test blocks, terminals and links.** Each joint adds a few milliohms; on 5 A circuits a dozen joints add noticeable VA.
+- **Choosing a CT rated far above the burden for metering.** Metering accuracy is specified from 25% to 100% of rated burden, so a 30 VA CT on a 2 VA meter circuit can read outside its class.

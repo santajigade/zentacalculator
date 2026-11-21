@@ -2,10 +2,10 @@
 title: Flow Meter K-Factor Calculator
 description: Convert pulse frequency to flow rate (and back) for turbine, positive displacement and other pulse-output flow meters.
 category: engineering
-intro: "Pulse-output flow meters such as turbines, vortex meters and gear meters send a fixed number of pulses per unit volume — the K-factor. It converts pulse frequency into flow rate and pulse count into totals, as explained in these [flow meter K-factor calculations](https://www.instrumentationblog.in/flow-meter-k-factor-calculations/)."
+intro: "Pulse output flow meters such as turbine, vortex, paddle wheel and gear meters send a fixed number of pulses for each litre that passes. This flow meter K-factor calculator converts that K-factor and the flow rate into pulse frequency, or a measured frequency back into flow.\n\nInstrument and PLC engineers use it to set up counters and scaling, check a meter against a test volume, and confirm an input card can follow the maximum frequency, as covered in these [flow meter K-factor calculations](https://www.instrumentationblog.in/flow-meter-k-factor-calculations/)."
 keywords: [k factor, pulse output, flow meter, turbine meter, pulses per litre, frequency to flow, hz to flow]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: K, label: K-factor, suffix: pulses/L, default: 450, min: 0 }
   - { id: Q, label: Flow rate, family: flow, unit: Lmin, imperialUnit: gpm, default: 6, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: "Count the pulses while passing a known volume, then divide pulses by volume. Repeat at several flows for accuracy."
   - q: "How do I convert pulses to total volume?"
     a: "Total volume = total pulses ÷ K-factor."
+  - q: "Why does my PLC count fewer pulses than the flow meter sends?"
+    a: "Usually because the pulses are read by a normal input in the PLC scan or blocked by the input filter. At 150 Hz each pulse lasts 6.7 ms, shorter than a typical scan, so use a high speed counter input with the filter set below the pulse width."
+  - q: "What is a meter factor and how is it different from the K-factor?"
+    a: "The K-factor is pulses per unit volume. A meter factor is a small correction, actual volume divided by indicated volume, found by proving the meter. In the test above the meter factor is 0.9951."
 related: [engineering/pipe-flow-velocity, engineering/4-20ma-scaling]
 ---
 
@@ -86,3 +90,37 @@ Make sure the maximum pulse frequency is within the counter input's limit, and t
 - Use the K-factor from the **calibration certificate**, not the nominal catalogue value.
 - K-factors drift slightly with viscosity and at very low flow. Many meters list a linear range where the K-factor holds within ±0.5%.
 - For long cable runs, use shielded cable and check the pulse output type (NPN, PNP, Namur or reed).
+
+## Second example: checking K with a test volume
+
+The default case gives **45 Hz** at 6 L/min with K = 450 pulses/L. On site you rarely trust the nameplate alone. Run the meter into a calibrated 50 L vessel and count the pulses: say the counter shows **22,610** pulses.
+
+- Measured K = 22,610 ÷ 50 = **452.2 pulses/L**
+- With the nominal 450 pulses/L the PLC would have shown 50.24 L, which is 0.49% high
+- Entering 452.2 in the scaling (or a meter factor of 0.9951) removes that error
+
+For a 200 L batch the counter preset is 200 × 452.2 = **90,440 pulses**, not the 90,000 pulses the nominal K gives.
+
+## Frequency at different K-factors and flows
+
+| K-factor | 1 L/min | 10 L/min | 100 L/min | 1,000 L/min |
+|---|---|---|---|---|
+| 1 pulse/L | 0.02 Hz | 0.17 Hz | 1.67 Hz | 16.67 Hz |
+| 5 pulses/L | 0.08 Hz | 0.83 Hz | 8.33 Hz | 83.33 Hz |
+| 50 pulses/L | 0.83 Hz | 8.33 Hz | 83.33 Hz | 833 Hz |
+| 450 pulses/L | 7.50 Hz | 75.00 Hz | 750 Hz | 7,500 Hz |
+| 1000 pulses/L | 16.67 Hz | 167 Hz | 1,667 Hz | 16,667 Hz |
+
+A meter rated in US gallons works the same way: K = 1,700 pulses/gal at 25 gpm gives 708.3 Hz, and the same K is 449.1 pulses/L.
+
+## How the pulses are counted in practice
+
+A PLC can only count pulses in its normal digital input logic if each pulse lasts longer than one scan. At the 20 L/min maximum of this meter the frequency is 150 Hz, a period of 6.7 ms, so a 10 ms scan would miss pulses. Wire the meter to a high speed counter input and read the accumulated count instead. Also check the input filter: many digital inputs have a default 3 to 10 ms debounce that silently drops fast pulses. Reed switch outputs on water meters are the opposite case and need debounce, because contact bounce creates extra counts. For the meter itself, [how a turbine flow meter works](https://www.instrumentationblog.in/turbine-flow-meter-working-principle/) explains why the rotor speed and therefore the pulse rate is proportional to velocity.
+
+## Common mistakes
+
+- **Mixing pulses per gallon with pulses per litre.** The error is a factor of 3.785, which is too big to miss on a total but easy to miss on a rate display nobody checks.
+- **Reading the rate in a normal scan.** Missed pulses make the meter read low only at high flow, which looks like a meter fault.
+- **Calculating rate from too short a gate time.** At 1 pulse per litre and 10 L/min there is one pulse every 6 s, so a 1 s rate window jumps between 0 and 60 L/min. Measure the time between pulses instead.
+- **Keeping the water K-factor for a viscous liquid.** Turbine meters slow down in oil, so K can shift by several percent; calibrate on the real product.
+- **Ignoring flow below the linear range.** Under the minimum rated flow, bearing friction makes K fall sharply and the totaliser under-registers.

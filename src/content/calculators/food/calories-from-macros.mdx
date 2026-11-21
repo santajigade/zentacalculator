@@ -1,11 +1,11 @@
 ---
-title: Calories from Macros Calculator
-description: Calculate total calories from grams of protein, carbohydrate, fat and alcohol — as shown on nutrition labels.
+title: "Calories from Macros Calculator: Protein, Carbs and Fat"
+description: "Calories from macros calculator: add up kcal from grams of protein, carbohydrate, fat and alcohol and see the share of calories that comes from fat."
 category: food
-intro: "Protein and carbohydrates provide 4 kcal per gram, fat 9 kcal and alcohol 7 kcal. Adding them up gives a food's total calories. This free calories from macros calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Every food's energy comes from its protein, carbohydrate, fat and alcohol, which supply about 4, 4, 9 and 7 kcal per gram. This calories from macros calculator adds those up to give total calories and the share coming from fat.\n\nDieters, athletes, nutrition students and cooks use it to check a nutrition label, plan meals to a macro split, or work out the calories in a home recipe from its ingredients."
 keywords: [calories from macros, calorie calculator, protein carbs fat calories, nutrition label, kcal from grams]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: p, label: Protein, suffix: g, default: 25, min: 0 }
   - { id: c, label: Carbohydrate, suffix: g, default: 40, min: 0 }
@@ -23,11 +23,13 @@ faq:
     a: Labels round values, and fibre provides fewer calories than other carbohydrates.
   - q: How do I convert kcal to kJ?
     a: Multiply by 4.184.
-  - q: "How many calories are in a gram of fat?"
-    a: "9 kcal."
+  - q: "How many calories are in an alcoholic drink?"
+    a: "Alcohol gives 7 kcal per gram. A drink with 14 g of alcohol and 10 g of sugar provides about 138 kcal, before any mixer."
   - q: "How many calories in 30 g of protein?"
     a: "120 kcal."
-related: [health/macros, health/bmr, conversion/energy-converter]
+  - q: "How do I find the percentage of calories from protein?"
+    a: "Multiply protein grams by 4 and divide by total calories. For 25 g protein in a 395 kcal meal: 100 ÷ 395 = 25.3%."
+related: [health/macros, health/bmr, health/protein-intake, health/alcohol-units, conversion/energy-converter]
 ---
 
 ## How to use the calories from macros calculator
@@ -38,12 +40,17 @@ Enter grams of **protein**, **carbohydrate**, **fat** and **alcohol**. Total cal
 
 <p class="formula">kcal = 4P + 4C + 9F + 7A</p>
 
-## Example
+## Worked example with the default values
 
-25 g protein, 40 g carbohydrate, 15 g fat:
+A meal with **25 g protein**, **40 g carbohydrate**, **15 g fat** and no alcohol:
 
-- kcal = 100 + 160 + 135 = **395 kcal**
-- Calories from fat = 135 ÷ 395 = **34%**
+- Protein: 25 × 4 = 100 kcal
+- Carbohydrate: 40 × 4 = 160 kcal
+- Fat: 15 × 9 = 135 kcal
+- Total = 100 + 160 + 135 = **395 kcal** (1,653 kJ)
+- Calories from fat = 135 ÷ 395 = **34.2%**
+
+The same meal gets 25.3% of its energy from protein and 40.5% from carbohydrate. If 8 of the 40 g of carbohydrate is fibre counted at 2 kcal per gram, the total drops to 379 kcal.
 
 ## Energy per gram
 
@@ -77,3 +84,33 @@ Labels may differ slightly because of rounding and fibre.
 ## Kilojoules
 
 Australia, New Zealand and parts of Europe use kJ. Multiply kcal by 4.184 to convert: 232 kcal ≈ 971 kJ.
+
+## Grams for a 500 kcal meal at common splits
+
+The split is the share of calories from protein, carbohydrate and fat. Grams = calories × share ÷ kcal per gram:
+
+| Protein / carbs / fat (%) | Protein | Carbohydrate | Fat |
+|---|---|---|---|
+| 30 / 40 / 30 | 38 g | 50 g | 17 g |
+| 25 / 50 / 25 | 31 g | 62 g | 14 g |
+| 40 / 30 / 30 | 50 g | 38 g | 17 g |
+| 20 / 30 / 50 | 25 g | 38 g | 28 g |
+| 15 / 55 / 30 | 19 g | 69 g | 17 g |
+
+## Alcohol counts too
+
+Alcohol is not a nutrient but it supplies 7 kcal per gram. A drink with 14 g of alcohol (one US standard drink) and 10 g of sugar provides 7 × 14 + 4 × 10 = **138 kcal**, before any mixer. Enter the alcohol grams to see how much of a meal's energy comes from drinks.
+
+## Practical notes
+
+- Use the **grams per serving** from the label and multiply by the number of servings you actually eat.
+- In the EU, labels list carbohydrate without fibre and give fibre separately at 2 kcal per gram; US labels include fibre in total carbohydrate. Subtract fibre when comparing.
+- Sugar alcohols such as erythritol provide little or no energy, so a low sugar product can show fewer calories than 4 kcal per gram of total carbohydrate suggests.
+
+## Common mistakes
+
+- **Using 9 kcal per gram for all macros.** Only fat is 9; protein and carbohydrate are 4.
+- **Adding sugar on top of carbohydrate.** Sugar is part of total carbohydrate on the label, so counting it twice inflates the total.
+- **Mixing cooked and raw weights.** Rice, pasta and meat change weight on cooking, so take grams from the same state as the nutrition data.
+- **Expecting an exact match with the label.** Rounding to the nearest 5 or 10 kcal and different fibre factors cause small differences.
+- **Reading the percentage as grams.** 34% of calories from fat is not 34% of the food's weight.

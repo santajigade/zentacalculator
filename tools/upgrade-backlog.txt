@@ -1,35 +1,5 @@
 # Pages to expand (Part C of the daily task). Take from the top; delete a line once the page is done.
 # Order: priority category, then thinnest body first.
-engineering/acceleration-factor
-engineering/beam-deflection
-engineering/minor-losses
-engineering/hydraulic-cylinder-force
-engineering/mass-flow-rate
-engineering/reynolds-number
-engineering/pitot-tube-velocity
-engineering/heat-duty
-engineering/darcy-weisbach-head-loss
-engineering/orifice-flow
-engineering/pt100-resistance
-engineering/flow-meter-k-factor
-engineering/pipe-flow-velocity
-engineering/dew-point
-engineering/npsh-available
-engineering/pressure-vessel-thickness
-engineering/air-receiver-size
-engineering/air-changes-per-hour
-engineering/tank-drain-time
-engineering/cone-bottom-tank-volume
-engineering/chain-length
-engineering/cooling-tower
-engineering/hydrostatic-test-pressure
-engineering/tank-heater-sizing
-engineering/compressed-air-leak
-electrical/lumen-method
-electrical/polarization-index
-electrical/ferranti-effect
-electrical/ct-burden
-electrical/earth-conductor-size
 electrical/braking-resistor
 electrical/earthing-resistance
 electrical/thd
@@ -405,7 +375,6 @@ everyday-life/cost-per-use
 everyday-life/electricity-cost
 food/butter-converter
 food/pizza-size
-food/calories-from-macros
 food/food-cost
 food/party-drinks
 food/liquid-weight
@@ -423,7 +392,6 @@ food/turkey-cooking-time
 food/turkey-thawing
 food/recipe-scaler
 sports/bowling-handicap
-sports/bowling-economy
 sports/effective-field-goal
 sports/cycling-gear-speed
 sports/cricket-run-rate
@@ -447,7 +415,6 @@ other/grade-percentage
 other/aspect-ratio
 other/download-time
 other/dog-age
-other/battery-life
 other/print-size-dpi
 other/data-storage-converter
 other/dog-food-calories

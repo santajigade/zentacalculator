@@ -2,10 +2,10 @@
 title: Pt100 / Pt1000 Resistance Calculator
 description: Convert RTD temperature to resistance and resistance to temperature for Pt100, Pt500 and Pt1000 sensors (IEC 60751, 0–850 °C).
 category: engineering
-intro: "A Pt100 is a platinum resistance thermometer with 100 Ω at 0 °C; its resistance rises predictably with temperature. Learn the [Pt100 vs Pt1000 differences](https://www.instrumentationblog.in/rtd-pt100-vs-pt1000-differences/), the [Callendar–Van Dusen equation](https://www.instrumentationblog.in/callendar-van-dusen-equation-rtd/) behind this calculator, and [how to test an RTD](https://www.instrumentationblog.in/how-to-test-an-rtd-pt100/). This free pt100 / pt1000 resistance calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A Pt100 is a platinum resistance thermometer with 100 Ω at 0 °C, and its resistance rises in a known way as it gets hotter. This Pt100 resistance calculator converts temperature to ohms and back for Pt100, Pt500 and Pt1000 sensors using the [Callendar Van Dusen equation](https://www.instrumentationblog.in/callendar-van-dusen-equation-rtd/).\n\nInstrument technicians use it to check a sensor with a multimeter, as in [how to test an RTD](https://www.instrumentationblog.in/how-to-test-an-rtd-pt100/), and to simulate a temperature with a decade box. The [Pt100 vs Pt1000 differences](https://www.instrumentationblog.in/rtd-pt100-vs-pt1000-differences/) matter when choosing one."
 keywords: [pt100, pt1000, rtd, resistance temperature detector, pt100 table, iec 60751, callendar van dusen, ohms to temperature]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: T, label: Temperature, family: temperature, unit: C, imperialUnit: F, default: 100, min: 273.15, max: 1123.15 }
   - id: R0
@@ -32,6 +32,10 @@ faq:
     a: "Exactly 100.00 Ω. A Pt1000 is 1,000 Ω at 0 °C."
   - q: "How much does a Pt100 change per degree?"
     a: "About 0.385 Ω per °C near room temperature."
+  - q: "How do I convert a Pt100 resistance reading to temperature?"
+    a: "Solve the IEC 60751 quadratic: t = [−A + √(A² − 4B(1 − R/100))] ÷ 2B, with A = 3.9083 × 10⁻³ and B = −5.775 × 10⁻⁷. A reading of 175.00 Ω gives 197.67 °C. Enter the resistance and press × on Temperature to let the calculator do it."
+  - q: "What voltage does a Pt100 give at 1 mA?"
+    a: "V = I × R, so 138.5 mV at 100 °C and 100 mV at 0 °C. The change is only about 0.39 mV per °C, which is why RTD inputs need high resolution and good shielding."
 related: [engineering/4-20ma-scaling, conversion/temperature-converter]
 ---
 
@@ -107,3 +111,39 @@ The measuring current heats the sensor slightly. Transmitters typically use 0.5�
 - **Check for lead resistance.** On a 2-wire Pt100, every 1 Ω of cable resistance reads as about 2.6 °C too high.
 - **Self-heating.** Too much measuring current warms the sensor. Typical transmitters use 1 mA or less.
 - **Tolerance classes.** Class A is ±(0.15 + 0.002·|T|) °C; Class B is ±(0.3 + 0.005·|T|) °C.
+
+## Worked example: resistance reading to temperature
+
+The default case is a Pt100 at 100 °C, which the calculator gives as **138.51 Ω** (a Pt1000 at the same temperature reads 1385.1 Ω). Going the other way needs the quadratic solved for t:
+
+<p class="formula">t = [−A + √(A² − 4B(1 − R/R₀))] ÷ (2B)</p>
+
+Suppose a 4-wire meter reads **175.00 Ω** across a Pt100. Then t = **197.67 °C**. If the same sensor is wired 2-wire through cable with 1.4 Ω of loop resistance, the instrument sees the extra ohms as heat; correcting for them gives 193.87 °C, so the uncorrected reading is about **3.8 °C high**.
+
+## Sensitivity and tolerance in ohms
+
+The slope dR/dt = R₀(A + 2Bt) falls slowly with temperature because B is negative, so one ohm means a little more temperature at the hot end. Class A tolerance converted to ohms is what you compare with a resistance check on the bench.
+
+| Temperature | Pt100 resistance | Pt100 slope | Pt1000 slope | Class A tolerance |
+|---|---|---|---|---|
+| 0 °C | 100.00 Ω | 0.3908 Ω/°C | 3.908 Ω/°C | ±0.15 °C = ±0.059 Ω |
+| 100 °C | 138.51 Ω | 0.3793 Ω/°C | 3.793 Ω/°C | ±0.35 °C = ±0.133 Ω |
+| 200 °C | 175.86 Ω | 0.3677 Ω/°C | 3.677 Ω/°C | ±0.55 °C = ±0.202 Ω |
+| 300 °C | 212.05 Ω | 0.3562 Ω/°C | 3.562 Ω/°C | ±0.75 °C = ±0.267 Ω |
+| 400 °C | 247.09 Ω | 0.3446 Ω/°C | 3.446 Ω/°C | ±0.95 °C = ±0.327 Ω |
+| 600 °C | 313.71 Ω | 0.3215 Ω/°C | 3.215 Ω/°C | ±1.35 °C = ±0.434 Ω |
+| 850 °C | 390.48 Ω | 0.2927 Ω/°C | 2.927 Ω/°C | ±1.85 °C = ±0.541 Ω |
+
+At 0 °C a Pt100 changes 0.3908 Ω per degree; at 400 °C only 0.3446 Ω, about 12% less.
+
+## How the resistance is measured in practice
+
+A transmitter or PLC RTD card pushes a small constant current through the element and reads the voltage across it. At 1 mA a Pt100 at 100 °C develops only 138.5 mV, so the input must resolve microvolts, and thermocouple effects at dissimilar terminals can matter on low-level signals. For a field check, disconnect the sensor, measure the element with a 4-wire ohmmeter or a calibrator, and compare with the table. To test the transmitter instead, connect a decade box or RTD simulator in place of the sensor and dial in the resistance for each test point; a [Pt100 calibration guide](https://www.instrumentationblog.in/pt100-rtd-calibration-guide/) covers the full procedure.
+
+## Common mistakes
+
+- **Setting a Pt1000 input and connecting a Pt100.** The transmitter reads about one tenth of the expected resistance and shows a temperature near −200 °C or an underrange fault.
+- **Using the 0.385 Ω/°C average for precise work.** It is the mean slope from 0 to 100 °C; at 400 °C the real slope is 0.345 Ω/°C, so linear estimates drift by several degrees at high temperature.
+- **Measuring with a cheap 2-wire multimeter.** The probe leads and contact resistance add a few tenths of an ohm, which is already close to 1 °C on a Pt100.
+- **Forgetting the alpha of the sensor.** Some older or US sensors use α = 0.003916 or 0.003920 instead of the IEC 0.00385, and their resistance at 100 °C differs by about 0.6 Ω.
+- **Checking a hot sensor while it is still in the process.** Remove it or read it at a known reference such as an ice bath; otherwise you cannot tell sensor drift from a real temperature change.

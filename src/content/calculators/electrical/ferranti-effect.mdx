@@ -2,10 +2,10 @@
 title: Ferranti Effect Calculator (Receiving-End Voltage Rise)
 description: Calculate the receiving-end voltage rise of a lightly loaded or open transmission line due to the Ferranti effect from line length, inductance and capacitance.
 category: electrical
-intro: "On a long, lightly loaded transmission line the charging current flowing through the line inductance makes the receiving-end voltage rise above the sending-end voltage. This Ferranti effect calculator uses the lossless-line equation Vr = Vs ÷ cos(βl) to find that rise — see the [Ferranti effect in transmission lines](https://www.instrumentationblog.in/ferranti-effect-transmission-line/)."
+intro: "On a long, lightly loaded transmission line the charging current flowing through the line inductance makes the receiving end voltage rise above the sending end voltage. This Ferranti effect calculator uses the lossless line equation Vr = Vs ÷ cos(βl) to find that rise, as explained in the [Ferranti effect in transmission lines](https://www.instrumentationblog.in/ferranti-effect-transmission-line/).\n\nPower system planners and substation engineers use it to check open line voltages during energisation and to judge how much shunt reactor compensation a long line or cable needs."
 keywords: [ferranti effect calculator, receiving end voltage rise, open circuit transmission line voltage, ferranti effect formula, long transmission line voltage, line charging voltage rise, shunt reactor sizing]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-21
 variables:
   - { id: Vs, label: Sending-end voltage, family: voltage, unit: kV, default: 400, min: 0 }
   - { id: l, label: Line length, family: length, unit: km, imperialUnit: mi, default: 300, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: For a 50 Hz overhead line it is roughly 0.5% at 100 km, 5% at 300 km and about 15% at 500 km.
   - q: How is the Ferranti effect controlled?
     a: With shunt reactors at the line ends (switched in at light load), SVCs or STATCOMs, and by energising long lines from the stronger end.
+  - q: "How much shunt reactor compensation does a long line need?"
+    a: "Start from the charging power Qc ≈ V² × ω × C × l. For a 400 kV, 300 km line with 11.5 nF/km at 50 Hz that is about 173 Mvar, and 60 to 80% of it is commonly installed as shunt reactors."
+  - q: "Is the Ferranti effect worse on a 60 Hz system?"
+    a: "Yes. βl is proportional to frequency and the rise roughly to its square, so the default 300 km line rises 5.33% at 50 Hz but about 7.83% at 60 Hz."
 related: [electrical/per-unit, electrical/cable-voltage-drop, electrical/capacitor-bank-kvar, electrical/skin-depth]
 ---
 
@@ -63,3 +67,37 @@ A 400 kV, 300 km, 50 Hz overhead line with L = 1.0 mH/km and C = 11.5 nF/km, ope
 
 - The lossless model slightly overstates the rise; line resistance and any load reduce it.
 - Underground cables show the effect over much shorter distances because their capacitance is 20–50 times higher.
+
+## Charging power and shunt reactors
+
+The default line rises by **5.33%** to **421.3 kV** when open at the far end. The reactive power it generates is roughly Q<sub>c</sub> = V² × ω × C × l = (400 kV)² × 314.2 × 11.5 nF/km × 300 km ≈ **173 Mvar**. Utilities usually compensate 60 to 80% of this with shunt reactors at one or both ends, for example two 61 Mvar reactors, which pulls the open end voltage back close to the sending end value.
+
+The same constants give a surge impedance of √(L ÷ C) = **295 Ω** and a surge impedance loading of V² ÷ Z<sub>c</sub> = **543 MW**. Below SIL the line generates more reactive power than it absorbs and the voltage profile rises along the line; above SIL it falls. The Ferranti effect is the extreme case of zero load.
+
+## Why the rise grows so fast with length
+
+The small angle form V<sub>r</sub> ÷ V<sub>s</sub> ≈ 1 + (βl)² ÷ 2 gives 5.11% for the default line, close to the exact 5.33%. The rise goes with the square of length and of frequency, so doubling the line from 300 to 600 km roughly quadruples it, and the same line on a 60 Hz system rises by **7.83%**. The wave travels at 1 ÷ √(LC) ≈ 294,884 km/s, a wavelength of 5,898 km at 50 Hz; a line a quarter wavelength long (1,474 km) would in theory give an infinite open end voltage, which is why very long AC lines are split into compensated sections or replaced by HVDC.
+
+## Underground cable: 132 kV, 0.4 mH/km, 250 nF/km, 50 Hz
+
+| Cable length | Rise | Open end voltage | Charging power |
+|---|---|---|---|
+| 10 km | 0.05% | 132.1 kV | 14 Mvar |
+| 25 km | 0.31% | 132.4 kV | 34 Mvar |
+| 50 km | 1.25% | 133.6 kV | 68 Mvar |
+| 75 km | 2.84% | 135.8 kV | 103 Mvar |
+| 100 km | 5.15% | 138.8 kV | 137 Mvar |
+
+The voltage rise on a cable stays modest, but the charging current is the real limit: a long cable can use up most of its own thermal rating carrying reactive current, which is why long AC cable routes have reactors at intermediate points.
+
+## How it shows up in operation
+
+Operators see the effect when a line is energised from one end: the voltage transformer at the open end reads above the sending end bus. Switching studies check this before the event, adding the rise caused by the source impedance, because charging current flowing through a weak source raises the sending end voltage too. The usual practice is to energise long lines from the stronger end and close the far end breaker within seconds.
+
+## Common mistakes
+
+- **Entering capacitance in µF/km as nF/km.** Overhead lines are about 0.011 µF/km, which is 11 nF/km; a factor of 1,000 error gives a nonsense electrical length.
+- **Using cable constants for an overhead line or the reverse.** Cable capacitance is 20 to 50 times higher and inductance about a third.
+- **Treating the rise as linear in length.** It grows roughly with the square of length, so halving a section cuts the rise by about four.
+- **Ignoring the source.** The calculator assumes a stiff sending end; a weak source adds its own rise on top.
+- **Forgetting that load removes the effect.** At loads near SIL the receiving end voltage is close to the sending end, so the open line case is the one to design for.

@@ -2,10 +2,10 @@
 title: Minor Losses Calculator (Fitting K Factors & Equivalent Length)
 description: Calculate pressure loss through pipe fittings and valves from K factors and velocity, plus the equivalent pipe length — with a table of typical K values.
 category: engineering
-intro: "Valves, elbows, tees, entrances and exits each add a pressure loss proportional to velocity head, described by a resistance coefficient K. This minor losses calculator adds them up, converts the loss to pressure and gives the equivalent straight-pipe length — see [how to calculate pressure drop in pipes](https://www.instrumentationblog.in/calculate-pressure-drop-in-pipes/)."
+intro: "Valves, elbows, tees, entrances and exits each add a pressure loss proportional to the velocity head, described by a resistance coefficient K. This minor losses calculator adds them up, converts the loss to pressure and gives the equivalent length of straight pipe.\n\nProcess and HVAC engineers use it when sizing pumps and checking skids, and it pairs with [how to calculate pressure drop in pipes](https://www.instrumentationblog.in/calculate-pressure-drop-in-pipes/) for the straight runs."
 keywords: [minor losses calculator, pipe fitting loss calculator, k factor pressure drop, equivalent length calculator, valve pressure loss, fittings head loss]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-21
 variables:
   - { id: K, label: Total K (sum of all fittings), default: 0.9, min: 0, help: 'Add the K values of every fitting — see the table below.' }
   - { id: V, label: Flow velocity, family: velocity, unit: ms, imperialUnit: fts, default: 2, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: Not always. In short pipe runs with many valves and fittings — pump suction lines, skids, plant rooms — fitting losses can exceed straight-pipe friction.
   - q: Where do K values come from?
     a: From manufacturer data (often given as Cv or Kv for valves) or published tables such as Crane TP-410. Values vary with size and design, so tables give typical figures.
+  - q: "Does the K value of a fitting change with flow rate?"
+    a: "In fully turbulent flow K is close to constant, so the loss grows with velocity squared. At low Reynolds numbers K rises, which the 2-K and 3-K methods model with an extra term that falls as flow increases."
+  - q: "Which pipe diameter should I use for the velocity at a reducer or enlargement?"
+    a: "Use the diameter the K value is referenced to, normally the smaller pipe. Published sudden contraction and expansion coefficients are almost always given for the velocity in the small bore."
 related: [engineering/darcy-weisbach-head-loss, engineering/hazen-williams, engineering/control-valve-kv-cv, engineering/pipe-flow-velocity]
 ---
 
@@ -73,3 +77,49 @@ K values are typical; they depend on size, design and manufacturer.
 ## Valve K from Cv or Kv
 
 For a valve with flow coefficient Kv (m³/h at 1 bar) and pipe diameter d in mm, K ≈ 0.0016 × d⁴ ÷ Kv². See the [control valve Kv/Cv calculator](/engineering/control-valve-kv-cv/).
+
+## Second example: a pump discharge skid
+
+A 50 mm water line at 2 m/s leaves a tank, passes a pump skid and enters a second tank, with 12 m of straight pipe and these fittings:
+
+| Fitting | Count | K each | K total |
+|---|---|---|---|
+| Pipe entrance, sharp edged | 1 | 0.5 | 0.5 |
+| 90° standard elbow | 4 | 0.75 | 3 |
+| Gate valve, open | 1 | 0.15 | 0.15 |
+| Swing check valve | 1 | 2 | 2 |
+| Tee, flow through branch | 1 | 1 | 1 |
+| Exit into tank | 1 | 1 | 1 |
+
+- Total K = **7.65**, so fitting head loss = 7.65 × 2² ÷ (2 × 9.807) = **1.56 m** (15.3 kPa)
+- Straight pipe friction = 0.02 × (12 ÷ 0.05) × 2² ÷ (2 × 9.807) = **0.98 m**
+- Equivalent length of the fittings = 7.65 × 0.05 ÷ 0.02 = **19.1 m**, more than the 12 m of real pipe
+
+On compact skids the "minor" losses are often the major part of the system curve, which is why they are worth adding item by item.
+
+## Effect of velocity on the skid loss
+
+Loss rises with the square of velocity. For the skid above (K = 7.65):
+
+| Velocity | Velocity head | Head loss | Pressure loss |
+|---|---|---|---|
+| 0.5 m/s | 13 mm | 0.098 m | 0.95 kPa |
+| 1.0 m/s | 51 mm | 0.390 m | 3.82 kPa |
+| 1.5 m/s | 115 mm | 0.878 m | 8.59 kPa |
+| 2.0 m/s | 204 mm | 1.560 m | 15.27 kPa |
+| 2.5 m/s | 319 mm | 2.438 m | 23.86 kPa |
+| 3.0 m/s | 459 mm | 3.510 m | 34.36 kPa |
+
+Halving the velocity, for example by stepping up one pipe size, cuts the fitting loss to a quarter.
+
+## How K values are obtained
+
+K is measured on a test rig by fitting pressure tappings far enough upstream and downstream that the flow is fully developed, measuring the differential pressure at several flow rates and subtracting the friction of the straight pipe between the tappings. Crane TP-410 expresses many fittings as K = f<sub>T</sub> × (L/D), where f<sub>T</sub> is the fully turbulent friction factor for that pipe size, so K for a given elbow is higher in small pipes. The 2-K and 3-K methods (Hooper, Darby) add a Reynolds number term for viscous or low velocity flow.
+
+## Common mistakes
+
+- **Using the wrong velocity at a reducer.** K is tied to a reference diameter, usually the smaller one; using the velocity in the larger pipe can understate the loss by a factor of 5 or more.
+- **Counting the exit twice.** The exit K of 1 is the kinetic energy thrown away into the tank; if the outlet velocity head is already counted as lost elsewhere, do not add it again.
+- **Using fully open K for a throttled valve.** A butterfly valve at 30° open has a K many times its open value; use the valve's Cv or Kv at the actual opening.
+- **Applying turbulent K values to laminar flow.** Below a Reynolds number of about 2,000, losses depend on viscosity and the simple K table underestimates them.
+- **Forgetting strainers and instruments.** Y strainers, orifice plates and flow meters add their own losses, which can exceed all the elbows put together.

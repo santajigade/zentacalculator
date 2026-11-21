@@ -2,10 +2,10 @@
 title: Compressed Air Leak Calculator (Flow, kW & Cost)
 description: Calculate the air flow lost through a compressed air leak from hole size and pressure, the compressor power it wastes and the yearly energy and cost.
 category: engineering
-intro: "Leaks are the biggest single waste in most compressed air systems — a typical plant loses 20–30% of its compressor output through fittings, hoses, drains and worn seals. This compressed air leak calculator estimates the free-air flow through a leak from the hole diameter and line pressure using choked-flow equations, then converts it into the compressor power it wastes and the energy and money lost per year — the numbers you need to justify a leak survey or a repair."
+intro: "Leaks are usually the largest single waste in a compressed air system, and many plants lose a fifth or more of their compressor output through fittings, hoses, drains and worn seals. This compressed air leak calculator estimates the free air lost through a leak, the compressor power it wastes and the yearly energy cost.\n\nEnergy auditors and maintenance teams use it to rank leaks found in a survey and to justify repairs, ultrasonic detectors and lower header pressure."
 keywords: [compressed air leak calculator, compressed air leak cost, air leak flow rate calculation, cost of compressed air leaks, compressed air leak cfm, air leakage calculation formula, leak hole size flow calculator]
 published: 2026-11-13
-updated: 2026-11-13
+updated: 2026-11-21
 variables:
   - { id: d, label: Leak hole diameter (equivalent), family: length, unit: mm, imperialUnit: in, default: 3, min: 0 }
   - { id: p, label: Line pressure (gauge), family: pressure, unit: bar, imperialUnit: psi, default: 7, min: 0, help: 'The formula assumes choked flow, valid above about 0.9 bar g (13 psig).' }
@@ -37,6 +37,10 @@ faq:
     a: Multiply the free air lost by the compressor's specific power to get the kW wasted, then by the operating hours and the electricity price. A 3 mm leak at 7 bar wastes about 2.8 kW — around 22,518 kWh in 8,000 hours, or 180,147 a year at a price of 8 per kWh.
   - q: How do you measure the total leakage in a plant?
     a: With all air-using equipment off, run the compressor and time its load and unload cycles — leakage (%) = load time ÷ (load + unload time) × 100. Alternatively, isolate a receiver of known volume and time the pressure decay. Ultrasonic leak detectors then locate the individual leaks.
+  - q: "How do I measure total air leakage with a pressure decay test?"
+    a: "Stop the compressor with all users off and time the pressure fall. Leakage in m³/min of free air = system volume (m³) × pressure drop (bar) ÷ 1.013 ÷ time (min). 3 m³ falling 1 bar in a minute is about 2.96 m³/min."
+  - q: "How much leakage does lowering the header pressure save?"
+    a: "Leak flow follows absolute pressure, so a 3 mm leak drops from 433 L/min at 7 bar g to 379 L/min at 6 bar g, about 12% less."
 related: [engineering/compressor-power, engineering/air-receiver-size, engineering/orifice-flow, engineering/gas-flow-correction, electrical/load-factor]
 ---
 
@@ -99,3 +103,28 @@ Free air lost in L/min per leak, C<sub>d</sub> = 0.65, air at 20 °C (multiply b
 - **Where leaks hide:** quick couplings, hose connections, filter–regulator–lubricator units, condensate drains stuck open, pipe joints and cylinder rod seals account for most of the losses.
 - **Leak tags:** a survey with an ultrasonic detector, tagging each leak and estimating its size, then using a table like the one above to rank repairs, usually pays back in weeks.
 - **Part-load compressors** use more energy per m³ than the full-load specific power, so the true saving from fixing leaks can be higher. Use the [compressor power calculator](/engineering/compressor-power/) to estimate the specific power from the pressure ratio and the [air receiver size calculator](/engineering/air-receiver-size/) for pressure-decay leak tests.
+
+## Second example: pricing a leak survey
+
+An ultrasonic survey on a 7 bar g system tags 25 small leaks of about 1.5 mm equivalent diameter and 5 larger ones of about 3 mm. With the same compressor and tariff as the default example:
+
+- Each 1.5 mm leak loses 108 L/min; the 25 together lose 2,707 L/min
+- The 5 larger leaks lose 2,165 L/min
+- Total **4,872 L/min** (4.87 m³/min), wasting **31.7 kW** of compressor power
+- Yearly cost about **2,026,649** at 8 per kWh over 8,000 hours
+
+The five large leaks are only a sixth of the count but cost almost half the money, so they go to the top of the repair list. Enter each group with its own diameter and count to get these figures.
+
+## Measuring the total leakage
+
+Two simple tests give the plant total before any leak is found. In the **load and unload test**, all air users are stopped and the compressor cycles only to feed leaks. A 10 m³/min compressor loaded for 18 seconds of every minute is feeding leaks of 30% of its output, about **3.0 m³/min**. In the **pressure decay test**, the compressor is stopped and the time for the pressure to fall is recorded. If 3 m³ of receiver and pipe falls from 7 to 6 bar g in one minute, the leakage is 3 × 1 ÷ 1.013 ÷ 1 = **2.96 m³/min** of free air. Repeat either test after the repairs to confirm the saving.
+
+Lowering the header pressure also cuts leakage. The default 3 mm leak drops from 433 L/min at 7 bar g to 379 L/min at 6 bar g, about 12% less, before counting the compressor energy saved.
+
+## Common mistakes
+
+- **Using the gauge pressure in the flow equation.** Choked flow follows the absolute pressure, gauge plus 1.013 bar.
+- **Guessing leak size from the noise.** A small leak at a sharp edge can be loud; ultrasonic detectors with a calibrated distance give better size estimates.
+- **Running the leak test with users still connected.** Machines left on standby, open blow-off nozzles or cooling air make the leakage look larger than it is.
+- **Applying full load specific power to a compressor that modulates.** Inlet throttled machines waste nearly as much power at part load, so the true saving depends on the control type.
+- **Fixing leaks and leaving the pressure set high.** Once leaks are repaired the header pressure can often be lowered, which adds a second saving.

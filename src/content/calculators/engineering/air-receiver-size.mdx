@@ -2,10 +2,10 @@
 title: Air Receiver Size Calculator (Compressed Air Tank Volume)
 description: Calculate compressed air receiver tank size for a peak demand event and for compressor load/unload cycling, from flow, pressure band and time.
 category: engineering
-intro: "A compressed air receiver stores air between the compressor's cut-out and cut-in pressures, covering short demand peaks and stopping the compressor from cycling too often. This air receiver size calculator works out the tank volume needed to ride through a demand event from the pressure drop you can accept, and the volume needed to keep a load/unload compressor within its maximum cycle rate, then gives the larger of the two."
+intro: "A compressed air receiver stores air between the compressor's unload and load pressures, covering short demand peaks and keeping the compressor from cycling too often. This air receiver size calculator gives the volume needed for a demand event and for load/unload cycling, then recommends the larger.\n\nPlant and utility engineers use it when adding a compressor or a large intermittent user, and maintenance teams use it to check whether an existing tank is too small."
 keywords: [air receiver size calculator, air receiver tank sizing, compressed air receiver calculation, air tank size calculator, receiver volume formula, compressor tank size, air receiver capacity]
 published: 2026-11-10
-updated: 2026-11-10
+updated: 2026-11-21
 variables:
   - { id: Qc, label: Compressor capacity (free air delivery), family: flow, unit: Ls, imperialUnit: cfm, default: 100, min: 0 }
   - { id: Qd, label: Peak air demand during the event (free air), family: flow, unit: Ls, imperialUnit: cfm, default: 150, min: 0 }
@@ -32,6 +32,10 @@ faq:
     a: Either, as long as both pressures use the same reference — only the difference P₁ − P₂ appears. Atmospheric pressure must be absolute, because it converts free air into compressed volume.
   - q: Should I use a wet or a dry receiver?
     a: A wet receiver before the dryer cools the air and drops out condensate, and smooths the compressor's flow. A dry receiver after the dryer stores clean air close to large intermittent users. Many systems use both, and the volumes add.
+  - q: "How can I measure my actual compressed air demand with the receiver?"
+    a: "Isolate the compressor and time the pressure drop. Free air used = V × ΔP ÷ P_atm, so a 5 m³ receiver falling 1 bar in 90 s supplies about 55 L/s. With production stopped the same test gives the leakage rate."
+  - q: "Does altitude change the receiver size?"
+    a: "Yes, slightly. Lower atmospheric pressure means each litre of free air takes less space when compressed. At 1,500 m (about 84.6 kPa) the example demand event needs 3.38 m³ instead of 4.05 m³."
 related: [engineering/compressor-power, engineering/absolute-gauge-pressure, engineering/gas-flow-correction, physics/ideal-gas-law]
 ---
 
@@ -86,3 +90,24 @@ Net shortfall (demand − compressor) and a 1.5 bar usable band:
 - Variable-speed compressors need much less storage than load/unload machines; follow the maker's minimum system volume.
 - Receivers are pressure vessels: they need a relief valve sized for the full compressor capacity, a pressure gauge, an automatic drain and periodic inspection — see the [pressure vessel thickness calculator](/engineering/pressure-vessel-thickness/).
 - Include the volume of large distribution headers when they are close to the users; piping volume acts as storage too.
+
+## Measuring real demand with a drawdown test
+
+The receiver itself can be used as a flow meter. Stop the compressor (or isolate it) with the plant running and time how long the pressure takes to fall. For a 5 m³ receiver falling from 7.5 to 6.5 bar g in 90 s:
+
+- Free air drawn from storage = 5 × (7.5 − 6.5) × 100 ÷ 101.325 = **4.935 m³**
+- Average demand = 4.935 ÷ 90 = **54.8 L/s**
+
+Repeat the test with production stopped and the result is the leakage rate of the system. Include the volume of the main headers in V if they are large, or the demand is overstated.
+
+## Altitude and pressure band
+
+Free air delivery is referred to the intake pressure, so the same flows need less stored volume at altitude. At 1,500 m the standard atmosphere is about **84.6 kPa**, and the demand event in the worked example needs 3.382 m³ instead of 4.053 m³. Widening the usable band from 1.5 to 2 bar cuts the event volume to 3.040 m³, but every extra bar of compressor discharge pressure adds energy cost, so a wider band is only worth it when the users can genuinely tolerate the lower pressure.
+
+## Common mistakes
+
+- **Entering compressed flow instead of free air.** The formulas use flows at intake conditions (FAD, Nm³ or scfm); a flow at 7 bar is about eight times smaller and gives an undersized tank.
+- **Setting P2 to the tool pressure.** Dryers, filters and pipework take 0.5 to 1 bar between the receiver and the users, so P2 is the receiver pressure needed to keep the farthest tool supplied, not the tool's own rating.
+- **Using gauge pressure for P_atm.** Atmospheric pressure converts free air into stored volume and must be absolute; only P1 and P2 may both be gauge.
+- **Sizing only for cycling.** A large intermittent user such as a blast pot or a baghouse pulse system usually needs its own receiver close to it, because the main receiver cannot refill through a long, small header fast enough.
+- **Ignoring the drain.** Condensate collecting in the bottom reduces the working volume and corrodes the shell; a blocked automatic drain slowly turns a correctly sized receiver into a small one.

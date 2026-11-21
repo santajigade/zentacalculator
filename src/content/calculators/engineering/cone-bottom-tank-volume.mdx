@@ -2,10 +2,10 @@
 title: Cone Bottom Tank Volume Calculator (Level to Volume)
 description: Calculate the liquid volume in a vertical tank with a conical bottom from its level, with total capacity, percent full, cone volume and cone angle.
 category: engineering
-intro: "Many process tanks, silos and hoppers have a conical bottom so they drain completely, which makes the level-to-volume relationship non-linear near the outlet. This cone bottom tank volume calculator works out the liquid volume for any level measured from the outlet, the total capacity, the percentage full, the volume held in the cone and the cone angle — the same strapping calculation used to set up [automatic tank gauging](https://www.instrumentationblog.in/automatic-tank-gauging-explained/) or a level transmitter."
+intro: "Many process tanks, silos and hoppers have a conical bottom so they drain fully, which makes level and volume non-linear near the outlet. This cone bottom tank volume calculator gives the liquid volume for any level from the outlet, plus total capacity, percent full, cone volume and cone angle.\n\nInstrument and process engineers use it to build strapping tables for [automatic tank gauging](https://www.instrumentationblog.in/automatic-tank-gauging-explained/) or a level transmitter, and operators use it to check stock and batch quantities."
 keywords: [cone bottom tank volume calculator, conical bottom tank volume, cone tank volume calculator, hopper volume calculator, silo volume calculator, conical tank level to volume, tank with cone bottom capacity]
 published: 2026-11-11
-updated: 2026-11-11
+updated: 2026-11-21
 variables:
   - { id: D, label: Tank inside diameter, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
   - { id: H, label: Height of the cylindrical part (straight side), family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
@@ -36,6 +36,10 @@ faq:
     a: In the cone the cross-section grows with the square of the height, so the first 10% of the cone height holds only about 0.1% of the cone volume for a pointed cone. Above the cone the tank is a straight cylinder and every metre of level adds the same volume.
   - q: What cone angle should a hopper or tank bottom have?
     a: Liquid tanks often use a 60°–90° included angle (walls 45°–60° from horizontal). Hoppers for powders and granular solids usually need steeper walls, often 60°–70° from horizontal, for reliable mass flow — the exact angle depends on the wall friction of the material.
+  - q: "How do I convert the tank volume to mass?"
+    a: "Multiply the volume by the liquid density. 2,202 L of a liquid with relative density 1.1 is about 2,422 kg. Use the density at the actual temperature, since many liquids change by 0.1% or more per 10 °C."
+  - q: "Should I use the slant height or the vertical height of the cone?"
+    a: "The vertical height, measured from the outlet to the joint with the straight side. The slant length is always longer; on the default tank it is 1.379 m against 1 m and would overstate the cone volume."
 related: [engineering/vertical-tank-volume, engineering/horizontal-tank-volume, math/frustum-volume, engineering/tank-drain-time]
 ---
 
@@ -97,3 +101,25 @@ Pointed cones (outlet diameter 0); each cell gives the cone height and the volum
 - **Dead volume:** liquid in the outlet nozzle and pipe below the cone is not included.
 - For a flat-bottomed vertical tank use the [vertical tank volume calculator](/engineering/vertical-tank-volume/); for a horizontal drum use the [horizontal tank volume calculator](/engineering/horizontal-tank-volume/).
 - **Solids:** for powders in a silo, the top surface forms a heap at the angle of repose instead of a flat surface, and the bulk density varies with compaction, so treat the result as an estimate.
+
+## From a transmitter reading to volume and mass
+
+A level transmitter rarely sits at the outlet. On the default tank, a [DP transmitter used for level measurement](https://www.instrumentationblog.in/dp-transmitter-level-measurement/) has its lower tapping 150 mm above the outlet and reads 1.2 m:
+
+- Level from the outlet = 0.15 + 1.2 = **1.35 m**, above the 1 m cone
+- Volume = 1,102.2 + π × 2² × (1.35 − 1) ÷ 4 × 1000 = **2,201.7 L**
+- For a liquid with relative density 1.1, the stock is **2,422 kg**
+
+Entering the raw 1.2 m reading would give only 1,730.5 L, an error of 471 L that comes from the offset in the cone alone. On a DP transmitter the reading also depends on the density set in the transmitter, so a change of product needs a new range as well as a new table.
+
+## Checking the table by water strapping
+
+For custody or batching duties the calculated table is confirmed by filling the empty tank with water through a calibrated flow meter in steps, recording the level at each step. The calculated and measured figures usually differ in the cone, where dished welds, a sloping outlet nozzle or an internal agitator foot take up volume. The measured table then replaces the calculated one in the gauging system.
+
+## Common mistakes
+
+- **Using the slant height of the cone.** The formula needs the vertical height. Entering the 1.379 m slant length of the default cone would give a cone volume of 1,520 L instead of 1,102 L.
+- **Ignoring the outlet diameter.** Treating the 100 mm outlet as a point with the same 1 m cone height gives 1,047 L in the cone, 55 L too little.
+- **Using the outside diameter.** Drawings often give the shell OD; subtract twice the wall thickness, since 6 mm of wall on a 2 m tank changes the volume by about 1.2%.
+- **Reading percent level as percent volume.** At 0.5 m the tank is 12.5% of its height but holds only 1.5% of its capacity.
+- **Forgetting the transmitter offset.** Add the height of the lower tapping or sensor above the outlet before entering the level, as in the example above.

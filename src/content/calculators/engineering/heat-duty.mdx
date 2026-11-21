@@ -2,10 +2,10 @@
 title: Heat Duty Calculator (Q = ṁ·cp·ΔT)
 description: Calculate heating or cooling power from mass flow, specific heat and temperature difference — for heat exchangers, chillers and boilers.
 category: engineering
-intro: "Heat duty is the rate at which heat is added to or removed from a fluid — the key figure for sizing heat exchangers, heaters and coolers. It depends on mass flow, specific heat and temperature change."
+intro: "Heat duty is the rate at which heat is added to or removed from a fluid stream, set by its mass flow, specific heat and temperature change. This heat duty calculator applies Q = ṁ × cp × ΔT and gives the result in kW or hp.\n\nProcess and HVAC engineers use it to size heat exchangers, chillers, heaters and boilers, and to check energy meter readings against the design load."
 keywords: [heat duty, heat load, q = m cp dt, heat exchanger, cooling load, heating power, kw, specific heat]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: m, label: Mass flow, family: massflow, unit: kgs, imperialUnit: lbh, default: 2, min: 0 }
   - { id: cp, label: Specific heat (cp), suffix: kJ/kg·K, default: 4.186, min: 0, help: Water 4.186 · Thermal oil ~2.0 · Air ~1.005 }
@@ -25,6 +25,10 @@ faq:
     a: "Q = ṁ × cp × ΔT: mass flow × specific heat × temperature change."
   - q: "How much heat to warm 1,000 L of water by 10 °C?"
     a: "About 41,860 kJ, or 11.6 kWh."
+  - q: "Why does a small temperature difference make heat duty readings inaccurate?"
+    a: "The duty is directly proportional to ΔT, so a fixed sensor error is a larger share of a small difference. At 5 K, a 0.1 K mismatch between sensors is a 2% error in duty."
+  - q: "How do I check that both sides of a heat exchanger agree?"
+    a: "Work out ṁ × cp × ΔT for the hot stream and for the cold stream. They should match within a few percent; a bigger difference means a faulty flow or temperature reading, or heat loss to the surroundings."
 related: [engineering/mass-flow-rate, engineering/pt100-resistance, engineering/thermal-expansion]
 ---
 
@@ -87,3 +91,40 @@ Cooling capacity is often quoted in tons of refrigeration (TR): 1 TR = 3.517 kW.
 - **Chiller and boiler sizing** — enter design flow and ΔT.
 - **Energy metering** — BTU/energy meters calculate exactly this using a flow meter and two temperature sensors (often matched Pt100 or Pt500 pairs).
 - **Checking performance** — compare measured duty with the design value to spot fouling.
+
+## Result with the default values
+
+The defaults are 2 kg/s of water, c<sub>p</sub> = 4.186 kJ/kg·K and a 10 K change, so Q = 2 × 4.186 × 10 = **83.72 kW**.
+
+## Example: checking a chilled water energy meter
+
+A chilled water branch carries 36 m³/h of water supplied at 7 °C and returned at 12 °C. At about 10 °C water has a density of 999.7 kg/m³ and c<sub>p</sub> of 4.192 kJ/kg·K:
+
+- Mass flow = 36 × 999.7 ÷ 3,600 = **9.997 kg/s**
+- Q = 9.997 × 4.192 × 5 = **209.5 kW**, or 59.6 TR
+
+Because the ΔT is only 5 K, a 0.1 K error between the two temperature sensors changes the duty by 2%. That is why energy meters use matched sensor pairs and why low ΔT loops are hard to bill accurately.
+
+## Example: hot and cold side balance
+
+A thermal oil heater circuit delivers 3 kg/s of oil (c<sub>p</sub> about 2.3 kJ/kg·K) that cools from 220 °C to 180 °C in an exchanger. The oil gives up 3 × 2.3 × 40 = **276 kW**. If that heat goes into 2 kg/s of water, the water warms by 276 ÷ (2 × 4.186) = **33.0 K**. Measured duties on the two sides usually agree within a few percent; a larger gap points to a bad flow or temperature reading, or heat lost through poor insulation.
+
+## Flow needed to carry 100 kW
+
+Volumetric flow in m³/h for each fluid and design temperature difference:
+
+| Fluid | ΔT 5 K | ΔT 10 K | ΔT 15 K | ΔT 20 K |
+|---|---|---|---|---|
+| Water | 17.2 | 8.6 | 5.7 | 4.3 |
+| Glycol 30% | 18.7 | 9.4 | 6.2 | 4.7 |
+| Thermal oil | 38.5 | 19.3 | 12.8 | 9.6 |
+
+Lower specific heat and density both push the flow up, so a glycol or oil system needs bigger pumps and pipes for the same load.
+
+## Common mistakes
+
+- **Entering volumetric flow as mass flow.** 2 m³/h is not 2 kg/s; convert with density first (0.554 kg/s for water).
+- **Mixing kJ and kW.** With mass flow in kg/s and c<sub>p</sub> in kJ/kg·K the result is kW; with kg/h it is kJ/h, 3,600 times larger.
+- **Using the water c<sub>p</sub> for glycol mixtures.** A 30% glycol solution has about 12% less heat capacity, so the duty is overstated.
+- **Applying the formula across a phase change.** Boiling or condensing duty is mass flow times latent heat, which c<sub>p</sub> × ΔT does not capture.
+- **Converting a °F difference like a temperature.** An 18 °F rise is 10 K, not −7.8 °C.

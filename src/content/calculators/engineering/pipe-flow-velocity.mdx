@@ -2,10 +2,10 @@
 title: Pipe Flow Velocity Calculator
 description: Calculate fluid velocity in a pipe from flow rate and inner diameter — or the flow rate and pipe size for a target velocity.
 category: engineering
-intro: "Fluid velocity in a pipe decides pressure drop, noise, erosion and the risk of water hammer. Designers keep velocity within recommended ranges by choosing the right pipe size for the flow. This free pipe flow velocity calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Fluid velocity in a pipe sets the pressure drop, noise, erosion and the size of a water hammer surge. This pipe flow velocity calculator finds the average velocity from the flow rate and inner diameter, or the flow or diameter for a target velocity.\n\nPiping and process engineers use it to size suction and discharge lines, while instrument engineers use it to check that a flow meter will run inside its velocity range."
 keywords: [flow velocity, pipe velocity, flow rate, pipe diameter, q = va, m3/h to m/s, gpm, pipe sizing]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
   - { id: D, label: Pipe inner diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: "Typically 1–2.5 m/s for pumped water lines, lower on pump suction (0.5–1.5 m/s)."
   - q: "How do I calculate flow from velocity and diameter?"
     a: "Q = v × π × D² ÷ 4. At 1.5 m/s in a 100 mm pipe, Q = 0.0118 m³/s, about 42 m³/h."
+  - q: "How do I find the inner diameter of a pipe?"
+    a: "Subtract twice the wall thickness from the outside diameter. A DN100 schedule 40 steel pipe is 114.3 mm OD with a 6.02 mm wall, so the bore is 102.26 mm. For plastic pipe, the wall is the OD divided by the SDR."
+  - q: "What happens to velocity when a pipe reduces in size?"
+    a: "The flow stays the same, so velocity rises with the square of the diameter ratio. Going from a 102.3 mm to a 52.5 mm bore raises 1.69 m/s to 6.42 m/s, nearly four times faster."
 related: [engineering/heat-duty, engineering/reynolds-number, engineering/hydrostatic-pressure]
 ---
 
@@ -87,3 +91,37 @@ Fast valve closure in a pipe with high velocity creates a pressure surge. The Jo
 ## Why velocity matters for flow meters
 
 Most flow meters have a velocity range. Electromagnetic meters typically need about 0.3–10 m/s, and many work best above 1 m/s. If the velocity is too low, a smaller meter (with reducers) often improves accuracy. Check the [Reynolds number](/engineering/reynolds-number/) too, since many meters need fully turbulent flow.
+
+## Sizing a pump suction line from the default flow
+
+The default case, 50 m³/h through a 100 mm bore, gives **1.77 m/s** and a cross-section of 78.54 cm², which is fine for a discharge line but too fast for a pump suction. Targeting 1.5 m/s:
+
+- D = √(4 × 0.01389 ÷ (π × 1.5)) = **108.6 mm** minimum bore
+- DN100 schedule 40 (102.26 mm bore) would run at 1.69 m/s, so the next size up is used
+- DN125 schedule 40 (128.2 mm bore) gives **1.08 m/s**, comfortably inside the suction range
+
+The same flow squeezed through a DN50 reducer (52.5 mm bore) speeds up to 6.42 m/s, since velocity scales with the inverse square of the bore. The velocity head v²/2g at the default 1.77 m/s is 0.159 m, which is the head lost at a pipe exit into a tank.
+
+## Velocity in PE100 SDR11 plastic pipe
+
+Polyethylene pipe is sold by outside diameter, and the wall is the OD divided by the SDR, so the bore is much smaller than the nominal size suggests.
+
+| Outside diameter | Wall | Bore | 10 m³/h | 30 m³/h | 60 m³/h |
+|---|---|---|---|---|---|
+| 63 mm | 5.7 mm | 51.5 mm | 1.33 m/s | 3.99 m/s | 7.99 m/s |
+| 90 mm | 8.2 mm | 73.6 mm | 0.65 m/s | 1.96 m/s | 3.91 m/s |
+| 110 mm | 10.0 mm | 90.0 mm | 0.44 m/s | 1.31 m/s | 2.62 m/s |
+| 160 mm | 14.5 mm | 130.9 mm | 0.21 m/s | 0.62 m/s | 1.24 m/s |
+| 225 mm | 20.5 mm | 184.1 mm | 0.10 m/s | 0.31 m/s | 0.63 m/s |
+
+## How velocity is measured in practice
+
+The calculator gives the mean velocity, flow divided by area. A clamp on ultrasonic meter measures it directly from transit time across the pipe, but you must type the real outside diameter and wall thickness into it, or the flow it reports is wrong by the same area error. A pitot tube or insertion probe reads a point velocity; in fully developed turbulent flow the centreline velocity is roughly 1.2 times the mean, so a single centre reading overstates flow unless a profile factor is applied. To find the true wall thickness on an old line, use an ultrasonic thickness gauge rather than the schedule tables, because corrosion and scale change the bore.
+
+## Common mistakes
+
+- **Using the nominal size as the bore.** DN100 schedule 80 has a 97.2 mm bore, and a cement lined ductile iron pipe of the same DN is smaller still.
+- **Mixing m³/h with m³/s.** A factor of 3,600 error usually shows up as an impossible velocity of thousands of metres per second.
+- **Applying the full bore area to a partly full drain.** Gravity drains and sewers seldom run full, so the wetted area is smaller and the real velocity differs.
+- **Using normal m³/h for a gas line.** Compressors and gas meters often quote flow at reference conditions; at 7 bar gauge the actual volume is about one eighth, and so is the velocity.
+- **Sizing on average flow only.** Check the peak flow too, because noise and erosion follow the highest velocity the line will see.

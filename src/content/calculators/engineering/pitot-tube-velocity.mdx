@@ -2,10 +2,10 @@
 title: Pitot Tube Velocity Calculator
 description: Calculate air or liquid velocity from pitot tube differential pressure — and the flow in a duct or pipe.
 category: engineering
-intro: "A Pitot tube measures flow velocity from the difference between total and static pressure. It is used for air ducts, stacks and aircraft, and an [averaging Pitot tube](https://www.instrumentationblog.in/averaging-pitot-tube-working-principle/) extends the idea to pipe flow measurement. This free Pitot tube velocity calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A Pitot tube measures flow velocity from the difference between the total pressure facing the flow and the static pressure. This Pitot tube velocity calculator turns that velocity pressure, the fluid density and the probe coefficient into velocity, or works back to the expected pressure.\n\nHVAC balancing technicians, stack testers and flow engineers use it on ducts, chimneys and pipes, and an [averaging Pitot tube](https://www.instrumentationblog.in/averaging-pitot-tube-working-principle/) extends the idea to pipe flow."
 keywords: [pitot tube, velocity pressure, air velocity, duct velocity, dynamic pressure, airflow, anemometer]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: dP, label: Velocity (dynamic) pressure, family: pressure, unit: Pa, imperialUnit: inH2O, default: 500, min: 0 }
   - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1.2, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: "At 1.2 kg/m³: v = √(2 × 100 ÷ 1.2) = 12.9 m/s."
   - q: "Can a pitot tube measure liquid flow?"
     a: "Yes. Use the liquid density, for example 998 kg/m³ for water."
+  - q: "How do I correct a Pitot reading for hot flue gas?"
+    a: "Use the gas density at stack temperature and pressure. At 150 °C and atmospheric pressure, air-like flue gas is about 0.834 kg/m³, so 120 Pa on an S-type probe (C = 0.84) means 14.25 m/s."
+  - q: "How do I convert inches of water to air velocity in feet per minute?"
+    a: "For standard air, velocity in ft/min is about 4,005 × √(velocity pressure in inH₂O). A reading of 0.5 inH₂O gives about 2,836 ft/min."
 related: [engineering/pipe-flow-velocity, engineering/orifice-flow]
 ---
 
@@ -87,3 +91,41 @@ Aircraft use pitot-static systems to measure indicated airspeed from dynamic pre
 - Point the tip straight into the flow, within about ±10°.
 - Velocity varies across a duct. For flow measurement, take a **traverse** — several readings at standard positions — and average the velocities (not the pressures).
 - Below about 3 m/s in air, the pressure is very small and readings become unreliable.
+
+## Example: S-type probe in a hot stack
+
+Stack testing uses S-type probes, which need a coefficient of about 0.84, and the gas is far lighter than room air. Flue gas close to the molar mass of air at 150 °C and 101.325 kPa has a density of 101,325 × 0.02897 ÷ (8.314 × 423.15) = **0.834 kg/m³**. With a reading of 120 Pa:
+
+- v = 0.84 × √(2 × 120 ÷ 0.834) = **14.25 m/s**
+- Stack area for a 1.2 m diameter = 1.131 m², so the flow is about **58,006 m³/h** at stack conditions
+
+Had the default 1.2 kg/m³ been left in, the velocity would read 11.88 m/s, about 17% low.
+
+## Average the velocities, not the pressures
+
+Five readings across a duct of 410, 480, 520, 495 and 430 Pa give velocities that average **27.872 m/s**. Averaging the pressures first and then taking the square root gives 27.899 m/s. The gap is small here, but it grows when the profile is uneven near dampers and bends, and the pressure average always reads high.
+
+## Inches of water to velocity
+
+US gauges and balancing reports often use inches of water column. For standard air (1.2 kg/m³), velocity in ft/min is close to 4,005 × √(inH₂O):
+
+| Velocity pressure | Pascal | Velocity | Velocity |
+|---|---|---|---|
+| 0.05 inH₂O | 12.5 Pa | 4.56 m/s | 897 ft/min |
+| 0.1 inH₂O | 24.9 Pa | 6.44 m/s | 1,268 ft/min |
+| 0.25 inH₂O | 62.3 Pa | 10.19 m/s | 2,005 ft/min |
+| 0.5 inH₂O | 124.5 Pa | 14.41 m/s | 2,836 ft/min |
+| 1 inH₂O | 249.1 Pa | 20.38 m/s | 4,011 ft/min |
+| 2 inH₂O | 498.2 Pa | 28.81 m/s | 5,672 ft/min |
+
+## How it is measured in practice
+
+The probe's total port faces upstream and the static ports sit on the side of the stem. Both connect to an inclined manometer or a digital micromanometer that reads the difference directly. Test points are drilled at least 7.5 duct diameters downstream of a bend or fan where possible, and the traverse positions follow the log-Tchebycheff or equal-area pattern. On wet or dusty stacks the lines are purged between readings and checked for leaks before and after the run.
+
+## Common mistakes
+
+- **Using room air density for hot or humid gas.** Correct density for temperature, static pressure and moisture, as in the stack example.
+- **Leaving C at 1.0 for an S-type probe.** S-type probes read a larger differential than a Prandtl tube and need their calibration coefficient, usually 0.82 to 0.86.
+- **Mixing pressure units.** 5 mm of water is 49.0 Pa, not 5 Pa; enter the value in the unit shown on the gauge.
+- **Swapping the tubing.** Total and static lines reversed give a negative or near zero reading, and on an S-type probe a wrong orientation gives a different coefficient.
+- **Reading in swirling flow.** Behind a fan or an elbow the flow is not parallel to the probe, so the tip sees only part of the dynamic pressure.

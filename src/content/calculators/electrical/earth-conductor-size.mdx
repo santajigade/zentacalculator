@@ -2,10 +2,10 @@
 title: Earth Conductor Size Calculator (Adiabatic Equation)
 description: Calculate the minimum protective earth conductor size from fault current and disconnection time with the adiabatic equation S = I√t / k (IEC 60364-5-54).
 category: electrical
-intro: "A protective earth conductor must carry the full fault current for the time it takes a breaker or fuse to trip — without overheating. The adiabatic equation gives the minimum safe size, as explained in this [earth conductor size calculation](https://www.instrumentationblog.in/earth-conductor-size-calculation/); the fault current itself comes from a [short circuit current calculation](https://www.instrumentationblog.in/short-circuit-current-calculation/)."
+intro: "A protective earth conductor must carry the full fault current for the time a breaker or fuse takes to trip, without overheating its insulation. This earth conductor size calculator applies the adiabatic equation, as explained in this [earth conductor size calculation](https://www.instrumentationblog.in/earth-conductor-size-calculation/).\n\nElectrical designers and installers use it to size circuit protective conductors, armour and bonding for sub mains and motor feeders, taking the fault current from a [short circuit current calculation](https://www.instrumentationblog.in/short-circuit-current-calculation/)."
 keywords: [earth conductor size calculation, earthing cable size, adiabatic equation, protective conductor size, i2t/k, earth wire size, cpc size]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: I, label: Prospective fault current, family: current, unit: kA, default: 10, min: 0 }
   - { id: t, label: Disconnection time, family: seconds, unit: s, default: 0.4, min: 0 }
@@ -32,6 +32,10 @@ faq:
     a: The actual operating time of the protective device at the fault current, from its time–current curve. Final circuits often require 0.4 s; distribution circuits 5 s.
   - q: Can I use the simple table instead?
     a: Yes, IEC 60364-5-54 also allows sizing by the line conductor size — equal up to 16 mm², 16 mm² up to 35 mm², and half above that.
+  - q: "Why does a lower fault current sometimes need a bigger earth conductor?"
+    a: "Because the protective device trips more slowly at low current and S depends on √t. A 3 kA fault cleared in 2 s needs about 29.7 mm² of PVC copper, close to the 44.2 mm² for 10 kA at 0.4 s."
+  - q: "How is the k factor for an earth conductor calculated?"
+    a: "From IEC 60364-5-54 Annex A using the conductor heat capacity, resistivity and the initial and final temperatures. For copper and PVC to 160 °C, starting at 30 °C gives about 143 and starting at 70 °C gives about 115."
 related: [electrical/earthing-resistance, electrical/transformer-short-circuit, electrical/cable-voltage-drop, electrical/kw-to-amps]
 ---
 
@@ -76,3 +80,43 @@ For more background, read [Earth Fault Loop Impedance (Zs) Testing](https://www.
 ## Check the earth fault loop too
 
 A conductor large enough thermally must also have low enough impedance for the protective device to trip within the required time. Verify the earth fault loop impedance Zs on site.
+
+## Worked example with the default values
+
+A 10 kA earth fault is cleared in 0.4 s and the protective conductor is a separate PVC insulated copper wire (k = 143):
+
+- I²t = 10,000² × 0.4 = 4.0 × 10⁷ A²s
+- S = √(4.0 × 10⁷) ÷ 143 = 6,325 ÷ 143 = **44.2 mm²**
+- Next standard size: **50 mm²**
+
+The same fault needs a different size for each conductor and insulation:
+
+| Conductor | k | Minimum S | Standard size |
+|---|---|---|---|
+| Copper, separate, PVC | 143 | 44.2 mm² | 50 mm² |
+| Copper, separate, XLPE/EPR | 176 | 35.9 mm² | 50 mm² |
+| Copper, core of PVC cable | 115 | 55.0 mm² | 70 mm² |
+| Bare copper, no fire risk | 159 | 39.8 mm² | 50 mm² |
+| Aluminium, separate, PVC | 95 | 66.6 mm² | 70 mm² |
+| Aluminium, separate, XLPE | 116 | 54.5 mm² | 70 mm² |
+| Steel, separate, PVC | 52 | 121.6 mm² | 150 mm² |
+
+## Where k comes from
+
+IEC 60364-5-54 Annex A derives k from the conductor's heat capacity, resistivity and the allowed temperature rise: k = √[Q<sub>c</sub>(B + 20) ÷ ρ<sub>20</sub> × ln((B + θ<sub>f</sub>) ÷ (B + θ<sub>i</sub>))]. For copper (Q<sub>c</sub> = 3.45 × 10⁻³ J/°C mm³, B = 234.5 °C, ρ<sub>20</sub> = 17.241 × 10⁻⁶ Ω mm) and PVC with a final 160 °C, starting at 30 °C gives **143** for a separate conductor, while starting at 70 °C, because a core inside a loaded cable is already warm, gives **115**. That is why the same copper has two very different k values.
+
+## Lower fault current is not always easier
+
+The equation rewards a short disconnection time much more than a low current. A 3 kA fault that a slow fuse clears in 2 s needs √(3,000² × 2) ÷ 143 = **29.7 mm²**, not far below the 10 kA case, and at even lower currents the device may not trip in time at all. Always read t from the device's time current curve at the actual earth fault current. For devices that clear in under 0.1 s, such as MCBs and current limiting fuses in their instantaneous region, use the let through I²t from the manufacturer instead of I² × t.
+
+## Checking it on site
+
+After installation the protective conductor is verified by a continuity test (R1 + R2) and an earth fault loop impedance test. The measured Zs gives the real fault current, I = U<sub>0</sub> ÷ Z<sub>s</sub>, which should be at least the value used in the sizing so the trip time assumed in the calculation holds.
+
+## Common mistakes
+
+- **Using the three phase fault level.** The earth fault current is usually lower because of the earth return impedance, which can mean a longer trip time.
+- **Taking the breaker's nominal 0.4 s instead of its curve.** The real clearing time at the calculated current may be longer or much shorter.
+- **Choosing k for a separate conductor when it is a cable core.** A core in a PVC cable has k = 115, needing about 24% more copper than k = 143.
+- **Rounding down to the nearest size.** 44.2 mm² means 50 mm², not 35 mm².
+- **Ignoring steel armour and conduit k values.** Steel has k around 46 to 52, so armour used as the protective conductor needs about three times the copper area.

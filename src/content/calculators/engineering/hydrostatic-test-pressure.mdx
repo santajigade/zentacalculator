@@ -2,10 +2,10 @@
 title: Hydrostatic Test Pressure Calculator (ASME VIII & B31.3)
 description: Calculate hydrostatic or pneumatic test pressure for vessels and piping to ASME VIII Div 1 and B31.3, with stress ratio, static head and gauge range.
 category: engineering
-intro: "A hydrostatic test proves a new pressure vessel or piping system by filling it with water and holding it above its design pressure, as described in [hydrostatic testing in the oil and gas industry](https://www.instrumentationblog.in/hydrostatic-testing-in-oil-gas-industry/). This hydrostatic test pressure calculator applies the ASME Section VIII Division 1 (1.3 × MAWP) and ASME B31.3 (1.5 × design pressure) factors with the temperature stress ratio, adds the static head at the lowest point and suggests a test gauge range."
+intro: "A hydrostatic test proves a new pressure vessel or pipe system by filling it with water and holding it above design pressure, as described in [hydrostatic testing in the oil and gas industry](https://www.instrumentationblog.in/hydrostatic-testing-in-oil-gas-industry/). This hydrostatic test pressure calculator applies the ASME VIII and B31.3 factors with the stress ratio.\n\nQA engineers and test supervisors use it to write test packs, add the head at the low point and pick a gauge range."
 keywords: [hydrostatic test pressure calculator, hydrotest pressure calculation, hydro test pressure formula, asme b31.3 test pressure, pressure vessel test pressure, pneumatic test pressure, 1.5 times design pressure]
 published: 2026-11-10
-updated: 2026-11-10
+updated: 2026-11-21
 variables:
   - { id: P, label: Design pressure or MAWP (gauge), family: pressure, unit: bar, imperialUnit: psi, default: 10, min: 0 }
   - id: k
@@ -41,6 +41,10 @@ faq:
     a: ASME VIII-1 specifies the test pressure at the top of the vessel in its test position. The bottom sees the test pressure plus the water head, about 0.098 bar per metre, which must not over-stress any part.
   - q: What range should the test pressure gauge have?
     a: ASME VIII-1 UG-102 says the dial range should preferably be about double the test pressure, and never less than 1.5 times or more than 4 times it. Gauges must be calibrated, and a recorder or second gauge is common practice.
+  - q: "Why is a pneumatic test more dangerous than a hydrostatic test?"
+    a: "Gas stores energy as it compresses and releases it all if the vessel fails. A 2 m³ vessel at 14.4 bar g holds about 4.1 MJ as air but only about 1 kJ as water."
+  - q: "Why does the pressure rise during a hydrotest when nothing is added?"
+    a: "Water expands as it warms, and a full, rigid system has no room for it. Sunshine on a pipeline or vessel can raise the gauge reading by several bar per degree, so monitor temperature and keep a bleed valve ready."
 related: [engineering/pressure-vessel-thickness, engineering/barlow-formula, engineering/hydrostatic-pressure, engineering/absolute-gauge-pressure]
 ---
 
@@ -97,3 +101,30 @@ For ambient-temperature services (S<sub>T</sub> = S). The last column is the pre
 - **Vent the high points** before pressurising — trapped air makes a hydrotest store energy like a pneumatic test.
 - **Isolate instruments**, relief valves and anything with a lower rating, following a written [hydrotest procedure for piping](ib:hydrotest-procedure-for-piping-system), and [select a calibrated test gauge](ib:pressure-gauge-selection-7-factors) with the right range.
 - A pneumatic test stores far more energy than a hydrotest; use it only when water cannot be used, with an exclusion zone and a staged pressure increase.
+
+## Second example: a B31.3 piping test with a tall riser
+
+A process line designed for 20 bar g has an allowable stress of 118 MPa at design temperature and 138 MPa at the ambient test temperature. The test gauge is at grade and the lowest point is a drain 15 m below it on a pipe rack riser:
+
+- Stress ratio = 138 ÷ 118 = **1.1695**
+- Test pressure = 1.5 × 20 × 1.1695 = **35.08 bar g** at the gauge
+- At the low point: 35.08 + 1000 × 9.807 × 15 ÷ 10⁵ = **36.56 bar g**
+- Gauge range between 52.6 and 140.3 bar, preferably about 70.2 bar, so a 0 to 60 bar gauge suits
+
+The 1.47 bar of head at the drain is added to the pressure the low point sees. Check that the flanges and valves down there are rated for 36.6 bar g, and that the hoop stress there stays below yield, as B31.3 requires.
+
+## Why a pneumatic test needs extra care
+
+A pneumatic test of the default vessel needs only 12.14 bar g, but compressed air stores far more energy than water. For a 2 m³ vessel at the hydrotest pressure of 14.35 bar g, the water stores about **0.9 kJ** (from its compressibility), while air at the same pressure would release about **4.1 MJ** if the vessel failed, over 4,432 times as much. That is why pneumatic tests use a lower factor, staged pressurisation, a hold at half the test pressure and an exclusion zone.
+
+## How the test is run
+
+Fill from the low point while venting at every high point until water runs clear of air. Raise the pressure slowly with a test pump, with a calibrated gauge or recorder at the top and a second gauge on the pump. Hold the full test pressure for the specified time, then on an ASME VIII-1 vessel lower it to at least 11.04 bar g (test pressure ÷ 1.3) for the close visual inspection of every weld and joint. Keep watch on the water temperature: in a rigid, completely full system, warming by the sun can raise the pressure by several bar for each degree.
+
+## Common mistakes
+
+- **Setting the test pressure at the low point gauge.** ASME VIII-1 defines the test pressure at the top; a gauge at the bottom reads high by the water head.
+- **Leaving out the stress ratio.** For hot services S<sub>T</sub> ÷ S is above 1, and a test at plain 1.3 or 1.5 times design pressure is too low.
+- **Testing against closed valves or relief valves.** Valve seats and relief valves are not test boundaries; use blinds and remove or isolate the relief devices.
+- **Choosing a gauge far over range.** A 0 to 100 bar gauge on a 14 bar test reads in the bottom seventh of the scale, where small errors and pointer friction dominate.
+- **Draining without venting.** Opening the drain with the high point vent shut can pull a vacuum and collapse thin tanks or large thin wall pipe.

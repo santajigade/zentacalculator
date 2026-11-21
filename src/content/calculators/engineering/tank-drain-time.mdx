@@ -2,10 +2,10 @@
 title: Tank Drain Time Calculator (Fill & Empty Time)
 description: Calculate how long a tank takes to drain by gravity through a bottom outlet (Torricelli's law), the outflow rate, and the time to fill it at a set flow.
 category: engineering
-intro: "A tank emptying through a hole or short nozzle in its bottom slows down as it drains, because the outflow velocity depends on the square root of the liquid head. This tank drain time calculator integrates Torricelli's law to give the time to drop from one level to another, the starting and final outflow and the volume drained, and also the time needed to fill the same volume at a constant inflow."
+intro: "A tank emptying through a bottom outlet slows down as it drains, because the outflow velocity follows the square root of the liquid head. This tank drain time calculator applies Torricelli's law to give the time between two levels, the start and end outflow, and the time to refill at a set flow.\n\nProcess and maintenance engineers use it to plan tank cleaning and batch transfers, and to choose an outlet size that empties a vessel within the time available."
 keywords: [tank drain time calculator, tank draining time, time to empty a tank, torricelli law calculator, tank fill time calculator, gravity drain time, orifice discharge time]
 published: 2026-11-11
-updated: 2026-11-11
+updated: 2026-11-21
 variables:
   - { id: D, label: Tank inside diameter (vertical cylinder), family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
   - { id: d, label: Outlet (orifice) diameter, family: length, unit: mm, imperialUnit: in, default: 50, min: 0 }
@@ -42,6 +42,10 @@ faq:
     a: About 0.61 for a sharp-edged hole in a thin plate, 0.8–0.82 for a short tube or nozzle, 0.95–0.98 for a smooth bell-mouthed outlet and about 0.5 for a tube projecting into the tank. If the tank drains through a long pipe or a valve, the pipe friction controls the flow and the coefficient is much lower.
   - q: How is the fill time calculated?
     a: With a constant inflow and the outlet closed, the fill time is simply the volume between the two levels divided by the flow rate. If the outlet stays open, the level rises only until the outflow √(2 g h) term equals the inflow.
+  - q: "Can I use this for viscous liquids like oil or syrup?"
+    a: "Only as a first estimate. Viscous liquids discharge with a lower coefficient, and it drops further as the head falls, so the real time is longer. Time a test drain and back-calculate the coefficient for the liquid you handle."
+  - q: "How can I check the discharge coefficient of my tank outlet?"
+    a: "Time the level fall between two marks and scale the coefficient by calculated time over measured time. If the default tank takes 30 minutes instead of 25.4, the effective coefficient is about 0.52."
 related: [engineering/orifice-flow, engineering/vertical-tank-volume, engineering/cone-bottom-tank-volume, engineering/residence-time]
 ---
 
@@ -103,3 +107,32 @@ Doubling the outlet diameter cuts the time by four; doubling the tank diameter m
 - **Closed tanks** need a vent sized for the outflow, otherwise the vacuum above the liquid slows or stops draining.
 - **Cone or dished bottoms** hold extra liquid below the straight side; for a [cone bottom tank](/engineering/cone-bottom-tank-volume/) the last part drains faster than this formula predicts because the area shrinks.
 - Vortexing near the end of draining can draw air into the outlet and reduce the flow further.
+
+## Outlet type and drain time
+
+The discharge coefficient changes the time in direct proportion. For the default 2 m tank and 50 mm outlet:
+
+| Outlet | C<sub>d</sub> | 3 m to 0.2 m | 3 m to empty |
+|---|---|---|---|
+| Re-entrant tube | 0.50 | 30.9 min | 41.7 min |
+| Sharp-edged hole | 0.61 | 25.4 min | 34.2 min |
+| Short nozzle | 0.82 | 18.9 min | 25.4 min |
+| Bell-mouth | 0.97 | 16.0 min | 21.5 min |
+
+Swapping a sharp-edged hole for a short nozzle of the same bore cuts the drain time from 25.4 to 18.9 minutes without any change to the tank.
+
+## Sizing an outlet for a target time
+
+Drain time is inversely proportional to the outlet area, so the bore scales with the square root of the time ratio. To bring the default tank from 3 m to 0.2 m in 15 minutes instead of 25.37, the outlet must be 50 × √(25.37 ÷ 15) = **65.0 mm**, so a standard DN65 nozzle does the job.
+
+## Checking the outlet on site
+
+Timing a real drain is a quick check of the outlet. If the default tank takes 30 minutes instead of the calculated 25.37, the effective coefficient is 0.61 × 25.37 ÷ 30 = **0.516**. A value well below the table suggests a partly closed valve, a strainer, debris in the nozzle or a drain line long enough for friction to control the flow. Level can be read from a sight glass, a dip tape or the level transmitter trend, using two readings well apart so the timing error stays small.
+
+## Common mistakes
+
+- **Assuming the flow stays at its starting value.** Dividing the volume by the initial outflow gives 8.80 m³ ÷ 33.07 m³/h × 60 = 16.0 min, far short of the real 25.4 min.
+- **Measuring levels from the tank floor.** The head is measured from the outlet centre; for a side nozzle 300 mm above the floor, the liquid below the nozzle never drains and the levels entered must be reduced by 0.3 m.
+- **Using C<sub>d</sub> 0.61 for a drain line.** Once the liquid passes through a pipe, valve and bends, friction controls the flow and the effective coefficient may be 0.2 to 0.4.
+- **Applying water figures to viscous liquids.** Oils, syrups and slurries have lower coefficients, especially at low head near the end of draining.
+- **Leaving an inflow running.** Any feed still entering the tank extends the drain time, and if it exceeds the outflow at the final head, the level never reaches it.

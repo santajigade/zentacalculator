@@ -2,10 +2,10 @@
 title: Mass Flow Rate Calculator
 description: Convert volumetric flow to mass flow and back using fluid density — kg/h, t/h, lb/h, m³/h, L/min and more.
 category: engineering
-intro: "Mass flow is what matters for reactions, billing and energy balances, because it does not change with temperature or pressure the way volume does. Read the [difference between mass flow and volumetric flow](https://www.instrumentationblog.in/difference-between-mass-flow-and-volumetric-flow/) and how a [thermal mass flow meter works](https://www.instrumentationblog.in/thermal-mass-flow-meter-working/). This free mass flow rate calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Mass flow is the amount of material passing per unit time, and unlike volume it does not change with temperature or pressure. This mass flow rate calculator converts volumetric flow to mass flow and back using density, in kg/h, t/h, lb/h, m³/h and L/min.\n\nProcess, utility and billing engineers use it for energy balances, dosing and custody transfer; see the [difference between mass flow and volumetric flow](https://www.instrumentationblog.in/difference-between-mass-flow-and-volumetric-flow/) and how a [thermal mass flow meter works](https://www.instrumentationblog.in/thermal-mass-flow-meter-working/)."
 keywords: [mass flow rate, volumetric flow to mass flow, kg/h to m3/h, density, flow conversion, coriolis]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: Q, label: Volumetric flow, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
   - { id: rho, label: Density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
@@ -19,8 +19,10 @@ faq:
     a: "Mass does not change with temperature or pressure, while volume does. Billing, batching and chemical dosing usually rely on mass."
   - q: "Which flow meters measure mass directly?"
     a: "Coriolis meters measure mass flow directly. Thermal mass meters do for gases. Others measure volume and need density to calculate mass."
-  - q: "Why is mass flow preferred over volume flow?"
-    a: "Mass does not change with temperature or pressure, so mass flow gives consistent results for billing, mixing and energy balances."
+  - q: "How do I convert Nm³/h of air to kg/h?"
+    a: "Multiply by the normal density, about 1.292 kg/m³ for dry air at 0 °C and 1.01325 bar(a). 500 Nm³/h is about 646 kg/h."
+  - q: "How do I convert kg/h of diesel to litres per minute?"
+    a: "Divide by the density to get m³/h, multiply by 1,000 for L/h and divide by 60. 2,000 kg/h at 835 kg/m³ is 2.395 m³/h, about 39.9 L/min."
 related: [engineering/pipe-flow-velocity, engineering/heat-duty]
 ---
 
@@ -81,3 +83,36 @@ Water is 998 kg/m³ at 20 °C but about 965 kg/m³ at 90 °C. A volumetric meter
 | Milk | ~1,030 |
 | Air (20 °C, 1 atm) | 1.204 |
 | Natural gas (standard) | ~0.75 |
+
+## The default result in other units
+
+The default 50 m³/h of water at 998 kg/m³ is 49,900 kg/h, which is:
+
+| Unit | Mass flow |
+|---|---|
+| kg/s | 13.86 |
+| kg/min | 831.7 |
+| kg/h | 49,900 |
+| t/h | 49.9 |
+| lb/h | 110,011 |
+| t/day | 1,197.6 |
+
+## Gas example: normal flow to actual flow
+
+A compressor delivers **500 Nm³/h** of air. Dry air at 0 °C and 1.01325 bar(a) has a density of p ÷ (R T) = 101,325 ÷ (287.05 × 273.15) = 1.292 kg/m³, so the mass flow is **646 kg/h**. In the 7 barg header at 30 °C the density is 801,325 ÷ (287.05 × 303.15) = 9.21 kg/m³, so the same mass occupies only **70.2 m³/h** of actual volume. Pipe velocity and meter sizing use the actual figure; compressor ratings and billing use the normal one.
+
+## Liquid fuel example
+
+A burner needs **2,000 kg/h** of diesel at 835 kg/m³. Enter the mass flow and density and clear the volume: Q = 2,000 ÷ 835 = **2.395 m³/h**, or 39.9 L/min, which is the figure for choosing a gear pump or a positive displacement meter.
+
+## How mass flow is measured
+
+A [Coriolis flow meter](https://www.instrumentationblog.in/coriolis-flow-meter-working-principle/) measures mass directly from the twist of vibrating tubes and also reports density. Most other meters (magnetic, vortex, turbine, differential pressure) measure volume or velocity, and the flow computer multiplies by a density calculated from temperature and pressure or from a densitometer. That density value is where most mass flow errors come from.
+
+## Common mistakes
+
+- **Using 998 kg/m³ for hot water.** At 80 °C water is about 971.8 kg/m³; using the cold value overstates the mass by 2.7% on a volumetric meter.
+- **Taking gauge pressure in the gas density.** p ÷ (R T) needs absolute pressure; 7 barg is 8.01 bar(a), not 7.
+- **Mixing Nm³ and Sm³.** Normal (0 °C) and standard (15 °C or 60 °F) conditions differ by about 5% in density.
+- **Converting specific gravity with 1,000 kg/m³ when the reference is 15 °C water.** SG values for oils are referenced to water at 15 °C or 60 °F (999.0 to 999.1 kg/m³), a small but real offset in custody transfer.
+- **Confusing kg/h and kg/s.** A factor of 3,600 error is common when copying results into energy balances that need kg/s.

@@ -2,10 +2,10 @@
 title: Hydraulic Cylinder Force Calculator
 description: Calculate push and pull force of a hydraulic cylinder from pressure, bore and rod diameter — or the pressure for a required force.
 category: engineering
-intro: "Hydraulic cylinders turn fluid pressure into large linear forces for presses, excavators and machines. The force depends on pressure and piston area, and is lower when retracting because the rod takes up part of the area. This free hydraulic cylinder force calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A hydraulic cylinder turns oil pressure into a large straight-line force, equal to pressure times piston area. This hydraulic cylinder force calculator gives the push force on the full bore and the pull force on the smaller annulus left beside the rod, or the pressure needed for a load.\n\nMachine designers, maintenance fitters and press operators use it to size cylinders, set relief valves and check whether a cylinder can still lift its load."
 keywords: [hydraulic cylinder force, cylinder force, bore, rod, hydraulic pressure, push force, pull force, tonnage]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: P, label: Working pressure, family: pressure, unit: bar, imperialUnit: psi, default: 160, min: 0 }
   - { id: d, label: Bore (piston) diameter, family: length, unit: mm, imperialUnit: in, default: 50, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: "Use the pressure available at the cylinder. Losses in hoses and valves, plus friction in the seals, reduce the real force by a few percent."
   - q: "How much force does a 50 mm cylinder produce at 200 bar?"
     a: "Area = π × 0.05² ÷ 4 = 0.00196 m², so force = 20,000,000 × 0.00196 = 39.3 kN."
+  - q: "Can the rod side pressure be higher than the pump pressure?"
+    a: "Yes. If the rod port is blocked, cap end pressure is multiplied by the area ratio. The default cylinder at 160 bar can build about 233 bar on the rod side, which is why rod side components need a relief or a higher rating."
+  - q: "How fast does a hydraulic cylinder retract?"
+    a: "Retract speed is flow divided by the annulus area. With 20 L/min the default 50/28 mm cylinder retracts at about 0.25 m/s, faster than its 0.17 m/s extend speed."
 related: [engineering/hydrostatic-pressure, engineering/torque-power-speed]
 ---
 
@@ -73,8 +77,38 @@ In a regenerative circuit, oil from the rod end is fed back to the cap end durin
 - Check **rod buckling** for long strokes under compression.
 - Use pressure relief valves set below the cylinder's rated pressure.
 
-## Quick sizing tips
+## Pressure needed for a load
 
-- Add a safety margin of **20–30%** over the calculated load.
-- Check the rod for **buckling** on long strokes — slender rods can fail before the force limit is reached.
-- Cylinder speed depends on pump flow: speed = flow ÷ effective area.
+To lift a 25 kN load with the default 50 mm cylinder and a 25% margin, the cylinder must produce 31.25 kN. The pressure is F ÷ A = 31,250 N ÷ 19.635 cm² = **159 bar**. In the calculator, clear Working pressure and enter 31.25 kN as the push force.
+
+For a 10 tonne press at 210 bar the minimum bore is √(4F ÷ πP) = **77.1 mm**, so the next standard size, 80 mm, is chosen.
+
+## Extend and retract speed
+
+With 20 L/min from the pump the default cylinder extends at 0.170 m/s and retracts at **0.247 m/s**, because the annulus is only 13.48 cm² against 19.63 cm² for the full bore. The area ratio φ = 1.46 also means the cap end returns 1.46 times the oil the pump supplies during retraction, so the return line and filter must be sized for that larger flow.
+
+## Force of the default cylinder at common pressures
+
+| Pressure | Push | Pull | Push in tonnes |
+|---|---|---|---|
+| 70 bar (1,015 psi) | 13.7 kN | 9.4 kN | 1.40 t |
+| 100 bar (1,450 psi) | 19.6 kN | 13.5 kN | 2.00 t |
+| 160 bar (2,321 psi) | 31.4 kN | 21.6 kN | 3.20 t |
+| 210 bar (3,046 psi) | 41.2 kN | 28.3 kN | 4.20 t |
+| 250 bar (3,626 psi) | 49.1 kN | 33.7 kN | 5.01 t |
+
+## Pressure intensification on the rod side
+
+If the rod port is blocked while full pressure acts on the cap end, the oil trapped on the rod side is squeezed by the area ratio. At 160 bar on the default cylinder the rod side can reach **233 bar**, enough to burst a hose or blow a seal rated for system pressure. Meter-out flow controls and pilot operated check valves on the rod port need this checked.
+
+## Measuring the real force
+
+Fit a gauge or pressure transducer at the cylinder port, not at the pump, because hoses and valves drop pressure during motion. The force on the load is then the port pressure times area minus seal friction, typically 2 to 5% of rated force. A load cell under the rod end gives the true force for press calibration.
+
+## Common mistakes
+
+- **Mixing bar and MPa.** 160 bar is 16 MPa; entering 160 MPa gives a force ten times too high.
+- **Using the rod diameter as the annulus.** The pull area is π(d² − r²) ÷ 4, not π r² ÷ 4.
+- **Reading pressure at the pump.** Pressure at the cylinder is lower while moving, so the force is less than the pump gauge suggests.
+- **Assuming a single rod cylinder pulls as hard as it pushes.** Only a through rod (double rod) cylinder has equal areas on both sides; the default one pulls 69% of its push force.
+- **Ignoring back pressure.** Pressure in the return line acts against the piston and reduces the net force.

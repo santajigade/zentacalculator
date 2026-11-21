@@ -2,10 +2,10 @@
 title: Cooling Tower Calculator (Range, Approach, Evaporation)
 description: Calculate cooling tower range, approach and efficiency, heat rejected in kW and tons, and the evaporation, blowdown and makeup water for a given flow.
 category: engineering
-intro: "A cooling tower rejects heat from condenser or process water by evaporating a small part of it into the air. This cooling tower calculator works out the range, approach and effectiveness from the hot water, cold water and wet bulb temperatures, the heat rejected in kW and refrigeration tons, and the evaporation, drift, blowdown and makeup water flows for the cycles of concentration you run."
+intro: "A cooling tower removes heat from condenser or process water by evaporating a small part of it into a moving air stream. This cooling tower calculator finds the range, approach and effectiveness, the heat rejected, and the evaporation, drift, blowdown and makeup flows.\n\nUtility engineers and HVAC operators use it to check tower performance against design, plan makeup water supply and set the blowdown that keeps dissolved solids under control."
 keywords: [cooling tower calculator, cooling tower range and approach, cooling tower efficiency calculation, cooling tower evaporation loss, cooling tower makeup water calculation, cooling tower blowdown calculation, cycles of concentration calculator]
 published: 2026-11-13
-updated: 2026-11-13
+updated: 2026-11-21
 variables:
   - { id: Th, label: Hot water temperature (tower inlet), family: temperature, unit: C, imperialUnit: F, default: 37 }
   - { id: Tc, label: Cold water temperature (tower outlet), family: temperature, unit: C, imperialUnit: F, default: 32 }
@@ -39,6 +39,10 @@ faq:
     a: About 0.153% of the circulating flow for every 1 °C of range (the rule E = 0.00085 × flow × range in °F from Perry's handbook), so roughly 1% of the flow for every 6.5 °C (12 °F). A 500 m³/h tower with a 5 °C range evaporates about 3.8 m³/h. The rule assumes nearly all heat leaves as latent heat; the real figure is a little lower in cold weather.
   - q: How do you calculate blowdown and makeup water?
     a: Blowdown B = E ÷ (COC − 1) − drift, and makeup M = evaporation + blowdown + drift = E × COC ÷ (COC − 1). Raising the cycles of concentration from 2 to 5 cuts the makeup by over a third, but the water treatment must then cope with higher scaling and corrosion potential.
+  - q: "How do I find cycles of concentration from conductivity?"
+    a: "Divide the basin water conductivity by the makeup water conductivity. 1200 µS/cm in the basin with 250 µS/cm makeup is 4.8 cycles. Chloride or silica ratios give the same figure and are not upset by acid dosing."
+  - q: "What happens to the cold water temperature on a more humid day?"
+    a: "It rises with the wet bulb. A tower that holds a 4 K approach gives 32 °C water at a 28 °C wet bulb but about 34 °C at a 30 °C wet bulb, for the same load and flow."
 related: [engineering/chiller-tonnage, engineering/heat-duty, engineering/lmtd, engineering/dew-point, engineering/pump-power]
 ---
 
@@ -99,3 +103,26 @@ Per 1,000 m³/h of circulating water with a 5 °C range (evaporation 7.65 m³/h)
 - **Range follows the load:** for a fixed flow the range rises and falls with the heat load; the approach stays fairly constant.
 - **Cycles of concentration** are usually measured as the ratio of conductivity or chloride in the basin to that in the makeup water. Gains above about 6–8 cycles are small, while scaling risk keeps rising.
 - **Design wet bulb:** size the tower on the local summer design wet bulb (often the 1% or 0.4% value), not the dry bulb temperature. Use the [dew point calculator](/engineering/dew-point/) for humidity checks and the [chiller tonnage calculator](/engineering/chiller-tonnage/) to size the chiller the tower serves.
+
+## Finding the cycles from conductivity readings
+
+Cycles of concentration are rarely known directly; they are read from conductivity. If the makeup water measures **250 µS/cm** and the basin **1200 µS/cm**, the tower runs at 1200 ÷ 250 = **4.8 cycles**. Entered with the other default values, that gives:
+
+- Blowdown = 3.825 ÷ (4.8 − 1) − 0.10 = **0.907 m³/h**
+- Makeup = **4.832 m³/h**, against 5.10 m³/h at 4 cycles
+
+Pushing on to 6 cycles cuts the makeup to 4.59 m³/h, a saving of about **12 m³ a day**. Whether that is safe depends on the makeup water's hardness, alkalinity and silica, which set the scaling limit for the treatment programme.
+
+## Checking a tower against its design
+
+A tower test needs four readings taken together at steady load: hot water temperature at the inlet header, cold water temperature at the basin outlet, wet bulb temperature at the air inlet (an aspirated psychrometer, not a dry bulb sensor) and circulating flow. Flow is often checked with a clamp-on meter on the riser; see [how an ultrasonic flow meter works](https://www.instrumentationblog.in/how-ultrasonic-flow-meter-works/) for its limits on lined or corroded pipe.
+
+On a humid day with a 30 °C wet bulb, a tower holding the same 4 K approach delivers 34 °C water, and with a 5 to 34 °C duty it still rejects 2,907 kW. The chiller now sees condenser water 2 K warmer, which typically costs it a few percent more compressor power per kelvin. A tower that drifts from a 4 K to a 6 K approach at the same wet bulb and load needs its fill, nozzles and fan checked.
+
+## Common mistakes
+
+- **Using the dry bulb temperature.** Evaporative cooling is limited by the wet bulb; using the dry bulb makes the approach look far better than it is.
+- **Reading cold water temperature in the basin surface.** Measure in the outlet pipe or at the pump suction, where the water is mixed.
+- **Treating effectiveness as the main performance figure.** Effectiveness changes with range; the approach at a known wet bulb, load and flow is what tower suppliers guarantee.
+- **Counting drift as blowdown.** Drift does remove dissolved solids, but modern eliminators keep it so small that it cannot replace controlled blowdown.
+- **Setting blowdown by a fixed timer.** Load and weather change the evaporation through the day; conductivity controlled blowdown holds the cycles steady.

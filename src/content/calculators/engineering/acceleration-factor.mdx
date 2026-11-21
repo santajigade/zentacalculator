@@ -2,10 +2,10 @@
 title: Arrhenius Acceleration Factor Calculator (HTOL, FIT & MTTF)
 description: Calculate the Arrhenius acceleration factor between stress and use temperatures, equivalent device-hours, and FIT rate and MTTF from a zero-failure life test.
 category: engineering
-intro: "Accelerated life tests run parts hot so that a few weeks represent years of field use, and the Arrhenius model converts test hours into equivalent use hours. This acceleration factor calculator gives the Arrhenius acceleration factor from the activation energy and the two temperatures, then the upper-bound failure rate in FIT and the MTTF demonstrated by a test with zero failures at your confidence level."
+intro: "Accelerated life tests run parts hot so that a few weeks represent years of field use. This acceleration factor calculator applies the Arrhenius model to the activation energy and the use and stress temperatures, then turns a zero-failure test into a FIT rate and MTTF.\n\nReliability and quality engineers use it to plan HTOL and burn-in tests, to check supplier qualification reports and to quote failure rates for electronics in reliability predictions."
 keywords: [acceleration factor calculator, arrhenius acceleration factor, htol calculator, fit rate calculator, accelerated life test calculator, activation energy reliability, mttf from life test]
 published: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-21
 variables:
   - { id: Ea, label: Activation energy Ea, suffix: eV, default: 0.7, min: 0, help: 'JEDEC and many suppliers use 0.7 eV for general semiconductor failure mechanisms.' }
   - { id: Tu, label: Use (field) temperature, family: temperature, unit: C, imperialUnit: F, default: 55, min: 0 }
@@ -33,6 +33,10 @@ faq:
     a: With no failures, the upper confidence bound on the failure rate is λ = −ln(1 − CL) ÷ (device-hours × AF). At 60% confidence −ln(0.4) = 0.916, at 90% it is 2.303. This equals the chi-square method χ²(CL, 2) ÷ (2 × device-hours × AF).
   - q: Why is MTTF from a life test so large?
     a: Because it is an MTTF for random failures during the useful life, not a wear-out lifetime. An MTTF of 1,000 years means that in a population of 1,000 devices about one fails per year — not that a single device lasts 1,000 years.
+  - q: "How many devices and hours do I need to demonstrate a FIT target?"
+    a: "Divide −ln(1 − CL) by the target failure rate to get equivalent device-hours, then divide by the acceleration factor. For 50 FIT at 60% confidence with AF = 77.6, that is about 236,019 device-hours, roughly 237 parts for 1,000 h."
+  - q: "Should I use ambient or junction temperature for the acceleration factor?"
+    a: "Junction temperature, for both the test and the field. A device dissipating 0.5 W at 40 K/W in a 125 °C oven has a 145 °C junction, which raises AF from 78 to about 206."
 related: [chemistry/arrhenius-equation, engineering/weibull-reliability, engineering/availability-mtbf, electronics/capacitor-lifetime]
 ---
 
@@ -70,3 +74,38 @@ A JEDEC-style HTOL test of 77 devices for 1,000 h at 125 °C with no failures, f
 - The Arrhenius model covers temperature-driven mechanisms only. Humidity (Peck model, 85 °C/85% RH), voltage and temperature cycling (Coffin–Manson) need their own acceleration factors.
 - With r failures, replace −ln(1 − CL) by χ²(CL; 2r + 2) ÷ 2 — for example 2.02 at 60% confidence and 1 failure.
 - Don't push the stress temperature past the point where new failure mechanisms appear (package glass transition, solder melting), or the acceleration factor is meaningless.
+
+## Planning a test to prove a FIT target
+
+The calculator can be run backwards to size a test. Suppose a customer asks for no more than **50 FIT** at 60% confidence, with the same 55 °C use temperature, 125 °C stress and E<sub>a</sub> = 0.7 eV:
+
+- Required equivalent device-hours = 0.916 ÷ (50 × 10⁻⁹) = **18,325,815 h**
+- Real device-hours in the oven = 18,325,815 ÷ 77.65 = **236,019 h**
+- With 77 devices that is about **3,065 h** of testing, or about **237 devices** for a standard 1,000 h run
+
+The default test of 77 devices for 1,000 h only reaches 153 FIT, so either the sample, the duration or the stress temperature has to rise.
+
+## How confidence level changes the result
+
+For the default 77 × 1,000 h test with zero failures:
+
+| Confidence | −ln(1 − CL) | FIT upper bound | MTTF lower bound |
+|---|---|---|---|
+| 50% | 0.693 | 116 FIT | 984 years |
+| 60% | 0.916 | 153 FIT | 744 years |
+| 90% | 2.303 | 385 FIT | 296 years |
+| 95% | 2.996 | 501 FIT | 228 years |
+
+Reports often quote 60% because it gives a smaller number; customers in automotive and medical work usually ask for 90%.
+
+## How the test is run in practice
+
+HTOL (high temperature operating life, JEDEC JESD22-A108) parts are biased and exercised inside a chamber, normally at 125 °C ambient, and taken out at read points such as 168, 500 and 1,000 hours for electrical testing at room and hot temperature. The acceleration factor must use the **junction** temperature. If each device dissipates 0.5 W with θ<sub>JA</sub> = 40 K/W, the junction sits at 145 °C, the acceleration factor rises to **206** and the same test demonstrates **58 FIT**. Ignoring that self heating understates the stress, while claiming it without measuring it overstates the result.
+
+## Common mistakes
+
+- **Entering temperatures in °C inside the formula.** The Arrhenius term needs kelvin; the calculator converts, but hand calculations with 55 and 125 give nonsense.
+- **Assuming a cool field temperature.** If the product actually runs at 65 °C instead of 55 °C, AF falls from 77.6 to 37.3 and the same test only supports 319 FIT.
+- **Picking a high E<sub>a</sub> to flatter the numbers.** Moving from 0.7 eV to 1.0 eV multiplies AF several times, so the value must come from the failure mechanism, not from the target.
+- **Pooling tests with different conditions.** Device-hours from 125 °C and 150 °C runs must each be multiplied by their own AF before adding.
+- **Reading MTTF as product life.** A demonstrated MTTF of hundreds of years describes the random failure rate, not how long a single part lasts before wear-out.

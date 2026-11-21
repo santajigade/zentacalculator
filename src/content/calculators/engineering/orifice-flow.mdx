@@ -2,10 +2,10 @@
 title: Orifice Plate Flow Calculator
 description: Calculate liquid flow through an orifice plate from differential pressure, bore, pipe size and density — or the DP for a given flow.
 category: engineering
-intro: "The orifice plate is the most widely used flow element in industry: a thin plate with a hole that creates a pressure drop proportional to flow squared. Learn about [orifice plate flow measurement](https://www.instrumentationblog.in/orifice-plate-flow-measurement/), the [orifice plate sizing guide](https://www.instrumentationblog.in/orifice-plate-sizing-guide/) and how it compares in [flow nozzle vs orifice plate vs Venturi](https://www.instrumentationblog.in/flow-nozzle-vs-orifice-plate-vs-venturi/)."
+intro: "The orifice plate is a thin plate with a bore that creates a differential pressure proportional to the square of flow. This orifice plate flow calculator gives liquid flow from that DP, the bore, the pipe size and density, as covered in [orifice plate flow measurement](https://www.instrumentationblog.in/orifice-plate-flow-measurement/).\n\nInstrument engineers use it to check plates, set DP transmitter ranges and compare elements, using the [orifice plate sizing guide](https://www.instrumentationblog.in/orifice-plate-sizing-guide/) and [flow nozzle vs orifice plate vs Venturi](https://www.instrumentationblog.in/flow-nozzle-vs-orifice-plate-vs-venturi/)."
 keywords: [orifice plate, orifice flow, differential pressure flow, beta ratio, discharge coefficient, dp flow meter, iso 5167]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: D, label: Pipe inner diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
   - { id: d, label: Orifice bore, family: length, unit: mm, imperialUnit: in, default: 50, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: "About 0.60–0.62 for sharp-edged concentric orifices in turbulent flow."
   - q: "What beta ratio should I use?"
     a: "Typically 0.3–0.7. Lower beta gives more DP and better low-flow measurement but higher permanent pressure loss."
+  - q: "What happens if an orifice plate is installed backwards?"
+    a: "With the bevelled side facing upstream the jet contracts less, the discharge coefficient rises and the meter reads low by several percent. Check the tab marking, which normally shows the upstream side and the bore."
+  - q: "How do I choose the DP range for an orifice transmitter?"
+    a: "Scale the known flow and DP to the maximum flow: DP_max = DP × (Q_max ÷ Q)². For the default plate, 40 m³/h needs about 403 mbar."
 related: [engineering/venturi-flow, engineering/dp-flow-square-root, engineering/pipe-flow-velocity, engineering/reynolds-number]
 ---
 
@@ -94,3 +98,34 @@ The discharge coefficient depends on the tapping type, so use the matching corre
 - Provide enough **straight pipe** upstream (often 10–40 D depending on fittings) and downstream (about 5 D).
 - Turndown is limited to about **3:1 to 4:1** with one DP transmitter, because flow follows the square root of DP. See the [DP square root calculator](/engineering/dp-flow-square-root/).
 - For gases and steam, an expansibility factor is also needed.
+
+## Example: setting the transmitter range
+
+With the default plate (50 mm bore in a 100 mm pipe, β = 0.5, C<sub>d</sub> = 0.61) and water at 998 kg/m³, 250 mbar gives **31.52 m³/h**. Suppose the line must read up to 40 m³/h. Because flow follows √ΔP, the DP at maximum flow is 250 × (40 ÷ 31.52)² = **403 mbar**, so a 0 to 403 mbar transmitter range (or the next round value above it) suits this plate.
+
+At the default flow the pipe Reynolds number is about 111,037, comfortably in the range where a fixed C<sub>d</sub> of 0.61 is reasonable. The permanent loss at 250 mbar is about (1 − 0.5<sup>1.9</sup>) × 250 = **183 mbar**.
+
+## Square root relationship for this plate
+
+| DP (% of range) | DP | Flow (% of max) | Flow |
+|---|---|---|---|
+| 1% | 4.0 mbar | 10.0% | 4.0 m³/h |
+| 4% | 16.1 mbar | 20.0% | 8.0 m³/h |
+| 10% | 40.3 mbar | 31.6% | 12.6 m³/h |
+| 25% | 100.6 mbar | 50.0% | 20.0 m³/h |
+| 50% | 201.3 mbar | 70.7% | 28.3 m³/h |
+| 100% | 402.6 mbar | 100.0% | 40.0 m³/h |
+
+The bottom of the table shows the turndown problem: the first 10% of the DP range covers almost a third of the flow, so small DP errors near zero become large flow errors. Most systems apply a low flow cutoff near 5 to 10% of flow.
+
+## How it is installed and read
+
+The plate sits between flanges with its sharp, square edge facing upstream and the bevel downstream. Impulse lines run from the taps to a DP transmitter through a three-valve or five-valve manifold, sloped so that gas vents back to the pipe on liquid service. The square root is extracted once, either in the transmitter or in the control system, and the zero is checked by opening the equalising valve.
+
+## Common mistakes
+
+- **Taking the square root twice.** If the transmitter output is already linear in flow, the DCS input must be set to linear, or the reading is badly low across the range.
+- **Fitting the plate backwards.** With the bevel facing upstream the discharge coefficient rises and the meter reads several percent low.
+- **Gas trapped in liquid impulse lines.** A bubble in one leg adds a false head and shifts the zero.
+- **Using design density at a different temperature.** Hot water at 90 °C is about 965 kg/m³, which changes the flow by about 1.7% for the same DP.
+- **Ignoring a worn or dirty edge.** A rounded edge or deposits on the upstream face raise C<sub>d</sub>, so an old plate reads low.

@@ -2,10 +2,10 @@
 title: Beam Deflection Calculator (Simply Supported & Cantilever)
 description: Calculate the maximum deflection and bending moment of a simply supported beam with a central point load and a cantilever with an end load, from E and I.
 category: engineering
-intro: "How much a beam sags depends on the load, the cube of its span and its flexural stiffness E·I. This beam deflection calculator gives the maximum deflection and bending moment for the two most common cases — a simply supported beam with a central point load and a cantilever with a load at its tip — the same elastic bending that a [beam-type load cell](https://www.instrumentationblog.in/load-cell-working-principle/) uses to measure force."
+intro: "How much a beam sags depends on the load, the cube of its span and its flexural stiffness E·I. This beam deflection calculator gives the maximum deflection and bending moment for a simply supported beam with a central point load and for a cantilever loaded at its tip.\n\nStructural engineers, fabricators and students use it for quick serviceability checks, and the same elastic bending is what a [beam-type load cell](https://www.instrumentationblog.in/load-cell-working-principle/) uses to measure force."
 keywords: [beam deflection calculator, simply supported beam deflection, cantilever beam deflection, point load deflection, pl^3/48ei, pl^3/3ei, steel beam deflection calculator]
 published: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-21
 variables:
   - { id: P, label: Point load, family: force, unit: kN, imperialUnit: lbf, default: 5, min: 0 }
   - { id: L, label: Span (length), family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: Typical serviceability limits are span/360 for floors with brittle finishes, span/250 for general floors and span/180 for roofs. Check your design code.
   - q: What is EI?
     a: The flexural rigidity — Young's modulus of the material times the second moment of area of the cross-section. Doubling the depth of a rectangular beam increases I, and the stiffness, eightfold.
+  - q: "How do I include a uniformly distributed load and a point load together?"
+    a: "Work out each deflection separately and add them, because both peak at mid-span on a simply supported beam. For the default IPE 200 the 5 kN point load gives 0.72 mm and its own weight adds 0.060 mm."
+  - q: "How do I find I for a rectangular timber or steel section?"
+    a: "Use I = b h³ ÷ 12 with h the depth in the direction of bending. A 75 × 200 mm joist on edge has 5,000 cm⁴; laid flat it has only 703 cm⁴."
 related: [engineering/bending-stress, engineering/area-moment-of-inertia, physics/youngs-modulus, engineering/factor-of-safety]
 ---
 
@@ -75,3 +79,40 @@ A steel IPE 200 (I = 1,943 cm⁴, E = 200 GPa) spanning 3 m with a 5 kN load:
 
 - Check the bending stress as well as deflection — use the [bending stress calculator](/engineering/bending-stress/) with the moment from this page.
 - These formulas assume small, elastic deflections of a straight, uniform beam.
+
+## Adding the beam's own weight
+
+The calculator covers the point load only. An IPE 200 weighs about 22.4 kg/m, a uniform load of 220 N/m. Over the default 3 m simple span it adds 5wL⁴ ÷ (384EI) = **0.060 mm**, so the total mid-span sag is about **0.78 mm**. Because the maximum deflections of both cases occur at mid-span, they can simply be added (superposition holds for elastic, small deflections).
+
+## Second example: a timber floor joist
+
+A 75 × 200 mm softwood joist (I = b h³ ÷ 12 = 5,000 cm⁴, E = 11,000 MPa) spans 3.6 m with a 2 kN point load at mid-span:
+
+- δ = 2,000 × 3.6³ ÷ (48 × 11 × 10⁹ × 5.0 × 10⁻⁵ m⁴) = **3.5 mm**
+- The L/360 limit for a floor is 10 mm, so the joist passes for this load
+- Laid flat (I = 703 cm⁴) the same joist would sag **25 mm**, which shows why joists are always set on edge
+
+Enter E = 11,000 MPa and I = 5,000 cm⁴ to reproduce it.
+
+## Deflection limits for the default 3 m beam
+
+| Use | Limit | Allowed δ | Largest centre load on the IPE 200 |
+|---|---|---|---|
+| Floors with brittle finishes | L/360 | 8.3 mm | 58 kN |
+| General floors | L/250 | 12.0 mm | 83 kN |
+| Roofs | L/180 | 16.7 mm | 115 kN |
+| Cantilevers (common rule) | L/180 | 16.7 mm | 115 kN |
+
+The load column comes from P = 48EIδ ÷ L³; bending stress usually governs long before these loads are reached, so check both.
+
+## How deflection is measured
+
+On a load test the beam is loaded in steps, often with water bags or calibrated weights, and the mid-span sag is read with a dial gauge or LVDT on a stand fixed to the ground, not to the structure. Support settlement is measured at each end and subtracted. Recovery is checked after unloading: a beam that does not return close to zero has yielded or slipped at its connections.
+
+## Common mistakes
+
+- **Entering I in mm⁴ or m⁴.** The field expects cm⁴; 1 cm⁴ = 10,000 mm⁴, so a value from a mm⁴ table is 10,000 times too large.
+- **Using the strong axis for a load that bends the weak axis.** An IPE 200 has I<sub>y</sub> ≈ 142 cm⁴ about its minor axis, 14 times less stiff.
+- **Using the clear span instead of the span between bearing centres.** Because δ grows with L³, a 5% longer span gives about 16% more deflection.
+- **Ignoring long term creep in timber and concrete.** Sustained loads can double timber deflection over time; design codes apply a creep factor.
+- **Treating a partly fixed end as fully fixed.** Bolted end plates rarely give full fixity, so the PL³ ÷ (192EI) case is optimistic.

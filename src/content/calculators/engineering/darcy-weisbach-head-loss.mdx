@@ -2,10 +2,10 @@
 title: Pipe Pressure Drop Calculator (Darcy–Weisbach)
 description: Calculate friction head loss and pressure drop in a pipe from length, diameter, velocity and friction factor.
 category: engineering
-intro: "Friction between a moving fluid and the pipe wall causes a pressure drop that pumps must overcome. The Darcy–Weisbach equation is the most accurate general method — see [how to calculate pressure drop in pipes](https://www.instrumentationblog.in/calculate-pressure-drop-in-pipes/) and its link to [Bernoulli's equation](https://www.instrumentationblog.in/bernoullis-equation-formula/). This free pipe pressure drop calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Friction between a moving fluid and the pipe wall causes a pressure drop that pumps must overcome. This pipe pressure drop calculator uses the Darcy Weisbach equation with your friction factor, length, bore, velocity and density, as explained in [how to calculate pressure drop in pipes](https://www.instrumentationblog.in/calculate-pressure-drop-in-pipes/).\n\nPiping and pump engineers use it to size lines and pumps, and the equation builds on [Bernoulli's equation](https://www.instrumentationblog.in/bernoullis-equation-formula/)."
 keywords: [pressure drop, head loss, darcy weisbach, friction factor, pipe friction, pipe pressure loss]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: f, label: Darcy friction factor, default: 0.02, min: 0, help: About 0.015–0.03 for turbulent flow in commercial steel pipe }
   - { id: L, label: Pipe length, family: length, unit: m, imperialUnit: ft, default: 100, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: "The Darcy factor is four times the Fanning factor. Make sure your chart or correlation uses the same one as your formula."
   - q: "How does diameter affect head loss?"
     a: "For the same flow, head loss varies roughly with 1 ÷ D⁵, so a slightly larger pipe greatly reduces losses."
+  - q: "Can I measure pipe friction loss with two pressure gauges?"
+    a: "Yes, on a straight run without fittings. Subtract the downstream reading from the upstream one, correct for any height difference between the gauges, and divide by ρg to get the friction head."
+  - q: "How much does pressure drop rise if flow increases by 20%?"
+    a: "Roughly with the square of flow, so about 1.44 times. Because the friction factor falls a little as Re rises, the default 100 mm steel case gives 1.41 times."
 related: [engineering/weir-flow, engineering/pump-power, engineering/reynolds-number, engineering/pipe-flow-velocity]
 ---
 
@@ -100,3 +104,35 @@ Add the K values for all fittings and include them with the straight-pipe loss t
 | Old or corroded steel | 0.025 – 0.04 |
 
 For laminar flow, f = 64 ÷ Re — check the [Reynolds number](/engineering/reynolds-number/) first.
+
+## Friction factor for the default case
+
+The default f = 0.02 is a round figure. For water at 20 °C in the same 100 mm new steel pipe at 1.77 m/s, Re = 998 × 1.77 × 0.1 ÷ 0.001002 = 176,293. With ε = 0.045 mm the Swamee Jain equation gives **f = 0.0189**, so the straight pipe loss is 3.02 m instead of the 3.19 m shown with the default (0.313 bar).
+
+Now add six standard elbows (K = 0.75 each), an open gate valve (0.15) and the pipe exit (1.0). ΣK = 5.65 and the fitting loss is 5.65 × 1.77² ÷ (2 × 9.807) = **0.90 m**. The total for pump sizing is about **3.92 m**, so the fittings add 30% to the straight run.
+
+## Pressure drop per 100 m of new steel pipe
+
+Water at 20 °C, ε = 0.045 mm, friction factor from Swamee Jain, result in bar per 100 m:
+
+| Pipe (bore) | 1.0 m/s | 1.5 m/s | 2.0 m/s |
+|---|---|---|---|
+| DN25 (26.6 mm) | 0.530 | 1.128 | 1.941 |
+| DN50 (52.5 mm) | 0.224 | 0.479 | 0.826 |
+| DN80 (77.9 mm) | 0.137 | 0.294 | 0.507 |
+| DN100 (102.3 mm) | 0.098 | 0.210 | 0.362 |
+| DN150 (154.1 mm) | 0.059 | 0.127 | 0.220 |
+
+At the same velocity, small pipes lose much more per metre because L ÷ D is larger and their relative roughness is higher.
+
+## Measuring friction loss on site
+
+Fit two pressure gauges or a DP transmitter on a straight run with no fittings between them, ideally 50 diameters or more apart. Correct the reading for any height difference between the tappings (9.81 kPa per metre of water), then divide by ρg to get h<sub>f</sub>. Back-calculating f from a measured drop and a known flow shows how much an old line has scaled up compared with its design.
+
+## Common mistakes
+
+- **Using the Fanning factor.** A Fanning value of 0.005 is a Darcy value of 0.02; using it here underestimates the loss four times.
+- **Using nominal size for the bore.** DN100 schedule 40 has a 102.3 mm bore, and the loss is very sensitive to diameter.
+- **Counting elevation as friction.** Static head from a height change is separate from h<sub>f</sub> and must be added on its own.
+- **Keeping f fixed when the flow changes.** In turbulent flow f falls slightly as Re rises; a 20% increase in flow raises the loss by a factor of 1.41, not exactly 1.44.
+- **Designing with new pipe roughness for an old system.** Scaled or tuberculated steel can be several times rougher than new pipe.

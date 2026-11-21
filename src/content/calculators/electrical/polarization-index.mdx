@@ -2,10 +2,10 @@
 title: Polarization Index Calculator (PI & DAR Insulation Test)
 description: Calculate the polarization index (PI = R10 min ÷ R1 min) and dielectric absorption ratio (DAR = R60 s ÷ R30 s) from megger readings, with IEEE 43 limits.
 category: electrical
-intro: "A healthy insulation's resistance keeps rising during a megger test as the dielectric polarizes, while moist or contaminated insulation levels off quickly. This polarization index calculator turns the 30-second, 1-minute and 10-minute readings into the PI and DAR — follow the [insulation resistance test with a megger](https://www.instrumentationblog.in/insulation-resistance-test-megger/) procedure and compare with [motor insulation classes](https://www.instrumentationblog.in/motor-insulation-classes/)."
+intro: "A healthy insulation's resistance keeps rising during a megger test as the dielectric polarizes, while moist or contaminated insulation levels off quickly. This polarization index calculator turns the 30 second, 1 minute and 10 minute readings into the PI and the DAR, using the [insulation resistance test with a megger](https://www.instrumentationblog.in/insulation-resistance-test-megger/).\n\nMaintenance electricians and motor repair shops use it to decide whether a motor, generator or transformer winding is dry and clean enough to energise or needs drying out first."
 keywords: [polarization index calculator, pi test calculator, dielectric absorption ratio calculator, insulation resistance test, megger pi value, ieee 43 polarization index, motor insulation test]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-21
 variables:
   - { id: R30, label: Insulation resistance at 30 s, family: resistance, unit: Mohm, default: 800, min: 0 }
   - { id: R1, label: Insulation resistance at 1 min, family: resistance, unit: Mohm, default: 1000, min: 0 }
@@ -40,6 +40,10 @@ faq:
     a: DAR = 60-second reading ÷ 30-second reading. It is a quicker test; above about 1.25 is acceptable and above 1.6 excellent.
   - q: When is the PI test not meaningful?
     a: If the 1-minute insulation resistance is above about 5,000 MΩ, IEEE 43 notes the PI may not be meaningful because the current is too small to measure reliably.
+  - q: "What test voltage should I use for a PI test?"
+    a: "Follow IEEE 43: 500 V DC for windings rated below 1,000 V, 500 to 1,000 V for 1,000 to 2,500 V, 1,000 to 2,500 V up to 5 kV, 2,500 to 5,000 V up to 12 kV and 5,000 to 10,000 V above that."
+  - q: "How do I correct insulation resistance to 40 °C?"
+    a: "Multiply the reading by 0.5 raised to (40 − T) ÷ 10, where T is the winding temperature in °C. A 1,000 MΩ reading at 20 °C corrects to about 250 MΩ at 40 °C."
 related: [electrical/three-phase-motor-power, electrical/earthing-resistance, electrical/wire-resistance, electrical/transformer-efficiency]
 ---
 
@@ -71,3 +75,45 @@ Motor winding readings at 1,000 V DC: 800 MΩ at 30 s, 1,000 MΩ at 1 min, 2,500
 
 - Insulation resistance roughly halves for every 10 °C rise — correct readings to 40 °C before comparing with past tests; PI is a ratio and is less sensitive to temperature.
 - Discharge the winding fully after the test, for at least four times the test duration.
+
+## A wet winding for comparison
+
+The defaults give PI = **2.50** and DAR = **1.25**: the current falls steadily over ten minutes, which is what clean, dry insulation does. Compare a pump motor that stood in a flooded pit and reads 40 MΩ at 30 s, 45 MΩ at 1 min and 50 MΩ at 10 min:
+
+- PI = 50 ÷ 45 = **1.11**, questionable and close to the 1.0 danger line
+- DAR = 45 ÷ 40 = **1.12**, poor
+
+The leakage current through the moisture is so large that it swamps the slowly decaying absorption current, so the reading hardly moves. Dry the winding with heaters or low voltage current and repeat the test; a rising PI over successive tests shows the drying is working.
+
+## Test voltage by winding rating (IEEE 43)
+
+| Winding rated voltage (line to line) | DC test voltage |
+|---|---|
+| Below 1,000 V | 500 V DC |
+| 1,000 to 2,500 V | 500 to 1,000 V DC |
+| 2,501 to 5,000 V | 1,000 to 2,500 V DC |
+| 5,001 to 12,000 V | 2,500 to 5,000 V DC |
+| Above 12,000 V | 5,000 to 10,000 V DC |
+
+Use the same voltage every time you test a machine, because the readings at different voltages are not directly comparable.
+
+## Correcting the 1 minute reading to 40 °C
+
+Insulation resistance falls as the winding warms. IEEE 43 gives a rough rule that it halves for every 10 °C, so the factor to 40 °C is K<sub>T</sub> = 0.5<sup>(40 − T)/10</sup>. A winding tested at 20 °C has K<sub>T</sub> = 0.25, so the default 1,000 MΩ becomes **250 MΩ** at 40 °C. That corrected figure is compared with the IEEE 43 minimum: 100 MΩ for form wound stator windings built after 1970, 5 MΩ for random wound windings below 1 kV, and kV + 1 MΩ for older windings (7.6 MΩ for a 6.6 kV machine). The PI itself is a ratio of two readings at the same temperature and needs no correction.
+
+| Winding temperature | K<sub>T</sub> to 40 °C | 1,000 MΩ corrected |
+|---|---|---|
+| 10 °C | 0.125 | 125 MΩ |
+| 20 °C | 0.250 | 250 MΩ |
+| 30 °C | 0.500 | 500 MΩ |
+| 40 °C | 1.000 | 1,000 MΩ |
+| 50 °C | 2.000 | 2,000 MΩ |
+| 60 °C | 4.000 | 4,000 MΩ |
+
+## Common mistakes
+
+- **Testing straight after a previous test.** Charge left in the winding makes the next readings climb too fast; ground the winding for at least four times the previous test time first.
+- **Leaving the cable and VFD connected.** The cable adds its own capacitance and leakage, and drive electronics can be damaged by the test voltage, so disconnect at the motor terminal box where possible.
+- **Ignoring the guard terminal on dirty terminals.** Surface leakage across a contaminated terminal board can make good insulation look poor; guard it out to see the winding alone.
+- **Trusting a PI on very high readings.** When the 1 minute value is above about 5,000 MΩ the meter is near its noise floor and a PI below 2 does not mean the insulation is bad.
+- **Comparing readings taken hot and cold.** A motor tested just after running reads far lower than the same motor cold, so always record the winding temperature.

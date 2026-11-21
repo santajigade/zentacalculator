@@ -2,10 +2,10 @@
 title: Lumen Method Calculator (Number of Light Fixtures & Lux)
 description: Calculate how many light fixtures a room needs for a target lux level with the lumen method, N = E·A ÷ (Φ·UF·MF), and the illuminance actually achieved.
 category: electrical
-intro: "The lumen method is the standard hand calculation for general lighting: the lumens needed equal target illuminance × area, corrected for how much light reaches the work plane and for ageing and dirt. This lumen method calculator gives the number of fixtures and the resulting lux — the same steps as in this [lighting design calculation](https://www.instrumentationblog.in/lighting-design-calculation/)."
+intro: "The lumen method is the standard hand calculation for general lighting: the lumens needed equal the target illuminance times the floor area, corrected for the share of light that reaches the work plane and for ageing and dirt. This lumen method calculator gives the number of fixtures and the lux they deliver.\n\nElectrical designers and contractors use it to size office, classroom and plant room lighting before layout software, following the steps of a [lighting design calculation](https://www.instrumentationblog.in/lighting-design-calculation/)."
 keywords: [lumen method calculator, number of light fixtures calculator, lux calculator room, lighting calculation formula, how many lights do i need, lumens to lux room, utilization factor maintenance factor]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-21
 variables:
   - { id: E, label: Required illuminance, suffix: lux, default: 500, min: 0 }
   - { id: Lr, label: Room length, family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: The fraction of the lamps' light that reaches the working plane. It depends on the room index, surface reflectances and the fitting's light distribution and comes from the manufacturer's UF table.
   - q: How should I arrange the fixtures?
     a: In a regular grid with spacing no more than the fitting's maximum spacing-to-height ratio (often 1.0–1.5 × mounting height above the work plane), so the lighting is uniform.
+  - q: "What is the room index and how does it affect the UF?"
+    a: "Room index K = L × W ÷ [Hm × (L + W)], with Hm the height of the fittings above the work plane. A 10 m × 8 m room with fittings 2 m above the desks has K = 2.22. Higher K means less light lost on the walls and a higher UF from the manufacturer table."
+  - q: "What lux should a new lighting installation measure?"
+    a: "About the design illuminance divided by the maintenance factor. With 500 lux and MF 0.8, a new room should read around 625 lux on average, falling to 500 lux by the end of the maintenance period."
 related: [electrical/kw-to-amps, electrical/load-factor, electronics/led-resistor, physics/inverse-square-law]
 ---
 
@@ -62,3 +66,42 @@ An office 10 m × 8 m (80 m²) needs 500 lux, using 4,000 lm LED panels with UF 
 
 - In practice round to a number that fits a neat grid (for example 21 → 4 × 5 = 20 or 4 × 6 = 24) and recheck the lux.
 - The lumen method gives the average illuminance; use lighting software to check uniformity and glare.
+
+## From the result to a real grid
+
+The default room needs **20.83** fixtures, so the calculator rounds up to **21** and reports **504 lux**. Twenty one panels rarely fit a ceiling grid, so check the neighbouring layouts with the same formula:
+
+- 4 × 5 = 20 fixtures: 20 × 4,000 × 0.6 × 0.8 ÷ 80 = **480 lux**, just under target
+- 4 × 6 = 24 fixtures: **576 lux**, comfortably above target and easy to dim back
+
+With 6 rows along the 10 m length and 4 across the 8 m width, the spacing is 1.67 m by 2.00 m. For panels mounted on a 2.8 m ceiling above a 0.8 m desk height, the mounting height over the work plane is 2.0 m, giving a spacing to height ratio of 1.00, inside the 1.0 to 1.5 that most panel datasheets allow. Keep the outer row about half a spacing from the walls.
+
+## Where the utilisation factor comes from
+
+Manufacturers publish UF tables against the room index K = L × W ÷ [H<sub>m</sub> × (L + W)] and the ceiling, wall and floor reflectances. For this room K = 80 ÷ (2.0 × 18) = **2.22**. A large, low room (K above 2) wastes little light on the walls and typically reaches UF 0.6 to 0.7 with light finishes; a narrow corridor or a tall plant room (K below 1) may fall to 0.35 to 0.45, which can almost double the fixture count for the same lux.
+
+## Lumen package and fixture count for 500 lux in 80 m²
+
+UF 0.6, MF 0.8, and an LED efficacy of 120 lm/W for the installed load:
+
+| Lumens per fixture | Exact N | Fixtures | Achieved | Connected load |
+|---|---|---|---|---|
+| 2,000 lm | 41.7 | 42 | 504 lux | 700 W |
+| 3,000 lm | 27.8 | 28 | 504 lux | 700 W |
+| 4,000 lm | 20.8 | 21 | 504 lux | 700 W |
+| 5,000 lm | 16.7 | 17 | 510 lux | 708 W |
+| 6,000 lm | 13.9 | 14 | 504 lux | 700 W |
+
+The 4 × 6 layout of 4,000 lm panels draws about 800 W, a lighting power density of **10.0 W/m²**, which is the figure energy codes and green building ratings check.
+
+## Checking the installation with a lux meter
+
+Measure at the work plane height on a regular grid of points, with daylight excluded (at night or with blinds closed) and the LEDs run for at least 20 minutes so their output is stable. The average of the grid is the maintained illuminance once the room is old and dirty only if you divide by the maintenance factor: a new installation should read about E ÷ MF, here around 625 lux, so a reading of 500 lux on day one means the room will fall short later. Uniformity is the minimum reading divided by the average; EN 12464-1 asks for at least 0.6 on office task areas.
+
+## Common mistakes
+
+- **Entering lamp lumens for a fitting with a diffuser.** Use the luminaire output from the datasheet, which already includes optic losses, or the count comes out too low.
+- **Using the floor to ceiling height for the room index.** The relevant height is from the fitting to the work plane, not to the floor.
+- **Taking MF as 1 for LED.** Even long life LEDs lose 10 to 20% of their output by L80 or L90, and dust on the diffuser adds to it.
+- **Rounding 20.8 down to 20 to save a fitting.** The average then falls below the target before any ageing.
+- **Applying an office UF to a dark warehouse.** Low reflectance walls and racking absorb far more light, so take the UF from the table at the real reflectances.

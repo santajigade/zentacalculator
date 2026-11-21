@@ -2,10 +2,10 @@
 title: Chain Length Calculator (Roller Chain & Sprocket)
 description: Calculate roller chain length in links from sprocket teeth and centre distance, the exact centre distance, speed ratio, chain speed and pitch diameters.
 category: engineering
-intro: "A roller chain drive is defined by the chain pitch, the number of teeth on each sprocket and the distance between the shaft centres. This chain length calculator works out the chain length in pitches, rounds it up to a whole even number of links, gives the exact centre distance that number of links needs, and also calculates the speed ratio, the driven shaft speed, the chain speed and the pitch diameter of both sprockets."
+intro: "A roller chain drive is set by three things: the chain pitch, the tooth count of each sprocket and the distance between the shaft centres. This chain length calculator gives the length in pitches, rounds it up to an even number of links and finds the exact centre distance that chain needs.\n\nMaintenance fitters use it to order replacement chain and set the motor base, and machine designers use it to check speed ratio, chain speed and sprocket diameters."
 keywords: [chain length calculator, roller chain length calculator, sprocket calculator, chain links calculator, sprocket pitch diameter calculator, chain drive calculator, chain centre distance calculator, chain speed calculator]
 published: 2026-11-12
-updated: 2026-11-12
+updated: 2026-11-21
 variables:
   - { id: p, label: Chain pitch, family: length, unit: mm, imperialUnit: in, default: 12.7, min: 0, help: 'ANSI 25 = 6.35 mm, 35 = 9.525 mm, 40 = 12.7 mm, 50 = 15.875 mm, 60 = 19.05 mm, 80 = 25.4 mm.' }
   - { id: N1, label: Teeth on the driving (small) sprocket, default: 17, min: 1, decimals: 0 }
@@ -40,6 +40,10 @@ faq:
     a: Pitch diameter = p ÷ sin(180° ÷ N). A 17-tooth sprocket for 12.7 mm (ANSI 40) chain has a pitch diameter of 12.7 ÷ sin(10.59°) = 69.1 mm. The outside diameter is a little larger and depends on the tooth form.
   - q: What centre distance is best for a chain drive?
     a: Manufacturers usually recommend 30–50 pitches, with a maximum of about 80 pitches without a guide or idler. The chain should wrap at least 120° around the small sprocket, which is easier with ratios below about 7:1.
+  - q: "How do I measure a roller chain for wear?"
+    a: "Measure across 12 pitches under light tension, pin centre to pin centre. New ANSI 40 measures 152.4 mm; replace it at about 154.7 mm (1.5%) for precise drives or 157.0 mm (3%) for slow, general drives."
+  - q: "How far must I move the motor after fitting a new chain?"
+    a: "Set the shafts to the exact centre distance for the rounded link count. In the ANSI 50 example the planned 640 mm becomes 643.7 mm for 120 links, a 3.7 mm move."
 related: [engineering/gear-ratio, engineering/pulley-speed, engineering/torque-power-speed, sports/cycling-gear-speed]
 ---
 
@@ -100,3 +104,37 @@ An ANSI 40 (12.7 mm pitch) chain drive with a 17-tooth driving sprocket at 500 r
 - **Lubrication:** chain speed and pitch decide whether manual, drip, bath or forced lubrication is needed — check the manufacturer's power rating tables, which also give the kW capacity of each chain size.
 - **Wear:** a roller chain is normally replaced when it has stretched by about 1.5–3% of its length; measure over several pitches with the chain under tension.
 - To check shaft speeds and torque for a drive, use the [gear ratio calculator](/engineering/gear-ratio/) or the [torque, power and speed calculator](/engineering/torque-power-speed/).
+
+## Second example: a reduction drive from a motor
+
+An ANSI 50 chain (15.875 mm pitch) takes a 960 rpm motor down through a 19-tooth sprocket to a 57-tooth sprocket, with the shafts planned at 640 mm:
+
+- Exact length = 2 × 640 ÷ 15.875 + (19 + 57) ÷ 2 + [(57 − 19) ÷ 2π]² × 15.875 ÷ 640 = **119.54 pitches**
+- Order **120 links**, a chain **1,905.0 mm** long
+- The shafts must then sit at **643.7 mm**, 3.7 mm further apart than planned, so the motor base needs at least that much slot travel
+- Ratio 3:1, driven speed **320 rpm**, chain speed **4.83 m/s**
+- Pitch diameters 96.4 mm and 288.2 mm, giving about **163°** of wrap on the small sprocket, comfortably above the 120° minimum
+
+At 4.8 m/s an ANSI 50 chain is past the range where hand oiling is enough; most makers ask for drip or oil bath lubrication at this speed.
+
+## Measuring chain wear in the field
+
+Chain stretch comes from wear of the pins and bushes, not from the plates stretching. Lay the chain flat under light tension and measure across 12 pitches from the centre of one pin to the centre of the pin 12 pitches away. For ANSI 40 the new length is 152.4 mm:
+
+| Elongation | Length over 12 pitches | In inches |
+|---|---|---|
+| 0.0% | 152.4 mm | 6.000 in |
+| 1.0% | 153.9 mm | 6.060 in |
+| 1.5% | 154.7 mm | 6.090 in |
+| 2.0% | 155.4 mm | 6.120 in |
+| 3.0% | 157.0 mm | 6.180 in |
+
+Replace the chain at about 1.5% on drives with large sprockets or timing duty and at 3% on slow, general drives. The 106-link chain in the default example grows by about 20 mm at 1.5% wear, which is most of the adjustment a normal tensioner offers. Replace worn sprockets with the chain, because hooked teeth wear a new chain out quickly.
+
+## Common mistakes
+
+- **Rounding the link count down.** A chain shorter than the calculated length cannot be fitted at the planned centres; always round up to the next even number and move the shaft.
+- **Counting rollers instead of pitches.** A 106-link chain has 106 pitches including the connecting link; counting rollers on an open length is easy to get wrong by one.
+- **Measuring a slack chain for wear.** Without tension the joints sit at random in their clearances and the reading means little.
+- **Mixing ANSI and ISO chain.** ANSI 40 and ISO 08B are both 12.7 mm pitch, but the roller diameter and inner width differ, so they do not run well on each other's sprockets.
+- **Ignoring tooth counts below 17 at speed.** A 12-tooth sprocket at high speed gives noticeable chordal speed variation, vibration and short chain life.

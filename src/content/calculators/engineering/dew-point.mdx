@@ -2,10 +2,10 @@
 title: Dew Point Calculator (Temperature & Relative Humidity)
 description: Calculate the dew point from air temperature and relative humidity with the Magnus formula, plus vapour pressure, absolute humidity and dew point spread.
 category: engineering
-intro: "The dew point is the temperature at which air becomes saturated and water starts to condense on a surface. This dew point calculator finds it from the dry-bulb temperature and relative humidity using the Magnus formula, and also gives the vapour pressure, absolute humidity and the temperature margin to condensation — useful for HVAC, coating work and [dew point in instrument air](https://www.instrumentationblog.in/dew-point-in-instrument-air-risks/). It works in reverse too: enter a dew point to get the relative humidity, as a [capacitive RH sensor](https://www.instrumentationblog.in/humidity-sensor-capacitive-rh/) transmitter would report."
+intro: "The dew point is the temperature at which air becomes saturated and water starts to condense on a surface. This dew point calculator finds it from the dry bulb temperature and relative humidity with the Magnus formula, and also gives the vapour pressure, absolute humidity and the margin to condensation.\n\nHVAC engineers, coating inspectors and instrument technicians use it to stop sweating pipes, approve painting conditions and check [dew point in instrument air](https://www.instrumentationblog.in/dew-point-in-instrument-air-risks/), or to read a [capacitive RH sensor](https://www.instrumentationblog.in/humidity-sensor-capacitive-rh/) as a dew point."
 keywords: [dew point calculator, dew point from relative humidity, calculate dew point, dew point temperature calculator, magnus formula dew point, relative humidity to dew point, absolute humidity calculator]
 published: 2026-11-09
-updated: 2026-11-09
+updated: 2026-11-21
 variables:
   - { id: T, label: Air (dry-bulb) temperature, family: temperature, unit: C, imperialUnit: F, default: 25 }
   - { id: RH, label: Relative humidity, family: percent, unit: '%', default: 60, min: 0.000001, max: 1 }
@@ -39,6 +39,10 @@ faq:
     a: Dew points below about 13 °C feel dry and comfortable, 16–18 °C starts to feel humid, and above 21 °C feels oppressive, because sweat cannot evaporate easily.
   - q: Why does instrument air need a low dew point?
     a: Compressed air that cools below its dew point condenses water in lines and instruments, causing corrosion and freezing. ISA-7.0.01 asks for a pressure dew point at least 10 °C below the lowest temperature the air lines will see.
+  - q: "Does the dew point change when air is heated or cooled?"
+    a: "Not while no water is added or removed. Heating air from 10 °C at 80% RH to 22 °C lowers the RH to about 37%, but the dew point stays at 6.7 °C. It changes only when air is dried, humidified or condenses water."
+  - q: "How do I convert a pressure dew point to an atmospheric dew point?"
+    a: "Find the vapour pressure at the pressure dew point, scale it by atmospheric pressure divided by line pressure (both absolute), then find the dew point of that vapour pressure. A 3 °C pressure dew point at 8 bar absolute is about -23 °C at atmosphere."
 related: [conversion/temperature-converter, chemistry/daltons-law, physics/latent-heat, engineering/chiller-tonnage]
 ---
 
@@ -82,3 +86,23 @@ Air at 25 °C and 60% relative humidity:
 - **Pipes and ducts sweat** when their surface is below the dew point of the surrounding air — insulate chilled-water lines with a vapour barrier.
 - **Compressed air:** the pressure dew point is higher than the atmospheric dew point of the same air, because compression raises the vapour pressure. Use the dryer manufacturer's data or a pressure dew point meter for instrument air.
 - RH sensors are usually accurate to ±2–3% RH; near saturation, that alone moves the dew point by about 0.5 °C.
+
+## More examples from site work
+
+**Sweating chilled water pipe.** A plant room is at 28 °C and 55% RH, and an uninsulated chilled water line runs at 14 °C. The dew point of the room air is 18.1 °C, so the pipe surface is 4.1 °C below it and will drip. Insulation must keep the outer surface above 18.1 °C, with a vapour barrier so moist air cannot reach the cold metal.
+
+**Painting a tank in the morning.** Air at 20 °C and 85% RH has a dew point of 17.4 °C. A steel surface at 18 °C is only 0.6 °C above it, below the 3 °C margin most coating specifications need, so the work waits until the steel warms up or the humidity falls.
+
+**Compressed air dew point at atmosphere.** A refrigerated dryer delivering a pressure dew point of 3 °C at 8 bar absolute holds water vapour at 0.7574 kPa. When that air expands to atmospheric pressure the vapour pressure falls in proportion to the total pressure, to 0.0959 kPa, which is an atmospheric dew point of about **-23.1 °C**. Quoting -23 °C as if it were the line dew point is a common way to oversell a dryer.
+
+## How dew point is measured
+
+A chilled mirror hygrometer cools a small polished mirror until dew forms and measures its temperature directly, which makes it the reference instrument for calibration labs. Most field transmitters are capacitive polymer RH sensors combined with a temperature sensor; the transmitter computes the dew point from the two with a Magnus type formula, just as this page does. For very dry compressed air and gases, aluminium oxide and silicon based sensors read trace moisture down to around −80 °C dew point, where RH sensors lose resolution. Handheld coating inspection gauges measure air temperature, RH and steel surface temperature together and show the spread.
+
+## Common mistakes
+
+- **Typing 60 as a fraction.** The calculator takes 60% in the percent field; in your own spreadsheet the Magnus formula needs 0.60, and ln(60) gives nonsense.
+- **Thinking heating air removes moisture.** Air at 10 °C and 80% RH heated to 22 °C drops to 37% RH, but its dew point stays at 6.7 °C because no water was taken out.
+- **Mixing pressure dew point and atmospheric dew point.** Dryer data sheets and ISO 8573-1 classes refer to the pressure dew point at line pressure.
+- **Measuring air temperature beside a warm wall or in sunlight.** The RH sensor and thermometer must see the same air; a 1 °C error in the air temperature moves the dew point almost as much.
+- **Using the dew point below 0 °C as the frost point.** Over ice, frost forms at a slightly higher temperature than the dew point given here.

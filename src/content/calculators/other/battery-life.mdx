@@ -1,11 +1,11 @@
 ---
-title: Battery Life Calculator
-description: "Estimate how long a battery will last from its capacity (mAh) and the device's current draw. Free online battery life calculator with formula and examples."
+title: "Battery Life Calculator: mAh Runtime in Hours"
+description: "Battery life calculator: estimate runtime in hours from battery capacity in mAh, average current draw and usable capacity, with sleep mode examples."
 category: other
-intro: "Battery life depends on its capacity and the current drawn by the device. It is useful for sensors, gadgets and IoT devices."
+intro: "A battery's runtime depends on how much charge it holds and how much current the device draws on average. This battery life calculator divides the usable capacity in mAh by the average current to give the expected runtime in hours.\n\nElectronics hobbyists, IoT and sensor designers and gadget buyers use it to pick a battery size, estimate how long a device will run between charges and check the effect of sleep modes."
 keywords: [battery life calculator, mah calculator, battery runtime, how long will battery last, power bank]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: cap, label: Battery capacity, suffix: mAh, default: 2000, min: 0 }
   - { id: I, label: Average current draw, family: current, unit: mA, default: 50, min: 0.000001 }
@@ -14,17 +14,19 @@ variables:
 equations:
   - t = cap / 1000 * ef / I / 8766
 faq:
-  - q: How is battery life calculated?
-    a: Runtime (hours) = capacity (mAh) ÷ current (mA), reduced by a factor for losses and the cut-off voltage.
+  - q: "How is battery life calculated?"
+    a: "Runtime in hours = capacity in mAh × usable fraction ÷ average current in mA. The usable fraction allows for losses, temperature and the cut-off voltage of the device."
   - q: Why use 85%?
     a: Batteries rarely deliver their full rated capacity in practice because of temperature, ageing and voltage cut-offs.
-  - q: How long will a 10,000 mAh power bank charge a phone?
-    a: Converter losses and voltage differences mean a typical power bank delivers about 60–70% of its rated mAh to a phone.
+  - q: "How long will a 10,000 mAh power bank charge a phone?"
+    a: "Voltage conversion and charging losses mean a typical power bank delivers about 60 to 70 percent of its rated mAh to a phone, so a 10,000 mAh bank gives roughly one and a half to two charges of a 4,000 mAh phone."
   - q: "How long will a 2,000 mAh battery last at 100 mA?"
     a: "About 20 hours in theory, or around 17 hours allowing for 85% usable capacity."
   - q: "Why does my battery die faster in the cold?"
     a: "Low temperatures slow the chemical reactions, reducing usable capacity, especially for alkaline and lithium-ion cells."
-related: [other/due-date, other/grade-percentage, ecology/battery-storage, electronics/led-resistor]
+  - q: "How do I convert mAh to Wh?"
+    a: "Multiply mAh by the nominal voltage and divide by 1,000. A 5,000 mAh phone battery at 3.85 V holds 19.25 Wh."
+related: [electronics/battery-charge-time, everyday-life/inverter-battery-backup, electrical/ups-sizing, ecology/battery-storage, electronics/led-resistor]
 ---
 
 ## How to use the battery life calculator
@@ -35,20 +37,25 @@ Enter the battery **capacity** (mAh), the device's **average current** and a **u
 
 <p class="formula">runtime = capacity × factor ÷ current</p>
 
-## Example
+## Worked example with the default values
 
-2,000 mAh at 50 mA average with 85% usable: 2,000 × 0.85 ÷ 50 = **34 hours**.
+A **2,000 mAh** battery powers a device that draws **50 mA** on average, and **85%** of the rated capacity is usable before the device cuts out:
+
+- Usable capacity = 2,000 × 0.85 = 1,700 mAh
+- Runtime = 1,700 ÷ 50 = **34 hours** (about 1.4 days)
+
+Without the 85% factor the same battery would be quoted at 40 hours, which few real batteries achieve.
 
 ## Typical battery capacities
 
 | Battery | Capacity (approx.) | Voltage |
 |---|---|---|
-| AA alkaline | 2,000–2,800 mAh | 1.5 V |
-| AA NiMH rechargeable | 1,900–2,500 mAh | 1.2 V |
-| AAA alkaline | 1,000–1,200 mAh | 1.5 V |
-| CR2032 coin cell | 220–240 mAh | 3 V |
-| 18650 Li-ion | 2,500–3,500 mAh | 3.6–3.7 V |
-| Smartphone battery | 3,000–5,000 mAh | 3.85 V |
+| AA alkaline | 2,000 to 2,800 mAh | 1.5 V |
+| AA NiMH rechargeable | 1,900 to 2,500 mAh | 1.2 V |
+| AAA alkaline | 1,000 to 1,200 mAh | 1.5 V |
+| CR2032 coin cell | 220 to 240 mAh | 3.0 V |
+| 18650 Li-ion | 2,500 to 3,500 mAh | 3.6 to 3.7 V |
+| Smartphone battery | 3,000 to 5,000 mAh | 3.85 V |
 
 ## Sleep mode makes the difference
 
@@ -56,7 +63,7 @@ For microcontroller projects, average current is what matters:
 
 <p class="formula">I<sub>avg</sub> = (I<sub>active</sub> × t<sub>active</sub> + I<sub>sleep</sub> × t<sub>sleep</sub>) ÷ total time</p>
 
-A sensor drawing 20 mA for 1 second every minute and 10 µA in sleep averages about 0.34 mA — a 2,000 mAh battery could last around **8 months** instead of 4 days.
+A sensor drawing 20 mA for 1 second every minute and 10 µA asleep averages (20 × 1 + 0.01 × 59) ÷ 60 = **0.343 mA**. With 85% usable capacity a 2,000 mAh battery then lasts about 4,954 h, roughly **6.8 months**, instead of 85 h (3.5 days) if it stayed awake.
 
 ## mAh vs Wh
 
@@ -64,4 +71,38 @@ mAh ignores voltage. To compare batteries of different voltages, use watt-hours:
 
 ## Power banks
 
-A 10,000 mAh power bank (at 3.7 V) delivers less at 5 V USB output after conversion losses — typically 60–70% of its rating, about 6,000–7,000 mAh at the phone's battery voltage.
+A 10,000 mAh power bank is rated at its internal cell voltage of 3.7 V, which is 37 Wh. Boosting to 5 V for USB and then charging the phone both lose energy, so a phone typically receives about 60 to 70 percent of the rated mAh, or 6,000 to 7,000 mAh.
+
+## Runtime of a 2,000 mAh battery at different loads
+
+Usable capacity 85%, constant current:
+
+| Average current | Runtime | Days |
+|---|---|---|
+| 0.1 mA | 17,000 h | 708.3 days |
+| 1 mA | 1,700 h | 70.8 days |
+| 10 mA | 170 h | 7.1 days |
+| 50 mA | 34 h | 1.4 days |
+| 100 mA | 17 h | 0.7 days |
+| 250 mA | 6.8 h | 0.3 days |
+| 500 mA | 3.4 h | 0.1 days |
+
+At high currents the real figure is lower again, because alkaline and NiMH cells deliver less of their rated capacity when discharged fast. At very low currents, self discharge takes over: a CR2032 coin cell of 225 mAh at 10 µA would last 19,125 h, or 2.2 years, on paper, but lithium coin cells lose around 1% a year and seals age, so plan for less.
+
+## How to measure the average current
+
+A multimeter on its mA range in series with the battery reads steady loads well. Devices that sleep and wake in bursts need a current logger, a shunt resistor with an oscilloscope, or a power profiler that integrates charge over a full cycle. Measure at least one complete wake and sleep cycle, including radio transmissions, which are usually the largest pulses.
+
+## Practical notes
+
+- Use the **cut-off voltage** of the device to choose the usable factor. A device that stops at 1.3 V per AA cell leaves much more charge unused than one that runs down to 0.9 V.
+- **Cold reduces capacity.** Alkaline cells near 0 °C can deliver half their room temperature capacity; Li-ion and lithium primary cells fare better.
+- **Ageing matters for rechargeables.** A Li-ion pack after a few hundred cycles may hold 80% of its new capacity, so lower the factor for an old pack.
+
+## Common mistakes
+
+- **Comparing mAh across voltages.** A 3.7 V 3,000 mAh cell holds about 2.5 times the energy of a 1.5 V 3,000 mAh cell; compare in Wh.
+- **Using peak current instead of average current.** A radio that draws 120 mA for a few milliseconds per minute averages far less.
+- **Forgetting regulator losses.** A linear regulator draws the full load current from the battery whatever the output voltage, and its quiescent current adds to sleep current.
+- **Assuming the full rated capacity is usable.** Ratings are measured at low current and room temperature down to a low cut-off voltage.
+- **Ignoring self discharge on multi year designs.** It can use more charge than the device itself in very low power sensors.

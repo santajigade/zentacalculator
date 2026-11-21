@@ -2,10 +2,10 @@
 title: Air Changes per Hour Calculator (ACH, CFM & m³/h)
 description: Calculate air changes per hour (ACH) from room size and airflow, the CFM or m³/h needed for a target ACH, and the time to clear 99% of airborne contaminants.
 category: engineering
-intro: "Air changes per hour (ACH) tells you how many times the air in a room is replaced by ventilation or air cleaning every hour, and it is the usual way ventilation rates for offices, labs, workshops, clean rooms and hospital rooms are specified. This air changes per hour calculator gives the ACH from the room dimensions and the airflow, the airflow in m³/h or CFM needed to reach a target ACH, and how long the ventilation takes to remove 99% and 99.9% of an airborne contaminant — a quick check on the fan or [HVAC system](https://www.instrumentationblog.in/what-is-an-hvac-system/) serving the room."
+intro: "Air changes per hour (ACH) is how many times the air in a room is replaced each hour by ventilation or air cleaning. This air changes per hour calculator gives the ACH from room size and airflow, the airflow for a target ACH, and the time to clear 99% of an airborne contaminant.\n\nHVAC designers, facility managers and safety officers use it to check offices, labs, workshops and clean rooms, and to confirm a fan or [HVAC system](https://www.instrumentationblog.in/what-is-an-hvac-system/) meets the required rate."
 keywords: [air changes per hour calculator, ach calculator, cfm to ach, ach to cfm, room air change rate, ventilation rate calculator, air changes per hour formula, cfm calculator for room]
 published: 2026-11-12
-updated: 2026-11-12
+updated: 2026-11-21
 variables:
   - { id: Lr, label: Room length, family: length, unit: m, imperialUnit: ft, default: 5, min: 0 }
   - { id: Wr, label: Room width, family: length, unit: m, imperialUnit: ft, default: 4, min: 0 }
@@ -34,6 +34,10 @@ faq:
     a: With good mixing the concentration falls exponentially, C = C₀ e^(−ACH × t), so removing 99% takes ln(100) ÷ ACH = 4.6 ÷ ACH hours and 99.9% takes 6.9 ÷ ACH hours. At 12 ACH that is about 23 and 35 minutes — the same figures used in US CDC guidance for healthcare rooms.
   - q: How many air changes per hour does a room need?
     a: It depends on the use and the governing code. Homes and offices are normally designed on outdoor air per person or per floor area rather than ACH; airborne infection isolation rooms in US hospitals need at least 12 ACH under ASHRAE 170, and laboratories, kitchens and clean rooms are often much higher. Always check the standard that applies to your building.
+  - q: "How can I measure the air change rate in an existing room?"
+    a: "Use a flow hood on each supply grille and divide the total by the room volume, or run a CO₂ decay test. A fall from 1,800 to 900 ppm in 20 minutes with 420 ppm outdoors means about 3.2 outdoor air changes per hour."
+  - q: "Should I count both the supply and the exhaust airflow?"
+    a: "No. In a balanced room the air that is supplied is the air that leaves, so use one of them. If they differ, use the larger flow for the air change rate and expect the room to be slightly pressurised or depressurised."
 related: [engineering/fan-affinity-laws, conversion/flow-rate-converter, engineering/chiller-tonnage, math/box-volume]
 ---
 
@@ -93,3 +97,19 @@ Well-mixed room with clean supply air:
 - **Air purifiers:** use the clean air delivery rate (CADR) as the airflow — a purifier with a CADR of 250 m³/h in a 50 m³ room adds 5 ACH of clean air.
 - **Recirculated air** only counts towards contaminant removal if it passes through an effective filter; outdoor-air requirements in ventilation codes are usually stated separately.
 - To change a fan's airflow by changing its speed, use the [fan affinity laws calculator](/engineering/fan-affinity-laws/); to convert between m³/h, L/s and CFM, use the [flow rate converter](/conversion/flow-rate-converter/).
+
+## Measuring the air change rate of a real room
+
+Design airflow and installed airflow are rarely the same, so ACH is checked on site in one of two ways.
+
+**At the grilles.** A flow hood (balometer) placed over each diffuser reads the airflow directly. Without one, a vane anemometer swept across the grille face gives an average velocity, which is multiplied by the free area. A 300 × 300 mm grille with about 80% free area and an average face velocity of 2.1 m/s passes 2.1 × 0.09 × 0.8 × 3600 = **544 m³/h**, which alone gives the 54 m³ office **10.1 ACH**.
+
+**By tracer gas decay.** Raise the CO₂ level (people or a small cylinder), stop the source and log the concentration. With outdoor air at 420 ppm and the room falling from 1,800 to 900 ppm in 20 minutes, ACH = ln[(1,800 − 420) ÷ (900 − 420)] ÷ (20 ÷ 60) = **3.17**. This measures outdoor air exchange only, including infiltration, and it ignores recirculated air entirely, which is exactly what matters for diluting CO₂ and odours.
+
+## Common mistakes
+
+- **Using floor area instead of volume.** ACH depends on the volume, so a hall with a 6 m ceiling needs more than twice the airflow of an office with the same floor area.
+- **Adding supply and exhaust together.** In a balanced room the same air enters and leaves; count one of them, normally the larger.
+- **Taking the fan catalogue figure.** A fan rated at free air delivers less once it works against ducts, filters and grilles; measure the installed flow or read it from the fan curve at the system pressure.
+- **Ignoring an open ceiling plenum.** If the void above a suspended ceiling is part of the return path, the mixed volume grows. Treating the same office as 3.3 m high gives 66 m³ and only **4.55 ACH** from 300 m³/h.
+- **Counting unfiltered recirculation as clean air.** A fan coil that just stirs room air adds no contaminant removal; only outdoor air or air through an effective filter (or a purifier's CADR) counts.

@@ -2,10 +2,10 @@
 title: Tank Heater Sizing Calculator (kW to Heat a Tank)
 description: Calculate the heater kW needed to heat a tank of liquid in a set time, including heat loss, holding power, energy in kWh and the supply current.
 category: engineering
-intro: "The heater for a process tank, hot-water cylinder or oil heating tank must supply the sensible heat of the liquid in the heat-up time and make up the heat lost through the walls while it warms. This tank heater sizing calculator works out the energy needed, the heat-up power, the average heat loss, the total heater kW, the power needed to hold the temperature and the current drawn on a single- or three-phase supply."
+intro: "A heater for a process tank, hot water cylinder or oil tank has to supply the sensible heat of the liquid in the heat-up time and cover the heat lost through the walls. This tank heater sizing calculator gives the energy, heat-up power, heat loss, heater kW, holding power and supply current.\n\nElectrical and process engineers use it to choose immersion heater ratings and cable sizes, and plant teams use it to check why a tank takes too long to reach temperature."
 keywords: [tank heater sizing calculator, heater kw calculation for tank, immersion heater sizing, tank heating calculation, kw required to heat water, heating time calculator, water heating power calculator]
 published: 2026-11-11
-updated: 2026-11-11
+updated: 2026-11-21
 variables:
   - { id: V, label: Liquid volume, family: volume, unit: L, imperialUnit: galUS, default: 2000, min: 0 }
   - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
@@ -48,6 +48,10 @@ faq:
     a: Heat loss = U × A × (liquid temperature − ambient). An insulated tank with U ≈ 0.8 W/m²·K loses very little, but a bare steel tank at 60 °C in still air (U ≈ 8–10 W/m²·K) can lose about 0.4 kW per square metre of surface, and wind or an outdoor location increases this further.
   - q: Should I add a safety margin to the heater size?
     a: Yes — a margin of 10–20% is common to cover low supply voltage (heater output falls with the square of the voltage), scaling of the element, uncertain losses and an open tank surface. Open tanks lose a lot of heat by evaporation, which this calculator does not include.
+  - q: "How much current should a three-phase immersion heater draw?"
+    a: "Line current is kW × 1,000 ÷ (√3 × line voltage). A 36 kW heater on 415 V draws about 50.1 A per phase; a lower reading on one phase usually means a failed element."
+  - q: "Does insulating the tank reduce the heater size?"
+    a: "Only a little for the heat-up duty, but a lot for the running cost. On a 5,000 L bare oil tank, insulation cuts the heater rating from 32.3 kW to 29.1 kW and the holding power from 7.20 kW to 0.72 kW."
 related: [engineering/heat-duty, chemistry/specific-heat, engineering/convection-heat-transfer, electrical/kw-to-amps]
 ---
 
@@ -107,3 +111,27 @@ Water (4.186 kJ/kg·K), no heat losses:
 - **Thermostat and over-temperature cut-out:** the heater should be controlled by a thermostat or a temperature controller and protected by an independent high-limit cut-out and a low-level interlock, so it never runs dry.
 - **Voltage:** a resistive heater's power falls with the square of the voltage — a heater rated at 415 V gives only about 90% of its kW at 394 V.
 - For flowing liquids (heat exchangers, inline heaters) use the [heat duty calculator](/engineering/heat-duty/) with the mass flow rate instead of a volume and time.
+
+## Second example: an uninsulated fuel oil day tank
+
+A 5,000 L bare steel tank of light fuel oil (870 kg/m³, c<sub>p</sub> 1.9 kJ/kg·K, 18 m² of surface, U about 8 W/m²·K in still air) must go from 20 °C to 70 °C in 4 hours in a 20 °C room:
+
+- Mass = 4,350 kg; heat = 4,350 × 1.9 × 50 ÷ 3,600 = **114.8 kWh**
+- Heat-up power = 114.8 ÷ 4 = **28.70 kW**
+- Average loss = 8 × 18 × (45 − 20) ÷ 1,000 = **3.60 kW**
+- Heater power = **32.30 kW**, drawing **44.9 A** at 415 V three-phase
+- Holding at 70 °C needs **7.20 kW**
+
+Losses are 11% of the heater rating here. Insulating the tank to U = 0.8 cuts the holding power to 0.72 kW, which matters more than the heater rating because the tank is held hot for most of the day.
+
+## Checking a heater in service
+
+Measure the phase currents with a clamp meter while the heater is on and compare them with the rating. A 36 kW heater at 415 V three-phase should draw about **50.1 A** per line; a much lower current on one phase points to a failed element. Low supply voltage has the same effect on all phases: at 394 V the same heater gives only 32.4 kW. With a healthy 36 kW heater the default 2,000 L tank should reach 60 °C in about **2.92 hours**; log the temperature during heat-up and compare. A slower rise means scale on the elements, a lower supply voltage or losses larger than assumed, often from an open lid.
+
+## Common mistakes
+
+- **Sizing for the holding load only.** The holding power is small; the heat-up duty sets the heater rating.
+- **Leaving out the steel of the tank.** A heavy steel tank or a tank full of parts also has to be heated; add its mass × 0.49 kJ/kg·K to the liquid energy.
+- **Forgetting evaporation from an open surface.** A hot open tank can lose more heat from the surface than through the walls; a lid or floating balls cut it sharply.
+- **Using single phase current formulas on a three-phase heater.** Divide by √3 × line voltage, not by the line voltage.
+- **Choosing high watt density elements for oil.** Oil carries heat away slowly, so a water heater element can coke the oil and burn out.

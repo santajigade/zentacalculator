@@ -2,10 +2,10 @@
 title: NPSH Available Calculator (NPSHa for Pumps)
 description: Calculate the net positive suction head available (NPSHa) for a pump from tank pressure, vapour pressure, liquid density, static height and suction losses.
 category: engineering
-intro: "A centrifugal pump cavitates when the pressure at its eye falls to the liquid's vapour pressure, so the suction system must supply more head than the pump needs. This NPSH available calculator works out NPSHa from the pressure on the liquid surface, the vapour pressure and density of the liquid, the static height and the suction-line friction, then compares it with the pump's NPSHr — the check explained in [NPSH and cavitation](https://www.instrumentationblog.in/npsh-and-cavitation-explained/)."
+intro: "A centrifugal pump cavitates when the pressure at its impeller eye falls to the vapour pressure of the liquid, so the suction system must supply more head than the pump needs. This NPSH available calculator works out NPSHa and compares it with the pump's NPSHr.\n\nProcess and mechanical engineers use it when laying out tanks, sumps and suction pipes, and when a noisy pump points to the problems explained in [NPSH and cavitation](https://www.instrumentationblog.in/npsh-and-cavitation-explained/)."
 keywords: [npsh available calculator, npsha calculator, npsh calculation, net positive suction head calculator, pump cavitation calculator, npsh margin, npshr vs npsha]
 published: 2026-11-09
-updated: 2026-11-09
+updated: 2026-11-21
 variables:
   - { id: Pa, label: Absolute pressure on the liquid surface, family: pressure, unit: kPa, imperialUnit: psi, default: 101.325, min: 0, help: 'Open tank: local atmospheric pressure. Closed vessel: gauge pressure + atmospheric.' }
   - { id: Pv, label: Vapour pressure of the liquid at pumping temperature, family: pressure, unit: kPa, imperialUnit: psi, default: 7.384, min: 0, help: 'Water: 2.34 kPa at 20 °C, 7.38 kPa at 40 °C, 19.9 kPa at 60 °C, 101.4 kPa at 100 °C.' }
@@ -40,6 +40,10 @@ faq:
     a: Hydraulic Institute guideline ANSI/HI 9.6.1 suggests NPSHa ÷ NPSHr ratios from about 1.1 up to 2.5 depending on the pump's suction energy and service; many specifications ask for at least 1 m (3 ft) of margin or a 1.3 ratio.
   - q: Why does hot water cause cavitation more easily?
     a: Vapour pressure rises steeply with temperature — from 2.3 kPa at 20 °C to 101 kPa at 100 °C — so the vapour head term eats almost all of the atmospheric head. Boiling or near-boiling liquids need a flooded suction with enough static height.
+  - q: "Why is NPSHa from a deaerator independent of its pressure?"
+    a: "The water is saturated, so the surface pressure equals the vapour pressure and the two pressure heads cancel. NPSHa is then just the static height of the water above the pump minus the suction losses."
+  - q: "How do I check NPSHa on an installed pump?"
+    a: "Read a suction gauge at the pump inlet, convert gauge plus atmospheric minus vapour pressure into head, then add the velocity head and the gauge height above the centreline. The example on this page gives 6.70 m."
 related: [engineering/pump-power, engineering/darcy-weisbach-head-loss, engineering/minor-losses, engineering/pressure-to-head]
 ---
 
@@ -98,3 +102,27 @@ Vapour pressure from the IAPWS-IF97 saturation equation.
 - **Reduce suction losses**: use a suction pipe one size larger than the pump inlet, keep it short, and avoid strainers or valves that can clog close to the pump.
 - For liquids at their boiling point (condensate, deaerator outlet, refrigerants) P<sub>surface</sub> = P<sub>v</sub>, so NPSHa is just the static height minus losses.
 - If you have a suction gauge reading, NPSHa = (P<sub>gauge</sub> + P<sub>atm</sub> − P<sub>v</sub>) ÷ ρg + v²/2g + gauge height above the pump centreline.
+
+## Second example: boiler feed pump under a deaerator
+
+A deaerator holds water at its boiling point, so the surface pressure equals the vapour pressure and the first two terms cancel. With the water level 6 m above the pump centreline and 0.8 m of suction loss, NPSHa = 6 − 0.8 = **5.2 m**, whatever the deaerator pressure. Against an NPSHr of 3.5 m the ratio is 1.49. This is why deaerators sit high on a structure: every metre of elevation is a metre of NPSH, and nothing else in the system adds any.
+
+## How the default case reacts to changes
+
+Starting from the default NPSHa of 5.45 m:
+
+- Sump level 1 m lower: NPSHa falls to 4.45 m and the ratio to 1.11
+- Flow 20% higher: friction rises roughly with the square of flow to 1.73 m, so NPSHa drops to 4.93 m while NPSHr also rises on the pump curve
+- Water at 60 °C instead of 40 °C: the vapour head grows from 0.76 m to about 2.07 m and almost all of the margin disappears
+
+## Checking NPSHa on a running pump
+
+Fit a calibrated compound gauge on the suction nozzle. Suppose it reads -35 kPa gauge, it sits 0.5 m above the centreline, and the pump moves 50 m³/h of 40 °C water through a 102.26 mm suction bore (velocity 1.69 m/s, velocity head 0.146 m). Then NPSHa = (-35 + 101.325 − 7.384) kPa ÷ (ρg) + 0.146 + 0.5 = **6.70 m**. A test like this catches blocked strainers and collapsed suction hoses that a desk calculation misses. Listen as well: cavitation sounds like gravel passing through the pump and often comes with a drop in discharge pressure.
+
+## Common mistakes
+
+- **Using gauge pressure for the surface.** An open tank has 101.325 kPa absolute at sea level, not zero; a closed vessel needs its gauge pressure plus atmospheric.
+- **Taking vapour pressure at the normal temperature.** Use the highest temperature the liquid can reach, such as summer cooling water or a hot condensate return.
+- **Forgetting the strainer.** A clean suction strainer may lose 0.2 m, a half blocked one several metres.
+- **Comparing NPSHa with NPSH3 and calling it safe.** NPSHr is the point where head has already dropped 3%, so cavitation and erosion begin before it.
+- **Checking only the duty point.** Run out on a parallel pump trip or an open bypass moves the pump to the right of its curve, where NPSHr climbs.

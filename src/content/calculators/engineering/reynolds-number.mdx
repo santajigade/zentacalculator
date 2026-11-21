@@ -2,10 +2,10 @@
 title: Reynolds Number Calculator
 description: Calculate the Reynolds number of pipe flow and see whether it is laminar, transitional or turbulent.
 category: engineering
-intro: "The Reynolds number tells you whether flow in a pipe is smooth (laminar) or chaotic (turbulent), which affects pressure drop, heat transfer and flow meter accuracy. See [what Reynolds number is](https://www.instrumentationblog.in/what-is-reynolds-number/) and why it matters in flow measurement."
+intro: "The Reynolds number compares inertial and viscous forces in a moving fluid and tells you whether pipe flow is laminar, transitional or turbulent. This Reynolds number calculator works it out from density, velocity, inner diameter and dynamic viscosity, and shows the flow regime at once.\n\nProcess and instrument engineers use it to choose friction factor correlations and to check that a flow meter is working inside its Reynolds limits. See [what Reynolds number is](https://www.instrumentationblog.in/what-is-reynolds-number/) for the background."
 keywords: [reynolds number, laminar flow, turbulent flow, fluid mechanics, viscosity, pipe flow regime, flow meter]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-21
 variables:
   - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
   - { id: v, label: Flow velocity, family: velocity, unit: ms, imperialUnit: fts, default: 2, min: 0 }
@@ -31,6 +31,10 @@ faq:
     a: "Many flow meters, such as vortex and orifice meters, are only accurate above a minimum Reynolds number, often 10,000 or more. Viscous liquids can fall below this."
   - q: "Is Reynolds number dimensionless?"
     a: "Yes. Use consistent units (for example SI) so the units cancel."
+  - q: "What diameter should I use for a rectangular duct?"
+    a: "Use the hydraulic diameter, four times the flow area divided by the wetted perimeter. A 400 by 200 mm duct has a hydraulic diameter of 266.7 mm."
+  - q: "Does warming water change its Reynolds number?"
+    a: "Yes, because viscosity drops. Water at 1 m/s in a 50 mm pipe has Re of about 27,896 at 0 °C and about 105,268 at 60 °C."
 related: [engineering/pipe-flow-velocity, engineering/hydrostatic-pressure]
 ---
 
@@ -109,3 +113,42 @@ Oils and syrups can have viscosities hundreds of times higher than water. Flow o
 | Honey | 2,000 – 10,000 |
 
 Viscosity changes strongly with temperature — use a value for your operating temperature.
+
+## Result with the default values
+
+The defaults describe water at about 20 °C (998 kg/m³, 1.002 cP) at 2 m/s in a 100 mm bore. Re = 998 × 2 × 0.1 ÷ 0.001002 = **199,202**, well into the turbulent band.
+
+## Example: air in a rectangular duct
+
+For a duct that is not round, use the hydraulic diameter D<sub>h</sub> = 4A ÷ P. A 400 × 200 mm duct has D<sub>h</sub> = 2 × 0.4 × 0.2 ÷ (0.4 + 0.2) = **266.7 mm**. With air at 20 °C (1.204 kg/m³, 0.0181 cP) moving at 6 m/s:
+
+Re = 1.204 × 6 × 0.2667 ÷ 0.0000181 = **106,431**, turbulent. Enter 266.7 mm as the diameter and 0.0181 cP as the viscosity to get the same figure.
+
+Laminar flow in water needs very low speeds. In a 25 mm tube, water at 20 °C stays laminar only below about **92 mm/s**. Viscous oils are the opposite case: a 100 cP oil (880 kg/m³) at 1 m/s in a 50 mm pipe gives Re = 440, and the laminar velocity profile takes about 0.05 × Re × D = **1.1 m** of straight pipe to develop fully.
+
+## Water temperature and Reynolds number
+
+Viscosity falls quickly as water warms, so the same flow becomes more turbulent. Water at 1 m/s in a 50 mm bore:
+
+| Temperature | Density (kg/m³) | Viscosity (cP) | Re |
+|---|---|---|---|
+| 0 °C | 999.8 | 1.792 | 27,896 |
+| 20 °C | 998.2 | 1.002 | 49,810 |
+| 40 °C | 992.2 | 0.653 | 75,972 |
+| 60 °C | 983.2 | 0.467 | 105,268 |
+| 80 °C | 971.8 | 0.355 | 136,873 |
+| 100 °C | 958.4 | 0.282 | 169,929 |
+
+Between 0 °C and 60 °C the Reynolds number rises from 27,896 to 105,268, more than three and a half times, with no change in flow.
+
+## How it is used in practice
+
+Plant engineers rarely measure Reynolds number directly. They calculate it at minimum, normal and maximum flow from the process data sheet, using viscosity at operating temperature from the fluid supplier or a laboratory viscometer. The minimum flow case is the one that decides whether a vortex meter will keep counting or whether an orifice coefficient is still valid, so meter sizing tools print Re for each flow case.
+
+## Common mistakes
+
+- **Typing kinematic viscosity into the dynamic field.** Centistokes and centipoise are equal only when density is 1,000 kg/m³; for an oil at 880 kg/m³, 100 cSt is 88 cP.
+- **Using nominal pipe size as the diameter.** A DN100 schedule 80 pipe has a bore of about 97 mm, not 100 mm, and the difference grows on small lines.
+- **Taking viscosity at the wrong temperature.** Lube oil can change viscosity by a factor of ten between a cold start and normal running.
+- **Using 2,300 for a non-circular duct without the hydraulic diameter.** The regime limits apply only when D<sub>h</sub> is used.
+- **Using standard density for gas at line pressure.** Compressed air at 7 bar(g) is about eight times denser than free air, so its Reynolds number is about eight times higher at the same velocity.

@@ -5,7 +5,7 @@ category: electrical
 intro: "When a motor on a variable frequency drive slows down, it works as a generator and pushes energy back into the DC bus. This braking resistor calculator finds the largest resistance that can absorb that power, as covered in this [VFD braking resistor sizing](https://www.instrumentationblog.in/vfd-braking-resistor-sizing/) guide.\n\nDrive commissioning engineers and panel builders use it to choose a resistor value, its continuous power rating and the chopper current before ordering parts."
 keywords: [braking resistor calculator, vfd braking resistor sizing, dynamic braking resistor, braking chopper, dc bus voltage, regenerative braking resistor]
 published: 2026-10-27
-updated: 2026-11-18
+updated: 2026-11-22
 variables:
   - { id: Vdc, label: Chopper switch-on DC bus voltage, family: voltage, unit: V, default: 760, min: 0, help: 'Typically about 760–800 V for 400 V drives and 380–400 V for 230 V drives — see the drive manual.' }
   - { id: Pb, label: Peak braking power, family: power, unit: kW, imperialUnit: hp, default: 15, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: The chopper current exceeds its rating and the drive trips or the chopper is damaged. Always respect the drive's minimum resistance.
   - q: "What is the peak current through a braking resistor?"
     a: "Peak current is the DC bus voltage divided by the resistance. With the default 760 V across 38.5 Ω it is 19.7 A, which must not exceed the braking chopper current rating."
+  - q: "Can I use two braking resistors in parallel?"
+    a: "Yes. Two equal resistors in parallel halve the resistance and share the power, so two 75 Ω units make 37.5 Ω and each needs 0.75 kW continuous for the default 1.5 kW duty. Each must still be rated for the full DC bus voltage."
+  - q: "How much energy does a braking resistor absorb per cycle?"
+    a: "Peak braking power multiplied by braking time. At 15 kW for 10% of a 120 s cycle that is 15 kW × 12 s = 180 kJ per cycle, which the resistor short-time rating must accept."
 related: [engineering/torque-power-speed, physics/rotational-kinetic-energy, electrical/three-phase-motor-power, physics/ohms-law, electrical/motor-starting-current]
 ---
 
@@ -104,3 +108,29 @@ Size the resistance from the peak power and the rating from the average power; m
 - **Use the resistor's duty rating.** Catalogue resistors are often rated for a short duty (for example 10% over 120 s). For long stops, size on the energy per stop and check the resistor's thermal time constant.
 - **Fit a thermal switch.** Wire the resistor's thermostat or a thermal overload into the drive's external fault input so a stuck chopper cannot overheat it.
 - **Mount it safely.** Resistors can exceed 200 °C; place them where airflow is free and away from cable trays, and use cable rated for the full DC bus voltage.
+
+## Rating the resistor for the duty cycle
+
+The average power is only half the thermal story; the resistor also has to absorb the energy of each stop without its element overheating. For the default 15 kW peak and a 120 s duty period:
+
+| Duty cycle | Braking time | Average rating | Energy per cycle |
+|---|---|---|---|
+| 5% | 6 s of every 120 s | 0.75 kW | 90 kJ |
+| 10% | 12 s of every 120 s | 1.50 kW | 180 kJ |
+| 20% | 24 s of every 120 s | 3.00 kW | 360 kJ |
+| 35% | 42 s of every 120 s | 5.25 kW | 630 kJ |
+| 50% | 60 s of every 120 s | 7.50 kW | 900 kJ |
+
+At 10% the resistor takes **180 kJ** in 12 s, then has 108 s to cool. Catalogue data quotes both a continuous rating and a short-time overload (for example 10 times continuous for 5 s), and both must cover the application.
+
+## Building the value from standard resistors
+
+Two **75 Ω** units in parallel give 37.5 Ω, just under the 38.5 Ω limit. Each sees the full bus voltage, so each must handle 7,701 W peak and half the average, 0.75 kW. Series strings share the voltage instead and suit low-ohm, high-voltage drives. Wire-wound and steel-grid resistors rise roughly 10% in resistance when hot: the 37.5 Ω pair becomes about 41.2 Ω, which absorbs 14.0 kW at the threshold, so leave some margin below R<sub>max</sub> rather than sitting exactly on it.
+
+## Common mistakes
+
+- **Using the motor voltage instead of the DC bus voltage.** 415² ÷ 15,000 gives 11.5 Ω, far too low, and would overload the chopper.
+- **Rating the resistor at the peak power.** A 15 kW continuous resistor for 10% duty is ten times larger and costlier than needed; size it on 1.5 kW plus the short-time overload check.
+- **Ignoring the drive's minimum ohms.** Paralleling extra resistors "for safety" lowers the value and can exceed the chopper current.
+- **Forgetting the hot resistance.** If the value is chosen right at R<sub>max</sub>, warming lowers the braking power and the drive trips on DC bus overvoltage at the end of a long stop.
+- **Running unscreened cable to a remote resistor.** The chopper switches the full bus voltage at high dv/dt, so use screened cable and keep it short.

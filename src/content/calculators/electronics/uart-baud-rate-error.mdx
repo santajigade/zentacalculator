@@ -2,10 +2,10 @@
 title: UART Baud Rate Error Calculator (Divisor & Actual Baud)
 description: Calculate the UART baud rate divisor, actual baud rate and percentage error for any clock frequency and oversampling, with an error table for common crystals.
 category: electronics
-intro: "A UART makes its bit clock by dividing the system clock by an integer, so the actual baud rate is rarely exactly what you asked for. This UART baud rate error calculator finds the nearest divisor, the real baud rate and the error — keep it within about ±2% for reliable links, as explained in [UART frame format and baud rate](https://www.instrumentationblog.in/uart-communication-frame-baud-rate/)."
+intro: "A UART makes its bit clock by dividing the system clock by a whole number, so the real baud rate is rarely exactly the one you asked for. This UART baud rate error calculator finds the nearest divisor, the actual rate and the percentage error.\n\nEmbedded firmware engineers use it when choosing crystals and register settings, and when debugging garbled serial data, following [UART frame format and baud rate](https://www.instrumentationblog.in/uart-communication-frame-baud-rate/)."
 keywords: [uart baud rate error calculator, baud rate calculator, ubrr calculator, uart divisor calculator, baud rate error percentage, serial baud rate clock, avr baud rate]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-22
 variables:
   - { id: f, label: Peripheral clock frequency, family: frequency, unit: MHz, default: 16, min: 0 }
   - { id: b, label: Desired baud rate, suffix: bit/s, default: 115200, min: 1 }
@@ -31,6 +31,10 @@ faq:
     a: They divide exactly into standard baud rates, giving 0% error at 9,600, 19,200, 57,600 and 115,200 baud.
   - q: Does fractional baud rate generation help?
     a: Yes — many STM32, NXP and ESP32 UARTs have a fractional divider, which reduces the error to a small fraction of a percent. This calculator assumes an integer divider.
+  - q: "Is 8x double speed mode always more accurate?"
+    a: "Not always. It halves the divisor step, which can help (+2.12% instead of -3.55% at 16 MHz and 115,200 baud), but the receiver tolerance falls from about 4.6% to 3.9% because each sample covers a larger part of the bit."
+  - q: "How can I measure the actual baud rate of a device?"
+    a: "Send 0x55 and measure one bit width with a scope or logic analyser, then take baud = 1 ÷ bit time. At 115,200 baud a bit lasts 8.68 µs; a 16 MHz AVR in normal mode produces 9.00 µs."
 related: [electronics/adc-resolution, electronics/pwm-duty-cycle, electronics/crystal-load-capacitance, electronics/555-timer]
 ---
 
@@ -66,3 +70,40 @@ Enter the UART's **clock frequency**, the **baud rate** you want and the **overs
 
 - Both ends contribute error — a ±2% error on each side can add up to 4%.
 - RC oscillators (internal clocks) can themselves be ±1–2% off; use a crystal for high baud rates.
+
+## Fixing the default example
+
+With a 16 MHz clock, 115,200 baud and 16× oversampling the calculator gives N = **9**, an actual rate of **111,111 bit/s** and an error of **-3.55%**. Three ways to bring it down:
+
+- **8× double speed mode:** N = round(16,000,000 ÷ (8 × 115,200)) = 17, so 117,647 bit/s and **+2.12%** (on AVR, set U2X and UBRR = 16)
+- **Fractional divider:** a UART that divides in sixteenths uses 8.6875 instead of 9, giving 115,108 bit/s and **-0.080%**
+- **Baud rate crystal:** 14.7456 MHz or 11.0592 MHz divides exactly, so the error is 0%
+
+## How much error a receiver tolerates
+
+The receiver syncs on the falling edge of the start bit and then samples each bit in its centre. In an 8-N-1 frame the last sample, in the stop bit, falls 9.5 bit times after that edge. The accumulated timing slip must stay under half a bit, less the uncertainty in detecting the start edge (one sample period). That gives a total budget of (0.5 − 1/16) ÷ 9.5 = **4.61%** with 16× oversampling and **3.95%** with 8×. The budget is shared by both ends, so a link where the transmitter is +2% and the receiver -2% is already at the edge. The default -3.55% error slips 0.35 of a bit by the stop bit, which leaves little margin for the other device's clock error.
+
+## 115,200 baud error for common clocks
+
+| Clock | 16× oversampling | 8× oversampling |
+|---|---|---|
+| 1 MHz | -45.75% | +8.51% |
+| 4 MHz | +8.51% | +8.51% |
+| 8 MHz | +8.51% | -3.55% |
+| 12 MHz | -6.99% | +0.16% |
+| 14.7456 MHz | +0.00% | +0.00% |
+| 16 MHz | -3.55% | +2.12% |
+| 20 MHz | -1.36% | -1.36% |
+| 24 MHz | +0.16% | +0.16% |
+
+## Measuring the real baud rate
+
+Put an oscilloscope or logic analyser on the TX line and send the character 0x55 ('U'), which produces alternating bits. Measure the width of one bit: at 115,200 baud it should be 8.68 µs, while the default 16 MHz setting gives 9.00 µs. Measuring across all ten bits of the frame averages out trigger jitter and gives a more precise result.
+
+## Common mistakes
+
+- **Writing N into a register that expects N − 1.** AVR UBRR and many other dividers are offset by one, which shifts the rate by a whole step.
+- **Using the core clock instead of the peripheral clock.** On many microcontrollers the UART runs from a prescaled bus clock, so the divisor is wrong by the prescaler ratio.
+- **Trusting an internal RC oscillator at high baud rates.** Its own tolerance of 1% to 2% adds to the divisor error.
+- **Checking only one end.** A PC USB adapter and a microcontroller each have errors, and only their difference matters.
+- **Forgetting longer frames.** With 9 data bits or parity the stop bit sits later in the frame, so the allowed error is smaller.

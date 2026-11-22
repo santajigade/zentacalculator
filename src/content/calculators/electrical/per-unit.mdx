@@ -2,10 +2,10 @@
 title: Per-Unit System Calculator (Base Impedance and Base Change)
 description: Calculate base impedance, base current and per-unit impedance for power system studies — and convert per-unit values to a new base.
 category: electrical
-intro: "Power system engineers express impedances, voltages and currents as fractions of chosen base values. This per-unit method removes transformer ratios from the maths and makes fault studies much quicker, as shown in this introduction to the [per-unit system in power systems](https://www.instrumentationblog.in/per-unit-system-power-system/)."
+intro: "The per-unit method expresses impedances, voltages and currents as fractions of chosen base values, so transformer ratios drop out of the maths. This per-unit system calculator finds base impedance, base current and the per-unit impedance, then converts it to a new MVA or kV base.\n\nProtection and planning engineers use it to build hand fault studies and to put nameplate data on one system base, as shown in this introduction to the [per-unit system in power systems](https://www.instrumentationblog.in/per-unit-system-power-system/)."
 keywords: [per unit calculator, per unit system, base impedance, base current, change of base per unit, pu impedance, power system analysis]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - { id: Sb, label: Base power, suffix: MVA, default: 10, min: 0 }
   - { id: Vb, label: Base voltage (line), family: voltage, unit: kV, default: 11, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: Z_new = Z_old × (V_old ÷ V_new)² × (S_new ÷ S_old).
   - q: What is the link between % impedance and per unit?
     a: Percentage impedance is per-unit × 100. A transformer with 6% impedance has 0.06 pu on its own rating.
+  - q: "Why does the base voltage change across a transformer?"
+    a: "The base voltages on each side are chosen in the ratio of the transformer turns. That way the transformer has the same per-unit impedance seen from either winding and the ideal ratio disappears from the circuit."
+  - q: "How do I convert a per-unit fault current back to amps?"
+    a: "Multiply by the base current of the voltage zone where the fault is. On a 100 MVA base at 415 V the base current is about 139,121 A, so 0.3 pu is about 41.7 kA."
 related: [electrical/kw-to-amps, electrical/three-phase-motor-power, electrical/transformer-short-circuit, electrical/transformer-current, electrical/kva-to-kw, electronics/reactance]
 ---
 
@@ -71,3 +75,48 @@ Z = 0.0625 × (100 ÷ 2.5) = **2.5 pu** on 100 MVA.
 ## Short-circuit with per-unit
 
 Fault current in pu = 1 ÷ Z<sub>total,pu</sub>; multiply by base current for amps. Adding source, transformer and cable impedances in per unit is how quick fault-level studies are done by hand.
+
+## Worked example with the default inputs
+
+An 11 kV cable has an impedance of 0.6 Ω. On a 10 MVA, 11 kV base:
+
+- Z<sub>b</sub> = 11² ÷ 10 = **12.1 Ω** and I<sub>b</sub> = 10,000,000 ÷ (√3 × 11,000) = **524.86 A**
+- Z<sub>pu</sub> = 0.6 ÷ 12.1 = **0.04959 pu**
+- Moved to a 100 MVA base at the same voltage: 0.04959 × (11 ÷ 11)² × (100 ÷ 10) = **0.49587 pu**
+
+## A hand fault study on one base
+
+Take a 250 MVA, 11 kV grid feeding that cable, then a 2.5 MVA, 11/0.415 kV, 6.25% transformer, with a fault on the LV busbar. Everything goes on 100 MVA:
+
+| Element | Per-unit impedance (100 MVA) | How it was found |
+|---|---|---|
+| Grid | 0.4000 | 100 ÷ 250 |
+| 11 kV cable | 0.4959 | from the calculator above |
+| Transformer | 2.5000 | 0.0625 × 100 ÷ 2.5 |
+| **Total** | **3.3959** | series sum |
+
+Base current at 415 V on 100 MVA is 139,121 A, so the fault current is 139,121 ÷ 3.3959 = **41.0 kA**. No turns ratio was needed because the base voltage changed from 11 kV to 0.415 kV across the transformer, exactly in step with its ratio. (Resistance and reactance are added as plain magnitudes here, which is a common conservative shortcut.)
+
+## Base currents on a 100 MVA base
+
+| Base voltage | Base current | In kA |
+|---|---|---|
+| 0.415 kV | 139,121 A | 139.12 kA |
+| 3.3 kV | 17,495 A | 17.50 kA |
+| 6.6 kV | 8,748 A | 8.75 kA |
+| 11 kV | 5,249 A | 5.25 kA |
+| 33 kV | 1,750 A | 1.75 kA |
+| 66 kV | 875 A | 0.87 kA |
+| 132 kV | 437 A | 0.44 kA |
+
+## Equipment rated at a different voltage
+
+Nameplate values are on the equipment's own rating. A 6% transformer rated 10.5 kV used on an 11 kV base becomes 0.06 × (10.5 ÷ 11)² = **0.0547 pu** before any MVA change. Ignoring the voltage term here is a small but real error.
+
+## Common mistakes
+
+- **Mixing phase and line quantities.** Use three-phase MVA with line kV, or single-phase MVA with phase kV, never one of each.
+- **Keeping one base voltage across a transformer.** The voltage base must follow the turns ratio from zone to zone, or the per-unit values are wrong on one side.
+- **Inverting the change of base.** Per-unit impedance rises with the new MVA base and falls with a higher new kV base; check that a 100 MVA base gives a bigger pu figure than a 10 MVA base.
+- **Forgetting to convert back.** A fault result of 0.3 pu current means nothing until it is multiplied by the base current of that voltage zone.
+- **Treating % and pu as different impedances.** 6% and 0.06 pu are the same thing on the same base.

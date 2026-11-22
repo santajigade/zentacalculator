@@ -2,10 +2,10 @@
 title: THD Calculator (Total Harmonic Distortion)
 description: Calculate total harmonic distortion (THD) of voltage or current from the fundamental and harmonic magnitudes, with IEEE 519 limits.
 category: electrical
-intro: "Drives, UPSs, LED drivers and computers draw distorted current that adds harmonics to the supply. Total harmonic distortion (THD) sums them into one figure you can compare with IEEE 519 limits. Read [power harmonics explained](https://www.instrumentationblog.in/power-harmonics-explained/) and how to do a [THD calculation for power systems](https://www.instrumentationblog.in/harmonic-distortion-thd-calculation-power-systems/)."
+intro: "Drives, UPSs, LED drivers and computers draw distorted current that adds harmonics to the supply. This THD calculator combines the measured harmonic magnitudes into one total harmonic distortion figure and the true RMS value; see [power harmonics explained](https://www.instrumentationblog.in/power-harmonics-explained/).\n\nPower quality engineers and maintenance teams use it to check analyser readings against IEEE 519 limits and follow a [THD calculation for power systems](https://www.instrumentationblog.in/harmonic-distortion-thd-calculation-power-systems/)."
 keywords: [thd calculator, total harmonic distortion, harmonic distortion calculation, ieee 519 limits, thd formula, voltage thd, current thd]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - { id: h1, label: Fundamental (50/60 Hz) magnitude, default: 100, min: 0.0001 }
   - { id: h3, label: 3rd harmonic, default: 2, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: Six-pulse VFDs and rectifiers mainly produce the 5th, 7th, 11th and 13th harmonics. Single-phase loads such as PCs and LED drivers add the 3rd.
   - q: Can I enter percentages instead of volts or amps?
     a: Yes — enter 100 for the fundamental and each harmonic as a percentage of it.
+  - q: "What is the difference between THD and TDD?"
+    a: "THD divides the harmonic current by the present fundamental; TDD divides it by the maximum demand current. A feeder at half load with 40% THD has a TDD of 20%, which is the figure IEEE 519 current limits use."
+  - q: "Why does the true RMS barely change at low THD?"
+    a: "Harmonics add as the square root of the sum of squares, so RMS = fundamental × √(1 + THD²). At 5.7% THD the RMS is only 0.16% above the fundamental, while at 40% it is 8% higher."
 related: [electrical/power-factor-correction, electrical/voltage-unbalance, physics/decibel, electrical/kva-to-kw]
 ---
 
@@ -74,3 +78,41 @@ Current limits (TDD) depend on the ratio of short-circuit current to load curren
 - Overheating of transformers, cables and neutral conductors (triplen harmonics add in the neutral).
 - Nuisance tripping of breakers and failure of capacitor banks through resonance.
 - Errors in meters that are not true-RMS.
+
+## Worked example with the default values
+
+Square each harmonic: 2² + 4² + 3² + 1.5² + 1² = 4 + 16 + 9 + 2.25 + 1 = **32.25**.
+
+- THD = √32.25 ÷ 100 = 5.679 ÷ 100 = **5.68%**
+- True RMS = √(100² + 32.25) = **100.16**
+
+The 5th harmonic alone supplies 50% of the squared sum, so it is the one to target with a filter. Note that 5.7% distortion raises the RMS by only 0.16%: harmonics add in quadrature, so small amounts barely change the heating value.
+
+## THD, RMS and distortion power factor
+
+| THD | RMS ÷ fundamental | Distortion power factor |
+|---|---|---|
+| 5% | 1.001 | 0.999 |
+| 10% | 1.005 | 0.995 |
+| 30% | 1.044 | 0.958 |
+| 50% | 1.118 | 0.894 |
+| 80% | 1.281 | 0.781 |
+| 100% | 1.414 | 0.707 |
+
+For a drive drawing current at 40% THD, the RMS current is 1.077 times the fundamental, so cables and transformers carry about 8% more heating current than the kW suggests, and the true power factor is the displacement power factor multiplied by 0.928.
+
+## THD versus TDD
+
+IEEE 519 current limits use total demand distortion, which divides the harmonic current by the maximum demand current I<sub>L</sub> instead of the present fundamental. A feeder running at 50 A with 40% current THD and a 100 A maximum demand has TDD = 40% × 50 ÷ 100 = **20%**. Judging a lightly loaded feeder by THD makes it look much worse than it is.
+
+## How it is measured
+
+Class A power quality analysers (IEC 61000-4-30) compute harmonics with a 10 cycle (50 Hz) or 12 cycle (60 Hz) FFT window up to the 40th or 50th order, and IEEE 519 assessments use the 95th percentile of 10 minute values over a week. Record at the point of common coupling, and log voltage and current together so you can tell whether distortion comes from your loads or from the grid.
+
+## Common mistakes
+
+- **Entering only the harmonics shown on screen.** Leaving out the 17th, 19th and higher orders underestimates THD for 6-pulse drives.
+- **Mixing units.** All inputs must be in the same unit, either all volts, all amps or all percent of the fundamental.
+- **Comparing current THD with the voltage limit.** The 8% figure applies to voltage at 1 kV or below; current is judged by TDD.
+- **Using a meter that is not true RMS.** An average-responding meter can read 10 to 40% low on distorted current.
+- **Confusing THD-F and THD-R.** Some analysers divide by the total RMS (THD-R) instead of the fundamental, which gives a lower number at high distortion.

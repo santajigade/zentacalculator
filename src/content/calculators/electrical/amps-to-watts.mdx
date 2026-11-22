@@ -2,10 +2,10 @@
 title: Amps to Watts Calculator (and Watts to Amps)
 description: Convert amps to watts for DC, single-phase and three-phase circuits — with charts for 12 V, 120 V and 230 V.
 category: electrical
-intro: "Watts measure the real power a load uses, while amps measure the current it draws. The two are linked by voltage — and, for AC loads such as motors, by power factor — so knowing any two lets you find the third when you size fuses, sockets, generators or inverters. This free amps to watts calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Current in amps and power in watts are linked by the supply voltage and, for AC loads, by power factor. This amps to watts calculator works for DC, single-phase and three-phase circuits and solves for whichever value you leave blank, so it also converts watts to amps.\n\nElectricians, solar installers and homeowners use it to check what a socket, fuse, inverter or generator can supply and to turn a clamp meter reading into an estimate of real power."
 keywords: [amps to watts, watts to amps, amps to kw, how many watts is an amp, 12v amps to watts, 230v amps to watts, ampere to watt]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - { id: I, label: Current, family: current, unit: A, default: 10, min: 0 }
   - { id: V, label: Voltage, family: voltage, unit: V, default: 230, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: About 3,680 W at 230 V. Many appliances are limited to a little less for continuous use.
   - q: How many amps is 2,000 watts?
     a: About 8.7 A at 230 V or 16.7 A at 120 V.
+  - q: "Can I find watts with just a clamp meter?"
+    a: "Only for resistive loads. A clamp gives amps, and volts × amps is VA. For a motor or compressor you also need the power factor: 4.2 A at 230 V and PF 0.7 is about 676 W, not 966 W."
+  - q: "How many watts is 10 amps on a 400 V three-phase supply?"
+    a: "About 5,889 W at a power factor of 0.85, using P = √3 × 400 × 10 × 0.85. At unity power factor it would be 6,928 W."
 related: [electrical/kw-to-amps, physics/ohms-law, electrical/kva-to-kw, everyday-life/electricity-cost]
 ---
 
@@ -77,3 +81,42 @@ For 12 V and 24 V systems (cars, solar, boats), current is high for modest power
 ## Watts, VA and power factor
 
 For AC loads with a power factor below 1 (motors, some electronics), the real power in watts is lower than volts × amps. That product is the apparent power in VA — see the [kVA to kW converter](/electrical/kva-to-kw/).
+
+## Worked example
+
+With the default inputs, a 10 A load on a 230 V single-phase supply at unity power factor:
+
+- P = V × I × PF = 230 × 10 × 1 = **2,300 W**, or 2.3 kW
+
+Switch the system to three-phase, enter 400 V and a power factor of 0.85, and the same 10 A per line gives √3 × 400 × 10 × 0.85 = **5,889 W**. The current is identical, but the three-phase circuit delivers about 2.6 times the power because three conductors share it.
+
+## What 10 A means on different supplies
+
+| System | Power at 10 A |
+|---|---|
+| 12 V DC | 120 W |
+| 24 V DC | 240 W |
+| 48 V DC | 480 W |
+| 120 V single-phase, PF 0.9 | 1,080 W |
+| 230 V single-phase, PF 1 | 2,300 W |
+| 230 V single-phase, PF 0.8 | 1,840 W |
+| 400 V three-phase, PF 0.85 | 5,889 W |
+| 480 V three-phase, PF 0.85 | 7,067 W |
+
+The table shows why a current rating alone says little about capacity: 10 A is a small car accessory at 12 V and a 7.1 kW motor at 480 V.
+
+## Turning a clamp meter reading into watts
+
+A clamp meter reads RMS current, not power. Multiplying that reading by the supply voltage gives volt-amperes, which equals watts only for resistive loads such as kettles, immersion heaters and incandescent lamps. A fridge compressor drawing 4.2 A on 230 V shows 966 VA, but at a typical running power factor of 0.7 it uses only about **676 W**. For an accurate figure on motors, compressors and electronics, use a plug-in energy meter or a power analyser that multiplies voltage and current sample by sample. Read the current once the load has settled, since motors draw several times their running current for the first second or two.
+
+## Battery and inverter currents
+
+On the DC side of an inverter, divide the AC load by the inverter efficiency before converting. A 1,000 W load on a 12 V inverter that is 90% efficient pulls 1,000 ÷ 0.9 ÷ 12 = **93 A** from the battery, which sets the cable size and fuse rating.
+
+## Common mistakes
+
+- **Using the phase voltage in the three-phase formula.** √3 × 230 V × 10 A × 0.85 gives 3,386 W, far below the real 5,889 W on a 400 V line voltage. Use the line-to-line voltage with √3.
+- **Leaving power factor at 1 for motors.** Pumps, fans and compressors run at 0.7 to 0.9, so watts are lower than volts × amps.
+- **Reading the nameplate current as the running current.** Nameplates often show the maximum or full-load value; actual draw at part load is lower.
+- **Forgetting inverter losses on battery systems.** Ignoring a 10% loss underestimates battery current by about 11%.
+- **Using peak instead of RMS values.** A 230 V supply peaks at about 325 V, but power formulas use RMS voltage and current.

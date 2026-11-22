@@ -2,10 +2,10 @@
 title: Battery Charging Time Calculator
 description: Calculate how long a battery takes to charge from its capacity, charging current, starting charge level and charging efficiency — lead-acid or lithium.
 category: electronics
-intro: "How long a battery takes to charge depends on its capacity, the charger current and how much charge it needs — plus losses that make real charging slower than Ah ÷ A. This battery charging time calculator includes the state of charge and efficiency — see [industrial battery charger float and boost charging](https://www.instrumentationblog.in/industrial-battery-charger-float-boost/) and the main [causes of battery failure](https://www.instrumentationblog.in/causes-of-battery-failure/)."
+intro: "How long a battery takes to charge depends on its capacity, the charger current, how much charge it needs and the losses that make real charging slower than Ah ÷ A. This battery charging time calculator includes state of charge and efficiency; see [industrial battery charger float and boost charging](https://www.instrumentationblog.in/industrial-battery-charger-float-boost/).\n\nInverter and solar installers, UPS technicians and boat or caravan owners use it to size chargers and plan recharge times between outages."
 keywords: [battery charging time calculator, battery charge time formula, how long to charge battery, ah charging time, lead acid charging time, lithium battery charge time]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-22
 variables:
   - { id: C, label: Battery capacity, suffix: Ah, default: 150, min: 0 }
   - { id: I, label: Charging current, family: current, unit: A, default: 15, min: 0 }
@@ -34,6 +34,10 @@ faq:
     a: For lead-acid, about 10% of capacity (C/10) — 15 A for a 150 Ah battery. Lithium batteries accept 0.5C or more; check the datasheet.
   - q: What is C-rate?
     a: Charging current divided by capacity. 15 A on a 150 Ah battery is 0.1C.
+  - q: "Can a bigger charger charge a lead-acid battery much faster?"
+    a: "Only in the bulk stage. Above about 0.2C (30 A for a 150 Ah battery) the battery heats and gasses, and the absorption stage still takes a few hours because the current tapers whatever the charger rating."
+  - q: "How do I find the starting state of charge?"
+    a: "For lead-acid, rest the battery for a few hours and read the open circuit voltage: about 12.7 V is full, 12.4 V is 75%, 12.2 V is 50% and 12.0 V is 25% for a 12 V battery. For lithium use the battery monitor."
 related: [everyday-life/inverter-battery-backup, other/battery-life, ecology/battery-storage, ecology/ev-charging-time]
 ---
 
@@ -71,3 +75,43 @@ Add 1–3 hours for the absorption stage of lead-acid batteries.
 1. **Bulk** — constant current until about 80% charge.
 2. **Absorption** — constant voltage (about 14.4–14.8 V for 12 V) while current tapers.
 3. **Float** — lower voltage (about 13.5–13.8 V) to maintain full charge.
+
+## Worked example
+
+The defaults describe a 150 Ah tubular inverter battery at 20% charge on a 15 A charger:
+
+- Charge needed = 150 × (100% − 20%) = **120 Ah**
+- Time = 120 ÷ (15 × 0.8) = **10 h**
+- C-rate = 15 ÷ 150 = **0.1C**
+
+To get the same battery back to full in an 8 hour night, the charger must supply 120 ÷ (8 × 0.8) = **18.8 A**, so a 20 A charger is the practical choice.
+
+## The same charge on different chemistries
+
+120 Ah into a battery at 15 A:
+
+| Battery type | Efficiency | Time | Ah drawn from charger |
+|---|---|---|---|
+| Flooded / tubular lead-acid | 80% | 10.00 h | 150.0 Ah |
+| AGM / gel lead-acid | 85% | 9.41 h | 141.2 Ah |
+| LiFePO4 / Li-ion | 95% | 8.42 h | 126.3 Ah |
+
+## A lithium example
+
+A 100 Ah LiFePO4 battery taken from 10% to 90% at 20 A needs 80 Ah and takes 80 ÷ (20 × 0.95) = **4.21 h** at 0.2C. Lithium cells stay in constant current mode until about 95%, so the estimate is close to what you will see, while lead-acid needs the extra absorption time noted above.
+
+## Estimating the starting charge
+
+Measure the open circuit voltage after the battery has rested for a few hours with no load or charger. For a 12 V flooded lead-acid battery, about 12.7 V is full, 12.4 V is about 75%, 12.2 V about 50% and 12.0 V about 25%. LiFePO4 voltage is very flat between 20% and 90%, so its state of charge is better read from a coulomb counting battery monitor than from voltage.
+
+## Energy from the wall
+
+Charging 120 Ah at an efficiency of 0.8 at an average 13.8 V through an 85% efficient charger takes about **2.44 kWh** from the mains, worth knowing when the charger runs from a generator.
+
+## Common mistakes
+
+- **Using rated capacity when the battery is aged.** A battery at 80% of its original capacity holds 120 Ah, and the charge needed falls with it.
+- **Taking the charger's label current as the actual current.** Many chargers fold back when hot or when the battery voltage rises; measure with a clamp meter.
+- **Charging lead-acid at too high a C-rate.** Flooded cells above about 0.2C gas heavily and heat up, which shortens life.
+- **Ignoring loads connected during charging.** An inverter feeding 3 A of load leaves only 12 A for the battery, stretching 10 h to 12.5 h.
+- **Stopping at the bulk stage.** Lead-acid left at 80% to 90% sulphates over time; let the absorption stage finish regularly.

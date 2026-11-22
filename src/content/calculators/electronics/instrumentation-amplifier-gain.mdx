@@ -2,10 +2,10 @@
 title: Instrumentation Amplifier Gain Calculator (Rg)
 description: Calculate the gain-setting resistor Rg for INA128, INA333, AD620 and other instrumentation amplifiers — or the gain from a given Rg.
 category: electronics
-intro: "Instrumentation amplifiers amplify the tiny differential signal from bridges, strain gauges and thermocouples while rejecting common-mode noise, with a single resistor setting the gain. This instrumentation amplifier gain calculator finds Rg for popular parts — see [how an instrumentation amplifier works](https://www.instrumentationblog.in/instrumentation-amplifier-working/) and how it [differs from an op-amp](https://www.instrumentationblog.in/instrumentation-amplifier-vs-op-amp-key-differences/)."
+intro: "An instrumentation amplifier boosts the small difference between two inputs and ignores the voltage they share, with one external resistor setting the gain. This instrumentation amplifier gain calculator finds that resistor R<sub>G</sub> for the INA128, AD620, INA333 and similar parts, or the gain from a given R<sub>G</sub>.\n\nDesigners of load cell, strain gauge and thermocouple front ends use it to scale millivolt signals to an ADC range. See [how an instrumentation amplifier works](https://www.instrumentationblog.in/instrumentation-amplifier-working/) and how it [differs from an op-amp](https://www.instrumentationblog.in/instrumentation-amplifier-vs-op-amp-key-differences/)."
 keywords: [instrumentation amplifier gain calculator, rg calculator, ina128 gain resistor, ad620 gain calculation, in-amp gain formula, ina333 gain]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-22
 variables:
   - id: k
     label: Amplifier (gain constant)
@@ -32,6 +32,10 @@ faq:
     a: A gain of 1 — leaving R_G open makes the amplifier a precision differential buffer.
   - q: Why use an instrumentation amplifier instead of an op-amp?
     a: It has very high input impedance on both inputs, excellent common-mode rejection and gain set by one resistor without matched-resistor networks.
+  - q: "Why is my measured instrumentation amplifier gain slightly off?"
+    a: "Usually R<sub>G</sub> is a rounded standard value plus PCB resistance. With the INA128 at G = 100, the nearest E96 value 511 Ω gives a gain of 98.85, about -1.15% from target; calibrate with two known inputs to remove it."
+  - q: "Do I need a resistor from each input to ground?"
+    a: "Yes, whenever the source has no DC path to the amplifier ground, such as an isolated thermocouple or AC coupled sensor. Without it the input bias current charges the inputs until the amplifier saturates."
 related: [electronics/op-amp-gain, electronics/wheatstone-bridge, electronics/strain-gauge, electronics/adc-resolution]
 ---
 
@@ -68,3 +72,36 @@ A 2 mV/V load cell on 5 V excitation gives 10 mV at full load. A gain of 250 (R<
 ## Output range
 
 The output cannot swing to the rails and is also limited by the common-mode voltage at the inputs — check the datasheet's input/output range charts, especially on single 3.3 or 5 V supplies.
+
+## Worked example: bridge sensor into an ADC
+
+The default inputs describe a common job: a 350 Ω load cell rated 2 mV/V, excited at 10 V, gives **20 mV** at full load. To turn that into 2 V for a 0 to 2.5 V ADC with headroom, pick the INA128 and a gain of 100:
+
+- R<sub>G</sub> = 50,000 ÷ (100 − 1) = **505.05 Ω**
+- Output at full load = 100 × 20 mV = **2.00 V**
+- The nearest 1% E96 value is 511 Ω, which gives G = 98.85, a gain error of **-1.15%**
+- Both inputs sit near 5 V, half the excitation, so that common mode voltage must lie inside the amplifier's input range at the chosen supply
+
+If -1.15% is too much, use a 0.1% E192 value of 505 Ω, or a 499 Ω resistor in series with a small trim resistor, and calibrate with known weights.
+
+## Standard resistor values and the gain you really get (INA128)
+
+| Target gain | Exact R<sub>G</sub> | Nearest E96 | Actual gain | Error |
+|---|---|---|---|---|
+| 10 | 5,555.6 Ω | 5,620 Ω | 9.90 | -1.03% |
+| 50 | 1,020.4 Ω | 1,020 Ω | 50.02 | +0.04% |
+| 100 | 505.1 Ω | 511.0 Ω | 98.85 | -1.15% |
+| 500 | 100.2 Ω | 100.0 Ω | 501.00 | +0.20% |
+| 1000 | 50.1 Ω | 49.9 Ω | 1,003.00 | +0.30% |
+
+## How it is set up on a real board
+
+The R<sub>G</sub> pins connect to internal nodes of the input stage, so place the resistor right next to the package with short, equal traces. Drive the REF pin from a low impedance source such as a buffered mid-supply voltage; any resistance in series with REF unbalances the internal difference amplifier and degrades common mode rejection. After assembly, check the gain with a precision source or a calibrator by applying two known differential voltages and fitting a straight line, which removes the offset at the same time.
+
+## Common mistakes
+
+- **Leaving no DC path for input bias current.** A floating thermocouple or a transformer coupled signal lets the inputs drift to a rail. Tie each input to ground or REF through a resistor of 10 kΩ to 1 MΩ.
+- **Ignoring trace resistance at high gain.** At G = 1000, R<sub>G</sub> is only 50.1 Ω, so an extra 0.1 Ω of copper and solder lowers the gain by about **0.20%**.
+- **Buying R<sub>G</sub> on tolerance alone.** A 0.1% part adds about 0.10% gain error at G = 100, but a 50 ppm/K mismatch to the internal resistors adds another 0.20% over a 40 K swing.
+- **Checking only the output swing.** With a high gain the internal nodes can clip before the output does, so read the datasheet's common mode versus output voltage chart for your supply.
+- **Expecting the formula to hold for any part.** Some in-amps, such as the INA333 and AD8237, use different constants or two gain resistors, so take k from the exact datasheet.

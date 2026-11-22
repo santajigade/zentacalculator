@@ -2,10 +2,10 @@
 title: Strain Gauge Calculator (ΔR and Bridge Output)
 description: Calculate the resistance change and Wheatstone bridge output of a strain gauge from gauge factor, strain and excitation — for quarter, half and full bridges.
 category: electronics
-intro: "A strain gauge is a fine foil grid whose resistance changes slightly when it is stretched or compressed. Wired into a Wheatstone bridge, it measures force, pressure and weight in load cells and transmitters. This strain gauge calculator gives the resistance change and bridge output — see the [strain gauge working principle](https://www.instrumentationblog.in/strain-gauge-working-principle/) and [bonded vs unbonded strain gauges](https://www.instrumentationblog.in/bonded-and-unbonded-strain-gauges/)."
+intro: "A strain gauge is a fine foil grid whose resistance changes slightly when it is stretched or compressed, and a Wheatstone bridge turns that into a voltage. This strain gauge calculator gives the resistance change and bridge output; see the [strain gauge working principle](https://www.instrumentationblog.in/strain-gauge-working-principle/).\n\nInstrumentation and test engineers use it to choose excitation and amplifier gain for load cells, pressure transmitters and structural tests, and to check that readings make sense."
 keywords: [strain gauge calculator, gauge factor calculation, strain gauge bridge output, microstrain to mv/v, quarter bridge calculator, load cell output, delta r strain]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-22
 variables:
   - { id: R, label: Gauge resistance, family: resistance, unit: ohm, default: 350, min: 0 }
   - { id: GF, label: Gauge factor, default: 2.0, min: 0 }
@@ -34,6 +34,10 @@ faq:
     a: "Very small: a quarter bridge with GF 2 at 1,000 µε gives about 0.5 mV/V — 5 mV with 10 V excitation — so an instrumentation amplifier is needed."
   - q: Why use a full bridge?
     a: It gives four times the output of a quarter bridge and cancels temperature effects and lead resistance, which is why load cells use full bridges.
+  - q: "What shunt calibration resistor simulates a given strain?"
+    a: "R<sub>s</sub> = R ÷ (GF × ε) − R. For a 350 Ω gauge with GF 2, simulating 1,000 µε needs about 174,650 Ω across the active arm."
+  - q: "How much error do lead wires add to a quarter bridge?"
+    a: "With two wire connection and 0.5 Ω per lead, a 350 Ω gauge reads about 0.28% low, and a 10 K warming of the copper leads appears as roughly 56 µε of false strain. A three wire connection cancels most of this."
 related: [electronics/wheatstone-bridge, electronics/instrumentation-amplifier-gain, physics/hookes-law, physics/pressure]
 ---
 
@@ -64,3 +68,37 @@ For steel (E ≈ 200 GPa), stress = E × ε: 1,000 µε corresponds to about 200
 ## Load cells
 
 Load cells are rated in **mV/V** at full load — commonly 2 mV/V. With 10 V excitation, a 2 mV/V cell gives 20 mV at full capacity. Amplify it with an [instrumentation amplifier](/electronics/instrumentation-amplifier-gain/).
+
+## Worked example
+
+The defaults are a 350 Ω foil gauge, GF = 2, 1,000 µε, 10 V excitation, quarter bridge:
+
+- ΔR = 350 × 2 × 0.001 = **0.70 Ω** (700 mΩ)
+- V<sub>out</sub> ≈ 10 × 1 × 2 × 0.001 ÷ 4 = **5.0 mV**
+- Sensitivity = 5.0 ÷ 10 = **0.50 mV/V**
+
+The exact quarter bridge output is 10 × (GFε/4) ÷ (1 + GFε/2) = 4.995 mV, so the linear formula reads 0.10% high at this strain. For a steel part (E = 200 GPa) that strain means about 200 MPa; in 6061 aluminium (E = 68.9 GPa) it is about 68.9 MPa.
+
+## Output by bridge type at the defaults
+
+| Configuration | Active arms | Output | Sensitivity |
+|---|---|---|---|
+| Quarter (1 active) | 1 | 5.0 mV | 0.50 mV/V |
+| Half, bending (2 active) | 2 | 10.0 mV | 1.00 mV/V |
+| Full (4 active) | 4 | 20.0 mV | 2.00 mV/V |
+
+## Lead wires and temperature
+
+In a two wire quarter bridge both leads sit in the gauge arm. With 0.5 Ω per lead the arm becomes 351 Ω, which desensitises the reading by 0.9972, so a true 1,000 µε reads about 997 µε. Worse, if those copper leads warm by 10 K their resistance rises 39.3 mΩ, which the bridge reports as **56 µε** of strain that is not there. A three wire connection puts one lead in each adjacent arm so the changes cancel, and the desensitisation drops to 0.9986.
+
+## Shunt calibration
+
+To check a channel without loading the part, a precision resistor is switched across one bridge arm to simulate a known strain. The resistor for ε is R<sub>s</sub> = R ÷ (GF × ε) − R. For 1,000 µε on a 350 Ω gauge that is **174,650 Ω**; the indicator should then show 1,000 µε (as compression when shunting the active arm).
+
+## Common mistakes
+
+- **Entering strain in m/m instead of µε.** 0.001 typed into a µε field means 0.001 µε, a millionth of the intended value.
+- **Using the half bridge factor for a Poisson arrangement.** A gauge across the grain only adds about 0.3 of the main gauge's signal, so the output is about 1.3 times a quarter bridge, not 2 times.
+- **Mismatched gauge and material.** A gauge self compensated for steel (11 ppm/K) bonded to aluminium (23 ppm/K) shows apparent strain with every temperature change.
+- **Too much excitation on a small gauge.** Self heating in a 120 Ω gauge on plastic at 10 V causes drift; 2 to 5 V is safer on poor heat sinks.
+- **Ignoring zero offset.** Bonding leaves a small initial unbalance; take a zero reading before loading and subtract it.

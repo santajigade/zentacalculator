@@ -2,10 +2,10 @@
 title: Solar String Sizing Calculator (Modules per String, Voc & Vmp)
 description: Work out the maximum and minimum number of PV modules per string from Voc, Vmp, temperature coefficients and the inverter's max DC and MPPT voltages.
 category: electrical
-intro: "A PV string must stay below the inverter's maximum DC voltage on the coldest morning and above the MPPT minimum on the hottest afternoon. This solar string sizing calculator corrects the module Voc and Vmp for temperature and gives the maximum and minimum number of modules per string, plus the string voltages for your chosen string length — the voltage check step in [solar PV system sizing](https://www.instrumentationblog.in/solar-pv-system-sizing-calculation/)."
+intro: "A PV string must stay below the inverter's maximum DC voltage on the coldest morning and above the MPPT minimum on the hottest afternoon. This solar string sizing calculator corrects module Voc and Vmp for temperature and gives the longest and shortest allowed string.\n\nSolar designers and installers use it when matching modules to an inverter, as the voltage check within [solar PV system sizing](https://www.instrumentationblog.in/solar-pv-system-sizing-calculation/), and when checking a quotation before work starts."
 keywords: [solar string sizing calculator, pv string sizing, modules per string calculator, solar string voltage calculator, voc temperature correction, inverter string size, mppt voltage range]
 published: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-22
 variables:
   - { id: Voc, label: Module open-circuit voltage Voc (STC), family: voltage, unit: V, default: 49.5, min: 0 }
   - { id: Vmp, label: Module max-power voltage Vmp (STC), family: voltage, unit: V, default: 41.6, min: 0 }
@@ -43,6 +43,10 @@ faq:
     a: On a hot afternoon Vmp falls; the string Vmp must stay above the inverter's MPPT minimum (and its start-up voltage), otherwise the inverter cannot track the maximum power point or clips power.
   - q: Which temperature should I use for the cold case?
     a: The record or design low ambient temperature for the site. The US NEC 690.7 allows the datasheet coefficient method used here; some codes give a fixed table of correction factors instead.
+  - q: "What Voc should a new string read during commissioning?"
+    a: "The temperature corrected sum of the module Voc values. For 16 modules of 49.5 V at a 15 °C cell temperature and -0.27 %/°C, expect about 813 V; a string about 50 V low has a faulty or reversed module."
+  - q: "How do I estimate cell temperature if I only know ambient?"
+    a: "Use T_cell = T_amb + (NOCT - 20) ÷ 800 × G. With 45 °C ambient, NOCT 45 °C and 1,000 W/m² the cells reach about 76 °C."
 related: [ecology/solar-system-size, ecology/solar-output, electrical/cable-voltage-drop, electrical/battery-bank-size]
 ---
 
@@ -84,3 +88,35 @@ A 49.5 V Voc / 41.6 V Vmp module (β<sub>Voc</sub> = -0.27 %/°C, β<sub>Vmp</su
 - Use the inverter's **start-up voltage** if it is higher than the MPPT minimum.
 - Bifacial and high-efficiency modules may have different coefficients — always take β from the exact datasheet.
 - Shading, soiling and mismatch lower Vmp further; leave a margin above the MPPT minimum rather than designing exactly to it.
+
+## Estimating the hot cell temperature
+
+If you only know the site's maximum ambient temperature, the NOCT method gives a cell temperature: T<sub>cell</sub> = T<sub>amb</sub> + (NOCT − 20) ÷ 800 × G. For a 45 °C afternoon, NOCT 45 °C and 1,000 W/m² this gives **76.25 °C**, a little above the default 70 °C. At that temperature the module Vmp falls to **34.14 V**, still giving a minimum of 6 modules for the 200 V MPPT floor. Roof mounted arrays with little rear ventilation can run 5 to 10 °C hotter than this estimate.
+
+## Hot cell temperature and minimum string length
+
+| Cell temperature | Module Vmp | Min modules (200 V MPPT) | Min modules (550 V start) | 16-module string Vmp |
+|---|---|---|---|---|
+| 50 °C | 37.96 V | 6 | 15 | 607 V |
+| 60 °C | 36.50 V | 6 | 16 | 584 V |
+| 70 °C | 35.05 V | 6 | 16 | 561 V |
+| 76.25 °C | 34.14 V | 6 | 17 | 546 V |
+| 85 °C | 32.86 V | 7 | 17 | 526 V |
+
+Some string inverters need several hundred volts before they start or reach full power, so the minimum is often set by the start-up or full-power voltage rather than the MPPT minimum.
+
+## Checking the current side
+
+Voltage is only half the match. With a module I<sub>sc</sub> of 13.9 A and 2 parallel strings on one MPPT input, the design current is 13.9 × 1.25 × 2 = **34.75 A**. That must not exceed the inverter's maximum short circuit input current per MPPT (for example 36 A). Extra parallel strings need their own MPPT input or string fuses.
+
+## Testing a string after installation
+
+Before connecting the inverter, measure each string's open circuit voltage with a PV rated meter or string tester and note the module temperature. At a cell temperature of 15 °C the 16-module default string should read about 16 × 49.5 × (1 + 0.0027 × 10) = **813.4 V**. A string reading one module's worth low (about 50 V) has a reversed or missing module; a reading a few percent low across all strings usually means the modules are warmer than you assumed.
+
+## Common mistakes
+
+- **Using the average winter low.** The cold case must use the record or design minimum, because one frosty morning above the inverter limit can damage it.
+- **Mixing up the Voc and Pmax coefficients.** β<sub>Voc</sub> (around -0.27 %/°C) is smaller than the Pmax coefficient; using the wrong one changes N<sub>max</sub>.
+- **Rounding N<sub>max</sub> up.** 1000 ÷ 52.84 = 18.92, so the answer is 18, never 19.
+- **Designing exactly to the MPPT minimum.** Ageing of about 0.5% a year and soiling lower Vmp, so leave a margin on the short-string side.
+- **Forgetting the sign of the coefficient.** Entering +0.27 instead of -0.27 makes Voc fall in the cold and gives an unsafe string length.

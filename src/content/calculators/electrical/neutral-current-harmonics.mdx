@@ -2,10 +2,10 @@
 title: Neutral Current Calculator with Third Harmonics (Neutral Sizing)
 description: Calculate neutral current in a balanced three-phase four-wire circuit from third-harmonic content, and the IEC 60364-5-52 design current for sizing the cable.
 category: electrical
-intro: "In a balanced three-phase circuit the fundamental currents cancel in the neutral, but third harmonics are in phase and add — so a neutral feeding LED lighting, computers or drives can carry more current than the phases. This neutral current calculator finds the neutral current from the third-harmonic content and applies the IEC 60364-5-52 Annex E reduction factors, as explained in [neutral conductor sizing with harmonics](https://www.instrumentationblog.in/neutral-conductor-sizing-harmonics/) and [power system harmonics](https://www.instrumentationblog.in/power-harmonics-explained/)."
+intro: "In a balanced three phase circuit the 50 Hz currents cancel in the neutral, but third harmonic currents are in phase and add, so a neutral feeding LED lighting or IT loads can carry more than the phases. This neutral current calculator finds that current and the IEC 60364-5-52 design current.\n\nElectrical designers and power quality engineers use it to size neutrals and four-core cables, as covered in [neutral conductor sizing with harmonics](https://www.instrumentationblog.in/neutral-conductor-sizing-harmonics/)."
 keywords: [neutral current calculator, neutral current harmonics, third harmonic neutral current, neutral conductor sizing harmonics, triplen harmonics neutral, iec 60364-5-52 annex e, neutral sizing calculator]
 published: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-22
 variables:
   - { id: I, label: Phase current (RMS), family: current, unit: A, default: 100, min: 0 }
   - { id: h3, label: Third-harmonic current (% of fundamental), family: percent, unit: '%', default: 30, min: 0, help: 'The 3rd-harmonic reading on a power-quality analyser, relative to the 50/60 Hz component.' }
@@ -40,6 +40,10 @@ faq:
     a: For four- and five-core cables, Annex E gives 1.0 (size on phase current) up to 15% third harmonic, 0.86 (phase current) for 15–33%, 0.86 (neutral current) for 33–45%, and 1.0 (neutral current) above 45%, where the harmonic is a percentage of the phase current.
   - q: Do other harmonics add in the neutral?
     a: Only triplen harmonics (3rd, 9th, 15th …) add. The 5th, 7th, 11th and 13th cancel in a balanced system, like the fundamental. Load unbalance adds a further fundamental-frequency neutral current.
+  - q: "At what third harmonic level does the neutral current exceed the phase current?"
+    a: "At about 35.4% of the fundamental, which is 33.3% of the phase RMS current. Beyond that the neutral is the most heavily loaded conductor and IEC 60364-5-52 sizes the cable on the neutral current."
+  - q: "How do load unbalance and third harmonics combine in the neutral?"
+    a: "Add the 50 Hz unbalance current and the triplen current as a root sum of squares. Phases of 100, 90 and 80 A with 30% third harmonic give about 17.3 A and 81 A, so roughly 83 A in the neutral."
 related: [electrical/thd, electrical/cable-voltage-drop, electrical/kw-to-amps, electrical/busbar-size]
 ---
 
@@ -80,3 +84,39 @@ Phase current 100 A with a third harmonic of 30% of the fundamental:
 - The IEC factors apply to four- and five-core cables where the neutral is inside the same cable and adds heat; for single-core cables, check the neutral on its own current.
 - Measure the harmonic spectrum at full load — percentages measured at light load often look high while the actual amps are small.
 - Harmonic filters or 3rd-harmonic blocking transformers (zig-zag, delta windings) reduce the neutral current at the source.
+
+## When the neutral overtakes the phase
+
+The neutral current equals the phase current when 3h ÷ √(1 + h²) = 1, which solves to h = 1 ÷ √8 = **35.4%** of the fundamental. Above that the neutral is the most heavily loaded conductor in the cable. In the default case (30%) the neutral carries **86.2 A** against 100 A on each phase, and the total heat in the four-core cable is about 1.25 times that of the three phases alone, which is why the IEC factor of 0.86 raises the design current to **116.3 A**.
+
+## Neutral heating relative to a phase conductor
+
+For a neutral of the same cross-section as the phases, its I²R heating compared with one phase conductor:
+
+| 3rd harmonic (% of fundamental) | I<sub>N</sub> ÷ I | Neutral heat ÷ phase heat |
+|---|---|---|
+| 10.0% | 0.30 | 0.09 |
+| 20.0% | 0.59 | 0.35 |
+| 30.0% | 0.86 | 0.74 |
+| 35.4% | 1.00 | 1.00 |
+| 40.0% | 1.11 | 1.24 |
+| 50.0% | 1.34 | 1.80 |
+| 70.0% | 1.72 | 2.96 |
+
+Heating rises with the square of current, so a neutral carrying 1.34 times phase current runs about 1.8 times as hot in watts.
+
+## Unbalance and harmonics together
+
+Real panels are never perfectly balanced. Suppose the fundamental currents are 100, 90 and 80 A, each with 30% third harmonic. The 50 Hz parts no longer cancel and leave **17.3 A** in the neutral, while the third harmonics add arithmetically to 0.3 × 270 = **81 A**. Because the two are at different frequencies they combine as a root sum of squares: √(17.3² + 81²) = **82.8 A**. The unbalance adds less than you might expect, so the harmonic content dominates the neutral sizing.
+
+## Measuring neutral current
+
+Use a true RMS clamp meter directly on the neutral; an average responding meter can read 30% or more low on distorted current. A power quality analyser logging over a working day shows both the RMS neutral current and the 150 Hz (or 180 Hz) component, and the peak period is the one that matters for cable temperature. A neutral reading higher than any phase is the clearest sign that triplen harmonics are present.
+
+## Common mistakes
+
+- **Entering the harmonic as a share of RMS instead of fundamental.** Analysers normally show % of fundamental; the calculator converts it to the IEC basis for you.
+- **Using a half-size neutral on LED or IT circuits.** Reduced neutrals are only acceptable when the third harmonic is low and the load is balanced.
+- **Relying on phase overcurrent protection.** Breakers on the phases do not see neutral overload; IEC 60364 may require neutral current detection when it can exceed the phase current.
+- **Assuming 5th and 7th harmonics add.** Only triplen orders add in the neutral; the others raise phase RMS but cancel.
+- **Measuring at light load.** Percentages look high when the fundamental is small, so size on full load amps.

@@ -2,10 +2,10 @@
 title: Resistor Color Code Calculator (4-Band)
 description: Find a resistor's value and tolerance from its 4 colour bands — or look up the colours for any resistance. Includes the full colour chart.
 category: electronics
-intro: "Most through-hole resistors are too small to print a value on, so coloured bands show their resistance and tolerance instead. This [resistor color code guide](https://www.instrumentationblog.in/resistor-color-code-guide/) explains how to read them."
+intro: "Most through-hole resistors are too small to print a value on, so coloured bands show their resistance and tolerance instead. This resistor color code calculator turns four bands into a value with its tolerance range; the [resistor color code guide](https://www.instrumentationblog.in/resistor-color-code-guide/) explains the system.\n\nStudents, hobbyists and repair technicians use it when sorting parts bins, checking a board against its schematic or confirming a value before soldering it in."
 keywords: [resistor color code calculator, resistor colour code, 4 band resistor, resistor value from colors, resistor color chart, brown black red, resistor bands]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - id: b1
     label: Band 1 (first digit)
@@ -77,6 +77,10 @@ faq:
     a: They have three digit bands, then multiplier and tolerance. They are used for 1% and better precision resistors.
   - q: Which end do I start from?
     a: The end with the band closest to the edge. Gold and silver are never first bands.
+  - q: "What does a resistor with a single black band mean?"
+    a: "It is a zero ohm link, used as a jumper that pick-and-place machines can fit like a resistor. It measures a few milliohms and is rated by current, not resistance."
+  - q: "What does the sixth band on a resistor mean?"
+    a: "It gives the temperature coefficient, how much the value drifts per kelvin. Brown is 100 ppm/K, red 50 ppm/K and yellow 25 ppm/K, so a 10 kΩ brown-coded part moves about 1 Ω per kelvin."
 related: [electronics/led-resistor, physics/resistors-series-parallel, physics/ohms-law, electronics/voltage-divider]
 ---
 
@@ -125,3 +129,48 @@ Resistors come in standard series. E12 (±10%): 1, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3,
 ## SMD resistors
 
 Surface-mount resistors use number codes: "103" = 10 × 10³ = 10 kΩ; "4R7" = 4.7 Ω; E96 parts use codes like "01C" = 10 kΩ.
+
+## Worked example
+
+A resistor reads **yellow, violet, orange, gold**:
+
+- Digits: yellow = 4, violet = 7, giving 47
+- Multiplier: orange = × 1,000, so R = 47 × 1,000 = **47 kΩ**
+- Tolerance: gold = ±5%, so the part can measure anywhere from **44,650 Ω to 49,350 Ω**
+
+With the calculator defaults (brown, black, red, gold) the value is 1 kΩ and the range is 950 Ω to 1,050 Ω. A multimeter reading of 987 Ω is -1.3% low, well inside the band.
+
+## E12 values in the 1 kΩ decade
+
+Every value below uses a red multiplier band. Move one colour up the multiplier scale (orange) for the 10 kΩ decade, or down (brown) for 100 Ω.
+
+| Value | Bands 1 to 3 | Range at ±10% |
+|---|---|---|
+| 1 kΩ | Brown, Black, Red | 900 to 1,100 Ω |
+| 1.2 kΩ | Brown, Red, Red | 1,080 to 1,320 Ω |
+| 1.5 kΩ | Brown, Green, Red | 1,350 to 1,650 Ω |
+| 1.8 kΩ | Brown, Grey, Red | 1,620 to 1,980 Ω |
+| 2.2 kΩ | Red, Red, Red | 1,980 to 2,420 Ω |
+| 2.7 kΩ | Red, Violet, Red | 2,430 to 2,970 Ω |
+| 3.3 kΩ | Orange, Orange, Red | 2,970 to 3,630 Ω |
+| 3.9 kΩ | Orange, White, Red | 3,510 to 4,290 Ω |
+| 4.7 kΩ | Yellow, Violet, Red | 4,230 to 5,170 Ω |
+| 5.6 kΩ | Green, Blue, Red | 5,040 to 6,160 Ω |
+| 6.8 kΩ | Blue, Grey, Red | 6,120 to 7,480 Ω |
+| 8.2 kΩ | Grey, Red, Red | 7,380 to 9,020 Ω |
+
+## Reading 5-band and 6-band parts
+
+Precision resistors use three digit bands. Brown, black, black, brown, brown reads 100 × 10 = **1 kΩ** at ±1%. A sixth band, when present, gives the temperature coefficient: brown is 100 ppm/K, red 50 ppm/K, yellow 25 ppm/K. On a 5-band part the tolerance band is often set slightly apart from the others, which is the most reliable clue to the reading direction.
+
+## Checking a value in practice
+
+Colours fade and shift with heat, so a brown that has been run hot can look orange or red. When in doubt, measure the part out of circuit, or lift one leg, because parallel paths on the board pull an in-circuit reading low. Hold the probes on the leads rather than with your fingers on both, since skin resistance in parallel affects readings above about 100 kΩ. Blue body resistors are usually metal film (±1% or better) and beige bodies are usually carbon film (±5%), which helps you tell a 4-band from a 5-band part at a glance.
+
+## Common mistakes
+
+- **Reading from the wrong end.** Brown, black, red read backwards is red, black, brown, which decodes to 200 Ω instead of 1 kΩ.
+- **Treating a gold third band as a digit.** Gold in the multiplier position means × 0.1, so yellow, violet, gold is 4.7 Ω, not 470 Ω.
+- **Confusing red and orange, or violet and grey,** under warm workshop lighting. Use a white light and compare against a known part.
+- **Assuming 4 bands means 4 significant figures.** Only the first two bands are digits; the third is always the multiplier.
+- **Ignoring tolerance when matching parts.** Two 5% resistors marked 1 kΩ can differ by up to 100 Ω, which matters in dividers and bridges.

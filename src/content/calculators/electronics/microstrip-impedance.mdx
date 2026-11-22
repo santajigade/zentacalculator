@@ -2,10 +2,10 @@
 title: Microstrip Impedance Calculator (PCB Trace Z₀, IPC-2141)
 description: Calculate the characteristic impedance and propagation delay of a surface microstrip PCB trace from trace width, thickness, dielectric height and εr.
 category: electronics
-intro: "A surface microstrip is a PCB trace on an outer layer over a ground plane; its characteristic impedance depends on trace width, copper thickness, dielectric height and the board's dielectric constant. This microstrip impedance calculator uses the IPC-2141 approximation to size [controlled-impedance PCB traces](https://www.instrumentationblog.in/controlled-impedance-pcb-traces/) and to check a [PCB layer stackup](https://www.instrumentationblog.in/pcb-layer-stackup-design/) before you ask the fabricator for a field-solver result."
+intro: "A surface microstrip is a trace on an outer PCB layer running over a ground plane, and its impedance is set by trace width, copper thickness, dielectric height and ε<sub>r</sub>. This microstrip impedance calculator uses the IPC-2141 formula to size [controlled impedance PCB traces](https://www.instrumentationblog.in/controlled-impedance-pcb-traces/).\n\nPCB and RF designers use it to choose 50 Ω and 90 Ω trace widths, plan a [PCB layer stackup](https://www.instrumentationblog.in/pcb-layer-stackup-design/) and estimate delay before asking the fabricator for a field solver check."
 keywords: [microstrip impedance calculator, pcb trace impedance calculator, 50 ohm trace width, characteristic impedance microstrip, ipc-2141 microstrip formula, controlled impedance calculator, fr4 trace impedance]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-22
 variables:
   - { id: w, label: Trace width w, family: length, unit: mm, imperialUnit: in, default: 0.3, min: 0 }
   - { id: t, label: Copper thickness t, family: length, unit: um, default: 35, min: 0, help: '1 oz copper ≈ 35 µm, 2 oz ≈ 70 µm, 0.5 oz ≈ 17.5 µm (add plating for outer layers).' }
@@ -27,6 +27,10 @@ faq:
     a: Within about ±5% inside the valid range. Solder mask lowers Z₀ by 1–3 Ω, and εr varies with frequency and glass weave, so final stackups should be confirmed with a field solver or by the fabricator.
   - q: What is the propagation delay on a microstrip?
     a: About 85√(0.475εr + 0.67) ps per inch — roughly 5.6–5.9 ps/mm on FR-4, slower than in free space because part of the field travels in the dielectric.
+  - q: "Does copper plating change microstrip impedance?"
+    a: "Yes. Outer layers gain roughly 25 µm of plating, so a 0.3 mm trace on 0.2 mm FR-4 falls from 53.5 Ω with 35 µm copper to about 50.4 Ω with 60 µm. Specify the target impedance so the fabricator can compensate."
+  - q: "How long can a PCB trace be before impedance matters?"
+    a: "A common rule is when its one way delay exceeds one sixth of the rise time. On FR-4 microstrip at 5.51 ps/mm that is about 30 mm for a 1 ns edge and about 8 mm for a 250 ps edge."
 related: [electronics/pcb-trace-width, electronics/antenna-length, electronics/reactance, electronics/free-space-path-loss]
 ---
 
@@ -64,3 +68,37 @@ Enter the **trace width**, **copper thickness**, the **dielectric height** betwe
 - Wider traces, thinner dielectric and higher ε<sub>r</sub> all lower the impedance.
 - Keep the reference plane continuous under the trace — a split plane breaks the return path and the impedance.
 - Differential pairs, stripline and coplanar waveguide need different formulas.
+
+## Finding the width for 50 Ω
+
+Running the formula backwards gives w = [5.98 h ÷ e<sup>Z₀√(εr + 1.41)/87</sup> − t] ÷ 0.8. For the default stackup (h = 0.2 mm, 35 µm copper, ε<sub>r</sub> = 4.3), a 50 Ω trace is **0.335 mm** wide, slightly wider than the 0.3 mm default that gives 53.5 Ω.
+
+Outer layers are plated after drilling, which typically adds about 25 µm. With 60 µm total copper the 0.3 mm trace drops to **50.4 Ω**, and the 50 Ω width becomes 0.304 mm. Fabricators adjust etch compensation for this, which is one reason to send them the target impedance rather than a fixed width.
+
+## Trace widths for common impedances (ε<sub>r</sub> 4.3, 35 µm copper)
+
+| Height to plane | 50 Ω width | w/h at 50 Ω | 75 Ω width | 90 Ω width |
+|---|---|---|---|---|
+| 0.10 mm | 0.146 mm | 1.46 | 0.052 mm | 0.019 mm |
+| 0.20 mm | 0.335 mm | 1.67 | 0.147 mm | 0.082 mm |
+| 0.36 mm | 0.638 mm | 1.77 | 0.299 mm | 0.183 mm |
+| 1.00 mm | 1.849 mm | 1.85 | 0.909 mm | 0.587 mm |
+| 1.60 mm | 2.985 mm | 1.87 | 1.481 mm | 0.966 mm |
+
+Widths with w/h below 0.1 fall outside the formula's range; for narrow high impedance lines on thin prepreg use a field solver.
+
+## Delay and when a trace needs controlling
+
+At 5.51 ps/mm a 100 mm trace delays the signal by about **551 ps**. A common rule of thumb treats a line as a transmission line once its one way delay exceeds about one sixth of the signal rise time. For a 1 ns edge that is about **30 mm** on this stackup, so even a short trace from a fast logic driver can ring if it is not terminated or matched.
+
+## How impedance is checked in production
+
+Fabricators place test coupons on the panel edge with the same stackup and trace geometry, then measure them with a time domain reflectometer (TDR). The usual tolerance is ±10%, or ±5% at extra cost. The TDR trace shows the impedance along the coupon, so a change at a via or connector appears as a step, which is also how impedance discontinuities are found on a finished board.
+
+## Common mistakes
+
+- **Measuring h to the wrong plane.** If the real reference is a 0.1 mm prepreg rather than 0.2 mm, the same 0.3 mm trace is about **28.3 Ω**, not 53.5 Ω.
+- **Using the laminate's 1 MHz ε<sub>r</sub>.** FR-4 datasheet values vary with frequency and resin content; moving from 4.3 to 4.6 already lowers Z₀ to 52.2 Ω.
+- **Forgetting plating and solder mask.** Both lower the impedance on outer layers, together often by 3 to 5 Ω.
+- **Routing across a plane split.** The return current has to detour around the gap, which adds inductance and turns a 50 Ω trace into a discontinuity.
+- **Reusing microstrip widths for inner layers.** An inner trace between two planes is stripline and needs a narrower width for the same impedance.

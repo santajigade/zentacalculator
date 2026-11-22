@@ -1,11 +1,11 @@
 ---
-title: ERA Calculator (Earned Run Average)
-description: Calculate a baseball pitcher's earned run average (ERA) and WHIP from innings pitched.
+title: "ERA Calculator: Earned Run Average and WHIP"
+description: "ERA calculator for baseball pitchers: enter earned runs, innings, hits and walks to get earned run average and WHIP, with innings notation explained."
 category: sports
-intro: "Earned run average shows how many earned runs a pitcher allows per nine innings — the standard measure of pitching performance."
+intro: "Earned run average (ERA) is the number of earned runs a pitcher allows per nine innings, the standard way to compare pitching. This ERA calculator also returns WHIP, the walks plus hits allowed per inning.\n\nCoaches, scorekeepers, fantasy players and fans use it to rate pitchers over a season, check box score figures and see how one start moves a pitcher's numbers."
 keywords: [era calculator, earned run average, baseball pitching stats, whip, innings pitched]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - { id: er, label: Earned runs, default: 45, min: 0 }
   - { id: ip, label: Innings pitched (decimal), default: 150, min: 0.0001 }
@@ -22,9 +22,11 @@ faq:
   - q: "How do I enter partial innings?"
     a: "Each out is one third of an inning. 150⅓ innings = 150.333 and 150⅔ = 150.667. Scorebooks often write these as 150.1 and 150.2."
   - q: "What is a good ERA?"
-    a: "In Major League Baseball, an ERA under 3.00 is excellent and around 4.00 is roughly average."
-  - q: "How do I enter 6⅔ innings?"
-    a: "Enter 6.667, not 6.2."
+    a: "In Major League Baseball an ERA under 3.00 is excellent, and the league average has been roughly 4.00 to 4.30 in recent seasons. In youth and amateur leagues averages are usually higher."
+  - q: "Can ERA go up after a good start?"
+    a: "Yes, if the start is good but still worse than the season so far. A pitcher with a 2.70 ERA who allows 2 earned runs in 6 innings (a 3.00 start) sees the season ERA rise slightly, to 2.71."
+  - q: "What is the difference between ERA and FIP?"
+    a: "ERA counts every earned run, so it depends partly on the fielders behind the pitcher. FIP uses only home runs, walks, hit batters and strikeouts; for the example pitcher it is 3.17 against an ERA of 2.70."
 related: [sports/baseball-batting, sports/win-percentage]
 ---
 
@@ -36,28 +38,30 @@ Enter **earned runs**, **innings pitched** (decimal), **hits** and **walks**. ER
 
 <p class="formula">ERA = 9 × ER ÷ IP   WHIP = (H + BB) ÷ IP</p>
 
-## Example
+## Worked example
 
-45 earned runs in 150 innings, 130 hits and 40 walks:
+A pitcher has allowed 45 earned runs, 130 hits and 40 walks in 150 innings:
 
-- ERA = **2.70**
-- WHIP = **1.13**
+- ERA = 9 × 45 ÷ 150 = 405 ÷ 150 = **2.70**
+- WHIP = (130 + 40) ÷ 150 = 170 ÷ 150 = **1.13**
+
+So the pitcher allows under three earned runs per nine innings and a little more than one base runner per inning, both well above league average.
 
 ## ERA and WHIP benchmarks
 
 | Rating | ERA | WHIP |
 |---|---|---|
 | Excellent | under 3.00 | under 1.10 |
-| Above average | 3.00–3.75 | 1.10–1.25 |
-| Average | 3.75–4.50 | 1.25–1.35 |
-| Below average | 4.50–5.25 | 1.35–1.45 |
+| Above average | 3.00 to 3.75 | 1.10 to 1.25 |
+| Average | 3.75 to 4.50 | 1.25 to 1.35 |
+| Below average | 4.50 to 5.25 | 1.35 to 1.45 |
 | Poor | over 5.25 | over 1.45 |
 
 Rough guides for modern MLB; league scoring levels vary by year.
 
 ## Innings notation
 
-Innings are recorded in thirds: “6.1” means 6⅓ innings and “6.2” means 6⅔. Convert to decimals before calculating — 6.1 becomes 6.333 and 6.2 becomes 6.667.
+Innings are recorded in thirds, one for each out: "6.1" means 6⅓ innings and "6.2" means 6⅔. Convert to decimals before calculating, so 6.1 becomes 6.333 and 6.2 becomes 6.667. For 3 earned runs in 6⅔ innings the correct ERA is 27 ÷ 6.667 = **4.05**; typing 6.2 instead gives 4.35, an error of 0.30 runs from a single start.
 
 ## Earned vs unearned runs
 
@@ -70,3 +74,33 @@ For leagues with 7-inning games, ERA is sometimes scaled to 7 innings: ERA = 7 �
 ## FIP
 
 Fielding Independent Pitching focuses on strikeouts, walks, hit batters and home runs, which the pitcher controls most directly. It is scaled to look like ERA and often predicts future ERA better.
+
+## How one start moves the ERA
+
+Starting from the 2.70 ERA over 150 innings above, this is what different next starts would do:
+
+| Next start | ERA for that start | Season ERA after | Change |
+|---|---|---|---|
+| 7.0 IP, 0 ER | 0.00 | 2.58 | -0.12 |
+| 6.0 IP, 2 ER | 3.00 | 2.71 | +0.01 |
+| 5.1 IP, 4 ER | 6.75 | 2.84 | +0.14 |
+| 3.0 IP, 6 ER | 18.00 | 3.00 | +0.30 |
+| 1.2 IP, 8 ER | 43.20 | 3.15 | +0.45 |
+
+A bad short outing does far more damage than a long good one repairs, because the earned runs are spread over very few innings. Early in a season, when a pitcher has only 20 or 30 innings, a single start can move ERA by more than a run.
+
+## FIP example
+
+Fielding Independent Pitching uses only the outcomes a pitcher controls: FIP = (13 × HR + 3 × (BB + HBP) - 2 × K) ÷ IP + constant. With 15 home runs, 40 walks, 5 hit batters and 160 strikeouts in 150 innings, and a league constant of about 3.10, FIP = (195 + 135 - 320) ÷ 150 + 3.10 = **3.17**. An ERA well below FIP often means good defence or luck on balls in play.
+
+## Seven inning games
+
+High school and many youth leagues play seven innings, so ERA is often scaled by 7: the same 45 earned runs in 150 innings gives 7 × 45 ÷ 150 = **2.10**. Compare pitchers only on the same scale.
+
+## Common mistakes
+
+- **Typing scorebook innings as decimals.** 6.2 innings is 6.667, not 6.2, so the ERA comes out too high.
+- **Counting unearned runs.** Runs that score after an error that should have ended the inning are left out of ERA, though they still count in runs allowed.
+- **Including hit batters in WHIP.** WHIP counts only walks and hits; hit by pitch and errors are not added.
+- **Judging small samples.** A reliever with 10 innings and 6 earned runs has a 5.40 ERA that can drop to 3.00 within a few clean outings.
+- **Comparing across eras and parks.** League average ERA changes with the era and the ballpark, so adjusted figures such as ERA+ are used for fair comparisons.

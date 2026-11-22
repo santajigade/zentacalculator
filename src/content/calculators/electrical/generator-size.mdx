@@ -2,10 +2,10 @@
 title: Generator Size Calculator (DG Set kVA)
 description: Calculate the diesel generator (DG set) kVA rating needed for your connected load, power factor, future margin and largest motor start.
 category: electrical
-intro: "A diesel generator must supply the running load and also survive the surge when the largest motor starts. Undersized sets stall or trip; oversized sets run lightly loaded and wet-stack. This generator size calculator gives the minimum kVA from both checks — see [how to calculate generator size for industrial load](https://www.instrumentationblog.in/how-to-calculate-generator-size-industrial-load/) and how an [AMF panel auto-starts a DG](https://www.instrumentationblog.in/amf-panel-working-dg-auto-start/)."
+intro: "A diesel generator must carry the running load and also ride through the surge when the largest motor starts. This generator size calculator gives the minimum kVA from both checks; see [how to calculate generator size for industrial load](https://www.instrumentationblog.in/how-to-calculate-generator-size-industrial-load/).\n\nElectrical consultants, facility managers and DG set suppliers use it to avoid sets that stall on motor starts or run so lightly loaded that they wet-stack, and to plan the [AMF panel auto start](https://www.instrumentationblog.in/amf-panel-working-dg-auto-start/)."
 keywords: [generator size calculator, dg set size calculation, diesel generator kva calculator, generator sizing for motor starting, kva required for load, genset sizing]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-22
 variables:
   - { id: P, label: Total running load, family: power, unit: kW, imperialUnit: hp, default: 80, min: 0 }
   - { id: pf, label: Load power factor, default: 0.8, min: 0.1, max: 1 }
@@ -28,6 +28,10 @@ faq:
     a: A motor draws several times its running kVA when starting. Most generators can supply about 1.5–2 times their rating briefly while keeping voltage dip around 15–20%; this calculator uses 1.5.
   - q: Is a bigger generator always better?
     a: No. Diesel sets run best above 30–40% load; long periods at light load cause wet-stacking and carbon build-up.
+  - q: "What is the difference between prime and standby generator ratings?"
+    a: "Under ISO 8528-1 standby is for emergency use with no overload allowed, while prime allows unlimited hours at varying load with a 10% overload for one hour in twelve. Prime is usually about 10% lower than standby for the same engine."
+  - q: "How heavily loaded will the selected generator run?"
+    a: "Divide the running kW by the set kW rating, which is kVA × 0.8. For the default 80 kW on a 125 kVA set that is 80%, inside the 30 to 80% band that diesel engines prefer."
 related: [electrical/motor-starting-current, electrical/ups-sizing, electrical/kva-to-kw, electrical/three-phase-motor-power]
 ---
 
@@ -70,3 +74,41 @@ The 1.5 factor assumes the generator can carry 150% of its rating momentarily du
 - **Non-linear loads** (VFDs, UPSs) may need generator derating or a larger alternator.
 - **Altitude and temperature** reduce output — derate above 1,000 m or 40 °C.
 - **Step loading**: start the largest motors first, when the generator is lightly loaded.
+
+## Worked example with the default values
+
+- Running check: 80 ÷ 0.8 = 100 kVA, plus 20% margin = **120 kVA**
+- Starting check: the other 58 kW need 58 ÷ 0.8 = 72.5 kVA, the star-delta motor needs 22 × 2.5 = 55 kVA, total 127.5 kVA ÷ 1.5 = **85 kVA**
+- The larger figure is 120 kVA, so the next standard set is **125 kVA**
+
+At 125 kVA (a 100 kW set) the 80 kW load is 80% of the kW rating today, a healthy level for a diesel engine, with the margin left for growth.
+
+## How the starter changes the answer
+
+Same 80 kW load and 22 kW motor:
+
+| Starter | kVA per kW | Starting check | Required | Standard set |
+|---|---|---|---|---|
+| DOL | 6.5 | 143.7 kVA | 143.7 kVA | 160 kVA |
+| Autotransformer | 3.5 | 99.7 kVA | 120.0 kVA | 125 kVA |
+| Star-delta | 2.5 | 85.0 kVA | 120.0 kVA | 125 kVA |
+| Soft starter | 2 | 77.7 kVA | 120.0 kVA | 125 kVA |
+| VFD | 1.35 | 68.1 kVA | 120.0 kVA | 125 kVA |
+
+With a DOL starter the motor start, not the running load, decides the size and pushes the set up to 160 kVA. Fitting a star-delta starter, soft starter or VFD on the largest motor is often cheaper than buying the bigger generator.
+
+## Prime, standby and continuous ratings
+
+ISO 8528-1 defines several ratings for the same engine. A **standby** rating covers emergency use for limited hours a year with no overload; a **prime** rating allows unlimited hours at a varying load with a 10% overload for one hour in twelve, and is typically about 10% lower than standby; a **continuous** rating is for constant base load. For a factory that runs on the DG during regular grid outages, size on the prime rating.
+
+## Load testing after installation
+
+A new set is commissioned on a resistive load bank at 25, 50, 75 and 100% for set periods while voltage, frequency, oil pressure and coolant temperature are logged, then the actual largest motor is started with the rest of the load connected while a recorder captures the voltage dip and frequency recovery.
+
+## Common mistakes
+
+- **Adding motor kW to kVA directly.** Convert the running load to kVA with its power factor before adding the starting kVA.
+- **Sizing only on the running load.** With a DOL motor the starting check here needs 144 kVA, more than the 120 kVA running figure.
+- **Starting the biggest motor last.** Started first on an unloaded set it needs only 36.7 kVA of equivalent capacity, so sequence the large motors first in the AMF logic.
+- **Using standby rating for daily running.** A set run for hours every day on its standby rating wears out early and voids warranty.
+- **Ignoring UPS and VFD harmonics.** Non-linear loads heat the alternator; many suppliers ask for an oversized alternator on the same engine.

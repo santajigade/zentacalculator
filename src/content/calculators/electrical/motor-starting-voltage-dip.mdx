@@ -2,10 +2,10 @@
 title: Motor Starting Voltage Dip Calculator (Transformer kVA & Z%)
 description: Estimate the voltage dip when a motor starts on a transformer, from motor kW, starting current, transformer kVA and Z% — for DOL, star-delta and soft starts.
 category: electrical
-intro: "When an induction motor starts it draws five to seven times its full-load current at a low power factor, and that current through the supply impedance pulls the bus voltage down. This motor starting voltage dip calculator estimates the dip from the motor's starting kVA and the transformer's short-circuit kVA, using the simplified method in [motor starting voltage dip calculation](https://www.instrumentationblog.in/motor-starting-voltage-dip-calculation/), and compares the [motor starting methods](https://www.instrumentationblog.in/motor-starting-methods-compared/)."
+intro: "An induction motor draws five to seven times its full-load current when it starts, and that current through the supply impedance pulls the bus voltage down. This motor starting voltage dip calculator estimates the dip from the motor starting kVA and the transformer short-circuit kVA, using the method in [motor starting voltage dip calculation](https://www.instrumentationblog.in/motor-starting-voltage-dip-calculation/).\n\nElectrical designers use it to decide whether a motor can start direct-on-line or needs one of the [motor starting methods](https://www.instrumentationblog.in/motor-starting-methods-compared/) that limit current."
 keywords: [motor starting voltage dip calculator, voltage dip calculation motor starting, motor starting voltage drop, transformer voltage dip, dol starting voltage dip, motor starting kva, voltage sag motor start]
 published: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-22
 variables:
   - { id: St, label: Transformer rating, suffix: kVA, default: 1000, min: 0 }
   - { id: z, label: Transformer impedance (Z%), family: percent, unit: '%', default: 6, min: 0 }
@@ -40,6 +40,10 @@ faq:
     a: The formula adds impedance magnitudes as if they were in phase. In reality the motor's starting power factor (0.2–0.4) and the transformer's X/R ratio differ slightly, so the true dip is usually a little smaller. Upstream source impedance and cable impedance make it larger, so include them for long feeders.
   - q: How do I reduce motor starting voltage dip?
     a: Use star–delta, autotransformer or soft starting, or a VFD; start large motors one at a time; or supply them from a larger or lower-impedance transformer.
+  - q: "How do I include the cable and the utility fault level in the voltage dip?"
+    a: "Convert each to short-circuit kVA (cable: V² ÷ |Z|; utility: its fault MVA) and combine them with the transformer as 1 ÷ (1/S₁ + 1/S₂ + 1/S₃). For the default motor, a 250 MVA grid and 200 m of 120 mm² cable raise the motor terminal dip to about 19.5%."
+  - q: "How is motor starting voltage dip measured?"
+    a: "With a power quality analyser recording half-cycle RMS voltage at the bus or motor terminals during a start, ideally with a current clamp on the feeder at the same time to record the real starting current."
 related: [electrical/motor-starting-current, electrical/transformer-short-circuit, electrical/three-phase-motor-power, electrical/transformer-size]
 ---
 
@@ -90,3 +94,48 @@ Assumes η = 95%, PF = 0.87 and 6 × FLC starting current.
 - The motor's torque falls with the square of voltage: a 15% dip leaves only about 72% of the rated starting torque.
 - Long cables add impedance between the transformer and the motor; the dip at the motor terminals is then larger than the bus dip shown here.
 - On generator supplies the dip is much larger because a generator's transient reactance (typically 15–30%) is far higher than a transformer's impedance.
+
+## Adding the grid and the motor cable
+
+The default result treats the grid behind the transformer as infinitely strong and ignores the cable. Both are easy to add as extra short-circuit kVA in series, combined like resistors in parallel:
+
+- Utility fault level at the 11 kV side, say 250 MVA = 250,000 kVA
+- 200 m of 120 mm² copper cable at about 0.19 + j0.08 Ω/km has |Z| = 0.0412 Ω, equal to 415² ÷ 0.0412 = **4,177 kVA**
+- Bus short-circuit capacity = 1 ÷ (1/16,667 + 1/250,000) = **15,625 kVA**, so the bus dip rises from 4.57% to **4.86%**
+- At the motor terminals, adding the cable gives 3,296 kVA and a dip of **19.5%**
+
+The cable more than doubles the dip seen by the motor, which is why long feeders to pump houses and conveyors often need soft starters even when the transformer is large.
+
+## Starting torque at reduced voltage
+
+Induction motor torque varies with the square of the applied voltage, so a modest dip costs much more torque.
+
+| Voltage dip | Voltage remaining | Starting torque remaining |
+|---|---|---|
+| 5% | 95% | 90% |
+| 10% | 90% | 81% |
+| 15% | 85% | 72% |
+| 20% | 80% | 64% |
+| 25% | 75% | 56% |
+
+In the cable example above the motor keeps about 65% of its rated starting torque. Check that this is still above the load torque at standstill, especially for loaded conveyors, crushers and positive displacement pumps.
+
+## Starting on a generator
+
+A 500 kVA generator with a subtransient reactance of 15% has an effective short-circuit capacity of 500 ÷ 0.15 = 3,333 kVA. The same 110 kW motor started DOL would dip its output by about **19%**, before the voltage regulator recovers. That is why generator sets feeding large motors are oversized or paired with soft starters.
+
+## Sizing the transformer for a dip limit
+
+Rearranging the formula, the transformer rating that keeps the bus dip at 10% for this motor (infinite grid, Z = 6%) is S<sub>T</sub> = S<sub>start</sub> × (1 − 0.10) ÷ 0.10 × Z% = **431 kVA**. Any standard rating above that meets the limit at the bus, but the motor terminal dip must still be checked with the cable included.
+
+## Measuring the dip on site
+
+A power quality analyser set to record half-cycle RMS voltage (the method in IEC 61000-4-30) captures the depth and duration of the dip during a real start. Clamp the current channel on the motor feeder at the same time to confirm the actual starting multiple, which is often lower than the catalogue value on modern high-efficiency motors and higher on older ones.
+
+## Common mistakes
+
+- **Using the motor kW as the starting kVA.** The starting kVA is k × kW ÷ (η × PF), here 799 kVA, more than seven times the shaft rating.
+- **Comparing the bus dip with a motor terminal limit.** The limit of 10% to 15% applies at the motor; the bus figure leaves out the cable.
+- **Ignoring other motors already running.** Running motors slow down and draw more current during the dip, deepening it, and contactors on them may drop out below about 80% voltage.
+- **Forgetting the star-delta changeover.** The open transition from star to delta causes a brief current spike that can produce a second dip larger than the first.
+- **Using the generator rated power factor of 0.8 as the motor starting PF.** Locked-rotor power factor is only about 0.2 to 0.4.

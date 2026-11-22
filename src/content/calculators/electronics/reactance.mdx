@@ -2,10 +2,10 @@
 title: Reactance and Impedance Calculator (XL, XC and Z)
 description: Calculate inductive reactance, capacitive reactance and series RLC impedance at any frequency — with phase angle.
 category: electronics
-intro: "In AC circuits, inductors and capacitors oppose current in a way that depends on frequency — this is reactance. Combined with resistance it gives impedance and a phase shift between voltage and current, as explained in [impedance and reactance in AC circuits](https://www.instrumentationblog.in/impedance-reactance-ac-circuits/) and [phase angle in AC circuits](https://www.instrumentationblog.in/phase-angle-in-ac-circuits/). This free reactance and impedance calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Inductors and capacitors oppose alternating current by an amount that changes with frequency, called reactance, and together with resistance this sets the impedance and phase angle. This reactance and impedance calculator finds X<sub>L</sub>, X<sub>C</sub>, series RLC impedance and phase.\n\nStudents, electricians and electronics designers use it for filters, motor circuits and resonance checks. See [impedance and reactance in AC circuits](https://www.instrumentationblog.in/impedance-reactance-ac-circuits/) and [phase angle in AC circuits](https://www.instrumentationblog.in/phase-angle-in-ac-circuits/)."
 keywords: [reactance calculator, inductive reactance, capacitive reactance, impedance calculator, rlc impedance, xl xc, phase angle]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - { id: f, label: Frequency, suffix: Hz, default: 50, min: 0 }
   - { id: L, label: Inductance, suffix: mH, default: 100, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: Positive means the circuit is inductive (current lags voltage); negative means capacitive (current leads voltage).
   - q: When is impedance lowest?
     a: At resonance, when XL = XC. The impedance then equals R alone. See the resonant frequency calculator.
+  - q: "Why is the voltage across the capacitor higher than the supply?"
+    a: "Near resonance the inductor and capacitor voltages are large but opposite in phase, so they cancel in the total. In the default circuit on 230 V, 11.50 A flows and each reactive part sees about 361 V."
+  - q: "How do I calculate the impedance of L and C in parallel?"
+    a: "Combine the reactances as X<sub>L</sub>X<sub>C</sub> ÷ (X<sub>C</sub> − X<sub>L</sub>). With 100 mH and 100 µF at 50 Hz that is about 2,409 Ω, because the two currents nearly cancel."
 related: [electronics/resonant-frequency, physics/ohms-law, physics/rc-time-constant, electrical/kva-to-kw]
 ---
 
@@ -69,3 +73,40 @@ For a series circuit, power factor = cos φ = R ÷ Z. Inductive loads such as mo
 - **Filters**: reactance changes with frequency, letting RC and LC circuits pass or block certain frequencies.
 - **Motors and transformers**: their inductance limits current and sets power factor.
 - **Speaker crossovers**: inductors send bass to woofers; capacitors send treble to tweeters.
+
+## Worked example: the default circuit on 230 V
+
+A 100 mH inductor, a 100 µF capacitor and a 20 Ω resistor in series at 50 Hz:
+
+- X<sub>L</sub> = 2π × 50 × 0.1 = **31.42 Ω**
+- X<sub>C</sub> = 1 ÷ (2π × 50 × 100 × 10⁻⁶) = **31.83 Ω**
+- Z = √(20² + (31.42 − 31.83)²) = **20.004 Ω**
+- φ = atan(-0.415 ÷ 20) = **-1.19°**, slightly capacitive
+
+The two reactances almost cancel because the circuit's resonant frequency, 1 ÷ (2π√(LC)) = **50.33 Hz**, is close to 50 Hz. On 230 V the current is 230 ÷ 20.004 = **11.50 A** and the resistor dissipates **2,644 W**. The voltage across the inductor is 11.50 × 31.42 = **361 V** and across the capacitor **366 V**, far above the supply, because the two are in antiphase and their voltages mostly cancel.
+
+## Impedance of the default circuit across frequency
+
+| Frequency | X<sub>L</sub> | X<sub>C</sub> | Z | Phase | Current at 230 V |
+|---|---|---|---|---|---|
+| 25.00 Hz | 15.71 Ω | 63.66 Ω | 51.96 Ω | -67.4° | 4.43 A |
+| 40.00 Hz | 25.13 Ω | 39.79 Ω | 24.80 Ω | -36.2° | 9.28 A |
+| 50.00 Hz | 31.42 Ω | 31.83 Ω | 20.00 Ω | -1.2° | 11.50 A |
+| 50.33 Hz | 31.62 Ω | 31.62 Ω | 20.00 Ω | -0.0° | 11.50 A |
+| 60.00 Hz | 37.70 Ω | 26.53 Ω | 22.91 Ω | +29.2° | 10.04 A |
+| 100.00 Hz | 62.83 Ω | 15.92 Ω | 51.00 Ω | +66.9° | 4.51 A |
+| 150.00 Hz | 94.25 Ω | 10.61 Ω | 86.00 Ω | +76.6° | 2.67 A |
+
+Below resonance the circuit is capacitive (negative phase); above it the inductor dominates and the phase turns positive.
+
+## Measuring reactance in practice
+
+An LCR meter applies a small AC test signal at a chosen frequency, commonly 100 Hz, 1 kHz or 10 kHz, and reports inductance or capacitance together with the series resistance (ESR). Measure at a frequency near the one the part will see, because iron cored inductors and electrolytic capacitors change value with frequency and level. In a working mains circuit, reactance can be found from a clamp meter current and a voltage reading as X = V ÷ I, provided the resistance is small or is subtracted.
+
+## Common mistakes
+
+- **Entering inductance in henries.** This calculator expects millihenries, so 0.1 means 0.1 mH and gives a reactance a thousand times too small.
+- **Adding the reactances.** In a series circuit X<sub>L</sub> and X<sub>C</sub> subtract, because their voltages are 180° apart.
+- **Using the series formula for a parallel circuit.** For L and C in parallel at 50 Hz the combined reactance is X<sub>L</sub>X<sub>C</sub> ÷ |X<sub>C</sub> − X<sub>L</sub>| = **2,409 Ω**, close to an open circuit, not a short.
+- **Rating parts for the supply voltage only.** Near resonance the component voltages can be many times the supply, as the 361 V in the example shows.
+- **Ignoring harmonics.** At the 5th harmonic (250 Hz) X<sub>L</sub> is five times larger and X<sub>C</sub> five times smaller, so a circuit tuned at 50 Hz behaves very differently for distorted waveforms.

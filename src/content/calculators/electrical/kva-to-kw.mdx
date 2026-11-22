@@ -2,10 +2,10 @@
 title: kVA to kW Converter (and kW to kVA)
 description: Convert kVA to kW and kW to kVA using power factor — for generators, UPS, transformers and DG set sizing.
 category: electrical
-intro: "kVA is apparent power — what cables, transformers and generators must carry — while kW is the real power that does useful work. Power factor connects the two, as explained in this guide to [power factor, kW, kVA and kVAr](https://www.instrumentationblog.in/power-factor-kw-kva-kvar/) and [active, reactive and apparent power](https://www.instrumentationblog.in/active-reactive-and-apparent-power/). This free kVA to kW converter converts instantly in both directions and includes a quick reference table."
+intro: "Apparent power in kVA is what cables, transformers and generators must carry, while real power in kW does the useful work. This kVA to kW converter applies the power factor to go either way and also gives the reactive power in kVAr, as described in [power factor, kW, kVA and kVAr](https://www.instrumentationblog.in/power-factor-kw-kva-kvar/).\n\nEngineers use it to size generators, UPS units and transformers and to read the [active, reactive and apparent power](https://www.instrumentationblog.in/active-reactive-and-apparent-power/) on a meter."
 keywords: [kva to kw, kw to kva, kva to kw conversion, power factor, generator kva, ups kva, apparent power, real power, kvar]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 featured: true
 variables:
   - { id: S, label: Apparent power (kVA), suffix: kVA, default: 100, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: Because their limit is set by current (heating of windings), which depends on kVA, not just kW. Most diesel generator sets are rated at 0.8 power factor.
   - q: What is a good power factor?
     a: 0.95 or higher is considered good for industrial loads. Many utilities charge penalties below about 0.9.
+  - q: "How do I add the kVA of loads with different power factors?"
+    a: "Add the kW and the kVAr separately, then take √(kW² + kVAr²). A 50 kVA load at 0.8 PF plus a 30 kVA load at unity PF totals about 76.2 kVA, not 80 kVA."
+  - q: "How many amps is 100 kVA?"
+    a: "On a three-phase supply, I = kVA × 1000 ÷ (√3 × V): about 139 A at 415 V or 144 A at 400 V. Power factor does not change the current for a given kVA."
 related: [electrical/kw-to-amps, electrical/three-phase-motor-power, electrical/amps-to-watts, conversion/kw-to-hp]
 ---
 
@@ -79,3 +83,42 @@ UPS units list both VA and W. A 1,000 VA UPS rated at 0.6 PF supports only 600 W
 ## Improving power factor
 
 Capacitor banks supply reactive power locally so less has to come from the grid. Raising PF from 0.75 to 0.95 on a 100 kW load cuts apparent power from 133 kVA to 105 kVA, reducing current, cable losses and transformer loading. The capacitor bank needed is the difference in kVAr: 55 kVAr.
+
+## Worked example
+
+With the default inputs, 100 kVA at a power factor of 0.8:
+
+- Real power P = 100 × 0.8 = **80 kW**
+- Reactive power Q = √(100² − 80²) = **60 kVAr**
+
+The 3-4-5 triangle is a handy check: at PF 0.8 the kW, kVAr and kVA are always in the ratio 4 : 3 : 5.
+
+## Reactive power at each power factor (100 kVA)
+
+| PF | Angle φ | kW | kVAr |
+|---|---|---|---|
+| 0.60 | 53.1° | 60 kW | 80.0 kVAr |
+| 0.70 | 45.6° | 70 kW | 71.4 kVAr |
+| 0.80 | 36.9° | 80 kW | 60.0 kVAr |
+| 0.85 | 31.8° | 85 kW | 52.7 kVAr |
+| 0.90 | 25.8° | 90 kW | 43.6 kVAr |
+| 0.95 | 18.2° | 95 kW | 31.2 kVAr |
+| 0.99 | 8.1° | 99 kW | 14.1 kVAr |
+
+Below about 0.9 the reactive part grows quickly, which is why a poor power factor loads a transformer far more than its kW suggests.
+
+## From kVA to amps
+
+The current that sets cable and breaker sizes follows from kVA alone, with no power factor: I = S ÷ (√3 × V). For 100 kVA that is **139 A** at 415 V and **144 A** at 400 V.
+
+## Checking transformer loading
+
+A plant drawing 720 kW at PF 0.82 from a 1,000 kVA transformer loads it to 878 kVA, or **88%**. If the power factor were corrected to 0.95, the same 878 kVA would carry 834 kW, so correction frees capacity without a new transformer. Read kW, kVA and PF together on the main incomer's multifunction meter or a power analyser; the kVA maximum demand on the electricity bill shows the same thing averaged over the billing period.
+
+## Common mistakes
+
+- **Adding kVA of loads with different power factors directly.** A 50 kVA load at 0.8 PF and a 30 kVA heater at 1.0 PF do not total 80 kVA. Add kW (70) and kVAr (30) separately: the total is √(70² + 30²) = **76.2 kVA** at PF 0.92.
+- **Treating a UPS or inverter VA rating as watts.** A 10 kVA UPS with a 0.9 output PF delivers at most 9 kW.
+- **Loading a 0.8 PF generator with unity PF loads up to its kVA.** A 100 kVA set has an engine sized for about 80 kW; heaters totalling 100 kW would overload it.
+- **Using displacement PF where harmonics are high.** With drives and rectifiers, true PF is lower than cos φ, so kVA is higher than kW ÷ cos φ suggests.
+- **Using the kVAr formula with a PF above 1 or kW above kVA.** Power factor cannot exceed 1; a reading that implies it usually means a wiring or CT polarity error on the meter.

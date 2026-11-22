@@ -2,10 +2,10 @@
 title: RC Phase Shift Oscillator Calculator (Frequency & Gain)
 description: Calculate the frequency of a three-stage RC phase shift oscillator, f = 1 ÷ (2π·R·C·√6), and the feedback resistor for the required gain of 29.
 category: electronics
-intro: "An RC phase shift oscillator uses three RC sections to shift the signal by 180°, and an inverting amplifier to supply the other 180° and make up the loss. This RC phase shift oscillator calculator gives the oscillation frequency and the gain resistor needed — one of the [types of transistor oscillators](https://www.instrumentationblog.in/types-of-transistor-oscillators/), and a cousin of the [Wien bridge oscillator](https://www.instrumentationblog.in/wien-bridge-oscillator-circuit/)."
+intro: "An RC phase shift oscillator uses three RC sections to shift the signal by 180°, and an inverting amplifier supplies the other 180° and makes up the loss. This RC phase shift oscillator calculator gives the frequency and the gain resistor; it is one of the [types of transistor oscillators](https://www.instrumentationblog.in/types-of-transistor-oscillators/).\n\nElectronics students build it as a first oscillator lab, and designers use it for simple fixed audio tones, test signals and sensor excitation where a crystal would be overkill."
 keywords: [rc phase shift oscillator calculator, phase shift oscillator frequency, rc oscillator calculator, phase shift oscillator formula, op amp phase shift oscillator, rc oscillator frequency formula, gain of 29]
 published: 2026-11-05
-updated: 2026-11-05
+updated: 2026-11-22
 variables:
   - { id: R, label: Resistance per stage R, family: resistance, unit: kohm, default: 10, min: 0 }
   - { id: C, label: Capacitance per stage C, family: capacitance, unit: nF, default: 10, min: 0 }
@@ -23,6 +23,10 @@ faq:
     a: Use an inverting amplifier whose input resistor is the last R of the ladder, and a feedback resistor Rf ≥ 29R. Use slightly more (about 30–32R) for reliable start-up.
   - q: Why is the output not a perfect sine wave?
     a: Excess gain drives the amplifier into clipping. Amplitude stabilisation with diodes or a thermistor in the feedback path keeps distortion low.
+  - q: "How do I choose R and C for a given frequency?"
+    a: "Pick a convenient capacitor, then R = 1 ÷ (2π f C √6). For 1 kHz with 10 nF, R = 6,497 Ω; 6.8 kΩ from the E24 series gives about 956 Hz."
+  - q: "What op-amp bandwidth does a phase shift oscillator need?"
+    a: "Gain bandwidth of at least 29 times the oscillation frequency, and preferably ten times more. At 650 Hz that is 18,843 Hz minimum, which almost any op-amp provides."
 related: [electronics/rc-filter, electronics/op-amp-gain, electronics/555-timer, electronics/crystal-load-capacitance]
 ---
 
@@ -55,3 +59,34 @@ R = 10 kΩ, C = 10 nF in each section:
 
 - The formula assumes the ladder is not loaded — drive it from a low impedance and let the last R go to the op-amp virtual ground.
 - For a transistor version the √6 factor changes slightly with the loading of the transistor's input.
+
+## Why the gain has to be 29
+
+The table shows the unloaded three section CR ladder (series C, shunt R) with the default 10 kΩ and 10 nF. Only at 649.7 Hz is the phase shift exactly 180°, and there the ladder passes 1/29 of the signal.
+
+| Frequency | Gain | As a fraction | Phase lead |
+|---|---|---|---|
+| 324.9 Hz | 0.0068 | 1/148.1 | 216.5° |
+| 519.8 Hz | 0.0213 | 1/47.0 | 192.7° |
+| 649.7 Hz | 0.0345 | 1/29.0 | 180.0° |
+| 812.2 Hz | 0.0535 | 1/18.7 | 166.9° |
+| 1,299.5 Hz | 0.1173 | 1/8.5 | 139.7° |
+
+## Designing for a target frequency
+
+For a 1 kHz tone with 10 nF capacitors, R = 1 ÷ (2π × 1000 × 10 nF × √6) = 6,497 Ω. The nearest E24 value is 6.8 kΩ, which gives **955.5 Hz**; the feedback resistor must be at least 29 × 6.8 kΩ = 197.2 kΩ, so fit 220 kΩ. If the exact frequency matters, use 1% resistors from the E96 series or trim one resistor.
+
+## Practical build notes
+
+- With ±5% capacitors the default circuit can land anywhere from 619 Hz to 684 Hz, so check the frequency with a counter or oscilloscope.
+- The op-amp must have plenty of gain left at the operating frequency. A gain of 29 at 650 Hz needs at least 18,843 Hz of gain bandwidth, and ten times that keeps the phase error small, so a general purpose 1 MHz op-amp is fine at audio frequencies but not at 50 kHz.
+- Expect start-up to take several cycles. Set the gain about 5% to 10% above 29 and add back to back diodes in series with a resistor across R<sub>f</sub> to limit the amplitude.
+- Take the output from the op-amp output, not from the ladder, and buffer it before driving a load.
+
+## Common mistakes
+
+- **Using the high pass formula for an RC low pass ladder.** With series R and shunt C the frequency is √6 ÷ (2πRC), which is 3,898 Hz for the defaults, not 649.7 Hz.
+- **Forgetting that the last R is the amplifier input resistor.** If a separate input resistor is added, the third section is loaded and both frequency and gain change.
+- **Setting the gain to exactly 29.** Tolerances and op-amp limits mean it may never start; aim for 30 to 32.
+- **Driving the ladder from a high impedance.** The source impedance adds to the first section and lowers the frequency.
+- **Choosing very small R values.** Below about 1 kΩ the ladder loads the op-amp output heavily and distortion rises.

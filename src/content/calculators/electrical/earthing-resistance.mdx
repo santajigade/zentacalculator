@@ -2,10 +2,10 @@
 title: Earthing Resistance Calculator (Earth Rod)
 description: Calculate the earth resistance of a vertical earth rod or pipe electrode from soil resistivity, length and diameter — and how many rods you need.
 category: electrical
-intro: "An earth electrode is only as good as its resistance to the ground around it. Lower resistance lets fault current flow safely and keeps touch voltages low. Soil resistivity and rod length matter most, as shown in this [earthing resistance calculation](https://www.instrumentationblog.in/earthing-resistance-calculation/) and the overview of [TN, TT and IT earthing systems](https://www.instrumentationblog.in/tn-tt-it-earthing-systems/)."
+intro: "An earth electrode is only as good as its resistance to the soil around it, because that resistance sets the fault current and the touch voltage. This earthing resistance calculator applies the Dwight formula to soil resistivity, rod length and diameter; see this [earthing resistance calculation](https://www.instrumentationblog.in/earthing-resistance-calculation/).\n\nElectrical contractors and plant engineers use it to plan earth pits, estimate how many rods a site needs and check designs for [TN, TT and IT earthing systems](https://www.instrumentationblog.in/tn-tt-it-earthing-systems/)."
 keywords: [earthing resistance calculator, earth rod resistance, earth pit resistance, soil resistivity, earth electrode calculation, grounding resistance, pipe earthing]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - { id: rho, label: Soil resistivity, suffix: Ω·m, default: 100, min: 0 }
   - { id: L, label: Rod length (buried), family: length, unit: m, imperialUnit: ft, default: 3, min: 0 }
@@ -22,6 +22,10 @@ faq:
     a: Only slightly. Doubling the diameter reduces resistance by about 10–15%. Length and soil resistivity matter far more.
   - q: How do I reduce earth resistance?
     a: Drive longer rods, add more rods spaced at least their own length apart, or treat the soil around the electrode with backfill compound.
+  - q: "How do I convert a Wenner test reading into soil resistivity?"
+    a: "Use ρ = 2πaR, where a is the probe spacing in metres and R the meter reading. A reading of 5.3 Ω at 3 m spacing gives about 100 Ω·m."
+  - q: "How long must an earth rod be to reach 10 ohms?"
+    a: "It depends mainly on soil resistivity. In 100 Ω·m soil a 16 mm rod needs to be about 12.3 m long to reach 10 Ω, compared with 33.5 Ω for a 3 m rod."
 related: [electrical/earth-conductor-size, physics/ohms-law, electrical/transformer-short-circuit, electrical/cable-voltage-drop]
 ---
 
@@ -65,3 +69,39 @@ Rods in parallel do not divide resistance perfectly because their resistance are
 ## Testing
 
 Measure earth resistance with the fall-of-potential (three-pole) method, with the current spike at least 5–10 times the electrode length away. Clamp-on testers work only where there is a parallel return path.
+
+## Worked example with the default values
+
+A 3 m rod of 16 mm diameter in soil of 100 Ω·m:
+
+1. ρ ÷ (2πL) = 100 ÷ (2π × 3) = **5.305 Ω**
+2. 8L ÷ d = 24 ÷ 0.016 = 1,500, and ln(1,500) = **7.313**
+3. R = 5.305 × (7.313 − 1) = **33.5 Ω**
+
+That is well above a typical 10 Ω target. Using the spacing factors above, two rods give about 19.4 Ω, three about 13.4 Ω and four about 11.1 Ω. A single rod would need to be about **12.3 m** long to reach 10 Ω on its own, which is why deep driven rods with couplers are common in poor soil.
+
+## How much the diameter helps
+
+At 3 m length in 100 Ω·m soil:
+
+| Rod diameter | Resistance | Change from 16 mm |
+|---|---|---|
+| 12.7 mm | 34.7 Ω | +3.7% |
+| 16 mm | 33.5 Ω | +0.0% |
+| 20 mm | 32.3 Ω | -3.5% |
+| 25 mm | 31.1 Ω | -7.1% |
+| 40 mm | 28.6 Ω | -14.5% |
+
+Going from 16 mm to 40 mm pipe saves only a few ohms; the thicker rod is chosen for mechanical strength and corrosion life, not resistance.
+
+## Measuring soil resistivity first
+
+A Wenner four-pin survey drives four probes in a line at equal spacing a and passes current between the outer pair. Soil resistivity is ρ = 2πaR. With a = 3 m and a meter reading of 5.3 Ω, ρ = 2π × 3 × 5.3 = **100 Ω·m**. The probe spacing roughly equals the depth sampled, so repeat at 1.5, 3 and 6 m to see whether a deeper rod will reach better ground.
+
+## Common mistakes
+
+- **Designing on wet-season resistivity.** If the soil dries to 200 Ω·m, the same rod rises to 67.0 Ω, double the value measured after rain.
+- **Spacing rods too close.** Rods 1 m apart share most of their resistance area; keep spacing at least equal to the rod length.
+- **Counting the rod alone in a TT system.** One 33.5 Ω rod passes only about 6.9 A at 230 V, far too little to trip a fuse or MCB, so an RCD is essential.
+- **Testing with the test spike too close.** If the current probe is inside the rod's resistance area the reading is low; check by moving the potential probe 10% either side of 62% of the distance.
+- **Measuring without disconnecting the earth link.** The parallel path through the supply earth makes a poor electrode look good.

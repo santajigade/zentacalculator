@@ -2,10 +2,10 @@
 title: dBm to Watts Converter (and Watts to dBm)
 description: Convert dBm to watts, milliwatts and dBW and back — with voltage across 50 Ω — for RF, Wi-Fi, radio and fibre power levels.
 category: electronics
-intro: "dBm expresses power in decibels relative to 1 milliwatt, so RF and optical power levels spanning many orders of magnitude become easy numbers to add and subtract. This dBm to watts converter works both ways and shows the equivalent voltage in a 50 Ω system — see [decibels in electronics: dB and dBm](https://www.instrumentationblog.in/decibel-in-electronics-db-dbm/)."
+intro: "dBm expresses power in decibels relative to 1 milliwatt, so RF and optical levels spanning many orders of magnitude become small numbers you can add and subtract. This dBm to watts converter works both ways and shows the voltage in a 50 Ω system; see [decibels in electronics: dB and dBm](https://www.instrumentationblog.in/decibel-in-electronics-db-dbm/).\n\nRF engineers, radio amateurs and fibre technicians use it to read power meters, check transmitter ratings and build link budgets."
 keywords: [dbm to watts, watts to dbm, dbm to mw, dbm calculator, dbm converter, dbw to dbm, rf power conversion]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-22
 variables:
   - { id: dbm, label: Power in dBm, suffix: dBm, default: 20, decimals: 2 }
   - { id: P, label: Power, family: power, unit: mW, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: dBW is referenced to 1 W, so dBW = dBm − 30.
   - q: What do negative dBm values mean?
     a: Power below 1 mW. Wi-Fi signals of −30 to −70 dBm are tiny fractions of a milliwatt.
+  - q: "What is the total power of two signals of the same dBm?"
+    a: "Double the milliwatts, which adds 3.01 dB. Two 20 dBm signals of 100 mW each total 200 mW, which is 23.01 dBm."
+  - q: "How do I convert dBm to volts in a 75 Ω system?"
+    a: "Use V = √(P × 75) with P in watts. At 20 dBm (0.1 W) that gives 2.739 V RMS, compared with 2.236 V in a 50 Ω system."
 related: [physics/decibel, electronics/snr, physics/wavelength-frequency, conversion/power-converter]
 ---
 
@@ -66,3 +70,46 @@ Enter a value in **dBm** to get watts (choose W, mW or kW), dBW and the RMS volt
 ## Link budgets
 
 In dB terms, you simply add gains and subtract losses: transmit 20 dBm + 6 dBi antenna − 80 dB path loss + 3 dBi antenna = −51 dBm received.
+
+## Worked example
+
+At the default **20 dBm**:
+
+- P = 10<sup>20/10</sup> ÷ 1,000 = **100 mW** (0.1 W)
+- dBW = 20 − 30 = **-10 dBW**
+- V = √(0.1 × 50) = **2.236 V RMS**, or 3.162 V peak
+
+Going the other way, a handheld radio rated at 4 W puts out 10 × log₁₀(4,000) = **36.02 dBm**.
+
+## Link budget with cable losses
+
+A 2.4 GHz point to point link: transmitter 20 dBm, antenna gain 6 dBi, cable loss 1.5 dB, free space loss 90 dB, receive antenna 3 dBi, receive cable 1 dB.
+
+- Received = 20 + 6 − 1.5 − 90 + 3 − 1 = **-63.5 dBm**
+- That is 446.7 pW, about 0.4467 nW
+- Against a receiver sensitivity of -85 dBm the fade margin is **21.5 dB**
+
+## Decibel steps from 20 dBm
+
+| Change | Power ratio | Result |
+|---|---|---|
+| +1 dB | × 1.26 | 125.9 mW |
+| +3 dB | × 2 | 199.5 mW |
+| +6 dB | × 3.98 | 398.1 mW |
+| +10 dB | × 10 | 1,000.0 mW |
+| +20 dB | × 100 | 10,000.0 mW |
+| +30 dB | × 1e+03 | 100,000.0 mW |
+
+Every 3 dB doubles the power and every 10 dB multiplies it by ten, so most conversions can be done in your head once these steps are familiar.
+
+## How RF power is measured
+
+A thermal or diode power sensor on an RF power meter reads average power directly in dBm and is the reference for transmitter checks. A spectrum analyser shows the level of each signal on screen, usually in dBm with a 50 Ω input. High power transmitters are measured through a calibrated attenuator or directional coupler, and its value is added back: a meter reading 6 dBm through a 30 dB attenuator means the source delivers 36 dBm, about 4 W.
+
+## Common mistakes
+
+- **Adding two dBm values directly.** Two 20 dBm signals combine to 23.01 dBm, not 40 dBm; convert to milliwatts, add, then convert back.
+- **Mixing dB and dBm.** A gain or loss is in dB; only an absolute power is in dBm.
+- **Using the 50 Ω voltage in a 75 Ω system.** Cable TV uses 75 Ω, where 20 dBm is 2.739 V, not 2.236 V.
+- **Comparing peak and average power.** Pulsed radar and OFDM signals have peak power several dB above the average a thermal meter shows.
+- **Forgetting the attenuator or coupler factor** when reading a transmitter through a test setup.

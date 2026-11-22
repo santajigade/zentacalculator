@@ -2,10 +2,10 @@
 title: Motor Starting Current Calculator (DOL, Star-Delta, Soft Starter)
 description: Estimate the starting (inrush) current of an induction motor for DOL, star-delta, autotransformer and soft-starter starting from full-load current.
 category: electrical
-intro: "A three-phase induction motor started direct-on-line (DOL) draws 6–8 times its full-load current for a few seconds, which can dip the supply voltage and trip protection. Reduced-voltage starters cut that inrush — compare the options in [DOL vs star-delta starter](https://www.instrumentationblog.in/dol-vs-star-delta-starter-which-to-use/) and [motor starting methods compared](https://www.instrumentationblog.in/motor-starting-methods-compared/). This motor starting current calculator estimates the inrush for each method."
+intro: "An induction motor started direct-on-line draws its locked-rotor current, several times full-load current, until it nears full speed. This motor starting current calculator estimates that inrush and the reduced current and torque with star-delta or autotransformer starting.\n\nElectrical designers and maintenance engineers use it to size supplies, protection and generators, and to choose a starter, as compared in [DOL vs star-delta starter](https://www.instrumentationblog.in/dol-vs-star-delta-starter-which-to-use/) and [motor starting methods compared](https://www.instrumentationblog.in/motor-starting-methods-compared/)."
 keywords: [motor starting current calculator, dol starting current, star delta starting current, inrush current motor, locked rotor current, soft starter current, motor starting current formula]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-22
 variables:
   - { id: Ifl, label: Motor full-load current (FLC), family: current, unit: A, default: 20, min: 0 }
   - { id: k, label: DOL starting current (× FLC), default: 6.5, min: 1, help: 'Locked-rotor current ratio from the motor datasheet — typically 6–8 for IE2/IE3 motors.' }
@@ -34,6 +34,10 @@ faq:
     a: Torque is proportional to voltage squared. With an autotransformer, line current and torque both scale with the tap ratio squared.
   - q: What about soft starters and VFDs?
     a: A soft starter typically limits current to 2.5–4 × FLC; a VFD can start a motor at about 1–1.5 × FLC with full torque.
+  - q: "Which motor connection do I need for a star-delta starter?"
+    a: "A motor whose delta voltage equals the supply line voltage, with all six winding ends brought out. On a 400 V supply that means a 400 V delta / 690 V star motor."
+  - q: "How do I measure motor starting current?"
+    a: "Use a clamp meter with an inrush mode or a power quality recorder on one phase during a start. For the default motor you would expect about 130 A DOL or 43 A in star-delta."
 related: [electrical/three-phase-motor-power, electrical/induction-motor-slip, electrical/cable-voltage-drop, electrical/generator-size]
 ---
 
@@ -73,3 +77,43 @@ A 11 kW, 415 V motor with 20 A FLC and a 6.5 × starting ratio:
 - **VFDs** give the lowest current and full torque, plus speed control.
 
 Check the voltage dip a large motor causes on a generator or weak supply — see the [generator size calculator](/electrical/generator-size/).
+
+## Will the motor still start? A torque check
+
+Cutting current also cuts torque, so the starter must leave enough torque to accelerate the load. Take the default 20 A motor with a 6.5 × current ratio and, from a typical datasheet, a DOL starting torque of 2.2 × rated torque:
+
+| Method | Line current | Current ratio | Starting torque |
+|---|---|---|---|
+| Direct-on-line | 130.0 A | 6.50 × FLC | 2.20 × rated |
+| Star-delta | 43.3 A | 2.17 × FLC | 0.73 × rated |
+| Autotransformer 80% | 83.2 A | 4.16 × FLC | 1.41 × rated |
+| Autotransformer 65% | 54.9 A | 2.75 × FLC | 0.93 × rated |
+| Autotransformer 50% | 32.5 A | 1.62 × FLC | 0.55 × rated |
+
+With star-delta the motor starts with only 0.73 × rated torque. That is plenty for a centrifugal pump or fan, whose load torque at standstill is small, but a loaded conveyor needing close to full torque would stall. The 65% autotransformer tap gives 0.93 × rated torque for 54.9 A, a useful middle ground.
+
+## Starting current for different motor ratios
+
+20 A full-load current:
+
+| DOL ratio I<sub>A</sub>/I<sub>N</sub> | DOL current | Star-delta current |
+|---|---|---|
+| 5 | 100 A | 33.3 A |
+| 6 | 120 A | 40.0 A |
+| 6.5 | 130 A | 43.3 A |
+| 7 | 140 A | 46.7 A |
+| 8 | 160 A | 53.3 A |
+
+Premium efficiency IE3 and IE4 motors tend to sit at the top of this range, so replacing an old motor can raise the inrush on the same supply.
+
+## Measuring starting current
+
+A clamp meter with an inrush function captures the RMS current over the first 100 ms or so and gives a figure that can be compared with k × FLC. A power quality recorder also shows how long the current stays high, which is the run-up time. Heavy, high inertia loads keep the current near locked-rotor value for many seconds, so the protection and the motor's thermal limit must both be checked against that time, not only the peak.
+
+## Common mistakes
+
+- **Fitting star-delta to the wrong winding.** The motor must be rated for delta at the supply voltage, for example 400 V delta / 690 V star on a 400 V system. A 230/400 V motor cannot be started star-delta on 400 V.
+- **Ignoring the changeover spike.** In open transition star-delta the motor is briefly disconnected, and reconnecting in delta can draw a current close to DOL if it changes over too early.
+- **Using rated torque instead of starting torque.** The one third reduction applies to the DOL starting torque from the datasheet, not to the rated torque.
+- **Taking FLC from a different voltage.** A dual voltage nameplate lists two currents; use the one for your supply.
+- **Forgetting the first half cycle.** The asymmetrical peak is higher than the RMS locked-rotor current, so instantaneous trips are set with margin above it.

@@ -1,35 +1,5 @@
 # Pages to expand (Part C of the daily task). Take from the top; delete a line once the page is done.
 # Order: priority category, then thinnest body first.
-electrical/braking-resistor
-electrical/earthing-resistance
-electrical/thd
-electrical/line-phase-voltage
-electrical/generator-size
-electrical/transformer-short-circuit
-electrical/per-unit
-electrical/earth-fault-loop-impedance
-electrical/generator-power-angle
-electrical/motor-starting-current
-electrical/amps-to-watts
-electrical/motor-starting-voltage-dip
-electrical/kw-to-amps
-electrical/kva-to-kw
-electrical/power-factor-correction
-electrical/cable-voltage-drop
-electrical/three-phase-motor-power
-electrical/neutral-current-harmonics
-electrical/solar-string-sizing
-electronics/uart-baud-rate-error
-electronics/resistor-color-code
-electronics/dbm-to-watts
-electronics/battery-charge-time
-electronics/strain-gauge
-electronics/rc-phase-shift-oscillator
-electronics/instrumentation-amplifier-gain
-electronics/microstrip-impedance
-electronics/zener-resistor
-electronics/inductor-al-value
-electronics/reactance
 electronics/555-timer
 electronics/pcb-trace-width
 electronics/led-resistor

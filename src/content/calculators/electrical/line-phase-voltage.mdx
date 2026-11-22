@@ -2,10 +2,10 @@
 title: Line and Phase Voltage Calculator (Star and Delta)
 description: Convert between line and phase voltage and current for star (wye) and delta connections — with three-phase power from either.
 category: electrical
-intro: "In a three-phase system, line values are measured between lines and phase values across each winding or load. In star (wye), line voltage is √3 times phase voltage; in delta, line current is √3 times phase current. This line and phase voltage calculator converts both ways — see [star vs delta connection](https://www.instrumentationblog.in/star-vs-delta-connection/) explained."
+intro: "Three-phase line values are measured between two lines, while phase values appear across each winding or load. This line and phase voltage calculator converts between them for star and delta connections and gives the total power; see [star vs delta connection](https://www.instrumentationblog.in/star-vs-delta-connection/) explained.\n\nElectricians, motor technicians and students use it to check nameplate voltages, wire motors correctly and work out the current in each winding or load."
 keywords: [line voltage phase voltage calculator, star delta voltage, phase to line voltage, 415 to 240, wye voltage calculator, line current phase current delta, three phase voltage]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-22
 variables:
   - id: c
     label: Connection
@@ -32,6 +32,10 @@ faq:
     a: No. P = √3 × V_L × I_L × PF for both, using line values.
   - q: Why is 400 V three-phase paired with 230 V single-phase?
     a: Because 400 ÷ √3 ≈ 230 V — the single-phase supply is one phase of the star system.
+  - q: "What is the phase current in a delta connection?"
+    a: "Line current divided by √3. With 10 A in each line, each delta winding carries 5.77 A, while the voltage across it equals the 415 V line voltage."
+  - q: "What is the high leg in a delta system?"
+    a: "In a 240 V delta with one winding centre tapped for 120 V, the third line sits at about 208 V to neutral. It is usually marked orange and must not supply single phase 120 V loads."
 related: [electrical/kw-to-amps, electrical/three-phase-motor-power, electrical/star-delta-transformation, electrical/motor-starting-current]
 ---
 
@@ -65,3 +69,39 @@ Choose **star** or **delta**, enter the **line voltage** and **line current** (o
 ## Motor windings
 
 A motor nameplate marked **Δ 415 V / Y 690 V** has windings rated at 415 V. On a 415 V supply it runs in delta, and can be started in star (where each winding gets 240 V) — the basis of the star-delta starter. See the [motor starting current calculator](/electrical/motor-starting-current/).
+
+## Worked example with the default values
+
+A star connected load on a 415 V supply drawing 10 A per line at 0.85 power factor:
+
+- Phase voltage = 415 ÷ √3 = **239.6 V**
+- Phase current = line current = **10 A**
+- Power = √3 × 415 × 10 × 0.85 = **6.11 kW**
+
+Switch the connection to delta with the same line values and each phase sees the full **415 V** but carries only 10 ÷ √3 = **5.77 A**. The power is unchanged: 3 × 415 × 5.774 × 0.85 = 6.11 kW, which confirms that the √3 formula with line values works for both.
+
+## Line current per kW at 0.85 power factor
+
+| Line voltage | Phase voltage (star) | Line current per kW | Delta winding current per kW |
+|---|---|---|---|
+| 208 V | 120 V | 3.27 A | 1.89 A |
+| 400 V | 231 V | 1.70 A | 0.98 A |
+| 415 V | 240 V | 1.64 A | 0.94 A |
+| 480 V | 277 V | 1.42 A | 0.82 A |
+| 690 V | 398 V | 0.98 A | 0.57 A |
+
+## Checking it with a meter
+
+With a true RMS multimeter, measure between each pair of lines (L1 L2, L2 L3, L3 L1) and then from each line to neutral. On a healthy 415 V star supply the line readings sit within about 2% of each other and the line to neutral readings near 240 V. A clamp meter on each line conductor gives the line current; on a delta motor the winding current can only be measured inside the terminal box on the link between winding ends, and it should be about 58% of the line reading.
+
+## The 30 degree shift
+
+In star, each line voltage is the phasor difference of two phase voltages, so it is √3 times larger and leads the first of them by 30°. This shift is why a Dyn11 transformer secondary is 30° ahead of its primary, and why two transformers of different vector groups must never be paralleled.
+
+## Common mistakes
+
+- **Applying √3 twice.** P = √3 × V<sub>L</sub> × I<sub>L</sub> already contains it; using phase voltage in that formula gives a result 1.73 times too small.
+- **Looking for a neutral on a delta system.** A plain delta has none; a centre tapped 240 V high leg delta has a "wild leg" at 208 V to neutral that must not feed 120 V loads.
+- **Wiring a delta rated motor in star on the same supply.** Each winding then gets 1 ÷ √3 of its voltage and the motor develops only 33% of its torque.
+- **Sizing delta winding conductors on line current.** Inside a delta the winding carries line current ÷ √3, so internal links can be smaller than the supply cable.
+- **Reading line to neutral as line voltage.** A meter showing 240 V on a "415 V" system is normal when one probe is on neutral.

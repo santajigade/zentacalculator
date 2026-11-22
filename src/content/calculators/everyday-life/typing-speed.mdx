@@ -1,11 +1,11 @@
 ---
 title: Typing Speed Calculator (WPM)
-description: Calculate typing speed in words per minute (WPM) and characters per minute from your test results.
+description: "Typing speed calculator: turn characters typed, errors and test time into gross WPM, net WPM, characters per minute and accuracy, with job benchmarks."
 category: everyday-life
-intro: "Typing speed is measured in words per minute (WPM), with accuracy taken into account. It is a common skill test for office jobs."
+intro: "Typing speed is measured in words per minute (WPM), where a word is any 5 characters including spaces, and errors are subtracted to give net WPM. This typing speed calculator works out gross WPM, net WPM and characters per minute from a test.\n\nJob seekers, students, teachers and employers use it to score typing tests, check data entry requirements and track practice over weeks."
 keywords: [typing speed, wpm calculator, words per minute, cpm, typing test, net wpm]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - { id: ch, label: Characters typed (including spaces), default: 1250, min: 0 }
   - { id: er, label: Uncorrected errors, default: 5, min: 0 }
@@ -21,11 +21,13 @@ faq:
   - q: "How is WPM calculated?"
     a: "By convention, one \"word\" is 5 characters including spaces. WPM = characters ÷ 5 ÷ minutes."
   - q: "What is net WPM?"
-    a: "Gross WPM minus uncorrected errors per minute — a fairer measure of useful speed."
+    a: "Gross WPM minus uncorrected errors per minute. 5 errors in a 5 minute test cost 1 WPM, so a gross 50 WPM becomes a net 49 WPM."
   - q: "What is a good typing speed?"
     a: "About 40 WPM is average; 60–70 WPM is good for office work; professional typists exceed 80 WPM."
   - q: "Why is one word counted as five characters?"
     a: "It standardises results so that long and short words count fairly. Spaces and punctuation are included in the five."
+  - q: "How many keystrokes per hour is a typing speed in WPM?"
+    a: "Multiply WPM by 5 characters and by 60 minutes. 50 WPM is 15,000 keystrokes per hour, and 40 WPM is 12,000."
 related: [everyday-life/unit-price, everyday-life/reading-time]
 ---
 
@@ -37,12 +39,19 @@ Enter the number of **characters typed**, any **uncorrected errors** and the **t
 
 <p class="formula">Gross WPM = (characters ÷ 5) ÷ minutes<br/>Net WPM = gross WPM − errors ÷ minutes</p>
 
-## Example
+## Worked example
 
-1,250 characters in 5 minutes with 5 errors:
+A 5 minute test produces 1,250 characters (spaces included) with 5 uncorrected errors:
 
-- Gross = 250 words ÷ 5 = **50 WPM**
-- Net = 50 − 1 = **49 WPM**
+- Standard words = 1,250 ÷ 5 = 250
+- Gross WPM = 250 ÷ 5 = **50.0**
+- Net WPM = 50 - 5 ÷ 5 = **49.0**
+- Characters per minute = 1,250 ÷ 5 = **250**
+- Accuracy = (1,250 - 5) ÷ 1,250 = **99.6%**
+
+### A one minute test
+
+330 characters in 1 minute with 8 errors gives a gross speed of 66 WPM but a net speed of only **58 WPM**, at 97.6% accuracy. On a short test every error costs a full word per minute, so accuracy matters more than raw speed.
 
 ## Typing speed benchmarks
 
@@ -64,7 +73,7 @@ Many data-entry and transcription jobs ask for 50–60 WPM with high accuracy.
 
 ## Words per minute vs keystrokes per hour
 
-Data-entry tests sometimes use **keystrokes per hour (KPH)**: KPH = characters per minute × 60. 250 characters per minute is 15,000 KPH.
+Data entry tests often use **keystrokes per hour (KPH)**: KPH = characters per minute × 60. The example's 250 characters per minute is **15,000 KPH**. Numeric keypad tests are scored in KPH because WPM makes little sense for strings of digits.
 
 ## Practice plan
 
@@ -76,3 +85,28 @@ Data-entry tests sometimes use **keystrokes per hour (KPH)**: KPH = characters p
 ## Improve your speed
 
 Use all ten fingers, keep your eyes on the screen, and practise accuracy first — speed follows.
+
+## How long a document takes at each speed
+
+| Net WPM | Keystrokes per hour | 500 words | 1,000 words | 2,500 words |
+|---|---|---|---|---|
+| 30 | 9,000 | 16.7 min | 33.3 min | 83 min |
+| 40 | 12,000 | 12.5 min | 25.0 min | 62 min |
+| 50 | 15,000 | 10.0 min | 20.0 min | 50 min |
+| 60 | 18,000 | 8.3 min | 16.7 min | 42 min |
+| 80 | 24,000 | 6.2 min | 12.5 min | 31 min |
+| 100 | 30,000 | 5.0 min | 10.0 min | 25 min |
+
+Real documents take longer than these figures because of thinking, formatting and corrections; the table shows pure typing time.
+
+## How typing tests are scored
+
+Most online and employment tests show a passage, time the typing for 1, 3 or 5 minutes and compare the result with the original text. Gross WPM uses every character typed; net WPM takes off one word per minute for each error left uncorrected. Errors you fix with backspace do not count against net WPM, but the time spent fixing them lowers the gross figure. Results from 1 minute tests usually run a few WPM higher than 5 minute tests, so a job advert asking for 50 WPM normally means a longer, accuracy checked test.
+
+## Common mistakes
+
+- **Counting real words.** Typing tests count every 5 characters as a word, so a passage of long technical words scores the same as one of short words.
+- **Leaving out spaces.** Spaces and punctuation are keystrokes; dropping them cuts the result by about a sixth for normal English text.
+- **Subtracting the total errors.** Net WPM subtracts errors per minute: 5 errors in 5 minutes costs 1 WPM, not 5.
+- **Comparing tests of different lengths.** A 1 minute burst is not comparable with a 10 minute transcription test.
+- **Chasing speed with low accuracy.** Below about 95% accuracy the corrections usually cost more time than the extra speed saves.

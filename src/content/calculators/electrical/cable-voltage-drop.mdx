@@ -2,10 +2,10 @@
 title: Cable Voltage Drop Calculator
 description: Calculate voltage drop in copper or aluminium cable for single-phase and three-phase circuits — and the minimum cable size.
 category: electrical
-intro: "Every cable has resistance, so some voltage is lost between the supply and the load. Too much drop makes motors overheat and lights dim, which is why standards limit it to about 3–5%. Learn the method in this [voltage drop calculation](https://www.instrumentationblog.in/voltage-drop-calculation/) guide and how it fits with [choosing cable size for load current](https://www.instrumentationblog.in/cable-size-for-load-current/). This free cable voltage drop calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Every cable has resistance, so part of the supply voltage is lost before it reaches the load, and wiring rules usually cap that loss at about 3% to 5%. This cable voltage drop calculator works out the drop for single phase or three phase copper and aluminium runs, or the smallest cross-section that meets your limit.\n\nElectricians and designers use it when planning long final circuits and motor feeders, following the method in this [voltage drop calculation](https://www.instrumentationblog.in/voltage-drop-calculation/) guide."
 keywords: [voltage drop, cable size, cable voltage drop, wire size, mm2, copper cable, aluminium cable, three phase]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 featured: true
 variables:
   - id: k
@@ -47,6 +47,10 @@ faq:
     a: "It uses resistivity at about 20 °C and ignores reactance, which is fine for small and medium cables. For large cables or high temperatures, use the manufacturer's mV/A/m tables."
   - q: "Does a longer cable increase voltage drop?"
     a: "Yes. Voltage drop is proportional to length, so doubling the run doubles the drop."
+  - q: "Why do cable tables give a higher voltage drop than my calculation?"
+    a: "Tables use resistance at the 70 °C operating temperature, about 1.20 times the 20 °C value used here. For 16 A over 30 m of 2.5 mm² copper the drop rises from 6.60 V to about 7.90 V."
+  - q: "How far can I run 2.5 mm² cable at 16 A?"
+    a: "At 230 V single phase with copper at 20 °C, about 31 m one way for a 3% drop and 52 m for 5%. Allow less if the cable runs warm."
 related: [electrical/braking-resistor, electrical/transformer-current, electrical/three-phase-motor-power, physics/ohms-law]
 ---
 
@@ -116,3 +120,41 @@ Copper resistance rises about 0.39% per °C. At a conductor temperature of 70 °
 ## Remember
 
 Voltage drop is only one check. The cable must also carry the current safely (current rating with installation derating) and allow protective devices to disconnect a fault in time.
+
+## Sizing the cable for a 3% limit
+
+The default circuit, 16 A over 30 m of 2.5 mm² copper at 230 V, drops **6.60 V (2.87%)**. Working backwards for a 3% lighting limit:
+
+- A<sub>min</sub> = 2 × 30 × 16 × 1.72 × 10⁻⁸ ÷ (0.03 × 230) = **2.39 mm²**, so 2.5 mm² just passes
+- Stretch the same run to 50 m and A<sub>min</sub> becomes **3.99 mm²**, which means 4 mm²
+- Current rating is checked separately, as in [choosing cable size for load current](https://www.instrumentationblog.in/cable-size-for-load-current/), and the larger of the two sizes wins
+- In aluminium the same drop needs 2.5 × 2.82 ÷ 1.72 = **4.10 mm²**, so the next standard size, 6 mm²
+
+## Maximum run length at 16 A, 230 V, copper
+
+| Size | Loop mV/A/m at 20 °C | Max length for 3% | Max length for 5% |
+|---|---|---|---|
+| 1.5 mm² | 22.93 | 19 m | 31 m |
+| 2.5 mm² | 13.76 | 31 m | 52 m |
+| 4 mm² | 8.60 | 50 m | 84 m |
+| 6 mm² | 5.73 | 75 m | 125 m |
+| 10 mm² | 3.44 | 125 m | 209 m |
+| 16 mm² | 2.15 | 201 m | 334 m |
+
+These lengths scale inversely with current: at 32 A each one halves.
+
+## Why datasheet mV/A/m values are higher
+
+From resistivity alone, 2.5 mm² twin cable gives 13.76 mV/A/m. Wiring regulation tables quote about 18 mV/A/m because they assume the conductor is at its 70 °C operating temperature. Correcting the default example by 1 + 0.00393 × 50 = 1.196 raises the drop to **7.90 V (3.44%)**, which now fails a 3% limit. Use the hot value for cables that run near their rated current and the 20 °C value only for lightly loaded runs.
+
+## Checking voltage drop on site
+
+Measure the voltage at the distribution board and at the far end at the same moment, with the load running. If the board reads 230.4 V and the socket reads 223.8 V at 16 A, the drop is 6.6 V and the loop resistance is 6.6 ÷ 16 = **0.412 Ω**, against 0.413 Ω expected for 60 m of 2.5 mm² conductor. A reading well above the calculated value usually points to a loose terminal or a longer route than drawn. A low-resistance ohmmeter on the dead circuit (an R1 + R2 style test) gives the same figure without load.
+
+## Common mistakes
+
+- **Entering the total conductor length.** L is the one-way route length; the factor 2 or √3 already accounts for the return path.
+- **Using 3% from the board instead of from the origin.** The limit usually applies from the supply origin, so the submain drop must be added to the final circuit drop.
+- **Using phase voltage for a three phase run.** With the √3 factor, compare the drop against the line voltage (400 V or 415 V), not 230 V.
+- **Ignoring motor starting current.** A motor drawing 6 times its running current gives 6 times the drop during start, which can stall contactors.
+- **Applying the resistive formula to large cables.** Above about 25 mm² reactance becomes significant and the manufacturer's mV/A/m (r and x) values give a more accurate answer.

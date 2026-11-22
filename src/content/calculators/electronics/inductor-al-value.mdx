@@ -2,10 +2,10 @@
 title: Inductor AL Value Calculator (Turns for Inductance, L = AL·N²)
 description: Calculate the number of turns for a target inductance from a ferrite or powdered-iron core's AL value, or the inductance of a given number of turns.
 category: electronics
-intro: "Core manufacturers specify an A<sub>L</sub> value — the inductance per turn squared — so the inductance of a wound core is simply L = A<sub>L</sub> × N². This inductor AL value calculator finds the turns needed for a target inductance, rounds them up and shows the inductance you actually get. Watch the current too: a ferrite core [saturates above its rated current](https://www.instrumentationblog.in/inductor-saturation-current/)."
+intro: "A core's A<sub>L</sub> value is the inductance of one turn on that core, in nH per turn squared, so a winding of N turns gives L = A<sub>L</sub> × N². This inductor AL value calculator finds the turns needed for a target inductance, rounds them up and shows the inductance you actually get.\n\nPower supply designers, RF hobbyists and students use it when winding chokes, filters and toroids, then check that the core will not [saturate above its rated current](https://www.instrumentationblog.in/inductor-saturation-current/)."
 keywords: [inductor al value calculator, al value turns calculator, ferrite core turns calculator, l = al n2, toroid turns calculator, inductance factor, number of turns for inductance]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-22
 variables:
   - { id: AL, label: Core AL value (nH per turn²), default: 250, min: 0, help: 'Read it from the core datasheet. Values in mH per 1000 turns are the same number.' }
   - { id: L, label: Target inductance, family: inductance, unit: uH, default: 150, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: Yes. 1,000 turns squared is 10⁶, and 10⁶ nH is 1 mH, so an A_L of 250 nH/N² is also 250 mH per 1,000 turns. Some datasheets use µH per 100 turns instead — 250 nH/N² is 2,500 µH per 100 turns.
   - q: Why is my measured inductance different?
     a: A_L tolerance is often ±25% for ungapped ferrite and ±3–10% for gapped cores, and permeability changes with temperature, frequency and DC bias. Measure and adjust the turns if needed.
+  - q: "How do I find the AL value of an unmarked core?"
+    a: "Wind about 10 turns, measure the inductance with an LCR meter and divide by the turns squared. A reading of 24 µH on 10 turns means A<sub>L</sub> = 240 nH/N²."
+  - q: "How much current can my wound inductor carry?"
+    a: "Until the peak flux density B = L × I ÷ (N × A<sub>e</sub>) reaches the core saturation limit. For 156.25 µH on 25 turns and A<sub>e</sub> = 25 mm², a 0.3 T limit allows about 1.20 A peak."
 related: [electronics/resistor-color-code, electronics/air-core-inductor, electronics/inductor-energy, electronics/buck-converter, electronics/resonant-frequency]
 ---
 
@@ -61,3 +65,33 @@ A ferrite core with A<sub>L</sub> = 250 nH/N² and a target of 150 µH:
 - Gapped cores have a lower A<sub>L</sub> but store more energy before saturating — check peak current against the core's saturation flux.
 - Doubling the turns quadruples the inductance; to change L by 10% change the turns by about 5%.
 - For coils without a magnetic core, use the [air core inductor calculator](/electronics/air-core-inductor/).
+
+## Why the rounded winding is never exact
+
+Turns come in whole numbers, so the achievable inductances are steps. On the default 250 nH/N² core, 24 turns give **144 µH** and 25 turns give **156.25 µH**, a step of about 9%. Rounding up keeps you at or above the target, which suits filter chokes where too little inductance means more ripple. If you need a value between steps, change the core, add a gap or accept the nearer value.
+
+## Measuring A<sub>L</sub> yourself
+
+When a core has no marking, wind a test coil and measure it with an LCR meter at a low test level. For example, 10 turns reading **24 µH** give A<sub>L</sub> = 24 µH ÷ 10² = **240 nH/N²**. With that core, 150 µH needs √(150,000 ÷ 240) = **25.00** turns, so 25 turns again. Use at least 10 turns spread evenly around a toroid so that leakage does not inflate the reading, and measure at a frequency close to the one the inductor will see.
+
+## Inductance spread from A<sub>L</sub> tolerance (25 turns, A<sub>L</sub> = 250 nH/N²)
+
+| Core type | Typical A<sub>L</sub> tolerance | Lowest L | Highest L |
+|---|---|---|---|
+| Ungapped ferrite | ±25% | 117.2 µH | 195.3 µH |
+| Typical ferrite toroid | ±20% | 125.0 µH | 187.5 µH |
+| Powdered iron | ±10% | 140.6 µH | 171.9 µH |
+| Gapped ferrite | ±5% | 148.4 µH | 164.1 µH |
+| Precision gapped core | ±3% | 151.6 µH | 160.9 µH |
+
+## Checking for saturation
+
+The peak flux density is B = L × I ÷ (N × A<sub>e</sub>), where A<sub>e</sub> is the core's effective area. For the 25 turn, 156.25 µH winding on a core with A<sub>e</sub> = 25 mm² carrying 1 A peak, B = **0.250 T**. Power ferrite saturates near 0.3 T when hot, so this winding can only carry about **1.20 A** before the inductance collapses. Use a larger core, a gapped core or fewer turns on a higher A<sub>L</sub> core if the peak current is higher.
+
+## Common mistakes
+
+- **Mixing up the A<sub>L</sub> units.** A value of 250 in µH per 100 turns is only 25 nH/N², which needs about 3.2 times as many turns.
+- **Counting turns wrongly on a toroid.** Each pass of the wire through the centre hole is one turn; the wire lying along the outside does not count again.
+- **Using A<sub>L</sub> under DC bias.** The datasheet value is measured at near zero current; powdered iron and ungapped ferrite lose a large part of it as DC current rises, so check the permeability versus bias curve.
+- **Taking A<sub>L</sub> from the wrong material grade.** The same core shape is sold in several ferrite mixes whose A<sub>L</sub> values differ by a factor of five or more.
+- **Rounding the turns down.** That leaves the inductance below target, and the tolerance can then push it far lower.

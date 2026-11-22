@@ -5,7 +5,7 @@ category: electronics
 intro: "A Zener diode with a series resistor is the simplest voltage regulator: the Zener holds a fixed voltage while the resistor drops the rest and limits current. This Zener diode resistor calculator sizes that resistor and checks the power in both parts.\n\nElectronics hobbyists, students and circuit designers use it for references, clamps and small supplies. For the device itself, see [what a Zener diode is](https://www.instrumentationblog.in/what-is-a-zener-diode/)."
 keywords: [zener diode resistor calculator, zener regulator calculator, zener series resistor, zener diode calculation, zener power dissipation, shunt regulator]
 published: 2026-10-28
-updated: 2026-11-16
+updated: 2026-11-22
 variables:
   - { id: Vin, label: Minimum input voltage, family: voltage, unit: V, default: 12, min: 0 }
   - { id: Vz, label: Zener voltage, family: voltage, unit: V, default: 5.1, min: 0 }
@@ -31,6 +31,8 @@ faq:
     a: "At least twice the no-load Zener power at the highest input voltage. In the example, 130 mW at 12 V rises to 168 mW at 14 V, so a 0.5 W Zener is suitable and a 0.25 W part is not."
   - q: "Can I connect two Zener diodes in series?"
     a: "Yes, two Zeners in series give the sum of their voltages and share the power, for example 5.1 V plus 6.8 V for 11.9 V. Do not connect Zeners in parallel to share current, because the one with the lower voltage takes nearly all of it."
+  - q: "How much does the output of a Zener regulator change with load?"
+    a: "About the load current change times the Zener dynamic resistance in parallel with the series resistor. With 270 Ω and r<sub>z</sub> = 10 Ω, going from no load to 20 mA lowers a 5.1 V output by roughly 193 mV."
 related: [electronics/led-resistor, electronics/voltage-divider, physics/ohms-law, electronics/transistor-base-resistor]
 ---
 
@@ -85,6 +87,24 @@ Load 20 mA and minimum Zener current 5 mA, with the standard value rounded down 
 ## Design for the highest input voltage too
 
 The resistor is sized at the lowest input voltage, but the Zener dissipates the most at the highest input with no load. If the 12 V supply in the example can rise to 14 V, the 270 Ω resistor passes 33.0 mA, the unloaded Zener dissipates **168 mW** and the resistor **293 mW**. Always check the power at the maximum input, and derate the Zener above 25 °C ambient as its datasheet shows (often about 4 mW per °C for a 0.5 W glass part).
+
+## How much the output really moves
+
+A Zener is not a perfect voltage source: above its knee it behaves like the rated voltage in series with a small dynamic resistance r<sub>z</sub>. With the 270 Ω resistor from the example and a typical r<sub>z</sub> of 10 Ω:
+
+- **Load regulation:** when the load goes from 0 to 20 mA, the output falls by about I<sub>L</sub> × (r<sub>z</sub> ∥ R) = 20 mA × 9.64 Ω = **193 mV**
+- **Line regulation:** a change in input appears at the output scaled by r<sub>z</sub> ÷ (R + r<sub>z</sub>) = **3.6%**, so a 2 V rise in supply lifts the output by about **71 mV**
+
+| Dynamic resistance r<sub>z</sub> | Output drop, 0 to 20 mA load | Line regulation | Output rise for +2 V input |
+|---|---|---|---|
+| 5 Ω | 98 mV | 1.8% | 36 mV |
+| 10 Ω | 193 mV | 3.6% | 71 mV |
+| 20 Ω | 372 mV | 6.9% | 138 mV |
+| 30 Ω | 540 mV | 10.0% | 200 mV |
+
+Read r<sub>z</sub> (often written Z<sub>ZT</sub>) from the datasheet at the test current; it rises sharply near the knee, so a starved Zener regulates far worse than these figures. To measure it, set two Zener currents such as 5 mA and 15 mA with a bench supply and divide the change in Zener voltage by the change in current.
+
+If 0.2 V of load regulation is too much, buffer the Zener with an NPN emitter follower. The Zener then only supplies the base current, about 0.2 mA for a gain of 100, so the series resistor rises to roughly 1327 Ω and the load change seen by the Zener falls to about 2 mV, at the cost of the transistor's 0.6 to 0.7 V base emitter drop.
 
 ## Practical notes
 

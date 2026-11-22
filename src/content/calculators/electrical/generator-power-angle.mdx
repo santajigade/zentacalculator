@@ -2,10 +2,10 @@
 title: Generator Power Angle Calculator (P = EV sin δ / Xs)
 description: Calculate the active and reactive power of a synchronous generator from its internal EMF, terminal voltage, synchronous reactance and load angle δ.
 category: electrical
-intro: "The power a synchronous generator delivers to the grid depends on the angle δ between its internal EMF and the terminal voltage, while its excitation decides the reactive power. This generator power angle calculator gives the active power, the steady-state stability limit and the reactive power for a round-rotor machine — see how the [excitation system and AVR](https://www.instrumentationblog.in/generator-excitation-system-avr/) control the EMF."
+intro: "A synchronous generator's real power output depends on the load angle δ between its internal EMF and the bus voltage, while its field current sets the reactive power. This generator power angle calculator gives the three-phase active power, the steady-state pull-out limit and the reactive power of a round-rotor machine.\n\nPower plant and protection engineers use it to judge stability margins and to see how the [excitation system and AVR](https://www.instrumentationblog.in/generator-excitation-system-avr/) change MVAr output."
 keywords: [generator power angle calculator, power angle equation, load angle calculator, p = ev sin delta / x, synchronous generator power, steady state stability limit, torque angle calculator]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-22
 variables:
   - { id: E, label: Internal EMF E (line-to-line), family: voltage, unit: kV, default: 12, min: 0 }
   - { id: V, label: Terminal / bus voltage (line-to-line), family: voltage, unit: kV, default: 11, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: Q = (E V cos δ − V²) ÷ X_s. Raising the field current raises E and the generator exports more reactive power (over-excited, lagging PF); weakening it makes the machine absorb reactive power.
   - q: Does this apply to salient-pole machines?
     a: Only approximately. Salient-pole generators add a reluctance term, V² (1/X_q − 1/X_d) sin 2δ ÷ 2, which this calculator does not include.
+  - q: "How do I find the load angle for a given generator output?"
+    a: "Use δ = arcsin(P × X_s ÷ (E × V)). For 9 MW from the default machine (E = 12 kV, V = 11 kV, X_s = 10 Ω), δ is about 43°."
+  - q: "What happens to the load angle when excitation is reduced?"
+    a: "At constant power the angle increases because a smaller E must deliver the same E V sin δ. The pull-out limit falls at the same time, so a weakly excited machine is closer to losing synchronism."
 related: [electrical/generator-frequency, electrical/generator-size, electrical/per-unit, electrical/kva-to-kw]
 ---
 
@@ -68,3 +72,38 @@ Same machine (E = 12 kV, V = 11 kV, X<sub>s</sub> = 10 Ω):
 - Armature resistance is neglected — typically less than 1% of X<sub>s</sub> for large machines.
 - In per-unit, P = E V sin δ ÷ X<sub>s</sub> with E, V and X<sub>s</sub> in pu; see the [per-unit calculator](/electrical/per-unit/).
 - During a fault the transient reactance X′<sub>d</sub> replaces X<sub>s</sub> in transient-stability studies.
+
+## Finding the load angle for a set output
+
+Run the equation backwards to see how hard the machine is working. For the default generator to deliver 9 MW:
+
+- sin δ = 9 ÷ 13.2 = 0.6818, so δ = **43.0°**
+- Q = (12,000 × 11,000 × cos 43.0° − 11,000²) ÷ 10 = **-2.44 MVAr**
+
+At this point the machine is absorbing reactive power, because 12 kV of EMF is no longer enough to export MVAr at that angle. The operator would raise the excitation, which lowers δ and restores a lagging power factor.
+
+## Raising excitation at constant power
+
+Holding the default 4.515 MW output while the AVR changes the EMF:
+
+| Internal EMF E | Load angle δ | Pull-out power | Reactive power |
+|---|---|---|---|
+| 10 kV | 24.2° | 11.00 MW | -2.07 MVAr |
+| 11 kV | 21.9° | 12.10 MW | -0.87 MVAr |
+| 12 kV | 20.0° | 13.20 MW | +0.30 MVAr |
+| 13 kV | 18.4° | 14.30 MW | +1.47 MVAr |
+| 14 kV | 17.0° | 15.40 MW | +2.62 MVAr |
+
+Higher excitation gives a smaller load angle and a larger pull-out power, so an over-excited machine is more stable. Running under-excited to absorb MVAr pushes δ up and erodes the margin, which is why under-excitation limiters exist.
+
+## In practice
+
+The synchronous reactance of 10 Ω is 0.826 pu on a 10 MVA, 11 kV base, typical of a round-rotor machine. The angle itself is rarely measured directly; the AVR, the capability chart and the pole-slip relay work from terminal voltage, current and power. A power system stabiliser adds damping so that δ does not swing after a disturbance. Real machines also have a step-up transformer and line reactance between them and the grid, which add to X<sub>s</sub> and lower the pull-out power.
+
+## Common mistakes
+
+- **Using phase voltages without multiplying by 3.** With E and V entered as 6.93 kV and 6.35 kV the formula gives 1.505 MW, one third of the real 4.515 MW.
+- **Leaving a spreadsheet in radians.** SIN(20) in Excel treats 20 as radians and returns 12.05 MW; use SIN(RADIANS(20)).
+- **Using sub-transient reactance for steady state.** X″<sub>d</sub> is for fault currents; steady-state power uses X<sub>s</sub>, and transient stability uses X′<sub>d</sub>.
+- **Treating P<sub>max</sub> as an operating point.** At 90° any small disturbance causes pole slipping; continuous operation stays well below it.
+- **Reading E from the terminals under load.** E is the open-circuit voltage for the present field current, not the measured terminal voltage.

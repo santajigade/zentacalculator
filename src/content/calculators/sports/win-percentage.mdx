@@ -1,11 +1,11 @@
 ---
-title: Win Percentage Calculator
-description: Calculate a team's or player's win percentage from wins, losses and ties.
+title: "Win Percentage Calculator: Wins, Losses and Ties"
+description: "Win percentage calculator for teams and players: enter wins, losses and ties to get the winning percentage and win to loss ratio, with a worked example."
 category: sports
-intro: "Win percentage shows the share of games a team or player has won, with draws counted as half a win in many sports."
+intro: "Win percentage is the share of games won, with a tie usually counted as half a win and half a loss. This win percentage calculator turns a record of wins, losses and ties into a winning percentage and a win to loss ratio.\n\nCoaches, league organisers, fantasy players and fans use it to rank teams with different numbers of games played, track a season and work out the wins still needed."
 keywords: [win percentage, winning percentage, win loss ratio, team record, standings]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - { id: w, label: Wins, default: 42, min: 0 }
   - { id: l, label: Losses, default: 28, min: 0 }
@@ -20,26 +20,38 @@ faq:
     a: Wins (plus half of ties) divided by games played. US sports often show it as a decimal such as .583.
   - q: How are ties counted?
     a: Usually as half a win and half a loss, as here. Some leagues ignore ties — check your league's rules.
-  - q: How many wins do I need for a target percentage?
-    a: Press × on Wins and type the target percentage.
-  - q: "How do I calculate win percentage?"
-    a: "Wins ÷ total games × 100. With ties counted as half, (wins + ties ÷ 2) ÷ games."
+  - q: "How many wins do I need for a target percentage?"
+    a: "Multiply the target by the total games, subtract the wins (plus half the ties) you already have and round up. A 42-28-2 team needs 7 wins from its last 10 games to finish an 82-game season at .600. You can also press × on Wins and type the target percentage."
+  - q: "Is win percentage the same as win to loss ratio?"
+    a: "No. Win percentage divides wins by all games played, while the win to loss ratio divides wins by losses. A 42-28-2 record is 59.7% but has a ratio of 1.50."
   - q: "What is a .500 record?"
     a: "Winning exactly half your games."
+  - q: "Do overtime losses count as losses in win percentage?"
+    a: "In a plain win percentage, yes: an overtime loss is a loss. Ice hockey leagues give a point for an overtime loss and rank teams by points percentage, which is points divided by twice the games played."
 related: [sports/football-points, math/percentage]
 ---
 
 ## How to use the win percentage calculator
 
-Enter **wins**, **losses** and **ties**. Win percentage and win–loss ratio are calculated.
+Enter **wins**, **losses** and **ties**. The calculator returns the win percentage, with each tie counted as half a win, and the win to loss ratio (wins divided by losses).
 
 ## Win percentage formula
 
 <p class="formula">Win % = (W + T/2) ÷ (W + L + T)</p>
 
-## Example
+## Worked example
 
-42 wins, 28 losses, 2 ties: (42 + 1) ÷ 72 = **59.7%** (.597).
+A team has a record of 42-28-2 (wins, losses, ties):
+
+- Games played = 42 + 28 + 2 = **72**
+- Win % = (42 + 2 ÷ 2) ÷ 72 = 43 ÷ 72 = **59.7%**, written as **.597** in US standings
+- Win to loss ratio = 42 ÷ 28 = **1.50**
+
+If the league ignored ties, the same record would give 42 ÷ 70 = .600 (60.0%), so always check which rule a table uses.
+
+### Wins needed for a target
+
+With 10 games left in an 82-game season, finishing at .600 needs 0.600 × 82 = 49.2 win points. The team already has 43, so it needs 6.2 more, which means **7 wins** from the last 10 games (assuming no more ties).
 
 ## Win percentage benchmarks
 
@@ -67,3 +79,34 @@ In standings, “games behind” compares two teams:
 ## Pythagorean expectation
 
 In baseball and other sports, expected win % can be estimated from points scored (S) and allowed (A): S² ÷ (S² + A²). Teams winning more than expected may have been lucky in close games.
+
+## Ties counted as half or ignored
+
+The rule for ties matters most when a record has many of them. Both versions for some example records:
+
+| Record (W-L-T) | Games | Ties as half a win | Ties ignored |
+|---|---|---|---|
+| 10-6-0 | 16 | .625 (62.5%) | .625 (62.5%) |
+| 9-6-1 | 16 | .594 (59.4%) | .600 (60.0%) |
+| 8-5-3 | 16 | .594 (59.4%) | .615 (61.5%) |
+| 42-28-2 | 72 | .597 (59.7%) | .600 (60.0%) |
+| 12-3-2 | 17 | .765 (76.5%) | .800 (80.0%) |
+| 25-25-4 | 54 | .500 (50.0%) | .500 (50.0%) |
+
+The NFL has counted ties as half a win since 1972, and most school and college standings do the same. Records without ties give the same answer either way.
+
+## Games behind example
+
+If the division leader is 50-22 and this team is 42-28, the team is ((50 - 42) + (28 - 22)) ÷ 2 = **7 games behind**. Games behind and win percentage can disagree when teams have played different numbers of games, which is why final standings are ranked by win percentage.
+
+## Pythagorean expectation example
+
+A baseball team that scores 750 runs and allows 650 has an expected win percentage of 750² ÷ (750² + 650²) = **.571**, or about 93 wins over 162 games. Using the refined exponent of 1.83 gives .565 (about 92 wins). A team far above its expected record has usually won an unusual share of close games, and tends to drift back towards the expectation.
+
+## Common mistakes
+
+- **Dividing wins by losses.** 42 ÷ 28 = 1.50 is the win to loss ratio, not the win percentage of 59.7%.
+- **Mixing up the decimal and the percentage.** A record of .597 means 59.7%, not 0.597%.
+- **Ranking early season tables by wins.** A 6-2 team (75%) is ahead of an 8-4 team (66.7%) even though it has fewer wins.
+- **Treating overtime losses as ties.** Ice hockey leagues award a point for an overtime loss and rank by points percentage (points ÷ twice the games played) instead.
+- **Applying the wrong tie rule.** Some competitions ignore ties or use league points, so copy the rule from the league before comparing.

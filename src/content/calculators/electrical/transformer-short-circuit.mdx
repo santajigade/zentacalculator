@@ -2,10 +2,10 @@
 title: Transformer Short-Circuit Current Calculator
 description: Estimate the maximum fault current on a transformer secondary from kVA, voltage and percentage impedance (infinite-bus method).
 category: electrical
-intro: "The impedance of a transformer limits how much current can flow when a fault occurs on its secondary. Knowing the maximum fault current is essential for choosing breakers with enough breaking capacity — see this guide to [short circuit current calculation](https://www.instrumentationblog.in/short-circuit-current-calculation/). This free transformer short-circuit current calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A transformer's own impedance is the main thing that limits current when a fault strikes its secondary terminals. This transformer short-circuit current calculator takes the kVA rating, secondary voltage and nameplate impedance and returns the full-load current, the symmetrical three-phase fault current and the fault level in MVA.\n\nElectrical designers use it to pick breaker breaking capacity, busbar ratings and cable withstand, as explained in this guide to [short circuit current calculation](https://www.instrumentationblog.in/short-circuit-current-calculation/)."
 keywords: [transformer short circuit current, fault current calculator, transformer impedance, percent impedance, fault level, breaking capacity, short circuit mva]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 variables:
   - { id: S, label: Transformer rating, suffix: kVA, default: 1000, min: 0 }
   - { id: V, label: Secondary line voltage, family: voltage, unit: V, default: 415, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: On the transformer nameplate, usually 4–6% for distribution transformers and higher for large units.
   - q: Why does fault current matter?
     a: Breakers and switchgear must have a breaking capacity higher than the prospective fault current, and cables must withstand it until protection operates.
+  - q: "How does the upstream grid fault level change transformer fault current?"
+    a: "Convert the grid fault level to an impedance on the transformer base (kVA ÷ 1,000 ÷ grid MVA) and add it to Z%. For 1,000 kVA, 5% and a 250 MVA grid, the total is 5.40% and the fault current drops from 27.8 kA to 25.8 kA."
+  - q: "What is the peak short-circuit current of a transformer fault?"
+    a: "Multiply the RMS fault current by κ × √2, where κ depends on the X/R ratio. With X/R = 5, κ is 1.56, so a 27.8 kA fault peaks at about 61 kA in the first half cycle."
 related: [electrical/transformer-current, electrical/kva-to-kw, electrical/cable-voltage-drop, electrical/kw-to-amps]
 ---
 
@@ -69,3 +73,42 @@ Select LV breakers with a rated short-circuit breaking capacity (Icu/Ics) above 
 ## Beyond this estimate
 
 A full short-circuit study (IEC 60909) includes source impedance, motor contribution, cable impedance and X/R ratios. Use this calculator for quick, conservative checks.
+
+## Worked example with a real upstream supply
+
+For the default 1,000 kVA, 415 V, 5% transformer:
+
+- I<sub>FL</sub> = 1,000,000 ÷ (√3 × 415) = **1,391.2 A**
+- I<sub>sc</sub> = 1,391.2 ÷ 0.05 = **27.82 kA**, a fault level of **20 MVA**
+
+That assumes the 11 kV network behind the transformer has no impedance. If the utility quotes a fault level of 250 MVA at the primary, its impedance on the 1 MVA transformer base is 1 ÷ 250 = 0.40%. Adding it to the transformer gives 5.40% and the fault current falls to **25.8 kA**, only about 7% lower. For LV switchgear selection the infinite bus figure is therefore a sensible, slightly conservative number.
+
+## Effect of the upstream fault level
+
+1,000 kVA, 415 V, 5% transformer:
+
+| Source fault level | Source impedance (on 1 MVA) | Total impedance | Fault current |
+|---|---|---|---|
+| Infinite bus | 0.00% | 5.00% | 27.8 kA |
+| 1,000 MVA | 0.10% | 5.10% | 27.3 kA |
+| 500 MVA | 0.20% | 5.20% | 26.8 kA |
+| 250 MVA | 0.40% | 5.40% | 25.8 kA |
+| 100 MVA | 1.00% | 6.00% | 23.2 kA |
+
+The stronger the grid, the closer the result gets to the simple formula. Weak rural supplies matter more for small transformers on long overhead lines.
+
+## Peak current and making capacity
+
+The calculator gives the symmetrical RMS current. The first peak is higher because of the DC offset. IEC 60909 gives i<sub>p</sub> = κ × √2 × I<sub>k</sub> with κ = 1.02 + 0.98 e<sup>−3R/X</sup>. With X/R = 5, κ = 1.558 and the peak is **61.3 kA**. Breakers are rated for this through their making capacity I<sub>cm</sub>, and busbar supports must withstand the force it produces.
+
+## Where the impedance figure comes from
+
+Percentage impedance is measured in the factory short-circuit test: the secondary is shorted and the primary voltage is raised until rated current flows. On an 11 kV primary a 5% unit reaches full-load current at about **550 V**. That voltage as a percentage of rated voltage is Z%, which is why a lower Z% always means a higher fault current.
+
+## Common mistakes
+
+- **Ignoring the impedance tolerance.** IEC 60076-1 allows the measured impedance to be 10% below the declared value. At 4.5% the default transformer gives **30.9 kA**, which can push a 30 kA rated board over its limit.
+- **Forgetting parallel transformers.** Two 1,000 kVA, 5% units on one busbar give about **55.6 kA**, so the switchboard must be rated for the combined value.
+- **Leaving out motor contribution.** Running induction motors feed the fault for the first few cycles, often taken as about 4 times their combined full-load current.
+- **Comparing RMS current with a peak rating.** I<sub>cu</sub> and I<sub>cs</sub> are RMS values; I<sub>cm</sub> is a peak value and must be checked against i<sub>p</sub>.
+- **Entering phase voltage.** Use the line voltage (415 V, not 240 V); phase voltage overstates the current by √3.

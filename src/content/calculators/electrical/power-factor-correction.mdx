@@ -2,10 +2,10 @@
 title: Power Factor Correction Calculator (Capacitor kVAr)
 description: Calculate the capacitor bank kVAr and capacitance needed to raise power factor from its present value to a target — with current reduction.
 category: electrical
-intro: "Inductive loads such as motors draw reactive current that loads up cables and transformers without doing useful work. Adding capacitors supplies that reactive power locally, raising power factor and cutting your kVA demand. Learn [how to calculate capacitor bank kVAr](https://www.instrumentationblog.in/how-to-calculate-capacitor-bank-kvar-formula/) and the basics of [capacitor bank sizing for power factor correction](https://www.instrumentationblog.in/capacitor-bank-sizing-power-factor-correction/)."
+intro: "Motors and other inductive loads draw reactive current that loads cables and transformers without doing useful work. This power factor correction calculator finds the capacitor kVAr and capacitance needed to raise power factor to a target, using the method in [how to calculate capacitor bank kVAr](https://www.instrumentationblog.in/how-to-calculate-capacitor-bank-kvar-formula/).\n\nPlant electrical engineers and panel builders use it to size fixed banks and APFC panels, cut kVA demand charges and avoid low power factor penalties, following [capacitor bank sizing for power factor correction](https://www.instrumentationblog.in/capacitor-bank-sizing-power-factor-correction/)."
 keywords: [power factor correction calculator, capacitor bank kvar calculation, kvar required, apfc panel sizing, improve power factor, capacitor size for power factor, kvar formula]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 featured: true
 variables:
   - { id: P, label: Active load power, family: power, unit: kW, imperialUnit: hp, default: 100, min: 0 }
@@ -33,6 +33,10 @@ faq:
     a: The capacitor supplies the reactive current locally, so the supply only carries the active part plus less reactive current. Current falls in proportion to PF₁ ÷ PF₂.
   - q: Do I need detuned capacitors?
     a: Where drives and other non-linear loads create harmonics, use detuned (reactor-protected) banks — typically 7% detuning — to avoid harmonic resonance.
+  - q: "How do I find my power factor from the electricity bill?"
+    a: "Use kWh ÷ √(kWh² + kVArh²) for the billing period. For 42,000 kWh and 37,000 kVArh the average power factor is about 0.75."
+  - q: "Does a 440 V capacitor give its full kVAr on a 415 V supply?"
+    a: "No. kVAr varies with the square of voltage, so a 50 kVAr, 440 V unit gives about 44.5 kVAr at 415 V. Allow for this when choosing the bank size."
 related: [electrical/braking-resistor, electrical/generator-size, electrical/kva-to-kw, electrical/three-phase-motor-power, electrical/thd, electrical/transformer-current]
 ---
 
@@ -87,3 +91,27 @@ Multiply the factor by the load kW to get the kVAr required.
 ## Harmonics
 
 Capacitors lower the system's resonant frequency. With VFDs, UPSs and other non-linear loads, check harmonic levels with the [THD calculator](/electrical/thd/) and use detuned reactors where needed.
+
+## Current and loss savings in the example
+
+At 415 V the default 100 kW load draws 185.5 A at PF 0.75 and **146.4 A** at PF 0.95. Cable and transformer copper losses scale with current squared, so they fall by 1 − (0.75 ÷ 0.95)² = **37.7%**, even though the current itself falls by only 21%. The capacitance per phase for a delta bank is 340.8 µF.
+
+## Finding the present power factor
+
+The best source is the electricity bill or the main incomer meter. Average power factor over a month is kWh ÷ √(kWh² + kVArh²). With 42,000 kWh and 37,000 kVArh that is **0.750**, the default value used here. For kW, take the average demand during working hours rather than the peak, because the bank is sized for the usual operating point.
+
+## Capacitor voltage rating
+
+Capacitor kVAr is quoted at the rated voltage and varies with voltage squared. A 50 kVAr unit rated at 440 V delivers only 50 × (415 ÷ 440)² = **44.5 kVAr** on a 415 V system. To get the 55.3 kVAr calculated here from 440 V units, the total nameplate must be about **62.2 kVAr**. In a detuned bank with 7% reactors the capacitor voltage rises to 415 ÷ (1 − 0.07) = 446 V, so 480 V or higher rated capacitors are used.
+
+## Splitting the bank into APFC steps
+
+An automatic panel switches steps to follow the load. For the 62 kVAr nameplate found above, a five-step panel of 5 + 10 + 15 + 15 + 20 = 65 kVAr gives 5 kVAr resolution, fine enough for the relay to hold the target without hunting as machines start and stop. The controller needs a CT on one phase of the incomer, upstream of the capacitor connection, and a voltage reference from the other two phases.
+
+## Common mistakes
+
+- **Leaving a fixed bank on at light load.** If the load drops to 30 kW at PF 0.75 with the full 55.3 kVAr connected, net reactive power is -28.9 kVAr and the power factor becomes 0.72 leading, which raises voltage and can be penalised.
+- **Ignoring the voltage derating.** Using 440 V capacitors on 415 V without allowing for the 11% kVAr loss leaves the bank short.
+- **Fitting plain capacitors where drives and UPSs create harmonics.** They can resonate near the 5th or 7th harmonic and fail; use detuned banks.
+- **Connecting capacitors to a VFD output.** The switching waveform destroys them and can trip the drive; correct on the supply side only.
+- **Placing the APFC CT downstream of the bank.** The relay then never sees the correction and keeps switching steps in.

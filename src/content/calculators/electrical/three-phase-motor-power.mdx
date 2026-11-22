@@ -2,10 +2,10 @@
 title: Three-Phase Motor Power & Current Calculator
 description: Calculate input power, output power and full-load current of a three-phase motor from voltage, power factor and efficiency.
 category: electrical
-intro: "A motor's nameplate kW is its shaft output, but the supply must also cover losses and reactive current. That is why the current drawn is higher than kW alone suggests. See how to work out [motor full-load current (FLC)](https://www.instrumentationblog.in/motor-full-load-current-flc/) and [how to calculate three-phase power](https://www.instrumentationblog.in/how-to-calculate-three-phase-power/). This free three-phase motor power & current calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A motor nameplate gives shaft output in kW, but the supply also has to cover the motor's losses and its reactive current, so the line current is higher than the kW figure suggests. This three-phase motor power calculator links line voltage, current, power factor and efficiency to input and output power.\n\nElectricians, maintenance engineers and panel designers use it to estimate [motor full-load current (FLC)](https://www.instrumentationblog.in/motor-full-load-current-flc/) for cables and protection, or to judge how loaded a running motor is."
 keywords: [three phase power, motor current, motor kw, full load current, 3 phase calculation, power factor, motor amps]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-22
 featured: true
 variables:
   - { id: V, label: Line voltage, family: voltage, unit: V, default: 415, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: "About 14 A, assuming 0.85 power factor and 88–90% efficiency."
   - q: "Why is √3 used in three-phase power?"
     a: "Because line voltage is √3 times phase voltage in a balanced three-phase system."
+  - q: "How do I estimate how much load a running motor has?"
+    a: "Measure line current and power factor, work out P = √3 × V × I × pf, then multiply by efficiency. At 415 V, 14.2 A and pf 0.78 give about 8.0 kW input and 7.2 kW at the shaft for this 11 kW motor."
+  - q: "Does a higher efficiency motor draw noticeably less current?"
+    a: "Only slightly. For 11 kW at 415 V and pf 0.85, IE1 draws about 20.6 A and IE3 about 19.7 A. The real gain is lower losses, around 3,132 kWh over 6,000 running hours."
 related: [engineering/torque-power-speed, electrical/cable-voltage-drop, physics/ohms-law]
 ---
 
@@ -101,3 +105,40 @@ Motors draw reactive power that does no useful work but loads cables and transfo
 - **Starting current** of a direct-on-line motor is typically **6–8×** full-load current.
 - **Cable sizing** must account for both current and length — check with the [cable voltage drop calculator](/electrical/cable-voltage-drop/).
 - For single-phase, use P = V × I × cos φ instead.
+
+## Apparent and reactive power for the default motor
+
+For the 11 kW, 415 V motor at full load the calculator gives P<sub>in</sub> = **12.22 kW** and I = **20.00 A**. The same figures give:
+
+- Apparent power S = √3 × 415 × 20.00 = **14.38 kVA**
+- Reactive power Q = √(14.38² − 12.22²) = **7.57 kVAr**
+- Losses inside the motor = 12.22 − 11 = **1.22 kW**, all turned into heat
+
+The kVA figure is what a generator or transformer must supply, and the kVAr figure is what a capacitor bank would have to cancel to bring the power factor to unity.
+
+## Estimating load from a measured current
+
+Leave P<sub>out</sub> blank and enter a measured current instead. If a clamp meter reads **14.2 A** and a power analyser shows a power factor of **0.78**, the input power is √3 × 415 × 14.2 × 0.78 = **7.96 kW** and the shaft output is about **7.17 kW**, roughly 65% of rating. Enter the measured power factor rather than the nameplate value, because at part load the power factor falls a lot while current falls only a little. Judging load from current alone with the full-load pf would overstate it.
+
+## Efficiency class and current for an 11 kW, 4-pole motor
+
+| Class (IEC 60034-30-1) | Efficiency | Input power | Current at pf 0.85 | Losses | Losses over 6,000 h |
+|---|---|---|---|---|---|
+| IE1 | 87.6% | 12.56 kW | 20.6 A | 1.56 kW | 9,342 kWh |
+| IE2 | 89.8% | 12.25 kW | 20.0 A | 1.25 kW | 7,497 kWh |
+| IE3 | 91.4% | 12.04 kW | 19.7 A | 1.04 kW | 6,210 kWh |
+| IE4 | 93.3% | 11.79 kW | 19.3 A | 0.79 kW | 4,740 kWh |
+
+Changing an IE1 motor for IE3 on a 6,000 h duty saves about **3,132 kWh** a year. The current changes by well under 1 A from one class to the next, so efficiency upgrades rarely change cable or breaker sizes.
+
+## Measuring motor power on site
+
+A clamp meter on one phase gives current only; to get kW you need voltage and power factor as well, which a three-phase power analyser measures directly on all three phases. Check that the three phase currents agree within a few percent: a larger imbalance usually means unbalanced supply voltages, which heat the motor far more than the current difference suggests. For hp ratings, 11 kW is about 14.8 hp (1 hp = 0.7457 kW).
+
+## Common mistakes
+
+- **Using phase voltage in the √3 formula.** V is the line-to-line voltage (415 V), not the 240 V phase voltage; using 240 V overstates current by √3.
+- **Forgetting efficiency.** Dividing 11 kW by √3 × V × pf alone gives 18.0 A, about 10% low, because the shaft kW is not the electrical input.
+- **Taking full-load pf for a lightly loaded motor.** A motor at 40% load may run at pf 0.6, so current based estimates of kW must use the measured pf.
+- **Sizing protection on FLC alone.** Direct-on-line starting at 6 to 8 times FLC must ride through the breaker curve without tripping.
+- **Reading the hp value as input power.** Nameplate hp, like kW, is shaft output on IEC and NEMA motors.

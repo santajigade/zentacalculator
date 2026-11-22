@@ -2,10 +2,10 @@
 title: Earth Fault Loop Impedance Calculator (Zs)
 description: Calculate prospective earth fault current from loop impedance Zs, or the maximum Zs for an MCB to trip within 0.4 s — for TN systems.
 category: electrical
-intro: "For an MCB or fuse to disconnect an earth fault quickly, the earth fault loop impedance (Zs) must be low enough to let a large fault current flow. Testing Zs is part of every installation inspection — see [earth fault loop impedance (Zs) testing](https://www.instrumentationblog.in/earth-fault-loop-impedance-zs-testing/). This earth fault loop impedance calculator gives the fault current and the maximum Zs for common MCBs."
+intro: "Earth fault loop impedance (Zs) is the total resistance of the path a fault current follows from the supply, through the line conductor and back along the protective conductor. This earth fault loop impedance calculator gives Zs, the prospective fault current and the maximum Zs that lets an MCB trip instantly.\n\nElectricians and inspectors use it to check circuits before testing, as described in [earth fault loop impedance (Zs) testing](https://www.instrumentationblog.in/earth-fault-loop-impedance-zs-testing/), and designers use it to set cable lengths."
 keywords: [earth fault loop impedance calculator, zs calculator, maximum zs mcb, prospective fault current, earth loop impedance, disconnection time, ze r1 r2]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-22
 variables:
   - { id: U0, label: Nominal voltage to earth (U0), family: voltage, unit: V, default: 230, min: 0 }
   - { id: Ze, label: External loop impedance (Ze), family: resistance, unit: ohm, default: 0.35, min: 0 }
@@ -36,6 +36,10 @@ faq:
     a: Tests are done at ambient temperature, but conductors run hotter in service with higher resistance. Measured Zs should be at most about 80% of the tabulated maximum.
   - q: What are typical Ze values?
     a: In the UK, typical maximums are 0.8 Ω for TN-S and 0.35 Ω for TN-C-S (PME) supplies.
+  - q: "How long can a 32 A Type B radial circuit in 2.5 mm² cable be?"
+    a: "With Ze = 0.35 Ω and conductors corrected to 70 °C, the Zs limit of 1.37 Ω allows about 43 m of 2.5/1.5 mm² cable. Voltage drop usually becomes the limit first."
+  - q: "Why can a measured Zs be lower than Ze plus R1 + R2?"
+    a: "Parallel earth paths such as bonded water and gas pipes or structural steel share the fault current and lower the reading. The design value should still be based on the cable alone, because those paths are not guaranteed."
 related: [electrical/transformer-current, electrical/earth-conductor-size, electrical/earthing-resistance, electrical/transformer-short-circuit, electrical/wire-resistance]
 ---
 
@@ -76,3 +80,40 @@ For measured values at room temperature, compare against about 80% of these figu
 ## Measuring R1 + R2
 
 Link line and protective conductor at the distribution board and measure between them at each outlet with a low-resistance ohmmeter. Copper 2.5/1.5 mm² cable has about 19.5 mΩ/m for R1 + R2 at 20 °C.
+
+## Worked example with the default inputs
+
+A 32 A Type B radial circuit on a PME supply with Z<sub>e</sub> = 0.35 Ω and R<sub>1</sub> + R<sub>2</sub> = 0.4 Ω:
+
+- Z<sub>s</sub> = 0.35 + 0.4 = **0.75 Ω**
+- I<sub>f</sub> = 0.95 × 230 ÷ 0.75 = **291.3 A**
+- Z<sub>s,max</sub> = 0.95 × 230 ÷ (5 × 32) = **1.3656 Ω**, so the margin is **0.6156 Ω** and the MCB trips instantly
+
+In 2.5/1.5 mm² twin and earth (19.51 mΩ/m at 20 °C), 0.4 Ω is about 20.5 m of cable. At its 70 °C operating temperature the conductors are about 20% more resistive, so R<sub>1</sub> + R<sub>2</sub> becomes 0.48 Ω and Z<sub>s</sub> 0.83 Ω, still inside the limit. A measured cold reading should be no more than 80% of 1.366 Ω, that is **1.09 Ω**, and 0.75 Ω passes.
+
+The same circuit on a 32 A **Type C** breaker fails: its limit is 0.683 Ω, so 291 A would not reach the 320 A needed for instantaneous tripping.
+
+## Maximum circuit length for a 32 A MCB
+
+Z<sub>e</sub> = 0.35 Ω, copper conductors corrected to 70 °C, 0.4 s disconnection:
+
+| Line / CPC size | R<sub>1</sub> + R<sub>2</sub> at 20 °C | Type B 32 A | Type C 32 A |
+|---|---|---|---|
+| 2.5 / 1.5 mm² | 19.51 mΩ/m | 43 m | 14 m |
+| 4 / 1.5 mm² | 16.71 mΩ/m | 51 m | 17 m |
+| 6 / 2.5 mm² | 10.49 mΩ/m | 81 m | 26 m |
+| 10 / 4 mm² | 6.44 mΩ/m | 131 m | 43 m |
+
+Voltage drop often limits the length before Zs does, so check both.
+
+## How Zs is tested on site
+
+Z<sub>e</sub> is measured at the origin with the main earthing conductor disconnected, which is only safe with the installation isolated, and reconnected straight after. Z<sub>s</sub> is measured at the furthest point of each circuit with a loop tester, using its no-trip mode on RCD protected circuits. Parallel earth paths through metal pipework can make a live Zs reading lower than Z<sub>e</sub> + R<sub>1</sub> + R<sub>2</sub>, so a reading far below the calculated value is worth questioning rather than celebrating.
+
+## Common mistakes
+
+- **Comparing a cold reading with the full table value.** Conductors heat up in service, which is why the 80% rule exists.
+- **Using the Type B column for a Type C or D breaker.** The limit halves each time the trip multiple doubles.
+- **Assuming the supplier's declared Ze.** The declared 0.35 Ω is a maximum; measure the real value, but design with the declared one.
+- **Adding R1 + R2 for a ring as if it were radial.** On a ring final circuit the end-to-end values are combined as (r1 + r2) ÷ 4.
+- **Forgetting the RCD on TT systems.** With a Zs of tens of ohms an MCB can never trip on earth faults and an RCD is the protection.

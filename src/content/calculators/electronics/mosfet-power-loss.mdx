@@ -2,10 +2,10 @@
 title: MOSFET Power Dissipation Calculator (Conduction and Switching Loss)
 description: Estimate MOSFET conduction and switching losses from Rds(on), current, voltage, switching frequency and rise/fall times — and the junction temperature.
 category: electronics
-intro: "A MOSFET used as a switch loses power in two ways: conduction loss from its on-resistance and switching loss during each turn-on and turn-off. Together they decide whether it needs a heat sink. This MOSFET power dissipation calculator estimates both — see [what a MOSFET is](https://www.instrumentationblog.in/what-is-a-mosfet-working-principle/) and [MOSFET gate driver ICs](https://www.instrumentationblog.in/mosfet-gate-driver-ics-explained/)."
+intro: "A MOSFET used as a switch loses power through its on-resistance while conducting and again during every turn-on and turn-off. This MOSFET power dissipation calculator estimates both losses and the junction temperature; see [what a MOSFET is](https://www.instrumentationblog.in/what-is-a-mosfet-working-principle/).\n\nPower electronics designers use it to choose a device, set the switching frequency and decide on heat sinking, and to check [MOSFET gate driver ICs](https://www.instrumentationblog.in/mosfet-gate-driver-ics-explained/) switch fast enough."
 keywords: [mosfet power dissipation calculator, mosfet conduction loss, mosfet switching loss, rds on power loss, mosfet junction temperature, mosfet heat calculation]
 published: 2026-10-28
-updated: 2026-10-28
+updated: 2026-11-23
 variables:
   - { id: I, label: Drain current (RMS), family: current, unit: A, default: 10, min: 0 }
   - { id: Rds, label: Rds(on) at operating temperature, family: resistance, unit: mohm, default: 20, min: 0, help: 'Rds(on) rises about 1.5–1.8 × from 25 °C to 125 °C — use the hot value.' }
@@ -32,6 +32,10 @@ faq:
     a: Most MOSFETs are rated to 150 or 175 °C; design for 100–125 °C maximum for reliability.
   - q: Do I need a heat sink?
     a: If the estimated junction temperature without a heat sink exceeds your target, yes — use the heat sink calculator to size it.
+  - q: "Does paralleling two MOSFETs reduce conduction loss?"
+    a: "Yes. Each carries half the current, so with 20 mΩ devices sharing 10 A each dissipates 0.5 W and the pair 1.0 W, half of the single device 2.0 W. Gate drive loss doubles because there are two gates."
+  - q: "What heat sink do I need to keep the junction at 100 °C?"
+    a: "Divide the temperature rise by the loss: (100 − 40) ÷ 2.6 W = 23.08 °C/W in total. After a 1.0 °C/W junction to case and 0.5 °C/W pad, the sink must be 21.58 °C/W or better."
 related: [electronics/heat-sink, electronics/buck-converter, electronics/pwm-duty-cycle, electronics/transistor-base-resistor]
 ---
 
@@ -63,3 +67,39 @@ Enter the **RMS drain current**, the **Rds(on)** at operating temperature, the *
 ## Not included
 
 Gate-drive loss (Q<sub>g</sub> × V<sub>gs</sub> × f), body-diode conduction and reverse-recovery losses add more in synchronous converters.
+
+## Second example: sizing the heat sink
+
+The default case reaches 144 °C, too hot for a reliable design. To hold the junction at 100 °C with 2.6 W of loss and 40 °C ambient:
+
+- Total thermal resistance allowed = (100 − 40) ÷ 2.6 = **23.08 °C/W**
+- Subtract junction to case (1.0 °C/W) and the thermal pad (0.5 °C/W)
+- The heat sink must be **21.58 °C/W** or better
+
+Enter 23.08 in the thermal resistance field to confirm 100 °C. Because R<sub>DS(on)</sub> falls as the device cools, the real loss is slightly lower, so this is a safe answer.
+
+## How frequency shifts the balance
+
+Same 10 A, 20 mΩ, 24 V and 100 ns, with no heat sink (40 °C/W):
+
+| Frequency | Conduction | Switching | Total | T<sub>j</sub> |
+|---|---|---|---|---|
+| 20 kHz | 2.00 W | 0.24 W | 2.24 W | 130 °C |
+| 50 kHz | 2.00 W | 0.60 W | 2.60 W | 144 °C |
+| 100 kHz | 2.00 W | 1.20 W | 3.20 W | 168 °C |
+| 200 kHz | 2.00 W | 2.40 W | 4.40 W | 216 °C |
+| 500 kHz | 2.00 W | 6.00 W | 8.00 W | 360 °C |
+
+Conduction dominates up to about 167 kHz, where switching loss equals it. Above that, a faster gate driver is worth more than a lower R<sub>DS(on)</sub>.
+
+## Measuring the real loss
+
+Fit a thermocouple to the tab, run the converter at full load until the temperature settles, then estimate T<sub>j</sub> = T<sub>case</sub> + P × R<sub>θJC</sub>. For the switching loss itself, capture V<sub>DS</sub> and I<sub>D</sub> on an oscilloscope with a current probe, deskew the channels, and integrate their product over each transition.
+
+## Common mistakes
+
+- **Using average current instead of RMS.** A 50% duty PWM drawing 14.14 A peak has an RMS of 10 A but an average of only 7.07 A; squaring the average halves the conduction loss.
+- **Using R<sub>θJA</sub> with a heat sink fitted.** The datasheet R<sub>θJA</sub> assumes a small copper pad; with a sink, add R<sub>θJC</sub>, interface and sink values.
+- **Forgetting output capacitance loss.** ½C<sub>oss</sub>V²f with 500 pF is only 7.2 mW at 24 V but 2.0 W at 400 V and 50 kHz.
+- **Counting gate charge as MOSFET heat.** Q<sub>g</sub> × V<sub>GS</sub> × f, here 15 mW for 30 nC at 10 V, is dissipated mostly in the driver and gate resistor.
+- **Expecting parallel devices to halve every loss.** Two MOSFETs sharing 10 A dissipate 0.5 W conduction each, half the total, but each still switches the full voltage at its share of current.

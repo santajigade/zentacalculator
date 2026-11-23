@@ -2,10 +2,10 @@
 title: "RL Time Constant Calculator (τ = L/R, Current Rise & Decay)"
 description: Calculate the time constant τ = L/R of an inductor-resistor circuit, plus current rise and decay at any time — for relays, solenoids and filters.
 category: electronics
-intro: "When voltage is applied to an inductor through a resistance, current rises exponentially with a time constant τ = L/R — and decays the same way when switched off. This RL time constant calculator gives τ and the current at any moment — see [RC and RL time constants explained](https://www.instrumentationblog.in/rc-and-rl-time-constant-explained/)."
+intro: "When voltage is applied to an inductor through a resistance, current rises exponentially with a time constant τ = L/R, and decays the same way when switched off. This RL time constant calculator gives τ and the current at any moment.\n\nControl panel designers, automation technicians and students use it to predict relay and solenoid timing, choose coil suppression and size drive circuits; see [RC and RL time constants explained](https://www.instrumentationblog.in/rc-and-rl-time-constant-explained/)."
 keywords: [rl time constant calculator, rl circuit calculator, inductor time constant, l/r time constant, inductor current rise, rl circuit formula]
 published: 2026-10-28
-updated: 2026-11-07
+updated: 2026-11-23
 variables:
   - { id: L, label: Inductance, family: inductance, unit: mH, default: 100, min: 0 }
   - { id: R, label: Resistance, family: resistance, unit: ohm, default: 50, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: The diode keeps current circulating through the coil's own low resistance, giving a long L/R decay. Adding a Zener or resistor in series speeds it up.
   - q: How is this different from an RC circuit?
     a: In RC circuits voltage changes exponentially with τ = RC; in RL circuits current does, with τ = L/R.
+  - q: "How do I find the inductance of a coil from its time constant?"
+    a: "Measure the time for the current to reach 63.2% of its final value, then multiply by the total loop resistance: L = τ × R. A 2 ms time constant in a 50 Ω loop means 100 mH."
+  - q: "How much energy does the default coil store?"
+    a: "½ × L × I² = ½ × 0.1 H × (0.48 A)² = 11.52 mJ at full current. A flyback diode, Zener or snubber must absorb this energy every time the coil is switched off."
 related: [physics/rc-time-constant, electronics/inductor-energy, electronics/reactance, electronics/rc-filter]
 ---
 
@@ -90,3 +94,38 @@ Interrupting inductor current suddenly creates a voltage spike V = L × di/dt. S
 - Use the **total** loop resistance — coil resistance plus series resistors and the driver's on-resistance — or τ will be overestimated.
 - Iron-cored coils are not linear: inductance changes with current and with the armature position in relays and solenoids, so treat τ as an estimate and measure if timing matters.
 - To speed up a slow-releasing relay, add a Zener or resistor in series with the flyback diode; the larger voltage across the coil collapses the current faster.
+
+## Current and voltages over time for the default coil
+
+For the default 100 mH, 50 Ω coil on 24 V, the current starts rising at V ÷ L = **240 A/s** and the inductor voltage falls as the resistor voltage grows:
+
+| Time | Current | Voltage across L | Voltage across R |
+|---|---|---|---|
+| 0.5 ms | 0.1062 A | 18.69 V | 5.31 V |
+| 1 ms | 0.1889 A | 14.56 V | 9.44 V |
+| 2 ms | 0.3034 A | 8.83 V | 15.17 V |
+| 4 ms | 0.4150 A | 3.25 V | 20.75 V |
+| 6 ms | 0.4561 A | 1.19 V | 22.81 V |
+| 10 ms | 0.4768 A | 0.16 V | 23.84 V |
+
+At every instant the two voltages add to 24 V. At full current the coil stores ½LI² = ½ × 0.1 × 0.48² = **11.52 mJ**, the energy any suppression circuit must absorb at switch-off.
+
+## Scenario 1: making the coil release faster
+
+With a plain flyback diode the current decays through the coil's own 50 Ω with τ = 2 ms, taking about 3.14 ms to fall to 0.1 A. Adding a 200 Ω resistor in series with the diode raises the loop resistance to 250 Ω, so τ<sub>off</sub> = 0.1 ÷ 250 = **0.4 ms** and the same drop takes only 0.63 ms. The cost is a switch voltage of 24 + 0.48 × 200 = **120 V** at turn-off (plus the diode drop), so the transistor must be rated well above that.
+
+## Scenario 2: forcing a faster rise
+
+Stepper and solenoid drivers speed up the rise by adding series resistance and raising the voltage in proportion. Tripling the supply to 72 V with an extra 100 Ω keeps the final current at 0.48 A but cuts τ to 0.667 ms, so 90% current arrives in 1.54 ms instead of 4.61 ms. The extra resistor wastes 23.0 W continuously, which is why modern drivers use chopper current control instead.
+
+## Measuring τ and L
+
+Put a small sense resistor in series, switch the supply on and watch the current on an oscilloscope: τ is the time to 63.2% of the final value. Then L = τ × R. An LCR meter at 1 kHz gives a quick inductance figure, but for iron-cored coils it can differ from the value at operating current.
+
+## Common mistakes
+
+- **Mixing units.** Millihenries divided by ohms give milliseconds directly; using henries with milliseconds gives an answer 1,000 times off.
+- **Using the RC formula.** τ = L × R is wrong for inductors; doubling R halves the RL time constant.
+- **Assuming a decay path exists.** If the switch simply opens with no diode or snubber, the current cannot follow the exponential curve and the stored energy appears as an arc or a destroyed transistor.
+- **Expecting relay pull-in at the final current.** The armature closes at its pull-in current, often well below V/R, and the inductance rises once it closes.
+- **Ignoring supply resistance.** A weak supply or long thin cable adds resistance and lowers both τ and the final current.

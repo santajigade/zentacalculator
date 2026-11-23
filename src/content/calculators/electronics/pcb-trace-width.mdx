@@ -2,10 +2,10 @@
 title: PCB Trace Width Calculator (IPC-2221)
 description: Calculate the PCB trace width needed for a current and temperature rise using the IPC-2221 formula — for external and internal layers and copper weights.
 category: electronics
-intro: "A copper track on a circuit board heats up as current flows through it, so it must be wide enough for the current it carries. The IPC-2221 formula links current, temperature rise and track size; for vias, see this guide to [PCB via current capacity](https://www.instrumentationblog.in/pcb-via-current-capacity/). This free PCB trace width calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A copper track heats up as current flows through it, so it must be wide enough to stay within a chosen temperature rise. This PCB trace width calculator applies the IPC-2221 formula to current, temperature rise, copper weight and layer; for vias, see [PCB via current capacity](https://www.instrumentationblog.in/pcb-via-current-capacity/).\n\nPCB designers and hardware engineers use it to size power rails, motor and LED drive tracks and heater feeds before routing, so boards do not overheat or drop voltage."
 keywords: [pcb trace width calculator, ipc 2221 calculator, trace current capacity, pcb track width, copper thickness oz, trace temperature rise, pcb current carrying]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-23
 variables:
   - { id: I, label: Current, family: current, unit: A, default: 3, min: 0 }
   - { id: dT, label: Allowed temperature rise, suffix: °C, default: 10, min: 0.1 }
@@ -32,6 +32,8 @@ faq:
     a: 1 ounce of copper spread over 1 square foot — a thickness of about 35 µm (1.378 mil).
   - q: Is IPC-2221 accurate?
     a: It is conservative for most designs. The newer IPC-2152 standard uses more detailed data that accounts for planes and board thickness.
+  - q: "How much voltage does a PCB trace drop?"
+    a: "Multiply current by trace resistance, R = ρL ÷ (w × t). A 50 mm run of 1.37 mm wide 1 oz copper is about 18.0 mΩ, so 3 A drops about 54 mV."
 related: [electronics/rl-time-constant, electrical/cable-voltage-drop, physics/ohms-law, electronics/heat-sink, electronics/led-resistor]
 ---
 
@@ -74,3 +76,41 @@ Doubling copper weight roughly halves the width needed.
 - **Voltage drop**: long, thin traces drop voltage. 1 oz copper has about 0.5 mΩ per square.
 - **Vias**: a standard 0.3 mm via carries roughly 1–2 A; use several vias in parallel for high currents.
 - **Spacing**: high-voltage traces need clearance and creepage per IPC-2221 or IEC 60664.
+
+## Worked example with the default values
+
+For 3 A on an outer layer of 1 oz copper with a 10 °C rise:
+
+1. ΔT<sup>0.44</sup> = 10<sup>0.44</sup> = 2.754
+2. A = (3 ÷ (0.048 × 2.754))<sup>1/0.725</sup> = 22.69<sup>1.379</sup> = **74.2 mil²**
+3. Width = 74.2 ÷ (1.378 × 1) = **53.8 mil**, which is **1.37 mm**
+
+The same current on an inner layer needs 140 mil (3.56 mm), 2.6 times wider. Halving k does not just double the area, because area appears with the exponent 0.725.
+
+## Voltage drop along the trace
+
+A 50 mm run of that 1.37 mm, 35 µm trace is 37 squares long. Using copper resistivity of 1.72 × 10<sup>−8</sup> Ω·m at 20 °C, R = ρL ÷ (w × t) = **18.0 mΩ**, so 3 A drops 54 mV and dissipates 162 mW. On a 3.3 V rail feeding a processor that drop may matter more than the heating, so check both.
+
+## Width against allowed temperature rise at 3 A
+
+| Rise | External, 1 oz | External, 2 oz | Internal, 1 oz |
+|---|---|---|---|
+| 5 °C | 2.08 mm | 1.04 mm | 5.42 mm |
+| 10 °C | 1.37 mm | 0.68 mm | 3.56 mm |
+| 20 °C | 0.90 mm | 0.45 mm | 2.33 mm |
+| 30 °C | 0.70 mm | 0.35 mm | 1.83 mm |
+| 45 °C | 0.55 mm | 0.27 mm | 1.43 mm |
+
+Allowing 20 °C instead of 10 °C shrinks the outer 1 oz trace to 0.90 mm. Add the rise to the worst case ambient inside the enclosure and keep the total well below the laminate rating, typically 130 °C for standard FR-4.
+
+## Checking a built board
+
+Run the board at full current and measure the trace with a thermal camera or a thermocouple taped to the copper, after it settles for 10 to 15 minutes. A four wire milliohm measurement across the trace also confirms the copper weight the fabricator delivered.
+
+## Common mistakes
+
+- **Sizing on the wide part and forgetting neck downs.** A trace that narrows to 0.3 mm at a connector or IC pad heats at that point; keep the full width as close to the pad as possible.
+- **Assuming outer layer plating.** Fabricators quote base copper; 1 oz base usually finishes thicker on outer layers after plating, but inner layers stay at base thickness.
+- **Using IPC-2221 outside its range.** The chart fits currents up to about 35 A, widths up to 400 mil and 10 to 100 °C rise; beyond that use IPC-2152 or thermal simulation.
+- **Ignoring thermal reliefs and vias.** Spoke connections to a plane and a single via can carry less than the trace feeding them.
+- **Putting parallel high current traces side by side.** Neighbouring hot traces heat each other, so the real rise is higher than the single trace figure.

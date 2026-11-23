@@ -2,10 +2,10 @@
 title: 555 Timer Calculator (Astable Mode)
 description: Calculate the frequency, duty cycle, high time and low time of a 555 timer in astable mode from R1, R2 and C — or choose parts for a target frequency.
 category: electronics
-intro: "The 555 is one of the most popular chips ever made — a simple timer that can blink LEDs, generate square waves and create time delays with just a few resistors and a capacitor. See the [555 timer IC explained](https://www.instrumentationblog.in/555-timer-ic-explained/) for how it works inside."
+intro: "The 555 is a timer chip that compares its capacitor voltage with one third and two thirds of the supply to make square waves, pulses and delays. This 555 timer calculator works out the astable frequency, high time, low time and duty cycle from R1, R2 and C; see the [555 timer IC explained](https://www.instrumentationblog.in/555-timer-ic-explained/).\n\nHobbyists, students and repair technicians use it to pick parts for LED flashers, buzzers, clock sources and simple PWM without trial and error on the bench."
 keywords: [555 timer calculator, 555 astable calculator, ne555 frequency, 555 duty cycle, 555 oscillator, 555 timer formula, square wave generator]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-23
 variables:
   - { id: R1, label: R1, family: resistance, unit: kohm, default: 1, min: 0 }
   - { id: R2, label: R2, family: resistance, unit: kohm, default: 10, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: About 1 kΩ, to limit the discharge transistor current when it turns on.
   - q: How accurate is the 555?
     a: Typically 1–2% plus component tolerances. Use film capacitors rather than electrolytics for stable timing.
+  - q: "Why is the first 555 output pulse longer than the rest?"
+    a: "At switch on the capacitor charges from 0 V instead of one third of the supply, so the first high time is ln 3 × (R1 + R2) × C. With the default parts that is 120.8 ms instead of 76.2 ms."
+  - q: "Does the supply voltage change the 555 frequency?"
+    a: "Ideally no, because the thresholds are fixed fractions of the supply and the charging current scales with it too. In practice the NE555 datasheet quotes a drift of about 0.1% per volt, unless pin 5 is driven externally."
 related: [electronics/buck-converter, physics/rc-time-constant, electronics/pwm-duty-cycle, electronics/rc-filter, physics/wavelength-frequency]
 ---
 
@@ -70,3 +74,44 @@ In one-shot (monostable) mode, the output pulse lasts t = 1.1 × R × C after a 
 | 8 | V<sub>cc</sub> | 4.5–16 V (bipolar NE555) |
 
 The CMOS version (7555, TLC555) runs from 2 V and uses far less current.
+
+## Worked example with the default values
+
+With R1 = 1 kΩ, R2 = 10 kΩ and C = 10 µF:
+
+1. High time t<sub>H</sub> = 0.693 × (1,000 + 10,000) × 0.00001 = **76.23 ms**
+2. Low time t<sub>L</sub> = 0.693 × 10,000 × 0.00001 = **69.30 ms**
+3. Period = 76.23 + 69.30 = 145.53 ms, so f = 1 ÷ 0.14553 s = **6.87 Hz**
+4. Duty cycle = 76.23 ÷ 145.53 = **52.4%**
+
+The 0.693 is ln 2: the capacitor charges and discharges between ⅓ and ⅔ of V<sub>cc</sub>, and each half step takes one RC time multiplied by ln 2. That is also why the supply voltage cancels out of the formula.
+
+## Why the first pulse is longer
+
+At power up the capacitor starts at 0 V, not ⅓ V<sub>cc</sub>, so the first high period runs from 0 to ⅔ V<sub>cc</sub> and takes ln 3 × (R1 + R2) × C = **120.8 ms** instead of 76.2 ms. If a circuit counts pulses from switch on, ignore the first one.
+
+## Effect of capacitor tolerance
+
+Timing scales directly with C, and general purpose electrolytics are often ±20%:
+
+| Capacitor tolerance | Actual C | Frequency | Period |
+|---|---|---|---|
+| −20% | 8 µF | 8.59 Hz | 116.4 ms |
+| −10% | 9 µF | 7.63 Hz | 131.0 ms |
+| Nominal | 10 µF | 6.87 Hz | 145.5 ms |
+| +10% | 11 µF | 6.25 Hz | 160.1 ms |
+| +20% | 12 µF | 5.73 Hz | 174.6 ms |
+
+So the default circuit could run anywhere from 5.73 Hz to 8.59 Hz before resistor tolerance is even counted. For a repeatable clock, use a 5% film capacitor and 1% resistors.
+
+## Designing for a target frequency
+
+For 1 kHz with C = 10 nF and R1 = 1 kΩ, rearrange f = 1.44 ÷ ((R1 + 2R2) C): R2 = (1.44 ÷ (1,000 × 10 nF) − 1,000) ÷ 2 = 71.5 kΩ. The nearest E12 value, 68 kΩ, gives 1053 Hz at 50.4% duty. Measure the result on pin 3 with an oscilloscope or a multimeter frequency range, and trim with a potentiometer in series with R2 if the exact value matters.
+
+## Common mistakes
+
+- **Making R1 very small.** When the discharge transistor turns on, pin 7 shorts R1 to ground; with 100 Ω on a 9 V supply that is 90 mA through the transistor, well above what it is meant to sink.
+- **Using huge resistors with an electrolytic.** Above a few hundred kΩ, capacitor leakage current becomes comparable to the charging current and the period stretches or the timer stops.
+- **Leaving reset (pin 4) floating.** It can pick up noise and stop the oscillator at random; tie it to V<sub>cc</sub>.
+- **No supply decoupling on the bipolar NE555.** Its output stage draws a current spike at every transition, so put 100 nF close to pins 8 and 1.
+- **Expecting below 50% duty from the standard circuit.** t<sub>H</sub> always includes R1, so it is always longer than t<sub>L</sub>.

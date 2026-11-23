@@ -2,10 +2,10 @@
 title: Air Core Inductor Calculator (Wheeler's Formula)
 description: Calculate the inductance of a single-layer air-core coil from diameter, length and number of turns using Wheeler's formula — plus the wire length needed.
 category: electronics
-intro: "A single-layer air-core coil has no magnetic core to saturate, which makes it the choice for RF tuned circuits, filters and crossovers. This air core inductor calculator uses Wheeler's formula to find the inductance from coil diameter, length and turns, or the turns for a target inductance — background on [how an inductor works](https://www.instrumentationblog.in/inductor-working-principle/)."
+intro: "A single-layer air-core coil has no magnetic core to saturate, so its inductance stays fixed with current and temperature. This air core inductor calculator applies Wheeler's formula to coil diameter, length and turns; see [how an inductor works](https://www.instrumentationblog.in/inductor-working-principle/).\n\nRadio amateurs, RF designers and audio builders use it to wind coils for tuned circuits, filters, matching networks and loudspeaker crossovers, and to work out how much wire to cut before winding."
 keywords: [air core inductor calculator, wheeler formula calculator, coil inductance calculator, single layer coil inductance, solenoid inductance, number of turns for inductance, rf coil calculator]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-23
 variables:
   - { id: D, label: Coil diameter (to wire centre), family: length, unit: mm, imperialUnit: in, default: 20, min: 0 }
   - { id: l, label: Coil length, family: length, unit: mm, imperialUnit: in, default: 30, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: Clear the turns field and enter the inductance you want. Remember that changing the turns at fixed wire size also changes the coil length.
   - q: Why use an air-core inductor?
     a: There is no core loss or saturation, and the inductance stays constant with current and temperature — ideal for RF circuits and audio crossovers, at the cost of larger size for a given inductance.
+  - q: "How many turns do I need for 10 µH on a 20 mm former?"
+    a: "With a 30 mm winding length, Wheeler's formula gives 31.47 turns, so wind 32 turns for about 10.34 µH. The wire must be thinner than 0.94 mm to fit."
+  - q: "How do I fine tune an air core coil after winding?"
+    a: "Spread or compress the turns. Stretching the default 25 turn coil from 30 mm to 36 mm lowers it from 6.31 µH to 5.47 µH. Compressing the turns raises inductance."
 related: [electronics/dbm-to-watts, electronics/inductor-al-value, electronics/resonant-frequency, electronics/reactance, electronics/inductor-energy]
 ---
 
@@ -62,3 +66,38 @@ Coils shorter than 0.4 × diameter fall outside the formula's 1% range, so treat
 - Spacing the turns lowers inductance slightly but also lowers self-capacitance, raising the self-resonant frequency.
 - Check the tuned frequency with the [LC resonant frequency calculator](/electronics/resonant-frequency/).
 - For ferrite or powdered-iron cores, use the core's A<sub>L</sub> value in the [inductor A<sub>L</sub> calculator](/electronics/inductor-al-value/).
+
+## Second example: winding for a target of 10 µH
+
+Keep the default 20 mm former and 30 mm winding length and ask for 10 µH. Rearranging Wheeler's formula gives N = √(L × (18d + 40l)) ÷ d:
+
+- 18 × 0.787 + 40 × 1.181 = 61.42
+- N = √(10 × 61.42) ÷ 0.787 = **31.47 turns**, so wind **32**
+- 32 turns give 10.34 µH and need about 2.01 m of wire
+
+Squeezing 32 turns into 30 mm leaves a pitch of 0.94 mm, so the wire must be thinner than about 0.94 mm including enamel. The default 25 turn coil has a 1.20 mm pitch, which suits 1.0 mm enamelled wire with a small gap.
+
+## Effect of coil length (20 mm diameter, 25 turns)
+
+| Winding length | l ÷ D | Inductance | Within 1% range |
+|---|---|---|---|
+| 10 mm | 0.50 | 12.95 µH | yes |
+| 15 mm | 0.75 | 10.25 µH | yes |
+| 20 mm | 1.00 | 8.48 µH | yes |
+| 30 mm | 1.50 | 6.31 µH | yes |
+| 45 mm | 2.25 | 4.56 µH | yes |
+| 60 mm | 3.00 | 3.57 µH | yes |
+
+Stretching the default coil from 30 mm to 36 mm drops it from 6.31 µH to 5.47 µH, which is the usual way to fine tune a coil after winding.
+
+## Checking a wound coil
+
+Measure inductance with an LCR meter at a frequency well below the self-resonant frequency, or resonate the coil with a known capacitor and read the frequency. With 100 pF across the default 6.31 µH coil, resonance should fall at **6.34 MHz**; a lower reading points to extra capacitance from leads and fixture.
+
+## Common mistakes
+
+- **Entering the outside diameter.** With 1 mm wire on a 20 mm centre diameter, typing 21 mm gives 6.88 µH, 9% too high.
+- **Forgetting the leads.** Straight leads add roughly 1 nH per millimetre, which matters for coils below about 0.5 µH.
+- **Using the formula for multilayer or pancake coils.** Wheeler's single layer expression does not apply; those shapes have their own formulas.
+- **Mounting the coil against metal.** A nearby chassis or ground plane induces eddy currents and lowers both inductance and Q; keep about one coil diameter of clearance.
+- **Cutting the wire to the exact length shown.** The figure excludes leads, so add a few centimetres for each end.

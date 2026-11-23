@@ -2,10 +2,10 @@
 title: Differential Amplifier Calculator (Op-Amp Subtractor)
 description: Calculate the output voltage, differential gain and common-mode gain of a four-resistor op-amp differential amplifier (subtractor) from V1, V2 and R1–R4.
 category: electronics
-intro: "A differential amplifier amplifies the difference between two voltages while rejecting what they have in common — the classic four-resistor op-amp subtractor. This differential amplifier calculator gives the output voltage, differential gain and common-mode gain for any resistor values, so you can see how resistor mismatch spoils the CMRR described in [differential amplifier basics and CMRR](https://www.instrumentationblog.in/differential-amplifier-explained-basics-and-cmrr/)."
+intro: "The four-resistor op-amp subtractor amplifies the difference between two voltages while rejecting the voltage they share. This differential amplifier calculator gives the output, differential gain and common-mode gain for any resistor values; see [differential amplifier basics and CMRR](https://www.instrumentationblog.in/differential-amplifier-explained-basics-and-cmrr/).\n\nCircuit designers and instrumentation technicians use it to size current shunt amplifiers, level shifters and bridge interfaces, and to see how resistor mismatch lets common-mode voltage leak into the output."
 keywords: [differential amplifier calculator, op amp differential amplifier formula, subtractor circuit calculator, difference amplifier gain, common mode gain, cmrr resistor mismatch, op amp subtractor]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-23
 variables:
   - { id: V1, label: Voltage at inverting side V₁, family: voltage, unit: V, default: 1 }
   - { id: V2, label: Voltage at non-inverting side V₂, family: voltage, unit: V, default: 1.2 }
@@ -29,6 +29,10 @@ faq:
     a: Worst-case CMRR ≈ (1 + G) ÷ (4t), where t is the resistor tolerance. With 1% resistors and a gain of 1 that is only about 34 dB, so precision work uses 0.1% or matched networks.
   - q: When should I use an instrumentation amplifier instead?
     a: When the sources have high or unequal impedance (bridges, thermocouples) — the four-resistor circuit loads the inputs with R₁ and R₃+R₄, unlike an in-amp's buffered inputs.
+  - q: "What voltage appears at the op-amp inputs of a differential amplifier?"
+    a: "The non-inverting input sits at V₂ × R₄ ÷ (R₃ + R₄), and feedback holds the inverting input at the same voltage. With the default values that is 1.091 V, which must stay inside the op-amp input range."
+  - q: "Can a differential amplifier measure across a shunt above its supply voltage?"
+    a: "Yes, if R₄ ÷ (R₃ + R₄) divides the input down enough. Using R₂/R₁ = R₄/R₃ below 1 attenuates the common-mode voltage at the inputs, at the cost of a lower differential gain that a later stage can restore."
 related: [electronics/instrumentation-amplifier-gain, electronics/op-amp-gain, electronics/summing-amplifier, electronics/wheatstone-bridge]
 ---
 
@@ -65,3 +69,38 @@ Values from CMRR ≈ (1 + G)/(4t); the op-amp's own CMRR sets a further limit.
 
 - The input impedance is R₁ at the V₁ input and R₃ + R₄ at the V₂ input — drive it from low-impedance sources.
 - For a reference offset, connect the bottom of R₄ to a reference voltage instead of ground; it adds directly to the output.
+
+## Second example: one resistor 1% high
+
+Keep the default inputs but let R₄ be 101 kΩ instead of 100 kΩ:
+
+- R₄ ÷ (R₃ + R₄) × (1 + R₂/R₁) = 101/111 × 11 = 10.0090
+- V<sub>out</sub> = 10.0090 × 1.2 − 10 × 1 = **2.0108 V** instead of 2.0000 V
+- A<sub>cm</sub> = 10.0090 − 10 = **0.00901**, A<sub>d</sub> = **10.0045**
+- CMRR = 20 log(10.0045 ÷ 0.00901) = **60.9 dB**
+
+That is better than the 49 dB worst case in the table above because only one resistor is off; the table assumes all four sit at the edge of tolerance in the worst direction.
+
+## Why mismatch matters on a high-side shunt
+
+Now put the same 0.2 V difference on top of a 12 V rail (V₁ = 12 V, V₂ = 12.2 V). With matched resistors the output is still 2.0 V, but with R₄ 1% high it becomes 2.110 V, an error of 110 mV, or 5.5% of reading. The error scales with common-mode voltage:
+
+| R₄ error | Common-mode gain | CMRR | Output error at 12 V common mode |
+|---|---|---|---|
+| 0.01% | 0.00009 | 100.8 dB | 1.1 mV |
+| 0.1% | 0.00091 | 80.8 dB | 10.9 mV |
+| 0.5% | 0.00452 | 66.9 dB | 54.3 mV |
+| 1% | 0.00901 | 60.9 dB | 108.1 mV |
+| 5% | 0.04348 | 47.3 dB | 521.7 mV |
+
+## Checking the op-amp input range
+
+With the default values the non-inverting input sits at 1.2 × 100/110 = **1.091 V**, and the inverting input follows it. On a 12 V rail the inputs sit near 11.09 V, so the op-amp needs a supply above that or a different resistor ratio. To measure CMRR on the bench, tie both inputs together, drive them with a known voltage, and divide the output change by the input change.
+
+## Common mistakes
+
+- **Ignoring source resistance.** A 100 Ω source on the V₁ side makes R₁ effectively 10.1 kΩ, giving A<sub>cm</sub> = 0.0090 even with perfect resistors.
+- **Driving the reference pin from a divider.** The bottom of R₄ must see a low impedance, otherwise the divider resistance adds to R₄ and unbalances the ratio; buffer it.
+- **Swapping V₁ and V₂.** The output polarity reverses, and on a single supply the op-amp simply sits at the negative rail.
+- **Forgetting output swing.** A gain of 10 on a 0.5 V difference needs 5 V of output, which a rail-to-rail op-amp on 5 V cannot quite reach.
+- **Mixing tolerances in one circuit.** One 5% resistor among 0.1% parts sets the CMRR on its own.

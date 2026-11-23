@@ -2,10 +2,10 @@
 title: Free Space Path Loss Calculator (FSPL in dB) & Link Budget
 description: Calculate free-space path loss in dB from distance and frequency, and the received power from transmit power and antenna gains — for LoRa, Wi-Fi and RF links.
 category: electronics
-intro: "Free-space path loss is how much a radio signal weakens as it spreads out over distance in a clear line of sight. This free space path loss calculator gives the FSPL in dB and a simple link budget — received power from transmit power and antenna gains — for [LoRaWAN sensor networks](https://www.instrumentationblog.in/lorawan-industrial-iot-guide/), [wireless transmitters](https://www.instrumentationblog.in/wireless-pressure-transmitters-iiot-systems/), Wi-Fi and point-to-point links."
+intro: "Free-space path loss is how much a radio signal weakens as it spreads out over a clear line of sight. This free space path loss calculator gives the FSPL in dB and a simple link budget, the received power from transmit power and antenna gains.\n\nRF engineers and IoT installers use it to plan [LoRaWAN sensor networks](https://www.instrumentationblog.in/lorawan-industrial-iot-guide/), [wireless transmitters](https://www.instrumentationblog.in/wireless-pressure-transmitters-iiot-systems/), Wi-Fi and point-to-point links, checking that the received signal clears the receiver sensitivity with a safe margin."
 keywords: [free space path loss calculator, fspl calculator, path loss formula db, link budget calculator, received signal strength calculator, rf path loss, lora range calculator]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-23
 variables:
   - { id: d, label: Distance, family: length, unit: km, imperialUnit: mi, default: 2, min: 0 }
   - { id: f, label: Frequency, family: frequency, unit: MHz, default: 868, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: FSPL assumes clear line of sight with an unobstructed Fresnel zone. Walls, terrain, foliage, rain and multipath add tens of dB, so leave a fade margin of 10–20 dB or more.
   - q: How do I check whether a link will work?
     a: Compare the received power with the receiver's sensitivity. For example, LoRa at SF12 can decode about −137 dBm, while Wi-Fi at high data rates needs about −65 to −70 dBm.
+  - q: "Why does path loss increase with frequency if space is the same?"
+    a: "The spreading of power over a sphere is the same at any frequency. The frequency term appears because FSPL assumes isotropic antennas, and the effective capture area of an isotropic receive antenna is λ² ÷ 4π, which shrinks as frequency rises."
+  - q: "What is the maximum free-space range of the default LoRa link?"
+    a: "With 14 dBm, 2 dBi antennas, SF7 sensitivity of about -123 dBm and a 20 dB fade margin, the allowed loss is 121 dB, reached at about 30.8 km in free space. On the ground the radio horizon and obstructions usually limit it to much less."
 related: [electronics/antenna-length, electronics/dbm-to-watts, electronics/snr, physics/wavelength-frequency]
 ---
 
@@ -66,3 +70,36 @@ A LoRa sensor at 868 MHz, 2 km from the gateway, 14 dBm transmit power and 2 dBi
 - FSPL uses isotropic antennas; real antenna gains are added separately in the link budget.
 - Keep the first Fresnel zone clear — at 868 MHz over 2 km its radius at mid-path is about 13 m, so mount antennas high.
 - Convert dBm to milliwatts with the [dBm to watts calculator](/electronics/dbm-to-watts/).
+
+## Link margin and maximum range from the defaults
+
+The default link delivers **-79.24 dBm**, which is only about 11.9 pW of real power at the receiver. A LoRa receiver at 125 kHz bandwidth decodes down to roughly -123 dBm at SF7 and -137 dBm at SF12, so:
+
+- Margin at SF7 = -79.24 − (-123) = **43.76 dB**
+- Keeping a 20 dB fade margin, the allowed path loss is 14 + 2 + 2 + 123 − 20 = **121 dB** at SF7, which free space reaches at **30.8 km**
+- At SF12 the allowed loss is 135 dB, or 155 km in free space
+
+Those long distances are rarely achieved on the ground. With both antennas 10 m high, the radio horizon (4.12 × (√h₁ + √h₂) km) is only about **26 km**, so terrain, Earth curvature and Fresnel zone blockage set the real limit long before free-space loss does.
+
+| Distance | FSPL at 868 MHz | Received power | Margin to SF7 | Margin to SF12 |
+|---|---|---|---|---|
+| 0.5 km | 85.2 dB | -67.2 dBm | 55.8 dB | 69.8 dB |
+| 1 km | 91.2 dB | -73.2 dBm | 49.8 dB | 63.8 dB |
+| 2 km | 97.2 dB | -79.2 dBm | 43.8 dB | 57.8 dB |
+| 5 km | 105.2 dB | -87.2 dBm | 35.8 dB | 49.8 dB |
+| 10 km | 111.2 dB | -93.2 dBm | 29.8 dB | 43.8 dB |
+| 20 km | 117.2 dB | -99.2 dBm | 23.8 dB | 37.8 dB |
+
+## Checking a link in the field
+
+Most LoRa gateways and Wi-Fi access points report the RSSI of every packet. Compare it with the predicted received power: the difference is the excess loss from obstacles, cables and multipath. A survey with a portable node at the planned sensor locations, logging RSSI and SNR, is quicker than any model. A spectrum analyser with a calibrated antenna gives a more accurate absolute level when RSSI accuracy (often ±3 to 6 dB) is not enough.
+
+The default transmitter radiates 16 dBm EIRP, or 13.85 dBm ERP since a half-wave dipole has 2.15 dBi of gain. Regulatory limits are often written in ERP, such as the 25 mW (14 dBm) ERP limit in parts of the European 868 MHz band, so check which reference your local rule uses before adding antenna gain.
+
+## Common mistakes
+
+- **Using the wrong unit constant.** The 32.44 dB constant is for kilometres and megahertz; with metres and megahertz it becomes -27.55 dB, and mixing them puts the answer 60 dB out.
+- **Treating dBd as dBi.** An antenna sold as 3 dBd is 5.15 dBi; entering dBd figures as dBi understates the gain, while the reverse overstates it.
+- **Forgetting cable and connector loss.** Five metres of thin RG58 at 868 MHz loses about 2.5 dB, which comes straight off the link budget at each end.
+- **Assuming free space indoors.** Each concrete wall can add 10 to 20 dB, so a calculated indoor margin of 40 dB can vanish behind two or three walls.
+- **Ignoring the Fresnel zone.** A clear visual line of sight is not enough; keep at least 60% of the first Fresnel zone free of trees, roofs and ground.

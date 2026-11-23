@@ -1,11 +1,11 @@
 ---
-title: Ten-Pin Bowling Average & Handicap Calculator
-description: Calculate your bowling average and league handicap from total pins, games played and the league basis.
+title: "Bowling Handicap Calculator: Average and League Handicap"
+description: "Bowling handicap calculator: enter total pins, games, league basis and percentage to get your ten pin average and handicap per game, with a worked example."
 category: sports
-intro: "In ten-pin bowling, a handicap levels the field between players of different abilities, based on their average. This free ten-pin bowling average & handicap calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A bowling handicap is a pin allowance added to each scratch game so bowlers of different ability can compete on equal terms. This bowling handicap calculator works out your league average from total pins and games, then your handicap from the basis and percentage.\n\nLeague bowlers, secretaries and tournament organisers use it to check standing sheets, set handicaps for new bowlers and see how a rising average changes the pins they receive."
 keywords: [bowling handicap calculator, bowling average, ten pin bowling, league handicap, handicap basis]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-23
 variables:
   - { id: pins, label: Total pins (scratch), default: 2610, min: 0 }
   - { id: g, label: Games played, default: 15, min: 1 }
@@ -18,23 +18,35 @@ equations:
   - hc = max(0, floor((basis - avg) * pct))
 faq:
   - q: "How is a bowling handicap calculated?"
-    a: "Handicap = (basis − average) × percentage, rounded down. For example (220 − 174) × 90% = 41."
+    a: "Subtract your average from the league basis, multiply by the handicap percentage and drop the fraction. For example (220 - 174) × 90% = 41.4, so the handicap is 41."
   - q: "Why are fractions dropped?"
     a: "Most leagues truncate both the average and the handicap to whole pins."
   - q: "What basis and percentage are common?"
-    a: "200–230 basis with 80–100% are common; check your league rules."
+    a: "A basis between 200 and 230 with a percentage between 80% and 100% is most common, and 220 at 90% is a popular standard. Always check your own league rules."
   - q: "Is handicap added to every game?"
     a: "Yes, it is added to your scratch score each game."
+  - q: "Do I get a handicap if my average is above the basis?"
+    a: "No. If your average is at or above the basis the handicap is 0. A 228 average in a 220 basis league gets no pins, and most leagues never use negative handicaps."
 related: [sports/win-percentage, math/average]
 ---
 
-## How to use the ten-pin bowling average & handicap calculator
+## How to use the bowling handicap calculator
 
-Enter your **total pins**, **games played**, the league's **basis** and **percentage**. Your average and handicap are calculated.
+Enter your **total pins** (scratch, without handicap), **games played**, the league's **basis** score and the handicap **percentage**. The calculator truncates the average to a whole pin, then takes the chosen percentage of the gap between the basis and the average, dropping any fraction. A bowler at or above the basis gets a handicap of 0.
 
-## Example
+## Worked example
 
-2,610 pins in 15 games → average **174**. With a 220 basis at 90%: (220 − 174) × 0.9 = 41.4 → handicap **41**.
+A bowler has knocked down 2,610 pins in 15 league games, in a league that uses a 220 basis at 90%:
+
+- Average = 2,610 ÷ 15 = **174** (any fraction would be dropped)
+- Gap to basis = 220 - 174 = 46
+- Handicap = 46 × 0.90 = 41.4, truncated to **41 pins per game**
+
+Over a three game series that is 123 extra pins. If the same bowler had 2,624 pins, the average would be 174.93, which still truncates to 174, so the handicap stays at 41.
+
+### A handicap match
+
+Our 174 average bowler meets a 205 average bowler, who gets (220 - 205) × 0.90 = 13.5, so **13 pins**. If the scratch games are 180 and 198, the handicap totals are 180 + 41 = **221** and 198 + 13 = **211**, so the lower average bowler wins the game by 10 pins after losing it by 18 on scratch.
 
 ## Handicap table (basis 220, 90%)
 
@@ -60,12 +72,35 @@ Enter your **total pins**, **games played**, the league's **basis** and **percen
 | 220 | 90% | Common standard |
 | 230 | 80% or 100% | Competitive leagues |
 
-Check your league rules — some use 100% of the difference.
+Check your league rules, because some use 100% of the difference. The same 174 average gets a very different handicap under each system:
+
+| Basis | 80% | 90% | 100% |
+|---|---|---|---|
+| 200 | 20 | 23 | 26 |
+| 210 | 28 | 32 | 36 |
+| 220 | 36 | 41 | 46 |
+| 230 | 44 | 50 | 56 |
+
 
 ## Establishing an average
 
-Most leagues need at least 3 games (often 9–21) to set a reliable average. Until then, a temporary or previous-season average may be used.
+Leagues set a minimum number of games before an average counts, often 9, 12 or 21, and some accept 3 games at the start of a season. Until then a bowler may use last season's book average, an average from another sanctioned league, or the league's entering average for new bowlers. Many leagues recalculate handicaps every week, so check whether your sheet uses this week's average or the one carried from the previous week.
 
 ## Why use handicaps?
 
 Handicaps let bowlers of different skill levels compete fairly. A 150-average bowler gets enough extra pins to have a real chance against a 200-average bowler.
+
+## Practical notes
+
+- **Use scratch pins only.** Total pins must be your actual pin count without handicap, otherwise the average is inflated and the next handicap shrinks.
+- **Bowlers above the basis.** A 228 average bowler in a 220 league gets a handicap of 0; the calculator never returns a negative handicap, and most leagues do not take pins away.
+- **Absent bowlers.** Leagues usually score an absent bowler as their average minus 10 pins (or a set blind score) plus handicap; that score does not go into the average.
+- **Team handicap.** Team handicap is normally worked out from the sum of the members' averages against a team basis, rather than by adding individual handicaps, so the totals can differ by a pin or two.
+
+## Common mistakes
+
+- **Rounding instead of truncating.** A 41.6 handicap is 41, not 42, and a 174.9 average is 174.
+- **Dividing by the wrong number of games.** Count only games actually bowled; vacancy, absent and blind scores are left out.
+- **Entering the percentage as a whole number on paper.** 90% means multiplying by 0.90, so (220 - 174) × 90 is wrong by a factor of 100.
+- **Mixing league rules.** A 174 average gets 20 pins at 200 and 80% but 56 pins at 230 and 100%, so always copy the basis and percentage from the league rules.
+- **Using a tournament average in a league.** Tournaments often require your highest recent book average, which can be higher than your current league average.

@@ -1,36 +1,6 @@
 # Pages to expand (Part C of the daily task). Take from the top; delete a line once the page is done.
 # Order: priority category, then thinnest body first.
-electronics/555-timer
-electronics/pcb-trace-width
 electronics/led-resistor
-electronics/voltage-divider
-electronics/capacitor-lifetime
-electronics/air-core-inductor
-electronics/differential-amplifier
-electronics/adc-resolution
-electronics/antenna-length
-electronics/mosfet-power-loss
-electronics/sallen-key-low-pass
-electronics/buck-converter
-electronics/rc-filter
-electronics/op-amp-integrator
-electronics/shunt-resistor
-electronics/free-space-path-loss
-electronics/summing-amplifier
-electronics/peukerts-law
-electronics/rl-time-constant
-electronics/current-divider
-electronics/hall-effect-current-sensor
-electronics/capacitor-energy
-electronics/buck-boost-converter
-electronics/resonant-frequency
-electronics/pwm-duty-cycle
-electronics/op-amp-gain
-electronics/transimpedance-amplifier
-electronics/lc-filter
-electronics/inductor-energy
-electronics/wheatstone-bridge
-electronics/flyback-transformer
 electronics/rc-snubber
 physics/inclined-plane
 physics/decibel

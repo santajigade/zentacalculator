@@ -2,10 +2,10 @@
 title: Capacitor Energy Calculator (Stored Energy ½CV² & Charge)
 description: Calculate the energy stored in a capacitor (½CV²), its charge (Q = CV) and the usable energy when it discharges to a lower voltage — for DC links and supercaps.
 category: electronics
-intro: "A capacitor stores energy in the electric field between its plates, and the amount rises with the square of the voltage — see the [capacitor working principle](https://www.instrumentationblog.in/capacitor-working-principle/) and how [supercapacitors](https://www.instrumentationblog.in/supercapacitor-working-principle/) store far more. This capacitor energy calculator gives the stored energy in joules, the charge in coulombs and the usable energy delivered when the capacitor discharges to a lower voltage."
+intro: "A capacitor stores energy in the electric field between its plates, and the amount rises with the square of the voltage; see the [capacitor working principle](https://www.instrumentationblog.in/capacitor-working-principle/) and how [supercapacitors](https://www.instrumentationblog.in/supercapacitor-working-principle/) store far more. This capacitor energy calculator gives stored energy, charge and usable energy.\n\nPower electronics designers use it to size hold-up and backup capacitors, and technicians use it to judge how dangerous a charged capacitor is before working on it."
 keywords: [capacitor energy calculator, energy stored in capacitor, 1/2 cv2, capacitor charge calculator, q = cv, supercapacitor energy, capacitor joules, usable capacitor energy]
 published: 2026-10-27
-updated: 2026-11-09
+updated: 2026-11-23
 variables:
   - { id: C, label: Capacitance, family: capacitance, unit: uF, default: 1000, min: 0 }
   - { id: V, label: Voltage (charged to), family: voltage, unit: V, default: 50, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: Large capacitors in power supplies, VFDs and microwave ovens can hold a lethal charge for minutes after switch-off. Safety standards treat a capacitor above about 60 V DC as a shock hazard once its stored charge exceeds a few tens of microcoulombs — a 10 µF capacitor at 100 V already holds 1,000 µC. Always discharge it and verify 0 V with a meter.
   - q: How do I convert capacitor energy to watt-hours?
     a: Divide joules by 3,600. A 3,000 F, 2.7 V supercapacitor stores 10,935 J, or about 3.04 Wh.
+  - q: "Why is half the energy lost when charging a capacitor from a battery?"
+    a: "The source delivers charge Q at constant voltage V, so it supplies QV, but the capacitor stores only ½QV. For 1,000 µF charged to 50 V the source gives 2.50 J, 1.25 J is stored and 1.25 J is lost as heat in the series resistance, regardless of its value."
+  - q: "How do I measure the capacitance of a supercapacitor?"
+    a: "Discharge it at a constant current and time the voltage fall: C = I × Δt ÷ ΔV. A 1 A discharge falling 1.9 V in 20 s means about 10.5 F. Ignore the instant ESR drop at the start."
 related: [electronics/capacitors-series-parallel, physics/rc-time-constant, electronics/inductor-energy, electronics/capacitor-lifetime]
 ---
 
@@ -78,3 +82,35 @@ A 1,000 µF capacitor charged to 50 V that feeds a circuit which stops working b
 - **Series strings:** capacitors in series share the voltage, so the bank voltage rises but the capacitance falls (1/C = 1/C₁ + 1/C₂); use balancing resistors or active balancing for supercapacitors.
 - **Derating:** electrolytic capacitance has a −20% tolerance and falls with age and cold; ceramic capacitors lose capacitance under DC bias. Use the worst-case value for hold-up time.
 - **Safe discharge:** use a resistor sized for the energy (not a screwdriver), and allow for dielectric absorption — a large capacitor can recover a few percent of its voltage after being shorted.
+
+## Hold-up time from the default capacitor
+
+The default 1,000 µF at 50 V, discharging to 25 V, delivers 0.9375 J. Feeding a converter that draws a steady 5 W from it, the supply rides through for 0.9375 ÷ 5 = **187.5 ms**. If the 5 W is the converter output and it runs at 85% efficiency, only 0.797 J reaches the load, giving **159.4 ms**. With an electrolytic at its −20% tolerance limit the usable energy falls to 0.75 J, so design hold-up on the minimum capacitance.
+
+| Load power | Hold-up (ideal) | Hold-up at 85% efficiency |
+|---|---|---|
+| 1 W | 937.5 ms | 796.9 ms |
+| 2 W | 468.8 ms | 398.4 ms |
+| 5 W | 187.5 ms | 159.4 ms |
+| 10 W | 93.8 ms | 79.7 ms |
+| 20 W | 46.9 ms | 39.8 ms |
+
+## Charging always costs twice the stored energy
+
+Charging the capacitor to 50 V from a fixed voltage source draws Q × V = 0.05 × 50 = **2.50 J** from the source. Only 1.25 J ends up stored; the other **1.25 J** is dissipated in the series resistance, whatever its value. A smaller resistor only makes the loss happen faster with a higher current peak. Inductor-based chargers avoid this by limiting the current instead of the voltage.
+
+## Discharging safely
+
+A 1 kΩ bleed resistor across the default capacitor gives a time constant of 1.0 s. The first instant passes 50 mA and dissipates 2.5 W, and the voltage reaches 5 V after τ × ln(50 ÷ 5) = **2.30 s**. The resistor absorbs the full 1.25 J, so a 3 W wirewound part handles it comfortably; a 0.25 W film resistor could fail open on larger banks.
+
+## Measuring capacitance from a discharge
+
+Supercapacitor capacitance is measured by constant-current discharge, as in IEC 62391-1: C = I × Δt ÷ ΔV, taken over the linear part of the curve after the initial ESR step. A cell discharged at 1 A that falls 1.9 V in 20 s has C = 1 × 20 ÷ 1.9 = **10.5 F**. The sudden drop when the current starts, divided by the current, gives the ESR.
+
+## Common mistakes
+
+- **Entering microfarads as farads.** Using 1,000 F instead of 1,000 µF gives 1,250,000 J, a million times too much.
+- **Using E = QV.** That is the energy drawn from the source; the energy stored is half of it, ½QV.
+- **Counting all the stored energy as usable.** Below the regulator's minimum input the remaining 25% stays in the capacitor.
+- **Ignoring ESR at high discharge current.** The I × ESR drop raises the effective cut-off voltage and reduces usable energy.
+- **Exceeding the voltage rating in series banks.** Without balancing, leakage differences can put one cell above its rating.

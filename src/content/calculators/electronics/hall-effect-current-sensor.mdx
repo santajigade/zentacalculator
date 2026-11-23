@@ -2,10 +2,10 @@
 title: Hall-Effect Current Sensor Calculator (Vout, I & ADC)
 description: Convert current to output voltage and back for a Hall-effect current sensor such as the ACS712, with ADC counts and current resolution per count.
 category: electronics
-intro: "A Hall-effect current sensor outputs a voltage proportional to the current through it, centred on a zero-current offset — usually half the supply for ratiometric parts. This Hall-effect current sensor calculator converts current to output voltage and back, and gives the ADC reading and current resolution for a microcontroller; see how the [ACS712 Hall-effect current sensor](https://www.instrumentationblog.in/hall-effect-current-sensor-acs712/) works."
+intro: "A Hall-effect current sensor gives an output voltage proportional to the current through it, centred on a zero-current offset that is usually half the supply. This Hall-effect current sensor calculator converts current to output voltage and back, and gives the ADC reading and current per count; see how the [ACS712 Hall-effect current sensor](https://www.instrumentationblog.in/hall-effect-current-sensor-acs712/) works.\n\nMakers, embedded developers and test engineers use it to scale firmware, pick a sensor range and judge how finely a microcontroller can resolve current."
 keywords: [hall effect current sensor calculator, acs712 calculator, acs712 voltage to current, current sensor sensitivity mv/a, hall sensor output voltage, acs712 adc conversion, arduino current sensor formula]
 published: 2026-11-07
-updated: 2026-11-07
+updated: 2026-11-23
 variables:
   - { id: Vq, label: Zero-current output (offset), family: voltage, unit: V, default: 2.5 }
   - { id: S, label: Sensitivity, suffix: mV/A, default: 185, min: 0.000001 }
@@ -28,6 +28,10 @@ faq:
     a: Voltage = reading × Vref ÷ 1024 for a 10-bit ADC, then I = (voltage − Vq) ÷ sensitivity. Calibrate Vq by reading the sensor with no current flowing.
   - q: Why is my reading noisy?
     a: With a 10-bit ADC one count is about 26 mA on the 5 A sensor, and the sensor itself has noise of a few tens of mA. Average many samples, add the recommended filter capacitor, and use the smallest range that covers your current.
+  - q: "Can I use a 5 V Hall-effect current sensor with a 3.3 V microcontroller?"
+    a: "Only with care. The output centres on 2.5 V and reaches 3.3 V at about 4.32 A on a 185 mV/A part, so the upper range is lost and the pin can be overdriven. Scale the output with a resistor divider and include the divider ratio in the conversion."
+  - q: "Does the sensor supply voltage change the current reading?"
+    a: "Yes for ratiometric sensors. At a 4.8 V supply the offset is 2.40 V and the sensitivity 177.6 mV/A, so fixed constants read 2 A as 1.38 A. Using the same rail as the ADC reference cancels the error."
 related: [electronics/shunt-resistor, electronics/adc-resolution, electronics/op-amp-gain, electrical/ct-burden]
 ---
 
@@ -63,3 +67,35 @@ ACS712 ±5 A (185 mV/A) on a 5 V supply, measuring 2 A with a 10-bit ADC and a 5
 - Zero the offset in firmware at start-up with no current flowing; offset drift with temperature is often the largest error at low current.
 - Keep strong magnetic fields and high-current wires away from the sensor package; they shift the reading.
 - For AC current, sample fast and compute RMS from the samples after subtracting the offset.
+
+## Second example: reverse and AC current
+
+With the default 2.5 V offset, 185 mV/A, 5 V reference and 10 bits, a current of **−3 A** gives V<sub>out</sub> = 2.5 − 0.185 × 3 = **1.945 V**, which the ADC reads as 1.945 ÷ 5 × 1,024 = **398.3 counts**. The sensor is bidirectional, so anything below 512 counts is current flowing the other way.
+
+For an AC load of 2 A RMS, the peak current is 2 × √2 = 2.828 A, so the output swings between **1.977 V** and **3.023 V** around the offset. Subtract the offset from every sample before squaring; computing RMS on the raw voltage gives a figure dominated by the 2.5 V DC level.
+
+## Why ratiometric output matters
+
+The ACS712 offset and sensitivity both scale with its supply. If a USB rail sags to 4.8 V, the offset becomes 2.40 V and the sensitivity 177.6 mV/A, so 2 A gives 2.7552 V. Firmware that converts with a fixed 2.5 V and 185 mV/A would report **1.38 A**. When the ADC reference is the same 4.8 V rail, the reading stays at **587.8 counts** and converts back to exactly 2.00 A, because both sides scaled together. Reference the ADC to the sensor supply, or measure that supply and correct for it.
+
+## Sensitivity versus resolution at 2 A
+
+Same 2.5 V offset and 5 V reference:
+
+| Sensitivity | V<sub>out</sub> at 2 A | 10-bit counts | Per count, 10-bit | Per count, 12-bit |
+|---|---|---|---|---|
+| 400 mV/A | 3.300 V | 675.8 | 12.2 mA | 3.05 mA |
+| 185 mV/A | 2.870 V | 587.8 | 26.4 mA | 6.60 mA |
+| 100 mV/A | 2.700 V | 553.0 | 48.8 mA | 12.21 mA |
+| 66 mV/A | 2.632 V | 539.0 | 74.0 mA | 18.50 mA |
+| 40 mV/A | 2.580 V | 528.4 | 122.1 mA | 30.52 mA |
+
+A higher sensitivity gives finer resolution but a smaller range before the output reaches the supply rail. Averaging 16 samples cuts random noise by √16 = 4, so the effective step on the 185 mV/A part improves from 26.4 mA towards 6.6 mA if the noise is enough to dither the readings.
+
+## Common mistakes
+
+- **Feeding a 5 V sensor into a 3.3 V ADC.** The input saturates at 3.3 V, which is only 4.32 A on the 185 mV/A part, and higher outputs can exceed the pin's absolute maximum. Use a resistor divider and rescale.
+- **Assuming the ADC reference is exactly 5 V.** USB supplies range roughly 4.75 to 5.25 V; a fixed constant in firmware turns that into a gain error.
+- **Hard coding the offset as 512 counts.** Each part has its own zero error; read it at start-up with no current flowing.
+- **Choosing the wrong variant.** The 5 A, 20 A and 30 A parts look identical; check the marking before trusting 185 mV/A.
+- **Leaving the filter pin open.** The bandwidth is then at its maximum and so is the noise; add the datasheet filter capacitor if you do not need fast transients.

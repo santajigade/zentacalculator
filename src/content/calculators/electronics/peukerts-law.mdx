@@ -2,10 +2,10 @@
 title: Peukert's Law Calculator (Battery Runtime at High Current)
 description: Estimate real battery runtime and effective capacity at any discharge current with Peukert's law, from the rated Ah, rated hours and Peukert exponent.
 category: electronics
-intro: "A battery's amp-hour rating is measured at a specific discharge time — usually 20 hours for lead-acid — and it delivers less capacity when discharged faster. This Peukert's law calculator corrects the simple Ah ÷ A estimate for the discharge rate, giving the realistic runtime and effective capacity; for overall [battery backup time](https://www.instrumentationblog.in/calculate-battery-backup-time/) planning, also allow for depth of discharge and inverter losses."
+intro: "A battery's amp-hour rating is measured at one discharge time, usually 20 hours for lead-acid, and it delivers less when discharged faster. This Peukert's law calculator corrects the simple Ah ÷ A estimate for the discharge rate, giving the realistic runtime and effective capacity.\n\nSolar installers, UPS designers and RV owners use it to size battery banks; for full [battery backup time](https://www.instrumentationblog.in/calculate-battery-backup-time/) planning, also allow for depth of discharge and inverter losses."
 keywords: [peukert's law calculator, peukert calculator, battery runtime calculator, peukert exponent, battery discharge time, effective battery capacity, lead acid battery runtime]
 published: 2026-11-07
-updated: 2026-11-07
+updated: 2026-11-23
 variables:
   - { id: C, label: Rated capacity, suffix: Ah, default: 100, min: 0 }
   - { id: H, label: Rated discharge time (C-rating hours), family: seconds, unit: h, default: 20, min: 0 }
@@ -29,6 +29,8 @@ faq:
     a: Take two ratings, for example the 20 h and 5 h capacities. Convert each to a current (I = Ah ÷ h), then k = ln(t₂/t₁) ÷ ln(I₁/I₂).
   - q: Does Peukert's law apply at low currents?
     a: Below the rated current it predicts more than the rated capacity, which real batteries do not reliably deliver because of self-discharge. Treat the rated Ah as the ceiling.
+  - q: "Does connecting two batteries in parallel more than double the runtime?"
+    a: "With lead-acid, yes. At 10 A a single 100 Ah C20 battery with k = 1.2 lasts 8.71 h, while two in parallel each supply 5 A and last 20 h, 2.30 times longer, because each battery is discharged at a gentler rate."
 related: [ecology/battery-storage, electrical/battery-bank-size, everyday-life/inverter-battery-backup, other/battery-life]
 ---
 
@@ -67,3 +69,34 @@ A 100 Ah battery rated at the 20-hour rate (k = 1.2) supplies a 10 A load:
 - **Usable depth of discharge** — lead-acid batteries last much longer if discharged only to 50%; multiply the runtime by the depth of discharge you plan to use.
 - **Temperature** — capacity falls by roughly 0.5–1% per °C below 25 °C for lead-acid; allow extra margin in cold locations.
 - **Varying loads** — Peukert's law assumes a constant current. For mixed loads, apply it to each period or use the average current as an approximation.
+
+## Three practical questions for the default battery
+
+The default 100 Ah C20 battery with k = 1.2 runs a 10 A load for 8.71 h to full discharge. Building on that:
+
+1. **To 50% depth of discharge**, the usual limit for long lead-acid life, the runtime is about 0.5 × 8.71 = **4.35 h**, not the 5 h a simple Ah ÷ A estimate suggests.
+2. **For a required 5 h runtime**, invert the law: I = C ÷ (H × (t ÷ H)<sup>1/k</sup>) = 100 ÷ (20 × 0.25<sup>0.833</sup>) = **15.87 A** is the largest constant load the battery can carry.
+3. **With a second battery in parallel**, each battery supplies 5 A, its rated current, so the bank runs for **20 h**, which is 2.30 times the single battery runtime rather than twice it.
+
+## Runtime at 10 A as batteries are added in parallel
+
+| Batteries | Bank capacity | Current per battery | Peukert runtime | Capped at rated Ah |
+|---|---|---|---|---|
+| 1 | 100 Ah | 10.00 A | 8.71 h | 8.71 h |
+| 2 | 200 Ah | 5.00 A | 20.00 h | 20.00 h |
+| 3 | 300 Ah | 3.33 A | 32.53 h | 30.00 h |
+| 4 | 400 Ah | 2.50 A | 45.95 h | 40.00 h |
+
+Above two batteries each one discharges below its rated current, where Peukert's law predicts more than the rated capacity. Use the capped column for design, as the existing notes advise.
+
+## Measuring capacity and the exponent
+
+A capacity test discharges a fully charged battery at constant current at 25 °C until the terminal voltage reaches the end voltage, usually 1.75 V per cell (10.5 V for a 12 V block). The rated current for the default battery is 5 A, so a healthy unit should last close to 20 h. Repeat the test at a higher current, such as 20 A, and the two runtimes give the exponent with the formula above. Batteries below 80% of rated capacity are normally due for replacement, and their exponent tends to rise with age.
+
+## Common mistakes
+
+- **Entering the wrong rating hours.** If the same 100 Ah figure were a C10 rating, the 10 A load would be the rated current and the runtime would be 10 h, not 8.71 h.
+- **Converting watts to amps at nominal voltage.** A 1,000 W inverter load at 90% efficiency draws 92.6 A at 12 V but 101.0 A as the battery sags to 11 V, so use the lower voltage.
+- **Using a lead-acid exponent for lithium.** A LiFePO4 battery with k ≈ 1.03 would run the default load for about 9.79 h; entering 1.2 understates it by more than an hour.
+- **Ignoring temperature.** The exponent and capacity are quoted at 25 °C; a cold battery loses capacity at every current.
+- **Applying it to short pulses.** Engine cranking and inrush loads recover between pulses, so the constant current law overstates their effect.

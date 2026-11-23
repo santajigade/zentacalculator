@@ -2,10 +2,10 @@
 title: Sallen-Key Low-Pass Filter Calculator (Cutoff Frequency & Q)
 description: Calculate the cutoff frequency, Q factor and attenuation of a unity-gain Sallen-Key second-order active low-pass filter from R1, R2, C1 and C2.
 category: electronics
-intro: "The Sallen-Key topology builds a second-order active filter from one op-amp, two resistors and two capacitors, giving a 40 dB-per-decade roll-off. This Sallen-Key low-pass filter calculator finds the cutoff frequency, the Q factor and the attenuation at any frequency for the unity-gain version — see the [Sallen and Key active filter](https://www.instrumentationblog.in/active-filter-sallen-and-key/) explained and compare it with a simple [RC low-pass filter](https://www.instrumentationblog.in/rc-low-pass-high-pass-filter/)."
+intro: "The Sallen-Key topology builds a second-order active filter from one op-amp, two resistors and two capacitors, rolling off at 40 dB per decade. This Sallen-Key low-pass filter calculator gives the cutoff frequency, Q factor and gain at any frequency for the unity-gain version; see the [Sallen and Key active filter](https://www.instrumentationblog.in/active-filter-sallen-and-key/) explained.\n\nAnalogue designers use it for anti-aliasing and sensor smoothing, choosing parts for a target response, and comparing it with a simple [RC low-pass filter](https://www.instrumentationblog.in/rc-low-pass-high-pass-filter/)."
 keywords: [sallen key low pass filter calculator, sallen key filter calculator, second order low pass filter, active low pass filter calculator, sallen key cutoff frequency, butterworth filter op amp, sallen key q factor]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-23
 variables:
   - { id: R1, label: R₁ (input resistor), family: resistance, unit: kohm, default: 10, min: 0 }
   - { id: R2, label: R₂ (second resistor), family: resistance, unit: kohm, default: 10, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: Choose R₁ = R₂ = R and C₁ = 2C₂ (so Q = 0.707), then set f₀ = 1/(2πR C₂√2). For example R = 10 kΩ, C₂ = 10 nF and C₁ = 20 nF give about 1.13 kHz.
   - q: What is the roll-off of a Sallen-Key filter?
     a: 40 dB per decade (12 dB per octave) above the cutoff. Cascade two stages with the right Q values for a fourth-order, 80 dB/decade filter.
+  - q: "What phase shift does a Sallen-Key low-pass filter give at f₀?"
+    a: "Exactly −90° at the natural frequency, whatever the Q. At low frequencies the phase is near 0° and well above f₀ it approaches −180°. Measuring the −90° point is a reliable way to find f₀ on the bench; with the defaults it is 1,073 Hz."
+  - q: "Why is the −3 dB frequency different from f₀?"
+    a: "Only a Butterworth filter (Q = 0.7071) has its −3 dB point at f₀. The defaults give Q = 0.7416, so the gain stays a little higher and falls to −3 dB at 1,123 Hz."
 related: [electronics/rc-filter, electronics/resonant-frequency, electronics/op-amp-gain, electronics/reactance]
 ---
 
@@ -68,3 +72,33 @@ For the Chebyshev case f₀ is the natural frequency, not the −3 dB point.
 - Use C0G/NP0 or film capacitors; X7R ceramics change value with voltage and add distortion.
 - The op-amp's gain-bandwidth product should be at least 100 × f₀ × Q for an accurate response.
 - High-frequency feedthrough limits the stop-band depth of Sallen-Key low-pass filters; a multiple-feedback (MFB) topology is better when deep attenuation is needed.
+
+## Where the default filter really cuts off
+
+With the default parts Q is 0.7416, a little above the Butterworth value of 0.7071, so f₀ is not quite the −3 dB point. Solving |H| = 0.7071 gives **1,123 Hz**, about 4.6% above f₀. The response also peaks slightly: the maximum gain is **1.0042** (+0.036 dB) at 324 Hz. That is far too small to hear or see on a scope, but it shows how Q shapes the knee.
+
+| Frequency | Value | Gain | Gain (dB) |
+|---|---|---|---|
+| 0.5 f₀ | 537 Hz | 0.9916 | -0.07 dB |
+| 1 f₀ | 1,073 Hz | 0.7416 | -2.60 dB |
+| 2 f₀ | 2,146 Hz | 0.2479 | -12.11 dB |
+| 4 f₀ | 4,292 Hz | 0.0627 | -24.05 dB |
+| 10 f₀ | 10,730 Hz | 0.0100 | -39.99 dB |
+
+Above about 2 f₀ each doubling of frequency costs close to 12 dB, the second-order slope.
+
+## Scaling the design to a new frequency
+
+To move the same response to about 10 kHz, keep both capacitors and divide both resistors by the same factor. Q depends only on the ratios, so it stays at 0.7416. The ideal value is 10 kΩ × 1,073 ÷ 10,000 = 1,073 Ω; the nearest E24 value, **1.1 kΩ**, gives f₀ = **9,755 Hz**. Scaling capacitors instead works the same way, but resistors come in finer steps.
+
+## Checking a built filter
+
+Drive the input from a signal generator at about 1 V and sweep the frequency while a two-channel scope or a Bode analyser compares input and output. The cleanest marker is phase: a second-order low-pass is exactly −90° at f₀ regardless of Q, so it confirms the natural frequency even when the −3 dB point has moved. Then read the gain at f₀, which equals Q, to check the capacitor ratio. Parts with 5% tolerance can move f₀ by several percent.
+
+## Common mistakes
+
+- **Swapping C₁ and C₂.** With 10 nF in the feedback position and 22 nF to ground, Q falls to 0.337 and the knee becomes soft and early.
+- **Ignoring the source resistance.** The driving impedance adds to R₁, lowering f₀ and changing Q, so drive the filter from a buffer or include it in R₁.
+- **Choosing a slow op-amp.** The default needs a gain-bandwidth product of at least 79.6 kHz by the 100 × f₀ × Q rule; slower parts shift the response.
+- **Using the unity-gain Q formula for a gain stage.** Adding gain resistors to the op-amp changes Q, so use the equal-component gain-set equations instead.
+- **Expecting endless stop-band rejection.** Output impedance rising with frequency lets signal leak through C₁, so attenuation stops improving well above f₀.

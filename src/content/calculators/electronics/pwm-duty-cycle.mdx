@@ -2,10 +2,10 @@
 title: "PWM Duty Cycle Calculator (Average & RMS Voltage)"
 description: Calculate PWM duty cycle, period, on-time and average output voltage from frequency and pulse width — for motor speed control, LEDs and microcontrollers.
 category: electronics
-intro: "Pulse width modulation controls power by switching a supply fully on and off very fast, varying the on-time to set the average. It drives motors, dims LEDs and is at the heart of [VFDs](https://www.instrumentationblog.in/vfd-working-principle-explained/) — see [pulse width modulation and duty cycle](https://www.instrumentationblog.in/pulse-width-modulation-duty-cycle/). This free PWM duty cycle calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Pulse width modulation controls power by switching a supply fully on and off very fast and varying the on-time to set the average; see [pulse width modulation and duty cycle](https://www.instrumentationblog.in/pulse-width-modulation-duty-cycle/). This PWM duty cycle calculator solves for period, duty, off time and average and RMS voltage.\n\nEmbedded developers, motor and lighting engineers and technicians use it to set timer registers, dim LEDs, control DC motors and understand [VFDs](https://www.instrumentationblog.in/vfd-working-principle-explained/)."
 keywords: [pwm duty cycle calculator, duty cycle formula, pwm average voltage, pulse width modulation, on time off time, pwm frequency, arduino pwm]
 published: 2026-10-27
-updated: 2026-11-07
+updated: 2026-11-23
 variables:
   - { id: f, label: PWM frequency, family: frequency, unit: kHz, default: 1, min: 0 }
   - { id: ton, label: On time (pulse width), family: seconds, unit: ms, default: 0.25, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: About 20–25 kHz for DC motors to stay above hearing, a few hundred hertz or more for LED dimming to avoid visible flicker, and 50 Hz for hobby servos.
   - q: How does an 8-bit PWM value map to duty cycle?
     a: Duty = value ÷ 255. An analogWrite of 64 on an Arduino gives about 25%.
+  - q: "Does changing the PWM frequency change the duty cycle?"
+    a: "Only if the on-time is held fixed. A 0.25 ms pulse is 25% at 1 kHz but 50% at 2 kHz. Microcontroller PWM normally holds the compare value as a fraction of the period, so the duty stays the same when the frequency changes."
+  - q: "How much ripple is left after an RC filter on a PWM output?"
+    a: "For the default 1 kHz, 25%, 12 V signal into 10 kΩ and 1 µF, the ripple is about 225 mV peak to peak around the 3 V average. Increasing the time constant or the PWM frequency reduces it."
 related: [electronics/555-timer, electronics/buck-converter, physics/wavelength-frequency, electronics/rc-filter]
 ---
 
@@ -93,3 +97,38 @@ A resistive heater cares about RMS (its power is V²/R), while a DC motor's spee
 - To turn PWM into a steady analogue voltage, add an [RC low-pass filter](/electronics/rc-filter/) with a cutoff at least 10× below the PWM frequency.
 - Inductive loads (motors, solenoids) need a flyback diode across them; the current keeps flowing during the off time.
 - At very low or very high duty cycles, the driver's rise and fall times become a large part of the pulse and the real average differs from D × V.
+
+## Filtering the default signal into a DC level
+
+Passing the default 1 kHz, 25%, 12 V signal through a 10 kΩ and 1 µF low-pass filter (τ = 10 ms, cutoff 15.9 Hz) gives a 3 V average with a steady-state ripple of
+
+V<sub>pp</sub> = V (1 − e<sup>−t<sub>on</sub>/τ</sup>)(1 − e<sup>−t<sub>off</sub>/τ</sup>) ÷ (1 − e<sup>−T/τ</sup>) = **225 mV**
+
+and takes about 5τ = **50 ms** to settle after a duty change. A bigger time constant lowers the ripple but slows the response:
+
+| Time constant | Cutoff | Ripple (p-p) | Settling (5τ) |
+|---|---|---|---|
+| 1 ms | 159.2 Hz | 2,216 mV | 5 ms |
+| 2.2 ms | 72.3 Hz | 1,019 mV | 11 ms |
+| 4.7 ms | 33.9 Hz | 478 mV | 23.5 ms |
+| 10 ms | 15.9 Hz | 225 mV | 50 ms |
+| 22 ms | 7.2 Hz | 102 mV | 110 ms |
+| 47 ms | 3.4 Hz | 48 mV | 235 ms |
+
+Raising the PWM frequency is the better lever: the ripple falls almost in proportion to frequency without slowing the response.
+
+## On-time versus duty register
+
+Timers set either a fixed on-time or a fixed compare value relative to the period. Keeping the 0.25 ms pulse but moving to 2 kHz makes the duty **50%** and the average 6 V, while a fixed compare value keeps 25% at any frequency. Servos are the opposite case: they read the pulse width, so 1.5 ms at 50 Hz is centre position even though the duty is only 7.5%.
+
+## Measuring PWM in practice
+
+An oscilloscope shows the duty directly and reveals slow edges. Most digital multimeters on DC volts display the average, 3 V for the default signal, while a true RMS meter set to AC+DC reads 6 V. Many meters also have a duty-cycle % function, but it needs a clean signal above the meter's trigger level. For a 6 Ω heater the power at 25% is 6² ÷ 6 = 6 W, a quarter of the 24 W at full on.
+
+## Common mistakes
+
+- **Forgetting inverted drive logic.** A P-channel high-side switch or an active-low driver is on when the pin is low, so the load sees 100% minus the programmed duty.
+- **Changing frequency with a fixed on-time.** As shown above, the duty and output double when the frequency doubles.
+- **Setting the filter cutoff too close to the PWM frequency.** With τ = 1 ms at 1 kHz the ripple is still 2,216 mV, far from a clean DC level.
+- **Ignoring edge time at high frequency.** At 20 kHz the period is 50 µs, so 2 µs rise and fall edges are a noticeable part of a 25% on-time of 12.5 µs.
+- **Measuring with an average-responding AC meter.** On a pulse train it reads neither the average nor the RMS correctly.

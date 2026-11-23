@@ -2,10 +2,10 @@
 title: Voltage Divider Calculator
 description: Calculate the output voltage of a resistor voltage divider, or the resistor values needed for a target output — with divider current and power.
 category: electronics
-intro: "Two resistors in series split a voltage in proportion to their values — the voltage divider. It is used everywhere to scale signals and set reference levels, as covered in the [voltage divider rule explained](https://www.instrumentationblog.in/voltage-divider-rule-explained/), which follows from [Kirchhoff's voltage law](https://www.instrumentationblog.in/kirchhoffs-voltage-law-kvl-explained/)."
+intro: "Two resistors in series split a voltage in proportion to their values, giving a smaller output at their junction. This voltage divider calculator finds that output voltage, the divider current and the power wasted, as set out in the [voltage divider rule explained](https://www.instrumentationblog.in/voltage-divider-rule-explained/), which follows from [Kirchhoff's voltage law](https://www.instrumentationblog.in/kirchhoffs-voltage-law-kvl-explained/).\n\nElectronics designers and students use it to scale sensor and battery voltages for ADC inputs, set regulator feedback and bias transistors."
 keywords: [voltage divider calculator, resistor divider, voltage divider formula, vout r2/(r1+r2), potential divider, resistor ratio calculator]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-23
 variables:
   - { id: Vin, label: Input voltage, family: voltage, unit: V, default: 12, min: 0 }
   - { id: R1, label: R1 (top), family: resistance, unit: kohm, default: 10, min: 0 }
@@ -26,6 +26,8 @@ faq:
     a: Generally no. The output voltage changes with load current. Use a voltage regulator to power circuits; dividers are for sensing and reference voltages.
   - q: How do I scale 24 V down for a 3.3 V ADC?
     a: A 62 kΩ / 10 kΩ divider gives 24 × 10 ÷ 72 = 3.33 V. Add a small capacitor across R2 to filter noise.
+  - q: "What is the output impedance of a voltage divider?"
+    a: "It is R1 and R2 in parallel, R1 × R2 ÷ (R1 + R2). For 10 kΩ and 4.7 kΩ that is 3.20 kΩ, and any load sees the divider as a 3.837 V source behind that resistance."
 related: [electronics/resistor-color-code, electronics/snr, electronics/current-divider, physics/ohms-law, physics/resistors-series-parallel, electronics/adc-resolution]
 ---
 
@@ -61,3 +63,43 @@ A load resistance R<sub>L</sub> across R2 acts in parallel with it, reducing the
 ## Measuring with a divider
 
 Dividers scale high voltages for ADCs and meters. Use 1% or better resistors with low temperature coefficients for accurate measurement, and make sure each resistor's voltage rating is not exceeded.
+
+## Worked example with the default values
+
+12 V across R1 = 10 kΩ and R2 = 4.7 kΩ:
+
+- Total resistance = 14.7 kΩ, so I = 12 ÷ 14,700 = **0.816 mA**
+- V<sub>out</sub> = 12 × 4.7 ÷ 14.7 = **3.837 V**
+- Power = 12 × 0.816 mA = **9.80 mW**, of which R1 takes 6.66 mW and R2 3.13 mW
+
+Even the larger share is tiny, so 0.125 W parts are fine here. Seen from the output, the divider behaves like a 3.837 V source with an internal resistance of R1 ∥ R2 = **3.20 kΩ**, which is the number that decides how much a load pulls it down.
+
+## How much a load pulls the output down
+
+Using that 3.20 kΩ source resistance:
+
+| Load across R2 | Output | Change |
+|---|---|---|
+| 4.7 kΩ | 2.283 V | -40.49% |
+| 47.0 kΩ | 3.592 V | -6.37% |
+| 100.0 kΩ | 3.718 V | -3.10% |
+| 1,000.0 kΩ | 3.825 V | -0.32% |
+| 10,000.0 kΩ | 3.836 V | -0.03% |
+
+The common rule of keeping the load at ten times R2 (47 kΩ here) still costs -6.4%. For a measurement input, aim for a load at least 100 to 1,000 times the source resistance, or buffer it.
+
+## Resistor tolerance
+
+With 1% resistors the worst case is R1 low and R2 high, or the reverse. The default divider can then give anything from 3.785 V to 3.889 V, about ±1.4%. Ratio errors do not cancel unless both resistors come from the same matched network.
+
+## In practice
+
+When feeding a microcontroller ADC, the sampling capacitor charges through the source resistance on every conversion; many datasheets ask for 10 kΩ or less, which the 3.20 kΩ default meets. Scaling both resistors up ten times to 100 kΩ and 47 kΩ cuts the current to 82 µA, but then a 10 to 100 nF capacitor from the output to ground is needed to hold the voltage during sampling. Check a built divider by measuring V<sub>out</sub> with the load connected, not with the meter alone.
+
+## Common mistakes
+
+- **Swapping R1 and R2.** The output is taken across the bottom resistor; reversing them gives 12 × 10 ÷ 14.7 = 8.16 V, which could damage a 3.3 V input.
+- **Powering a load from a divider.** Any load current changes the output, and the resistors waste power continuously.
+- **Ignoring resistor voltage rating.** A small SMD resistor is often rated around 50 to 200 V, so a mains or high voltage divider needs several resistors in series.
+- **Leaving a divider on a battery permanently.** Even a fraction of a milliamp drains a small battery over months; switch it with a MOSFET or use megohm values.
+- **Using very high values near noise sources.** Megohm dividers pick up interference and leakage, so add a filter capacitor across R2.

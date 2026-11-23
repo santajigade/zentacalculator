@@ -2,10 +2,10 @@
 title: LC Resonant Frequency Calculator (f = 1/2π√LC, Q & Bandwidth)
 description: Calculate the resonant frequency of an LC circuit, the L or C needed to tune to a frequency, and the Q factor and bandwidth of a series RLC circuit.
 category: electronics
-intro: "An inductor and a capacitor together resonate at one frequency, where their reactances are equal and cancel — the principle behind radio tuning, oscillators and tuned filters, explained in [LC resonant circuit frequency](https://www.instrumentationblog.in/lc-resonant-circuit-frequency/). This LC resonant frequency calculator gives the resonant frequency from L and C (or the component needed for a target frequency), plus the reactance at resonance, the Q factor and the bandwidth when you add the circuit's series resistance."
+intro: "An inductor and a capacitor resonate at the one frequency where their reactances are equal and cancel, as explained in [LC resonant circuit frequency](https://www.instrumentationblog.in/lc-resonant-circuit-frequency/). This LC resonant frequency calculator finds that frequency from L and C, or the part needed for a target, with reactance, Q and bandwidth.\n\nRadio designers, filter designers and electronics students use it to tune oscillators, receivers, wireless chargers and notch filters."
 keywords: [resonant frequency calculator, lc resonant frequency calculator, lc resonance, tank circuit, resonance frequency formula, rlc q factor, resonance bandwidth, 1/2pi sqrt lc]
 published: 2026-11-09
-updated: 2026-11-09
+updated: 2026-11-23
 variables:
   - { id: L, label: Inductance, suffix: µH, default: 10, min: 0 }
   - { id: C, label: Capacitance, family: capacitance, unit: nF, default: 100, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: Enter the target frequency and the inductance, then press × on Capacitance. C = 1 ÷ ((2πf)² L) — for example 240 µH needs about 105 pF to tune to 1 MHz.
   - q: What sets the bandwidth of a resonant circuit?
     a: Resistance. For a series RLC circuit Q = X ÷ R = (1/R)√(L/C) and the −3 dB bandwidth is f₀ ÷ Q, so halving R halves the bandwidth and makes the resonance twice as sharp.
+  - q: "Why can the capacitor voltage be higher than the supply at resonance?"
+    a: "In a series RLC circuit the current at resonance is limited only by R, and the voltages across L and C are each Q times the drive voltage but opposite in phase. With the default values Q = 10, so a 1 V source puts 10 V across the capacitor."
+  - q: "How do I measure the Q of a resonant circuit?"
+    a: "Sweep the frequency, find the peak at f₀ and the two points where the response is 0.707 of the peak, then divide f₀ by their difference. For the default circuit the edges are about 151,396 Hz and 167,312 Hz, giving Q = 10."
 related: [electronics/lc-filter, electronics/reactance, electronics/air-core-inductor, electronics/crystal-load-capacitance]
 ---
 
@@ -88,3 +92,38 @@ L = 10 µH, C = 100 nF and a total series resistance of 1 Ω:
 - Coil resistance rises with frequency (skin effect), so Q measured at the working frequency is lower than a DC-resistance estimate suggests.
 - Capacitors for tuned circuits should be stable types: C0G/NP0 ceramic, silver mica or polypropylene. X7R and Y5V ceramics drift with temperature and voltage.
 - For a second-order low-pass filter (inductor in series, capacitor across a load), use the [LC filter calculator](/electronics/lc-filter/) to see the attenuation and peaking.
+
+## Where the default circuit's bandwidth edges fall
+
+For the default 10 µH, 100 nF and 1 Ω, the bandwidth of 15,915 Hz is not split exactly evenly around 159,155 Hz. The exact −3 dB frequencies of a series RLC circuit are f₀ × (√(1 + 1/4Q²) ∓ 1/2Q), which gives **151,396 Hz** and **167,312 Hz**. Their geometric mean is f₀, which is why resonance curves look symmetrical on a logarithmic frequency axis.
+
+Driven by 1 V at resonance, the current is 1 V ÷ 1 Ω = 1 A and the voltage across the capacitor and the inductor is Q times the drive, **10 V** each, in antiphase so they cancel. Used as a parallel tank with the same coil, the impedance at resonance is about Q × X = **100 Ω**.
+
+## Q and bandwidth versus series resistance
+
+Default L and C, 1 V drive:
+
+| Series R | Q | Bandwidth | Voltage across C at f₀ |
+|---|---|---|---|
+| 0.1 Ω | 100.00 | 1,592 Hz | 100.00 V |
+| 0.5 Ω | 20.00 | 7,958 Hz | 20.00 V |
+| 1 Ω | 10.00 | 15,915 Hz | 10.00 V |
+| 2 Ω | 5.00 | 31,831 Hz | 5.00 V |
+| 5 Ω | 2.00 | 79,577 Hz | 2.00 V |
+| 10 Ω | 1.00 | 159,155 Hz | 1.00 V |
+
+## Second example: tuning the AM broadcast band
+
+A 240 µH ferrite rod coil covering 530 to 1,700 kHz needs **375.7 pF** at the bottom of the band and **36.5 pF** at the top. Because f varies as 1/√C, a frequency ratio of 3.21 needs a capacitance ratio of 10.3. A classic variable capacitor of about 10 to 365 pF just covers it once wiring and coil stray capacitance are added.
+
+## Measuring resonance on the bench
+
+Drive the circuit from a signal generator through a small coupling capacitor or a high resistance, watch the voltage across the capacitor on an oscilloscope, and sweep for the peak. Note the two frequencies where the amplitude falls to 0.707 of the peak; their difference is the bandwidth and Q = f₀ ÷ BW. A vector network analyser or an LCR meter that sweeps frequency does the same job automatically.
+
+## Common mistakes
+
+- **Leaving out the 2π.** 1 ÷ √(LC) is the angular frequency, 1,000,000 rad/s here; quoting it as hertz is 6.28 times too high.
+- **Driving it straight from a 50 Ω generator.** The source resistance adds to R, so Q falls from 10 to 0.20 and the peak almost disappears; couple in loosely.
+- **Rating the capacitor for the supply voltage.** At resonance it sees Q times the drive, 10 V from 1 V in this example.
+- **Ignoring the scope probe.** A ×10 probe adds roughly 10 to 15 pF, enough to pull a small-capacitance tank noticeably lower in frequency.
+- **Using series-circuit formulas for a parallel tank fed by a resistive source.** The source and load resistances also damp a parallel circuit and lower its Q.

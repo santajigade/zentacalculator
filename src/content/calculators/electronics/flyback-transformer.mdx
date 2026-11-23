@@ -2,10 +2,10 @@
 title: Flyback Transformer Calculator (Turns Ratio & Inductance)
 description: Calculate flyback transformer turns ratio, reflected voltage, switch voltage stress, peak current and primary inductance from input, output and duty cycle.
 category: electronics
-intro: "A flyback converter stores energy in a coupled inductor while the switch is on and releases it to the output when the switch turns off, so the transformer turns ratio sets both the duty cycle and the voltage the switch must block. This flyback transformer calculator gives the turns ratio, the reflected output voltage, the drain–source voltage stress, the peak primary current and the primary inductance for operation at the edge of discontinuous mode, as described in [how a flyback converter works](https://www.instrumentationblog.in/flyback-converter-working-principle-explained/)."
+intro: "A flyback converter stores energy in a gapped coupled inductor while the switch is on and delivers it to the output when the switch turns off. This flyback transformer calculator gives the turns ratio, reflected voltage, switch voltage stress, peak currents and primary inductance; see [how a flyback converter works](https://www.instrumentationblog.in/flyback-converter-working-principle-explained/).\n\nPower supply designers and hobbyists use it to size the transformer, pick a MOSFET voltage rating and check peak currents before winding a prototype."
 keywords: [flyback transformer calculator, flyback turns ratio calculator, flyback transformer design, flyback primary inductance, reflected voltage flyback, flyback duty cycle, flyback converter calculator]
 published: 2026-11-09
-updated: 2026-11-09
+updated: 2026-11-23
 variables:
   - { id: Vmin, label: Minimum DC input voltage, family: voltage, unit: V, default: 18, min: 0, help: 'For AC input, the lowest bulk-capacitor voltage (≈ 100 V DC for 85 V AC).' }
   - { id: Vmax, label: Maximum DC input voltage, family: voltage, unit: V, default: 32, min: 0, help: 'For 265 V AC input, about 375 V DC.' }
@@ -41,6 +41,10 @@ faq:
     a: For discontinuous (DCM) operation all the energy ½ L I_pk² must be delivered every cycle, so L_p ≤ (V_in,min × D_max)² ÷ (2 × P_in × f_s). A larger inductance pushes the converter into continuous mode (CCM) with lower peak current but a right-half-plane zero in the control loop.
   - q: What duty cycle should a flyback use?
     a: Typically 40–50% at minimum input. A higher duty cycle lowers the primary peak current but raises the reflected voltage and the switch voltage stress; with universal AC input this usually means a 600–800 V MOSFET and an RCD clamp.
+  - q: "How do I calculate primary RMS current in a DCM flyback?"
+    a: "The primary current is a triangle from zero to I<sub>pk</sub> during the on time, so I<sub>rms</sub> = I<sub>pk</sub> × √(D ÷ 3). For a 24 W, 100 V minimum input design with I<sub>pk</sub> = 1.255 A at 45% duty that is about 0.486 A."
+  - q: "How much energy must a flyback transformer store?"
+    a: "In discontinuous mode it must store the full input energy each cycle, ½ L<sub>p</sub> I<sub>pk</sub>² = P<sub>in</sub> ÷ f<sub>s</sub>. A 28.2 W input at 65 kHz needs about 434 µJ per cycle, held mainly in the air gap."
 related: [electronics/buck-boost-converter, electronics/buck-converter, electronics/mosfet-power-loss, electrical/transformer-turns-ratio]
 ---
 
@@ -90,3 +94,42 @@ The leakage-inductance spike typically adds 30–50% of V<sub>OR</sub>, which is
 - The core must store ½ L<sub>p</sub> I<sub>pk</sub>² without saturating — flyback cores need an air gap, and the gap stores most of the energy.
 - Round the turns to whole numbers and recalculate the duty cycle; an auxiliary winding for the controller supply uses the same volts-per-turn.
 - Secondary RMS current is much higher than the DC output current at low duty cycle, so size the output capacitor for ripple current, not just capacitance.
+
+## Second example: universal AC input, 12 V at 24 W
+
+An offline adapter with a 100 V to 375 V bulk capacitor, 12 V output, fast silicon rectifier (V<sub>f</sub> = 0.7 V), D<sub>max</sub> = 45%, efficiency 85% and 65 kHz:
+
+1. Turns ratio n = 100 × 0.45 ÷ (0.55 × 12.7) = 45 ÷ 6.985 = **6.442**
+2. Reflected voltage V<sub>OR</sub> = 6.442 × 12.7 = **81.8 V**; switch voltage at 375 V = **456.8 V** before the leakage spike
+3. Input power 24 ÷ 0.85 = **28.24 W**; peak primary current = 2 × 28.24 ÷ 45 = **1.255 A**
+4. Primary inductance L<sub>p</sub> = 45 ÷ (1.255 × 65,000) = **552 µH**; peak secondary current = **8.08 A**
+5. Duty cycle at 375 V input = **17.9%**
+
+The energy stored each cycle is ½ L<sub>p</sub> I<sub>pk</sub>² = 434 µJ, exactly P<sub>in</sub> ÷ f<sub>s</sub>, which is the figure the gapped core must hold without saturating. The primary RMS current is I<sub>pk</sub> √(D ÷ 3) = **0.486 A** and the secondary RMS current is I<sub>sp</sub> √((1 − D) ÷ 3) = **3.46 A**, against a DC output of only 2 A; use these RMS values for winding wire and capacitor ripple ratings.
+
+## From the result to a real winding
+
+Pick a whole number of secondary turns from the core's volts per turn, then round the primary. With N<sub>s</sub> = 8, the primary is 6.442 × 8 = 51.5, rounded to **52 turns**, a ratio of 6.500. Recalculating, the duty cycle at 100 V becomes 45.2%, V<sub>OR</sub> becomes 82.5 V and the switch sees 457.6 V. Allowing a leakage spike of half V<sub>OR</sub> brings the peak to about 499 V, comfortable for a 650 V MOSFET with clamp tolerance included. A 15 V auxiliary winding for the controller uses the same volts per turn as the secondary: 10 turns give about 15.2 V after its diode. Finally, choose a primary inductance slightly below the calculated maximum, typically 10% lower, so that inductance tolerance and low line never push the design into continuous mode.
+
+## Duty cycle trade-off at the page defaults
+
+18 V to 32 V input, 5 V and 0.5 V diode, 10 W, 80% efficiency, 100 kHz:
+
+| D<sub>max</sub> | Turns ratio | V<sub>OR</sub> | V<sub>DS</sub> at 32 V | Primary I<sub>pk</sub> | Max L<sub>p</sub> | Secondary I<sub>pk</sub> |
+|---|---|---|---|---|---|---|
+| 30% | 1.403 | 7.71 V | 39.71 V | 4.630 A | 11.66 µH | 6.49 A |
+| 35% | 1.762 | 9.69 V | 41.69 V | 3.968 A | 15.88 µH | 6.99 A |
+| 40% | 2.182 | 12.00 V | 44.00 V | 3.472 A | 20.74 µH | 7.58 A |
+| 45% | 2.678 | 14.73 V | 46.73 V | 3.086 A | 26.24 µH | 8.26 A |
+| 50% | 3.273 | 18.00 V | 50.00 V | 2.778 A | 32.40 µH | 9.09 A |
+| 55% | 4.000 | 22.00 V | 54.00 V | 2.525 A | 39.20 µH | 10.10 A |
+
+Raising D<sub>max</sub> from 30% to 55% cuts the primary peak current from 4.63 A to 2.53 A, but the switch voltage climbs from 39.7 V to 54.0 V and the secondary peak rises from 6.49 A to 10.10 A because the secondary has less time to deliver the energy. Most designs settle between 40% and 50%.
+
+## Common mistakes
+
+- **Leaving the diode drop out of the turns ratio.** For the 12 V example, using 12 V instead of 12.7 V gives n = 6.818, and the output then sits low at minimum input.
+- **Choosing L<sub>p</sub> above the boundary value.** The converter slips into continuous mode at low line, adding a right half plane zero that a DCM compensation network was not designed for.
+- **Sizing the MOSFET on V<sub>in,max</sub> + V<sub>OR</sub> alone.** The leakage spike on top can add 30% to 50% of V<sub>OR</sub>; without a clamp the device avalanches every cycle.
+- **Taking the average bulk voltage as V<sub>in,min</sub>.** For AC input, V<sub>in,min</sub> is the valley of the bulk capacitor ripple at low line, not the average; designing on the average undersizes the turns ratio and the duty cycle saturates.
+- **Ignoring core saturation at start up.** Current limit and peak flux must be checked at the controller's current limit, not just at the nominal I<sub>pk</sub>, or the core saturates during load steps and short circuits.

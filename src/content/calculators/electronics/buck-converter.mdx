@@ -2,10 +2,10 @@
 title: Buck Converter Calculator (Inductor and Capacitor)
 description: Calculate duty cycle, inductor value, ripple current and output capacitor for a buck (step-down) DC-DC converter.
 category: electronics
-intro: "A buck converter steps a DC voltage down efficiently by switching it on and off and smoothing the result with an inductor and capacitor — far less wasteful than a linear regulator. Learn the [buck converter working principle](https://www.instrumentationblog.in/buck-converter-working-principle/) and why [capacitor ESR](https://www.instrumentationblog.in/capacitor-esr-equivalent-series-resistance/) matters for output ripple."
+intro: "A buck converter steps a DC voltage down by switching it on and off and smoothing the result with an inductor and capacitor, wasting far less power than a linear regulator. This buck converter calculator sizes the duty cycle, inductor and output capacitor; see the [buck converter working principle](https://www.instrumentationblog.in/buck-converter-working-principle/).\n\nPower supply designers and embedded engineers use it for a first-pass part selection, then check output ripple and [capacitor ESR](https://www.instrumentationblog.in/capacitor-esr-equivalent-series-resistance/) on the bench."
 keywords: [buck converter calculator, buck inductor calculation, step down converter design, buck duty cycle, output capacitor ripple, dc dc converter calculator]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-23
 variables:
   - { id: Vi, label: Input voltage, family: voltage, unit: V, default: 24, min: 0 }
   - { id: Vo, label: Output voltage, family: voltage, unit: V, default: 5, min: 0 }
@@ -33,6 +33,10 @@ faq:
     a: L = V_out × (V_in − V_out) ÷ (V_in × f × ΔI). For 24 V to 5 V at 2 A, 500 kHz and 30% ripple, L ≈ 13 µH.
   - q: What sets the output ripple voltage?
     a: Capacitance and the capacitor's ESR. The formula here covers capacitance; with electrolytics, ripple is usually dominated by ESR × ΔI.
+  - q: "What ESR does the output capacitor need?"
+    a: "ESR ripple is about ESR × ΔI, so the ESR must stay below the allowed ripple divided by the ripple current. For 20 mV and 0.6 A that is 33 mΩ, easy for ceramic capacitors but hard for small electrolytics."
+  - q: "When does a buck converter go into discontinuous mode?"
+    a: "When the load current falls below half the inductor ripple, the inductor current reaches zero each cycle. With 15 µH in the default design that happens below about 0.26 A, and the output then depends on load as well as duty cycle."
 related: [electronics/boost-converter, electronics/inductor-energy, electronics/pwm-duty-cycle, electronics/capacitor-energy]
 ---
 
@@ -77,3 +81,37 @@ Higher frequency allows smaller inductors and capacitors but increases switching
 - Inductor saturation current above I<sub>pk</sub> with margin; RMS rating above I<sub>o</sub>.
 - Input capacitor sized for RMS ripple current ≈ I<sub>o</sub>√(D(1 − D)).
 - Use the controller datasheet's compensation and layout guidance — tight loops around the switch, diode and input capacitor matter most.
+
+## After choosing real parts
+
+The calculation asks for 13.2 µH, so a standard **15 µH** inductor is fitted. Larger inductance means less ripple: ΔI = 5 × 19 ÷ (24 × 500,000 × 15 µH) = **0.528 A**, and the peak current falls to **2.264 A**. The converter stays in continuous conduction down to a load of about ΔI ÷ 2, roughly 0.26 A with 15 µH (0.3 A with the calculated value); below that it enters discontinuous mode and the simple duty cycle formula no longer holds.
+
+The capacitance formula ignores ESR. To keep 20 mV with 0.6 A of ripple the ESR must be below 0.020 ÷ 0.6 = **33 mΩ**. A ceramic capacitor near 5 mΩ adds only 3 mV, while an electrolytic of 50 mΩ adds 30 mV on its own, which is why ceramics dominate at 500 kHz. The input capacitor must carry about 2 × √(0.208 × 0.792) = **0.81 A RMS**.
+
+With a non-synchronous design and a 0.5 V Schottky diode, the duty cycle rises to (5 + 0.5) ÷ (24 + 0.5) = **22.4%**. The on-time at 500 kHz is 417 ns, comfortably above the minimum on-time of typical controllers.
+
+## Designing across an input range
+
+The inductance needed rises with input voltage, so design at the highest input. For 5 V out, 0.6 A ripple and 500 kHz:
+
+| Input voltage | Duty cycle | Inductance | On-time |
+|---|---|---|---|
+| 8 V | 62.5% | 6.2 µH | 1250 ns |
+| 12 V | 41.7% | 9.7 µH | 833 ns |
+| 18 V | 27.8% | 12.0 µH | 556 ns |
+| 24 V | 20.8% | 13.2 µH | 417 ns |
+| 36 V | 13.9% | 14.4 µH | 278 ns |
+
+A converter fed from 8 to 36 V needs about 14.4 µH, not the 13.2 µH found at 24 V.
+
+## Measuring ripple properly
+
+Measure output ripple with the scope probe's ground spring touching the capacitor ground pad, not a long ground clip, and set 20 MHz bandwidth limiting. A long lead picks up switching spikes that look like ripple. Check the switch node for the expected duty cycle, and use a current probe on the inductor to confirm the ripple and that the waveform stays triangular with no sharp rise near the peak, which would mean saturation.
+
+## Common mistakes
+
+- **Designing at nominal input voltage.** At 36 V the same ripple needs 14.4 µH; a part sized at 24 V gives more ripple and higher peak current at maximum input.
+- **Ignoring DC bias on ceramic capacitors.** X5R and X7R parts can lose half or more of their capacitance at rated voltage, so check the derating curve at 5 V.
+- **Rating the inductor at the load current.** The saturation rating must exceed the peak current and ideally the controller's current limit.
+- **Asking for too short an on-time.** Converting 24 V to 1 V at 2 MHz needs only 20.8 ns, below the 50 to 100 ns minimum of many controllers.
+- **Probing with a long ground lead,** which turns switching edges into false ripple readings.

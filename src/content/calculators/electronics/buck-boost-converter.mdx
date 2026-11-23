@@ -2,10 +2,10 @@
 title: Buck-Boost Converter Calculator (Inverting, L & C)
 description: Calculate duty cycle, inductor current, inductance, peak switch current, switch voltage and output capacitance for an inverting buck-boost DC-DC converter.
 category: electronics
-intro: "An inverting buck-boost converter makes a negative output voltage that can be larger or smaller in magnitude than the input — for example −12 V from a +12 V rail for an op-amp or LCD bias. This buck-boost converter calculator gives the duty cycle, average and peak inductor current, required inductance, switch voltage stress and minimum output capacitance; for a positive output use the related [SEPIC converter](https://www.instrumentationblog.in/sepic-converter-working-design/)."
+intro: "An inverting buck-boost converter makes a negative output voltage that can be larger or smaller in magnitude than the input, such as −12 V from a +12 V rail. This buck-boost converter calculator gives the duty cycle, inductor currents, inductance, switch stress and output capacitance; for a positive output see the [SEPIC converter](https://www.instrumentationblog.in/sepic-converter-working-design/).\n\nPower supply designers and hardware engineers use it to create negative rails for op-amps, LCD bias and sensor interfaces from a single supply."
 keywords: [buck boost converter calculator, inverting buck boost calculator, buck boost duty cycle, buck boost inductor calculation, negative voltage converter design, buck boost formula, dc dc converter calculator]
 published: 2026-11-07
-updated: 2026-11-07
+updated: 2026-11-23
 variables:
   - { id: Vi, label: Input voltage, family: voltage, unit: V, default: 12, min: 0 }
   - { id: Vo, label: Output voltage magnitude |Vout|, family: voltage, unit: V, default: 12, min: 0 }
@@ -38,6 +38,10 @@ faq:
     a: The MOSFET and diode both see Vin + |Vout| when off — 24 V for +12 V to −12 V. Choose parts rated at least 20–30% higher to allow for ringing.
   - q: How is a SEPIC different from a buck-boost?
     a: A SEPIC has the same duty-cycle relation but gives a positive output, at the cost of a second inductor and a coupling capacitor. A 4-switch buck-boost also gives a positive output with higher efficiency.
+  - q: "How does a changing input voltage affect a buck-boost design?"
+    a: "With the output fixed, low input means a higher duty cycle and a higher peak current (1.401 A at 9 V for the default load with 47 µH), while high input gives more ripple and more switch voltage (28 V at 16 V). Check the inductor and capacitor at the minimum input and the switch rating at the maximum."
+  - q: "Can I use a buck regulator IC to make a negative voltage?"
+    a: "Yes, many buck ICs are approved by their makers for the inverting buck-boost connection. The IC ground goes to the negative output, so its maximum input rating must exceed the input voltage plus the output magnitude, and the available output current is lower than in buck mode."
 related: [electronics/buck-converter, electronics/boost-converter, electronics/inductor-energy, electronics/mosfet-power-loss]
 ---
 
@@ -79,3 +83,41 @@ The output capacitor alone supplies the load while the switch is on, so — as i
 - Rate the inductor's **saturation current** above the peak current, not the average.
 - Use low-ESR ceramic output capacitors; ESR ripple = I<sub>pk</sub> × ESR adds to the capacitive ripple.
 - The control loop has a right-half-plane zero, as in a boost, which limits loop bandwidth — follow the controller datasheet's compensation guide.
+
+## Second example: a battery input from 9 to 16 V
+
+The default design takes 7.06 W from the input to deliver 6 W, so about 1.06 W is lost in the switch, diode and inductor. Now suppose the input is a vehicle or lead-acid battery that varies from 9 to 16 V while the output stays at −12 V, 0.5 A, and the standard **47 µH** inductor chosen at 12 V is kept. The ripple with a fixed inductor is ΔI = V<sub>i</sub> D ÷ (f L):
+
+| Input | Duty cycle | Inductor current | Ripple ΔI | Peak current | Switch voltage | C (min.) |
+|---|---|---|---|---|---|---|
+| 9 V | 61.1% | 1.284 A | 0.234 A | 1.401 A | 21 V | 12.21 µF |
+| 12 V | 54.1% | 1.088 A | 0.276 A | 1.226 A | 24 V | 10.81 µF |
+| 16 V | 46.9% | 0.941 A | 0.319 A | 1.101 A | 28 V | 9.38 µF |
+
+The **peak current is highest at the lowest input** (1.401 A at 9 V), so the inductor saturation rating and the controller current limit are set there. The **ripple and the switch voltage are highest at the highest input** (0.319 A and 28 V at 16 V), so a 40 V MOSFET and diode give sensible margin. The output capacitor is sized at the minimum input, where the duty cycle and so the on-time are longest.
+
+## Effect of switching frequency
+
+Default 12 V to −12 V at 0.5 A, 30% ripple and 50 mV output ripple:
+
+| Frequency | L required | C (min.) |
+|---|---|---|
+| 100 kHz | 198.7 µH | 54.05 µF |
+| 250 kHz | 79.5 µH | 21.62 µF |
+| 500 kHz | 39.7 µH | 10.81 µF |
+| 1000 kHz | 19.9 µH | 5.41 µF |
+| 2000 kHz | 9.9 µH | 2.70 µF |
+
+Higher frequency shrinks both parts in proportion, but switching loss rises with frequency, which is why 300 kHz to 1 MHz is a common compromise at this power level.
+
+## Building it from a buck regulator
+
+Many designs use an ordinary synchronous buck IC as an inverting buck-boost by tying its ground pin to the −12 V output. The IC then sees V<sub>i</sub> + |V<sub>o</sub>| between its input and ground pins, 24 V in the default case, so it must be rated for that sum rather than for the 12 V input. Its enable and logic pins are also referenced to the negative rail and may need level shifting.
+
+## Common mistakes
+
+- **Sizing the inductor at the nominal input only.** At 9 V the peak current rises to 1.401 A, about 14% above the 1.226 A at 12 V.
+- **Ignoring ESR ripple.** A capacitor with 20 mΩ ESR adds 1.2515 × 0.020 = 25 mV, half of the 50 mV budget on its own.
+- **Forgetting DC bias derating.** A 10 µF X7R ceramic can lose half its value at 12 V; check the bias curve.
+- **Reversing polarised output capacitors.** The output is negative, so an electrolytic's positive lead goes to ground.
+- **Probing with a long ground lead.** The pulsed output current makes the ripple look far worse than it is; use a short ground spring at the capacitor.

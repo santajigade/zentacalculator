@@ -2,10 +2,10 @@
 title: ADC Resolution Calculator (LSB and Step Size)
 description: Calculate ADC step size (LSB), number of levels and the digital code for an input voltage from bit depth and reference voltage — including 4–20 mA PLC inputs.
 category: electronics
-intro: "An analog-to-digital converter turns a voltage or current into a number, and its bit depth sets the smallest change it can see. Read [analog-to-digital conversion explained](https://www.instrumentationblog.in/analog-to-digital-conversion-explained/) and how this affects [analog signal resolution in PLCs](https://www.instrumentationblog.in/analog-signal-resolution-in-plc/). This free ADC resolution calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "An analog-to-digital converter turns a voltage into a number, and its bit depth sets the smallest change it can see. This ADC resolution calculator gives the levels, step size, output code and ideal SNR; see [analog-to-digital conversion explained](https://www.instrumentationblog.in/analog-to-digital-conversion-explained/).\n\nEmbedded engineers, PLC programmers and instrument technicians use it to choose converters, scale raw counts and judge [analog signal resolution in PLCs](https://www.instrumentationblog.in/analog-signal-resolution-in-plc/)."
 keywords: [adc resolution calculator, lsb calculator, adc step size, bits to voltage resolution, analog to digital converter, adc counts, plc analog resolution]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-23
 variables:
   - { id: n, label: ADC resolution, suffix: bits, default: 12, min: 1, max: 32 }
   - { id: Vr, label: Full-scale (reference) voltage, family: voltage, unit: V, default: 3.3, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: Only if noise and reference accuracy are good enough to use them. The effective number of bits (ENOB) is often 1–3 bits less than the nominal resolution.
   - q: What resolution do PLC analog inputs have?
     a: Commonly 12–16 bits. A 16-bit input on 4–20 mA resolves about 0.25 µA per count when it spans 0–21 mA across 65,536 counts.
+  - q: "How do I calculate ENOB from SNR?"
+    a: "ENOB = (SINAD − 1.76) ÷ 6.02, using the measured signal to noise and distortion ratio in dB. A 12-bit ADC measuring 66 dB has an ENOB of about 10.67 bits."
+  - q: "What is ADC quantisation noise?"
+    a: "The rounding error of each conversion, spread evenly over one LSB, has an RMS value of LSB ÷ √12. For a 12-bit, 3.3 V converter that is 0.2326 mV."
 related: [electronics/buck-converter, engineering/4-20ma-scaling, electronics/snr, electronics/voltage-divider, electronics/op-amp-gain]
 ---
 
@@ -69,3 +73,38 @@ Convert counts to engineering units with the [4–20 mA scaling calculator](/eng
 - Use a stable, low-noise reference — its error appears directly in every reading.
 - Filter the input below half the sample rate to prevent aliasing — see the [RC filter calculator](/electronics/rc-filter/).
 - Average or oversample: averaging 4ⁿ samples adds about n bits of resolution when noise is present.
+
+## Worked example with the default values
+
+A 12-bit ADC with a 3.3 V reference reading 1.65 V:
+
+1. Levels = 2¹² = **4,096**
+2. LSB = 3.3 ÷ 4,096 = **0.8057 mV**
+3. Code = ⌊1.65 ÷ 0.8057 mV⌋ = **2,048**
+4. Ideal SNR = 6.02 × 12 + 1.76 = **74.00 dB**
+
+Code 2,048 covers every input from 1.65000 V up to 1.65081 V, so the reading carries an uncertainty of one LSB, or ±0.403 mV about the centre of the step. Treated as noise, that quantisation error has an RMS value of LSB ÷ √12 = 0.2326 mV, which is where the 6.02n + 1.76 dB figure comes from.
+
+## What one count means for a sensor
+
+A temperature sensor with a 10 mV/°C output on this converter resolves 0.8057 mV ÷ 10 mV = **0.0806 °C per count** and spans 0 to 330 °C at full scale. If the process only runs 0 to 100 °C, two thirds of the codes go unused; an amplifier gain of about 3 restores the resolution.
+
+## Oversampling for extra bits
+
+| Extra bits | Samples averaged | Effective bits | Effective LSB at 3.3 V |
+|---|---|---|---|
+| 0 | 1 | 12 | 0.8057 mV |
+| 1 | 4 | 13 | 0.4028 mV |
+| 2 | 16 | 14 | 0.2014 mV |
+| 3 | 64 | 15 | 0.1007 mV |
+| 4 | 256 | 16 | 0.0504 mV |
+
+This only works when at least about one LSB of random noise is present; a perfectly quiet input returns the same code every time and averaging gains nothing.
+
+## Common mistakes
+
+- **Dividing by 2ⁿ − 1.** Some datasheets define full scale at code 4,095, giving 0.8059 mV per count; check which convention the part uses.
+- **Trusting the reference.** A 1% reference error shifts full scale by 33 mV, about 41 counts, far more than the resolution.
+- **Confusing resolution with accuracy.** Offset, gain and linearity errors are specified separately and usually exceed 1 LSB.
+- **Feeding a SAR ADC from a high source impedance.** The sampling capacitor cannot charge within the acquisition time, so readings sag; buffer the input or lengthen the sample time.
+- **Expecting all bits to be useful.** A measured SNR of 66 dB means ENOB = (66 − 1.76) ÷ 6.02 = 10.67 bits, not 12.

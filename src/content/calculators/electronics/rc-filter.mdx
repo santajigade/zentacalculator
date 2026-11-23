@@ -2,10 +2,10 @@
 title: RC Filter Cutoff Frequency Calculator
 description: Calculate the −3 dB cutoff frequency of an RC low-pass or high-pass filter, or the R or C needed for a target cutoff — with attenuation at any frequency.
 category: electronics
-intro: "A resistor and capacitor make the simplest filter in electronics — removing noise from sensor signals or blocking DC from audio. Read about [RC low-pass and high-pass filters](https://www.instrumentationblog.in/rc-low-pass-high-pass-filter/) and how [Sallen-Key active filters](https://www.instrumentationblog.in/active-filter-sallen-and-key/) give a sharper response. This free RC filter cutoff frequency calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A resistor and capacitor make the simplest filter in electronics, removing noise from sensor signals or blocking DC from audio. This RC filter cutoff frequency calculator solves for whichever value you leave blank; read about [RC low-pass and high-pass filters](https://www.instrumentationblog.in/rc-low-pass-high-pass-filter/).\n\nInstrument technicians and circuit designers use it to smooth transmitter signals, set ADC anti-aliasing and decide when a sharper [Sallen-Key active filter](https://www.instrumentationblog.in/active-filter-sallen-and-key/) is needed."
 keywords: [rc filter calculator, cutoff frequency calculator, rc low pass filter, rc high pass filter, 1/2πrc, -3db frequency, corner frequency]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-23
 variables:
   - { id: R, label: Resistance, family: resistance, unit: kohm, default: 10, min: 0 }
   - { id: C, label: Capacitance, family: capacitance, unit: nF, default: 100, min: 0 }
@@ -28,6 +28,8 @@ faq:
     a: First order — 20 dB per decade (6 dB per octave) beyond the cutoff. For steeper roll-off, cascade stages or use an active filter.
   - q: How do I filter noise on a sensor signal?
     a: Choose a cutoff well above the signal bandwidth but below the noise frequency — for slow process signals, a few hertz is common.
+  - q: "What is the phase shift of an RC low-pass filter?"
+    a: "The output lags by arctan(f ÷ f<sub>c</sub>): 45° at the cutoff, approaching 90° far above it. For the defaults at 1 kHz the lag is 81.0°. A high-pass filter leads by the complementary angle."
 related: [electronics/capacitor-energy, physics/rc-time-constant, electronics/reactance, physics/decibel, electronics/op-amp-gain]
 ---
 
@@ -71,3 +73,40 @@ For more background, read [RC and RL Time Constant Explained](https://www.instru
 - The source impedance adds to R; the load impedance appears in parallel with C. Keep the load at least ten times R.
 - For ADC anti-aliasing, set the cutoff below half the sampling rate.
 - Use C0G/NP0 or film capacitors for stable filters; ceramic X7R values change with voltage and temperature.
+
+## Worked example with the default values
+
+R = 10 kΩ and C = 100 nF, with a 1 kHz test signal:
+
+1. τ = RC = 10,000 × 100 × 10⁻⁹ = **1 ms**
+2. f<sub>c</sub> = 1 ÷ (2π × 0.001) = **159.15 Hz**
+3. f ÷ f<sub>c</sub> = 6.283, so the low-pass gain is −10 log₁₀(1 + 39.48) = **-16.07 dB**
+4. The high-pass gain at the same frequency is **-0.11 dB**
+
+As a low-pass filter the circuit passes 15.7% of a 1 kHz signal with a phase lag of 81.0°; as a high-pass filter it passes nearly all of it.
+
+## Step response in the time domain
+
+The same RC sets how fast the output follows a step, which matters for sensor signals and digital inputs:
+
+| Time | Default value | Output reached |
+|---|---|---|
+| 1 τ | 1 ms | 63.2% |
+| 2 τ | 2 ms | 86.5% |
+| 3 τ | 3 ms | 95.0% |
+| 4 τ | 4 ms | 98.2% |
+| 5 τ | 5 ms | 99.3% |
+
+Five time constants, 5 ms here, is the usual rule for "settled".
+
+## Filtering mains hum on a slow signal
+
+A 4 to 20 mA loop signal read across 250 Ω often carries 50 Hz pickup. Putting the cutoff at 5 Hz with a 10 µF film or tantalum capacitor needs R = 1 ÷ (2π × 5 × 10 µF) = **3,183 Ω**, and attenuates 50 Hz by 20.0 dB. The default 159 Hz filter would barely touch it, so the cutoff must sit well below the interference, not near it.
+
+## Common mistakes
+
+- **Dropping the 2π.** 1 ÷ RC gives 1,000 rad/s, not hertz; the cutoff is 159.2 Hz.
+- **Ignoring the load.** A 10 kΩ load across the capacitor halves the passband level to 0.50 and moves the cutoff to 318 Hz, because the source sees R in parallel with the load.
+- **Expecting two stages to keep the same cutoff.** Two identical buffered sections are −6 dB at f<sub>c</sub> and −3 dB at 0.644 f<sub>c</sub>, 102 Hz for the defaults; without a buffer the second stage loads the first and the result is lower still.
+- **Mixing nF and µF.** 100 nF is 0.1 µF; entering 100 µF makes the cutoff a thousand times lower.
+- **Using a polarised electrolytic in a high-pass filter** where the DC across it can reverse.

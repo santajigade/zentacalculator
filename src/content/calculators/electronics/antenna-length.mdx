@@ -2,10 +2,10 @@
 title: Antenna Length Calculator (Half-Wave Dipole & Quarter-Wave)
 description: Calculate half-wave dipole and quarter-wave antenna lengths from frequency with a velocity (end-effect) factor — for 433 MHz, 868 MHz, 2.4 GHz and more.
 category: electronics
-intro: "A resonant antenna is cut to a fraction of the wavelength — half a wavelength for a dipole, a quarter for a ground-plane whip — shortened slightly because of end effects and conductor thickness. This antenna length calculator gives the free-space wavelength and the practical dipole, dipole leg and quarter-wave lengths for any frequency."
+intro: "A resonant antenna is cut to a fraction of a wavelength, half for a dipole and a quarter for a ground-plane whip, then shortened slightly for end effects. This antenna length calculator gives the wavelength and the practical dipole, leg and quarter-wave lengths for any frequency.\n\nRadio amateurs, IoT developers and installers of ISM band telemetry use it to cut wire antennas, set a starting length before trimming and check that a module's whip suits its band."
 keywords: [antenna length calculator, dipole antenna calculator, half wave dipole length, quarter wave antenna length, 433 mhz antenna length, 868 mhz antenna length, 468 / f formula]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-23
 variables:
   - { id: f, label: Frequency, family: frequency, unit: MHz, default: 433.92, min: 0 }
   - { id: k, label: Velocity / end-effect factor, default: 0.95, min: 0, max: 1, decimals: 3, help: 'About 0.95 for thin wire dipoles; lower for thick elements or insulated wire.' }
@@ -27,6 +27,10 @@ faq:
     a: Currents near the ends of a real conductor make it behave electrically longer, so the physical length is a few percent shorter than the free-space fraction of a wavelength. Thicker elements need a lower factor.
   - q: Does a quarter-wave antenna need a ground plane?
     a: Yes. A monopole uses a ground plane (a metal surface, PCB copper or radials about λ/4 long) as the other half of the dipole; without it, performance and matching suffer.
+  - q: "How much should I trim if my antenna resonates too low?"
+    a: "Multiply the present length by the measured resonant frequency divided by the target. A 32.82 cm dipole resonating at 420 MHz needs to become 31.76 cm for 433.92 MHz, removing about 0.53 cm from each leg."
+  - q: "What is the feed impedance of a half-wave dipole?"
+    a: "About 73 Ω at the centre in free space, falling when the dipole is close to the ground. A quarter-wave monopole over a ground plane is about half that, roughly 36 Ω."
 related: [physics/wavelength-frequency, electronics/free-space-path-loss, electronics/resonant-frequency, electronics/dbm-to-watts]
 ---
 
@@ -66,3 +70,36 @@ A dipole for 433.92 MHz with k = 0.95:
 - Cut slightly long and trim — it is easier to shorten an antenna than to lengthen it.
 - PCB trace antennas and helical or ceramic chip antennas follow their own design notes, not these formulas.
 - Estimate the range of the link with the [free-space path loss calculator](/electronics/free-space-path-loss/).
+
+## Second example: trimming to resonance
+
+Cut the default 433.92 MHz dipole to 32.82 cm and sweep it with an antenna analyser. Suppose the lowest SWR appears at 420 MHz, so the antenna is electrically long. Length scales inversely with frequency:
+
+- New length = 32.82 × 420 ÷ 433.92 = **31.76 cm**
+- Remove **1.05 cm** in total, about 0.53 cm from each leg
+
+Trim in two or three steps rather than all at once, because the first cut also changes how the feed line and nearby objects interact with the antenna. Insulated wire slows the wave slightly; with k = 0.92 the starting length is 31.78 cm.
+
+## Reading SWR from the analyser
+
+| VSWR | Reflection coefficient | Return loss | Power reflected | Mismatch loss |
+|---|---|---|---|---|
+| 1.1 | 0.048 | 26.4 dB | 0.2% | 0.01 dB |
+| 1.5 | 0.200 | 14.0 dB | 4.0% | 0.18 dB |
+| 2.0 | 0.333 | 9.5 dB | 11.1% | 0.51 dB |
+| 3.0 | 0.500 | 6.0 dB | 25.0% | 1.25 dB |
+| 5.0 | 0.667 | 3.5 dB | 44.4% | 2.55 dB |
+
+Below 1.5:1 only 4% of the power comes back, so chasing a perfect 1.0 is rarely worth the effort. A centre fed half-wave dipole in free space presents about 73 Ω, and a quarter-wave monopole over a good ground plane about 36 Ω; drooping ground-plane radials downward to about 45° raises the monopole toward 50 Ω.
+
+## Practical placement
+
+Mount the antenna clear of metal and away from the circuit board's noisy sections. A plastic enclosure, a hand or a wall within a few centimetres lowers the resonant frequency, so do the final trim with the antenna installed in its housing.
+
+## Common mistakes
+
+- **Using the coax velocity factor.** The 0.66 or 0.82 figure on a cable data sheet applies to the feed line, not the radiating wire.
+- **Confusing total length with leg length.** At 433.92 MHz each leg is 16.41 cm; making each leg 32.82 cm gives a full wave dipole with a high feed impedance.
+- **Running a quarter-wave whip without a ground plane.** The feed line becomes the missing half and the pattern and match become unpredictable.
+- **Trimming in free air, then fitting the case.** The enclosure shifts resonance by several megahertz at UHF.
+- **Coiling surplus wire.** A coiled length acts as an inductor and detunes the antenna; cut it instead.

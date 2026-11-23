@@ -2,10 +2,10 @@
 title: Op-Amp Integrator Calculator (Ramp Rate & Unity-Gain Frequency)
 description: Calculate the output ramp rate, output voltage after a time, unity-gain frequency and AC gain of an inverting op-amp integrator from R, C and input voltage.
 category: electronics
-intro: "An op-amp integrator charges a feedback capacitor with a current set by the input resistor, so a constant input produces a linear ramp and a sine input is attenuated by 20 dB per decade. This op-amp integrator calculator gives the ramp rate, the output after a chosen time and the unity-gain frequency — see the [op-amp integrator and differentiator](https://www.instrumentationblog.in/op-amp-integrator-differentiator/) explained."
+intro: "An op-amp integrator charges a feedback capacitor with a current set by the input resistor, so a constant input produces a linear ramp. This op-amp integrator calculator gives the ramp rate, the output after a chosen time, the unity-gain frequency and the AC gain; see the [op-amp integrator and differentiator](https://www.instrumentationblog.in/op-amp-integrator-differentiator/) explained.\n\nStudents, analogue designers and control engineers use it for ramp generators, analogue PID integral terms and dual-slope converters."
 keywords: [op amp integrator calculator, integrator circuit formula, op amp integrator output voltage, integrator ramp rate, unity gain frequency integrator, rc integrator op amp, miller integrator]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-23
 variables:
   - { id: Vin, label: Input voltage (constant), family: voltage, unit: V, default: 1 }
   - { id: R, label: Input resistor R, family: resistance, unit: kohm, default: 10, min: 0 }
@@ -31,6 +31,8 @@ faq:
     a: Without it the DC gain is the op-amp's open-loop gain, so input offset voltage and bias current slowly drive the output into the rail. A resistor R_f in parallel with C limits DC gain to −R_f/R, at the cost of integrating only above 1/(2πR_fC).
   - q: Where are integrators used?
     a: In the I term of analogue PID controllers, triangle-wave and ramp generators, dual-slope ADCs, active filters and charge amplifiers.
+  - q: "How fast does input offset voltage drift an integrator?"
+    a: "The offset is integrated like a signal, at V<sub>os</sub> ÷ RC volts per second. With 1 mV and RC = 1 ms that is 1 V/s, so an uncorrected integrator reaches a 13 V rail in about 13 s."
 related: [electronics/rc-filter, electronics/op-amp-gain, physics/rc-time-constant, electronics/summing-amplifier]
 ---
 
@@ -67,3 +69,35 @@ Enter the **input voltage**, the **input resistor** and the **feedback capacitor
 - The output can only ramp until it reaches the op-amp's output swing limit; reset the capacitor with a switch for repeating ramps.
 - Use a low-leakage film (C0G, polypropylene) capacitor — electrolytics leak and drift.
 - For a square-wave input the integrator produces a triangle wave of peak-to-peak amplitude V<sub>in</sub> T/(2RC) for a symmetric ±V<sub>in</sub> square of period T.
+
+## How long until the output saturates
+
+On ±15 V supplies a typical op-amp swings to about ±13 V. At the default ramp of 1,000 V/s the output reaches −13 V after 13 ÷ 1,000 = **13 ms**, and then simply sits at the rail. Any integrator with a steady input must be reset, or placed inside a feedback loop that drives its input back to zero, as in a PID controller.
+
+## Errors that integrate too
+
+The circuit cannot tell signal from error. An input offset voltage of 1 mV integrates at 0.001 ÷ 1 ms = **1 V/s**, reaching the rail in about 13 s with no input at all. A bias current of 100 nA, typical of older bipolar op-amps, charges the 100 nF capacitor at I ÷ C = **1 V/s**. A FET-input op-amp with picoamp bias removes the second error, and a resistor equal to R on the non-inverting input cancels much of it for bipolar parts.
+
+Adding R<sub>f</sub> = 1 MΩ across the capacitor limits the DC gain to −100, so the 1 mV offset now produces only about 101 mV at the output. The price is that the circuit integrates only above 1.59 Hz.
+
+## Square wave in, triangle out
+
+Feed a ±1 V, 1 kHz square wave. Each half period of 0.5 ms changes the output by 1 × 0.0005 ÷ 0.001 = **0.5 V peak to peak**, a triangle wave. Doubling the frequency halves the amplitude, the same 20 dB per decade slope as the sine response.
+
+## Ramp rate for common parts (1 V input)
+
+| R | C | Ramp rate | Time to 10 V |
+|---|---|---|---|
+| 10 kΩ | 10 nF | 10,000.0 V/s | 1.0 ms |
+| 10 kΩ | 100 nF | 1,000.0 V/s | 10.0 ms |
+| 100 kΩ | 100 nF | 100.0 V/s | 100.0 ms |
+| 100 kΩ | 1000 nF | 10.0 V/s | 1,000.0 ms |
+| 1000 kΩ | 1000 nF | 1.0 V/s | 10,000.0 ms |
+
+## Common mistakes
+
+- **Forgetting the inversion.** A positive input gives a falling output; follow with an inverting stage if a rising ramp is needed.
+- **Leaving out a DC path.** Without R<sub>f</sub> or a reset switch, offset and bias current drift the output to a rail.
+- **Using ceramic X7R or electrolytic capacitors.** Leakage and dielectric absorption bend the ramp and leave residual voltage after reset; polypropylene or C0G parts are better.
+- **Mixing time units.** The time input is in milliseconds, so 1 means 0.001 s.
+- **Ignoring the initial condition.** A capacitor not discharged at the start shifts the whole ramp by V₀.

@@ -2,10 +2,10 @@
 title: Electrolytic Capacitor Life Calculator (10 °C Rule)
 description: Estimate the expected life of an aluminium electrolytic capacitor at your operating temperature from its rated hours and temperature, using the 10-degree rule.
 category: electronics
-intro: "Aluminium electrolytic capacitors wear out as their electrolyte slowly dries, and heat speeds this up dramatically. They are often the first part to fail in power supplies and drives — see this [electrolytic capacitor lifetime calculation](https://www.instrumentationblog.in/electrolytic-capacitor-lifetime-calculation/) and how the [failure modes of electrolytic, ceramic and tantalum capacitors](https://www.instrumentationblog.in/electrolytic-vs-ceramic-vs-tantalum-capacitor-failure-modes/) differ."
+intro: "Aluminium electrolytic capacitors wear out as their electrolyte slowly dries, and heat speeds this up. This electrolytic capacitor life calculator applies the 10 degree rule to the rated hours and temperature; see this [electrolytic capacitor lifetime calculation](https://www.instrumentationblog.in/electrolytic-capacitor-lifetime-calculation/) and the [failure modes of electrolytic, ceramic and tantalum capacitors](https://www.instrumentationblog.in/electrolytic-vs-ceramic-vs-tantalum-capacitor-failure-modes/).\n\nPower supply designers and maintenance engineers use it to choose capacitor series and plan replacement in drives, UPSs and SMPS units."
 keywords: [capacitor life calculator, electrolytic capacitor lifetime, capacitor life expectancy, 10 degree rule, arrhenius capacitor, capacitor hours at temperature]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-23
 variables:
   - { id: L0, label: Rated life, family: seconds, unit: h, default: 2000, min: 0 }
   - { id: T0, label: Rated temperature, suffix: °C, default: 105 }
@@ -24,6 +24,8 @@ faq:
     a: Core (hotspot) temperature — ambient plus self-heating from ripple current. Many manufacturers also include a ripple current factor.
   - q: Does voltage affect life?
     a: Less than temperature for most aluminium electrolytics. Some manufacturers add a factor for operating below rated voltage.
+  - q: "How much does ripple current shorten capacitor life?"
+    a: "Ripple heats the core by I² × ESR multiplied by the thermal resistance. For 1.5 A through 100 mΩ with 30 °C/W the core rises about 6.8 °C, which on its own cuts the estimated life by about 37%."
 related: [electronics/ntc-thermistor, electronics/heat-sink, electronics/capacitor-energy, chemistry/arrhenius-equation, electronics/buck-converter]
 ---
 
@@ -60,3 +62,40 @@ One year of continuous use is 8,760 hours. Manufacturers often cap estimates at 
 ## Why it matters
 
 Electrolytic capacitors are the most common wear-out part in power supplies, VFDs and UPSs. Rising ESR and falling capacitance are early warning signs, which is why drive makers recommend replacing DC-bus capacitors on a schedule.
+
+## Worked example with the default values
+
+A 2,000 h, 105 °C capacitor running with its core at 55 °C:
+
+1. Temperature margin = 105 − 55 = 50 °C, which is 5 steps of 10 °C
+2. Life factor = 2<sup>5</sup> = **32**
+3. L = 2,000 × 32 = **64,000 h**, or 64,000 ÷ 8,760 = **7.3 years** of continuous running
+
+## Where the core temperature comes from
+
+The core is the ambient around the can plus the heat the ripple current makes in the ESR. Suppose the capacitor carries 1.5 A RMS ripple with an ESR of 100 mΩ, and the datasheet gives a thermal resistance of 30 °C/W for that can size. It dissipates 1.5² × 0.1 = 0.225 W, a rise of 0.225 × 30 = **6.75 °C**. A core of 55 °C therefore means an ambient of about 48 °C. If the enclosure warms to give a 65 °C core, life halves to 32,000 h (3.7 years).
+
+## Calendar life by running hours
+
+| Operation | Core temperature | Life in hours | Calendar life |
+|---|---|---|---|
+| 24 h/day | 55 °C | 64,000 h | 7.3 years |
+| 24 h/day | 65 °C | 32,000 h | 3.7 years |
+| 16 h/day | 55 °C | 64,000 h | 11.0 years |
+| 16 h/day | 65 °C | 32,000 h | 5.5 years |
+| 8 h/day | 55 °C | 64,000 h | 21.9 years |
+| 8 h/day | 65 °C | 32,000 h | 11.0 years |
+
+Figures above about 15 years are not reliable, because the rubber seal and the oxide layer age even at low temperature.
+
+## Checking capacitors in service
+
+Measure the can top with a thermocouple or thermal camera at full load; the core is normally a few degrees hotter than the case top. During maintenance, an ESR meter or LCR meter shows wear: datasheets usually define end of life as capacitance falling more than 20%, tan δ rising above twice the initial limit, or leakage exceeding the specification. A bulging vent or electrolyte residue means the part is already past end of life.
+
+## Common mistakes
+
+- **Using room temperature instead of core temperature.** A cabinet at 25 °C can still have capacitors at 60 °C next to a heat sink.
+- **Applying the 10 degree rule to polymer capacitors.** Conductive polymer types usually follow a 20 degree rule; for the same rating at 55 °C they would give 632,456 h, so use the maker's formula.
+- **Counting calendar time when the equipment is mostly off.** Life is consumed only at temperature, so a machine running 8 h a day lasts three times as many years.
+- **Extrapolating far below 40 °C.** The doubling rule overstates life at low temperature, where seal ageing dominates.
+- **Mixing up load life and shelf life.** Rated hours apply with voltage and ripple applied; capacitors stored unpowered for years may need reforming before use.

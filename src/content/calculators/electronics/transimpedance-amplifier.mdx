@@ -2,10 +2,10 @@
 title: Transimpedance Amplifier Calculator (Photodiode TIA Rf, Cf, Bandwidth)
 description: "Design a photodiode transimpedance amplifier: output voltage from Rf, maximum bandwidth from op-amp GBW and input capacitance, and the feedback capacitor Cf."
 category: electronics
-intro: "A transimpedance amplifier turns a photodiode's tiny current into a voltage, Vout = I × Rf, but the photodiode's capacitance and the op-amp's gain-bandwidth limit how fast it can be. This transimpedance amplifier calculator gives the output voltage, the achievable −3 dB bandwidth and the feedback capacitor for a flat (Butterworth) or 45° phase-margin response — see how a [transimpedance amplifier works with a photodiode](https://www.instrumentationblog.in/transimpedance-amplifier-photodiode/)."
+intro: "A transimpedance amplifier converts a photodiode's small current into a voltage, Vout = I × Rf, with speed limited by input capacitance and op-amp GBW. This transimpedance amplifier calculator gives the output, the achievable bandwidth and the feedback capacitor for a flat or 45° phase margin response.\n\nOptical sensor, lidar and instrument designers use it to choose Rf and Cf before layout; see how a [transimpedance amplifier works with a photodiode](https://www.instrumentationblog.in/transimpedance-amplifier-photodiode/)."
 keywords: [transimpedance amplifier calculator, tia calculator, photodiode amplifier calculator, transimpedance amplifier bandwidth, feedback capacitor transimpedance, photodiode tia design, current to voltage converter op amp]
 published: 2026-11-08
-updated: 2026-11-08
+updated: 2026-11-23
 variables:
   - { id: Ip, label: Photodiode current, family: current, unit: uA, default: 10, min: 0 }
   - { id: Rf, label: Feedback resistor Rf, family: resistance, unit: kohm, default: 100, min: 0 }
@@ -29,6 +29,8 @@ faq:
     a: The input capacitance creates a rising noise gain that meets the op-amp's falling open-loop gain at a steep angle, so without Cf the circuit peaks or oscillates. Cf adds a zero that restores phase margin.
   - q: How do I get more bandwidth from a photodiode amplifier?
     a: Reverse-bias the photodiode to reduce its capacitance, choose a smaller-area photodiode, use a higher-GBW op-amp with low input capacitance, or use a lower Rf followed by a second gain stage.
+  - q: "Which noise source dominates in a photodiode TIA?"
+    a: "It depends on the photocurrent. With 10 µA and Rf = 100 kΩ, shot noise is 1.79 pA/√Hz against 0.407 pA/√Hz from Rf, so the light dominates. At low currents Rf noise dominates, and at high frequency the op-amp voltage noise multiplied by 1 + Cin ÷ Cf often takes over."
 related: [electronics/op-amp-gain, electronics/rc-filter, electronics/snr, electronics/adc-resolution]
 ---
 
@@ -67,3 +69,40 @@ A photodiode with 20 pF total capacitance producing 10 µA, R<sub>f</sub> = 100 
 - Choose an op-amp with **FET or CMOS inputs** — bias current flows through R<sub>f</sub> and appears directly as an output offset.
 - Photovoltaic mode (zero bias) gives the lowest dark current and noise; photoconductive mode (reverse bias) gives lower capacitance and higher speed.
 - Thermal noise of R<sub>f</sub> is √(4kT/R<sub>f</sub>) in current terms, so a larger R<sub>f</sub> improves signal-to-noise as well as gain.
+
+## Noise and signal to noise ratio with the default values
+
+The worked example above stops at bandwidth, but a TIA is usually chosen for its noise. Take the same 10 µA, 100 kΩ, 20 pF and 10 MHz design at 300 K:
+
+1. Thermal noise current of R<sub>f</sub> = √(4kT ÷ R<sub>f</sub>) = **0.407 pA/√Hz**, which appears at the output as 40.7 nV/√Hz.
+2. Shot noise of the 10 µA photocurrent = √(2qI) = **1.79 pA/√Hz**, about 4.4 times larger.
+3. A second-order Butterworth response has a noise bandwidth of about 1.11 × f<sub>−3dB</sub> = 990 kHz, so √ENBW = 995.
+4. Integrated: R<sub>f</sub> noise 405 pA rms (40.5 µV rms at the output), shot noise 1.78 nA rms, total 1.83 nA rms.
+5. SNR = 20 log₁₀(10 µA ÷ 1.83 nA) = **74.8 dB**. Without shot noise it would be 87.9 dB.
+
+At this signal level the light itself sets the noise floor, so a bigger R<sub>f</sub> buys little. At nanoamp currents the balance reverses and R<sub>f</sub> noise dominates, which is why weak-signal receivers use 1 to 10 MΩ.
+
+The op-amp's own voltage noise matters too. Above the feedback zero at 1 ÷ (2π R<sub>f</sub> C<sub>f</sub>) = 631 kHz the noise gain rises to 1 + C<sub>in</sub> ÷ C<sub>f</sub> = **8.93**, so an op-amp with 10 nV/√Hz contributes about 89 nV/√Hz there, more than R<sub>f</sub> does.
+
+## Choosing Rf for the output swing
+
+| R<sub>f</sub> | Gain | Max current for 4.5 V swing | R<sub>f</sub> noise current | Output noise from R<sub>f</sub> | Bandwidth at 10 MHz GBW |
+|---|---|---|---|---|---|
+| 10 kΩ | 0.01 V/µA | 450 µA | 1.287 pA/√Hz | 12.9 nV/√Hz | 2820.9 kHz |
+| 100 kΩ | 0.1 V/µA | 45 µA | 0.407 pA/√Hz | 40.7 nV/√Hz | 892.1 kHz |
+| 1,000 kΩ | 1 V/µA | 4.5 µA | 0.129 pA/√Hz | 128.7 nV/√Hz | 282.1 kHz |
+| 10,000 kΩ | 10 V/µA | 0.45 µA | 0.041 pA/√Hz | 407.0 nV/√Hz | 89.2 kHz |
+
+With the default 100 kΩ the output reaches 4.5 V at 45 µA, leaving 4.5 times headroom over the 10 µA signal.
+
+## Testing a TIA
+
+Drive a fast LED or laser diode with a square wave and watch the output step. A Butterworth design rises in roughly 0.35 ÷ f<sub>−3dB</sub> = 392 ns with about 4% overshoot; ringing means C<sub>f</sub> is too small or C<sub>in</sub> is larger than you assumed. Cover the photodiode to read the dark offset: a FET-input op-amp with 1 pA bias adds only 0.1 µV, while 100 nA of bipolar bias current would add 10 mV.
+
+## Common mistakes
+
+- **Using the photodiode's zero-bias capacitance in a biased circuit.** Reverse bias can cut junction capacitance by half or more, and the op-amp's input capacitance must be added.
+- **Calling f<sub>−3dB</sub> the noise bandwidth.** The noise integrates over about 1.11 times the −3 dB frequency for a Butterworth response, more with peaking.
+- **Fitting a Cf below 0.5 pF.** Board and resistor parasitics already provide about that much, so the real response is slower than calculated.
+- **Ignoring shot noise at high light levels.** Above a few µA the photocurrent's own shot noise usually exceeds R<sub>f</sub> noise.
+- **Picking Rf without checking the rails.** A 10 MΩ resistor saturates a 5 V output at only 0.45 µA.

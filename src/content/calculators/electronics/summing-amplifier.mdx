@@ -2,10 +2,10 @@
 title: Summing Amplifier Calculator (Inverting Op-Amp Adder)
 description: Calculate the output voltage of an inverting op-amp summing amplifier from up to three input voltages, input resistors and the feedback resistor.
 category: electronics
-intro: "An inverting summing amplifier adds several input voltages, each weighted by the ratio of the feedback resistor to its own input resistor, because the inverting input sits at a virtual ground. This summing amplifier calculator gives the output voltage and input current for three inputs — the circuit builds on the [inverting amplifier gain formula](https://www.instrumentationblog.in/inverting-amplifier-gain-formula/) covered in [op-amp basics](https://www.instrumentationblog.in/operational-amplifier-op-amp-basics/)."
+intro: "An inverting summing amplifier adds several input voltages, each weighted by the ratio of the feedback resistor to its own input resistor, because the inverting input sits at a virtual ground. This summing amplifier calculator gives the output voltage and input current for three inputs.\n\nCircuit designers and students use it for mixers, offset and scaling stages and simple DACs, building on the [inverting amplifier gain formula](https://www.instrumentationblog.in/inverting-amplifier-gain-formula/) covered in [op-amp basics](https://www.instrumentationblog.in/operational-amplifier-op-amp-basics/)."
 keywords: [summing amplifier calculator, op amp summing amplifier, inverting summing amplifier formula, op amp adder calculator, summing amplifier output voltage, audio mixer op amp]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-23
 variables:
   - { id: V1, label: Input voltage V₁, family: voltage, unit: V, default: 1 }
   - { id: R1, label: Input resistor R₁, family: resistance, unit: kohm, default: 10, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: No. The inverting input is held at virtual ground, so each input current depends only on its own voltage and resistor. That isolation is why the circuit is used in audio mixers.
   - q: What limits the output?
     a: The op-amp supply rails. The result is only valid while |Vout| stays below the output swing limit — typically 1–2 V inside the rails, or close to the rails for rail-to-rail parts.
+  - q: "What is the input impedance of a summing amplifier?"
+    a: "Each input sees only its own input resistor, because the inverting node is held at virtual ground. With the defaults, V₁ and V₂ each see 10 kΩ and V₃ sees 20 kΩ."
+  - q: "Why does adding inputs reduce the bandwidth?"
+    a: "Each input resistor lowers the resistance from the inverting node to ground and raises the noise gain, 1 + R_f ÷ (R₁ ∥ R₂ ∥ R₃). For the defaults it is 3.5, so a 1 MHz op-amp gives about 286 kHz of bandwidth."
 related: [electronics/op-amp-gain, electronics/differential-amplifier, electronics/op-amp-integrator, electronics/voltage-divider]
 ---
 
@@ -67,3 +71,35 @@ A summing amplifier with binary-weighted input resistors is the simplest digital
 - Keep input resistors in the 1 kΩ–100 kΩ range: lower values load the sources, higher values add noise and offset.
 - For a **mixer**, use equal input resistors and a potentiometer in series with each input.
 - An **averaging amplifier** uses R<sub>f</sub> = R/N for N equal inputs.
+
+## What each default input contributes
+
+Superposition makes the summing amplifier easy to check one input at a time:
+
+| Input | Voltage | Resistor | Gain −R<sub>f</sub>/R<sub>n</sub> | Contribution | Source current |
+|---|---|---|---|---|---|
+| V₁ | +1 V | 10 kΩ | -1.00 | -1.00 V | +100 µA |
+| V₂ | +0.5 V | 10 kΩ | -1.00 | -0.50 V | +50 µA |
+| V₃ | -0.2 V | 20 kΩ | -0.50 | +0.10 V | -10 µA |
+
+The three contributions add to **-1.40 V**. Note that V₃ is negative and passes through twice the resistance, so it pushes the output up by only 0.10 V. Each source sees a load equal to its own input resistor, so V₁ must supply 100 µA into 10 kΩ regardless of the other inputs.
+
+## Bias resistor, noise gain and bandwidth
+
+For the defaults, the resistor from the non-inverting input to ground should be R₁ ∥ R₂ ∥ R₃ ∥ R<sub>f</sub> = **2.857 kΩ**; 2.87 kΩ or 2.8 kΩ is a practical value. The signal gain of each input is at most 1, but the op-amp sees a **noise gain** of 1 + R<sub>f</sub> ÷ (R₁ ∥ R₂ ∥ R₃) = 1 + 10 ÷ 4 = **3.5**. That number, not the signal gain, sets the closed-loop bandwidth and the output offset: a 1 MHz gain-bandwidth op-amp gives about 286 kHz, and a 1 mV input offset appears as 3.5 mV at the output. Every extra input lowers the bandwidth further.
+
+## A second scenario: averaging the same inputs
+
+To output the average instead of the sum, use equal input resistors of 30 kΩ and R<sub>f</sub> = 30 ÷ 3 = 10 kΩ. The same three voltages then give −(1 + 0.5 − 0.2) ÷ 3 = **-0.4333 V**. This is how a sensor averager combines three thermocouple amplifier outputs into one reading.
+
+## Testing a built circuit
+
+With the circuit powered and inputs connected, a multimeter between the inverting input and ground should read within a few millivolts of zero; if it does not, the op-amp is saturated or the feedback path is open. Then remove one input at a time (ground it) and confirm the output changes by that input's contribution from the table.
+
+## Common mistakes
+
+- **Forgetting the inversion when chaining stages.** A positive sum needs a second inverting stage with unity gain, which adds its own offset and noise to the result.
+- **Designing bandwidth from the signal gain.** With three inputs and equal resistors the noise gain is 4 even though each input has a gain of 1.
+- **Driving an input from a high impedance source.** A 10 kΩ sensor output in series with a 10 kΩ input resistor halves that input's weight.
+- **Leaving an unused input floating.** Tie it to ground or remove its resistor; a resistor with a floating far end acts as an antenna and couples hum into the summing node.
+- **Exceeding the output swing on peaks.** Audio mixers must be checked at the sum of all input peaks, not the average level.

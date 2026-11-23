@@ -2,10 +2,10 @@
 title: Inductor Energy Calculator (E = ½LI²)
 description: Calculate the energy stored in an inductor from inductance and current with E = ½LI², plus the switch-off voltage and the average power released.
 category: electronics
-intro: "An inductor stores energy in its magnetic field while current flows, and releases it when the current changes — which is why switching off a coil can cause a voltage spike. Learn the [inductor working principle](https://www.instrumentationblog.in/inductor-working-principle/) and the limits set by [inductor saturation current](https://www.instrumentationblog.in/inductor-saturation-current/). This inductor energy calculator gives the stored energy, the voltage induced if the current is switched off in a given time and the average power released, and solves for the inductance or current when you know the energy."
+intro: "An inductor stores energy in its magnetic field while current flows and releases it when the current changes, which is why a switched-off coil produces a voltage spike. This inductor energy calculator gives the stored energy, the induced voltage and the average power released at switch-off.\n\nElectronics and controls engineers use it to size flyback diodes, snubbers and clamps. Read about the [inductor working principle](https://www.instrumentationblog.in/inductor-working-principle/) and [inductor saturation current](https://www.instrumentationblog.in/inductor-saturation-current/)."
 keywords: [inductor energy calculator, energy stored in inductor, 1/2 li2 calculator, magnetic energy calculator, inductor current energy, choke energy, inductive kickback voltage]
 published: 2026-10-27
-updated: 2026-11-12
+updated: 2026-11-23
 variables:
   - { id: L, label: Inductance, family: inductance, unit: mH, default: 10, min: 0 }
   - { id: I, label: Current, family: current, unit: A, default: 2, min: 0 }
@@ -26,6 +26,8 @@ faq:
     a: Above a certain current the core can hold no more magnetic flux, so the inductance falls sharply and the current rises quickly. Ferrite cores saturate at roughly 0.3–0.5 T; always keep the peak current below the saturation current given in the datasheet.
   - q: Where is inductor energy used?
     a: Switch-mode power supplies store energy in an inductor or transformer each switching cycle and release it to the output; ignition coils use it to create the high-voltage spark, and superconducting magnets store megajoules in their field.
+  - q: "How long does it take an inductor to release its energy through a Zener clamp?"
+    a: "The current falls linearly at a rate set by the clamp voltage, so t = L × I ÷ V. A 10 mH coil at 2 A clamped at 24 V reaches zero in about 0.83 ms, and the clamp absorbs the full 20 mJ."
 related: [electronics/rl-time-constant, electronics/capacitor-energy, electronics/flyback-transformer, electronics/buck-converter]
 ---
 
@@ -90,3 +92,39 @@ Interrupting the same current in 10 µs would induce about 2,000 V — why a sup
 - **Energy per cycle:** a converter that stores E each switching period at frequency f transfers up to P = E × f — 20 µJ at 100 kHz is 2 W.
 - **Decay time:** with a flyback diode the current dies away with the coil's L/R time constant; see the [RL time constant calculator](/electronics/rl-time-constant/).
 - To compare with energy stored in an electric field, use the [capacitor energy calculator](/electronics/capacitor-energy/).
+
+## Sizing a clamp for the default coil
+
+The default 10 mH coil at 2 A holds 20 mJ, and every bit of it must go somewhere when the switch opens. Three common ways to absorb it give very different results:
+
+1. **Plain flyback diode.** The coil voltage is held at about 0.7 V and the current decays through the coil's own resistance. If the coil runs from 12 V at 2 A its resistance is 6 Ω, so τ = L ÷ R = 1.67 ms and the current takes about 5τ = **8.3 ms** to die away. Most of the 20 mJ heats the winding.
+2. **Diode plus 24 V Zener.** The coil voltage is clamped at 24 V, so the current falls linearly to zero in L × I ÷ V = **0.833 ms**. The Zener absorbs the full 20 mJ at an average of 24 V × 1 A = 24 W during that time.
+3. **No suppression.** The voltage rises until something breaks down: the transistor, the contacts or the insulation.
+
+If the coil is switched 50 times a second, the clamp must dissipate 20 mJ × 50 = **1.0 W** continuously, which rules out a small signal Zener.
+
+## Switch-off time and the induced voltage
+
+For 10 mH and 2 A (energy 20 mJ):
+
+| Switch-off time | Average induced voltage | Average power released |
+|---|---|---|
+| 10 ms | 2 V | 2 W |
+| 1 ms | 20 V | 20 W |
+| 0.1 ms | 200 V | 200 W |
+| 0.01 ms | 2,000 V | 2,000 W |
+| 0.001 ms | 20,000 V | 20,000 W |
+
+The energy is the same in every row; only the rate changes. Faster interruption means a higher voltage and a shorter, more intense pulse.
+
+## Measuring inductance under current
+
+An LCR meter measures inductance at a small test signal, which tells you nothing about saturation. To check a choke at its working current, apply a known DC voltage through a switch and capture the current on a scope with a current probe: di/dt = V ÷ L. At 12 V the default 10 mH coil ramps at 1,200 A/s and should reach 2 A in about 1.67 ms (before resistance flattens the curve). If the slope steepens as the current rises, the core is saturating and the stored energy is less than ½LI² suggests.
+
+## Common mistakes
+
+- **Entering henries as millihenries.** 10 H instead of 10 mH gives 20 J, a thousand times too much.
+- **Forgetting that energy goes with I².** Running the coil at 1.4 times the current roughly doubles the energy the clamp must take.
+- **Rating the clamp only for peak voltage.** The Zener or TVS must also absorb the energy per pulse and the average power at the switching rate.
+- **Using a plain diode on a fast-release relay or valve.** The slow decay delays drop-out by several milliseconds; a Zener clamp releases far faster.
+- **Using small-signal inductance near saturation.** The real inductance at full current can be much lower than the datasheet value.

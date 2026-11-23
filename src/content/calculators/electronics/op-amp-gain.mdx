@@ -2,10 +2,10 @@
 title: Op-Amp Gain Calculator (Inverting and Non-Inverting)
 description: "Calculate the voltage gain, gain in dB and output of an inverting or non-inverting op-amp amplifier from Rf and Rin — or the resistor for a target gain."
 category: electronics
-intro: "Operational amplifiers are the building blocks of analog electronics, and two resistors set their gain. Start with [op-amp basics](https://www.instrumentationblog.in/operational-amplifier-op-amp-basics/), the [voltage follower](https://www.instrumentationblog.in/voltage-follower-unity-gain-buffer-explained/), and how an [instrumentation amplifier differs from an op-amp](https://www.instrumentationblog.in/instrumentation-amplifier-vs-op-amp-key-differences/). This free op-amp gain calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Two resistors set the closed-loop gain of an operational amplifier, in either the inverting or the non-inverting form. This op-amp gain calculator returns the gain as a ratio and in dB plus the ideal output, and finds Rf or Rin for a target gain.\n\nCircuit designers, students and instrument technicians use it to scale sensor signals for ADCs and check stages. Start with [op-amp basics](https://www.instrumentationblog.in/operational-amplifier-op-amp-basics/), the [voltage follower](https://www.instrumentationblog.in/voltage-follower-unity-gain-buffer-explained/) and how an [instrumentation amplifier differs from an op-amp](https://www.instrumentationblog.in/instrumentation-amplifier-vs-op-amp-key-differences/)."
 keywords: [op amp gain calculator, inverting amplifier calculator, non inverting amplifier gain, opamp gain formula, rf rin, amplifier gain db]
 published: 2026-10-27
-updated: 2026-11-07
+updated: 2026-11-23
 variables:
   - id: t
     label: Configuration
@@ -32,6 +32,10 @@ faq:
     a: The output cannot swing beyond the supply rails (minus a headroom of 0.1–2 V depending on the op-amp), and gain falls at high frequency due to the gain-bandwidth product.
   - q: What is a voltage follower?
     a: A non-inverting amplifier with Rf = 0 and no Rin — a gain of exactly 1. It buffers a high-impedance source.
+  - q: "Why is my op-amp output not zero when the input is zero?"
+    a: "Input offset voltage and bias current are amplified. A 1 mV offset in a gain of 11 stage gives about 11 mV at the output, and 100 nA of bias current through a 100 kΩ feedback resistor adds about 10 mV unless the inputs see matched resistances."
+  - q: "How much do 1% resistors change the op-amp gain?"
+    a: "In the worst case for a non-inverting gain of 11, one resistor high and the other low, the gain ranges from 10.802 to 11.202, about ±1.8%. Use 0.1% resistors or a matched network when gain accuracy matters."
 related: [electronics/dbm-to-watts, electronics/instrumentation-amplifier-gain, electronics/rc-filter, electronics/voltage-divider, physics/decibel, electronics/adc-resolution]
 ---
 
@@ -92,3 +96,36 @@ For bridge sensors and thermocouples, use an instrumentation amplifier, which re
 - Keep resistors roughly 1 kΩ–1 MΩ: low values load the op-amp output and the source, high values add noise and offset from input bias current.
 - The inverting amplifier's input impedance is only R<sub>in</sub> — buffer high-impedance sensors or use the non-inverting form.
 - Check the output swing against the rails and the slew rate (a 10 V peak at 20 kHz needs about 1.3 V/µs).
+
+## How accurate is the default gain of 11 in a real circuit?
+
+The ideal formula gives 11 and 1.1 V out for the default 100 kΩ, 10 kΩ and 100 mV. Four real effects pull it away from that:
+
+1. **Resistor tolerance.** With 1% parts the worst case is 1 + 101 ÷ 9.9 = **11.202** and 1 + 99 ÷ 10.1 = **10.802**, about ±1.8% of 11.
+2. **Bandwidth.** On a 1 MHz GBW op-amp the closed-loop bandwidth is 1 MHz ÷ 11 = 90.9 kHz. At 20 kHz the gain has already fallen to 11 ÷ √(1 + (20 ÷ 90.9)²) = **10.743**, 2.3% low, even though 20 kHz is well inside the −3 dB point.
+3. **Offset voltage.** A 1 mV input offset is multiplied by the noise gain, so the output sits **11 mV** away from zero with no signal, 1% of the 1.1 V output.
+4. **Bias current.** 100 nA of bipolar input bias current flowing through R<sub>f</sub> adds 10 mV. A 9.09 kΩ resistor (R<sub>f</sub> ∥ R<sub>in</sub>) in series with the non-inverting input balances the two inputs so only the much smaller offset current matters.
+
+A 0.5 V/µs slew rate limits a full 1.1 V peak sine to about 72 kHz before the output turns triangular.
+
+## Worst-case gain error from resistor tolerance
+
+| Gain | Non-inverting, 5% | Non-inverting, 1% | Non-inverting, 0.1% | Inverting, 1% |
+|---|---|---|---|---|
+| 2 | 5.3% | 1.01% | 0.100% | 2.02% |
+| 11 | 9.6% | 1.84% | 0.182% | 2.02% |
+| 101 | 10.4% | 2.00% | 0.198% | 2.02% |
+
+The inverting stage always carries the full error of both resistors, while in the non-inverting stage the fixed "1" dilutes it at low gain.
+
+## Measuring the gain on the bench
+
+Feed a sine from a signal generator at a frequency at least ten times below the expected bandwidth, with an amplitude that keeps the output well inside the rails, and read input and output on the same scope or true RMS meter. To measure offset, short the input to ground, read the output and divide by the noise gain.
+
+## Common mistakes
+
+- **Confusing the two forms.** With the same pair, the inverting stage gives −10, not −11; the "1 +" belongs only to the non-inverting formula.
+- **Expecting full gain right up to GBW ÷ G.** The gain is already 3 dB down at that frequency and a few percent low a decade below it at high gain.
+- **Ignoring the output swing.** An input of 1 V at gain 11 asks for 11 V, which a 5 V rail-to-rail part clips at about 4.9 V.
+- **Leaving Rin out of the source impedance.** In the inverting stage the source resistance adds to R<sub>in</sub>, so a 1 kΩ source cuts the gain from −10 to −9.09.
+- **Using megohm resistors to save current.** Bias current, noise and stray capacitance across R<sub>f</sub> all grow, and a few pF across 1 MΩ forms a pole at tens of kHz.

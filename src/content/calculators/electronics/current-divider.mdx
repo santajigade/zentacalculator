@@ -2,10 +2,10 @@
 title: "Current Divider Calculator (Current Divider Rule & Branch Currents)"
 description: Calculate how a total current splits between two parallel resistors using the current divider rule — with branch currents and equivalent resistance.
 category: electronics
-intro: "When current reaches parallel branches, it splits between them — more through the lower resistance. The [current divider rule](https://www.instrumentationblog.in/current-divider-rule-explained/) follows directly from [Kirchhoff's current law](https://www.instrumentationblog.in/kirchhoffs-current-law-kcl-explained/) and is the basis of [shunt resistors in instrumentation](https://www.instrumentationblog.in/shunt-resistors-in-instrumentation/). This current divider calculator gives each branch current, the equivalent resistance and the voltage across the pair."
+intro: "When current reaches parallel branches it splits between them, with more through the lower resistance. The [current divider rule](https://www.instrumentationblog.in/current-divider-rule-explained/) follows from [Kirchhoff's current law](https://www.instrumentationblog.in/kirchhoffs-current-law-kcl-explained/), and this current divider calculator gives each branch current, the equivalent resistance and the voltage.\n\nElectronics students and instrument technicians use it to analyse parallel loads, check how a meter shunt shares current with the movement and design [shunt resistors in instrumentation](https://www.instrumentationblog.in/shunt-resistors-in-instrumentation/)."
 keywords: [current divider calculator, current divider rule, parallel resistor current, branch current calculator, current division formula]
 published: 2026-10-27
-updated: 2026-11-07
+updated: 2026-11-23
 variables:
   - { id: It, label: Total current, family: current, unit: A, default: 1, min: 0 }
   - { id: R1, label: R1, family: resistance, unit: ohm, default: 100, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: "Use conductances: I_n = I_total × G_n ÷ ΣG, where G = 1 ÷ R."
   - q: Where is the current divider used?
     a: In ammeter shunts, current-sharing resistors and in analysing parallel loads.
+  - q: "How much power does each branch dissipate?"
+    a: "Use P = I² × R for each branch. With 1 A into 100 Ω and 300 Ω, the 100 Ω resistor dissipates 56.25 W and the 300 Ω resistor 18.75 W, a total of 75 W."
+  - q: "Does an ammeter in one branch change the current split?"
+    a: "Slightly, because its burden resistance adds to that branch. A 1 Ω meter in the 100 Ω branch lowers its current from 0.75 A to about 0.7481 A, so use a low burden meter or a clamp on low resistance branches."
 related: [electronics/led-resistor, electronics/voltage-divider, physics/resistors-series-parallel, electronics/shunt-resistor, physics/ohms-law]
 ---
 
@@ -79,3 +83,38 @@ A 250 Ω resistor converts a 4–20 mA loop current into 1–5 V for a voltage i
 - Include wire and connector resistance when one branch is a low-value shunt — 10 mΩ of wiring is 10% of a 0.1 Ω shunt.
 - For accurate current sharing between parallel power devices, add small equal ballast resistors; tiny differences in on-resistance otherwise make one device carry most of the current.
 - The rule assumes an ideal current source. If the source has internal resistance, the total current changes with the load — solve with the source voltage and [Ohm's law](/physics/ohms-law/) instead.
+
+## Power in each branch at the default values
+
+The default split also tells you how hot each resistor gets:
+
+- P₁ = 0.75² × 100 = **56.25 W** and P₂ = 0.25² × 300 = **18.75 W**
+- Total = 75 W, which equals I<sub>T</sub>² × R<sub>eq</sub> = 1² × 75 and V × I<sub>T</sub> = 75 × 1
+
+The smaller resistor carries three times the current and dissipates three times the power, because both resistors share the same 75 V and P = V² ÷ R. Neither value could be an ordinary 0.25 W part; these are power resistors on a heatsink or in free air with derating.
+
+## How resistor tolerance shifts the split
+
+With 1 A into the default pair:
+
+| R₁ change | R₂ change | I₁ | I₂ | Change in I₁ |
+|---|---|---|---|---|
+| +0% | +0% | 0.7500 A | 0.2500 A | +0.00% |
+| +5% | +0% | 0.7407 A | 0.2593 A | -1.23% |
+| -5% | +0% | 0.7595 A | 0.2405 A | +1.27% |
+| +0% | +5% | 0.7590 A | 0.2410 A | +1.20% |
+| +5% | -5% | 0.7308 A | 0.2692 A | -2.56% |
+| -5% | +5% | 0.7683 A | 0.2317 A | +2.44% |
+
+A 5% error in one resistor moves the split by only about 1.2 to 1.3%, because the error partly cancels in the ratio R₂ ÷ (R₁ + R₂). The worst case, R₁ high and R₂ low, gives 0.7308 A. Where an exact split matters, use 0.1% resistors or trim one branch.
+
+## Measuring branch currents
+
+A series ammeter adds its burden resistance to the branch it measures. A meter with 1 Ω burden in the R₁ branch reads 0.7481 A instead of 0.75 A, a small error here but a large one when the branch is a shunt of a few ohms or less. A clamp meter or a voltage reading across a known resistor avoids the problem: 75 V across the 100 Ω branch confirms 0.75 A without breaking the circuit.
+
+## Common mistakes
+
+- **Putting the branch's own resistance in the numerator.** I₁ = I<sub>T</sub> × R₁ ÷ (R₁ + R₂) gives 0.25 A, the current of the other branch.
+- **Using the two-branch formula for three branches.** With three or more paths, work with conductances or combine two branches first.
+- **Forgetting the power rating.** Branch currents can look harmless while the resistors dissipate tens of watts.
+- **Ignoring temperature coefficient.** Copper wiring rises about 0.39% per °C, so a copper path in parallel with a manganin shunt drifts as it warms.

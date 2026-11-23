@@ -1,11 +1,11 @@
 ---
-title: Basketball Shooting Calculator (FG%, eFG%, TS%)
-description: Calculate field goal percentage, effective field goal percentage and true shooting percentage.
+title: "Effective Field Goal Percentage Calculator (eFG%, TS%, FG%)"
+description: "Effective field goal percentage calculator: enter makes, attempts, threes and free throws to get eFG%, true shooting %, FG% and points, with examples."
 category: sports
-intro: "Field goal percentage, effective FG% and true shooting percentage measure how efficiently a basketball player scores. This free basketball shooting calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Effective field goal percentage gives a three pointer 1.5 times the credit of a two, so shooters who take different shot mixes can be compared fairly. This effective field goal percentage calculator also returns plain FG%, true shooting percentage and points from one box score line.\n\nCoaches, scouts, fantasy players and fans use it to judge shooting efficiency after a game or season and to see whether more threes or more free throws would help."
 keywords: [effective field goal percentage, efg, true shooting, ts%, fg%, basketball stats, shooting efficiency]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-23
 variables:
   - { id: fg, label: Field goals made (incl. 3-pointers), default: 8, min: 0 }
   - { id: fga, label: Field goal attempts, default: 17, min: 1 }
@@ -22,54 +22,91 @@ equations:
   - efg = (fg + 0.5 * tp) / fga
   - ts = pts / (2 * (fga + 0.44 * fta))
 faq:
-  - q: What is effective field goal percentage?
-    a: FG% adjusted for the extra value of three-pointers — (FG + 0.5 × 3PM) ÷ FGA.
-  - q: What is true shooting percentage?
-    a: Points per shooting possession, including free throws — PTS ÷ (2 × (FGA + 0.44 × FTA)).
-  - q: What is a good TS%?
-    a: Around 57–58% is roughly NBA average in recent seasons; above 62% is excellent.
+  - q: "What is effective field goal percentage?"
+    a: "It is FG% adjusted for the extra point a three is worth: (FG + 0.5 × 3PM) ÷ FGA. For example (8 + 0.5 × 3) ÷ 17 = 55.9%."
+  - q: "What is true shooting percentage?"
+    a: "It is points per shooting possession, including free throws: PTS ÷ (2 × (FGA + 0.44 × FTA)), expressed as a percentage."
+  - q: "What is a good TS%?"
+    a: "Around 57% to 58% is roughly NBA league average in recent seasons, above 60% is very good and above 62% is excellent."
   - q: "What is the difference between eFG% and TS%?"
     a: "eFG% adjusts for three-pointers; TS% also includes free throws."
-  - q: "What is a good true shooting percentage?"
-    a: "Above about 60% is very good in the NBA."
+  - q: "What is a good eFG%?"
+    a: "In the NBA about 54% to 55% is league average in recent seasons, and 57% or higher is excellent. College and high school averages are lower."
 related: [sports/win-percentage]
 ---
 
-## How to use the basketball shooting calculator
+## How to use the effective field goal percentage calculator
 
-Enter **field goals made and attempted**, **three-pointers made** and **free throws made and attempted**. Points and the three shooting percentages are calculated.
+Enter **field goals made and attempted**, **three pointers made** and **free throws made and attempted**. Field goals made must include the threes, exactly as a box score shows FGM. The calculator returns points, FG%, eFG% and TS%, and you can also leave an input blank and type a target percentage to solve for it.
 
-## Example
+## Worked example
 
-8/17 FG (3 threes), 5/6 FT:
+The default line is 8 of 17 from the field with 3 threes, and 5 of 6 free throws:
 
-- Points = **24**
-- FG% = **47.1%**, eFG% = **55.9%**, TS% = **61.1%**
+- Points = 2 × 8 + 3 + 5 = **24** (5 twos, 3 threes and 5 free throws)
+- FG% = 8 ÷ 17 = **47.1%**
+- eFG% = (8 + 0.5 × 3) ÷ 17 = 9.5 ÷ 17 = **55.9%**
+- TS% = 24 ÷ (2 × (17 + 0.44 × 6)) = 24 ÷ 39.28 = **61.1%**
+
+The 19 field goal points on 17 shots are 1.118 points per shot, and half of that is exactly the 55.9% eFG%. The free throws then lift true shooting to 61.1%.
 
 ## Why eFG% and TS% matter
 
-Plain field-goal percentage treats a three-pointer like a two. Effective FG% adds 50% extra credit for threes, and true shooting % also includes free throws, giving the best single measure of scoring efficiency.
+Plain field goal percentage treats a three pointer like a two. Effective FG% adds 50% extra credit for each made three, and true shooting % also counts free throws, which makes it the best single measure of scoring efficiency. A player who goes 10 of 20 on twos shoots 50.0% FG and 50.0% eFG for 20 points, while one who goes 8 of 20 with 5 threes shoots only 40.0% FG but 52.5% eFG and scores 21.
 
 ## Benchmarks (NBA, approximate)
 
 | Rating | FG% | eFG% | TS% |
 |---|---|---|---|
-| Excellent | 50%+ | 57%+ | 62%+ |
-| Above average | 47–50% | 54–57% | 58–62% |
-| League average (recent seasons) | about 47% | about 54% | about 58% |
+| Excellent | 50% or more | 57% or more | 62% or more |
+| Above average | 47% to 50% | 55% to 57% | 58% to 62% |
+| League average (recent seasons) | about 47% | about 54% to 55% | about 57% to 58% |
 | Below average | under 44% | under 50% | under 54% |
 
-Averages shift as teams take more threes.
+Averages shift as teams take more threes, and college, high school and women's leagues run lower, so compare players within the same level and season.
 
 ## The 0.44 factor
 
-TS% uses 0.44 × free-throw attempts to estimate the number of possessions used by free throws, since and-ones and technical fouls do not use a full possession.
+TS% uses 0.44 × free throw attempts to estimate the shooting possessions used by free throws. A two shot foul uses one possession for two attempts, while and ones and technical free throws use none, so each attempt counts as a little less than half a possession.
 
-## Example
+## eFG% reference table
 
-8 FG on 17 attempts, 3 threes, 5 of 6 free throws:
+eFG% on 20 field goal attempts for different makes and numbers of made threes:
 
-- Points = 2 × 8 + 3 + 5 = **24**
-- FG% = 8 ÷ 17 = 47.1%
-- eFG% = (8 + 1.5) ÷ 17 = **55.9%**
-- TS% = 24 ÷ (2 × (17 + 2.64)) = **61.1%**
+| Makes | 0 threes | 2 threes | 4 threes | 6 threes |
+|---|---|---|---|---|
+| 6 of 20 (30%) | 30.0% | 35.0% | 40.0% | 45.0% |
+| 8 of 20 (40%) | 40.0% | 45.0% | 50.0% | 55.0% |
+| 10 of 20 (50%) | 50.0% | 55.0% | 60.0% | 65.0% |
+| 12 of 20 (60%) | 60.0% | 65.0% | 70.0% | 75.0% |
+
+### Three point percentage as a two point equivalent
+
+Because a three is worth 1.5 twos, a three point percentage times 1.5 gives the two point percentage with the same value per shot:
+
+| 3P% | Equal value 2P% (eFG%) | Points per three attempt |
+|---|---|---|
+| 30% | 45.0% | 0.90 |
+| 33% | 49.5% | 0.99 |
+| 35% | 52.5% | 1.05 |
+| 36% | 54.0% | 1.08 |
+| 38% | 57.0% | 1.14 |
+| 40% | 60.0% | 1.20 |
+| 45% | 67.5% | 1.35 |
+
+So a 40% three point shooter produces the same points per attempt as a 60% shooter on twos.
+
+## Practical notes
+
+- **Small samples swing hard.** Turning one miss into a made three in the example game adds 8.8 percentage points of eFG%, so judge players over many games.
+- **eFG% ignores free throws.** A player who draws many fouls can have an ordinary eFG% and an excellent TS%, as in the example (55.9% against 61.1%).
+- **Team stats work the same way.** Enter team totals to get team eFG%, one of Dean Oliver's four factors along with turnover rate, offensive rebounding and free throw rate.
+- **Maximum value.** eFG% can exceed 100%: a player who makes every attempt and all are threes reaches 150%.
+
+## Common mistakes
+
+- **Leaving threes out of field goals made.** FGM already includes threes. Entering only the 5 twos as FG gives an eFG% of 38.2% instead of 55.9%.
+- **Using three point attempts instead of makes.** Only made threes earn the bonus. Typing 7 attempts in place of 3 makes inflates eFG% to 67.6%.
+- **Adding free throws to eFG%.** Free throws belong only in points and TS%; adding them to FGM or FGA breaks the eFG% formula.
+- **Comparing eFG% with someone else's FG%.** eFG% is always equal to or higher than FG%, so compare like with like.
+- **Forgetting the factor of 2 in TS%.** TS% divides points by 2 × (FGA + 0.44 × FTA); without the 2 the example would show 122.2%.

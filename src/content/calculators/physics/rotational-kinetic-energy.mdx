@@ -2,10 +2,10 @@
 title: Rotational Kinetic Energy Calculator (Flywheel Energy)
 description: Calculate rotational kinetic energy ½Iω² and moment of inertia for a disc, ring or sphere from mass, radius and rpm — for flywheels and rotors.
 category: physics
-intro: "A spinning body stores kinetic energy that depends on its moment of inertia and the square of its angular velocity. This rotational kinetic energy calculator works out the moment of inertia of common shapes and the stored energy from rpm — useful for flywheels, motor rotors, grinding wheels and coast-down estimates."
+intro: "Rotational kinetic energy is the energy a body stores by spinning, set by its moment of inertia and the square of its angular velocity. This rotational kinetic energy calculator finds the moment of inertia of a disc, ring or sphere from mass and radius, then the stored energy from rpm.\n\nMechanical engineers, students and machine designers use it to size flywheels, estimate rotor coast down, check grinding wheel energy and work out braking loads."
 keywords: [rotational kinetic energy calculator, flywheel energy calculator, moment of inertia calculator, kinetic energy of rotation, i omega squared, spinning disc energy]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-24
 variables:
   - id: k
     label: Shape
@@ -34,6 +34,10 @@ faq:
     a: Putting mass far from the axis raises the moment of inertia, so a rim-heavy flywheel stores more energy for the same weight.
   - q: How does speed affect stored energy?
     a: Energy rises with the square of speed — doubling rpm stores four times the energy, which is also why overspeed failures are so violent.
+  - q: "How much energy does a flywheel release when it slows down?"
+    a: "The difference ½ I (ω₁² − ω₂²). The 20 kg, 250 mm disc going from 1,000 to 600 rpm releases about 2,193 J, which is why flywheels can deliver short bursts of high power."
+  - q: "What is the difference between rotational and translational kinetic energy?"
+    a: "Translational energy ½ m v² comes from the whole body moving along a path; rotational energy ½ I ω² comes from spinning about an axis. A rolling wheel has both, and they add."
 related: [physics/kinetic-energy, physics/angular-velocity, physics/torque, engineering/torque-power-speed]
 ---
 
@@ -45,7 +49,7 @@ Choose the **shape**, then enter the **mass**, the **radius** and the **speed in
 
 <p class="formula">E = ½ I ω² &nbsp;·&nbsp; I = k m r² &nbsp;·&nbsp; ω = 2π N ÷ 60</p>
 
-## Example
+## Worked example
 
 A 20 kg solid steel disc of radius 250 mm spinning at 1,000 rpm:
 
@@ -74,3 +78,34 @@ A 20 kg solid steel disc of radius 250 mm spinning at 1,000 rpm:
 | 1,500 rpm | 7,711 J |
 | 3,000 rpm | 30,843 J |
 | 6,000 rpm | 123,370 J |
+
+The rim of this disc moves at ω r = 104.72 × 0.25 = **26.18 m/s**. If the same disc rolled along the floor at that speed, its straight line energy ½ m v² would be 6,854 J on top of the 3,427 J of spin.
+
+## Same mass, different shape
+
+At 1,000 rpm with 20 kg and a 250 mm radius:
+
+| Shape | Moment of inertia | Stored energy |
+|---|---|---|
+| Solid disc | 0.6250 kg·m² | 3,427 J |
+| Thin ring | 1.2500 kg·m² | 6,854 J |
+| Solid sphere | 0.5000 kg·m² | 2,742 J |
+| Thin hollow sphere | 0.8333 kg·m² | 4,569 J |
+
+Moving the mass from a solid disc to a thin rim doubles the energy (6,854 J against 3,427 J) without adding a kilogram.
+
+## Using the energy in practice
+
+**Coast down.** If the example disc slows from 1,000 to 600 rpm, it releases 2,193 J. Delivered over 2 s that is an average of 1,097 W, which is how a press flywheel supplies a short punching stroke from a small motor.
+
+**Braking.** A constant friction torque of 5 N·m gives an angular deceleration of 5 ÷ 0.625 = 8 rad/s², so the disc stops in 13.1 s after about 109 revolutions. All 3,427 J end up as heat in the brake or bearings.
+
+**Measuring the moment of inertia.** For irregular parts, hang the part on a thin wire (torsion pendulum) or let a known falling mass spin it up and time the acceleration, then enter I directly instead of shape, mass and radius.
+
+## Common mistakes
+
+- **Using rpm instead of rad/s.** E = ½ I ω² needs ω in rad/s; putting 1,000 in directly gives an answer about 91 times too large.
+- **Diameter for radius.** Entering 500 mm for a 500 mm diameter disc makes I and E four times too large.
+- **Treating a spoked or webbed flywheel as a solid disc.** Most of its mass sits in the rim, so it is closer to a thick ring.
+- **Ignoring the shaft, hub and coupling.** On small rotors they can add a noticeable share of the total inertia.
+- **Forgetting the stress limit.** Stored energy rises with speed squared, but so does rim stress; check the rated maximum speed before raising rpm to store more energy.

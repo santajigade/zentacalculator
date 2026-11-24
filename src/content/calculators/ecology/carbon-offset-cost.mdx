@@ -1,11 +1,11 @@
 ---
-title: Carbon Offset Cost Calculator
-description: "Calculate the cost of offsetting your emissions at a given carbon price per tonne. Free online carbon offset cost calculator with formula and examples."
+title: "Carbon Offset Cost Calculator: Price to Offset CO2 Emissions"
+description: "Carbon offset cost calculator: enter tonnes of CO2 and the price per tonne to get the yearly and monthly cost of offsetting, with prices and examples."
 category: ecology
-intro: "Carbon offsets let you pay for emissions reductions elsewhere to balance your own. The cost depends on how many tonnes of CO₂ you want to offset and the price per tonne. This free carbon offset cost calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A carbon offset is a credit for one tonne of CO2 that a verified project has avoided or removed, bought to balance emissions you cannot cut yet. This carbon offset cost calculator multiplies the tonnes you want to cover by the price per tonne and spreads the total over twelve months.\n\nHouseholds, small businesses and event organisers use it to budget for offsetting flights, fuel and electricity, and to compare how much a cheap credit and a high quality removal credit would cost."
 keywords: [carbon offset cost, carbon credit price, offset calculator, cost per tonne co2, carbon pricing]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: t, label: Emissions to offset, family: mass, unit: t, imperialUnit: lb, default: 5, min: 0 }
   - { id: p, label: Price per tonne CO₂, family: currency, default: 15, min: 0, decimals: 2 }
@@ -15,26 +15,46 @@ equations:
   - cost = t / 1000 * p
   - m = cost / 12
 faq:
-  - q: How much does a carbon offset cost?
-    a: Voluntary offsets range widely — from a few to over 100 per tonne — depending on the project type and quality.
+  - q: "How much does a carbon offset cost?"
+    a: "Voluntary credits range from a few units of currency per tonne for renewable energy and some avoidance projects to several hundred per tonne for engineered carbon removal. Quality, project type and the year all move the price."
   - q: Are all offsets equal?
     a: No. Look for independently verified projects (for example Gold Standard or Verra) and check permanence and additionality.
   - q: Should I offset or reduce?
     a: Reduce first, then offset what you cannot avoid.
   - q: "How much does it cost to offset a flight?"
-    a: "A return long-haul economy flight emits roughly 1–3 tonnes of CO₂; at 15 per tonne that is about 15–45."
+    a: "A return long haul economy flight emits roughly 1 to 3 tonnes of CO2. At 15 per tonne that is about 15 to 45; at 100 per tonne it is 100 to 300."
   - q: "Are carbon offsets worth it?"
     a: "High-quality, verified offsets can help, but reducing your own emissions first has the most reliable impact."
-related: [ecology/water-leak, finance/stock-average, ecology/flight-emissions, ecology/tree-offset, ecology/car-carbon-footprint]
+  - q: "How many carbon credits do I need?"
+    a: "One credit usually covers one tonne of CO2 equivalent, so you need as many credits as tonnes you want to offset. Round up, because most registries do not sell fractions of a credit."
+related: [ecology/tree-offset, ecology/flight-emissions, ecology/car-carbon-footprint, ecology/electricity-co2]
 ---
 
 ## How to use the carbon offset cost calculator
 
 Enter the **emissions** to offset (yearly) and the **price per tonne**. The total and monthly cost are calculated.
 
-## Example
+## Worked example with the default values
 
-5 tonnes at 15 per tonne → **75** a year (**6.25** a month).
+You want to offset 5 tonnes of CO2 a year and the provider charges 15 per tonne:
+
+1. Yearly cost = 5 t × 15 per tonne = **75.00**
+2. Monthly cost = 75.00 ÷ 12 = **6.25**
+
+The calculator stores mass in kilograms, so 5 t is treated as 5,000 kg and divided by 1,000 before it is multiplied by the price. The currency is whatever you type: the price and the result are always in the same unit.
+
+## Cost of offsetting 5 tonnes at different prices
+
+| Price per tonne | Per year | Per month | Per day |
+|---|---|---|---|
+| 5 | 25.00 | 2.08 | 0.07 |
+| 15 | 75.00 | 6.25 | 0.21 |
+| 30 | 150.00 | 12.50 | 0.41 |
+| 50 | 250.00 | 20.83 | 0.68 |
+| 100 | 500.00 | 41.67 | 1.37 |
+| 600 | 3,000.00 | 250.00 | 8.22 |
+
+The spread is the main point: the same 5 tonnes can cost less than a cinema ticket a month with cheap avoidance credits or several hundred a month with engineered removals such as direct air capture.
 
 ## Typical offset prices
 
@@ -68,3 +88,32 @@ Offsets are most credible as a complement to cutting emissions, not a replacemen
 | India | about 2 t |
 
 Figures are territorial emissions from fossil fuels and industry; consumption-based footprints can differ.
+
+## Offsetting a typical footprint
+
+Using the per person averages from the table above, here is what a full year of emissions would cost to offset at three price levels:
+
+| Footprint | At 15 per t | At 30 per t | At 100 per t |
+|---|---|---|---|
+| India average (about 2 t) | 30.00 | 60.00 | 200.00 |
+| Global average (about 4.7 t) | 70.50 | 141.00 | 470.00 |
+| EU average (about 6 t) | 90.00 | 180.00 | 600.00 |
+| US average (about 14.5 t) | 217.50 | 435.00 | 1,450.00 |
+
+A single return long haul flight of about 2 t costs 30.00 to offset at 15 per tonne. Work out the tonnes first with the [flight emissions calculator](/ecology/flight-emissions/), then bring the figure here.
+
+## Practical notes
+
+- **Check what one credit covers.** One credit is normally one tonne of CO2 equivalent. If a site sells offsets "per flight" or "per month", divide its price by the tonnes it claims to cover to compare it with other providers.
+- **Expect fees.** Retail providers often add a service margin. A 10% fee turns the 75.00 example into 82.50.
+- **Small amounts.** For 800 kg enter 0.8 t; at 15 per tonne that is 12.00.
+- **Reduce, then offset the remainder.** Cutting the footprint in half before buying credits halves the bill, so 2.5 t at 15 costs 37.50 instead of 75.00.
+- **Ask for retirement proof.** A good provider retires the credits on a public registry and gives you the serial numbers.
+
+## Common mistakes
+
+- **Mixing kilograms and tonnes.** Footprint tools often report kilograms; 5,000 kg is 5 t, not 5,000 t.
+- **Comparing prices of different credit types.** Avoidance credits and removal credits are different products, so a lower price per tonne does not mean a better deal.
+- **Offsetting CO2 only when the figure is CO2e.** Some footprints include methane and other gases as CO2 equivalent; buy credits for the CO2e total.
+- **Forgetting it is a yearly figure.** The monthly value is the yearly cost divided by 12, so enter a full year of emissions to get a correct monthly budget.
+- **Buying unverified credits.** Credits without an independent standard and registry can be double counted or never delivered.

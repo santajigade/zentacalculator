@@ -2,10 +2,10 @@
 title: de Broglie Wavelength Calculator (λ = h/mv)
 description: Calculate the de Broglie wavelength of an electron, proton, neutron or any mass from its velocity, with momentum and kinetic energy in eV.
 category: physics
-intro: "Every moving particle behaves as a wave whose wavelength is Planck's constant divided by its momentum, λ = h/p. This de Broglie wavelength calculator gives the matter wavelength, momentum and kinetic energy of electrons, protons, neutrons or any object — the physics behind electron microscopes and electron diffraction."
+intro: "Every moving particle also behaves as a wave, and its wavelength is Planck's constant divided by its momentum, λ = h ÷ p. This de Broglie wavelength calculator gives the matter wavelength, momentum and kinetic energy of an electron, proton, neutron or alpha particle at a chosen speed.\n\nPhysics students use it for quantum mechanics problems, and microscopists and crystallographers use it to judge whether an electron or neutron beam can resolve atomic spacings."
 keywords: [de broglie wavelength calculator, lambda = h / mv, matter wave calculator, electron wavelength calculator, de broglie equation, wavelength of electron, particle wavelength]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-24
 variables:
   - id: m
     label: Particle (rest mass)
@@ -32,6 +32,10 @@ faq:
     a: Their momentum is enormous by comparison. A 0.15 kg ball at 40 m/s has λ ≈ 1.1 × 10⁻³⁴ m, far too small to observe.
   - q: When do I need the relativistic formula?
     a: Above about 10% of the speed of light. For electrons accelerated through more than a few kilovolts, use p = √(2 m E (1 + E ÷ 2mc²)); the table below shows the difference.
+  - q: "Does the de Broglie wavelength depend on the charge of the particle?"
+    a: "No. It depends only on momentum. A proton and a neutron moving at the same speed have almost identical wavelengths, even though one is charged and the other is not. Charge only matters for how you accelerate the particle."
+  - q: "What wavelength did the Davisson and Germer electrons have?"
+    a: "Electrons accelerated through 54 V have a de Broglie wavelength of about 0.167 nm, which matched the diffraction peak they measured from a nickel crystal."
 related: [physics/photon-energy, physics/momentum, physics/kinetic-energy, physics/wavelength-frequency]
 ---
 
@@ -45,13 +49,15 @@ Choose the **particle** and enter its **velocity**. The calculator returns the m
 
 <p class="formula">KE = ½ m v² &nbsp;·&nbsp; λ = h ÷ √(2 m KE)</p>
 
-## Example
+## Worked example with the default values
 
-An electron (9.109 × 10⁻³¹ kg) moving at 1 × 10⁶ m/s:
+An electron (m = 9.109 × 10⁻³¹ kg) moving at 1 × 10⁶ m/s:
 
-- p = 9.109 × 10⁻³¹ × 10⁶ = **9.1094 × 10⁻²⁵ kg·m/s**
-- λ = 6.626 × 10⁻³⁴ ÷ 9.1094 × 10⁻²⁵ = **0.7274 nm**
-- KE = ½ × 9.109 × 10⁻³¹ × (10⁶)² = **2.843 eV**
+1. Momentum p = m v = 9.109 × 10⁻³¹ × 1 × 10⁶ = **9.1094 × 10⁻²⁵ kg·m/s**
+2. Wavelength λ = h ÷ p = 6.626 × 10⁻³⁴ ÷ 9.1094 × 10⁻²⁵ = 7.2739 × 10⁻¹⁰ m = **0.7274 nm**
+3. Kinetic energy = ½ m v² = 4.5547 × 10⁻¹⁹ J, and dividing by 1.602 × 10⁻¹⁹ J/eV gives **2.843 eV**
+
+Check: λ = h ÷ √(2 m KE) with KE in joules gives 0.7274 nm again. The speed is only 0.33% of the speed of light, so the relativistic factor γ = 1.0000056 changes the momentum by about 0.0006%, far below the precision shown.
 
 ## Wavelength of electrons accelerated through a voltage
 
@@ -71,3 +77,30 @@ Transmission electron microscopes run at 100–300 kV, giving wavelengths of a f
 - For an electron accelerated from rest through V volts, λ (nm) ≈ 1.226 ÷ √V (non-relativistic).
 - Thermal neutrons (about 2,200 m/s) have λ ≈ 0.18 nm, ideal for neutron diffraction.
 - The [photon energy calculator](/physics/photon-energy/) does the equivalent conversion for light, where λ = h c ÷ E.
+
+## Same speed, different particles
+
+At the default 1 × 10⁶ m/s, the heavier particles have far shorter wavelengths and far more energy:
+
+| Particle | Wavelength | Kinetic energy |
+|---|---|---|
+| Electron | 727.4 pm | 2.843 eV |
+| Proton | 0.3961 pm | 5,220 eV |
+| Neutron | 0.3956 pm | 5,227 eV |
+| Alpha particle | 0.09972 pm | 20,736 eV |
+
+A proton and a neutron at the same speed have almost the same wavelength because only momentum matters, not charge.
+
+## How matter waves are measured
+
+The first direct proof came from the Davisson and Germer experiment in 1927. Electrons accelerated through 54 V have λ = h ÷ √(2 m e V) = **0.1669 nm**. Scattered from a nickel crystal with a surface row spacing of 0.215 nm, they showed a strong peak at 50°, and the grating condition d sin θ = λ gives 0.215 × sin 50° = 0.1647 nm, within about 1% of the prediction.
+
+Today the same idea is used every day. Electron diffraction in a transmission electron microscope reveals crystal structure, low energy electron diffraction (LEED) maps surfaces, and neutron diffraction uses reactor neutrons near 2,200 m/s (0.180 nm) to locate light atoms such as hydrogen that X-rays barely see. To get a 0.1 nm electron, roughly one atomic spacing, the electron needs a speed of 7.274e+06 m/s, which you can check by clearing the velocity box and entering 0.1 nm.
+
+## Common mistakes
+
+- **Using the photon formula.** λ = h c ÷ E is only for light. For a particle with mass, use λ = h ÷ p or h ÷ √(2 m KE).
+- **Putting energy in eV straight into the formula.** Convert eV to joules first by multiplying by 1.602 × 10⁻¹⁹, or the answer is out by a factor of about 2.5 × 10⁹.
+- **Ignoring relativity at high voltage.** Above about 10 kV for electrons the non-relativistic λ is noticeably too long, as the voltage table shows.
+- **Mixing up nm and pm.** 0.7274 nm is 727.4 pm; electron microscope wavelengths are normally quoted in picometres.
+- **Using grams.** Masses must be in kilograms; the particle menu already supplies them in kg.

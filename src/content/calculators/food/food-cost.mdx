@@ -1,11 +1,11 @@
 ---
-title: Food Cost & Menu Price Calculator
-description: Calculate cost per serving and the menu price needed to hit a target food cost percentage.
+title: "Food Cost Calculator: Cost per Serving and Menu Price"
+description: "Food cost calculator for restaurants: enter recipe cost, servings and target food cost % to get the cost per serving, menu price and gross profit per plate."
 category: food
-intro: "Food cost percentage compares the cost of ingredients with the menu price. Restaurants use it to set prices and protect their margins. This free food cost & menu price calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Food cost percentage is the share of a dish's selling price that goes on ingredients. This food cost calculator divides the recipe cost by the servings it makes, then sets the menu price that hits your target percentage and shows the gross profit per plate.\n\nChefs, restaurant owners, caterers and home bakers selling at markets use it to price new dishes, check old prices after supplier increases and keep margins steady."
 keywords: [food cost calculator, menu pricing, food cost percentage, cost per serving, restaurant pricing, plate cost]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: tc, label: Total ingredient cost of the recipe, family: currency, default: 36, min: 0, decimals: 2 }
   - { id: n, label: Servings the recipe makes, default: 12, min: 1 }
@@ -18,16 +18,18 @@ equations:
   - price = cps / fc
   - gp = price - cps
 faq:
-  - q: What is food cost percentage?
-    a: Ingredient cost divided by selling price. Many restaurants aim for about 25–35%.
+  - q: "What is food cost percentage?"
+    a: "Ingredient cost per serving divided by the selling price, times 100. Many restaurants aim for roughly 25 to 35%, depending on the style of service."
   - q: How do I price a dish?
     a: Menu price = cost per serving ÷ target food cost %. A 3.00 plate cost at 30% gives a price of 10.00.
   - q: What else affects the price?
     a: Labour, rent, overheads and the local market. Food cost is only part of the picture.
   - q: "What is a good food cost percentage?"
-    a: "Most restaurants aim for 28–35%, depending on the type of restaurant."
+    a: "Most full service restaurants aim for about 28 to 35%, quick service for 25 to 30%, and pizza and drinks can run lower. Your own rent and labour costs decide what works."
   - q: "How do I calculate menu price from food cost?"
     a: "Menu price = cost per serving ÷ target food cost. A 3.00 cost at 30% gives a price of 10.00."
+  - q: "What is the difference between food cost percentage and markup?"
+    a: "Food cost percentage is cost divided by price; markup is profit divided by cost. A 3.00 plate sold at 10.00 has a 30% food cost and a 233% markup."
 related: [finance/profit-margin, food/recipe-scaler]
 ---
 
@@ -35,13 +37,27 @@ related: [finance/profit-margin, food/recipe-scaler]
 
 Enter the **total ingredient cost**, how many **servings** it makes and your **target food cost %**. The cost per serving, menu price and gross profit are calculated.
 
-## Example
+## Worked example with the default values
 
-Ingredients cost 36 for 12 servings, target 30%:
+A tray of lasagne costs 36.00 in ingredients and is cut into 12 portions. The target food cost is 30%:
 
-- Cost per serving = **3.00**
-- Menu price = 3.00 ÷ 0.30 = **10.00**
-- Gross profit = **7.00** per plate
+1. Cost per serving = 36.00 ÷ 12 = **3.00**
+2. Menu price = 3.00 ÷ 0.30 = **10.00**
+3. Gross profit = 10.00 - 3.00 = **7.00** per plate
+
+Dividing by a 30% food cost is the same as multiplying the plate cost by 3.33. Expressed as a markup on cost, that is 233%.
+
+## Batch size and price (recipe cost 36.00, 30% target)
+
+| Servings | Cost per serving | Menu price | Gross profit |
+|---|---|---|---|
+| 8 | 4.50 | 15.00 | 10.50 |
+| 10 | 3.60 | 12.00 | 8.40 |
+| 12 | 3.00 | 10.00 | 7.00 |
+| 15 | 2.40 | 8.00 | 5.60 |
+| 18 | 2.00 | 6.67 | 4.67 |
+
+Portion size is a pricing decision: cutting the same tray into 15 instead of 12 lowers the price you need by 2.00.
 
 ## Typical food cost percentages
 
@@ -82,3 +98,22 @@ A common rule is that food plus labour (prime cost) should stay under about 60�
 - Use the **yield** after trimming and cooking, not the raw weight.
 - Update costs when supplier prices change.
 - Round menu prices to psychologically comfortable figures.
+
+## Checking an existing price
+
+The formula also works backwards. If the local market will only pay 9.00 for the dish, the food cost becomes 3.00 ÷ 9.00 = 33.3%. Decide whether that is acceptable, cut the plate cost, or change the portion.
+
+## Practical notes
+
+- **Allow for waste.** If one portion out of 12 is lost to trimming, tasting or a dropped plate, the real cost per serving is 36.00 ÷ 11 = 3.27, and the 30% price rises to 10.91.
+- **Use edible portion cost.** Price meat, fish and vegetables at their yield after trimming and cooking, not their bought weight.
+- **Recost regularly.** Re-enter the recipe cost whenever a main ingredient changes price; a 10% rise in a key item can push a dish several points over target.
+- **Price sides and sauces too.** A dish that includes bread, dips or a side salad must carry their cost as well.
+
+## Common mistakes
+
+- **Confusing food cost with markup.** Adding 30% to the plate cost gives 3.90, not 10.00; a 30% food cost means dividing by 0.30.
+- **Using the recipe cost as the serving cost.** Always divide by the number of portions first.
+- **Including tax in the menu price.** Compare food cost with the price before sales tax or VAT.
+- **Forgetting labour and overheads.** A healthy food cost does not guarantee profit if prep is slow or rent is high.
+- **Setting one target for every item.** Drinks and desserts usually run lower food costs than steaks, so judge the menu as a whole.

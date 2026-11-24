@@ -2,10 +2,10 @@
 title: Acceleration Calculator
 description: Calculate acceleration from change in speed and time — or the final speed or time needed — in m/s², g and more.
 category: physics
-intro: "Acceleration is how quickly velocity changes — speeding up, slowing down or changing direction. It links speed and time in every motion problem, from a car pulling away to a ball falling under gravity."
+intro: "Acceleration is how quickly velocity changes, whether an object speeds up, slows down or changes direction. This acceleration calculator works it out from the initial speed, final speed and time, in m/s² and in g, or finds the time or final speed from a known acceleration.\n\nStudents use it in motion problems, drivers and car testers compare 0 to 100 km/h times, and engineers check the loads that people and equipment feel."
 keywords: [acceleration calculator, a = (v-u)/t, 0-100 km/h, change in velocity, m/s2, g force]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: u, label: Initial speed, family: velocity, unit: kmh, imperialUnit: mph, default: 0 }
   - { id: v, label: Final speed, family: velocity, unit: kmh, imperialUnit: mph, default: 100 }
@@ -26,6 +26,10 @@ faq:
     a: "27.78 m/s ÷ 10 s = 2.78 m/s², about 0.28 g."
   - q: "Can acceleration be negative?"
     a: "Yes. Negative acceleration means the object is slowing down in the chosen direction, often called deceleration."
+  - q: "How far does a car travel while accelerating from 0 to 100 km/h?"
+    a: "At constant acceleration it is the average speed times the time. For 8 s that is 13.89 m/s × 8 s = 111.1 m; a 5 s car covers 69.4 m."
+  - q: "How is acceleration measured in a car or phone?"
+    a: "With a MEMS accelerometer, a tiny sprung silicon mass whose movement is sensed electrically, or by logging GPS speed many times a second and working out how fast it changes."
 related: [physics/suvat-equations, physics/force, physics/speed-distance-time]
 ---
 
@@ -88,6 +92,32 @@ Acceleration is a vector. If an object speeds up and turns at the same time, its
 - Roller coasters: up to about 4–5 g briefly.
 - Fighter pilots with g-suits: about 9 g for short periods.
 
-## Related equations
+## Distance and force during the default run
 
-For distance covered while accelerating, use the [SUVAT calculator](/physics/suvat-equations/).
+With constant acceleration the average speed is (0 + 27.78) ÷ 2 = 13.89 m/s, so the car covers 13.89 × 8 = **111.1 m** while reaching 100 km/h. For a 1,500 kg car, F = m a = 1,500 × 3.472 = **5,208 N** of net forward force, and at the moment it reaches 100 km/h that force needs F × v = 145 kW at the wheels. Real cars accelerate harder at low speed and less near the top, so 3.47 m/s² is an average.
+
+| 0 to 100 km/h time | Average acceleration | Distance covered | Net force for 1,500 kg |
+|---|---|---|---|
+| 3.5 s | 7.94 m/s² | 48.6 m | 11,905 N |
+| 5 s | 5.56 m/s² | 69.4 m | 8,333 N |
+| 8 s | 3.47 m/s² | 111.1 m | 5,208 N |
+| 12 s | 2.31 m/s² | 166.7 m | 3,472 N |
+| 15 s | 1.85 m/s² | 208.3 m | 2,778 N |
+
+For other distance problems use the [SUVAT calculator](/physics/suvat-equations/).
+
+## Overtaking and braking examples
+
+Going from 50 to 80 km/h in 4 s is (80 − 50) ÷ 3.6 ÷ 4 = **2.08 m/s²**. Braking from 100 km/h at 0.8 g (7.85 m/s²) takes 3.54 s and 49.2 m, before adding the distance covered during the driver's reaction time.
+
+## How acceleration is measured
+
+Phones, car data loggers and crash test dummies use MEMS accelerometers, tiny silicon masses on springs whose deflection is read capacitively. Vibration engineers use piezoelectric accelerometers that respond to thousands of hertz. Performance testers more often log GPS speed many times a second and differentiate it, which avoids the tilt error an accelerometer picks up on a sloping road. In a school lab, two light gates and a timer give the speed at two points and the time between them.
+
+## Common mistakes
+
+- **Leaving speeds in km/h.** Divide by 3.6 first; 100 ÷ 8 = 12.5 is in km/h per second, not m/s².
+- **Dropping the sign.** Slowing from 100 to 50 km/h gives a negative a; keep it so later calculations stay consistent.
+- **Treating the average as the peak.** A car that averages 0.35 g may pull 0.6 g in first gear.
+- **Using total time with a reaction delay.** If the timer includes a pause before moving, the acceleration comes out too low.
+- **Quoting g as a force.** g is an acceleration ratio; multiply by mass and 9.80665 to get newtons.

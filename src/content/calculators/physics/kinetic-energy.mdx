@@ -2,10 +2,10 @@
 title: Kinetic Energy Calculator
 description: Calculate kinetic energy from mass and speed (KE = ½mv²) — or the speed or mass from a known energy.
 category: physics
-intro: "Kinetic energy is the energy of motion. Because it grows with the square of speed, doubling speed quadruples the energy — which is why stopping distances rise so steeply."
+intro: "Kinetic energy is the energy an object has because it is moving, KE = ½mv². This kinetic energy calculator finds the energy from mass and speed, or the speed or mass from a known energy, with automatic unit conversion. Because energy grows with the square of speed, doubling speed quadruples it.\n\nStudents use it for mechanics problems, road safety trainers use it to show why speed matters, and engineers use it to size brakes, buffers and crash barriers."
 keywords: [kinetic energy, ke = 1/2 mv2, energy of motion, joules, kinetic energy formula]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 1200, min: 0 }
   - { id: v, label: Speed, family: velocity, unit: kmh, imperialUnit: mph, default: 100, min: 0 }
@@ -24,6 +24,8 @@ faq:
     a: "It becomes four times larger, because kinetic energy depends on speed squared."
   - q: "Is kinetic energy ever negative?"
     a: "No. Mass and speed squared are always positive, so kinetic energy is zero or positive."
+  - q: "How high would a car have to fall to match its crash energy?"
+    a: "Use h = v² ÷ 2g. At 100 km/h (27.78 m/s) the height is 39.3 m, whatever the mass of the car; at 50 km/h it is 9.8 m."
 related: [electronics/capacitor-energy, physics/potential-energy, physics/momentum, physics/suvat-equations]
 ---
 
@@ -37,9 +39,13 @@ Enter **mass** and **speed** to get the kinetic energy, or enter the energy to f
 
 ## Worked example
 
-A 1,200 kg car at 100 km/h (27.78 m/s):
+A 1,200 kg car at 100 km/h, the calculator defaults:
 
-KE = 0.5 × 1,200 × 27.78² = **463 kJ**
+1. Convert the speed: 100 ÷ 3.6 = 27.778 m/s
+2. Square it: 27.778² = 771.6 m²/s²
+3. KE = 0.5 × 1,200 × 771.6 = 462,963 J = **463.0 kJ**
+
+That is 0.129 kWh, about the same energy as dropping the car from a height of 39.3 m (v² ÷ 2g). To stop it in 40 m the brakes must apply an average force of 463.0 kJ ÷ 40 m = 11.57 kN.
 
 At 50 km/h the same car has only 116 kJ — one quarter.
 
@@ -81,3 +87,32 @@ Spinning objects such as flywheels and wheels also store energy: KE = ½ × I ×
 | 120 km/h | 667 kJ |
 
 This is why small speed increases make crashes much more severe.
+
+## Equivalent drop height by speed (1,200 kg car)
+
+| Speed | Speed in m/s | Kinetic energy | Same as falling from |
+|---|---|---|---|
+| 30 km/h | 8.33 m/s | 42 kJ | 3.5 m |
+| 50 km/h | 13.89 m/s | 116 kJ | 9.8 m |
+| 80 km/h | 22.22 m/s | 296 kJ | 25.2 m |
+| 100 km/h | 27.78 m/s | 463 kJ | 39.3 m |
+| 120 km/h | 33.33 m/s | 667 kJ | 56.7 m |
+| 150 km/h | 41.67 m/s | 1,042 kJ | 88.5 m |
+
+The drop height does not depend on mass, which makes it a useful way to picture a crash: hitting a wall at 50 km/h is like driving off a 9.8 m high roof.
+
+## Where the energy goes in a stop
+
+In a normal stop almost all of the 463 kJ ends up as heat in the brakes. If four steel discs of 6 kg each absorb it (specific heat about 460 J/kg·K), they warm by roughly 42 °C in one stop from 100 km/h, which is why repeated hard braking on a long descent causes brake fade. Regenerative braking in electric cars returns part of that energy to the battery instead.
+
+## Kinetic energy and momentum
+
+The same car has a momentum of 33,333 kg·m/s. Momentum grows with speed, energy with speed squared, so KE = p² ÷ 2m. Collisions conserve momentum, but kinetic energy is usually lost to deformation and heat; see the [momentum calculator](/physics/momentum/).
+
+## Common mistakes
+
+- **Leaving speed in km/h.** Using 100 instead of 27.78 m/s gives 6,000 kJ, about 13 times too much.
+- **Forgetting to square the speed.** ½ × 1,200 × 27.78 = 16,667, which is half the momentum, not the energy.
+- **Dropping the ½.** m v² alone is twice the kinetic energy.
+- **Mixing weight and mass.** Use the mass in kg; a weight in newtons must first be divided by 9.81.
+- **Adding energies of objects moving in different directions as vectors.** Kinetic energy is a scalar; just add the values.

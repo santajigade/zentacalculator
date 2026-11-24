@@ -2,10 +2,10 @@
 title: Pressure Calculator (P = F/A, Force and Area)
 description: Calculate pressure from force and area with P = F/A, or the force or area from a pressure — in Pa, kPa, bar, psi or MPa, with examples and unit tables.
 category: physics
-intro: "Pressure is force spread over an area, P = F ÷ A. It explains why sharp knives cut and why wide tyres do not sink, and it is one of the most measured quantities in industry — see [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/) and [Pascal's law in pressure instruments](https://www.instrumentationblog.in/understanding-pascals-law-pressure-instruments/). This pressure calculator finds the pressure from any force and area, or the force or area you need for a target pressure, in Pa, kPa, bar, psi or MPa."
+intro: "Pressure is force spread over an area, P = F ÷ A, which is why sharp knives cut and wide tyres do not sink. This pressure calculator finds the pressure from a force and an area, or the force or area needed for a target pressure, in Pa, kPa, bar, psi or MPa.\n\nStudents, technicians and engineers use it for hydraulics, tyres, foundations and gauges; see [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/) and [Pascal's law in pressure instruments](https://www.instrumentationblog.in/understanding-pascals-law-pressure-instruments/)."
 keywords: [pressure calculator, p = f/a, pressure formula, force and area to pressure, calculate pressure from force, pressure in pascals, force over area calculator, psi calculator]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-24
 variables:
   - { id: F, label: Force, family: force, unit: N, imperialUnit: lbf, default: 700, min: 0 }
   - { id: A, label: Area, family: area, unit: cm2, imperialUnit: in2, default: 400, min: 0 }
@@ -21,6 +21,10 @@ faq:
     a: The same force on a much smaller area creates a much higher pressure. A knife edge or a pin point concentrates the force on a tiny area so the pressure exceeds the strength of the material; snowshoes do the opposite and spread your weight so you do not sink.
   - q: How do I convert kPa to psi?
     a: Divide by 6.895 (1 psi = 6.894757 kPa). 200 kPa is 29.0 psi and 1 bar is 14.5 psi. Use the pressure converter for other units.
+  - q: "Does the shape of the contact area change the pressure?"
+    a: "Not for the average value. P = F ÷ A depends only on the size of the area, so 700 N on a 400 cm² square or a 400 cm² circle gives the same 17.5 kPa. Shape matters only for how the pressure is distributed, for example the peak under a sharp corner."
+  - q: "What is the difference between pressure and stress?"
+    a: "Both are force per area and use the same units. Pressure is the normal push of a fluid or a contact load and acts equally in all directions in a fluid, while stress inside a solid has a direction and can be tension, compression or shear."
 related: [conversion/pressure-converter, engineering/hydrostatic-pressure, engineering/hydraulic-cylinder-force, engineering/absolute-gauge-pressure, physics/force, physics/buoyancy]
 ---
 
@@ -86,3 +90,15 @@ Car brakes, jacks and presses use this; size real cylinders with the [hydraulic 
 - **Gauge vs absolute:** most gauges read pressure above atmospheric (gauge pressure). Add about 101.3 kPa to get absolute pressure at sea level — see the [absolute and gauge pressure calculator](/engineering/absolute-gauge-pressure/).
 - **Pressure vs stress:** stress in a solid has the same units (N/m², often given as MPa = N/mm²) and the same formula, but acts in a particular direction, while fluid pressure acts equally in all directions.
 - **Tyres:** a tyre's contact patch grows until patch area × inflation pressure roughly equals the load on the wheel, which is why under-inflated tyres flatten and wear at the edges.
+
+## Common mistakes
+
+- **Using cm² as if it were m².** The default 400 cm² is 0.04 m²; leaving it as 400 gives 1.75 Pa instead of 17,500 Pa, an error of 10,000 times.
+- **Squaring the diameter without π ÷ 4.** A 50 mm piston has an area of π × 0.05² ÷ 4 = 19.63 cm², not 25 cm². At 6 bar the force is 1,178 N; using d² alone would claim 1,500 N.
+- **Putting a mass where a force belongs.** 70 kg is not 70 N; multiply by 9.81 to get 687 N before dividing by the area.
+- **Mixing gauge and absolute readings.** A tyre at 220 kPa gauge is about 321 kPa absolute; gas law calculations need the absolute value.
+- **Assuming pressure depends on container shape.** In a liquid, pressure at a depth depends only on depth and density, not on how wide the vessel is (the hydrostatic paradox).
+
+## Reverse calculation: tyre contact patch
+
+A 1,200 kg car puts about 2,942 N on each wheel. At 220 kPa gauge, the contact patch settles at roughly 2,942 ÷ 220,000 = 0.01337 m², or **134 cm²** per tyre. Drop the pressure to 180 kPa and the patch grows to 163 cm², which is why soft tyres feel heavy and heat up. Sidewall stiffness carries some load too, so real patches are slightly smaller.

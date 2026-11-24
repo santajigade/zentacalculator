@@ -2,10 +2,10 @@
 title: Photon Energy Calculator (E = hf = hc/λ) in eV and Joules
 description: Calculate photon energy in electronvolts and joules from wavelength, plus frequency, energy per mole and photons per second for a given light power.
 category: physics
-intro: "A photon's energy depends only on its frequency, E = hf, or equivalently on its wavelength, E = hc/λ. This photon energy calculator converts a wavelength into energy in eV and joules, frequency, energy per mole and the number of photons a light source emits per second — useful for lasers, LEDs, [photodiodes and phototransistors](https://www.instrumentationblog.in/photodiode-vs-phototransistor-key-differences/) and photochemistry."
+intro: "A photon's energy depends only on its frequency, E = hf, or equivalently on its wavelength, E = hc/λ. This photon energy calculator converts a wavelength into energy in eV and joules, frequency, energy per mole and photons emitted per second.\n\nLaser and LED engineers, photochemists and people working with [photodiodes and phototransistors](https://www.instrumentationblog.in/photodiode-vs-phototransistor-key-differences/) use it to check band gaps, detector response and photon counts."
 keywords: [photon energy calculator, e = hf calculator, wavelength to ev, photon energy in ev, e = hc / lambda, photons per second calculator, planck equation]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-24
 variables:
   - { id: lam, label: Wavelength (nm), default: 532, min: 0 }
   - { id: fT, label: Frequency (THz), min: 0 }
@@ -29,6 +29,8 @@ faq:
     a: Divide the power by the photon energy. A 1 mW green laser at 532 nm emits about 2.7 × 10¹⁵ photons per second.
   - q: Why can't infrared light trigger some photodetectors?
     a: A photon can only free an electron if its energy exceeds the material's band gap. Silicon (1.12 eV) responds up to about 1,100 nm; beyond that, detectors such as InGaAs are needed.
+  - q: "What is the responsivity of a photodiode at 532 nm?"
+    a: "An ideal detector gives 0.429 A/W at 532 nm (λ in nm ÷ 1239.84). A real silicon photodiode with about 80% quantum efficiency gives roughly 0.34 A/W, so 1 mW produces about 343 µA."
 related: [statistics/poisson-probability, physics/wavelength-frequency, physics/de-broglie-wavelength, electronics/led-resistor, physics/snells-law]
 ---
 
@@ -44,9 +46,9 @@ Enter the **wavelength in nanometres**. The calculator returns the frequency in 
 
 h = 6.62607015 × 10⁻³⁴ J·s (Planck constant), c = 299,792,458 m/s and 1 eV = 1.602176634 × 10⁻¹⁹ J — all exact SI values.
 
-## Example
+## Worked example
 
-A 532 nm green laser with 1 mW output:
+A 532 nm green laser with 1 mW output, the calculator defaults:
 
 - f = 299,792,458 ÷ 532 × 10⁻⁹ = **563.52 THz**
 - E = 6.626 × 10⁻³⁴ × 563.52 × 10¹² = **3.7339 × 10⁻¹⁹ J** = **2.3305 eV**
@@ -71,3 +73,37 @@ A 532 nm green laser with 1 mW output:
 - Shorter wavelength means higher energy: UV-C photons (about 4.9 eV) can break chemical bonds, which is why they disinfect.
 - An LED's forward voltage is roughly its photon energy in eV — a blue LED needs about 2.8–3.3 V, a red one about 1.8–2.2 V.
 - For a matter wave instead of light, use the [de Broglie wavelength calculator](/physics/de-broglie-wavelength/).
+
+Each step uses the exact SI constants: f = c ÷ λ = 299,792,458 ÷ (532 × 10⁻⁹) Hz, then E = h f, then the result is divided by the elementary charge for eV and multiplied by Avogadro's number for the molar value. The shortcut 1239.84 ÷ 532 gives the same 2.3305 eV.
+
+## From photons to detector current
+
+A photodiode turns each absorbed photon into at most one electron. Its ideal responsivity is therefore the electron charge divided by the photon energy, R = q ÷ E = λ (nm) ÷ 1239.84 A/W. For the 532 nm laser:
+
+- Ideal responsivity = 1.602 × 10⁻¹⁹ ÷ 3.7339 × 10⁻¹⁹ = **0.429 A/W**
+- With a quantum efficiency of 80%, a typical silicon value in the green, the photocurrent from 1 mW is 1 mW × 0.429 × 0.8 = **343 µA**
+
+The same 1 mW gives a larger current at longer wavelengths, because each photon carries less energy and so there are more of them:
+
+| Wavelength | Photon energy | Ideal responsivity | Photons per second in 1 mW |
+|---|---|---|---|
+| 400 nm | 3.100 eV | 0.323 A/W | 2.014 × 10¹⁵ |
+| 532 nm | 2.331 eV | 0.429 A/W | 2.678 × 10¹⁵ |
+| 650 nm | 1.907 eV | 0.524 A/W | 3.272 × 10¹⁵ |
+| 850 nm | 1.459 eV | 0.686 A/W | 4.279 × 10¹⁵ |
+| 940 nm | 1.319 eV | 0.758 A/W | 4.732 × 10¹⁵ |
+| 1550 nm | 0.800 eV | 1.250 A/W | 7.803 × 10¹⁵ |
+
+Silicon stops responding near 1107 nm, where the photon energy falls below its 1.12 eV band gap, so the 1550 nm row needs an InGaAs or germanium detector.
+
+## How light power is measured in practice
+
+Laser power meters use either a calibrated photodiode head, which reads in amps and divides by the responsivity at the wavelength you select, or a thermal head that absorbs the beam and measures the temperature rise. That is why a photodiode meter set to the wrong wavelength reads wrongly while a thermal head does not care. Spectrometers report wavelength directly, and this calculator converts that to energy.
+
+## Common mistakes
+
+- **Entering metres or micrometres in the nanometre box.** 1.55 µm must be typed as 1550, otherwise the energy is a thousand times too large.
+- **Confusing photon energy with beam power.** A brighter 532 nm laser emits more photons per second; each photon still carries 2.331 eV.
+- **Using vacuum wavelength rules inside glass.** The photon energy is fixed by frequency; the wavelength shortens in a medium but the energy does not change.
+- **Mixing kJ/mol with eV per photon.** 1 eV per photon equals about 96.49 kJ/mol, so 2.331 eV is 224.9 kJ/mol, not 2.331 kJ/mol.
+- **Assuming LED voltage equals photon energy exactly.** Real forward voltage is higher because of series resistance and the junction design.

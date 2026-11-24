@@ -2,10 +2,10 @@
 title: Density Calculator (ρ = m/V)
 description: Calculate density from mass and volume — or mass or volume from density — in kg/m³, g/cm³ and lb/ft³.
 category: physics
-intro: "Density is mass per unit volume — how tightly matter is packed. It identifies materials, decides whether things float and is a key input for flow and level measurement; see [what specific gravity is](https://www.instrumentationblog.in/what-is-specific-gravity/) and how [Coriolis meters measure density](https://www.instrumentationblog.in/coriolis-density-measurement/)."
+intro: "Density is mass per unit volume, a measure of how tightly matter is packed. This density calculator finds density and specific gravity from mass and volume, or mass or volume from a known density, in kg/m³, g/cm³ or lb/ft³.\n\nStudents, lab technicians and process engineers use it to identify materials, predict floating, and turn volume into mass; see [what specific gravity is](https://www.instrumentationblog.in/what-is-specific-gravity/) and [Coriolis density measurement](https://www.instrumentationblog.in/coriolis-density-measurement/)."
 keywords: [density calculator, density formula, mass volume, kg/m3, g/cm3, specific gravity]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 7.85, min: 0 }
   - { id: V, label: Volume, family: volume, unit: L, imperialUnit: ft3, default: 1, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: "About 1,000 kg/m³ (1 g/cm³) at 4 °C, and 998 kg/m³ at 20 °C."
   - q: "How do I find mass from density and volume?"
     a: "Mass = density × volume. 2 litres of steel weighs 7,850 × 0.002 = 15.7 kg."
+  - q: "Why is ice less dense than water?"
+    a: "Water molecules lock into an open hexagonal lattice when they freeze, which takes about 9% more space. Ice is about 917 kg/m³ against 1,000 kg/m³ for liquid water, so it floats."
+  - q: "How can I check if a metal object is solid gold?"
+    a: "Weigh it in air and in water and divide the air weight by the loss. Pure gold gives about 19.3 g/cm³ and 18 carat yellow gold roughly 15 to 16 g/cm³; a result near 10.5 g/cm³, like the 10.48 g/cm³ ring above, points to silver."
 related: [engineering/api-gravity, engineering/mass-flow-rate, engineering/hydrostatic-pressure, physics/pressure]
 ---
 
@@ -42,19 +46,19 @@ A 1-litre block of steel has a mass of 7.85 kg:
 
 ρ = 7.85 kg ÷ 0.001 m³ = **7,850 kg/m³** (specific gravity 7.85)
 
-## Common densities
+## The default result in other units
 
-| Material | kg/m³ |
+The default 7.85 kg in 1 L gives 7,850 kg/m³. The same density in the units you will meet on data sheets:
+
+| Unit | Value |
 |---|---|
-| Air (20 °C) | 1.2 |
-| Wood (pine) | 500 |
-| Ice | 917 |
-| Water | 998 |
-| Concrete | 2,400 |
-| Aluminium | 2,700 |
-| Steel | 7,850 |
-| Copper | 8,960 |
-| Gold | 19,300 |
+| kg/m³ | 7,850 |
+| g/cm³ (= kg/L = t/m³) | 7.85 |
+| lb/ft³ | 490.1 |
+| lb/in³ | 0.2836 |
+| lb/US gal | 65.51 |
+
+A quick check: g/cm³, kg/L and specific gravity are numerically the same (to within the 0.2% difference between water at 4 °C and 20 °C), and kg/m³ is always 1,000 times larger.
 
 ## Density of common materials
 
@@ -87,3 +91,27 @@ For irregular objects, drop them in a measuring jug and read the rise in water l
 ## Specific gravity
 
 Specific gravity is density compared with water, with no units. It is used for liquids such as acids, fuels and syrups, and for gemstones and minerals.
+
+## Second example: a block measured with a ruler
+
+A brass block measures 50 mm × 40 mm × 30 mm and weighs 510 g on a kitchen scale.
+
+1. Volume = 0.050 × 0.040 × 0.030 = 60 × 10⁻⁶ m³ (60 cm³)
+2. Density = 0.510 kg ÷ 0.000060 m³ = **8,500 kg/m³**, specific gravity 8.50
+
+That sits inside the 8,400 to 8,700 kg/m³ range of common brasses, so the part is very likely brass rather than bronze or plated steel.
+
+## How density is measured in practice
+
+- **Archimedes weighing.** Weigh the object in air, then hanging in water. The loss of weight equals the mass of displaced water. A ring that reads 10.50 g in air and 9.50 g in water has a volume of 1.00 ÷ 0.998 = 1.002 cm³ and a density of **10.48 g/cm³**, close to pure silver (10.49) and above sterling silver (about 10.36).
+- **Hydrometer.** A weighted glass float sinks until it displaces its own mass of liquid; the stem scale reads density or specific gravity directly. Used for battery acid, brewing and fuels.
+- **Pycnometer.** A glass bottle of exactly known volume is weighed empty and full, which gives liquid density to about 0.01%.
+- **Oscillating U-tube and Coriolis meters.** The natural frequency of a vibrating tube falls as the fluid inside gets heavier, so the instrument reports density continuously in a pipeline.
+
+## Common mistakes
+
+- **Forgetting the litre factor.** 1 L is 0.001 m³, so 7.85 kg in 1 L is 7,850 kg/m³, not 7.85 kg/m³.
+- **Confusing bulk and particle density.** Dry sand in a heap is about 1,600 kg/m³ while each quartz grain is 2,650 kg/m³; the 40% difference is air between the grains. Use bulk density for silos and trucks, particle density for settling.
+- **Entering weight in newtons as mass.** A scale reading in kg is already mass; a force gauge reading in N must be divided by 9.81 first.
+- **Ignoring temperature for liquids.** Diesel loses roughly 0.07% of its density per °C, so a fuel density quoted at 15 °C does not match a hot tank reading.
+- **Measuring hollow or porous parts by their outside size.** A casting with internal voids gives a lower apparent density than the solid alloy.

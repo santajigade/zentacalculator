@@ -2,10 +2,10 @@
 title: Weight Calculator (Mass to Weight on Planets)
 description: Convert mass to weight (force) on Earth, the Moon, Mars and other planets using W = m × g.
 category: physics
-intro: "Weight is the force of gravity on a mass, so it changes from planet to planet while mass stays the same. A 70 kg person weighs about 687 N on Earth but only 114 N on the Moon."
+intro: "Weight is the force of gravity acting on a mass, so it changes from planet to planet while the mass itself stays the same. This weight calculator multiplies mass by the local gravity to give weight in newtons and the reading an Earth bathroom scale would show.\n\nStudents use it to learn the difference between mass and weight, and engineers and science teachers use it for load calculations, space examples and scale problems."
 keywords: [weight calculator, mass vs weight, weight on moon, weight on mars, w = mg, gravity]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - id: gg
     label: Location
@@ -33,6 +33,10 @@ faq:
     a: "Bathroom scales measure force but are calibrated for Earth's gravity, so they display mass directly."
   - q: "Is weight measured in kg or N?"
     a: "Strictly, weight is a force measured in newtons. In everyday language, “weight” in kg means mass."
+  - q: "How do I convert newtons to pounds-force?"
+    a: "Divide by 4.448. A 686.5 N weight is 154.3 lbf. To go the other way, multiply pounds-force by 4.448 to get newtons."
+  - q: "Does my weight change with altitude?"
+    a: "Yes, slightly. At an airliner cruising height of 11 km gravity is about 0.34% lower, so a 70 kg person weighs about 2.4 N less than at sea level."
 related: [physics/force, physics/free-fall]
 ---
 
@@ -46,12 +50,12 @@ Choose a **location**, then enter a **mass**. You get the weight in newtons (or 
 
 ## Worked example (70 kg person)
 
-| Location | Weight (N) | Scale reading |
-|---|---|---|
-| Earth | 686 | 70 kg |
-| Moon | 113 | 11.6 kg |
-| Mars | 260 | 26.5 kg |
-| Jupiter | 1735 | 177.0 kg |
+With the default 70 kg mass on Earth:
+
+1. W = m × g = 70 × 9.80665 = **686.47 N**, which is 154.3 lbf
+2. Equivalent scale reading = W ÷ 9.80665 = **70 kg**, as expected on Earth
+
+Choose the Moon instead and the weight drops to 70 × 1.62 = **113.4 N**. The same Earth calibrated scale divides by 9.80665 and shows **11.56 kg**, although the person still has 70 kg of mass.
 
 ## Your weight on other worlds
 
@@ -63,7 +67,7 @@ For a 70 kg person:
 | Mercury | 3.7 | 259 | 26.4 |
 | Mars | 3.71 | 260 | 26.5 |
 | Venus | 8.87 | 621 | 63.3 |
-| Earth | 9.81 | 687 | 70.0 |
+| Earth | 9.81 | 686 | 70.0 |
 | Uranus | 8.69 | 608 | 62.0 |
 | Neptune | 11.15 | 780 | 79.6 |
 | Saturn | 10.44 | 731 | 74.5 |
@@ -90,3 +94,30 @@ Astronauts on the International Space Station are not beyond gravity — at abou
 ## Gravity on Earth varies slightly
 
 Standard gravity is 9.80665 m/s², but the real value ranges from about 9.78 at the equator to 9.83 at the poles — a difference of about 0.5% in your weight.
+
+## Weight at altitude
+
+Gravity falls with the square of the distance from Earth's centre, g = g₀ × (R ÷ (R + h))², with R = 6,371 km. For the same 70 kg person:
+
+| Location | Height | g (m/s²) | Weight (N) |
+|---|---|---|---|
+| Sea level | 0 m | 9.807 | 686.5 |
+| Everest summit | 8,849 m | 9.779 | 684.6 |
+| Airliner cruise | 11,000 m | 9.773 | 684.1 |
+| Edge of space (100 km) | 100 km | 9.506 | 665.4 |
+| ISS orbit | 400 km | 8.682 | 607.8 |
+| Geostationary orbit | 35,786 km | 0.224 | 15.7 |
+
+Even at geostationary height the weight is not zero; satellites stay up because they are falling around the Earth, not because gravity has vanished.
+
+## How weight is measured in practice
+
+A spring scale or electronic scale measures force. Most electronic platforms use a strain gauge [load cell](https://www.instrumentationblog.in/load-cell-working-principle/) whose output is proportional to the force on it, and the display divides by an assumed g to show kilograms. That is why commercial scales are calibrated with test masses at their place of use. A 70 kg person weighs 684.6 N at the equator (g ≈ 9.78) and 688.2 N near the poles (g ≈ 9.832). A scale set up with standard gravity would read 69.81 kg at the equator. A beam balance compares two masses directly, so it reads the same anywhere, even on the Moon.
+
+## Common mistakes
+
+- **Quoting weight in kilograms.** In physics, weight is a force in newtons; 70 kg is the mass, 686 N is the weight.
+- **Confusing lb and lbf.** A 70 kg mass is 154.3 lb of mass, and on Earth it weighs 154.3 lbf; the two numbers only match under standard gravity.
+- **Multiplying a scale reading by g twice.** The scale reading is already a mass equivalent; multiply it by 9.80665 once to get newtons.
+- **Using Earth's g on another planet.** The Moon's 1.62 m/s² gives a weight about one sixth of Earth's; picking the right location matters more than the decimals.
+- **Expecting zero weight in orbit.** At 400 km, gravity is still about 89% of the surface value.

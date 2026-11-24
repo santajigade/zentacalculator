@@ -2,10 +2,10 @@
 title: RC Time Constant Calculator
 description: Calculate the RC time constant, charging time and cut-off frequency of a resistor–capacitor circuit.
 category: physics
-intro: "When a capacitor charges or discharges through a resistor, the voltage changes exponentially with a time constant τ = RC. It sets timing in circuits, filters and delays — see [RC and RL time constants explained](https://www.instrumentationblog.in/rc-and-rl-time-constant-explained/) and their use in [RC snubber design](https://www.instrumentationblog.in/snubber-circuit-rc-design/). This free RC time constant calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "The time constant τ = RC sets how fast a capacitor charges or discharges through a resistor, as explained in [RC and RL time constants explained](https://www.instrumentationblog.in/rc-and-rl-time-constant-explained/). This RC time constant calculator gives τ, the 5τ settling time and the matching cut-off frequency.\n\nElectronics students, hobbyists and design engineers use it to size timing networks, sensor filters, switch debouncers and [RC snubbers](https://www.instrumentationblog.in/snubber-circuit-rc-design/) without working through exponentials by hand."
 keywords: [rc time constant, rc circuit, capacitor charging time, tau = rc, cutoff frequency, low pass filter]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: R, label: Resistance, family: resistance, unit: kohm, default: 10, min: 0 }
   - { id: Cc, label: Capacitance, family: capacitance, unit: uF, default: 100, min: 0 }
@@ -23,6 +23,10 @@ faq:
     a: "About 5 time constants (5RC) to reach 99.3%."
   - q: "What is the cut-off frequency of an RC filter?"
     a: "fc = 1 ÷ (2πRC) — the frequency at which the output falls to 70.7% (−3 dB)."
+  - q: "Why do kilohms times microfarads give milliseconds?"
+    a: "Because kΩ is 10³ and µF is 10⁻⁶, so their product is 10⁻³ seconds. For example 4.7 kΩ with 10 µF gives 47 ms."
+  - q: "How can I measure the time constant with an oscilloscope?"
+    a: "Apply a step or square wave and read the time for the capacitor voltage to reach 63.2% of its final value, or measure the 10% to 90% rise time and divide it by 2.197."
 related: [physics/resistors-series-parallel, physics/ohms-law]
 ---
 
@@ -71,14 +75,39 @@ To find the time to reach a given voltage while charging: t = −τ × ln(1 − 
 
 Large capacitors in power supplies can stay charged after power is removed. Always discharge them through a suitable resistor before touching, and allow at least 5τ.
 
-## Charging curve
+## Time constants for common part values
 
-| Time | Charge (% of supply) |
-|---|---|
-| 1τ | 63.2% |
-| 2τ | 86.5% |
-| 3τ | 95.0% |
-| 4τ | 98.2% |
-| 5τ | 99.3% |
+Kilohms multiplied by microfarads give milliseconds, which makes quick estimates easy:
 
-The same percentages apply in reverse when discharging. RC networks are used for timers, debouncing switches and simple signal filters.
+| Resistance | 1 nF | 100 nF | 1 µF | 100 µF |
+|---|---|---|---|---|
+| 1 kΩ | 1 µs | 100 µs | 1 ms | 100 ms |
+| 10 kΩ | 10 µs | 1 ms | 10 ms | 1 s |
+| 100 kΩ | 100 µs | 10 ms | 100 ms | 10 s |
+| 1 MΩ | 1 ms | 100 ms | 1 s | 100 s |
+
+## Voltages for the default circuit on a 12 V supply
+
+With 10 kΩ and 100 µF (τ = 1 s, cut-off 0.1592 Hz) connected to a 12 V source:
+
+| Time after switching | Charging voltage | Discharging voltage (from 12 V) |
+|---|---|---|
+| 0.5 s | 4.72 V | 7.28 V |
+| 1 s | 7.59 V | 4.41 V |
+| 2 s | 10.38 V | 1.62 V |
+| 3 s | 11.40 V | 0.60 V |
+| 5 s | 11.92 V | 0.08 V |
+
+To reach 9 V while charging takes t = −1 s × ln(1 − 9 ÷ 12) = **1.386 s**. If the 12 V source itself has 1 kΩ of internal resistance, the real time constant is (10 kΩ + 1 kΩ) × 100 µF = 1.1 s, so every time in the table stretches by 10%.
+
+## Measuring τ in practice
+
+Drive the circuit with a slow square wave and watch the capacitor on an oscilloscope. Measure the time from the step to 63.2% of the final value, or for a discharge the time to fall to 36.8%. A quicker way is to measure the 10% to 90% rise time, which equals 2.197τ for a single RC stage. A general purpose electrolytic with ±20% tolerance means the default network can measure anywhere from 0.8 s to 1.2 s, so check the real part before trimming resistor values.
+
+## Common mistakes
+
+- **Mixing unit prefixes.** 10 kΩ × 100 µF is 1 s, but 10 kΩ × 100 nF is 1 ms; a slip of a thousand is the most common error.
+- **Treating 5τ as exactly full.** At 5τ the capacitor is at 99.3%; precision sample and hold circuits wait 7τ to 9τ for 12 bit accuracy.
+- **Forgetting the source and load resistance.** Driver output resistance adds to R, and a load across the capacitor forms a divider that lowers the final voltage and shortens τ.
+- **Assuming the cut-off frequency removes the signal.** A 1 kΩ and 100 nF low pass filter cuts off at 1592 Hz but only attenuates by 3 dB there and by 20 dB per decade above.
+- **Ignoring leakage in large electrolytics.** With megohm resistors, leakage current can stop the capacitor ever reaching the expected voltage.

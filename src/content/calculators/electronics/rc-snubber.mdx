@@ -2,10 +2,10 @@
 title: RC Snubber Calculator (Ringing Frequency Method)
 description: "Design an RC snubber from the measured ringing frequency: find parasitic capacitance and inductance, snubber resistor and capacitor values and resistor power."
 category: electronics
-intro: "Fast switching edges in MOSFET, diode and transformer circuits excite the stray inductance and capacitance of the layout into high-frequency ringing that raises voltage stress and EMI. This RC snubber calculator uses the proven measure-and-add-capacitance method: from the ringing frequency before and after adding a known test capacitor it finds the parasitic capacitance and inductance, the characteristic impedance, and a resistor and capacitor that damp the ringing — plus the power the snubber resistor must dissipate. The design steps follow this guide to [RC snubber circuit design](https://www.instrumentationblog.in/snubber-circuit-rc-design/)."
+intro: "An RC snubber is a resistor and capacitor in series across a switch or diode that damps the high frequency ringing set off by each fast edge. This RC snubber calculator finds the parasitic capacitance and loop inductance from two ringing measurements, then sizes the resistor, capacitor and resistor power.\n\nPower electronics engineers and EMC technicians use it when bringing up converters, motor drives and flyback supplies, following this [RC snubber circuit design](https://www.instrumentationblog.in/snubber-circuit-rc-design/) method."
 keywords: [rc snubber calculator, snubber circuit design, snubber capacitor calculation, snubber resistor calculation, mosfet snubber design, rc snubber formula, ringing frequency snubber]
 published: 2026-11-13
-updated: 2026-11-13
+updated: 2026-11-24
 variables:
   - { id: f0, label: Ringing frequency (as measured), family: frequency, unit: MHz, default: 80, min: 0 }
   - { id: Ca, label: Test capacitor added across the switch, family: capacitance, unit: pF, default: 220, min: 0, help: 'Add capacitors until the ringing frequency drops by about half; a 2:1 drop gives the most accurate result.' }
@@ -37,6 +37,10 @@ faq:
     a: When f₁ = f₀ ÷ 2 the added capacitor is exactly three times the parasitic capacitance, so the measurement is well above the scope probe and fixture capacitance and the result is not sensitive to small reading errors. Any ratio works with the formula, but ratios close to 1 give poor accuracy.
   - q: What type of resistor and capacitor should a snubber use?
     a: Use a low-inductance resistor (thick-film or carbon composition, not wirewound) and a capacitor with low ESL rated well above the peak voltage — C0G/NP0 ceramic or polypropylene film. Keep the snubber loop as short as possible, directly across the device that rings.
+  - q: "Can an RC snubber reduce the efficiency of a converter?"
+    a: "Yes. The resistor dissipates C V² f every cycle, 0.135 W in the default 48 V, 200 kHz example. At high voltage or high switching frequency this loss can reach watts, so a lower k, a better layout or an RCD snubber may be a better choice."
+  - q: "Where should the snubber go, across the MOSFET or the diode?"
+    a: "Across the device whose node rings: in a synchronous buck that is usually the low side MOSFET, and in a flyback the secondary rectifier. Measure the ringing on each device and snub the one with the highest overshoot."
 related: [electronics/mosfet-power-loss, electronics/resonant-frequency, electronics/reactance, electronics/rc-filter, electronics/buck-converter]
 ---
 
@@ -89,3 +93,39 @@ A 48 V synchronous buck switching at 200 kHz rings at 80 MHz on the switch node.
 - **Check the result:** fit the calculated R and C, then confirm on the scope that the overshoot is damped within one or two cycles. Adjust R ±50% to fine-tune; if the loss is too high, reduce k towards 2.
 - **Rating:** the resistor sees pulses of up to V ÷ R at every edge — choose a pulse-rated part and allow at least twice the calculated average power.
 - **Snubber loss counts as switching loss** — include it in the converter efficiency with the [MOSFET power loss calculator](/electronics/mosfet-power-loss/). To check the ringing frequency from L and C, use the [resonant frequency calculator](/electronics/resonant-frequency/).
+
+## Choosing the capacitor multiplier k
+
+The multiplier trades damping against loss. With the default measurement (C<sub>p</sub> = 73.33 pF, R<sub>s</sub> = 27.13 Ω, 48 V at 200 kHz):
+
+| k | C<sub>s</sub> | Resistor loss | R<sub>s</sub>C<sub>s</sub> |
+|---|---|---|---|
+| 2 | 147 pF | 68 mW | 3.98 ns |
+| 3 | 220 pF | 101 mW | 5.97 ns |
+| 4 | 293 pF | 135 mW | 7.96 ns |
+| 6 | 440 pF | 203 mW | 11.94 ns |
+
+Below about k = 2 the capacitor starts to limit the damping and the ringing comes back as a smaller, slower oscillation. Above 4 the extra loss buys very little. A useful rule is that R<sub>s</sub>C<sub>s</sub> should be several times shorter than the shortest on or off time, so the capacitor fully charges and discharges every cycle.
+
+## Measuring the ringing properly
+
+- Use the probe tip and ground spring, not the 15 cm ground clip: the clip adds its own loop of roughly 100 nH, which rings with the probe capacitance near the frequency you are trying to measure.
+- Read the frequency from several cycles of the first ringing burst after the edge, for example the time across five peaks divided by five.
+- Take both readings at the same load current and input voltage, because MOSFET output capacitance falls as the drain voltage rises.
+- Solder the test capacitor directly across the drain and source pins; leads of a few centimetres add inductance and spoil the ratio.
+
+## Why the 2:1 frequency drop matters
+
+With a 2:1 drop, reading f<sub>1</sub> as 41 MHz instead of 40 MHz changes C<sub>p</sub> to 78.4 pF, an error of 6.9%. If the test capacitor were so small that the frequency only fell from 80 MHz to 76 MHz, the same 1 MHz reading error (77 MHz) would move C<sub>p</sub> from 2036 pF to 2769 pF. A big frequency shift makes the method robust.
+
+## Peak current and energy
+
+When the switch turns on, the charged snubber capacitor discharges through R<sub>s</sub>, so with a 27 Ω part the peak current is about 48 ÷ 27 = **1.78 A** for a few nanoseconds. That pulse flows through the MOSFET too and adds slightly to its turn on loss. For comparison, a 10 A current through the 53.97 nH loop stores ½ L I² = **2699 nJ** at turn off, which is the energy the snubber has to absorb to stop the overshoot.
+
+## Common mistakes
+
+- **Measuring with a long ground lead**, which reads the probe resonance instead of the circuit resonance.
+- **Using a wirewound resistor.** Its inductance can be larger than the loop inductance being damped.
+- **Placing the snubber far from the device**, so the snubber loop has its own inductance and rings at a new frequency.
+- **Sizing the resistor for average power only.** The 0.135 W average comes as 1.8 A pulses; pick a pulse rated part and at least twice the average rating.
+- **Forgetting the capacitor voltage rating.** It sees the full switched voltage plus the overshoot, so a 100 V part is the minimum for a 48 V rail.

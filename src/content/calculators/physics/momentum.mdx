@@ -2,10 +2,10 @@
 title: Momentum Calculator (p = mv, Linear Momentum)
 description: Calculate linear momentum from mass and velocity (p = mv), or find the mass or velocity from a momentum, with kinetic energy and collision examples.
 category: physics
-intro: "Momentum is mass times velocity — a measure of how hard a moving object is to stop, and a quantity that is conserved in every collision. This momentum calculator finds the linear momentum p = mv from any mass and speed, or the speed or mass from a known momentum, and also gives the kinetic energy so you can compare the two."
+intro: "Linear momentum is mass multiplied by velocity: a measure of how hard a moving object is to stop, and a quantity conserved in every collision. This momentum calculator finds p = mv from a mass and speed, or the speed or mass from a known momentum, and shows the kinetic energy beside it.\n\nPhysics students use it for collision and recoil problems, coaches compare balls and players, and engineers start crash and impact force estimates from it."
 keywords: [momentum calculator, p = mv, linear momentum calculator, momentum formula, calculate momentum, kg m/s, conservation of momentum, momentum and kinetic energy]
 published: 2026-10-27
-updated: 2026-11-14
+updated: 2026-11-24
 variables:
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 0.16, min: 0 }
   - { id: v, label: Velocity, family: velocity, unit: kmh, imperialUnit: mph, default: 140 }
@@ -23,6 +23,10 @@ faq:
     a: When no outside force acts, the total momentum of a system stays the same — the total before a collision or explosion equals the total after. Momentum is a vector, so velocities in opposite directions have opposite signs.
   - q: What is the difference between momentum and kinetic energy?
     a: Momentum (mv) is a vector and is conserved in every collision; kinetic energy (½mv²) is a scalar and is only conserved in elastic collisions. Doubling the speed doubles the momentum but quadruples the kinetic energy, which is why speed matters so much in crashes.
+  - q: "How do you find momentum from kinetic energy?"
+    a: "Use p = √(2 m KE). For the default ball, √(2 × 0.16 × 121.0) = 6.22 kg·m/s, matching m × v."
+  - q: "Can an object have kinetic energy but zero total momentum?"
+    a: "A single moving object cannot, but a system can: two identical balls moving apart at the same speed have zero total momentum and plenty of kinetic energy. That is what happens in an explosion from rest."
 related: [physics/impulse, physics/kinetic-energy, physics/elastic-collision, physics/force, physics/acceleration, physics/speed-distance-time]
 ---
 
@@ -77,6 +81,35 @@ If the objects stick together (a perfectly inelastic collision) the common final
 | 5,000 kg | 3.33 m/s | 200 kJ | 33.3 kJ | 83% |
 
 Momentum is conserved in every case, but most of the kinetic energy turns into deformation, heat and sound. For bouncing (elastic) collisions use the [elastic collision calculator](/physics/elastic-collision/).
+
+## Stopping the ball: why catching time matters
+
+The cricket ball's 6.22 kg·m/s must all be removed to stop it. Stopped against a rigid surface in 0.01 s the average force is 6.22 ÷ 0.01 = **622 N**; a fielder who draws the hands back so the catch takes 0.1 s feels only **62 N**. Same momentum change, one tenth of the force.
+
+## Equal energy is not equal momentum
+
+For the same 100 J of kinetic energy, the heavier object carries much more momentum, because p = √(2 m KE):
+
+| Object | Mass | Speed for 100 J | Momentum |
+|---|---|---|---|
+| Golf ball | 0.0459 kg | 66.0 m/s | 3.03 kg·m/s |
+| Cricket ball | 0.16 kg | 35.4 m/s | 5.66 kg·m/s |
+| Football | 0.43 kg | 21.6 m/s | 9.27 kg·m/s |
+| Shot put | 7.26 kg | 5.2 m/s | 38.11 kg·m/s |
+
+This is why a slow, heavy object is harder to stop by hand than a fast, light one with the same energy.
+
+## How momentum is measured
+
+Momentum is not read directly; mass and velocity are measured separately. Balls are weighed and timed with a radar gun, light gates or high speed video. In school labs two light gates on an air track give the velocities before and after a collision. For bullets the classic method is the ballistic pendulum: an 8 g bullet that lodges in a 2 kg block and lifts it 10 cm gives the block 1.400 m/s, so the bullet was moving at about **352 m/s**. Momentum is conserved in the impact, then energy in the swing.
+
+## Common mistakes
+
+- **Leaving speed in km/h.** 6.22 kg·m/s needs 38.89 m/s; using 140 directly gives a momentum 3.6 times too big.
+- **Entering grams as kilograms.** A 160 g ball is 0.16 kg.
+- **Adding momenta without signs.** Two equal cars meeting head on at the same speed have a total momentum of zero, not double.
+- **Using kinetic energy conservation for a crash.** Only momentum is conserved when objects stick or crumple.
+- **Adding 2D momenta as plain numbers.** Resolve into x and y components first, then combine.
 
 ## Practical notes
 

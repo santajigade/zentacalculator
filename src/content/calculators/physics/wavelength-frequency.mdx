@@ -2,10 +2,10 @@
 title: Wavelength & Frequency Calculator
 description: Convert between wavelength, frequency and wave speed for light, radio and sound (v = fλ).
 category: physics
-intro: "For any wave, speed equals wavelength times frequency. This links the colour of light, the pitch of sound and the channel of a radio signal to their wavelengths. This free wavelength & frequency calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "For any wave, speed equals frequency times wavelength, v = f λ. This wavelength calculator converts frequency to wavelength and back for light and radio in vacuum and for sound in air, water and steel.\n\nRadio amateurs and RF engineers use it to cut antennas and feed lines, audio and acoustics designers use it for room and speaker work, and students use it for wave problems."
 keywords: [wavelength calculator, frequency to wavelength, wave speed, v = f lambda, speed of light, radio wavelength]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - id: c
     label: Wave type / medium
@@ -30,6 +30,10 @@ faq:
     a: "About 3 metres."
   - q: "How are frequency and wavelength related?"
     a: "They are inversely proportional: wavelength = speed ÷ frequency. Double the frequency and the wavelength halves."
+  - q: "Does frequency change when a wave enters another medium?"
+    a: "No. The frequency is fixed by the source, so when the wave slows down in a new medium its wavelength gets shorter in proportion to the speed."
+  - q: "What is the wavelength of 100 MHz inside a coaxial cable?"
+    a: "Multiply the free space wavelength by the velocity factor. Solid polyethylene coax with a factor of 0.66 gives 1.98 m instead of 3.00 m."
 related: [physics/speed-distance-time]
 ---
 
@@ -99,3 +103,43 @@ The energy of a photon is E = h × f, where h = 6.626 × 10<sup>−34</sup> J·s
 | X-rays | 0.01–10 nm |
 
 Tip: for MHz, enter the value × 1,000,000 Hz (100 MHz = 100000000).
+
+## Worked example with the default values
+
+The default is a 100 MHz radio signal in vacuum:
+
+1. λ = c ÷ f = 299,792,458 ÷ 100,000,000 = **2.9979 m**, or 9.84 ft
+2. The period is T = 1 ÷ f = **10 ns** per cycle
+3. A half wave dipole for this frequency is λ ÷ 2 = 1.499 m from tip to tip; real dipoles are cut about 5% shorter, close to 1.42 m, because the wire ends add capacitance
+
+## The same 1 kHz tone in different media
+
+Frequency is set by the source and does not change when a wave crosses into another medium; the wavelength does:
+
+| Medium | Wave speed | Wavelength at 1 kHz |
+|---|---|---|
+| Air, 20 °C | 343 m/s | 34.3 cm |
+| Water | 1,481 m/s | 148.1 cm |
+| Steel | 5,960 m/s | 596.0 cm |
+
+## Wavelength inside a cable
+
+Radio waves travel slower in coaxial cable than in air. The ratio is the velocity factor, and a quarter wave matching section must be cut to the shorter wavelength:
+
+| Medium | Velocity factor | Wavelength at 100 MHz |
+|---|---|---|
+| Free space | 1.00 | 2.998 m |
+| Foam PE coax | 0.85 | 2.548 m |
+| Solid PE coax (RG58, RG213) | 0.66 | 1.979 m |
+| PTFE coax | 0.70 | 2.099 m |
+
+## Measuring wavelength in practice
+
+For sound, a resonance tube or a pair of microphones on an oscilloscope shows the distance between points in phase. For microwaves, a classic kitchen check is to remove the turntable, heat a plate of chocolate briefly and measure between melted spots: they are half a wavelength apart, about 6.1 cm for a 2.45 GHz oven. RF engineers measure frequency with a counter or spectrum analyser and calculate the wavelength, while optical wavelengths are measured with a spectrometer and a diffraction grating.
+
+## Common mistakes
+
+- **Typing MHz or GHz as Hz.** The frequency box is in hertz, so 2.4 GHz must be entered as 2,400,000,000.
+- **Using 343 m/s at every temperature.** The speed of sound in air is about 331.3 + 0.606 T m/s, so at 30 °C it is 349.5 m/s and every wavelength is about 1.9% longer.
+- **Cutting coax to the free space wavelength.** Multiply by the cable's velocity factor first, or a stub for 100 MHz will be far too long.
+- **Forgetting refractive index for light.** Inside glass with n = 1.5, 500 nm light has a wavelength of 333 nm, while its colour and frequency stay the same.

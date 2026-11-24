@@ -1,37 +1,7 @@
 # Pages to expand (Part C of the daily task). Take from the top; delete a line once the page is done.
 # Order: priority category, then thinnest body first.
 electronics/led-resistor
-electronics/rc-snubber
-physics/inclined-plane
-physics/decibel
-physics/rotational-kinetic-energy
-physics/spring-mass-frequency
-physics/de-broglie-wavelength
-physics/thin-lens
-physics/weight
-physics/work-and-power
-physics/wavelength-frequency
-physics/rc-time-constant
-physics/pendulum
-physics/liquid-thermal-expansion
-physics/lorentz-force
-physics/parallel-plate-capacitor
-physics/density
-physics/stokes-law
-physics/drag-force
-physics/force
-physics/pressure
-physics/resistors-series-parallel
-physics/photon-energy
-physics/projectile-motion
-physics/kinetic-energy
-physics/simple-harmonic-motion
-physics/youngs-modulus
-physics/momentum
-physics/latent-heat
 physics/ideal-gas-law
-physics/bernoulli-equation
-physics/acceleration
 physics/centripetal-force
 physics/potential-energy
 physics/free-fall

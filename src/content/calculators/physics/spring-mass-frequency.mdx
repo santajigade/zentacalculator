@@ -2,10 +2,10 @@
 title: Spring-Mass Frequency Calculator (Natural Frequency)
 description: Calculate the natural frequency, angular frequency and period of a mass on a spring from spring constant and mass — or from static deflection.
 category: physics
-intro: "A mass on a spring oscillates at a natural frequency set only by its stiffness and mass, f = (1/2π)√(k/m). This spring-mass frequency calculator gives the frequency, angular frequency, period and static deflection — the basis of vibration isolation, machine mounts and simple harmonic motion problems."
+intro: "A mass on a spring oscillates at a natural frequency fixed only by the stiffness and the mass, f = (1/2π)√(k/m). This spring-mass frequency calculator gives the natural frequency, angular frequency, period and static deflection under gravity.\n\nMechanical and vibration engineers use it to choose isolation mounts and avoid resonance in machines, and physics students use it to check simple harmonic motion problems."
 keywords: [spring mass frequency calculator, natural frequency calculator, spring mass system, simple harmonic oscillator frequency, period of spring, static deflection natural frequency]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-24
 variables:
   - { id: k, label: Spring constant (stiffness), suffix: N/m, default: 2000, min: 0 }
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 5, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: Isolation starts when the forcing frequency is more than √2 times the natural frequency; designers usually aim for a ratio of 3 or more.
   - q: Does gravity change the frequency of a vertical spring?
     a: No. Gravity shifts the equilibrium position by the static deflection, but the oscillation frequency is the same as horizontal.
+  - q: "How do I choose a spring for a target natural frequency?"
+    a: "Rearrange to k = m (2π f)². For a 5 kg mass and a target of 5 Hz, k = 5 × (2π × 5)² ≈ 4,935 N/m."
+  - q: "Why does my measured frequency differ from the calculated one?"
+    a: "Common causes are the spring's own mass (add one third of it to m), damping, extra stiffness from the mounting and the difference between static and dynamic stiffness in rubber springs."
 related: [physics/hookes-law, physics/pendulum, physics/wavelength-frequency, electronics/resonant-frequency]
 ---
 
@@ -40,9 +44,9 @@ Enter the **spring constant** in N/m and the **mass**. You get the angular frequ
 
 <p class="formula">δ = m g ÷ k &nbsp;⇒&nbsp; f = (1/2π) √(g ÷ δ)</p>
 
-## Example
+## Worked example
 
-A 5 kg mass on a 2,000 N/m spring:
+A 5 kg mass on a 2,000 N/m spring (g = 9.80665 m/s²):
 
 - ω = √(2000 ÷ 5) = **20 rad/s**
 - f = 20 ÷ 2π = **3.183 Hz**
@@ -66,3 +70,36 @@ A 5 kg mass on a 2,000 N/m spring:
 - Springs in **series** combine as 1/k = 1/k₁ + 1/k₂; in **parallel**, k = k₁ + k₂.
 - Damping lowers the observed frequency slightly: ω<sub>d</sub> = ω √(1 − ζ²).
 - See the [Hooke's law calculator](/physics/hookes-law/) to find k from a force and extension.
+
+Check from the deflection alone: f = (1 ÷ 2π) √(9.80665 ÷ 0.02452) = **3.183 Hz**, the same answer, which is why mount catalogues often quote deflection instead of stiffness.
+
+Because f depends on √(k ÷ m), doubling the mass to 10 kg lowers the frequency only to 2.251 Hz, and it takes four times the stiffness (8,000 N/m) to double it to 6.366 Hz. Two of these springs in series give 1,000 N/m and 2.251 Hz.
+
+## Vibration isolation with this spring
+
+For an undamped mount the transmissibility is 1 ÷ |1 − r²|, where r is the forcing frequency divided by the natural frequency (3.183 Hz here):
+
+| Ratio r | Forcing frequency | Transmissibility | Effect |
+|---|---|---|---|
+| 0.5 | 1.59 Hz | 1.33 | amplified |
+| 1.2 | 3.82 Hz | 2.27 | amplified |
+| 1.414 | 4.50 Hz | 1.00 | no change |
+| 2 | 6.37 Hz | 0.33 | isolated |
+| 3 | 9.55 Hz | 0.12 | isolated |
+| 5 | 15.92 Hz | 0.04 | isolated |
+
+Near r = 1 the response grows without limit in this ideal case; real mounts have damping that caps it, typically at 5 to 15 times. Isolation only starts above r = √2.
+
+## Sizing a mount in practice
+
+A fan running at 1,500 rpm (25 Hz) needs r = 3, so the target natural frequency is 25 ÷ 3 = 8.33 Hz. Rearranging f = (1/2π)√(g/δ), the mounts must deflect δ = g ÷ (2π f)² = **3.58 mm** under the machine weight. Pick a mount whose rated load gives about that deflection, and divide the weight evenly between mounts.
+
+To measure k on the bench, hang known weights and record the extension, or tap the loaded system and count oscillations with a phone accelerometer app; the measured frequency then gives k = m (2π f)².
+
+## Common mistakes
+
+- **Confusing ω and f.** ω = 20 rad/s is not 20 Hz; f is ω ÷ 2π, here 3.183 Hz.
+- **Entering the weight in newtons as the mass.** 5 kg weighs 49.03 N; using 49 as the mass lowers the frequency by a factor of about 3.1.
+- **Ignoring the spring's own mass.** Add one third of the spring mass to m; a 0.6 kg spring moves this example to 3.121 Hz.
+- **Choosing a mount that is too stiff.** Any forcing ratio below √2 amplifies vibration instead of isolating it, and the worst case is close to r = 1.
+- **Using the catalogue stiffness of rubber mounts for dynamic work.** Rubber is stiffer under vibration than in a static test, so the real natural frequency is often 10 to 40% higher.

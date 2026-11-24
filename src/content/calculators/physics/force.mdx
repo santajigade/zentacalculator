@@ -2,10 +2,10 @@
 title: Force Calculator (F = ma)
 description: Calculate force, mass or acceleration using Newton's second law, F = m × a, in newtons, kN or lbf.
 category: physics
-intro: "Newton's second law says force equals mass times acceleration. It is the core equation of mechanics, connecting what pushes or pulls an object with how its motion changes."
+intro: "Newton's second law says the net force on an object equals its mass times its acceleration, F = m × a. This force calculator finds the force from mass and acceleration, or solves for mass or acceleration when the force is known, in N, kN, kgf or lbf.\n\nStudents use it for mechanics problems, and engineers use it to size motors, brakes, cables and fixings that must speed up, slow down or hold a load."
 keywords: [force calculator, f = ma, newton's second law, newtons, mass acceleration, lbf]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 1200, min: 0 }
   - { id: a, label: Acceleration, suffix: m/s², default: 3 }
@@ -24,6 +24,8 @@ faq:
     a: "The force that accelerates 1 kg at 1 m/s². It is roughly the weight of a small apple (about 100 g)."
   - q: "How do I convert kgf to newtons?"
     a: "Multiply by 9.80665. 10 kgf is about 98 N."
+  - q: "How much force does it take to lift something while accelerating it upward?"
+    a: "The force is m × (g + a). An 800 kg lift car accelerating up at 1 m/s² needs 8,645 N of cable tension, 800 N more than its static weight of 7,845 N."
 related: [physics/weight, physics/acceleration, physics/momentum]
 ---
 
@@ -37,7 +39,7 @@ Enter any **two** of mass, acceleration and force. The third is calculated, in n
 
 ## Worked example
 
-A 1,200 kg car accelerating at 3 m/s² needs a net force of 1,200 × 3 = **3,600 N** (3.6 kN, about 809 lbf).
+A 1,200 kg car accelerating at 3 m/s² needs a net force of 1,200 × 3 = **3,600 N**, which is 3.6 kN or 809 lbf. At that steady rate it would reach 100 km/h (27.78 m/s) in 27.78 ÷ 3 = 9.26 s.
 
 ## Net force
 
@@ -75,3 +77,44 @@ Friction resists sliding. The maximum friction force is μ × N, where μ is the
 | 1 kgf | 9.81 N |
 | 1 lbf | 4.448 N |
 | 1 dyne | 0.00001 N |
+
+## From net force to the force the engine must supply
+
+The 3,600 N above is what is left over to accelerate the car. At 36 km/h (10 m/s), the tyres and the air also push back:
+
+1. Rolling resistance with C<sub>rr</sub> = 0.012: 1,200 × 9.807 × 0.012 = 141.2 N
+2. Air drag (C<sub>d</sub> 0.30, 2.2 m²): 0.5 × 1.225 × 10² × 0.30 × 2.2 = 40.4 N
+3. Driving force at the wheels = 3,600 + 141.2 + 40.4 = **3,781.6 N**
+
+So the drivetrain must deliver about 5% more than F = ma alone suggests, and the share grows as speed rises.
+
+## Force for a target 0 to 100 km/h time
+
+Assuming constant acceleration of the default 1,200 kg car:
+
+| 0 to 100 km/h | Acceleration | In g | Net force |
+|---|---|---|---|
+| 4 s | 6.94 m/s² | 0.71 g | 8,333 N |
+| 6 s | 4.63 m/s² | 0.47 g | 5,556 N |
+| 8 s | 3.47 m/s² | 0.35 g | 4,167 N |
+| 10 s | 2.78 m/s² | 0.28 g | 3,333 N |
+| 12 s | 2.31 m/s² | 0.24 g | 2,778 N |
+| 15 s | 1.85 m/s² | 0.19 g | 2,222 N |
+
+Real cars accelerate harder at low speed and less near the top, so these are average forces.
+
+## Lifting: when gravity is part of the sum
+
+For vertical motion the weight must be added. A lift car of 800 kg accelerating upward at 1 m/s² needs a cable tension of 800 × (9.807 + 1) = **8,645.3 N**, against 7,845.3 N when it hangs still. That extra 800 N is the F = ma part, and it is why cranes and hoists are rated with dynamic factors.
+
+## How force is measured
+
+Load cells are the standard tool: strain gauges bonded to a steel element change resistance as it flexes, and a bridge circuit turns that into a signal proportional to force. Spring balances and handheld force gauges do the same job mechanically for small loads, and piezoelectric sensors capture fast impacts such as a kick or a hammer blow. Force plates under a sprinter measure the push against the ground directly.
+
+## Common mistakes
+
+- **Using the applied force instead of the net force.** F = ma uses the sum of all forces; a 500 N push against 200 N of friction accelerates the object with 300 N.
+- **Entering mass in kgf or weight in kg.** Mass is in kg; a force written as 50 kgf is 490 N.
+- **Using km/h per second as m/s².** 10 km/h per second is only 2.78 m/s².
+- **Leaving out the weight in vertical problems.** A lifting cable carries m (g + a), not just m a.
+- **Mixing lb and lbf.** In imperial units, 1 lbf accelerates 1 lb at 32.17 ft/s², not 1 ft/s².

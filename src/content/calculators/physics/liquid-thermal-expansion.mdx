@@ -2,10 +2,10 @@
 title: Liquid Thermal Expansion Calculator (Volumetric)
 description: Calculate how much a liquid's volume increases when heated, using the volumetric expansion coefficient β — for fuel, water, oil and solvent tanks.
 category: physics
-intro: "Liquids expand far more than solids when heated, which is why fuel tanks, hot-water systems and closed pipelines need expansion space or thermal relief valves. This liquid thermal expansion calculator applies ΔV = β V₀ ΔT to find the volume change, the final volume and the percentage increase."
+intro: "Liquids expand much more than solids when they warm up, so a full tank or a closed pipe needs space or relief for the extra volume. This liquid thermal expansion calculator applies ΔV = β V₀ ΔT to give the volume increase, final volume and percentage change.\n\nTank designers, fuel depot staff, plumbers and process engineers use it to set safe fill levels, size expansion vessels and correct delivered fuel volumes to a reference temperature."
 keywords: [liquid thermal expansion calculator, volumetric expansion calculator, coefficient of volume expansion, fuel expansion calculator, water expansion calculator, delta v = beta v delta t, volume expansion formula]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-24
 variables:
   - { id: b, label: Volumetric expansion coefficient β (×10⁻⁶ per K), default: 950, min: 0, help: 'Petrol ≈ 950, water at 20 °C ≈ 207, ethanol ≈ 1090. See the table below.' }
   - { id: V0, label: Initial volume, family: volume, unit: L, imperialUnit: galUS, default: 1000, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: Water's β changes strongly with temperature — it is zero at 4 °C (maximum density), about 207 × 10⁻⁶/K at 20 °C and about 750 × 10⁻⁶/K near 100 °C. For large temperature changes use densities from a steam table instead of a single β.
   - q: Does the container expansion matter?
     a: Yes. A steel tank's volume grows by about 3α ≈ 36 × 10⁻⁶ per K, so the apparent expansion of the liquid is β − 3α. For most liquids this is a small correction.
+  - q: "How much pressure builds up in a full, closed pipe when the liquid warms?"
+    a: "A lot. For water near 20 °C, β divided by the compressibility of about 4.6 × 10⁻¹⁰ per Pa gives roughly 4.5 bar for every 1 °C rise in a rigid pipe. Pipe stretch reduces it somewhat, but a few degrees can exceed the rating of the pipe, which is why thermal relief valves are fitted."
+  - q: "How full can I fill a tank to allow for expansion?"
+    a: "Divide 1 by (1 + β ΔT). For petrol and a 20 K rise that is 98.1% of the tank volume, and most rules then add a margin so tanks are filled to about 95%."
 related: [engineering/thermal-expansion, physics/density, engineering/vertical-tank-volume, physics/latent-heat]
 ---
 
@@ -66,3 +70,36 @@ Coefficients are typical values near room temperature; they vary with temperatur
 - **Tank ullage**: leave enough free space for the expansion over the full storage temperature range.
 - **Custody transfer**: fuel volumes are corrected to 15 °C (or 60 °F) using expansion tables.
 - For solids (pipes, rails), use the linear [thermal expansion calculator](/engineering/thermal-expansion/).
+
+## Beyond the basic result: the default petrol tank
+
+The default case is 1,000 L of petrol (β = 950 × 10⁻⁶/K) warming from 15 °C to 35 °C, giving **19.0 L** of extra volume and **1,019 L** in total. Three follow on figures matter in practice:
+
+- **Apparent expansion in a steel tank.** The tank grows too, by about 3 × 12 × 10⁻⁶ per K, so the level rises by the equivalent of (950 − 36) × 10⁻⁶ × 1,000 × 20 = **18.28 L**, not 19 L.
+- **Density falls, mass stays.** 745 kg of petrol at 745 kg/m³ is still 745 kg at 35 °C, but the density drops to 745 ÷ 1.019 = **731.1 kg/m³**. That is why fuel is sold at a 15 °C reference volume.
+- **Maximum fill.** To leave room for the 20 K rise, the tank may be filled to at most 1 ÷ 1.019 = **98.14%** of its capacity at 15 °C, before any safety margin.
+
+## Maximum fill level for a temperature rise
+
+Fill fraction that just reaches 100% after the rise, ignoring tank expansion:
+
+| Liquid | +10 K | +20 K | +30 K | +40 K |
+|---|---|---|---|---|
+| Water (20 °C) | 99.79% | 99.59% | 99.38% | 99.18% |
+| Diesel | 99.18% | 98.37% | 97.57% | 96.79% |
+| Petrol | 99.06% | 98.14% | 97.23% | 96.34% |
+| Ethanol | 98.92% | 97.87% | 96.83% | 95.82% |
+
+Regulations for road tankers and storage tanks usually add a margin on top, often filling to 95% or 97% at most.
+
+## Where it is used
+
+Hot water systems are fitted with expansion vessels sized from the system volume and the temperature rise. Liquid pipelines that can be isolated between two valves get thermal relief valves, because a trapped liquid that warms in the sun cannot expand. Custody transfer meters apply volume correction factors from API or ISO tables, which are a more exact form of the same β calculation.
+
+## Common mistakes
+
+- **Using the linear coefficient α.** For a liquid only the volumetric β exists; for a solid β ≈ 3α.
+- **Dropping the 10⁻⁶.** Enter β as 950, not 0.00095, because the field is already in units of 10⁻⁶ per kelvin.
+- **Using water's 20 °C value over a large range.** Water heated from 20 °C to 80 °C expands about 2.7%, roughly 6 times what β = 207 × 10⁻⁶ predicts; use densities instead.
+- **Taking a β quoted per °F as per K.** A coefficient per °F must be multiplied by 1.8 before use here.
+- **Ignoring pressure in a closed space.** A trapped liquid does not expand, it builds pressure, see the FAQ below.

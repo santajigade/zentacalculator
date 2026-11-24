@@ -2,10 +2,10 @@
 title: Drag Force Calculator (F = ½ρv²CdA) & Power to Overcome Drag
 description: Calculate aerodynamic or hydrodynamic drag force from fluid density, speed, drag coefficient and frontal area — and the power needed to overcome it.
 category: physics
-intro: "Drag is the resistance a fluid exerts on a moving object, and it grows with the square of speed. This drag force calculator uses the drag equation F = ½ρv²C<sub>d</sub>A to find the force and the power needed to push through air or water — for cars, cyclists, wind loads, sensors in pipes and falling objects."
+intro: "Drag is the resistance a fluid exerts on an object moving through it, and it grows with the square of speed. This drag force calculator applies the drag equation F = ½ρv²C<sub>d</sub>A to give the force and the power needed to push through air or water.\n\nVehicle engineers, cyclists, structural designers checking wind load and instrument engineers sizing probes in a flowing pipe use it to see how speed, shape and area change resistance."
 keywords: [drag force calculator, drag equation, aerodynamic drag calculator, air resistance calculator, drag coefficient, power to overcome drag, wind resistance force]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-24
 variables:
   - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1.225, min: 0, help: 'Air at sea level 15 °C: 1.225 kg/m³. Water: about 1000 kg/m³.' }
   - { id: v, label: Speed relative to the fluid, family: velocity, unit: kmh, imperialUnit: mph, default: 100, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: About 0.25–0.35 for modern cars, 0.47 for a sphere, 1.0–1.3 for flat plates and bluff shapes, and 0.04 for a streamlined teardrop.
   - q: Which area should I use?
     a: The frontal area projected onto a plane perpendicular to the flow for vehicles and bluff bodies. Wings use plan area, so check which reference area the Cd value was measured with.
+  - q: "How much fuel does air drag cost?"
+    a: "Air drag on the default car takes 8.7 kWh of work at the wheels per 100 km at 100 km/h. Petrol engines turn roughly a quarter to a third of fuel energy into wheel work, so that is around 3 litres of petrol per 100 km for drag alone."
+  - q: "Does a headwind increase drag?"
+    a: "Yes, because drag depends on speed relative to the air. At 100 km/h into a 20 km/h headwind the car meets 449 N instead of 312 N, about 44% more force."
 related: [physics/thin-lens, physics/stokes-law, physics/work-and-power, physics/force, engineering/pitot-tube-velocity]
 ---
 
@@ -64,3 +68,37 @@ Drag coefficients are typical values; the real Cd depends on Reynolds number, su
 - Air density falls with altitude and temperature (about 1.0 kg/m³ at 2,000 m), reducing drag.
 - At very low Reynolds numbers (dust, fine droplets) use [Stokes' law](/physics/stokes-law/) instead.
 - Terminal velocity of a falling object is where drag equals weight: v = √(2 m g ÷ (ρ C<sub>d</sub> A)).
+
+## How speed changes force, power and energy
+
+For the default car (C<sub>d</sub> 0.30, 2.2 m², sea level air), drag force rises with v² and drag power with v³. The last column is the energy spent on air drag alone per 100 km driven, which is force × distance:
+
+| Speed | Drag force | Drag power | Drag energy per 100 km |
+|---|---|---|---|
+| 50 km/h | 78.0 N | 1.08 kW | 2.2 kWh |
+| 80 km/h | 199.6 N | 4.44 kW | 5.5 kWh |
+| 100 km/h | 311.9 N | 8.66 kW | 8.7 kWh |
+| 120 km/h | 449.2 N | 14.97 kW | 12.5 kWh |
+| 130 km/h | 527.1 N | 19.04 kW | 14.6 kWh |
+| 150 km/h | 701.8 N | 29.24 kW | 19.5 kWh |
+
+At 100 km/h the car spends 8.7 kWh per 100 km on air; at 130 km/h that rises to 14.6 kWh, because energy per distance follows the force, not the power.
+
+## Wind, altitude and other real conditions
+
+- **Headwind.** Drag uses speed relative to the air. Driving at 100 km/h into a 20 km/h headwind, the air speed is 120 km/h, so the force is 449.2 N and the power at the wheels is 449.2 × 27.78 = 12.48 kW, against 8.66 kW in still air.
+- **Altitude.** At about 2,000 m, air density is near 1.007 kg/m³ and the same car at 100 km/h meets only 256.4 N.
+- **Cyclists.** An upright rider (C<sub>d</sub> 0.9, 0.36 m²) at 36 km/h needs 198 W against air; a time trial position (C<sub>d</sub> 0.7, 0.30 m²) cuts that to 129 W.
+- **Terminal velocity.** An 80 kg skydiver in a belly position (C<sub>d</sub> ≈ 1.0, A ≈ 0.7 m²) stops accelerating at √(2 × 80 × 9.807 ÷ (1.225 × 1.0 × 0.7)) = 42.8 m/s, about 154 km/h.
+
+## Finding C<sub>d</sub> from a measurement
+
+C<sub>d</sub> values come from wind tunnel balances, coast down tests (the car rolls in neutral and the deceleration is logged) or CFD. If a coast down test shows 400 N of aerodynamic force at 120 km/h on a 2.2 m² car, then C<sub>d</sub> = 400 ÷ (0.5 × 1.225 × 33.33² × 2.2) = **0.267**. In the calculator, enter the force and clear C<sub>d</sub> to get the same result.
+
+## Common mistakes
+
+- **Entering km/h as if it were m/s.** The formula needs m/s; 100 km/h is 27.78 m/s. The calculator converts for you, but hand calculations often skip it and come out 13 times too high.
+- **Using the wrong reference area.** A C<sub>d</sub> quoted for a wing uses plan area, a car uses frontal area; mixing them can be off by a factor of 5 or more.
+- **Ignoring rolling resistance.** Drag is only part of the road load. Below about 60 km/h, tyre rolling resistance is often larger than air drag for a car.
+- **Applying one C<sub>d</sub> at every Reynolds number.** A sphere drops from about 0.47 to roughly 0.1 past the drag crisis, which is why dimpled golf balls fly further.
+- **Forgetting water is 800 times denser than air.** The same shape and speed in water feels about 816 times the force, so marine sensors and pipe probes see large loads at low speeds.

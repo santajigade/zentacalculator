@@ -2,10 +2,10 @@
 title: Work & Power Calculator
 description: "Calculate work done (W = F × d) and power (P = W ÷ t) from force, distance and time. Free online work & power calculator with formula and examples."
 category: physics
-intro: "Work is done when a force moves something, and power is how fast that work is done. These ideas connect forces and energy to the watts of motors, engines and people. This free work & power calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "Work is done when a force moves something through a distance, and power is how fast that work is done. This work and power calculator finds work in joules from force and distance, then power in watts or horsepower from the time taken, and solves for whichever value you leave blank.\n\nStudents use it for mechanics problems, and engineers, coaches and DIY builders use it to size motors, compare machines and estimate human effort."
 keywords: [work calculator, power calculator, work = force x distance, watts, joules, physics power]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: F, label: Force, family: force, unit: N, imperialUnit: lbf, default: 500 }
   - { id: d, label: Distance moved (in direction of force), family: length, unit: m, imperialUnit: ft, default: 10 }
@@ -24,6 +24,10 @@ faq:
     a: "Use only the part of the force along the direction of motion, F × cos θ."
   - q: "What is the unit of work?"
     a: "The joule (J): 1 newton of force moving 1 metre."
+  - q: "How many joules are in a kilowatt hour?"
+    a: "One kilowatt hour is 3,600,000 J (1,000 W for 3,600 s). The default 5,000 J of work is only 0.00139 kWh."
+  - q: "How is power related to force and speed?"
+    a: "For a steady push, power equals force times speed in the direction of the force, P = F v. 500 N at 0.5 m/s is 250 W."
 related: [physics/potential-energy, physics/force, conversion/power-converter]
 ---
 
@@ -77,3 +81,35 @@ If the force is at an angle θ to the movement, only the part along the movement
 ## Climbing stairs
 
 A 70 kg person climbs 3 m of stairs in 4 s: work = 70 × 9.81 × 3 = 2059 J, power = 515 W — similar to a bright old-style light bulb.
+
+## Checking the default answer with P = F × v
+
+The default case moves 10 m in 20 s, an average speed of 0.5 m/s. Power can also be written as force times speed: P = 500 N × 0.5 m/s = **250 W**, the same as 5,000 J ÷ 20 s. In horsepower that is 0.335 mechanical hp or 0.340 metric hp (PS). The 5,000 J of work equals 0.001389 kWh or 1.20 kcal, a reminder of how small a joule is.
+
+The P = F × v form is handy for vehicles. A car at 25 m/s (90 km/h) pushing against 600 N of drag and rolling resistance needs 15 kW at the wheels just to hold its speed.
+
+## Power to lift 100 kg by 10 m
+
+Lifting 100 kg through 10 m always takes 100 × 9.80665 × 10 = 9,807 J of work; only the power changes with time:
+
+| Time taken | Power | Horsepower |
+|---|---|---|
+| 60 s | 163 W | 0.22 hp |
+| 30 s | 327 W | 0.44 hp |
+| 10 s | 981 W | 1.32 hp |
+| 5 s | 1,961 W | 2.63 hp |
+| 2 s | 4,903 W | 6.58 hp |
+
+This is how a hoist or lift motor is sized: work from the load and height, power from the required speed, then divide by the drive efficiency.
+
+## How power is measured
+
+Engine and motor power is measured on a dynamometer, which loads the shaft and records torque and speed (P = torque × angular speed). Cyclists use crank or pedal power meters with strain gauges, and sports labs use the stair climb test shown below. For electrical loads, a plug in energy meter reads watts directly, though that is input power, not mechanical output.
+
+## Common mistakes
+
+- **Counting distance that is not along the force.** Carrying a bag across a level floor does almost no work against gravity, because the lifting force is vertical and the motion is horizontal.
+- **Entering mass instead of force.** A 50 kg load needs about 490 N to lift; typing 50 into the force box understates the work by a factor of 9.8.
+- **Using minutes for time.** Power in watts needs time in seconds; 20 minutes is 1,200 s.
+- **Mixing horsepower types.** Mechanical hp is 745.7 W, metric hp (PS) is 735.5 W, and electrical hp is 746 W.
+- **Confusing W for work with W for watts.** Work is in joules; the watt is the unit of power, one joule per second.

@@ -2,10 +2,10 @@
 title: Inclined Plane Calculator (Forces, Friction & Acceleration)
 description: Calculate the forces on an inclined plane — parallel and normal components, friction, acceleration down the slope and the push needed to move up.
 category: physics
-intro: "On a slope, gravity splits into a component pulling the object down the incline and a component pressing it into the surface, which sets the friction. This inclined plane calculator resolves those forces and gives the acceleration of a sliding object and the force needed to push it up at steady speed."
+intro: "An inclined plane is a flat surface set at an angle, where gravity splits into a pull along the slope and a push into the surface. This inclined plane calculator resolves those forces, adds friction, and gives the sliding acceleration and the push needed to move a load up at steady speed.\n\nPhysics students use it for homework and exam checks, while engineers and riggers use it to size ramps, conveyors and winches for moving loads up a slope."
 keywords: [inclined plane calculator, incline force calculator, ramp force calculator, acceleration down incline, friction on inclined plane, force parallel to incline]
 published: 2026-10-29
-updated: 2026-10-29
+updated: 2026-11-24
 variables:
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 10, min: 0 }
   - { id: th, label: Angle of incline, family: angle, unit: deg, default: 30, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: When tan θ exceeds the static coefficient of friction — the angle of repose θ = arctan μs. For μs = 0.5 that is about 26.6°.
   - q: How much force is needed to push a load up a ramp?
     a: F = m g (sin θ + μ cos θ) at steady speed, ignoring acceleration. A shallower ramp needs less force but a longer distance.
+  - q: "How long will it take an object to slide down a ramp?"
+    a: "From rest, t = √(2 L ÷ a) with a = g (sin θ − μ cos θ). A block on a 30° slope with μ = 0.2 takes 1.12 s to slide 2 m and reaches 3.58 m/s."
+  - q: "Does a ramp reduce the work needed to lift a load?"
+    a: "No. It reduces the force, but friction adds work. Raising 10 kg by 0.5 m takes 49.0 J straight up but more along any ramp with friction, for example 66.0 J on a 30° ramp with μ = 0.2."
 related: [physics/friction-force, physics/force, physics/weight, physics/acceleration]
 ---
 
@@ -43,9 +47,9 @@ Enter the **mass**, the **angle** of the slope and the **coefficient of friction
 
 <p class="formula">a = g (sin θ − μ cos θ) &nbsp;·&nbsp; F<sub>up</sub> = m g (sin θ + μ cos θ)</p>
 
-## Example
+## Worked example
 
-A 10 kg block on a 30° slope with μ = 0.2:
+A 10 kg block on a 30° slope with μ = 0.2 (g = 9.80665 m/s², sin 30° = 0.5, cos 30° = 0.8660):
 
 - F<sub>∥</sub> = 10 × 9.807 × 0.5 = **49.03 N**
 - N = 10 × 9.807 × 0.866 = **84.93 N**, friction = **16.99 N**
@@ -65,3 +69,32 @@ A 10 kg block on a 30° slope with μ = 0.2:
 | 60° | 8.493 | 7.512 |
 
 Negative values mean friction prevents sliding.
+
+### Following the block down the slope
+
+If the block starts from rest and slides 2 m along the incline at 3.205 m/s², it reaches v = √(2 a L) = **3.58 m/s** after t = √(2 L ÷ a) = **1.12 s**. It has dropped 1.0 m vertically, and without friction it would arrive at √(2 g h) = 4.43 m/s. The difference is the 34.0 J that friction turned into heat over the 2 m (friction force 16.99 N × 2 m).
+
+## Trading force for distance on a ramp
+
+A ramp lowers the force but not the work. Raising the same 10 kg load by 0.5 m with μ = 0.2:
+
+| Ramp angle | Ramp length | Push force | Work done |
+|---|---|---|---|
+| 10° | 2.88 m | 36.3 N | 104.6 J |
+| 20° | 1.46 m | 52.0 N | 76.0 J |
+| 30° | 1.00 m | 66.0 N | 66.0 J |
+| 45° | 0.71 m | 83.2 N | 58.8 J |
+
+Lifting straight up needs 98.1 N and 49.0 J. Every ramp needs less force, but friction makes the total work higher, and the shallowest ramp wastes the most because the load rubs over the longest distance.
+
+## Measuring the friction coefficient
+
+Put the block on a board and raise one end slowly until it just starts to slide. The angle at that moment gives the static coefficient, μ<sub>s</sub> = tan θ. Keep tilting until the block slides at a steady speed after a light tap: tan θ at that angle is the kinetic coefficient this calculator uses. Repose angles for a few coefficients are μ = 0.1: 5.7°, 0.3: 16.7°, 0.5: 26.6° and 0.8: 38.7°.
+
+## Common mistakes
+
+- **Swapping sin and cos.** The pull along the slope uses sin θ and the normal force uses cos θ; at 0° the parallel force must be zero.
+- **Using the static coefficient for a sliding block.** Static friction only sets whether the block starts to move; once it slides, use the kinetic value, which is usually lower.
+- **Reading a negative acceleration as motion uphill.** It means friction would stop the block; a block at rest simply stays put.
+- **Entering the slope as a percentage grade.** A 30% grade is arctan 0.30 = 16.7°, not 30°.
+- **Forgetting the friction direction when pushing up.** Friction always opposes the motion, so it adds to the push uphill and reduces the pull when lowering.

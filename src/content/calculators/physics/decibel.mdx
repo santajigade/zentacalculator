@@ -2,10 +2,10 @@
 title: Decibel Calculator (dB Power and Voltage Ratios)
 description: Convert power and voltage ratios to decibels and back — dB gain and loss for audio, RF and signal chains, plus sound levels.
 category: physics
-intro: "Decibels express ratios of power, voltage or sound on a logarithmic scale, so huge ranges fit into manageable numbers and gains simply add. See [decibels in electronics: dB and dBm](https://www.instrumentationblog.in/decibel-in-electronics-db-dbm/) for practical examples."
+intro: "A decibel is ten times the base 10 logarithm of a power ratio, so huge ranges become small numbers and gains along a signal chain simply add. This decibel calculator converts power ratios with 10 log and voltage ratios with 20 log, and works backwards from dB to a value.\n\nAudio, RF and instrumentation engineers use it for amplifier gain, cable loss and link budgets; see [decibels in electronics: dB and dBm](https://www.instrumentationblog.in/decibel-in-electronics-db-dbm/) for practical examples."
 keywords: [decibel calculator, db calculator, power ratio to db, voltage ratio to db, db gain, 3 db, 10 log, 20 log, sound level]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: P1, label: Reference power (P₁), family: power, unit: W, default: 1, min: 0 }
   - { id: P2, label: Power (P₂), family: power, unit: W, default: 100, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: Add the dB values. An amplifier of +20 dB followed by a cable loss of −3 dB gives +17 dB overall.
   - q: What is dBm?
     a: Power relative to 1 mW. 0 dBm = 1 mW, 30 dBm = 1 W.
+  - q: "How do I convert dB back to a ratio?"
+    a: "Power ratio = 10^(dB ÷ 10) and voltage ratio = 10^(dB ÷ 20). For example 13 dB is a power ratio of about 19.95 and a voltage ratio of about 4.47."
+  - q: "What is the total level of two equal sound sources?"
+    a: "Two equal sources are 3 dB louder than one: two 80 dB machines give 83.0 dB. Ten equal sources add 10 dB."
 related: [electronics/snr, math/logarithm, physics/wavelength-frequency, physics/ohms-law, physics/doppler-effect]
 ---
 
@@ -77,6 +81,50 @@ Use the top section for **power** ratios and the bottom for **voltage** (or curr
 
 Every 10 dB increase sounds roughly twice as loud and carries ten times the sound power.
 
-## Signal chains
+## Worked example with the default values
 
-In RF and audio systems, gains and losses in dB simply add, which is why engineers prefer them to multiplying ratios.
+- Power: P₂ ÷ P₁ = 100 ÷ 1 = 100, and 10 × log₁₀(100) = 10 × 2 = **20.00 dB**
+- Voltage: V₂ ÷ V₁ = 10 ÷ 1 = 10, and 20 × log₁₀(10) = 20 × 1 = **20.00 dB**
+
+Both give 20 dB because a tenfold voltage across the same resistance delivers a hundredfold power. The two results only agree like this when both voltages are measured across equal impedances.
+
+## Adding gains along a signal chain
+
+| Stage | Gain |
+|---|---|
+| Preamplifier | +26.0 dB |
+| Cable | -2.5 dB |
+| Splitter | -3.5 dB |
+| Power amplifier | +14.0 dB |
+| **Total** | **+34.0 dB** |
+
+The overall power gain is 10<sup>3.4</sup> = 2,512 times. Working the same chain with plain ratios needs four multiplications (398.1 × 0.562 × 0.447 × 25.12); in decibels it is one sum.
+
+## From watts to dBm, dBV and dBu
+
+An amplifier delivering 0.5 W into an 8 Ω speaker produces V = √(P R) = 2.00 V RMS. That is 10 log(500 mW ÷ 1 mW) = **27.0 dBm** (or -3.0 dBW), 20 log(2.00 ÷ 1 V) = **6.02 dBV** and 20 log(2.00 ÷ 0.7746 V) = **8.24 dBu**.
+
+| Power | In mW | In dBW | Voltage across 50 Ω |
+|---|---|---|---|
+| -30 dBm | 0.001 mW | -60 dBW | 0.007071 V |
+| 0 dBm | 1 mW | -30 dBW | 0.2236 V |
+| 10 dBm | 10 mW | -20 dBW | 0.7071 V |
+| 20 dBm | 100 mW | -10 dBW | 2.236 V |
+| 30 dBm | 1000 mW | 0 dBW | 7.071 V |
+| 40 dBm | 10000 mW | 10 dBW | 22.36 V |
+
+## Adding sound levels
+
+Decibel levels of separate sources do not add arithmetically. Two machines at 80 dB each give 10 log(10<sup>8</sup> + 10<sup>8</sup>) = **83.0 dB**, not 160 dB. A 90 dB source plus an 85 dB source gives 91.2 dB, so the quieter one barely changes the total.
+
+## How decibels are measured
+
+RF engineers read dBm directly on spectrum analysers and power meters, audio engineers read dBu or dBFS on mixing desk meters, and sound level meters show dB SPL with A weighting (dBA) to match human hearing. In each case the instrument does the 10 log or 20 log against its own fixed reference.
+
+## Common mistakes
+
+- **Using 20 log for power.** Power and energy ratios use 10 log; only field quantities such as voltage, current and sound pressure use 20 log.
+- **Comparing voltages across different impedances.** 1 V across 600 Ω and 1 V across 50 Ω are very different powers, so a 20 log voltage ratio is not a power ratio there.
+- **Dropping the reference.** "+10 dB" is only a ratio; dBm, dBV and dBu each name a reference, and 0 dBu is 0.7746 V, not 1 V.
+- **Adding dB SPL of separate sources** as plain numbers instead of adding their powers.
+- **Treating 3 dB as "a bit".** It is double or half the power, which is a big change in a link budget.

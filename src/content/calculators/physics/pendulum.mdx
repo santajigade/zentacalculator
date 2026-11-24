@@ -2,10 +2,10 @@
 title: Pendulum Period Calculator
 description: Calculate the period and frequency of a simple pendulum from its length — or the length for a given period.
 category: physics
-intro: "A simple pendulum swings with a period that depends on its length and gravity, not on how heavy the bob is. This regularity made pendulums the heart of accurate clocks for centuries. This free pendulum period calculator solves for whichever value you leave blank and shows the formula and steps."
+intro: "A simple pendulum swings with a period set by its length and the local gravity, not by the mass of the bob. This pendulum period calculator finds the period and frequency from the length, or the length needed for a chosen period.\n\nPhysics students use it to check lab results and measure g, clock restorers use it to regulate pendulums, and engineers use it for swinging loads such as crane hooks and hanging signs."
 keywords: [pendulum calculator, pendulum period, simple pendulum, t = 2 pi sqrt(l/g), seconds pendulum]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: L, label: Pendulum length, family: length, unit: m, imperialUnit: ft, default: 1, min: 0 }
   - { id: T, label: Period (one full swing), family: seconds, unit: s, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: "No. For a simple pendulum the period depends only on length and gravity, not on mass."
   - q: "How long is a pendulum with a 1-second period?"
     a: "About 24.8 cm."
+  - q: "What is the period of a 1 m pendulum on the Moon?"
+    a: "About 4.94 s, because lunar gravity is only about 1.62 m/s². The period grows with 1 ÷ √g, so it is about 2.5 times the Earth value."
+  - q: "Why does a swinging rod have a shorter period than a string pendulum of the same length?"
+    a: "Its mass is spread along its length, so its centre of oscillation sits at two thirds of the length. A 1 m uniform rod swings with a period of about 1.64 s instead of 2.01 s."
 related: [physics/free-fall, physics/wavelength-frequency]
 ---
 
@@ -77,14 +81,33 @@ Rearrange the formula: g = 4π² × L ÷ T². Time 20 full swings to reduce timi
 
 A pendulum clock that runs slow has a pendulum that is too long. Raising the bob by just 1 mm on a seconds pendulum speeds it up by about 43 seconds a day.
 
-## Period vs length
+## The same 1 m pendulum on other worlds
 
-| Length | Period |
-|---|---|
-| 0.25 m | 1.00 s |
-| 0.5 m | 1.42 s |
-| 1 m | 2.01 s |
-| 2 m | 2.84 s |
-| 4 m | 4.01 s |
+The period scales with 1 ÷ √g, so the same pendulum is a simple gravity meter. The last column is the length that would beat seconds (a 2 s period) in that gravity:
 
-Four times the length doubles the period. This is why grandfather clocks are tall — a ~1 m pendulum ticks once per second.
+| Location | g | Period of a 1 m pendulum | Seconds pendulum length |
+|---|---|---|---|
+| Equator (sea level) | 9.780 m/s² | 2.009 s | 0.991 m |
+| Standard gravity | 9.807 m/s² | 2.006 s | 0.994 m |
+| Poles (sea level) | 9.832 m/s² | 2.004 s | 0.996 m |
+| Moon | 1.620 m/s² | 4.937 s | 0.164 m |
+| Mars | 3.710 m/s² | 3.262 s | 0.376 m |
+| Jupiter (cloud tops) | 24.790 m/s² | 1.262 s | 2.512 m |
+
+Even on Earth the difference matters to a clock: a seconds pendulum regulated for standard gravity loses about 118 seconds a day if moved to the equator.
+
+## Lab worked example
+
+Using the calculator default of L = 1 m and g = 9.80665 m/s²: T = 2π × √(1 ÷ 9.80665) = **2.0064 s** and f = **0.4984 Hz**. Twenty full swings should therefore take 40.13 s. If your stopwatch reads 0.2 s long over those 20 swings, the measured period becomes 2.0164 s and g = 4π² × 1 ÷ 2.0164² = 9.710 m/s², an error of 1.0%. Timing more swings divides that error further.
+
+## Measuring a real pendulum
+
+Measure the length from the pivot point to the centre of mass of the bob, not to its bottom. Use a light, inextensible string, keep the amplitude below about 10°, and start timing as the bob passes the lowest point, where it moves fastest and the instant is easiest to judge. A light gate or a phone camera at 240 frames per second beats hand timing.
+
+## Common mistakes
+
+- **Measuring to the bottom of the bob.** With a 5 cm bob that adds 2.5 cm to L and the predicted period becomes 2.0313 s instead of 2.0064 s.
+- **Timing one way swings.** The period is a full there and back cycle; a one way swing is half of it.
+- **Counting the first pass as one.** Say zero when you start the stopwatch, otherwise you time one swing fewer than you count.
+- **Using the formula for a rigid rod.** A uniform 1 m rod pivoted at one end has T = 2π√(2L ÷ 3g) = 1.638 s, not 2.006 s, because its mass is spread along its length.
+- **Large release angles.** At 45° the period is already 4% longer than the formula gives.

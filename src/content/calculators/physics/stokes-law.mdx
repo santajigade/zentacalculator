@@ -2,10 +2,10 @@
 title: Stokes' Law Calculator (Terminal Settling Velocity)
 description: Calculate the terminal settling velocity of a small sphere in a fluid with Stokes' law, plus the particle Reynolds number to check the law is valid.
 category: physics
-intro: "Stokes' law describes how fast a small sphere sinks or rises through a viscous fluid once drag balances its weight and buoyancy. This Stokes' law calculator gives the terminal settling velocity, drag force and particle Reynolds number — useful for sedimentation tanks, dust settling, [viscosity measurement](https://www.instrumentationblog.in/viscosity-measurement-explained/) with a falling-ball viscometer and emulsions."
+intro: "Stokes' law describes how fast a small sphere sinks or rises through a viscous fluid once drag balances its weight and buoyancy. This Stokes' law calculator gives the terminal settling velocity, the drag force and the particle Reynolds number that tells you whether the law applies.\n\nWater treatment engineers size settling tanks with it, lab staff run falling ball tests for [viscosity measurement](https://www.instrumentationblog.in/viscosity-measurement-explained/), and formulators use it to predict creaming in emulsions."
 keywords: [stokes law calculator, terminal velocity calculator, settling velocity calculator, stokes settling velocity, falling ball viscometer, particle settling rate, sedimentation velocity]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-24
 variables:
   - { id: d, label: Particle diameter, family: length, unit: um, imperialUnit: in, default: 50, min: 0 }
   - { id: rp, label: Particle density, family: density, unit: kgm3, imperialUnit: lbft3, default: 2650, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: The particle is lighter than the fluid, so it rises instead of sinking — for example oil droplets or air bubbles in water.
   - q: How is Stokes' law used to measure viscosity?
     a: In a falling-ball viscometer a ball of known size and density falls a measured distance; rearranging gives μ = (ρp − ρf) g d² ÷ (18 v). Clear the viscosity field and enter the measured velocity.
+  - q: "Why does fine dust stay in the air so long?"
+    a: "Settling speed falls with the square of size. A 10 µm dust particle settles at about 6.0 mm/s and takes roughly 7 minutes to fall 2.5 m in still air, and any air current easily outruns that."
+  - q: "Does Stokes' law work for bubbles and droplets?"
+    a: "Approximately. Small rigid looking bubbles and droplets follow it, but clean fluid droplets with an internally circulating surface can move up to 1.5 times faster (the Hadamard and Rybczynski result). Surfactants usually make them behave like solid spheres again."
 related: [engineering/reynolds-number, physics/buoyancy, physics/drag-force, physics/density]
 ---
 
@@ -66,3 +70,33 @@ At 100 µm the Reynolds number approaches 1, so Stokes' law starts to overpredic
 - Viscosity changes strongly with temperature — water at 5 °C is about 1.5 mPa·s, slowing settling by a third.
 - Non-spherical particles settle more slowly than the equivalent sphere.
 - For larger objects, use the [drag force calculator](/physics/drag-force/) with a drag coefficient instead.
+
+## Sizing a settling tank from the result
+
+The default 50 µm sand grain settles at 2.250 mm/s. In a clarifier 3 m deep it needs 3 ÷ 0.002250 = 1333 s, about **22 minutes**, to reach the floor from the surface. Designers turn that velocity into a surface overflow rate: any particle that settles faster than the flow rate divided by the tank plan area is captured. For 2.25 mm/s that is 8.10 m³ per m² of tank area per hour, so a flow of 50 m³/h needs at least 6.2 m² of surface, before a safety factor of 1.5 to 2 for turbulence and short circuiting.
+
+## Temperature changes the answer
+
+Viscosity of water falls quickly as it warms, and settling speed rises in proportion. The same 50 µm quartz grain:
+
+| Water temperature | Viscosity | Settling velocity | Time to fall 1 m |
+|---|---|---|---|
+| 5 °C | 1.519 mPa·s | 1.48 mm/s | 11.3 min |
+| 10 °C | 1.306 mPa·s | 1.72 mm/s | 9.7 min |
+| 20 °C | 1.002 mPa·s | 2.25 mm/s | 7.4 min |
+| 30 °C | 0.797 mPa·s | 2.83 mm/s | 5.9 min |
+| 40 °C | 0.653 mPa·s | 3.46 mm/s | 4.8 min |
+
+A plant that settles well in summer can carry fines over the weir in winter for this reason alone.
+
+## Measuring viscosity with a falling ball
+
+A 2 mm steel ball (7,800 kg/m³) dropped in glycerol (1,260 kg/m³) takes 9.89 s to fall between two marks 100 mm apart, so v = 10.11 mm/s. Rearranged, μ = (ρp − ρf) g d² ÷ (18 v) = **1.41 Pa·s**, and Re = 0.018, safely in the Stokes range. Start timing only after the ball has fallen a few centimetres so it is at terminal speed, and use a tube at least 10 times the ball diameter, or apply a wall correction, because nearby walls slow the ball.
+
+## Common mistakes
+
+- **Mixing up mPa·s and Pa·s.** Water is 1.0 mPa·s, which is 0.001 Pa·s; entering 1 Pa·s makes the velocity 1,000 times too small.
+- **Using radius in the 18 μ form.** The equation here uses diameter. The radius form is v = 2 (ρp − ρf) g r² ÷ (9 μ); swapping one for the other gives a factor of 4 error.
+- **Skipping the Reynolds check.** Above Re ≈ 1 the true drag is higher than 3πμdv, so Stokes' law overstates the speed of coarse sand and gravel.
+- **Treating flocs as solid grains.** A floc of fine particles holds a lot of water, so its effective density may be only 1,010 to 1,100 kg/m³.
+- **Forgetting that air is a fluid too.** A 10 µm dust particle (2,000 kg/m³) in air settles at only 6.0 mm/s, taking about 7 minutes to fall 2.5 m, which is why fine dust hangs in a room.

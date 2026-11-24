@@ -2,10 +2,10 @@
 title: Simple Harmonic Motion Calculator (SHM x, v and a)
 description: Calculate displacement, velocity and acceleration in simple harmonic motion at any time from amplitude, frequency and phase — plus period and peak values.
 category: physics
-intro: "Simple harmonic motion is the back-and-forth motion of a spring, pendulum or vibrating machine, where the restoring force is proportional to displacement. This simple harmonic motion calculator gives the displacement, velocity and acceleration at any instant, along with the period, angular frequency and peak values."
+intro: "Simple harmonic motion is the back and forth motion of a spring, pendulum or vibrating machine, where the restoring force is proportional to displacement. This simple harmonic motion calculator gives the displacement, velocity and acceleration at any instant, plus the period, angular frequency and peak values.\n\nPhysics students use it to check oscillation problems, and vibration engineers use it to convert between displacement, velocity and acceleration readings at a known frequency."
 keywords: [simple harmonic motion calculator, shm calculator, shm displacement velocity acceleration, x = a cos wt, angular frequency, maximum velocity shm, oscillation calculator]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-24
 variables:
   - { id: A, label: Amplitude, family: length, unit: m, imperialUnit: in, default: 0.1, min: 0 }
   - { id: f, label: Frequency, family: frequency, unit: Hz, default: 2, min: 0 }
@@ -35,6 +35,8 @@ faq:
     a: Not for ideal simple harmonic motion. The period depends only on the system — √(m/k) for a spring, √(L/g) for a small-angle pendulum — which is why SHM is used for clocks.
   - q: What phase angle should I use?
     a: Use 0° if the motion starts at maximum displacement (released from rest at +A) and −90° if it starts at the centre moving in the positive direction.
+  - q: "How do I convert vibration acceleration to velocity and displacement?"
+    a: "For a single frequency, divide the acceleration by ω = 2πf to get velocity and by ω² to get displacement. 1 g at 100 Hz is 15.61 mm/s peak and 0.025 mm peak."
 related: [physics/spring-mass-frequency, physics/pendulum, physics/hookes-law, physics/wavelength-frequency]
 ---
 
@@ -77,3 +79,38 @@ A mass oscillates with amplitude 0.1 m at 2 Hz, starting from +A (φ = 0). At t 
 - Total energy stays constant: ½ k A² = ½ m v<sub>max</sub>².
 - Real oscillators lose energy to damping, so the amplitude decays with time while the frequency stays almost the same.
 - To get the frequency of a spring or pendulum first, use the [spring-mass frequency](/physics/spring-mass-frequency/) or [pendulum](/physics/pendulum/) calculators.
+
+## Energy in the worked example
+
+Give the oscillating body a mass of 0.5 kg. For SHM at ω = 12.5664 rad/s the spring constant must be k = m ω² = 78.96 N/m, and the total energy is ½ k A² = **0.3948 J**. At t = 0.1 s the split is:
+
+- Kinetic energy ½ m v² = 0.5 × 0.5 × (-1.1951)² = 0.3571 J
+- Potential energy ½ k x² = 0.5 × 78.96 × 0.0309² = 0.0377 J
+- Sum = 0.3948 J, the same as the total, as it must be without damping
+
+## Vibration readings: the same motion three ways
+
+Machine vibration is close to SHM at each frequency, so the peak values follow v = a ÷ ω and x = a ÷ ω². For a peak acceleration of 1 g (9.81 m/s²):
+
+| Frequency | Peak velocity | RMS velocity | Peak displacement |
+|---|---|---|---|
+| 5 Hz | 312.16 mm/s | 220.73 mm/s | 9.9362 mm |
+| 10 Hz | 156.08 mm/s | 110.36 mm/s | 2.4841 mm |
+| 50 Hz | 31.22 mm/s | 22.07 mm/s | 0.0994 mm |
+| 100 Hz | 15.61 mm/s | 11.04 mm/s | 0.0248 mm |
+| 500 Hz | 3.12 mm/s | 2.21 mm/s | 0.0010 mm |
+| 1000 Hz | 1.56 mm/s | 1.10 mm/s | 0.0002 mm |
+
+The same 1 g means large movement at low frequency and almost none at high frequency. That is why displacement probes suit slow shafts, velocity in mm/s RMS is used for general machine condition (ISO 10816 and ISO 20816) and accelerometers are used for bearing and gear faults at high frequency.
+
+## How SHM is measured
+
+An accelerometer gives a(t) directly, and the frequency is read from the spectrum; integrating once gives velocity and twice gives displacement. In a lab, a motion sensor or a video of a mass on a spring gives x(t), and the period is timed over 10 or 20 cycles to reduce reaction time error.
+
+## Common mistakes
+
+- **Using degrees inside cos with ω t in radians.** ωt = 1.2566 rad is 72°; mixing the two gives a wrong phase.
+- **Confusing f and ω.** At 2 Hz, ω is 12.566 rad/s, not 2; using f in place of ω makes v<sub>max</sub> and a<sub>max</sub> far too small.
+- **Mixing peak, peak to peak and RMS.** The 1.2566 m/s peak velocity here is 0.8886 m/s RMS, and the displacement is 0.2 m peak to peak.
+- **Reading a negative value as an error.** A negative velocity or displacement only means the motion is on, or heading to, the negative side.
+- **Applying SHM to large pendulum swings.** Above about 15° the pendulum period grows with amplitude and the simple formulas drift.

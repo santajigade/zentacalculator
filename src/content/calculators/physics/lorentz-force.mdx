@@ -2,10 +2,10 @@
 title: Lorentz Force Calculator (F = qvB & F = BIL)
 description: Calculate the magnetic Lorentz force on a moving charge (F = qvB sin θ), its radius of curvature and cyclotron frequency, and the force on a wire.
 category: physics
-intro: "A charged particle moving through a magnetic field feels a force at right angles to both its velocity and the field, and a current-carrying wire feels the same force — the principle behind electric motors, loudspeakers and mass spectrometers. This Lorentz force calculator gives the force on a moving charge, the radius of its circular path and its cyclotron frequency, plus the force on a conductor."
+intro: "A charge moving through a magnetic field is pushed sideways, at right angles to both its velocity and the field, and a current carrying wire feels the same push. This Lorentz force calculator gives the force on a charge, its orbit radius and cyclotron frequency, and the force on a conductor.\n\nPhysics students, motor and actuator designers and people working with mass spectrometers or beam lines use it to check forces, path radii and frequencies quickly."
 keywords: [lorentz force calculator, magnetic force calculator, f = qvb calculator, force on a moving charge, force on current carrying wire, f = bil calculator, cyclotron frequency calculator, gyroradius calculator]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-24
 variables:
   - { id: z, label: Charge number (multiples of e), default: 1, help: '+1 for a proton, −1 for an electron, +2 for an alpha particle.' }
   - { id: v, label: Particle speed, family: velocity, unit: ms, default: 2000000, min: 0 }
@@ -32,6 +32,10 @@ faq:
     a: The magnetic force is always perpendicular to the velocity, so it changes the direction but not the speed. The radius is r = m v⊥ ÷ (|q| B).
   - q: Which way does the force act?
     a: Use the right-hand rule for positive charges (or conventional current) — fingers along v, curl towards B, thumb gives F. The force on an electron is in the opposite direction.
+  - q: "Does the magnetic force do work on a moving charge?"
+    a: "No. The force is always perpendicular to the velocity, so it changes the direction of motion but not the speed or kinetic energy. Only an electric field can speed a charge up."
+  - q: "What is the cyclotron frequency of an electron in the Earth's magnetic field?"
+    a: "About 1.4 MHz in a 50 µT field. Electrons spiralling around field lines in the upper atmosphere emit and absorb radio waves near this frequency."
 related: [physics/magnetic-field, physics/faradays-law, physics/centripetal-force, physics/coulombs-law]
 ---
 
@@ -71,3 +75,34 @@ The radius column is for a speed of 10⁶ m/s perpendicular to the field.
 - The formulas are non-relativistic; above about 10% of the speed of light use the relativistic momentum γmv.
 - A velocity component parallel to B is unaffected, so the particle spirals along the field lines.
 - Find the field of a coil or wire first with the [magnetic field calculator](/physics/magnetic-field/).
+
+## Default case taken further
+
+The default proton (2 × 10⁶ m/s across 0.5 T) gives F = **1.6022 × 10⁻¹³ N**, r = **41.76 mm** and f<sub>c</sub> = **7.623 MHz**, and the 0.2 m wire with 5 A feels **0.50 N**. Changing one thing at a time shows how the formulas behave:
+
+- **Swap in an electron** (0.00054858 u, charge −1) at the same speed: the force has the same size but the opposite direction, the radius shrinks to 22.7 µm and the cyclotron frequency rises to 14.0 GHz.
+- **Tilt the velocity to 30° from the field**: the force halves to 8.0109 × 10⁻¹⁴ N and the circle radius halves to 20.88 mm, while the particle drifts along B by 227 mm per turn, tracing a helix.
+- **Double the speed**: the force and the radius double, but the cyclotron frequency does not change, which is what lets a cyclotron use a fixed RF frequency.
+
+## Mass spectrometer example
+
+Singly charged carbon ions of 12 u and 13.00335 u enter a 0.5 T field at 1 × 10⁵ m/s. Their radii are 24.87 mm and 26.95 mm, so after a half circle they land 4.16 mm apart on the detector. Heavier ions bend less, which is how isotopes are separated and identified.
+
+## Force on a 1 m conductor
+
+| Current | Earth field, 50 µT | 0.1 T | 0.5 T | 1.5 T |
+|---|---|---|---|---|
+| 1 A | 5e-05 N | 0.1 N | 0.5 N | 1.5 N |
+| 10 A | 0.0005 N | 1 N | 5 N | 15 N |
+| 100 A | 0.005 N | 10 N | 50 N | 150 N |
+| 1,000 A | 0.05 N | 100 N | 500 N | 1.5e+03 N |
+
+Fields of 0.5 T to 1.5 T are typical of the air gap in motors and loudspeakers; the Earth's field produces only tiny forces even on heavy cables.
+
+## Common mistakes
+
+- **Measuring the angle from the wrong reference.** θ is between the velocity (or current) and the field; motion parallel to B gives zero force.
+- **Entering mass in kilograms.** The mass field is in atomic mass units, so a proton is 1.007276, not 1.67 × 10⁻²⁷.
+- **Forgetting the sign of the charge.** The size of the force uses |q|, but an electron is pushed the opposite way to a proton.
+- **Using a length of wire outside the field.** Only the length actually inside the field region counts in F = B I L.
+- **Applying it near light speed.** Above about 0.1c use the relativistic momentum, or the radius comes out too small.

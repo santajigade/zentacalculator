@@ -2,10 +2,10 @@
 title: Bernoulli Equation Calculator (Pressure, Velocity & Height)
 description: Solve Bernoulli's equation for pressure, velocity or elevation at a second point in a pipe — with total head, velocity head and a worked example.
 category: physics
-intro: "Bernoulli's equation says that along a streamline the sum of pressure, kinetic energy per volume and potential energy per volume stays constant for a steady, frictionless, incompressible flow. This Bernoulli equation calculator finds the pressure, velocity or height at a second point from conditions at the first — see [Bernoulli's equation and its formula](https://www.instrumentationblog.in/bernoullis-equation-formula/) for the derivation."
+intro: "Bernoulli's equation says that along a streamline the sum of pressure, kinetic energy per volume and potential energy per volume stays constant in steady, frictionless, incompressible flow. This Bernoulli equation calculator finds the pressure at a second point from conditions at the first; see [Bernoulli's equation and its formula](https://www.instrumentationblog.in/bernoullis-equation-formula/).\n\nStudents, pump and piping engineers and flow meter specialists use it for venturi, pitot and nozzle problems."
 keywords: [bernoulli equation calculator, bernoulli's principle calculator, bernoulli pressure calculator, total head calculator, velocity head, p1 + 1/2 rho v^2 + rho g h, fluid pressure velocity]
 published: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-24
 variables:
   - { id: rho, label: Fluid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
   - { id: P1, label: Pressure at point 1, family: pressure, unit: kPa, imperialUnit: psi, default: 200 }
@@ -27,6 +27,10 @@ faq:
     a: It assumes steady, incompressible, inviscid flow with no pumps or turbines between the points. For real pipes add the friction head loss, and for gases above about Mach 0.3 use compressible-flow relations.
   - q: What is total head?
     a: The Bernoulli sum expressed as a height of fluid — pressure head P/ρg plus velocity head v²/2g plus elevation z. Without losses it is the same at every point.
+  - q: "How do I find the velocity at point 2 from the pipe diameters?"
+    a: "Use continuity: v2 = v1 × (D1 ÷ D2)². Water at 2 m/s in a 100 mm bore speeds up to 5 m/s in a 63.2 mm bore. Enter that v2 here to get the pressure."
+  - q: "Why is my measured pressure lower than the Bernoulli result?"
+    a: "Real pipes lose head to wall friction, bends, valves and sudden changes in bore. Bernoulli gives the ideal value; subtract the friction loss ρ g hL to get what a gauge will read."
 related: [engineering/venturi-flow, engineering/pitot-tube-velocity, engineering/darcy-weisbach-head-loss, physics/pressure]
 ---
 
@@ -61,6 +65,40 @@ Water (1,000 kg/m³) flows at 2 m/s and 200 kPa at ground level, then rises 3 m 
 | 10 m/s | 50.000 kPa | 5.099 m | 60.0 Pa |
 | 20 m/s | 200.000 kPa | 20.394 m | 240.0 Pa |
 | 30 m/s | 450.000 kPa | 45.887 m | 540.0 Pa |
+
+## Checking the example with heads
+
+Bernoulli's equation can be read as energy per unit weight. At point 1 the pressure head is 200 kPa ÷ (1,000 × 9.80665) = 20.394 m and the velocity head is 2² ÷ (2 × 9.80665) = 0.204 m, so H = 20.598 m. At point 2 the pressure head is 16.324 m, the velocity head 1.275 m and the elevation 3 m, which add back to **20.598 m**. If your two totals differ, an input or unit is wrong. P<sub>2</sub> = 160.08 kPa is also 23.22 psi.
+
+## Where the second velocity comes from
+
+In a real pipe v<sub>2</sub> is set by continuity, v<sub>1</sub>A<sub>1</sub> = v<sub>2</sub>A<sub>2</sub>. If point 1 is a 100 mm bore carrying 15.71 L/s, a speed of 5 m/s at point 2 means a bore of 100 × √(2 ÷ 5) = **63.2 mm**. Work out the speed from the diameters first, then use this calculator for the pressure.
+
+## Pressure at point 2 for other speeds and heights
+
+Same water, P<sub>1</sub> = 200 kPa and v<sub>1</sub> = 2 m/s:
+
+| v<sub>2</sub> | h<sub>2</sub> = 0 m | h<sub>2</sub> = 3 m | h<sub>2</sub> = 10 m |
+|---|---|---|---|
+| 2 m/s | 200.0 kPa | 170.6 kPa | 101.9 kPa |
+| 4 m/s | 194.0 kPa | 164.6 kPa | 95.9 kPa |
+| 5 m/s | 189.5 kPa | 160.1 kPa | 91.4 kPa |
+| 8 m/s | 170.0 kPa | 140.6 kPa | 71.9 kPa |
+| 10 m/s | 152.0 kPa | 122.6 kPa | 53.9 kPa |
+
+With v<sub>2</sub> = 5 m/s the gauge pressure would reach zero at a height of 19.32 m, so a pipe climbing higher than that would need more inlet pressure.
+
+## Measuring the terms in practice
+
+Static pressure is read with a gauge or transmitter on a wall tapping flush with the pipe bore, never one that pokes into the stream. Elevation differences come from drawings or a level survey of the tapping points. Velocity is found from the volumetric flow rate divided by the bore area, or with a pitot tube that senses static plus dynamic pressure. A differential pressure transmitter across two tappings measures P<sub>1</sub> − P<sub>2</sub> directly, which is how venturi and orifice meters turn this equation into a flow reading.
+
+## Common mistakes
+
+- **Mixing gauge and absolute pressure.** Either works, but both points must use the same reference.
+- **Getting the elevation sign wrong.** Point 2 above point 1 lowers P<sub>2</sub>; measure both heights from one datum.
+- **Applying it across a pump or turbine.** Add the pump head or subtract the turbine head, or the result is meaningless.
+- **Picking v<sub>2</sub> freely.** It is fixed by the flow rate and bore, so check it with continuity.
+- **Ignoring friction on long runs.** Over many metres of pipe the head loss can be bigger than the velocity term.
 
 ## Practical notes
 

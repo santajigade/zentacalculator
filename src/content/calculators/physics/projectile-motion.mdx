@@ -2,10 +2,10 @@
 title: Projectile Motion Calculator
 description: "Calculate range, maximum height and flight time of a projectile from launch speed and angle. Free online projectile motion calculator with formula and examples."
 category: physics
-intro: "A thrown ball, a cricket shot or a water jet all follow a curved path called a parabola. Projectile motion splits the movement into steady horizontal travel and vertical motion under gravity."
+intro: "A thrown ball, a cricket shot or a water jet all follow a curved path called a parabola, because the horizontal speed stays steady while gravity changes the vertical speed. This projectile motion calculator gives the range, maximum height and flight time from launch speed and angle.\n\nPhysics students use it to check homework, coaches and players use it to see why launch angle matters, and engineers use it for first estimates of jets and thrown objects."
 keywords: [projectile motion, range calculator, launch angle, maximum height, time of flight, trajectory]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: v, label: Launch speed, family: velocity, unit: ms, imperialUnit: fts, default: 20, min: 0 }
   - { id: th, label: Launch angle, family: angle, unit: deg, default: 45, min: 0, max: 1.5708 }
@@ -28,6 +28,8 @@ faq:
     a: "Range depends on sin 2θ, which is largest when 2θ = 90°. This holds only on level ground without air resistance."
   - q: "Do complementary angles give the same range?"
     a: "Yes. On level ground, 30° and 60° (or 20° and 70°) give the same range, but the steeper angle goes higher and takes longer."
+  - q: "What is the speed of a projectile at the top of its path?"
+    a: "Only the horizontal component remains, v cos θ. For 20 m/s at 45° that is 14.14 m/s; the vertical velocity is zero at the peak."
 related: [physics/free-fall, physics/suvat-equations]
 ---
 
@@ -41,11 +43,14 @@ Enter the **launch speed** and **angle** to get the range, maximum height and fl
 
 ## Worked example
 
-Launched at 20 m/s and 45°:
+Launched at the default 20 m/s and 45°, with g = 9.80665 m/s²:
 
-- Range = 400 × 1 ÷ 9.81 = **40.8 m**
-- Maximum height = **10.2 m**
-- Flight time = **2.88 s**
+1. Split the velocity: v<sub>x</sub> = 20 × cos 45° = 14.14 m/s and v<sub>y</sub> = 20 × sin 45° = 14.14 m/s
+2. Time to the top: 14.14 ÷ 9.80665 = 1.442 s, so the time of flight is **2.884 s**
+3. Maximum height: 14.14² ÷ (2 × 9.80665) = **10.20 m**
+4. Range: 14.14 m/s × 2.884 s = **40.79 m**, the same as 20² × sin 90° ÷ 9.80665
+
+At x = 30 m the ball is still 7.94 m up, from y = x tan θ − g x² ÷ (2 v² cos² θ). Doubling the launch speed to 40 m/s multiplies the range by four, to 163.2 m, and on the Moon (g = 1.62 m/s²) the same throw would travel 247 m.
 
 ## Projectile from a height
 
@@ -84,3 +89,28 @@ For something thrown or rolled horizontally off a table (θ = 0), time to land i
 | 45° | 40.8 m |
 | 60° | 35.3 m |
 | 75° | 20.4 m |
+
+## Height, flight time and horizontal speed by angle (20 m/s)
+
+| Angle | Maximum height | Time of flight | Horizontal speed |
+|---|---|---|---|
+| 15° | 1.37 m | 1.06 s | 19.32 m/s |
+| 30° | 5.10 m | 2.04 s | 17.32 m/s |
+| 45° | 10.20 m | 2.88 s | 14.14 m/s |
+| 60° | 15.30 m | 3.53 s | 10.00 m/s |
+| 75° | 19.03 m | 3.94 s | 5.18 m/s |
+| 90° | 20.39 m | 4.08 s | 0.00 m/s |
+
+Range is shared by complementary angles, but height and time are not: a 75° lob stays in the air 3.7 times longer than a 15° shot that lands at the same spot.
+
+## Measuring a real trajectory
+
+The simplest method is slow motion video against a background with marked distances: step through the frames, note the position every few frames and fit a parabola. Radar guns give launch speed directly, and launch monitors in golf and baseball measure speed, angle and spin together. Comparing those measurements with this calculator shows how much air drag removes.
+
+## Common mistakes
+
+- **Using the level ground formulas from a height.** A ball thrown from a cliff or a shot put released at shoulder height needs the launch height formula above, or the range comes out short.
+- **Entering speed in km/h as m/s.** 72 km/h is 20 m/s; typing 72 gives a range almost 13 times too large.
+- **Thinking the ball stops at the top.** Only the vertical velocity is zero at the peak; it still moves sideways at 14.14 m/s.
+- **Splitting with the wrong trig function.** The horizontal part is v cos θ and the vertical part v sin θ when θ is measured from the ground.
+- **Trusting 45° for real balls.** With drag, the best angle for a long throw or a golf drive is well below 45°.

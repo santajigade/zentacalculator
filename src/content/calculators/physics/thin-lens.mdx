@@ -2,10 +2,10 @@
 title: Thin Lens Equation Calculator (Lens and Mirror Formula)
 description: Find focal length, object distance, image distance and magnification for lenses and mirrors using 1/f = 1/dₒ + 1/dᵢ.
 category: physics
-intro: "Lenses and curved mirrors form images at distances set by their focal length. The thin lens equation predicts where the image appears and how large it is — the basis of cameras, glasses, microscopes and projectors."
+intro: "Lenses and curved mirrors form images at distances set by their focal length. This thin lens equation calculator uses 1/f = 1/dₒ + 1/dᵢ to find the image distance, magnification and lens power from the focal length and object distance, for both lenses and mirrors.\n\nStudents use it for optics homework and lab reports, and photographers, optometry trainees and hobbyists use it to see where an image will form and how big it will be."
 keywords: [thin lens equation, lens formula calculator, mirror equation, focal length calculator, image distance, magnification calculator, 1/f = 1/u + 1/v]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-24
 variables:
   - { id: f, label: Focal length, family: length, unit: cm, imperialUnit: in, default: 10, help: Positive for converging lenses and concave mirrors; negative for diverging lenses and convex mirrors. }
   - { id: do, label: Object distance, family: length, unit: cm, imperialUnit: in, default: 30, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: The image is upside down (inverted). Positive magnification means upright.
   - q: What is a dioptre?
     a: "Lens power in reciprocal metres: P = 1 ÷ f. A +2.5 dioptre reading lens has a focal length of 40 cm."
+  - q: "How do I measure the focal length of a lens at home?"
+    a: "Focus a distant object such as a window onto a wall or sheet of paper and measure from the lens to the sharp image. Because the object is very far away, that distance is the focal length."
+  - q: "Why does the image distance become infinite?"
+    a: "When the object sits exactly at the focal point, 1/f − 1/dₒ is zero, the rays leave the lens parallel and no image forms at any finite distance. Move the object slightly inside or outside f to get a virtual or real image."
 related: [physics/snells-law, biology/magnification, biology/field-of-view, physics/wavelength-frequency]
 ---
 
@@ -50,7 +54,7 @@ Enter the **focal length** and **object distance**. The calculator finds the ima
 |---|---|---|---|
 | 50 cm | 12.5 cm | -0.25 | real, inverted, reduced |
 | 30 cm | 15.0 cm | -0.50 | real, inverted, reduced |
-| 20 cm | 20.0 cm | -1.00 | real, inverted, reduced |
+| 20 cm | 20.0 cm | -1.00 | real, inverted, same size |
 | 15 cm | 30.0 cm | -2.00 | real, inverted, enlarged |
 | 12 cm | 60.0 cm | -5.00 | real, inverted, enlarged |
 | 8 cm | -40.0 cm | 5.00 | virtual, upright, enlarged |
@@ -68,3 +72,39 @@ Powers add: P = P₁ + P₂. Two +5 D lenses together make a +10 D lens with a 1
 ## Spectacles
 
 Short-sighted (myopic) people wear diverging lenses with negative dioptres; long-sighted people and reading glasses use positive lenses.
+
+## Worked example with the default values
+
+A converging lens with f = 10 cm and an object 30 cm away:
+
+1. 1/dᵢ = 1/f − 1/dₒ = 1/10 − 1/30 = 3/30 − 1/30 = 2/30, so **dᵢ = 15.0 cm** (positive, so a real image on the far side of the lens)
+2. m = −dᵢ ÷ dₒ = −15 ÷ 30 = **-0.500**, so the image is inverted and half size
+3. P = 1 ÷ f = 1 ÷ 0.10 m = **10.00 dioptres** (the focal length must be in metres for dioptres)
+
+A 2 cm tall object therefore gives an image -1.0 cm tall, the minus sign showing it is upside down.
+
+## Diverging lens, f = −10 cm
+
+A diverging lens always gives a virtual, upright, reduced image, whatever the object distance:
+
+| Object distance | Image distance | Magnification |
+|---|---|---|
+| 50 cm | -8.33 cm | 0.167 |
+| 30 cm | -7.50 cm | 0.250 |
+| 20 cm | -6.67 cm | 0.333 |
+| 10 cm | -5.00 cm | 0.500 |
+| 5 cm | -3.33 cm | 0.667 |
+
+## Measuring the focal length of a real lens
+
+The quickest method is to focus a distant window or tree onto a wall: the object is effectively at infinity, so the lens to wall distance is the focal length. For a better result use the displacement (Bessel) method. Fix an object and a screen D = 50 cm apart; a 10 cm lens gives a sharp image at two positions, dₒ = 36.18 cm and dₒ = 13.82 cm, which are 22.36 cm apart. Then f = (D² − s²) ÷ 4D = (2,500 − 500) ÷ 200 = **10.0 cm**. It only works when D is more than 4f, and it avoids measuring from the centre of a thick lens.
+
+The same equation explains camera focusing. A 50 mm lens focused at 3 m needs dᵢ = 50.85 mm, so the lens moves only 0.85 mm forward from its infinity position.
+
+## Common mistakes
+
+- **Mixing sign conventions.** This calculator uses real is positive. Textbooks using the Cartesian convention write 1/f = 1/v − 1/u with u negative, so do not copy signs between the two.
+- **Using centimetres for dioptres.** P = 1 ÷ f only gives dioptres with f in metres: 10 cm is 0.1 m and +10 D, not +0.1 D.
+- **Putting the object exactly at the focal point.** With dₒ = f the rays leave parallel and the image distance is infinite, so the calculator cannot return a finite value.
+- **Forgetting that a convex mirror is diverging.** Enter a negative focal length for car wing mirrors and shop security mirrors.
+- **Applying it to thick lenses.** For thick lenses and multi element camera lenses, distances are measured from the principal planes, not from the glass surface.

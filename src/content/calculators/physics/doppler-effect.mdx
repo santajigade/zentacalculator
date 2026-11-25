@@ -2,10 +2,10 @@
 title: Doppler Effect Calculator (Sound Frequency Shift)
 description: Calculate the frequency heard from a moving sound source or by a moving observer with the Doppler effect formula — for sirens, trains and cars.
 category: physics
-intro: "When a sound source moves towards you its pitch rises, and when it moves away the pitch falls. This Doppler effect calculator gives the frequency heard for any combination of source and observer speeds, and the percentage shift. The same principle is used in radar speed guns, medical ultrasound and [Doppler ultrasonic flow meters](https://www.instrumentationblog.in/transit-time-vs-doppler-ultrasonic-flow-meter/)."
+intro: "The Doppler effect is the change in frequency heard when a sound source, a listener or both move relative to the air. This Doppler effect calculator gives the observed frequency for any source and observer speeds, plus the percentage shift.\n\nStudents use it for wave problems, acousticians and sound engineers for passing vehicles, and instrument engineers for radar, medical ultrasound and [Doppler ultrasonic flow meters](https://www.instrumentationblog.in/transit-time-vs-doppler-ultrasonic-flow-meter/)."
 keywords: [doppler effect calculator, doppler shift calculator, observed frequency, moving source frequency, siren frequency, doppler formula, doppler effect sound]
 published: 2026-10-27
-updated: 2026-11-09
+updated: 2026-11-25
 variables:
   - { id: f, label: Source frequency, suffix: Hz, default: 700, min: 0 }
   - { id: v, label: Speed of sound, family: velocity, unit: ms, default: 343, min: 1, help: '343 m/s in air at 20 °C; 331 m/s at 0 °C; about 1,480 m/s in water.' }
@@ -25,6 +25,10 @@ faq:
     a: Enter the source speed as a negative number. A 700 Hz siren moving away at 72 km/h (20 m/s) is heard at 661 Hz; approaching at the same speed it is heard at 743 Hz.
   - q: Does the Doppler effect apply to light?
     a: Yes. Light from galaxies moving away is shifted towards red (redshift), which shows the universe is expanding. Light has no medium, so it uses the relativistic formula based only on the relative speed.
+  - q: "Is a moving listener the same as a moving source?"
+    a: "No. At 72 km/h towards a 700 Hz source a moving listener hears 740.8 Hz, while a source moving at 72 km/h towards a still listener is heard at 743.3 Hz. The difference grows with speed."
+  - q: "Can I find the speed of a passing vehicle from its sound?"
+    a: "Yes. With the pitch heard while it approaches (f_a) and while it moves away (f_r), the speed is v (f_a − f_r) ÷ (f_a + f_r). 743.3 Hz and 661.4 Hz at 343 m/s give 20.0 m/s, or 72 km/h."
 related: [physics/wavelength-frequency, physics/speed-of-sound, physics/beat-frequency, physics/decibel]
 ---
 
@@ -57,6 +61,35 @@ An ambulance siren at 700 Hz approaches a standing observer at 72 km/h (20 m/s),
 | 120 km/h | 775.3 Hz | 638.0 Hz | 137.4 Hz | 3.38 |
 | 200 km/h | 835.3 Hz | 602.4 Hz | 232.9 Hz | 5.66 |
 | 300 km/h | 924.6 Hz | 563.2 Hz | 361.5 Hz | 8.58 |
+
+## Moving observer versus moving source
+
+With the default 700 Hz source and 343 m/s, the calculator gives **743.3 Hz** and a shift of **+6.19%** for a source approaching at 72 km/h. If instead the source stands still and the listener drives towards it at 72 km/h, f′ = 700 × (343 + 20) ÷ 343 = **740.8 Hz**. The two are not equal: a moving source changes the wavelength in the air, while a moving observer only meets the unchanged waves more often. If both approach each other at 72 km/h, f′ = 700 × 363 ÷ 323 = **786.7 Hz**.
+
+| Speed | Source moving | Observer moving | Difference |
+|---|---|---|---|
+| 36 km/h (10 m/s) | 721.0 Hz | 720.4 Hz | 0.6 Hz |
+| 72 km/h (20 m/s) | 743.3 Hz | 740.8 Hz | 2.5 Hz |
+| 144 km/h (40 m/s) | 792.4 Hz | 781.6 Hz | 10.8 Hz |
+| 288 km/h (80 m/s) | 912.9 Hz | 863.3 Hz | 49.7 Hz |
+
+The gap grows quickly with speed, because the source term v ÷ (v − v<sub>s</sub>) blows up as v<sub>s</sub> nears the speed of sound while the observer term grows only in a straight line.
+
+## Working out a speed from a recording
+
+Record a vehicle passing, read the steady pitch before and after it goes by, and solve the two Doppler equations together: v<sub>s</sub> = v × (f<sub>a</sub> − f<sub>r</sub>) ÷ (f<sub>a</sub> + f<sub>r</sub>). For the default siren, 743.3 Hz approaching and 661.4 Hz receding give 343 × 81.9 ÷ 1404.8 = **20.0 m/s**, which is 72 km/h. The nice feature is that you do not need to know the siren's true frequency. Temperature still matters: on a 0 °C day, with sound at 331.3 m/s, the same siren approaching at 72 km/h sounds at 745.0 Hz.
+
+## Doppler ultrasound
+
+Medical and industrial ultrasound measures a reflected beam, so the shift is doubled and only the speed along the beam counts: Δf = 2 f v cos θ ÷ c. A 5 MHz probe looking at blood moving at 0.5 m/s, with a 60° angle between beam and flow and c = 1,540 m/s in tissue, sees a shift of **1623 Hz**, conveniently in the audible range, which is why Doppler machines can play blood flow as sound. If the operator sets the angle as 65° instead of 60°, the machine reports 0.59 m/s instead of 0.50 m/s, so the angle setting matters a lot above about 60°.
+
+## Common mistakes
+
+- **Getting the sign convention backwards.** In this calculator positive speeds mean moving towards the other party; a receding source needs a negative v<sub>s</sub>.
+- **Mixing km/h and m/s.** The speed of sound is in m/s while the vehicle speeds are in km/h; 72 km/h is 20 m/s, not 72 m/s.
+- **Swapping the source and observer formulas.** As the table shows, the two cases give different answers at high speed.
+- **Ignoring the angle.** Only the part of the velocity along the line to the listener counts. A car passing 50 m away on a straight road gives a smooth slide in pitch, and no shift at all at the moment it is closest.
+- **Forgetting wind.** The speeds must be measured relative to the air, so a steady wind shifts both v<sub>o</sub> and v<sub>s</sub>.
 
 ## Speed of sound in air
 

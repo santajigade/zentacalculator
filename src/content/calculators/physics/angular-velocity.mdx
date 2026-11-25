@@ -2,10 +2,10 @@
 title: Angular Velocity Calculator (rpm to rad/s & Rim Speed)
 description: Convert rpm to rad/s, Hz and degrees per second, and calculate the tangential (rim) speed at any radius for motors, wheels, pulleys and rotating shafts.
 category: physics
-intro: "Rotating machines are rated in revolutions per minute, but physics and engineering formulas use angular velocity in radians per second. This angular velocity calculator converts between rpm, rad/s and Hz, gives the time per revolution and works out the tangential speed at any radius, v = ωr — handy for motor shafts, wheels, grinding discs, fans and pulleys."
+intro: "Angular velocity is how fast something turns, measured as the angle swept per second, while machines are usually rated in revolutions per minute. This angular velocity calculator converts rpm to rad/s, degrees per second and Hz, gives the time per revolution and finds the rim speed at any radius.\n\nMaintenance engineers, machinists and students use it for motor shafts, wheels, pulleys, fans and cutting tools, where formulas for power, stress and surface speed need rad/s."
 keywords: [angular velocity calculator, rpm to rad/s, rad/s to rpm, tangential velocity calculator, rpm to linear speed, rotational speed converter, angular speed formula, rim speed calculator]
 published: 2026-10-29
-updated: 2026-11-13
+updated: 2026-11-25
 variables:
   - { id: N, label: Rotational speed, suffix: rpm, default: 1450, min: 0 }
   - { id: r, label: Radius, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: Frequency counts revolutions per second (Hz); angular velocity counts radians per second. One revolution is 2π radians, so ω = 2πf — 50 revolutions per second is 314.16 rad/s.
   - q: Why does rim speed matter?
     a: Grinding wheels, saw blades and fans have a maximum safe peripheral speed marked on them, belt and conveyor speeds are set by the pulley rim speed, and cutting speeds in machining are specified as surface speed at the tool or workpiece diameter.
+  - q: "How many rpm does a car wheel turn at 100 km/h?"
+    a: "With a typical rolling radius of 315 mm, ω = 27.78 m/s ÷ 0.315 m = 88.18 rad/s, or about 842 rpm. Smaller wheels turn faster at the same road speed."
+  - q: "How do I find rpm from encoder pulses?"
+    a: "rpm = pulse frequency × 60 ÷ pulses per revolution. A 1024 ppr encoder giving 24,747 Hz is turning at 1,450 rpm."
 related: [engineering/pulley-speed, physics/centripetal-force, physics/rotational-kinetic-energy, engineering/torque-power-speed, engineering/gear-ratio, electrical/induction-motor-slip]
 ---
 
@@ -98,3 +102,33 @@ N<sub>s</sub> = 120 f ÷ poles; induction motors run a few percent slower (for e
 - **Gears and belts** keep the rim speed equal on both sides of a belt or at the pitch circle of a gear mesh, so the angular velocities are in the inverse ratio of the diameters — see the [pulley speed calculator](/engineering/pulley-speed/) and the [gear ratio calculator](/engineering/gear-ratio/).
 - **Power and torque:** P = T × ω, so a 15 kW motor at 151.84 rad/s delivers 98.8 N·m — use the [torque, power and speed calculator](/engineering/torque-power-speed/).
 - **Centripetal acceleration** at the rim is a = ω² r (2,306 m/s², about 235 g, in the example), which sets the stress in rotating discs and the force on any unbalance; see the [centripetal force calculator](/physics/centripetal-force/).
+
+## Measuring rotational speed
+
+A tachometer counts events per revolution and divides by time. At the default 1,450 rpm, different sensors give these pulse frequencies:
+
+| Sensor | Pulses per revolution | Pulse frequency |
+|---|---|---|
+| Reflective tape, 1 mark | 1 | 24.17 Hz |
+| Shaft key with proximity sensor | 1 | 24.17 Hz |
+| 60 tooth gear wheel | 60 | 1,450.00 Hz |
+| Incremental encoder, 360 ppr | 360 | 8,700.00 Hz |
+| Incremental encoder, 1024 ppr | 1024 | 24,746.67 Hz |
+
+A 1024 pulse encoder resolves 0.352° per pulse, so it can measure speed accurately in a few milliseconds, while a single reflective mark gives only 24.17 readings per second. Handheld optical tachometers read the tape mark; drive controllers and PLC high speed counters read encoders or gear tooth pickups.
+
+## Second example: a car wheel
+
+At 100 km/h (27.78 m/s) a tyre with a rolling radius of 315 mm turns at ω = v ÷ r = 27.78 ÷ 0.315 = **88.18 rad/s**, which is **842 rpm**. Here the rim speed is known and the angular velocity is the unknown: enter the speed and radius and clear rpm. Speedometers work the same way in reverse, so fitting larger tyres makes the car go faster than the speedometer shows.
+
+## Very slow and very fast rotation
+
+The Earth turns once per sidereal day (86,164 s), only 7.2921e-05 rad/s, yet the equator moves at 465 m/s because the radius is 6,378 km. At the other extreme, a 230 mm angle grinder disc at 6,600 rpm has a rim speed of 79.5 m/s, which is why such discs carry a maximum speed rating of 80 m/s.
+
+## Common mistakes
+
+- **Using diameter as the radius.** v = ω r uses the radius; entering the diameter doubles the rim speed.
+- **Leaving ω in rpm inside a formula.** P = T ω, a = ω² r and E = ½ I ω² all need rad/s; using 1,450 instead of 151.84 gives answers about 9.5 times too large for P and 91 times too large for a.
+- **Confusing ω with f.** Frequency is revolutions per second (24.17 Hz here), ω is 2π times larger.
+- **Trusting a stroboscope at the first frozen image.** A strobe flashing at 12.08 Hz also freezes a shaft turning at 24.17 Hz; start from a high flash rate and come down to the first single steady image.
+- **Assuming the motor runs at its synchronous speed.** A 4 pole induction motor on 50 Hz runs near 1,450 rpm under load, not 1,500 rpm; read the nameplate or measure it.

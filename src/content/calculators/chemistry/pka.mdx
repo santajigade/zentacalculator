@@ -2,10 +2,10 @@
 title: pKa Calculator — Ka to pKa, Kb to pKb and Back
 description: Convert Ka to pKa and back, and find the conjugate base Kb and pKb at 25 °C using Ka × Kb = Kw — with a table of pKa values for common acids.
 category: chemistry
-intro: "pKa is the negative logarithm of an acid's dissociation constant: the lower the pKa, the stronger the acid. This pKa calculator converts Ka to pKa (or pKa to Ka) and gives the Kb and pKb of the conjugate base — the numbers you need to pick a buffer, as in [pH meter calibration buffers](https://www.instrumentationblog.in/ph-meter-calibration-buffers/), or to estimate pH."
+intro: "pKa is the negative base 10 logarithm of an acid's dissociation constant Ka: the lower the pKa, the stronger the acid. This pKa calculator converts Ka to pKa or back and gives the Kb and pKb of the conjugate base at 25 °C.\n\nChemists and lab technicians use these numbers to estimate pH and choose a buffer, as in [pH meter calibration buffers](https://www.instrumentationblog.in/ph-meter-calibration-buffers/)."
 keywords: [pka calculator, ka to pka, pka to ka, kb to pkb, pkb calculator, acid dissociation constant, pka + pkb = 14]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-25
 variables:
   - { id: Ka, label: Acid dissociation constant Ka, default: 0.000018, min: 0 }
   - { id: pKa, label: pKa, decimals: 4 }
@@ -24,6 +24,10 @@ faq:
     a: For a conjugate acid–base pair in water at 25 °C, Ka × Kb = Kw = 1.0 × 10⁻¹⁴, so pKa + pKb = 14.
   - q: What does pKa tell you about a buffer?
     a: A buffer works best within about ±1 pH unit of the acid's pKa, and at pH = pKa the acid and its conjugate base are present in equal amounts.
+  - q: "How do I find pKa from a titration curve?"
+    a: "Locate the equivalence point volume, halve it, and read the pH at that volume. At the half equivalence point the concentrations of the acid and its conjugate base are equal, so pH = pKa."
+  - q: "What is the pH of 0.1 M acetic acid?"
+    a: "With Ka = 1.8 × 10⁻⁵ the exact quadratic gives [H⁺] = 1.333 × 10⁻³ mol/L and pH 2.88. The square root shortcut gives 2.87, close enough because under 2% of the acid ionises."
 related: [chemistry/weak-acid-ph, chemistry/henderson-hasselbalch, chemistry/ph, chemistry/titration]
 ---
 
@@ -67,3 +71,34 @@ Literature values vary by about ±0.05 between sources and with ionic strength.
 - K<sub>w</sub> changes with temperature (pK<sub>w</sub> ≈ 14.17 at 20 °C and 13.26 at 50 °C), so pKa + pKb = 14 holds only at 25 °C.
 - Polyprotic acids have one pKa per proton — phosphoric acid has 2.15, 7.20 and 12.35.
 - Use the [Henderson–Hasselbalch calculator](/chemistry/henderson-hasselbalch/) to find buffer pH from pKa and the acid–base ratio.
+
+## From pKa to the pH of a solution
+
+The default Ka of 1.8 × 10⁻⁵ also predicts the pH of a 0.10 mol/L acetic acid solution. The quick estimate [H⁺] = √(Ka C) = 1.342 × 10⁻³ mol/L gives pH 2.872. Solving the full quadratic, [H⁺] = (−Ka + √(Ka² + 4 Ka C)) ÷ 2 = 1.333 × 10⁻³ mol/L, gives pH **2.875**, so only 1.33% of the acid is ionised. For 0.10 mol/L sodium acetate the Kb of 5.556 × 10⁻¹⁰ gives [OH⁻] = √(Kb C) = 7.454 × 10⁻⁶ mol/L and pH **8.87**, which is why acetate solutions are mildly basic.
+
+## How much is ionised at each pH
+
+With pKa = 4.7447, the fraction present as acetate is 1 ÷ (1 + 10<sup>pKa − pH</sup>):
+
+| pH | Acetic acid (HA) | Acetate (A⁻) |
+|---|---|---|
+| 3.00 | 98.2% | 1.8% |
+| 4.00 | 84.7% | 15.3% |
+| 4.74 | 50.3% | 49.7% |
+| 5.00 | 35.7% | 64.3% |
+| 6.00 | 5.3% | 94.7% |
+| 7.00 | 0.6% | 99.4% |
+
+Each pH unit away from the pKa shifts the ratio tenfold. Chromatographers use this to keep an analyte fully ionised or fully neutral, and formulators use it to predict how a drug will behave at stomach or blood pH.
+
+## How pKa is measured
+
+The usual method is a potentiometric titration with a calibrated pH electrode: titrate the weak acid with strong base and read the pH at the half equivalence point, where [HA] = [A⁻] and pH = pKa. Acids with a chromophore can also be measured by UV-visible spectroscopy, following the absorbance of the two forms across a series of buffers. Tabulated values usually refer to zero ionic strength. In a 0.1 mol/L salt background the Davies equation puts the apparent pKa of acetic acid near 4.53 instead of 4.74, so measured values in real media read lower.
+
+## Common mistakes
+
+- **Using the natural log.** −ln(1.8 × 10⁻⁵) is 10.93, not a pKa; the definition uses log₁₀.
+- **Mistyping the exponent.** 1.8e5 instead of 1.8e-5 gives a negative pKa of -5.26, which would describe a strong acid.
+- **Treating a base's pKb as the pKa.** For ammonia enter its Kb (1.8 × 10⁻⁵) and read the pKa of the ammonium ion, 9.26; the two numbers are not interchangeable.
+- **Picking the wrong pKa of a polyprotic acid.** A phosphate buffer at pH 7.2 is governed by the second pKa (7.20), not the first (2.15).
+- **Comparing values measured in different media.** Ionic strength and solvent shift pKa, so check the conditions before comparing two sources.

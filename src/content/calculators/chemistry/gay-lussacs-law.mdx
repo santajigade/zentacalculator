@@ -2,10 +2,10 @@
 title: Gay-Lussac's Law Calculator (P₁/T₁ = P₂/T₂)
 description: Calculate the new pressure or temperature of a gas in a closed, rigid container with Gay-Lussac's law — pressure is proportional to absolute temperature.
 category: chemistry
-intro: "In a sealed, rigid container the pressure of a gas rises in direct proportion to its absolute temperature. This Gay-Lussac's law calculator finds the final pressure after heating or cooling — or the temperature that produces a given pressure — for gas cylinders, aerosol cans, tyres and sealed vessels."
+intro: "Gay-Lussac's law says that the pressure of a fixed amount of gas in a rigid, sealed container is proportional to its absolute temperature. This Gay-Lussac's law calculator finds the final pressure after heating or cooling, or the temperature that gives a chosen pressure.\n\nEngineers use it to check gas cylinders, sealed vessels and trapped pipe sections against their pressure ratings, remembering that the law needs [absolute rather than gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/)."
 keywords: [gay lussacs law calculator, p1/t1 = p2/t2, pressure temperature law, gas pressure temperature calculator, amontons law, constant volume gas law, pressure law]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-25
 variables:
   - { id: P1, label: Initial pressure (absolute), family: pressure, unit: kPa, imperialUnit: psi, default: 200, min: 0 }
   - { id: T1, label: Initial temperature, family: temperature, unit: C, imperialUnit: F, default: 20, min: 0 }
@@ -22,6 +22,10 @@ faq:
     a: Pressure rises with absolute temperature. A can at 20 °C heated to 80 °C sees its pressure rise by about 20%, and much more if liquid propellant evaporates.
   - q: How is Gay-Lussac's law different from Charles's law?
     a: Charles's law holds pressure constant and relates volume to temperature; Gay-Lussac's law holds volume constant and relates pressure to temperature.
+  - q: "How much does gas pressure rise per degree in a sealed container?"
+    a: "By P₁ ÷ T₁ per kelvin. A gas at 200 kPa absolute and 20 °C rises by 0.682 kPa for every degree, so heating it by 60 °C adds 40.9 kPa."
+  - q: "Does Gay-Lussac's law apply to a propane cylinder?"
+    a: "Not while it contains liquid. The pressure then equals the vapour pressure of propane, which rises much faster with temperature than the gas law predicts. The law applies only to a gas that stays a gas."
 related: [chemistry/charles-law, chemistry/boyles-law, chemistry/combined-gas-law, physics/ideal-gas-law]
 ---
 
@@ -54,6 +58,43 @@ A sealed container holds gas at 200 kPa absolute and 20 °C. It is heated to 80 
 | 80 °C | 1.205 | 240.9 kPa | 139.6 kPa |
 | 100 °C | 1.273 | 254.6 kPa | 153.3 kPa |
 | 150 °C | 1.443 | 288.7 kPa | 187.4 kPa |
+
+## Solving for temperature
+
+Leave the final temperature blank and enter a final pressure to find when a vessel reaches a limit. If the default container (200 kPa absolute at 20 °C) has a relief valve set at 300 kPa absolute:
+
+- T<sub>2</sub> = T<sub>1</sub> × P<sub>2</sub> ÷ P<sub>1</sub> = 293.15 × 300 ÷ 200 = **439.73 K**
+- In Celsius: 439.73 − 273.15 = **166.6 °C**
+
+## The gauge pressure trap
+
+Suppose the 200 kPa in the example was really read on a gauge. The absolute pressure is 200 + 101.325 = 301.325 kPa, and at 80 °C it becomes 301.325 × 353.15 ÷ 293.15 = 363.0 kPa absolute, or **261.7 kPa gauge**. Entering the gauge value as if it were absolute gives 240.9 kPa, an underestimate of 20.7 kPa. When the gas is heated, this error is always on the unsafe side.
+
+## Pressure rise per degree
+
+The pressure changes by P<sub>1</sub> ÷ T<sub>1</sub> for every kelvin, so the rise per degree grows with the fill pressure. For gases sealed at 20 °C:
+
+| Sealed system | Absolute pressure at 20 °C | Rise per °C | At 50 °C |
+|---|---|---|---|
+| Jar sealed at atmosphere | 101.3 kPa | 0.346 kPa | 111.7 kPa |
+| Default example | 200.0 kPa | 0.682 kPa | 220.5 kPa |
+| Small receiver | 500.0 kPa | 1.706 kPa | 551.2 kPa |
+| Air receiver, 10 bar(a) | 1,000.0 kPa | 3.411 kPa | 1,102.3 kPa |
+| Gas cylinder, 200 bar(a) | 20,000.0 kPa | 68.224 kPa | 22,046.7 kPa |
+
+A cylinder left in the sun gains about 68 kPa (0.68 bar) for every degree, which is why cylinders are stored away from heat and their filling pressure is always quoted at a reference temperature, usually 15 °C.
+
+## Absolute zero from two readings
+
+Gay-Lussac's law is the basis of the constant volume gas thermometer. Plot the two default points against Celsius temperature: the slope is (240.93 − 200) ÷ (80 − 20) = 0.6822 kPa per °C, and the line reaches zero pressure at 20 − 200 ÷ 0.6822 = **-273.15 °C**. Guillaume Amontons used the same idea around 1700 to estimate that an absolute zero of temperature must exist.
+
+## Common mistakes
+
+- **Using Celsius directly.** 200 × 80 ÷ 20 gives 800 kPa, a fourfold rise instead of the real 20.5%.
+- **Using gauge pressure.** Add atmospheric pressure first, then subtract it again from the answer if a gauge value is needed.
+- **Applying it to a flexible container.** A tyre or balloon expands as it warms, so its pressure rises less than the law predicts; use the combined gas law when volume changes.
+- **Applying it to a liquefied gas.** A propane or CO₂ cylinder holding liquid follows the vapour pressure curve, which climbs much faster than P ∝ T.
+- **Forgetting temperature gradients.** If only part of a vessel is heated, the gas is not at one temperature, so use the average gas temperature, not the hottest surface.
 
 ## Notes
 

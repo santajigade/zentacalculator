@@ -1,11 +1,11 @@
 ---
-title: Heat Duty Calculator (Q = ṁ·cp·ΔT)
-description: Calculate heating or cooling power from mass flow, specific heat and temperature difference — for heat exchangers, chillers and boilers.
+title: "Heat Duty Calculator: Q = ṁ·cp·ΔT in kW and hp"
+description: "Heat duty calculator: find heating or cooling power in kW from mass flow, specific heat and temperature change, for heat exchangers, chillers and boilers."
 category: engineering
 intro: "Heat duty is the rate at which heat is added to or removed from a fluid stream, set by its mass flow, specific heat and temperature change. This heat duty calculator applies Q = ṁ × cp × ΔT and gives the result in kW or hp.\n\nProcess and HVAC engineers use it to size heat exchangers, chillers, heaters and boilers, and to check energy meter readings against the design load."
 keywords: [heat duty, heat load, q = m cp dt, heat exchanger, cooling load, heating power, kw, specific heat]
 published: 2026-10-27
-updated: 2026-11-21
+updated: 2026-11-25
 variables:
   - { id: m, label: Mass flow, family: massflow, unit: kgs, imperialUnit: lbh, default: 2, min: 0 }
   - { id: cp, label: Specific heat (cp), suffix: kJ/kg·K, default: 4.186, min: 0, help: Water 4.186 · Thermal oil ~2.0 · Air ~1.005 }
@@ -29,6 +29,8 @@ faq:
     a: "The duty is directly proportional to ΔT, so a fixed sensor error is a larger share of a small difference. At 5 K, a 0.1 K mismatch between sensors is a 2% error in duty."
   - q: "How do I check that both sides of a heat exchanger agree?"
     a: "Work out ṁ × cp × ΔT for the hot stream and for the cold stream. They should match within a few percent; a bigger difference means a faulty flow or temperature reading, or heat loss to the surroundings."
+  - q: "How do I convert heat duty from kW to Btu/h or tons?"
+    a: "Multiply kW by 3,412 for Btu/h and divide by 3.517 for tons of refrigeration. The default 83.72 kW is about 285,665 Btu/h or 23.8 TR."
 related: [engineering/mass-flow-rate, engineering/pt100-resistance, engineering/thermal-expansion]
 ---
 
@@ -40,11 +42,14 @@ Enter the **mass flow**, **specific heat** and the **temperature difference** be
 
 <p class="formula">Q̇ = ṁ × c<sub>p</sub> × ΔT</p>
 
-## Worked example
+## Worked example with the default values
 
-2 kg/s of water cooled by 10 °C in a heat exchanger:
+A heat exchanger cools 2 kg/s of water (c<sub>p</sub> = 4.186 kJ/kg·K) by 10 K:
 
-Q̇ = 2 × 4.186 × 10 = **83.7 kW**
+1. Q̇ = ṁ × c<sub>p</sub> × ΔT = 2 × 4.186 × 10 = **83.72 kW**
+2. In other units: 112.3 hp, 301,392 kJ/h, 285,665 Btu/h or 23.80 TR
+
+The calculator multiplies c<sub>p</sub> by 1,000 to work in J/kg·K, so the raw result is 83,720 W, shown as 83.72 kW. In imperial mode the same inputs read as 15,873 lb/h and an 18 °F difference; the duty does not change, only the units on screen.
 
 ## Typical specific heats
 
@@ -88,13 +93,11 @@ Cooling capacity is often quoted in tons of refrigeration (TR): 1 TR = 3.517 kW.
 
 ## Practical uses
 
-- **Chiller and boiler sizing** — enter design flow and ΔT.
-- **Energy metering** — BTU/energy meters calculate exactly this using a flow meter and two temperature sensors (often matched Pt100 or Pt500 pairs).
-- **Checking performance** — compare measured duty with the design value to spot fouling.
-
-## Result with the default values
-
-The defaults are 2 kg/s of water, c<sub>p</sub> = 4.186 kJ/kg·K and a 10 K change, so Q = 2 × 4.186 × 10 = **83.72 kW**.
+- **Chiller and boiler sizing:** enter the design flow and ΔT, then convert the duty to tons with the [chiller tonnage calculator](/engineering/chiller-tonnage/).
+- **Energy metering:** BTU and thermal energy meters compute exactly this product from a flow meter and two temperature sensors, usually a matched Pt100 or Pt500 pair.
+- **Exchanger sizing:** once the duty is known, the [LMTD calculator](/engineering/lmtd/) gives the driving temperature difference for Q = U × A × LMTD.
+- **Steam heating:** for a steam heated exchanger, the [steam consumption calculator](/engineering/steam-consumption/) turns the duty into kg/h of steam.
+- **Checking performance:** a measured duty falling below the design value at the same flow points to fouling or a control valve that is not opening fully.
 
 ## Example: checking a chilled water energy meter
 
@@ -111,19 +114,19 @@ A thermal oil heater circuit delivers 3 kg/s of oil (c<sub>p</sub> about 2.3 kJ/
 
 ## Flow needed to carry 100 kW
 
-Volumetric flow in m³/h for each fluid and design temperature difference:
+Volumetric flow in m³/h for each fluid and design temperature difference, from V = Q ÷ (ρ × c<sub>p</sub> × ΔT) with the properties shown (typical values; check your fluid data sheet):
 
 | Fluid | ΔT 5 K | ΔT 10 K | ΔT 15 K | ΔT 20 K |
 |---|---|---|---|---|
-| Water | 17.2 | 8.6 | 5.7 | 4.3 |
-| Glycol 30% | 18.7 | 9.4 | 6.2 | 4.7 |
-| Thermal oil | 38.5 | 19.3 | 12.8 | 9.6 |
+| Water (c<sub>p</sub> 4.186, ρ 998 kg/m³) | 17.2 | 8.6 | 5.7 | 4.3 |
+| Glycol 30% (c<sub>p</sub> 3.7, ρ 1040 kg/m³) | 18.7 | 9.4 | 6.2 | 4.7 |
+| Thermal oil (c<sub>p</sub> 2.2, ρ 870 kg/m³) | 37.6 | 18.8 | 12.5 | 9.4 |
 
 Lower specific heat and density both push the flow up, so a glycol or oil system needs bigger pumps and pipes for the same load.
 
 ## Common mistakes
 
-- **Entering volumetric flow as mass flow.** 2 m³/h is not 2 kg/s; convert with density first (0.554 kg/s for water).
+- **Entering volumetric flow as mass flow.** 2 m³/h is not 2 kg/s; convert with density first (about 0.554 kg/s for water).
 - **Mixing kJ and kW.** With mass flow in kg/s and c<sub>p</sub> in kJ/kg·K the result is kW; with kg/h it is kJ/h, 3,600 times larger.
 - **Using the water c<sub>p</sub> for glycol mixtures.** A 30% glycol solution has about 12% less heat capacity, so the duty is overstated.
 - **Applying the formula across a phase change.** Boiling or condensing duty is mass flow times latent heat, which c<sub>p</sub> × ΔT does not capture.

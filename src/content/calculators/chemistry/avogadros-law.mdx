@@ -2,10 +2,10 @@
 title: Avogadro's Law Calculator (V₁/n₁ = V₂/n₂)
 description: Calculate gas volume or moles at constant temperature and pressure with Avogadro's law, plus the molar volume — with a table of molar volumes at STP and NTP.
 category: chemistry
-intro: "Avogadro's law states that, at the same temperature and pressure, equal volumes of gas contain equal numbers of molecules — so volume is proportional to the amount of gas. This Avogadro's law calculator finds the new volume when moles are added or removed, or the moles in a given volume, and shows the molar volume."
+intro: "Avogadro's law says that at fixed temperature and pressure, the volume of a gas is proportional to the number of moles it contains. This Avogadro's law calculator finds the new volume after gas is added or removed and the molar volume implied by the first state.\n\nStudents use it for gas stoichiometry, and lab staff use it when filling balloons, gas bags and reactors or converting standard flow rates into moles."
 keywords: [avogadros law calculator, v1/n1 = v2/n2, volume and moles of gas, molar volume calculator, avogadro gas law, gas volume moles, 22.4 l per mol]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-25
 variables:
   - { id: V1, label: Initial volume, family: volume, unit: L, imperialUnit: ft3, default: 6, min: 0 }
   - { id: n1, label: Initial amount of gas, suffix: mol, default: 0.25, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: No. For ideal gases the molar volume is the same for hydrogen, oxygen or carbon dioxide at the same conditions; real gases deviate slightly at high pressure.
   - q: How does Avogadro's law relate to the ideal gas law?
     a: It is the ideal gas law PV = nRT with P and T held constant, so V ÷ n = RT ÷ P is a constant — the molar volume.
+  - q: "Why do equal volumes of different gases weigh different amounts?"
+    a: "Equal volumes contain equal numbers of molecules, but the molecules have different masses. At 25 °C and 1 atm a litre of hydrogen weighs 0.0824 g and a litre of carbon dioxide 1.799 g."
+  - q: "What is an sccm in moles?"
+    a: "One standard cubic centimetre per minute referenced to 0 °C and 1 atm is 1 ÷ 22,414 mol/min, about 7.436 × 10⁻⁷ mol/s. A 100 sccm nitrogen flow carries 0.125 g/min."
 related: [chemistry/dilution, chemistry/molality, physics/ideal-gas-law, chemistry/moles, chemistry/charles-law, chemistry/gay-lussacs-law]
 ---
 
@@ -56,6 +60,48 @@ A balloon holds 6.0 L containing 0.25 mol of gas. Gas is added until it holds 0.
 | 25 °C, 1 bar (SATP) | 24.790 L/mol |
 
 Calculated from V<sub>m</sub> = RT ÷ P with R = 8.314462618 J/(mol·K).
+
+## Reading more from the default example
+
+The default molar volume of 24.0 L/mol is itself a clue to the conditions. At 1 atm, V<sub>m</sub> = RT ÷ P gives T = 101325 × 0.0240 ÷ 8.314 = **292.5 K**, about 19.3 °C, so the balloon is at a cool room temperature.
+
+- Molecules before: 0.25 × 6.022 × 10²³ = **1.506 × 10²³**
+- Molecules after: 0.40 × 6.022 × 10²³ = **2.409 × 10²³**
+- Gas added: 0.15 mol, which takes up 0.15 × 24.0 = 3.6 L, exactly the 9.6 − 6.0 L increase
+
+Avogadro's law cares only about moles, so those 0.15 mol could be 0.600 g of helium or 6.60 g of carbon dioxide and the balloon would grow by the same 3.6 L.
+
+## Following a gas reaction by its volume
+
+When gases react at constant temperature and pressure, the volume tracks the total moles. Mix 0.25 mol N₂ with 0.75 mol H₂ at the default 24.0 L/mol: the mixture fills 24.0 L. In N₂ + 3H₂ → 2NH₃ four molecules become two, so if 20% of the nitrogen reacts the gas holds 0.20 mol N₂, 0.60 mol H₂ and 0.10 mol NH₃, 0.90 mol in all, and shrinks to **21.6 L**. Watching that contraction in a gas syringe or a pressure controlled reactor is a simple way to measure conversion.
+
+## Standard flow rates are really molar flows
+
+Mass flow controllers in labs and semiconductor fabs are set in sccm, standard cubic centimetres per minute. Because one standard volume always holds the same number of moles, 1 sccm referenced to 0 °C and 1 atm is 1 ÷ 22,414 mol per minute, or 7.436 × 10⁻⁷ mol/s. A 100 sccm nitrogen flow therefore delivers 0.1250 g/min. Some suppliers reference 20 °C instead, which makes the same reading 6.8% fewer moles, so always check the reference conditions.
+
+## Density of common gases at 25 °C and 1 atm
+
+With V<sub>m</sub> = 24.465 L/mol, density is molar mass ÷ V<sub>m</sub>:
+
+| Gas | Molar mass | Density | Volume of 1 g |
+|---|---|---|---|
+| Hydrogen (H₂) | 2.016 g/mol | 0.0824 g/L | 12.136 L |
+| Helium (He) | 4.0026 g/mol | 0.1636 g/L | 6.112 L |
+| Methane (CH₄) | 16.043 g/mol | 0.6557 g/L | 1.525 L |
+| Nitrogen (N₂) | 28.014 g/mol | 1.1450 g/L | 0.873 L |
+| Oxygen (O₂) | 31.998 g/mol | 1.3079 g/L | 0.765 L |
+| Argon (Ar) | 39.948 g/mol | 1.6328 g/L | 0.612 L |
+| Carbon dioxide (CO₂) | 44.009 g/mol | 1.7988 g/L | 0.556 L |
+
+Every row holds the same number of molecules per litre; only the mass of each molecule changes.
+
+## Common mistakes
+
+- **Using 22.4 L/mol at room temperature.** At 25 °C and 1 atm the molar volume is 24.465 L/mol, so 22.4 understates volumes by about 9.2%.
+- **Assuming equal volumes have equal mass.** Equal volumes hold equal moles; a litre of CO₂ is 21.8 times heavier than a litre of H₂.
+- **Counting condensed products as gas.** Water formed in combustion is liquid at room temperature and contributes almost nothing to the final gas volume.
+- **Letting temperature or pressure drift.** Adding gas to a rigid vessel raises the pressure instead of the volume, and a warm reaction expands the gas before it cools.
+- **Applying it to dense or easily condensed gases.** CO₂ and NH₃ deviate by about 0.5 to 1% at 1 atm and room temperature and far more at high pressure; use a real gas model there.
 
 ## Notes
 

@@ -2,10 +2,10 @@
 title: Escape Velocity Calculator (km/s from Mass & Radius)
 description: Calculate the escape velocity in km/s and km/h from any planet, moon or star's mass and radius, with surface gravity and circular orbital velocity.
 category: physics
-intro: "Escape velocity is the speed an unpowered object needs to break free of a body's gravity, about 11.2 km/s from the Earth's surface. This escape velocity calculator works it out from the mass and radius of any planet, moon or star, and also gives the surface gravity and the circular orbital velocity at the same distance."
+intro: "Escape velocity is the launch speed an unpowered object needs to coast away from a planet, moon or star and never fall back, about 11.2 km/s at the Earth's surface. This escape velocity calculator works it out from the body's mass and radius.\n\nStudents and astronomy enthusiasts use it for gravitation problems, and mission planners use the same numbers, with the matching orbital speed and surface gravity, to budget the speed changes needed for spaceflight."
 keywords: [escape velocity calculator, escape velocity formula, escape velocity of earth, escape speed calculator, 11.2 km/s, planet escape velocity, sqrt 2gm/r, orbital velocity]
 published: 2026-10-27
-updated: 2026-11-08
+updated: 2026-11-25
 variables:
   - { id: M, label: Mass of the body, suffix: kg, default: 5.972e24, min: 0 }
   - { id: R, label: Radius (or distance from centre), family: length, unit: km, imperialUnit: mi, default: 6371, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: No. It depends only on the mass of the planet and the distance from its centre. A heavier rocket needs more energy to escape, but the same speed.
   - q: Do rockets actually reach escape velocity?
     a: Not necessarily. Escape velocity is the speed for an unpowered object launched once. A rocket that keeps thrusting can climb away more slowly; spacecraft heading to other planets do reach about 11 km/s relative to the Earth, usually starting from a parking orbit.
+  - q: "How much energy does it take to escape the Earth?"
+    a: "Per kilogram, GM ÷ R = 62.6 MJ from the surface, ignoring air drag. A 1,000 kg spacecraft needs 62.6 GJ of kinetic energy, and far more fuel energy because a rocket also has to lift its own propellant."
+  - q: "What is the escape velocity from the solar system?"
+    a: "At the Earth's distance from the Sun it is about 42.1 km/s relative to the Sun. Because the Earth moves at 29.8 km/s, a probe launched along the Earth's motion needs about 12.3 km/s extra after escaping the Earth."
 related: [physics/orbital-period, physics/gravitational-force, physics/weight, physics/centripetal-force]
 ---
 
@@ -75,6 +79,40 @@ Earth: M = 5.972 × 10²⁴ kg, R = 6,371 km:
 | 384,400 km | 1.01 km/s | 1.43 km/s |
 
 400 km is about the height of the International Space Station, 20,200 km GPS, 35,786 km geostationary orbit and 384,400 km the Moon's distance. See the [orbital period calculator](/physics/orbital-period/) for the time to go round.
+
+## What the default result means in energy
+
+The default Earth values give v<sub>esc</sub> = **11.186 km/s** (40,270 km/h), v<sub>orbit</sub> = **7.910 km/s** and g = **9.820 m/s²**. As a check, √(2 g R) = √(2 × 9.820 × 6.371 × 10⁶) gives the same 11,186 m/s. Escaping means supplying kinetic energy ½ v² = GM ÷ R = **62.6 MJ per kilogram**, so a 1,000 kg probe needs 62.6 GJ, ignoring drag and the rocket's own fuel.
+
+## Second scenario: leaving from orbit
+
+Enter R = 6,771 km (the surface plus 400 km). The escape velocity drops to 10.85 km/s, and a spacecraft already circling there at 7.67 km/s only needs a burn of **3.18 km/s** to escape. That is why interplanetary probes start from a parking orbit: the hard part, reaching orbit, has already been done.
+
+## Escape velocity and atmospheres
+
+A planet keeps a gas over billions of years roughly when its escape velocity is at least six times the gas's typical molecular speed, √(3 k T ÷ m). The table compares the Earth's 11.19 km/s with molecular speeds at about 1,000 K, a typical temperature high in the Earth's thin outer atmosphere, and the Moon's 2.38 km/s with speeds at its daytime surface temperature of about 390 K:
+
+| Gas | Speed at 1,000 K | Earth ratio | Speed at 390 K | Moon ratio |
+|---|---|---|---|---|
+| Hydrogen, H₂ | 3.52 km/s | 3.2 | 2.20 km/s | 1.1 |
+| Helium, He | 2.50 km/s | 4.5 | 1.56 km/s | 1.5 |
+| Water vapour, H₂O | 1.18 km/s | 9.5 | 0.73 km/s | 3.2 |
+| Nitrogen, N₂ | 0.94 km/s | 11.9 | 0.59 km/s | 4.0 |
+| Carbon dioxide, CO₂ | 0.75 km/s | 14.9 | 0.47 km/s | 5.1 |
+
+Hydrogen and helium fall well below the factor of six for the Earth and leak away slowly, while nitrogen and carbon dioxide are held. On the Moon every gas falls short, which matches its lack of an atmosphere.
+
+## Beyond a single planet
+
+Escaping the Earth does not mean leaving the solar system. At the Earth's distance from the Sun, solar escape velocity is √(2 GM<sub>Sun</sub> ÷ 1 AU) = **42.1 km/s**, and the Earth already orbits at 29.8 km/s, so a probe launched in the direction of the Earth's motion needs 12.3 km/s on top once it has left the Earth's gravity. At the other extreme, squeezing the Earth's mass until its escape velocity equals the speed of light would need a radius of 2GM ÷ c² = **8.87 mm**.
+
+## Common mistakes
+
+- **Entering the altitude instead of the distance from the centre.** For 400 km above the Earth, R is 6,771 km, not 400 km.
+- **Mixing kilometres and metres in a hand calculation.** G is in SI units, so R must be in metres; using kilometres makes the answer √1000, about 31.6 times, too large.
+- **Thinking the launch must point straight up.** Without air drag, any direction that does not hit the ground works, because escape depends on energy, not direction.
+- **Confusing it with orbital velocity.** Circular orbit needs only 7.91 km/s at the surface; escape needs √2 times that.
+- **Forgetting the Earth's rotation and the Sun.** The ground at the equator already moves at 0.47 km/s eastward, and escaping the Earth still leaves an object in orbit round the Sun.
 
 ## Practical notes
 

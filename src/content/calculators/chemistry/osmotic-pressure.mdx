@@ -2,10 +2,10 @@
 title: Osmotic Pressure Calculator
 description: Calculate osmotic pressure from molarity, van 't Hoff factor and temperature using π = iMRT.
 category: chemistry
-intro: "Osmotic pressure is the pressure needed to stop water flowing through a membrane into a more concentrated solution. It matters in biology, medicine and reverse osmosis water treatment."
+intro: "Osmotic pressure is the pressure that must be applied to a solution to stop pure water flowing into it through a semipermeable membrane. This osmotic pressure calculator applies the van 't Hoff relation π = iMRT to the particle count, molarity and absolute temperature.\n\nBiology students, pharmacists preparing intravenous fluids and engineers sizing reverse osmosis pumps use it to compare a solution with blood, seawater or brine."
 keywords: [osmotic pressure, van't hoff, pi = imrt, osmosis, reverse osmosis, colligative properties]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-25
 variables:
   - { id: i, label: van 't Hoff factor (i), default: 2, min: 0, help: "1 for sugar, about 2 for NaCl, about 3 for CaCl₂" }
   - { id: c, label: Molarity, suffix: mol/L, default: 0.15, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: "About 7.4 atm at body temperature, from an osmolarity of about 0.29 osmol/L."
   - q: "Why does salt water dehydrate cells?"
     a: "It is hypertonic, so water moves out of cells by osmosis towards the higher solute concentration."
+  - q: "How do clinical labs measure osmolality?"
+    a: "Most use a freezing point osmometer. The freezing point falls by 1.86 K for each osmol/kg, so serum at 290 mOsm/kg freezes at about −0.539 °C, and the instrument converts that reading back to mOsm/kg."
+  - q: "Why does a urea solution as concentrated as blood still make red cells burst?"
+    a: "Urea crosses the red cell membrane, so it equalises on both sides and exerts no lasting osmotic pull. A 0.3 mol/L urea solution is isosmotic with blood but behaves as hypotonic, and water enters the cells until they lyse."
 related: [biology/water-potential, chemistry/molarity, chemistry/molality]
 ---
 
@@ -35,7 +39,7 @@ Enter the **van 't Hoff factor**, **molarity** and **temperature**. The osmotic 
 
 <p class="formula">π = i M R T</p>
 
-## Worked example — saline at body temperature
+## Worked example: saline at body temperature
 
 0.15 M NaCl (i = 2) at 37 °C (310.15 K):
 
@@ -72,4 +76,48 @@ i is the number of particles each formula unit produces in solution: about 1 for
 
 ## Finding molar mass of proteins
 
-Osmotic pressure can measure molar masses of large molecules: M = mass ÷ (Π × V ÷ RT). Even dilute protein solutions give measurable pressures.
+Osmotic pressure can measure molar masses of large molecules: M = mass ÷ (π × V ÷ RT). Even dilute protein solutions give measurable pressures.
+
+Suppose 2.00 g of a purified protein is dissolved to make 100.0 mL of solution at 25 °C, and in a membrane osmometer the solution column rises 7.60 cm above the pure water side. Taking the solution density as 1.00 g/cm³:
+
+- π = ρ g h = 1000 × 9.80665 × 0.0760 = **745.3 Pa**
+- Particle concentration = π ÷ RT = 745.3 ÷ (8.314 × 298.15) = **0.3007 mol/m³**
+- Mass concentration = 2.00 g ÷ 0.1000 L = 20.0 g/L = 20.0 kg/m³
+- M = 20.0 ÷ 0.3007 = **66.5 kg/mol**, or about 66,522 g/mol, close to haemoglobin
+
+The same 20 g/L of NaCl would give about 17.0 bar, over 2,000 times more, because each gram contains far more particles. The protein would lower the freezing point by only 0.56 mK, which no routine instrument can read, so membrane osmometry is the practical method for macromolecules.
+
+## The default result in every unit
+
+With the default inputs the calculator works in SI units: c = 0.15 mol/L = 150 mol/m³ and T = 37 + 273.15 = 310.15 K, so RT = 2578.7 J/mol.
+
+- π = 2 × 150 × 2578.7 = **773,619 Pa** = 773.6 kPa
+- = **7.635 atm** = 7.736 bar = 112.2 psi = 5,803 mmHg
+
+That pressure would hold up a column of water about 79 m tall, which shows how strongly a membrane pulls water towards dissolved salt. In real 0.15 M NaCl the ions do not act fully independently: the osmotic coefficient is about 0.93, so the measured value is nearer 7.10 atm, equivalent to about 279 mOsm/L. That is why 0.9% saline sits close to plasma (275 to 295 mOsm/kg) even though the ideal formula gives slightly more.
+
+## How osmotic pressure is measured in practice
+
+Hospital and research labs rarely measure π directly. A freezing point osmometer supercools a sample of a few tens to a few hundred microlitres and reads the depression, ΔT<sub>f</sub> = K<sub>f</sub> × osmolality with K<sub>f</sub> = 1.86 K·kg/mol for water. Normal serum at 290 mOsm/kg freezes at about −0.539 °C, and converting that osmolality with π = c R T gives 7.38 atm at body temperature. Vapour pressure osmometers work on the same particle count through the dew point, and membrane osmometers, which do read π as a liquid head, are used for polymers and proteins.
+
+## Ideal osmotic pressure of salt solutions at 25 °C
+
+Values use i = 2 and molarity from NaCl at 58.44 g/mol. They set the minimum pressure a reverse osmosis pump must exceed before any permeate flows.
+
+| NaCl content | Molarity | Osmolarity | Ideal π |
+|---|---|---|---|
+| 1 g/L (Fresh to slightly brackish) | 0.0171 mol/L | 34 mOsm/L | 0.85 bar |
+| 5 g/L (Brackish groundwater) | 0.0856 mol/L | 171 mOsm/L | 4.24 bar |
+| 10 g/L (Strong brackish) | 0.1711 mol/L | 342 mOsm/L | 8.48 bar |
+| 35 g/L (Seawater strength) | 0.5989 mol/L | 1198 mOsm/L | 29.69 bar |
+| 70 g/L (RO brine reject) | 1.1978 mol/L | 2396 mOsm/L | 59.39 bar |
+
+Natural seawater measures about 27 bar rather than the ideal 29.7 bar because of its osmotic coefficient and mix of ions. As water is removed the brine concentrates, so an RO train has to work against the reject concentration, not the feed.
+
+## Common mistakes
+
+- **Using the Celsius number in a hand calculation.** Putting 37 in place of 310.15 K gives 0.911 atm, about eight times too low. The calculator converts for you, but written work must use kelvin.
+- **Pairing R = 8.314 with mol/L.** That R needs mol/m³, so multiply molarity by 1000, or use R = 0.08206 L·atm/(mol·K) to get atm directly.
+- **Treating i as an exact whole number.** Ion pairing makes the effective factor for NaCl about 1.86 at physiological strength and smaller still in strong brines.
+- **Counting solutes that cross the membrane.** Urea, ethanol and glycerol pass through cell membranes, so they raise osmolarity without raising tonicity; only impermeant solutes pull water.
+- **Applying π = iMRT to concentrated solutions.** The relation is a dilute limit; above about 1 mol/L use molality and measured osmotic coefficients.

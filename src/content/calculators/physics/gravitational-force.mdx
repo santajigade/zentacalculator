@@ -2,10 +2,10 @@
 title: Gravitational Force Calculator (Newton's Law of Gravitation)
 description: Calculate the gravitational force between two masses with F = Gm₁m₂/r², plus the gravitational acceleration and potential energy — from people to planets.
 category: physics
-intro: "Every mass attracts every other mass with a force proportional to both masses and inversely proportional to the square of the distance between their centres. This gravitational force calculator applies Newton's law of universal gravitation to any two bodies, and also gives the gravitational acceleration the first mass produces at that distance and the potential energy of the pair. It solves for whichever value you leave blank."
+intro: "Gravity is the attraction every mass exerts on every other mass, proportional to both masses and falling off with the square of the distance between their centres. This gravitational force calculator applies Newton's law of universal gravitation to any two bodies and adds the gravitational acceleration and potential energy.\n\nStudents use it for orbit and weight problems, and astronomy enthusiasts, satellite engineers and teachers use it to compare the pulls between planets, moons and spacecraft."
 keywords: [gravitational force calculator, newtons law of gravitation calculator, universal gravitation calculator, force of gravity between two objects, gravitational constant, gravitational acceleration, f = gmm/r2]
 published: 2026-10-27
-updated: 2026-11-10
+updated: 2026-11-25
 variables:
   - { id: m1, label: Mass 1 (m₁), suffix: kg, default: 5.972e+24, min: 0, help: 'Scientific notation works: Earth = 5.972e24, Moon = 7.342e22, Sun = 1.989e30.' }
   - { id: m2, label: Mass 2 (m₂), suffix: kg, default: 7.342e+22, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: Because G is tiny. Two 70 kg people 1 m apart attract each other with about 3.27 × 10⁻⁷ N, roughly the weight of a few hundredths of a milligram.
   - q: Which distance do I use?
     a: The distance between the centres of mass, not between the surfaces. For an object on the Earth's surface, use the Earth's radius (about 6,371 km); for a satellite, add its altitude.
+  - q: "Does the Sun pull harder on the Moon than the Earth does?"
+    a: "Yes. The Sun pulls on the Moon with about 4.36 × 10²⁰ N, roughly 2.2 times the Earth's 1.98 × 10²⁰ N. The Moon stays with the Earth because the Sun accelerates both of them by almost the same amount."
+  - q: "How much lighter am I on top of Mount Everest?"
+    a: "Treating the Earth as a sphere, gravity at 8,849 m above the mean radius is 0.28% lower than at sea level, so a 70 kg person weighs about 1.9 N less. Local geology and the Earth's bulge change the real figure slightly."
 related: [physics/weight, physics/escape-velocity, physics/orbital-period, physics/coulombs-law]
 ---
 
@@ -89,3 +93,37 @@ Astronauts on the International Space Station are still pulled by about 89% of s
 - **Weight on Earth** is usually calculated with the standard g = 9.80665 m/s²; the actual value ranges from about 9.78 m/s² at the equator to 9.83 m/s² at the poles because of the Earth's rotation and shape — see the [weight calculator](/physics/weight/).
 - For orbits, the same law gives the [orbital period](/physics/orbital-period/) and the [escape velocity](/physics/escape-velocity/).
 - G was first measured by Henry Cavendish in 1798 with a torsion balance; it is still known only to about 22 parts per million, far less precisely than the other fundamental constants.
+
+## The inverse square law in numbers
+
+Moving the Moon to different distances from the Earth (same masses as the default):
+
+| Distance | Force | Share of the default force |
+|---|---|---|
+| 0.5 × 384,400 km | 7.922 × 10²⁰ N | 4 |
+| 1 × 384,400 km | 1.980 × 10²⁰ N | 1 |
+| 2 × 384,400 km | 4.951 × 10¹⁹ N | 0.25 |
+| 3 × 384,400 km | 2.201 × 10¹⁹ N | 0.1111 |
+| 10 × 384,400 km | 1.980 × 10¹⁸ N | 0.01 |
+
+Halving the distance multiplies the force by four, and ten times the distance leaves one hundredth. The real Moon swings between about 363,300 km at perigee and 405,500 km at apogee, so the force varies from 2.217 × 10²⁰ N to 1.780 × 10²⁰ N, about 12% above and 10% below the mean value.
+
+## Who pulls harder on the Moon?
+
+The Sun is much farther away, but its mass more than makes up for it. At 1 AU (1.496 × 10¹¹ m) the Sun pulls on the Moon with 4.355 × 10²⁰ N, about 2.2 times the Earth's pull of 1.980 × 10²⁰ N. The Moon still orbits the Earth because the Sun accelerates the Earth and the Moon almost equally, so only the small difference, the tidal effect, disturbs the orbit.
+
+## Measuring the gravitational constant
+
+G cannot be found from planets alone, because astronomy gives only the product G M. It is measured in the laboratory with a torsion balance: two large spheres are brought near two small ones hanging on a thin fibre, and the tiny twist is read with a light beam. With 158 kg and 0.73 kg lead spheres 23 cm apart, the attraction is only 1.455 × 10⁻⁷ N, comparable to the weight of a single medium grain of sand, so air currents, temperature changes and the fibre's own drift all have to be controlled.
+
+## Energy of the Earth and Moon pair
+
+The potential energy of the default pair is -7.613 × 10²⁸ J. For a circular orbit the kinetic energy is half its magnitude, about 3.807 × 10²⁸ J, so the total energy is negative and the Moon is bound. Freeing it completely would need the remaining 3.807 × 10²⁸ J.
+
+## Common mistakes
+
+- **Using surface to surface distance.** r is measured between centres, so a person standing on the Earth is 6,371 km from the centre, not 0 km.
+- **Forgetting to square the distance,** or squaring it in kilometres while G is in SI units. Convert r to metres first; the calculator does this for you when you enter kilometres.
+- **Mixing up G and g.** G is the universal constant 6.6743e-11 N·m²/kg²; g is the local acceleration, 9.81 m/s² at the Earth's surface and 0.002697 m/s² at the Moon's distance.
+- **Reading the negative potential energy as an error.** U is zero at infinite separation, so every bound pair has a negative value.
+- **Applying the formula to irregular shapes at close range.** For two long bars or a person beside a mountain, the masses are not points and the force must be summed over the parts.

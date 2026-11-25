@@ -1,11 +1,11 @@
 ---
 title: Percent Composition Calculator
-description: Calculate the mass percent of an element in a compound from atom count, atomic mass and molar mass.
+description: "Calculate the mass percent of an element in a compound from its atom count, atomic mass and molar mass, with worked hydrate and fertiliser examples."
 category: chemistry
-intro: "Percent composition shows what share of a compound's mass comes from each element. It is used to identify substances and check purity."
+intro: "Percent composition is the share of a compound's mass that comes from each element, fixed by the chemical formula. This percent composition calculator multiplies the atom count by the atomic mass and divides by the molar mass of the compound to give the mass percent of one element.\n\nStudents use it to check formulas and find empirical formulas, while analysts compare it with elemental analysis results to confirm the identity and purity of a sample."
 keywords: [percent composition, mass percent of element, element percentage, compound composition, empirical formula]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-25
 variables:
   - { id: k, label: Number of atoms of the element in the formula, default: 2, min: 0 }
   - { id: Ar, label: Atomic mass of the element, suffix: g/mol, default: 1.008, min: 0 }
@@ -22,6 +22,10 @@ faq:
     a: "Yes — the percentages of all elements in a compound total 100% (within rounding)."
   - q: "How do I find the empirical formula from percentages?"
     a: "Convert percentages to moles (assuming 100 g), divide by the smallest, and round to whole-number ratios."
+  - q: "How do I convert a fertiliser P₂O₅ or K₂O value to the element?"
+    a: "Multiply by the mass fraction of the element in the oxide: P = P₂O₅ × 0.4364 and K = K₂O × 0.8302. A label with 20% P₂O₅ supplies 8.73% phosphorus."
+  - q: "Is percent composition the same as the mass percent of a solution?"
+    a: "No. Percent composition is fixed by the chemical formula of a pure compound. Mass percent of a solution or mixture depends on how much of each component was mixed, and is found with the mass percent calculator."
 related: [chemistry/mass-percent, chemistry/moles, chemistry/percent-yield]
 ---
 
@@ -67,11 +71,47 @@ Fertiliser grades such as 46-0-0 (urea) give nitrogen, phosphate (as P₂O₅) a
 
 Water of crystallisation counts in the mass. Copper sulphate pentahydrate is 36.1% water by mass.
 
-## More examples
+## Water of crystallisation in common hydrates
 
-| Compound | Element | % by mass |
-|---|---|---|
-| CO₂ (44.01) | C | 27.3% |
-| NaCl (58.44) | Na | 39.3% |
-| C₆H₁₂O₆ (180.16) | C | 40.0% |
-| Fe₂O₃ (159.69) | Fe | 69.9% |
+Use k = number of water molecules, "atomic mass" = 18.015 g/mol for H₂O and the molar mass of the whole hydrate:
+
+| Hydrate | Molar mass (g/mol) | H₂O per formula | Water by mass |
+|---|---|---|---|
+| CuSO₄·5H₂O | 249.68 | 5 | 36.08% |
+| MgSO₄·7H₂O (Epsom salt) | 246.47 | 7 | 51.17% |
+| Na₂CO₃·10H₂O (washing soda) | 286.14 | 10 | 62.96% |
+| CaSO₄·2H₂O (gypsum) | 172.16 | 2 | 20.93% |
+
+Heating a weighed hydrate to constant mass and comparing the loss with this percentage is a classic way to find the number of water molecules.
+
+## What the default values give
+
+The calculator opens with hydrogen in water: k = 2, atomic mass 1.008 g/mol and molar mass 18.015 g/mol.
+
+- Mass of hydrogen per mole = 2 × 1.008 = 2.016 g
+- Percent hydrogen = 2.016 ÷ 18.015 × 100 = **11.19%**
+- Oxygen is the remainder, 88.81%, and 1 kg of water holds 111.9 g of hydrogen
+
+## Full composition of glucose
+
+Run the calculator once per element with M = 180.156 g/mol:
+
+| Element | Atoms | Mass per mole (g) | Mass percent |
+|---|---|---|---|
+| C | 6 | 72.066 | 40.00% |
+| H | 12 | 12.096 | 6.71% |
+| O | 6 | 95.994 | 53.28% |
+
+The three percentages add to 100.00%. If your own total is off by more than a few hundredths, an atom count or atomic mass is wrong.
+
+## How percent composition is used in practice
+
+A CHN combustion analyser burns a few milligrams of sample and measures the CO₂, H₂O and N₂ formed, reporting carbon, hydrogen and nitrogen as mass percent. Chemists compare those numbers with the calculated composition. Many journals accept a new compound when each element is within 0.4 percentage points of theory, so a glucose sample must read between 39.60% and 40.40% carbon. On fertiliser labels phosphorus and potassium are quoted as oxides: %P = %P₂O₅ × 0.4364 and %K = %K₂O × 0.8302, factors that come straight from this formula.
+
+## Common mistakes
+
+- **Missing atoms inside parentheses.** Ca(OH)₂ has two oxygens: 43.19% O, not the 21.59% that k = 1 gives.
+- **Leaving out water of crystallisation.** The molar mass of a hydrate includes the water, so the percentages of the other elements fall.
+- **Using the molar mass of the element gas.** Oxygen in a formula counts 15.999 g/mol per atom, not 31.998 for O₂.
+- **Reading fertiliser grades as elements.** The middle number is P₂O₅, so a 0-46-0 grade holds 20.1% phosphorus, not 46%.
+- **Rounding atomic masses to whole numbers.** Using 1 for hydrogen gives 2 ÷ 18 = 11.11% for water instead of 11.19%, an error of 0.08 points before any measurement is made.

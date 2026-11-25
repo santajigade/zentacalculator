@@ -2,10 +2,10 @@
 title: Normality Calculator (Equivalents per Litre, N)
 description: Calculate the normality of a solution from the mass of solute, molar mass, equivalents per mole and volume — or the grams needed for a target normality.
 category: chemistry
-intro: "Normality counts reactive equivalents per litre — protons for an acid, hydroxide ions for a base, electrons for a redox reagent — so a 1 N acid exactly neutralises the same volume of a 1 N base. This normality calculator works out normality and molarity from the mass you weigh out, or the mass needed for a target N."
+intro: "Normality counts reactive equivalents per litre: protons for an acid, hydroxide ions for a base, electrons for a redox reagent. A 1 N acid exactly neutralises the same volume of a 1 N base. This normality calculator gives normality, molarity and equivalent weight from the mass you weigh out.\n\nAnalytical chemists and water testing labs use it to prepare and check titrants, where results are reported in equivalents."
 keywords: [normality calculator, normality formula, equivalent weight calculator, gram equivalent, normality to molarity, how to calculate normality, 0.1 n solution]
 published: 2026-11-04
-updated: 2026-11-04
+updated: 2026-11-25
 variables:
   - { id: m, label: Mass of solute, family: mass, unit: g, imperialUnit: g, default: 4.904, min: 0 }
   - { id: Mw, label: Molar mass of solute, suffix: g/mol, default: 98.079, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: The equivalent weight is 98.079 ÷ 2 = 49.04 g/eq, so 0.1 N needs 4.904 g per litre. In practice it is made by diluting concentrated acid and standardised by titration.
   - q: Why is normality used less today?
     a: Because n depends on the reaction — KMnO₄ transfers 5 electrons in acid but 3 in neutral solution — the same solution can have two normalities. IUPAC recommends molarity, but normality remains common in titration and water-testing methods.
+  - q: "What is a milliequivalent?"
+    a: "One thousandth of an equivalent. The number of milliequivalents in a portion of solution is normality × volume in mL, so 25.00 mL of 0.2000 N acid holds 5.000 meq."
+  - q: "How much concentrated sulfuric acid makes 500 mL of 0.2 N?"
+    a: "About 2.72 mL. Concentrated acid (98% w/w, 1.84 g/mL) is 36.77 N, and 0.2000 × 500 ÷ 36.77 = 2.72 mL. Add the acid to water, never water to acid, and standardise the result."
 related: [chemistry/molarity, chemistry/titration, chemistry/dilution, chemistry/water-hardness]
 ---
 
@@ -59,6 +63,40 @@ Enter the **mass of solute**, its **molar mass**, the **equivalents per mole** a
 | Oxalic acid dihydrate (H₂C₂O₄·2H₂O) | 126.065 | 2 (acid–base or redox) | 63.032 | 63.032 g |
 | Potassium permanganate (KMnO₄) | 158.034 | 5 (redox, acid solution) | 31.607 | 31.607 g |
 | Potassium dichromate (K₂Cr₂O₇) | 294.185 | 6 (redox, acid solution) | 49.031 | 49.031 g |
+
+## Using the default solution in a titration
+
+The default solution is 0.2000 N sulfuric acid, so a 25.00 mL aliquot holds 0.2000 × 25.00 = **5.000 meq** of acid. If it takes 24.60 mL of sodium hydroxide to reach the end point, N₁V₁ = N₂V₂ gives N(NaOH) = 0.2000 × 25.00 ÷ 24.60 = **0.2033 N**. Since NaOH has n = 1, that is also 0.2033 mol/L, or 8.13 g of NaOH per litre.
+
+## Making it from concentrated acid
+
+Nobody weighs out pure sulfuric acid. Concentrated acid is about 98% w/w with a density of 1.84 g/mL, which works out to 1,840 × 0.98 ÷ 98.079 = 18.39 mol/L or 36.77 N. For 500 mL of 0.2000 N you need 0.2000 × 500 ÷ 36.77 = **2.72 mL** of concentrated acid, added slowly to about 400 mL of water before making up to the mark. Because the strength of the concentrated acid is never exact, the diluted solution is then standardised against a primary standard such as sodium carbonate.
+
+## One molarity, several normalities
+
+The value of n belongs to the reaction, not to the bottle:
+
+| Solution | Reaction used | n | Normality |
+|---|---|---|---|
+| H₃PO₄, 0.1 M | to H₂PO₄⁻ (methyl orange end point) | 1 | 0.1 N |
+| H₃PO₄, 0.1 M | to HPO₄²⁻ (phenolphthalein end point) | 2 | 0.2 N |
+| KMnO₄, 0.02 M | to Mn²⁺ (acid solution) | 5 | 0.10 N |
+| KMnO₄, 0.02 M | to MnO₂ (neutral or weakly alkaline) | 3 | 0.06 N |
+| KMnO₄, 0.02 M | to MnO₄²⁻ (strongly alkaline) | 1 | 0.02 N |
+
+Always write the reaction next to a normality on a label or in a method, or the number cannot be checked.
+
+## Normality in water testing
+
+Standard methods for alkalinity and hardness still use normal solutions because the arithmetic becomes simple. Calcium carbonate has an equivalent weight of 50.04 g/eq, so each millilitre of 0.02 N acid neutralises 0.02 meq, which is 1.001 mg of CaCO₃. Titrating a 100 mL sample therefore gives alkalinity in mg/L as CaCO₃ as ten times the titre in millilitres.
+
+## Common mistakes
+
+- **Taking n from the wrong reaction.** Permanganate is 5 equivalents per mole only in acid solution, as the table shows.
+- **Using molarities in N₁V₁ = N₂V₂.** 0.1 M H₂SO₄ needs twice its own volume of 0.1 M NaOH; with normalities (0.2 N against 0.1 N) the equation works directly.
+- **Weighing the anhydrous mass for a hydrate.** Oxalic acid dihydrate is 126.065 g/mol, not 90.03 g/mol for the anhydrous acid.
+- **Trusting the weighed mass of sodium hydroxide.** NaOH pellets pick up water and CO₂ from the air, so standardise the solution by titration rather than relying on the balance.
+- **Adding solute to the full volume of water.** V is the final volume of solution: dissolve, then make up to the mark in a volumetric flask.
 
 ## Notes
 

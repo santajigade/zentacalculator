@@ -2,10 +2,10 @@
 title: Hooke's Law Calculator (Spring Force F = kx)
 description: Calculate spring force, spring constant or extension with Hooke's law F = kx, plus the elastic energy stored and the equivalent hanging mass.
 category: physics
-intro: "Within its elastic limit, a spring pushes back with a force proportional to how far it is stretched or compressed — Hooke's law, F = kx. This Hooke's law calculator gives the spring force, the elastic potential energy stored and the mass that would produce the same force when hung from the spring, and solves for the spring constant or the extension when you know the force."
+intro: "Hooke's law states that, within its elastic limit, a spring's force is proportional to how far it is stretched or compressed from its free length: F = k x. This Hooke's law calculator returns the force, the elastic energy stored and the equivalent hanging mass.\n\nStudents use it for elasticity problems and lab reports, while designers and technicians use it to pick springs for latches, valves, scales and suspensions, or to solve for stiffness or extension."
 keywords: [hookes law calculator, spring constant calculator, spring force calculator, f = kx calculator, elastic potential energy calculator, spring extension calculator, spring stiffness]
 published: 2026-10-27
-updated: 2026-11-11
+updated: 2026-11-25
 variables:
   - { id: k, label: Spring constant (k), suffix: N/m, default: 500, min: 0, help: '1 N/mm = 1,000 N/m; 1 lbf/in = 175.13 N/m.' }
   - { id: x, label: Extension or compression, family: length, unit: cm, imperialUnit: in, default: 4, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: E = ½ k x², the area under the force–extension line. A 500 N/m spring compressed 4 cm stores ½ × 500 × 0.04² = 0.4 J. Doubling the compression stores four times the energy.
   - q: How do springs in series and parallel combine?
     a: In parallel the stiffnesses add, k = k₁ + k₂. In series the compliances add, 1/k = 1/k₁ + 1/k₂, so two equal springs end to end are half as stiff as one.
+  - q: "How fast can a compressed spring launch an object?"
+    a: "If all the stored energy becomes kinetic energy, v = √(k x² ÷ m). A 500 N/m spring compressed 4 cm stores 0.4 J and launches a 50 g ball at 4.0 m/s; friction and the spring's own moving mass make the real speed a little lower."
+  - q: "Does Hooke's law apply to rubber bands?"
+    a: "Only roughly, over a small stretch. Rubber gets stiffer at large extensions and returns less energy than it took to stretch it (hysteresis), so a single spring constant describes it poorly."
 related: [physics/spring-mass-frequency, physics/youngs-modulus, physics/potential-energy, engineering/spring-rate]
 ---
 
@@ -70,6 +74,35 @@ A spring with k = 500 N/m is stretched by 4 cm (0.04 m):
 ## Mass on a spring
 
 A mass m on a spring oscillates with period T = 2π√(m ÷ k). A 0.5 kg mass on a 500 N/m spring bounces with a period of **0.199 s** — see the [spring–mass frequency calculator](/physics/spring-mass-frequency/).
+
+## Second scenario: energy and launch speed
+
+The default spring (k = 500 N/m, 2.86 lbf/in) compressed 4 cm stores 0.4 J. If it fires a 50 g ball and all of that becomes kinetic energy, the ball leaves at v = √(2 E ÷ m) = √(2 × 0.4 ÷ 0.05) = **4.0 m/s**. To store a full joule the spring must be compressed √(2 × 1 ÷ 500) = **6.32 cm**. Pushing on from 4 cm to 8 cm costs ½ × 500 × (0.08² − 0.04²) = **1.2 J**, three times the work of the first 4 cm, because the force keeps rising along the way. In the other direction, hanging a 2 kg mass from the spring stretches it 3.92 cm at rest.
+
+## Force, energy and mass for the default spring
+
+| Extension | Force | Stored energy | Equivalent mass |
+|---|---|---|---|
+| 1 cm | 5.0 N | 0.025 J | 0.510 kg |
+| 2 cm | 10.0 N | 0.100 J | 1.020 kg |
+| 4 cm | 20.0 N | 0.400 J | 2.039 kg |
+| 6 cm | 30.0 N | 0.900 J | 3.059 kg |
+| 8 cm | 40.0 N | 1.600 J | 4.079 kg |
+| 10 cm | 50.0 N | 2.500 J | 5.099 kg |
+
+Force and mass grow in step with the extension, while energy grows with its square: at 8 cm the spring holds 1.6 J, four times the energy at 4 cm.
+
+## Measuring a spring constant
+
+In a school lab, hang the spring from a clamp, add slotted masses one at a time and read the pointer against a ruler, then plot force against extension and take the slope. The straight part of the line is the spring constant; where the points bend away, the spring has passed its elastic limit or, for close-wound springs, is still overcoming initial tension. Spring makers test compression springs on a load tester that records force at two set lengths, and quote the rate between them, often between about 20% and 80% of the available travel where the coils behave most linearly.
+
+## Common mistakes
+
+- **Using the total length instead of the change in length.** x is measured from the free (unloaded) length, not from the clamp or the floor.
+- **Leaving x in centimetres.** With k in N/m, 4 cm must be entered as 0.04 m in a hand calculation, or the force comes out 100 times too large.
+- **Entering a mass as a force.** A 2 kg load is 19.61 N; dividing 2 by k instead gives an extension almost ten times too small.
+- **Assuming energy doubles with extension.** It rises with x², so the second 4 cm stores three times as much as the first.
+- **Ignoring initial tension and preload.** Extension springs need a starting force before they move, and compression springs in a mechanism are usually fitted already compressed, so add the preload length to x.
 
 ## Practical notes
 

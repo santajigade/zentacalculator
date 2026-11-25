@@ -2,10 +2,10 @@
 title: Van der Waals Equation Calculator (Real Gas Pressure)
 description: Calculate the pressure of a real gas with the van der Waals equation, (P + an²/V²)(V − nb) = nRT, and compare it with the ideal gas law and compressibility Z.
 category: chemistry
-intro: "Real gas molecules attract each other and take up space, so at high pressure they stop behaving like an ideal gas. This van der Waals calculator corrects the ideal gas law with the attraction constant a and the excluded volume b, and shows how far the real pressure departs from PV = nRT."
+intro: "The van der Waals equation corrects the ideal gas law for two real effects: molecules attract one another and they occupy a finite volume. This van der Waals calculator uses the constants a and b to give the real gas pressure, the ideal pressure and the compressibility factor Z.\n\nChemistry and chemical engineering students use it to see when a gas stops behaving ideally, and engineers use it for quick estimates of dense gases such as CO₂."
 keywords: [van der waals calculator, van der waals equation calculator, real gas calculator, van der waals constants, real gas pressure, compressibility factor, non-ideal gas]
 published: 2026-11-04
-updated: 2026-11-04
+updated: 2026-11-25
 variables:
   - { id: nm, label: Amount of gas, suffix: mol, default: 1, min: 0 }
   - { id: T, label: Temperature, family: temperature, unit: C, default: 25, min: 0 }
@@ -28,6 +28,10 @@ faq:
     a: At low pressure and high temperature — below a few bar near room temperature most gases are within 1% of ideal. The van der Waals correction matters at high pressure, low temperature or near condensation.
   - q: Which units do a and b use here?
     a: a in L²·bar/mol² and b in L/mol, the most common table units. To convert a from L²·atm/mol², multiply by 1.01325.
+  - q: "How do I find the critical point from van der Waals constants?"
+    a: "Use T_c = 8a ÷ (27Rb), P_c = a ÷ (27b²) and V_c = 3b with R = 0.08314 L·bar/(mol·K). For CO₂ (a = 3.640, b = 0.04267) that gives 304.0 K, 74.0 bar and 0.128 L/mol."
+  - q: "What is the Boyle temperature of a van der Waals gas?"
+    a: "T_B = a ÷ (R b), the temperature at which attraction and excluded volume cancel at low pressure so Z stays close to 1. For CO₂ the model gives 1026 K; the measured Boyle temperature is about 715 K."
 related: [physics/ideal-gas-law, chemistry/combined-gas-law, chemistry/boyles-law, chemistry/daltons-law]
 ---
 
@@ -62,6 +66,43 @@ R = 8.314 J/(mol·K), T in kelvin. With a in L²·bar/mol² and b in L/mol, use 
 | Carbon dioxide (CO₂) | 3.64 | 0.04267 | 22.25 bar | 0.898 |
 
 The ideal-gas pressure under the same conditions is 24.79 bar. Light gases (He, H₂) have Z above 1 because the excluded volume outweighs the weak attraction.
+
+## What each correction does in the default case
+
+The calculator works in SI: a = 3.64 L²·bar/mol² becomes 0.364 Pa·m⁶/mol², b = 0.04267 L/mol becomes 4.267 × 10⁻⁵ m³/mol, and V = 1 L = 0.001 m³. The two corrections pull in opposite directions:
+
+- Excluded volume alone: n R T ÷ (V − n b) = 25.894 bar, which is 4.5% above ideal because the molecules have only 0.95733 L of free space
+- Attraction: a n² ÷ V² = 3.640 bar subtracted from that
+- Net: 25.894 − 3.640 = **22.254 bar**, ideal **24.790 bar**, Z = **0.8977**
+
+For CO₂ at this density attraction wins by a wide margin. Doubling the amount to 2 mol in the same litre doubles the excluded volume and quadruples the attraction term, giving 39.64 bar and Z = 0.7996, the same state as 1 mol in 0.5 L in the table below.
+
+## Carbon dioxide at 25 °C as it is compressed
+
+One mole of CO₂ squeezed into smaller volumes at 25 °C:
+
+| Volume | Ideal P | Van der Waals P | Z |
+|---|---|---|---|
+| 20 L | 1.239 bar | 1.233 bar | 0.9948 |
+| 10 L | 2.479 bar | 2.453 bar | 0.9896 |
+| 5 L | 4.958 bar | 4.855 bar | 0.9792 |
+| 2 L | 12.395 bar | 11.755 bar | 0.9484 |
+| 1 L | 24.790 bar | 22.254 bar | 0.8977 |
+| 0.5 L | 49.579 bar | 39.645 bar | 0.7996 |
+
+Z stays within 1% of ideal down to about 5 L, then falls quickly. CO₂ at 25 °C is below its critical temperature and condenses at about 64 bar, so pushing the volume much below 0.5 L takes the equation into the region where its cubic shape gives loops instead of a real liquid and vapour balance.
+
+## Critical point and Boyle temperature from a and b
+
+The same two constants predict the critical point, above which the gas cannot be liquefied by pressure alone: T<sub>c</sub> = 8a ÷ (27 R b), P<sub>c</sub> = a ÷ (27 b²) and V<sub>c</sub> = 3b. For the default CO₂ constants these give T<sub>c</sub> = **304.0 K**, P<sub>c</sub> = **74.0 bar** and V<sub>c</sub> = 0.128 L/mol. The measured values are 304.1 K and 73.8 bar, which agree because tabulated a and b are usually fitted to them, but the real critical volume is 0.094 L/mol, showing the model's weakness at liquid like densities. The Boyle temperature, where Z stays near 1 over a wide range of pressure, is T<sub>B</sub> = a ÷ (R b) = 1026 K in the model against roughly 715 K measured.
+
+## Common mistakes
+
+- **Mixing units for a.** Tables give a in L²·atm/mol², L²·bar/mol² or Pa·m⁶/mol². The CO₂ value 3.592 L²·atm/mol² is 3.640 L²·bar/mol²; entering an SI value such as 0.364 here would cut the attraction term tenfold.
+- **Treating b as a total volume.** b is per mole, so the excluded volume is n b; with 2 mol in 1 L it is 0.0853 L, not 0.04267 L.
+- **Using it inside the two phase region.** Below T<sub>c</sub> at high density the equation can give three volumes for one pressure or even negative pressures; those are not physical states.
+- **Expecting design accuracy.** Van der Waals is qualitative near and above the critical density; use Peng Robinson, Soave Redlich Kwong or measured Z charts for engineering.
+- **Using pure gas constants for a mixture.** Combine them with mixing rules, for example a<sub>mix</sub> = (Σ y<sub>i</sub>√a<sub>i</sub>)² and b<sub>mix</sub> = Σ y<sub>i</sub> b<sub>i</sub>; for 79% N₂ and 21% O₂ this gives a = 1.3725 and b = 0.03726.
 
 ## Notes
 

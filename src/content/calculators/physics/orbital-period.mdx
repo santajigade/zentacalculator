@@ -2,10 +2,10 @@
 title: Orbital Period Calculator (Kepler's Third Law, T = 2π√(a³/GM))
 description: Calculate the orbital period and speed of a satellite, moon or planet from the central mass and orbit radius using Kepler's third law — ISS, GPS and GEO.
 category: physics
-intro: "How long a satellite or planet takes to go round depends only on the mass it orbits and the size of its orbit. This orbital period calculator applies Kepler's third law, T = 2π√(a³/GM), to give the period and the circular orbital speed for any orbit radius — from the ISS and GPS satellites to geostationary orbit and the planets."
+intro: "An orbital period is the time a satellite, moon or planet takes to complete one orbit, and it depends only on the central mass and the orbit's size. This orbital period calculator applies Kepler's third law, T = 2π√(a³/GM), and also gives the circular orbital speed.\n\nStudents, satellite enthusiasts and mission planners use it to check the ISS, GPS and geostationary orbits, moons and planets."
 keywords: [orbital period calculator, keplers third law calculator, satellite orbit calculator, orbital speed calculator, geostationary orbit, iss orbit period, orbital velocity]
 published: 2026-10-27
-updated: 2026-11-09
+updated: 2026-11-25
 variables:
   - { id: M, label: Central mass, suffix: kg, default: 5.972e+24, min: 0, help: 'Earth 5.972 × 10²⁴ kg, Moon 7.342 × 10²² kg, Mars 6.417 × 10²³ kg, Sun 1.989 × 10³⁰ kg.' }
   - { id: a, label: Orbit radius or semi-major axis (from centre), family: length, unit: km, imperialUnit: mi, default: 6779, min: 0, help: 'Altitude + planet radius (Earth mean radius 6,371 km).' }
@@ -23,6 +23,10 @@ faq:
     a: A circular orbit 35,786 km above the equator (42,164 km from Earth's centre) with a period of one sidereal day, 23 h 56 min, so the satellite stays above one point on the ground.
   - q: Should I enter altitude or radius?
     a: Radius from the centre — add the planet's radius to the altitude. For Earth, add 6,371 km (6,378 km at the equator). For an elliptical orbit use the semi-major axis, the average of the closest and farthest distances from the centre.
+  - q: "How long does a low orbit around the Moon take?"
+    a: "About 118 minutes at 100 km altitude (radius 1,837 km), at 1,633 m/s, using the Moon mass of 7.342 × 10²² kg."
+  - q: "How fast is a satellite at perigee of an elliptical orbit?"
+    a: "Use the vis viva equation v = √(GM (2 ÷ r − 1 ÷ a)). For a 600 km by 39,700 km Earth orbit it gives 9,966 m/s at perigee and 1,508 m/s at apogee."
 related: [physics/escape-velocity, physics/gravitational-force, physics/centripetal-force, physics/angular-velocity]
 ---
 
@@ -42,6 +46,12 @@ The ISS at about 408 km altitude, a = 6,371 + 408 = 6,779 km around Earth (M = 5
 
 - T = 2π √((6.779 × 10⁶ m)³ ÷ (6.6743 × 10⁻¹¹ × 5.972 × 10²⁴)) = **5,555 s = 92.58 min**
 - v = √(GM ÷ a) = **7,668 m/s = 27,605 km/h**
+
+Each lap covers 2π × 6,779 = 42,594 km, and 86,400 s ÷ 5,555 s gives **15.55 orbits per day**. Multiplying speed by period gives the same circumference, 42,594 km, which is a quick check that the two results agree.
+
+### Working backwards to a geostationary radius
+
+Rearranging Kepler's law gives a = (G M T² ÷ 4π²)<sup>1/3</sup>. With the sidereal day, T = 86,164 s, the radius is **42,164 km**, an altitude of 35,793 km above the mean radius (35,786 km above the equatorial radius of 6,378 km).
 
 ## Earth orbits
 
@@ -76,3 +86,27 @@ For the Sun, T in years ≈ a³ᐟ² with a in astronomical units — Mars at 1.
 - **Higher orbits are slower.** Orbital speed falls as 1/√a, so to catch a spacecraft ahead of you, you drop to a lower, faster orbit first.
 - Low orbits decay because of atmospheric drag; the ISS is reboosted every few months.
 - The period depends only on the semi-major axis, not on how elongated an elliptical orbit is; the speed, however, varies around an ellipse (fastest at perigee).
+
+## Low orbits around other bodies
+
+Using the masses in the field help and mean radii, the period of a low circular orbit is:
+
+| Body | Altitude | Orbit radius | Period | Speed |
+|---|---|---|---|---|
+| Moon | 100 km | 1,837.4 km | 117.8 min | 1,633 m/s |
+| Mars | 400 km | 3,789.5 km | 118.0 min | 3,362 m/s |
+| Venus | 250 km | 6,301.8 km | 91.9 min | 7,180 m/s |
+| Earth | 408 km | 6,779.0 km | 92.6 min | 7,668 m/s |
+
+The Moon's low orbit is slower than Earth's mainly because its mass is 81 times smaller, while Venus, almost Earth's twin in mass and size, gives a very similar period.
+
+## Elliptical orbits from perigee and apogee
+
+Orbits are usually published as perigee and apogee altitudes, worked out from radar, optical or GPS tracking. The semi-major axis is the planet radius plus the average of the two: for a highly elliptical orbit at 600 km by 39,700 km, a = 6,371 + (600 + 39,700) ÷ 2 = 26,521 km. Entering that gives T = 11.94 h, close to half a sidereal day. The circular speed output does not apply here; the vis viva equation v = √(GM (2 ÷ r − 1 ÷ a)) gives 9,966 m/s at perigee and only 1,508 m/s at apogee.
+
+## Common mistakes
+
+- **Entering altitude instead of radius.** Typing 408 km for the ISS gives a period of 82 s, an orbit inside the Earth. Add the planet radius first.
+- **Using 24 hours for geostationary orbit.** A 24 h period puts the orbit at 42,241 km, about 77 km too high; the correct period is the sidereal day of 23 h 56 min 4 s.
+- **Entering the mass in Earth masses.** The field needs kilograms, so Earth is 5.972 × 10²⁴, not 1.
+- **Reading the speed output for an ellipse.** It is the circular orbit speed at radius a; on an elliptical path the speed changes all the way round.

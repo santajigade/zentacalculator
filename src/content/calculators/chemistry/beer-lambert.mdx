@@ -2,10 +2,10 @@
 title: Beer–Lambert Law Calculator (Absorbance)
 description: "Calculate absorbance, concentration or molar absorptivity using A = εlc, plus transmittance. Free online Beer–Lambert law calculator with formula and examples."
 category: chemistry
-intro: "The Beer–Lambert law says a solution's absorbance is proportional to its concentration and the path length of light through it. It is the basis of spectrophotometry and many online analysers."
+intro: "The Beer-Lambert law says a solution's absorbance rises in direct proportion to the concentration of the absorbing species and the path length of light through it. This Beer-Lambert law calculator works out absorbance and transmittance from A = εlc, or the concentration from a measured absorbance.\n\nBiochemists, analytical chemists and water quality analysts use it to quantify samples on UV-visible spectrophotometers, plate readers and online colorimetric analysers."
 keywords: [beer lambert law, absorbance calculator, spectrophotometry, molar absorptivity, transmittance, a = elc]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-25
 variables:
   - { id: eps, label: Molar absorptivity ε, suffix: L/(mol·cm), default: 6220, min: 0 }
   - { id: l, label: Path length, suffix: cm, default: 1, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: "Only 10% of the light passes through; 90% is absorbed."
   - q: "Why is absorbance unitless?"
     a: "It is a logarithm of a ratio of light intensities, so the units cancel."
+  - q: "How do I convert molar absorptivity from mM⁻¹ cm⁻¹ to L/(mol·cm)?"
+    a: "Multiply by 1,000. NADH at 340 nm is 6.22 mM⁻¹ cm⁻¹, which is 6,220 L/(mol·cm), the default value in this calculator."
+  - q: "At what absorbance is a spectrophotometer most precise?"
+    a: "For a fixed transmittance error the relative concentration error is smallest at A = 0.434, where 36.8% of the light is transmitted. Readings between about 0.2 and 1.0 keep the error within roughly twice that minimum."
 related: [chemistry/molarity, chemistry/dilution]
 ---
 
@@ -93,3 +97,59 @@ For nucleic acid samples, see the [DNA concentration calculator](/biology/dna-co
 | 0.3 | 50% |
 | 1 | 10% |
 | 2 | 1% |
+
+## From a reading back to concentration
+
+Suppose the same NADH assay reads A = 0.450 in the 1 cm cuvette. Then c = A ÷ (ε l) = 0.450 ÷ (6,220 × 1) = **7.235 × 10⁻⁵ mol/L**, or 72.3 µmol/L. In a kinetic enzyme assay the same division turns a slope into a rate: a fall of 0.050 absorbance per minute at 340 nm means NADH is used at 8.04 µmol/L per minute.
+
+## Effect of path length at the default concentration
+
+| Path length | Absorbance | Transmittance |
+|---|---|---|
+| 0.2 cm | 0.124 | 75.09% |
+| 0.5 cm | 0.311 | 48.87% |
+| 1 cm | 0.622 | 23.88% |
+| 2 cm | 1.244 | 5.70% |
+| 5 cm | 3.110 | 0.08% |
+| 10 cm | 6.220 | 0.00% |
+
+Long path cells (5 to 10 cm) are used for trace analysis in clean water, while 0.1 to 0.2 cm cells or diluting the sample bring a strong absorber back into range.
+
+## Why mid-range readings are most precise
+
+A photometer's noise is roughly a fixed error in transmittance. For a 0.5% T reading error the relative error in concentration is 0.4343 ΔT ÷ (T A):
+
+| Absorbance | Transmittance | Concentration error |
+|---|---|---|
+| 0.05 | 89.1% | 4.87% |
+| 0.2 | 63.1% | 1.72% |
+| 0.4343 | 36.8% | 1.36% |
+| 1 | 10.0% | 2.17% |
+| 2 | 1.0% | 10.86% |
+
+The minimum sits at A = 0.434 (T = 36.8%). The default reading of A = 0.622 gives about 1.46%, comfortably inside the good zone.
+
+## How stray light bends the curve
+
+Stray light is light that reaches the detector outside the selected band. With 0.1% stray light the instrument reads A = −log((T + s) ÷ (1 + s)):
+
+| True absorbance | Reading with 0.1% stray light | Error |
+|---|---|---|
+| 0.5 | 0.499 | -0.2% |
+| 1 | 0.996 | -0.4% |
+| 2 | 1.959 | -2.0% |
+| 3 | 2.699 | -10.0% |
+
+This is why calibration lines flatten at the top even when the chemistry is perfectly linear.
+
+## Measuring in practice
+
+Zero the instrument with a blank of the same solvent and reagents in a matched cuvette, then read at λ<sub>max</sub>, where small wavelength errors matter least. Polystyrene cuvettes absorb strongly in the deep UV, so 260 nm work needs quartz or UV-grade cells. In microplate readers the light passes vertically, so the path length depends on the fill volume; many readers correct it from the water absorbance band near 977 nm.
+
+## Common mistakes
+
+- **Entering percent transmittance as absorbance.** Convert first: A = −log₁₀(T), so 23.9% T is A = 0.622, not 23.9.
+- **Mixing ε units.** NADH is often quoted as 6.22 mM⁻¹ cm⁻¹, which is 6,220 L/(mol·cm); using 6.22 with mol/L gives a concentration a thousand times too high.
+- **Assuming a 1 cm path in a microplate well.** A partly filled well has a much shorter path, so concentrations come out too low unless you correct it.
+- **Skipping the blank.** Reagent colour and cuvette absorbance add to every reading and shift the whole calibration line upward.
+- **Reading off the absorption peak.** On a steep shoulder a 1 nm wavelength drift changes ε noticeably and the results drift with it.

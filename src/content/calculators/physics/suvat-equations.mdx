@@ -2,10 +2,10 @@
 title: SUVAT Equations Calculator (Kinematics)
 description: Solve constant-acceleration motion problems — initial velocity, final velocity, acceleration, time and displacement.
 category: physics
-intro: "The SUVAT equations describe motion with constant acceleration using five quantities: displacement, initial velocity, final velocity, acceleration and time. Knowing any three lets you find the other two."
+intro: "The SUVAT equations describe straight line motion at constant acceleration, linking displacement s, initial velocity u, final velocity v, acceleration a and time t. This SUVAT equations calculator solves for the two unknowns once any three are entered.\n\nPhysics students rely on it for mechanics exams, and driving instructors, vehicle testers and lab technicians use it for braking, acceleration and light gate measurements."
 keywords: [suvat, kinematics calculator, equations of motion, displacement, constant acceleration, v = u + at]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-25
 variables:
   - { id: u, label: Initial velocity (u), family: velocity, unit: ms, imperialUnit: fts, default: 5 }
   - { id: v, label: Final velocity (v), family: velocity, unit: ms, imperialUnit: fts }
@@ -27,6 +27,10 @@ faq:
     a: "s (displacement), u (initial velocity), v (final velocity), a (acceleration) and t (time)."
   - q: "How do I find acceleration from distance and time?"
     a: "If starting from rest, a = 2s ÷ t². A car covering 100 m in 10 s from rest accelerates at 2 m/s²."
+  - q: "What is the difference between displacement and distance in SUVAT?"
+    a: "Displacement s is the change in position along the line, with a sign. Distance counts every metre travelled. They differ only if the object reverses: with u = 10 m/s, a = −2 m/s² and t = 8 s, s = 16 m but the distance is 34 m."
+  - q: "How do I find the time when I know s, u and a?"
+    a: "Solve s = ut + ½at² as a quadratic: t = (−u + √(u² + 2as)) ÷ a. With u = 5 m/s, a = 2 m/s² and s = 100 m, t = 7.808 s."
 related: [physics/acceleration, physics/free-fall, physics/projectile-motion]
 ---
 
@@ -43,7 +47,30 @@ Enter **any three** of u, v, a, t and s. The other two are solved automatically 
 u = 5 m/s, a = 2 m/s², t = 10 s:
 
 - v = 5 + 2 × 10 = **25 m/s**
-- s = 5 × 10 + ½ × 2 × 10² = **150 m**
+- s = ½ × (5 + 25) × 10 = **150 m** (the same as 5 × 10 + ½ × 2 × 10²)
+
+Two quick checks confirm the pair: v² = u² + 2as gives 25 + 2 × 2 × 150 = 625 = 25², and s = vt − ½at² gives 250 − 100 = 150 m. The average velocity is 15 m/s, midway between u and v. In the tenth second alone the object covers s(10) − s(9) = 150 − 126 = **24 m**, which also follows from u + a(n − ½) = 5 + 2 × 9.5.
+
+### Solving for time from displacement
+
+With the same u = 5 m/s and a = 2 m/s², when has the object gone 100 m? Rearranging s = ut + ½at² gives t² + 5t − 100 = 0, and the positive root is t = (−5 + √425) ÷ 2 = **7.808 s**, at which point v = 20.62 m/s.
+
+### Motion that reverses direction
+
+A ball thrown up at 15 m/s from the top of a 20 m cliff lands on the beach below when s = −20 m, with up positive and a = −9.80665 m/s². The quadratic −4.903t² + 15t + 20 = 0 has roots -1.004 s and **4.063 s**. The negative root is the time before the throw at which a ball on the same path would have passed the beach level, so it is discarded. The ball lands at -24.84 m/s, the minus sign showing it is moving downwards.
+
+## Motion table for the default values
+
+| Time | Velocity | Displacement |
+|---|---|---|
+| 0 s | 5 m/s | 0 m |
+| 2 s | 9 m/s | 14 m |
+| 4 s | 13 m/s | 36 m |
+| 6 s | 17 m/s | 66 m |
+| 8 s | 21 m/s | 104 m |
+| 10 s | 25 m/s | 150 m |
+
+Velocity rises in equal steps of 4 m/s every 2 s, while displacement grows faster and faster because the ½at² term is quadratic in time.
 
 ## Braking distance example
 
@@ -88,3 +115,15 @@ SUVAT applies only when acceleration is **constant**. For changing acceleration,
 ## Sign convention
 
 Pick one direction as positive. Velocities and accelerations in the opposite direction are negative — for example, a = −9.81 m/s² for an object thrown upwards.
+
+## Using SUVAT with real measurements
+
+Car magazines quote 0 to 100 km/h times. A car that takes 8 s has an average acceleration of 27.78 ÷ 8 = 3.47 m/s² and covers ½ × 27.78 × 8 = 111 m during the run. Real acceleration falls as the car changes gear and gains speed, so this is the constant acceleration that would give the same time. In school labs, two light gates measure u and v and a timer gives t, so a = (v − u) ÷ t can be checked against a = (v² − u²) ÷ 2s from the gate spacing.
+
+## Common mistakes
+
+- **Mixing up displacement and distance.** With u = 10 m/s, a = −2 m/s² and t = 8 s, s = 16 m, but the object went 25 m forward before turning back at t = 5 s, so the distance travelled is 34 m.
+- **Using SUVAT across a change in acceleration.** Split the motion into phases, for example thinking time at constant speed and braking at constant deceleration, and use the final v of one phase as the u of the next.
+- **Keeping the wrong root.** A quadratic in t gives two answers; keep the one that is positive and physically follows the start of the motion.
+- **Leaving speeds in km/h.** Convert to m/s (divide by 3.6) before using a in m/s².
+- **Inconsistent signs.** Once up is positive, a thrown ball has a = −9.80665 m/s² on the way up and on the way down.

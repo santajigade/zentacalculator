@@ -2,10 +2,10 @@
 title: Significant Figures Calculator (Round to Sig Figs)
 description: Round any number to a chosen number of significant figures or decimal places, with the rules for counting sig figs and worked examples.
 category: math
-intro: "Significant figures show how precisely a number is known: 1,230 to three significant figures is not the same claim as 1,234.5678. This significant figures calculator rounds any number to the number of sig figs you choose, gives its power-of-ten exponent for scientific notation and also rounds to a fixed number of decimal places, using the round-half-away-from-zero rule taught in school."
+intro: "Significant figures show how precisely a number is known: 1,230 to three significant figures is a different claim from 1,234.5678. This significant figures calculator rounds any number to the sig figs you choose, gives the power of ten for scientific notation and also rounds to fixed decimal places, rounding halves away from zero.\n\nStudents use it to check chemistry and physics homework, and lab technicians and engineers use it to report measured results without claiming more precision than the instrument gives."
 keywords: [significant figures calculator, sig fig calculator, round to significant figures, sig figs rounding, rounding calculator, round to decimal places, significant digits calculator]
 published: 2026-11-14
-updated: 2026-11-14
+updated: 2026-11-25
 variables:
   - { id: x, label: Number to round, default: 1234.5678 }
   - { id: n, label: Significant figures, default: 3, min: 1, max: 15 }
@@ -28,6 +28,8 @@ faq:
     a: For multiplication and division, keep as many significant figures as the least precise input. For addition and subtraction, keep as many decimal places as the input with the fewest decimal places. Round only the final answer, not intermediate steps.
   - q: What is the difference between significant figures and decimal places?
     a: Decimal places count digits after the decimal point; significant figures count digits from the first non-zero digit. 0.00457 has 5 decimal places but only 3 significant figures, while 1,234.57 has 2 decimal places and 6 significant figures.
+  - q: "Do exact numbers limit the significant figures of an answer?"
+    a: "No. Counted values and defined constants, such as 12 eggs, the 2 in d = 2r or 100 cm in 1 m, are exact and have unlimited significant figures. Only measured values set how many figures the answer keeps."
 related: [math/scientific-notation, math/percent-error, math/fraction-to-decimal, math/exponent, math/logarithm, statistics/measurement-uncertainty]
 ---
 
@@ -81,3 +83,45 @@ Round 1234.5678 to 3 significant figures and to 2 decimal places:
 - **Rounding 5s:** this calculator rounds halves away from zero. Some scientific software and IEEE 754 arithmetic use "round half to even" (banker's rounding), where 2.5 → 2 and 3.5 → 4; this avoids a small upward bias when many values are rounded.
 - **Binary floating point:** a decimal like 2.675 is stored as 2.67499999…, so any computer may round it to 2.67 instead of 2.68. If an exact half matters, add a tiny amount or use more figures.
 - Use the [scientific notation calculator](/math/scientific-notation/) to convert the result to and from E-notation.
+
+## Second example: a small negative number
+
+Round −0.0045678 to 3 significant figures and to 2 decimal places:
+
+1. e = ⌊log<sub>10</sub> 0.0045678⌋ = **−3**, because the first significant digit (4) is in the thousandths place
+2. Rounding unit = 10<sup>−3 − 3 + 1</sup> = 10<sup>−5</sup>, and 0.0045678 ÷ 10<sup>−5</sup> = 456.78, which rounds to 457
+3. Rounded to 3 sig figs = **−0.00457** = −4.57 × 10<sup>−3</sup>
+4. Rounded to 2 decimal places = **0.00**
+
+The sign is kept aside and put back at the end, so negative numbers round the same way as positive ones. The decimal place result shows why fixed decimals are a poor choice for very small values: every digit is lost.
+
+## How much precision each figure claims
+
+Rounding 1,234.5678 to more figures shrinks the rounding unit, and the largest error a rounded value can carry is half that unit:
+
+| Sig figs | Rounded | Scientific notation | Rounding unit | Max rounding error | Relative error |
+|---|---|---|---|---|---|
+| 1 | 1,000 | 1 × 10³ | 1000 | ±500 | 50% |
+| 2 | 1,200 | 1.2 × 10³ | 100 | ±50 | 4.2% |
+| 3 | 1,230 | 1.23 × 10³ | 10 | ±5 | 0.41% |
+| 4 | 1,235 | 1.235 × 10³ | 1 | ±0.5 | 0.040% |
+| 5 | 1,234.6 | 1.2346 × 10³ | 0.1 | ±0.05 | 0.0040% |
+| 6 | 1,234.57 | 1.23457 × 10³ | 0.01 | ±0.005 | 0.00040% |
+| 7 | 1,234.568 | 1.234568 × 10³ | 0.001 | ±0.0005 | 0.000040% |
+
+Each extra figure makes the claim ten times tighter. Three figures already pins this value to within about 0.4%, which is better than most everyday measurements.
+
+## Significant figures in calculations
+
+- **Multiplying:** a plate measured as 12.5 cm by 3.2 cm has an area of 12.5 × 3.2 = 40.0 cm² on a calculator. 3.2 has only 2 significant figures, so report **40 cm²** (better written 4.0 × 10¹ cm² to show both figures).
+- **Adding:** 12.52 g + 3.1 g = 15.62 g, but 3.1 is known only to one decimal place, so report **15.6 g**.
+- **Exact factors:** the diameter of a circle with radius 4.37 cm is 2 × 4.37 = **8.74 cm**. The 2 is exact and does not limit the answer to one figure.
+
+## Common mistakes
+
+- **Counting leading zeros.** 0.0045678 has five significant figures, not seven; zeros in front of the first non-zero digit only place the decimal point.
+- **Rounding in stages.** 1.2449 to 2 significant figures is 1.2. Rounding first to 1.245 and then to 1.25 and 1.3 gives a wrong answer; always round the original value once.
+- **Rounding intermediate results.** Keep all digits through a multi step calculation and round only the final answer, or small errors build up.
+- **Dropping significant trailing zeros.** A reading of 2.50 V has three figures; writing 2.5 V throws away the information that the last digit was measured.
+- **Using the wrong rule for sums.** Addition and subtraction follow decimal places, not significant figures, so 100.2 + 0.0345 is 100.2, not 100.2345 or 100.
+- **Entering zero.** Zero has no first significant digit (log<sub>10</sub> 0 is undefined), so the calculator cannot round it; 0 to any number of figures is simply 0.

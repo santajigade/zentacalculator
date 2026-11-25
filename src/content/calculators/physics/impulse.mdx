@@ -2,10 +2,10 @@
 title: Impulse Calculator (Impulse–Momentum Theorem)
 description: Calculate impulse from force and contact time, and the change in velocity or momentum it causes, with J = F·Δt = m·Δv, average force and deceleration in g.
 category: physics
-intro: "Impulse is the product of a force and the time it acts, and it equals the change in an object's momentum. This impulse calculator applies the impulse–momentum theorem to find the impulse, the change in velocity, the average force or the contact time, and shows the average acceleration in g — useful for collisions, kicks, drops, airbags and rocket burns."
+intro: "Impulse is the product of a force and the time over which it acts, and by the impulse momentum theorem it equals the change in an object's momentum. This impulse calculator finds the impulse, the change in velocity, the average force or the contact time, and shows the average acceleration in g.\n\nStudents use it for collision and kick problems, while safety engineers, sports scientists and packaging designers use it to estimate impact forces from drops, airbags and padding."
 keywords: [impulse calculator, impulse momentum theorem, impulse formula, change in momentum calculator, force time calculator, impulse physics, average force calculator, impulse equation]
 published: 2026-10-29
-updated: 2026-11-13
+updated: 2026-11-25
 variables:
   - { id: F, label: Average force, family: force, unit: N, imperialUnit: lbf, default: 500 }
   - { id: t, label: Contact time, family: seconds, unit: s, default: 0.1, min: 0 }
@@ -26,6 +26,8 @@ faq:
     a: The change in momentum in a crash is fixed by the mass and speed, so stretching the stopping time lowers the average force by the same factor. Stopping a 70 kg person from 15 m/s in 0.1 s instead of 0.01 s cuts the average force from 105,000 N to 10,500 N.
   - q: How do I find the force from a change in velocity?
     a: "Enter the mass, the change in velocity and the contact time, and clear the force — F = m × Δv ÷ Δt. Remember that Δv is a vector change: a ball arriving at 20 m/s and leaving at 20 m/s in the opposite direction has Δv = 40 m/s."
+  - q: "Why does a falling object hit harder on a hard floor?"
+    a: "The impulse is the same on any floor, because it equals the momentum lost. A 0.2 kg phone dropped 1.5 m carries 1.085 N·s; stopping it in 2 ms on tile needs about 542 N, while stopping it in 15 ms on carpet needs about 72 N."
 related: [physics/momentum, physics/force, physics/elastic-collision, physics/acceleration, physics/kinetic-energy, physics/free-fall]
 ---
 
@@ -80,3 +82,40 @@ Ball starting from rest (or with the incoming speed neglected); force is the ave
 - **Drop tests:** an object dropped from height h hits the ground at √(2gh) — use the [free fall calculator](/physics/free-fall/) for the speed, then this calculator with the measured stopping time for the force.
 - **Rockets:** total impulse (N·s) is the standard rating of a rocket motor; the change in velocity is the total impulse divided by the mass, ignoring gravity and the mass of propellant burnt.
 - For the momentum of a moving object, use the [momentum calculator](/physics/momentum/); for collisions between two bodies, use the [elastic collision calculator](/physics/elastic-collision/).
+
+## Peak force depends on the pulse shape
+
+The calculator works with the average force, but sensors and structures respond to the peak. The default impulse of 50 N·s delivered over 0.1 s can arrive in different shapes:
+
+| Pulse shape | Average force | Peak force | Peak ÷ average |
+|---|---|---|---|
+| Rectangular (constant force) | 500 N | 500 N | 1.00 |
+| Half sine (typical elastic impact) | 500 N | 785.4 N | 1.57 |
+| Triangular (sharp rise and fall) | 500 N | 1000 N | 2.00 |
+
+All three have the same area under the force time curve, so all three give the same 25 m/s change in velocity of the 2 kg mass. Design a mount or a fixture for the peak, not the average.
+
+## Dropping a phone: why the floor matters
+
+A 0.2 kg phone dropped from 1.5 m lands at √(2 g h) = 5.42 m/s, so the floor must remove 1.085 N·s of momentum whatever it is made of. Only the stopping time changes:
+
+| Surface | Stopping time | Average force | Average deceleration |
+|---|---|---|---|
+| Ceramic tile | 2 ms | 542 N | 277 g |
+| Wooden floor | 5 ms | 217 N | 111 g |
+| Carpet | 15 ms | 72 N | 37 g |
+| Foam cushion | 60 ms | 18 N | 9 g |
+
+If the phone bounces off the tile at 30% of its impact speed, the impulse rises to 1.410 N·s, because the floor must also send it back up. Protective cases work by adding a few milliseconds of crush, not by absorbing momentum.
+
+## How impulse is measured
+
+Force plates and instrumented hammers sample a load cell or piezoelectric sensor and integrate the force over time to get the impulse directly. The sampling rate must suit the contact: a 1 kHz plate is fine for a jump lasting 0.3 s, but its 1 ms sample interval is longer than a whole 0.5 ms golf strike, so ball impact studies use sensors read at 50 kHz or more. Without a force sensor, high speed video gives the velocities before and after, and m × Δv gives the impulse.
+
+## Common mistakes
+
+- **Using speed instead of velocity change.** A rebound reverses the direction, so Δv is the sum of the two speeds, not their difference.
+- **Reading the average force as the peak.** As the table above shows, the peak can be about twice the average for a sharp impact.
+- **Entering the contact time in milliseconds as seconds.** 5 ms is 0.005 s; typing 5 underestimates the force a thousand times.
+- **Leaving out gravity during a long contact.** When a person lands from a jump over 0.3 s, the floor force is m Δv ÷ Δt plus the body weight m g.
+- **Mixing lbf·s and N·s.** 1 lbf·s is 4.448 N·s, so US rocket motor data must be converted before dividing by a mass in kilograms.

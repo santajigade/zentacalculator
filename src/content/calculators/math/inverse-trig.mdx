@@ -2,10 +2,10 @@
 title: Inverse Trig Calculator (arcsin, arccos, arctan)
 description: Calculate arcsin, arccos, arctan and arccot of any value in degrees and radians, with tables of exact angles and the principal value ranges of each function.
 category: math
-intro: "The inverse trigonometric functions run sine, cosine and tangent backwards: given a ratio, they return the angle. This inverse trig calculator finds arcsin, arccos, arctan and arccot of any number in degrees or radians, using the standard principal-value ranges, and also works the other way — enter an angle to get back the ratio. Use it to find an angle from the sides of a right triangle, a slope or a phasor."
+intro: "The inverse trigonometric functions run sine, cosine and tangent backwards: given a ratio, they return the angle. This inverse trig calculator finds arcsin, arccos, arctan and arccot of any number in degrees or radians, using the standard principal value ranges, and also works from an angle back to its ratio.\n\nStudents, surveyors, builders and engineers use it to find an angle from the sides of a right triangle, the pitch of a roof or ramp, or the phase angle of a phasor."
 keywords: [inverse trig calculator, arcsin calculator, arccos calculator, arctan calculator, inverse sine calculator, inverse cosine, inverse tangent calculator, sin⁻¹ cos⁻¹ tan⁻¹]
 published: 2026-11-14
-updated: 2026-11-14
+updated: 2026-11-25
 variables:
   - { id: x, label: Value (ratio), default: 0.5, help: 'arcsin and arccos need −1 ≤ x ≤ 1; arctan and arccot accept any number.' }
   - { id: asn, label: arcsin x (sin⁻¹), family: angle, unit: deg }
@@ -26,6 +26,8 @@ faq:
     a: No. sin⁻¹ x means arcsin x, the angle whose sine is x. The reciprocal 1/sin x is the cosecant, csc x. Calculators label the inverse function sin⁻¹, which causes this common mix-up.
   - q: How do I find other angles with the same sine or cosine?
     a: "For sine, the other solution in 0–360° is 180° − arcsin x; for cosine it is 360° − arccos x; for tangent add 180°. The general solutions are θ = arcsin x + 360°k or 180° − arcsin x + 360°k, θ = ±arccos x + 360°k and θ = arctan x + 180°k."
+  - q: "Why do I get an error for arcsin of 2?"
+    a: "The sine of a real angle is never larger than 1 or smaller than −1, so arcsin and arccos are undefined outside that range. Check the ratio: opposite ÷ hypotenuse can never exceed 1 because the hypotenuse is the longest side."
 related: [math/right-triangle-trig, math/angle-converter, math/law-of-sines, math/law-of-cosines, math/pythagorean-theorem, math/slope]
 ---
 
@@ -103,3 +105,30 @@ The angle of a slope is arctan(rise ÷ run):
 - **Two-argument arctangent:** arctan(y/x) cannot tell (1, 1) from (−1, −1). For angles of vectors, phasors or coordinates use atan2(y, x), which returns the full −180° to 180° range — see the [vector calculator](/math/vector/).
 - **Degrees vs radians:** spreadsheets and programming languages return radians; multiply by 180/π (57.2958) to get degrees. Convert other units with the [angle converter](/math/angle-converter/).
 - **Solving triangles:** use arcsin with the [law of sines](/math/law-of-sines/) (watch for the ambiguous case where 180° − θ is also a solution) and arccos with the [law of cosines](/math/law-of-cosines/), which never has that ambiguity.
+
+## Example: the angle of a wheelchair ramp
+
+A ramp that rises 1 unit for every 12 units of run has a ratio of 1 ÷ 12 = 0.0833. Enter that as the value and read arctan: **4.76°**, a gradient of 8.33%. Going the other way, to keep a ramp below 5°, enter 5° in the arctan box: the value returned is 0.0875, so the ramp needs at least 11.4 units of run per unit of rise.
+
+## Angles of right triangles with whole number sides
+
+For a right triangle, arcsin(opposite ÷ hypotenuse), arccos(adjacent ÷ hypotenuse) and arctan(opposite ÷ adjacent) all give the same angle. The other acute angle is 90° minus it:
+
+| Sides (opp, adj, hyp) | sin θ | cos θ | tan θ | θ | 90° − θ |
+|---|---|---|---|---|---|
+| 3, 4, 5 | 3/5 | 4/5 | 3/4 | 36.87° | 53.13° |
+| 5, 12, 13 | 5/13 | 12/13 | 5/12 | 22.62° | 67.38° |
+| 8, 15, 17 | 8/17 | 15/17 | 8/15 | 28.07° | 61.93° |
+| 7, 24, 25 | 7/25 | 24/25 | 7/24 | 16.26° | 73.74° |
+| 20, 21, 29 | 20/29 | 21/29 | 20/21 | 43.60° | 46.40° |
+| 1, 1, √2 | 1/√2 | 1/√2 | 1/1 | 45.00° | 45.00° |
+
+The 3, 4, 5 triangle is the one builders use to set out a square corner; its smaller angle is 36.87°, not the 30° or 45° people often assume.
+
+## Common mistakes
+
+- **Calculator in the wrong angle mode.** arcsin 0.5 is 30 in degrees but 0.5236 in radians. Spreadsheets and programming languages always return radians.
+- **Asking for arcsin or arccos outside −1 to 1.** No angle has a sine of 1.2, so the result is undefined. A ratio above 1 usually means the opposite and hypotenuse were swapped.
+- **Forgetting the second solution.** arcsin 0.5 returns only 30°, but 150° has the same sine. In the law of sines this is the ambiguous case.
+- **Using arctan(y/x) for a direction.** The point (−1, −1) gives arctan 1 = 45°, while its real direction is −135° (or 225°). Use atan2(y, x) for vectors and coordinates.
+- **Assuming every source defines arccot the same way.** Here arccot x = 90° − arctan x, so arccot(−1) = 135°. Some software uses arctan(1/x) instead, which gives −45° for the same input.

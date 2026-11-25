@@ -2,10 +2,10 @@
 title: Coulomb's Law Calculator (Electric Force Between Charges)
 description: Calculate the electrostatic force between two point charges with Coulomb's law, plus the electric field and potential energy, and solve for charge or distance.
 category: physics
-intro: "Electric charges push or pull on each other with a force that grows with the product of the charges and falls with the square of the distance between them. This Coulomb's law calculator gives that force for two point charges in vacuum or air, shows whether it is attractive or repulsive, and also returns the electric field of the first charge and the potential energy of the pair — or solves for the charge or distance needed for a given force."
+intro: "Coulomb's law says two point charges push or pull on each other with a force proportional to the product of the charges and inversely proportional to the square of their separation. This Coulomb's law calculator returns that force, the field of the first charge and the pair's potential energy.\n\nPhysics students check electrostatics problems with it, and engineers use it to estimate forces in electrostatic precipitators, sensors and static discharge problems, or to solve for a charge or spacing."
 keywords: [coulombs law calculator, coulomb's law calculator, electric force calculator, electrostatic force calculator, force between two charges, coulomb constant, point charge force]
 published: 2026-10-27
-updated: 2026-11-10
+updated: 2026-11-25
 variables:
   - { id: q1, label: Charge 1 (q₁), suffix: µC, default: 2, help: 'Use a minus sign for a negative charge. 1 µC = 10⁻⁶ C; 1 nC = 0.001 µC.' }
   - { id: q2, label: Charge 2 (q₂), suffix: µC, default: -3 }
@@ -26,6 +26,10 @@ faq:
     a: The force falls with the square of the distance. Doubling the distance cuts the force to a quarter, and ten times the distance cuts it to one hundredth.
   - q: Does Coulomb's law work in water or oil?
     a: In a uniform insulating medium, divide the vacuum force by the relative permittivity εᵣ. Water (εᵣ ≈ 80) weakens the force between ions about 80 times, which is why salts dissolve in it. Air (εᵣ ≈ 1.0006) is practically the same as vacuum.
+  - q: "How many electrons make up a microcoulomb?"
+    a: "One microcoulomb is 10⁻⁶ ÷ 1.602 × 10⁻¹⁹ = 6.242 × 10¹² electrons. The default +2 µC charge is a shortage of 1.248 × 10¹³ electrons."
+  - q: "How much work does it take to separate two opposite charges?"
+    a: "The work equals the change in potential energy. Pulling +2 µC and −3 µC from 10 cm apart to infinity takes 0.5393 J, and from 10 cm to 30 cm takes 0.3595 J."
 related: [physics/electric-field, physics/parallel-plate-capacitor, physics/gravitational-force, physics/force]
 ---
 
@@ -80,3 +84,38 @@ In a hydrogen atom the electron and proton, 52.9 pm apart, attract each other wi
 - **1 coulomb is a huge static charge** — about 6.24 × 10¹⁸ electrons. Charges from rubbing or static build-up are usually nanocoulombs to a few microcoulombs.
 - For charges spread over large or close conductors, the point-charge formula is only approximate; use the [electric field calculator](/physics/electric-field/) or a capacitance model instead.
 - Electrostatic forces drive dust precipitators, laser printers, powder coating and the ESD that damages electronic parts.
+
+## Second scenario: changing the spacing
+
+With the same +2 µC and −3 µC charges, the attraction falls to exactly 1 N at r = √(k |q₁ q₂| ÷ 1 N) = **23.22 cm**. Pulling the charges from 10 cm to 30 cm apart raises the potential energy from −0.5393 J to −0.1798 J, so you must do **0.3595 J** of work. Separating them completely takes **0.5393 J**, which is the potential energy with its sign reversed.
+
+### Adding a third charge
+
+Forces from several charges add as vectors. Place a +1 µC charge 5 cm beyond the −3 µC charge on the same line. Charge 1 pulls the −3 µC charge back with 5.393 N, while the +1 µC charge, only 5 cm away, pulls it forward with k × 1 µC × 3 µC ÷ 0.05² = 10.785 N. The net force is **5.393 N** towards the third charge, even though its charge is half that of charge 1, because it is twice as close.
+
+## How much charge is realistic
+
+A +2 µC charge means 1.248 × 10¹³ electrons removed, and −3 µC means 1.872 × 10¹³ electrons added. Air breaks down at roughly 3 MV/m, so a charged sphere can only hold a charge whose surface field k q ÷ a² stays below that. The table shows the field each charge makes 10 cm away and the smallest sphere radius that can hold it in dry air without sparking:
+
+| Charge | Electrons | Field at 10 cm | Smallest sphere radius in air |
+|---|---|---|---|
+| 1 nC | 6.24 × 10⁹ | 8.99 × 10² N/C | 0.17 cm |
+| 10 nC | 6.24 × 10¹⁰ | 8.99 × 10³ N/C | 0.55 cm |
+| 100 nC | 6.24 × 10¹¹ | 8.99 × 10⁴ N/C | 1.73 cm |
+| 1 µC | 6.24 × 10¹² | 8.99 × 10⁵ N/C | 5.47 cm |
+| 2 µC | 1.25 × 10¹³ | 1.80 × 10⁶ N/C | 7.74 cm |
+| 10 µC | 6.24 × 10¹³ | 8.99 × 10⁶ N/C | 17.31 cm |
+
+So the default +2 µC needs a sphere at least 7.7 cm in radius. For comparison, a person charged to 10 kV by walking on carpet, with a body capacitance of about 150 pF, carries Q = C V = 1.5 µC spread over the whole body.
+
+## How electrostatic force is measured
+
+Coulomb found the inverse square law in 1785 with a torsion balance, reading the twist of a fine wire as small charged spheres repelled each other. Today charge is measured with a Faraday cup connected to an electrometer, which collects the whole charge of an object and reads it as a voltage on a known capacitance. Field meters (field mills) measure the field near charged surfaces in clean rooms and powder handling plants, and the force between charges then follows from F = q E.
+
+## Common mistakes
+
+- **Leaving charges in microcoulombs.** Each µC is 10⁻⁶ C, so the product q₁ q₂ carries 10⁻¹²; forgetting it gives a force a million million times too large.
+- **Entering the distance in centimetres as metres.** 10 cm is 0.1 m, and because r is squared, using 10 makes the force 10,000 times too small.
+- **Reading the sign as a direction on an axis.** Here a negative result only means attraction; to get the direction on a diagram, decide which way each charge is pulled and add the forces as vectors.
+- **Using the point charge formula for close conductors.** Charges on nearby metal objects redistribute (induction), so the real force differs from k q₁ q₂ ÷ r² when the gap is similar to the object size.
+- **Measuring r from surfaces instead of centres.** For charged spheres the distance is centre to centre, which is the gap plus both radii.

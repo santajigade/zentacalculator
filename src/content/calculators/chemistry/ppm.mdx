@@ -1,11 +1,11 @@
 ---
 title: PPM Calculator (Parts per Million)
-description: Calculate concentration in ppm from solute and solution mass — and convert ppm to percent and mg/L.
+description: "Calculate concentration in parts per million from solute and sample mass, convert ppm to percent and ppb, and see how ppm relates to mg/L and mg/m³."
 category: chemistry
-intro: "Parts per million (ppm) expresses very small concentrations — dissolved salts in water, pollutants in air or trace elements in a sample. 1 ppm is about 1 mg per litre of water."
+intro: "Parts per million (ppm) states a very small concentration as the mass of one substance per million mass units of the whole sample, so 1 mg in 1 kg is 1 ppm. This ppm calculator turns a solute mass and a sample mass into ppm, percent and parts per billion.\n\nWater treatment operators use it to dose chlorine and check a [residual chlorine analyzer](https://www.instrumentationblog.in/residual-chlorine-analyzer-working/), and laboratories use it to report trace metals and dissolved salts."
 keywords: [ppm calculator, parts per million, mg/l, ppm to percent, ppb, water quality, tds]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-25
 variables:
   - { id: ms, label: Mass of substance, family: mass, unit: mg, default: 50, min: 0 }
   - { id: mt, label: Mass of sample (solution), family: mass, unit: kg, default: 1, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: "Divide by 10,000. 5,000 ppm = 0.5%."
   - q: "How many ppm is 1%?"
     a: "10,000 ppm."
+  - q: "How do I convert ppm of a gas to mg/m³?"
+    a: "At 25 °C and 1 atm, mg/m³ = ppmv × molar mass ÷ 24.47. For carbon monoxide (28.01 g/mol), 1 ppmv is 1.145 mg/m³, so 50 ppmv is 57.2 mg/m³."
+  - q: "How much substance do I need for a given ppm?"
+    a: "Multiply the target ppm by the sample mass in kg to get milligrams. 250 ppm in 20 kg of water needs 5,000 mg, which is 5 g."
 related: [chemistry/mass-percent, chemistry/dilution]
 ---
 
@@ -40,7 +44,10 @@ Enter the **mass of the substance** and the **mass of the sample**. You get ppm,
 
 50 mg of chlorine in 1 kg (1 L) of water:
 
-ppm = 0.050 g ÷ 1,000 g × 10⁶ = **50 ppm** = 0.005%
+- Substance mass: 50 mg = 0.050 g = 0.000050 kg
+- ppm = 0.000050 kg ÷ 1 kg × 10⁶ = **50 ppm**
+- Percent = 50 ÷ 10,000 = **0.005%**
+- Parts per billion = 50 × 1,000 = **50,000 ppb**
 
 ## Typical values
 
@@ -87,3 +94,41 @@ To dose a 10,000 L tank to 2 ppm free chlorine with 10% sodium hypochlorite: chl
 ## Conversions
 
 1% = 10,000 ppm · 1 ppm = 1,000 ppb · 1 ppm = 1 mg/kg
+
+## Working backwards to a mass
+
+To hit a target ppm, multiply the target by the sample mass in kilograms to get milligrams. A 20 kg batch of water at 250 ppm sodium needs 250 × 20 = **5,000 mg (5 g) of sodium**. Sodium is only 39.34% of the mass of sodium chloride (22.990 ÷ 58.443), so the salt to weigh out is 5 ÷ 0.3934 = **12.71 g of NaCl**. Always check whether a limit is stated for the ion or for the whole compound.
+
+## When ppm and mg/L are not the same
+
+ppm by mass is milligrams per kilogram; mg/L is milligrams per litre. They match only when a litre of the sample weighs 1 kg. Seawater at 35,000 mg/kg with a density of 1.025 kg/L holds 35,000 × 1.025 = **35,875 mg/L**, a 2.5% difference. For brines, acids, oils and soils, report mg/kg and mg/L separately.
+
+## Gas ppm (by volume) to mg/m³
+
+For gases ppm usually means ppmv, a mole fraction. To convert to a mass concentration at 25 °C and 1 atm, use mg/m³ = ppmv × M ÷ 24.47, where M is the molar mass in g/mol and 24.47 L/mol is the molar volume at those conditions.
+
+| Gas | M (g/mol) | mg/m³ per 1 ppmv | mg/m³ at 50 ppmv |
+|---|---|---|---|
+| Carbon monoxide, CO | 28.01 | 1.145 | 57.2 |
+| Ammonia, NH₃ | 17.03 | 0.696 | 34.8 |
+| Hydrogen sulfide, H₂S | 34.08 | 1.393 | 69.6 |
+| Carbon dioxide, CO₂ | 44.01 | 1.799 | 89.9 |
+| Sulfur dioxide, SO₂ | 64.06 | 2.618 | 130.9 |
+| Nitrogen dioxide, NO₂ | 46.01 | 1.880 | 94.0 |
+
+The same 50 ppm is almost four times heavier for sulfur dioxide than for ammonia, so a gas detector set in ppm and an emission limit set in mg/m³ have to be converted per gas. This calculator itself works by mass; use the table for gas readings.
+
+## How ppm is measured in practice
+
+- **Dissolved solids:** a TDS meter measures electrical conductivity and multiplies by a factor of roughly 0.5 to 0.8 that depends on which salts are present. A reading of 800 µS/cm with a factor of 0.65 is reported as about 520 mg/L.
+- **Chlorine:** handheld kits use the DPD colour reaction, and online analyzers in treatment plants use amperometric or colorimetric cells that read free chlorine continuously in mg/L.
+- **Trace metals:** ICP-OES and ICP-MS measure elements such as lead and arsenic down to ppb and below after acid digestion of the sample.
+- **Gases:** NDIR sensors read CO₂ in ppm, and electrochemical cells read CO and H₂S for personal gas detectors.
+
+## Common mistakes
+
+- **Mixing units in the ratio.** Grams over kilograms is a factor of 1,000 off; the calculator converts, but hand calculations must put both masses in the same unit before multiplying by 10⁶.
+- **Confusing ppm by mass with ppmv.** 50 ppmv of CO₂ in air is not 50 mg/kg; convert with the molar mass.
+- **Assuming mg/L equals ppm in dense liquids** such as seawater or concentrated brine.
+- **Dividing by 100 instead of 10,000 for percent.** 50 ppm is 0.005%, not 0.5%.
+- **Reporting the compound when the limit is for the ion**, for example nitrate as NO₃⁻ versus nitrate nitrogen (NO₃-N), which differ by a factor of about 4.43.

@@ -2,10 +2,10 @@
 title: Centripetal Force Calculator
 description: Calculate centripetal force and acceleration for an object moving in a circle from mass, speed and radius.
 category: physics
-intro: "Anything moving in a circle needs a force pulling it towards the centre — centripetal force. It keeps cars on curves, satellites in orbit and water in a spinning bucket."
+intro: "Centripetal force is the inward pull that keeps any object moving along a circle, supplied by friction, tension, gravity or a normal force. This centripetal force calculator finds the centripetal acceleration and force from mass, speed and the radius of the path.\n\nStudents use it for circular motion problems, while drivers, road designers and ride engineers use it to judge how much grip or structural load a turn demands at a given speed."
 keywords: [centripetal force, circular motion, centripetal acceleration, f = mv2/r, g force in turns]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-25
 variables:
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 1200, min: 0 }
   - { id: v, label: Speed, family: velocity, unit: kmh, imperialUnit: mph, default: 60, min: 0 }
@@ -26,6 +26,10 @@ faq:
     a: "Friction between the tyres and the road. On ice there is little friction, so the car slides outward."
   - q: "What is the centripetal force formula?"
     a: "F = m × v² ÷ r, where m is mass, v is speed and r is the radius of the circular path."
+  - q: "What friction coefficient does a car need to take a bend?"
+    a: "At least μ = v² ÷ (r g). For 60 km/h on a 50 m radius that is 0.567. Dry asphalt typically offers 0.7 or more, so there is a margin; on ice, with μ near 0.1, the safe speed would be only about 25 km/h."
+  - q: "What is the minimum speed at the top of a vertical loop?"
+    a: "The speed at which gravity alone supplies the centripetal force, v = √(g r). For a 10 m radius loop that is 9.90 m/s, about 35.7 km/h."
 related: [physics/force, physics/kinetic-energy]
 ---
 
@@ -42,7 +46,11 @@ Enter the **mass**, **speed** and **radius** to get the centripetal acceleration
 A 1,200 kg car takes a 50 m radius bend at 60 km/h (16.67 m/s):
 
 - a = 16.67² ÷ 50 = **5.56 m/s²** (0.57 g)
-- F = 1,200 × 5.56 = **6.67 kN**
+- F = 1,200 × 5.5556 = **6.67 kN**
+
+### What that means for the tyres
+
+The car weighs m g = 1,200 × 9.80665 = 11,768 N, so the 6,667 N sideways force is 0.567 of its weight. The tyres therefore need a friction coefficient of at least μ = v² ÷ (r g) = **0.567** just to hold the line, which dry asphalt can manage but a wet or icy road may not. The car turns at ω = v ÷ r = 0.333 rad/s, so it would take 18.85 s to drive a full circle and 4.71 s to get round a 90° corner. A road banked at atan(0.567) = **29.5°** would supply the whole force with no friction at all, which is far steeper than public roads are built.
 
 ## Centripetal acceleration on curves
 
@@ -55,6 +63,24 @@ A 1,200 kg car takes a 50 m radius bend at 60 km/h (16.67 m/s):
 | 120 km/h | 22.22 m/s² (2.27 g) | 11.11 m/s² | 4.44 m/s² |
 
 Doubling the speed **quadruples** the force needed, which is why speed limits drop on tight bends.
+
+## Radius needed for a comfortable turn
+
+Highway designers keep the lateral acceleration low so that passengers stay comfortable and tyres keep a large grip margin. Rearranging r = v² ÷ a gives the smallest radius for each speed:
+
+| Design speed | Speed in m/s | Radius for 0.2 g | Radius for 0.4 g |
+|---|---|---|---|
+| 40 km/h | 11.11 m/s | 63 m | 31 m |
+| 60 km/h | 16.67 m/s | 142 m | 71 m |
+| 80 km/h | 22.22 m/s | 252 m | 126 m |
+| 100 km/h | 27.78 m/s | 393 m | 197 m |
+| 120 km/h | 33.33 m/s | 567 m | 283 m |
+
+The radius grows with the square of the speed, so a bend designed for 120 km/h needs four times the radius of one designed for 60 km/h.
+
+## Vertical loops and apparent weight
+
+On a roller coaster loop the track and gravity share the job. At the top of a 10 m radius loop, gravity alone provides the centripetal force when v = √(g r) = **9.90 m/s**; any slower and the car would leave the track without its upstop wheels. If the car only just makes the top, energy conservation gives v = √(5 g r) = 22.14 m/s at the bottom, where the seat must push up with m (g + v² ÷ r). For a 60 kg rider that is 3,530 N, six times body weight, which is why real loops use a clothoid (teardrop) shape with a tighter radius at the top.
 
 ## Banked curves
 
@@ -79,3 +105,15 @@ Centripetal force is the real force pointing **towards** the centre (friction, t
 ## Grip limit
 
 On a dry road, tyres can typically provide around 0.7–0.9 g of sideways acceleration; on wet roads much less. At 0.7 g, the maximum speed for a 50 m bend is about √(0.7 × 9.81 × 50) = 67 km/h.
+
+## Measuring centripetal force in practice
+
+In a classroom the usual method is the whirling bung: a rubber bung on a string passes through a glass tube, and a hanging mass at the bottom provides the tension. A 20 g bung whirled on 0.80 m of string at one revolution every 2.0 s needs F = m 4π² r ÷ T² = 0.158 N, which a hanging mass of 16.1 g supplies. In cars, the lateral accelerometer in a data logger or phone reads ac directly, and multiplying by the vehicle mass gives the force the tyres carry. Centrifuges are specified by relative centrifugal force, which is ac divided by g.
+
+## Common mistakes
+
+- **Entering speed in the wrong unit.** Typing 60 m/s when the car does 60 km/h makes the force 86.4 kN instead of 6.67 kN, almost thirteen times too large, because the error is squared.
+- **Using the diameter.** The formula needs the radius; using a 100 m diameter as r halves the computed force.
+- **Drawing centripetal force as an extra force.** It is the net inward result of real forces such as friction or tension, so it must not appear as a separate arrow on a free body diagram.
+- **Assuming force scales with speed.** It scales with speed squared; a 20% faster entry speed needs 44% more grip.
+- **Confusing ac with g force felt.** On a flat road the occupants feel ac sideways, but on a loop or a hump the seat force also includes gravity.

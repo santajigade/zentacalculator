@@ -2,10 +2,10 @@
 title: Snell's Law Calculator (Angle of Refraction & Critical Angle)
 description: Find the angle of refraction, a refractive index or the critical angle for total internal reflection when light passes between two media, using Snell's law.
 category: physics
-intro: "Light bends when it crosses from one transparent material into another because its speed changes. This Snell's law calculator uses n₁ sin θ₁ = n₂ sin θ₂ to find the angle of refraction — or the angle of incidence or a refractive index — and also gives the critical angle for total internal reflection at the interface, the deviation of the ray and the speed of light in the second medium."
+intro: "Snell's law describes how a ray of light changes direction when it crosses from one transparent material into another, because its speed changes. This Snell's law calculator applies n₁ sin θ₁ = n₂ sin θ₂ to give the angle of refraction, the critical angle, the deviation and the speed of light in the second medium.\n\nPhysics students check optics problems with it, while lens designers, fibre optic technicians and refractometer users rely on the same relation to predict where light goes."
 keywords: [snells law calculator, snell's law calculator, refraction calculator, angle of refraction calculator, critical angle calculator, total internal reflection, refractive index calculator]
 published: 2026-10-27
-updated: 2026-11-10
+updated: 2026-11-25
 variables:
   - { id: n1, label: Refractive index of the first medium (n₁), default: 1.0003, min: 1, help: 'Vacuum 1, air 1.0003, water 1.333, crown glass 1.517, diamond 2.417.' }
   - { id: t1, label: "Angle of incidence (θ₁, from the normal)", family: angle, unit: deg, default: 30, min: 0, max: 1.5708 }
@@ -28,6 +28,10 @@ faq:
     a: Going from a denser to a less dense medium at an angle larger than the critical angle, n₁ sin θ₁ ÷ n₂ is greater than 1, so no refracted ray exists — this is total internal reflection.
   - q: What is the refractive index of water and glass?
     a: About 1.333 for water at 20 °C and 1.517 for common crown glass (BK7), measured with yellow sodium light (589 nm). The index is slightly higher for blue light and lower for red, which is why prisms split white light.
+  - q: "How deep does a swimming pool really look?"
+    a: "Viewed from directly above, the apparent depth is the real depth × n(air) ÷ n(water), about 0.75 of the real depth. A 2.0 m pool looks about 1.50 m deep, and it looks shallower still when viewed at an angle."
+  - q: "What is the acceptance angle of an optical fibre?"
+    a: "It is arcsin of the numerical aperture, NA = √(n_core² − n_cladding²). A fibre with a 1.468 core and 1.462 cladding has NA = 0.1326, so it accepts light within about 7.6° of its axis."
 related: [physics/thin-lens, physics/wavelength-frequency, physics/speed-of-sound, math/right-triangle-trig]
 ---
 
@@ -100,3 +104,38 @@ Even at grazing incidence, light entering water bends to less than the critical 
 - **Refractometers** measure the critical angle of a sample against a prism to find its refractive index — the basis of sugar (°Brix) and concentration measurement.
 - **Dispersion:** n changes with wavelength, so quote the index at a wavelength (usually 589 nm) when precision matters.
 - Part of the light is always reflected at the interface; at normal incidence the reflected fraction is ((n₁ − n₂) ÷ (n₁ + n₂))², about 4% for air to glass.
+
+## Measuring an unknown refractive index
+
+In the classic ray box experiment a narrow beam strikes a rectangular block and the incident and refracted rays are traced on paper. With an incidence of 40° and a refracted ray measured at 25.0°, the block has n = 1.0003 × sin 40° ÷ sin 25.0° = **1.521**, typical of a crown glass. A protractor reading only good to ±0.5° moves this between 1.494 and 1.550, so repeat the trace at several angles and fit sin θ₁ against sin θ₂: the slope of that straight line is n₂ ÷ n₁. Laboratory refractometers avoid the protractor altogether by locating the sharp edge of the critical angle against a prism, which gives four decimal places.
+
+## Sideways shift through a glass plate
+
+A ray passing through a flat plate leaves parallel to its original direction but displaced sideways by t sin(θ₁ − θ₂) ÷ cos θ₂. For a 10 mm crown glass plate (n = 1.517) in air:
+
+| Angle of incidence | Angle inside the glass | Lateral shift |
+|---|---|---|
+| 10° | 6.57° | 0.60 mm |
+| 20° | 13.03° | 1.24 mm |
+| 30° | 19.25° | 1.98 mm |
+| 45° | 27.79° | 3.34 mm |
+| 60° | 34.82° | 5.18 mm |
+| 75° | 39.56° | 7.52 mm |
+
+This shift is why a thick window or a filter placed in front of a camera or a laser rangefinder moves the image slightly, and why optical designers include plane plates in their ray traces.
+
+## Apparent depth and Snell's window
+
+Seen from straight above, a 2.0 m deep pool looks only 2.0 × 1.0003 ÷ 1.333 = **1.50 m** deep, because the rays bend away from the normal as they leave the water. A diver looking up sees the entire sky squeezed into a cone 97.3° wide (twice the 48.63° critical angle); outside it the surface acts as a mirror.
+
+## Fibre optic acceptance angle
+
+A step index fibre with a core of n = 1.468 and cladding of n = 1.462 has a critical angle of 84.82° at the core boundary and a numerical aperture of √(1.468² − 1.462²) = **0.1326**. Only light arriving within 7.62° of the fibre axis is guided, which is why connector alignment matters so much.
+
+## Common mistakes
+
+- **Measuring the angle from the surface.** Snell's law uses the angle from the normal. A ray striking water 30° above the surface is at 60° to the normal and refracts to 40.53°, not 22.04°.
+- **Looking for a critical angle going into the denser medium.** Total internal reflection only happens when light travels from the higher index to the lower one; from air into water every angle refracts.
+- **Mixing up which index is which.** n₁ always belongs to the medium the light starts in; swapping them gives the reverse path, not the same one.
+- **Ignoring the wavelength.** Indices are quoted at 589 nm; crown glass is about 1.513 in deep red and 1.530 in violet, enough to shift a refraction angle by a few tenths of a degree.
+- **Over trusting the air value.** Taking air as exactly 1 changes the default result from 22.037° to 22.030°. That is negligible for homework but not for precision refractometry, where the temperature of the sample matters more still.

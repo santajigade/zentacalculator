@@ -2,10 +2,10 @@
 title: Weak Acid pH Calculator (and Weak Base pH from Ka or Kb)
 description: Calculate the pH of a weak acid or weak base solution from Ka or Kb and concentration, using the exact quadratic — plus percent dissociation.
 category: chemistry
-intro: "A weak acid only partly dissociates, so its pH depends on both its concentration and its Ka. This weak acid pH calculator solves the equilibrium exactly with the quadratic formula — and works for weak bases from Kb — giving the pH, [H⁺] or [OH⁻] and the percent dissociated. A [pH sensor](https://www.instrumentationblog.in/what-is-ph-sensor-how-does-it-work/) measures the same quantity directly."
+intro: "A weak acid only partly dissociates in water, so its pH depends on both the concentration and the acid dissociation constant Ka. This weak acid pH calculator solves the equilibrium exactly with the quadratic formula, also handles weak bases from Kb, and reports [H⁺] or [OH⁻] and the percent dissociated.\n\nStudents use it for ICE table problems, and lab staff use it to predict the reading a [pH sensor](https://www.instrumentationblog.in/what-is-ph-sensor-how-does-it-work/) should give for a prepared solution."
 keywords: [weak acid ph calculator, ph of weak acid, weak base ph calculator, ph from ka and concentration, percent dissociation, acetic acid ph, ice table ph]
 published: 2026-10-30
-updated: 2026-10-30
+updated: 2026-11-25
 variables:
   - id: t
     label: Solution type
@@ -31,6 +31,10 @@ faq:
     a: The same way with Kb — x is then [OH⁻], pOH = −log₁₀ x and pH = 14 − pOH at 25 °C. 0.1 M ammonia (Kb = 1.8 × 10⁻⁵) has pH 11.13.
   - q: Why does dilution increase percent dissociation?
     a: Le Chatelier's principle — diluting shifts the equilibrium towards more ions. 0.1 M acetic acid is 1.3% dissociated; 0.001 M is about 12.5%.
+  - q: "How do I find Ka from a measured pH?"
+    a: "Convert the pH to [H⁺] = 10^(−pH) and use Ka = [H⁺]² ÷ (C − [H⁺]). A 0.050 mol/L acid reading pH 3.40 has [H⁺] = 3.98 × 10⁻⁴ mol/L and Ka = 3.20 × 10⁻⁶."
+  - q: "What is the pH of a sodium acetate solution?"
+    a: "Acetate is a weak base with Kb = Kw ÷ Ka = 5.56 × 10⁻¹⁰. A 0.1 mol/L solution has [OH⁻] = 7.45 × 10⁻⁶ mol/L and pH 8.87 at 25 °C."
 related: [chemistry/pka, chemistry/ph, chemistry/henderson-hasselbalch, chemistry/molarity]
 ---
 
@@ -66,6 +70,41 @@ Water's own ionisation is ignored, which is accurate unless the solution is extr
 | 0.05 mol/L | 3.027 | 1.88% | 10.973 |
 | 0.01 mol/L | 3.382 | 4.15% | 10.618 |
 | 0.001 mol/L | 3.901 | 12.55% | 10.099 |
+
+## Checking the default answer
+
+Put the result back into the equilibrium expression: Ka = x² ÷ (C − x) = (1.3327 × 10⁻³)² ÷ (0.1 − 0.0013327) = 1.800 × 10⁻⁵, which returns the Ka you entered. The shortcut x = √(Ka C) = √(1.8 × 10⁻⁶) = 1.3416 × 10⁻³ mol/L gives pH 2.872. It overestimates [H⁺] by 0.7% and moves the pH by only 0.003, because acetic acid at 0.1 M is barely dissociated.
+
+## Common weak acids at 0.1 mol/L
+
+Ka values are typical 25 °C figures; pH is from the exact quadratic, the last column from the √(Ka C) shortcut.
+
+| Acid | Ka | pH (exact) | Dissociated | pH (shortcut) |
+|---|---|---|---|---|
+| Hydrofluoric acid, HF | 6.8 × 10⁻⁴ | 2.102 | 7.91% | 2.084 |
+| Formic acid, HCOOH | 1.8 × 10⁻⁴ | 2.382 | 4.15% | 2.372 |
+| Benzoic acid, C₆H₅COOH | 6.3 × 10⁻⁵ | 2.606 | 2.48% | 2.600 |
+| Acetic acid, CH₃COOH | 1.8 × 10⁻⁵ | 2.875 | 1.33% | 2.872 |
+| Hypochlorous acid, HOCl | 3.0 × 10⁻⁸ | 4.262 | 0.0548% | 4.261 |
+| Hydrocyanic acid, HCN | 6.2 × 10⁻¹⁰ | 5.104 | 0.00787% | 5.104 |
+
+The shortcut only fails noticeably for the stronger weak acids. For HF it predicts a pH 0.018 units too low, because about 8% of the acid has dissociated and C − x is no longer close to C.
+
+## Finding Ka from a measured pH
+
+In the lab Ka is usually found the other way round. Suppose a calibrated pH meter reads **3.40** in a 0.050 mol/L solution of an unknown weak acid. Then [H⁺] = 10<sup>−3.40</sup> = 3.981 × 10⁻⁴ mol/L, and Ka = x² ÷ (C − x) = **3.20 × 10⁻⁶**, so pKa = 5.50. Calibrate the meter with two buffers that bracket the reading, such as pH 4.01 and 7.00, and measure at the temperature the Ka refers to. A pH electrode responds to hydrogen ion activity, so in concentrated or salty solutions the apparent Ka differs slightly from the tabulated thermodynamic value.
+
+## The pH of a salt such as sodium acetate
+
+The conjugate base of a weak acid is itself a weak base, with Kb = Kw ÷ Ka. For acetate, Kb = 10⁻¹⁴ ÷ (1.8 × 10⁻⁵) = 5.556 × 10⁻¹⁰. Choose weak base, enter that Kb and 0.1 mol/L, and the calculator gives [OH⁻] = 7.453 × 10⁻⁶ mol/L and **pH 8.87**. That is why a sodium acetate solution is mildly alkaline, and why the endpoint of an acetic acid titration with sodium hydroxide sits above pH 7.
+
+## Common mistakes
+
+- **Entering pKa instead of Ka.** A pKa of 4.74 typed into the Ka box describes an absurdly strong acid; convert first with Ka = 10<sup>−pKa</sup>.
+- **Using the conjugate's constant.** Ammonia has Kb = 1.8 × 10⁻⁵, but the ammonium ion is an acid with pKa 9.26; pick the constant that matches the species you dissolved.
+- **Treating a polyprotic acid as one step.** For phosphoric or carbonic acid the first dissociation sets the pH, but the second and third steps matter for speciation and buffering.
+- **Applying it after adding base.** Once part of the acid has been neutralised the solution is a buffer, and the Henderson-Hasselbalch equation is the right tool.
+- **Assuming pKw = 14 at every temperature.** At 50 °C pKw is about 13.26, so the weak base result from 14 + log x drifts by more than half a unit.
 
 ## Notes
 

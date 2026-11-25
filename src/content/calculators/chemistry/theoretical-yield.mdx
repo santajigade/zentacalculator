@@ -2,10 +2,10 @@
 title: Theoretical Yield Calculator (Grams of Product & % Yield)
 description: Calculate the theoretical yield of a reaction in grams from the mass of the limiting reagent, the mole ratio and molar masses — plus the percent yield.
 category: chemistry
-intro: "The theoretical yield is the maximum mass of product a reaction can give if all of the limiting reagent reacts as the balanced equation says. This theoretical yield calculator turns the mass of the limiting reagent into moles, applies the mole ratio and converts back to grams of product — and, if you enter what you actually obtained, gives the percent yield."
+intro: "The theoretical yield is the largest mass of product a reaction can give when all of the limiting reagent reacts exactly as the balanced equation says. This theoretical yield calculator converts the reagent mass to moles, applies the mole ratio and returns grams of product, plus the percent yield.\n\nChemistry students use it for lab reports and stoichiometry homework, and process chemists use it to set batch targets and judge how much product a step loses."
 keywords: [theoretical yield calculator, how to calculate theoretical yield, theoretical yield formula, grams of product calculator, mole ratio yield, percent yield and theoretical yield, stoichiometry yield]
 published: 2026-11-06
-updated: 2026-11-06
+updated: 2026-11-25
 variables:
   - { id: m, label: Mass of limiting reagent, family: mass, unit: g, imperialUnit: g, default: 2, min: 0 }
   - { id: MR, label: Molar mass of limiting reagent, suffix: g/mol, default: 138.12, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: Not for a pure, dry product. A result above 100% usually means the product is wet or contaminated, or the wrong limiting reagent was used.
   - q: What if I don't know which reactant is limiting?
     a: Work out moles ÷ coefficient for each reactant first — the smallest is limiting. The limiting reagent calculator does this for two reactants.
+  - q: "How do I include reagent purity in the theoretical yield?"
+    a: "Multiply the weighed mass by the purity fraction before entering it. 2.00 g of 98% salicylic acid counts as 1.96 g, which gives a theoretical yield of 2.557 g of aspirin."
+  - q: "How do I calculate the overall yield of a multistep synthesis?"
+    a: "Multiply the fractional yields of the steps. Steps of 80%, 85% and 90% give 0.80 × 0.85 × 0.90 = 0.612, an overall yield of 61.2%."
 related: [chemistry/limiting-reagent, chemistry/percent-yield, chemistry/moles, chemistry/molarity]
 ---
 
@@ -65,3 +69,41 @@ Enter the **mass of the limiting reagent**, its **molar mass**, the **coefficien
 - Incomplete reaction or an equilibrium that does not go to completion
 - Side reactions forming other products
 - Losses in filtration, transfer, washing and recrystallisation
+
+## Checking which reagent is limiting
+
+In the aspirin synthesis the salicylic acid is reacted with acetic anhydride (C₄H₆O₃, 102.09 g/mol). A typical recipe adds 5.0 mL of anhydride, which at 1.08 g/mL is 5.40 g or 0.0529 mol. That is 3.65 times the 0.01448 mol of salicylic acid, so the anhydride is in excess and the salicylic acid really is the limiting reagent. Basing the yield on the anhydride would overstate the theoretical yield by the same factor.
+
+## Second example: a 1 : 2 mole ratio
+
+Fermentation turns one glucose into two ethanol: C₆H₁₂O₆ → 2 C₂H₅OH + 2 CO₂. For 50 g of glucose (180.156 g/mol), set r = 1, p = 2 and the product molar mass to 46.069 g/mol:
+
+- Moles of glucose = 50 ÷ 180.156 = 0.27754 mol
+- Moles of ethanol = 0.27754 × 2 ÷ 1 = **0.55507 mol**
+- Theoretical yield = 0.55507 × 46.069 = **25.57 g** of ethanol
+
+So the theoretical ethanol yield is 51.1% of the sugar mass; the rest leaves as CO₂. Yeast also burns some sugar for growth, so real fermentations reach only part of this figure.
+
+## Theoretical yield, atom economy and overall yield
+
+Theoretical yield says how much product the limiting reagent can make. **Atom economy** says how much of all the reactant mass can end up in the product. For aspirin it is 180.16 ÷ (138.12 + 102.09) = **75.0%**, because one acetic acid is made as a by-product for every aspirin. A reaction can have a 100% yield and still a poor atom economy.
+
+In a multistep synthesis the overall yield is the product of the step yields. Three steps at 80%, 85% and 90% give 61.2% overall:
+
+| Steps | 90% per step | 80% per step | 70% per step |
+|---|---|---|---|
+| 1 | 90.0% | 80.0% | 70.0% |
+| 2 | 81.0% | 64.0% | 49.0% |
+| 3 | 72.9% | 51.2% | 34.3% |
+| 5 | 59.0% | 32.8% | 16.8% |
+| 8 | 43.0% | 16.8% | 5.8% |
+
+This is why process chemists fight for every percent in a long route.
+
+## Common mistakes
+
+- **Inverting the mole ratio.** Using r ÷ p instead of p ÷ r in the fermentation example gives 6.39 g instead of 25.57 g, a factor of four too low.
+- **Ignoring reagent purity.** With 98% pure salicylic acid only 1.96 g is reactant, so the theoretical yield drops to 2.557 g and the same 2.10 g gives 82.1%, not 80.5%.
+- **Using the wrong molar mass form.** A hydrate or salt (for example sodium salicylate instead of salicylic acid) has a different molar mass; use the form you actually weighed.
+- **Weighing a damp product.** Solvent left in the crystals inflates the actual yield, sometimes above 100%. Dry to constant mass before weighing.
+- **Basing the calculation on an unbalanced equation.** The coefficients r and p must come from the balanced equation, or the mole ratio is meaningless.

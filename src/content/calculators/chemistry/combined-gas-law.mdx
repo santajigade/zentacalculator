@@ -2,10 +2,10 @@
 title: Combined Gas Law Calculator
 description: Solve P₁V₁/T₁ = P₂V₂/T₂ for any unknown — pressure, volume or temperature of a fixed amount of gas.
 category: chemistry
-intro: "The combined gas law brings Boyle's, Charles's and Gay-Lussac's laws together to show how pressure, volume and temperature of a fixed amount of gas change at the same time."
+intro: "The combined gas law links pressure, volume and absolute temperature for a fixed amount of gas moving between two states, merging the laws of Boyle, Charles and Gay-Lussac. This combined gas law calculator solves P₁V₁/T₁ = P₂V₂/T₂ for whichever value is missing.\n\nChemistry students, lab technicians correcting gas volumes to standard conditions and engineers working with compressors, balloons and gas meters use it to predict a new volume or pressure."
 keywords: [combined gas law, p1v1/t1 = p2v2/t2, gas law calculator, pressure volume temperature]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-25
 variables:
   - { id: P1, label: Initial pressure (absolute), family: pressure, unit: kPa, imperialUnit: psi, default: 101.325, min: 0 }
   - { id: V1, label: Initial volume, family: volume, unit: L, default: 10, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: "Absolute pressure and absolute temperature. The calculator converts units automatically."
   - q: "Can I use it for real gases?"
     a: "Yes for most gases near room conditions. At very high pressure or low temperature, real-gas corrections are needed."
+  - q: "How do I convert a gas volume to STP?"
+    a: "Treat STP as the second state: V = V₁ × (P₁ ÷ 100 kPa) × (273.15 K ÷ T₁). The default sample, 5.66 L at 200 kPa and 60 °C, is 9.28 L at IUPAC STP, the same as the original 10 L at 101.325 kPa and 25 °C, since both describe the same moles."
+  - q: "Can the combined gas law be used for a closed rigid tank?"
+    a: "Yes. With V₁ = V₂ the volumes cancel and it reduces to P₁ ÷ T₁ = P₂ ÷ T₂, so pressure rises in proportion to absolute temperature. Enter the same value for both volumes and solve for the final pressure."
 related: [chemistry/boyles-law, chemistry/charles-law, physics/ideal-gas-law]
 ---
 
@@ -40,6 +44,8 @@ Enter **five** of the six values (initial and final pressure, volume and tempera
 10 L of air at 101.325 kPa and 25 °C is compressed to 200 kPa and warms to 60 °C:
 
 V₂ = 101.325 × 10 × 333.15 ÷ (298.15 × 200) = **5.66 L**
+
+It helps to split the answer into two factors. The pressure ratio P₁ ÷ P₂ = 0.5066 roughly halves the volume, and the temperature ratio T₂ ÷ T₁ = 1.1174 expands it again by about 12%, so V₂ = 10 × 0.5066 × 1.1174 = 5.661 L. The sample holds n = P₁V₁ ÷ (R T₁) = 0.409 mol throughout, but the combined law never needs that number because it cancels between the two states.
 
 ## Standard conditions
 
@@ -64,11 +70,40 @@ This is how gas flow is billed and compared in industry.
 
 If the amount of gas changes too, use the full [ideal gas law](/physics/ideal-gas-law/): PV = nRT. The combined gas law is the special case where n is constant.
 
-## Common errors
+## Second example: a weather balloon climbing to 10 km
 
-- Using **gauge pressure** instead of absolute.
-- Using **°C instead of kelvin**.
-- Mixing units — keep P₁ and P₂ in the same unit, and V₁ and V₂ in the same unit. The calculator handles this for you.
+A sounding balloon is filled with 5.00 m³ of helium at 101.325 kPa and 15 °C. Near 10 km the standard atmosphere is about 26.44 kPa and −50 °C (223.15 K). If the envelope stretches freely so the gas stays at the outside pressure and cools to the outside temperature:
+
+V₂ = 5.00 × 101.325 × 223.15 ÷ (288.15 × 26.44) = **14.84 m³**
+
+The pressure drop alone would almost quadruple the volume; the cold air takes back part of that, leaving a factor of 2.97. Balloons are filled loosely for exactly this reason.
+
+## Breathing gas: BTPS to STPD
+
+Lung function labs report volumes in two ways. Exhaled air is at body temperature, ambient pressure and saturated with water vapour (BTPS, 37 °C), while oxygen uptake is quoted dry at 0 °C and 101.325 kPa (STPD). Water vapour at 37 °C exerts 6.27 kPa, so the dry gas pressure is 95.06 kPa. A 5.00 L breath at BTPS becomes
+
+V<sub>STPD</sub> = 5.00 × (95.06 ÷ 101.325) × (273.15 ÷ 310.15) = **4.131 L**
+
+which is 17.4% smaller. Gas meters, flow computers and spirometers all apply the same P and T ratios automatically.
+
+## Final volume of 10 L of gas starting at 101.325 kPa and 25 °C
+
+| Final pressure | 0 °C | 25 °C | 60 °C | 100 °C |
+|---|---|---|---|---|
+| 50 kPa | 18.57 L | 20.27 L | 22.64 L | 25.36 L |
+| 101.325 kPa | 9.16 L | 10.00 L | 11.17 L | 12.52 L |
+| 200 kPa | 4.64 L | 5.07 L | 5.66 L | 6.34 L |
+| 500 kPa | 1.86 L | 2.03 L | 2.26 L | 2.54 L |
+
+Reading across a row shows Charles's law, down a column shows Boyle's law, and the default case sits at 200 kPa and 60 °C.
+
+## Common mistakes
+
+- **Entering gauge pressure.** If the 200 kPa final pressure were a gauge reading, the absolute value is 301.325 kPa and the volume becomes 3.76 L, not 5.66 L.
+- **Dividing by Celsius temperatures.** Using 25 and 60 directly gives 12.16 L, more than double the right answer, and 0 °C would mean dividing by zero.
+- **Ignoring water vapour.** Gas collected over water or exhaled breath is partly H₂O, which condenses on cooling; correct the dry gas partial pressure, not the total.
+- **Letting the amount of gas change.** Leaks, reactions, gas dissolving in a liquid or condensation all break the fixed n assumption; use PV = nRT for each state instead.
+- **Reading the temperature too early.** A gas compressed quickly heats up and then cools towards ambient, so the pressure drifts until the gas and vessel reach the same temperature.
 
 ## Special cases
 

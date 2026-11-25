@@ -2,10 +2,10 @@
 title: Potential Energy Calculator (PE = mgh)
 description: Calculate gravitational potential energy from mass and height — or the height for a given energy.
 category: physics
-intro: "Gravitational potential energy is the energy an object has because of its height. Lifting a mass stores energy that is released as it falls — the principle behind hydropower and pumped storage."
+intro: "Gravitational potential energy is the energy a mass gains when it is raised against gravity, equal to mass times g times the height gained. This potential energy calculator gives PE = m g h in joules, kilojoules or kilowatt hours, or the height needed for a chosen energy.\n\nStudents use it for energy conservation problems, and engineers use it to size lifts, cranes, hoists and pumped storage or small hydro schemes."
 keywords: [potential energy, pe = mgh, gravitational potential energy, joules, energy calculator, height]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-25
 variables:
   - { id: m, label: Mass, family: mass, unit: kg, imperialUnit: lb, default: 1000, min: 0 }
   - { id: h, label: Height, family: length, unit: m, imperialUnit: ft, default: 50 }
@@ -24,6 +24,10 @@ faq:
     a: "PE = m × g × h: mass × gravitational acceleration (9.81 m/s²) × height."
   - q: "How much energy is needed to lift 1 kg by 1 m?"
     a: "About 9.81 joules."
+  - q: "Does the path taken change the potential energy?"
+    a: "No. Gravity is a conservative force, so the change in potential energy depends only on the start and end heights. A ramp, a staircase or a straight lift to the same height all give the same m g h, although friction may make the work you do larger."
+  - q: "How high must 1 tonne be lifted to store 1 kWh?"
+    a: "About 367 m, because h = 3,600,000 J ÷ (1,000 kg × 9.80665 m/s²) = 367.1 m."
 related: [physics/kinetic-energy, physics/work-and-power, engineering/pump-power]
 ---
 
@@ -39,7 +43,17 @@ Enter the **mass** and **height** to get the potential energy, or enter the ener
 
 1,000 kg (1 m³) of water held 50 m above a turbine:
 
-PE = 1,000 × 9.81 × 50 = **490 kJ** = 0.136 kWh
+PE = 1,000 × 9.80665 × 50 = 490,332 J = **490.3 kJ** = 0.1362 kWh
+
+Each metre of height adds m g = 9,807 J for this tonne of water. Released through a turbine and generator with 88% overall efficiency, the 0.1362 kWh becomes about 0.120 kWh of electricity. Dropped freely, the same water would hit the bottom at √(2 g h) = 31.32 m/s, because all of the 490.3 kJ has turned into kinetic energy.
+
+### How high for one kilowatt hour?
+
+Turning the formula round, h = PE ÷ (m g). To store 1 kWh (3.6 MJ) in one tonne you must lift it 3,600,000 ÷ (1,000 × 9.80665) = **367.1 m**. That is why gravity storage needs very large masses or very large height differences.
+
+## Energy and power for a lift
+
+The calculator gives energy; dividing by time gives power. Raising the default 1,000 kg through 50 m in 40 s needs 490.3 kJ ÷ 40 s = 12.26 kW of mechanical power. With a 70% efficient motor and gearbox the electrical demand is about 17.5 kW. Counterweights in real lifts balance the car and part of the load, so the motor only lifts the difference.
 
 ## Potential energy examples
 
@@ -74,3 +88,30 @@ If dropped, the object's potential energy turns into kinetic energy. Ignoring ai
 ## Height is measured from a reference
 
 Potential energy is always relative to a chosen zero level, such as the floor or the turbine.
+
+## How g changes the answer
+
+The calculator uses standard gravity, 9.80665 m/s². The same 1,000 kg raised 50 m stores:
+
+| Location | g | Potential energy |
+|---|---|---|
+| Earth (standard) | 9.80665 m/s² | 490.3 kJ |
+| Earth at the equator | 9.78 m/s² | 489.0 kJ |
+| Earth at the poles | 9.832 m/s² | 491.6 kJ |
+| Moon | 1.62 m/s² | 81.0 kJ |
+| Mars | 3.71 m/s² | 185.5 kJ |
+| Jupiter | 24.79 m/s² | 1,239.5 kJ |
+
+Across Earth's surface the spread is only about half a percent, which is smaller than most height measurement errors. On the Moon the same lift takes about a sixth of the energy.
+
+## When m g h stops being accurate
+
+The formula assumes g is constant over the height range, which is excellent for buildings, dams and mountains. For large heights use the exact change G M m (1 ÷ R<sub>1</sub> − 1 ÷ R<sub>2</sub>). Lifting a mass to 400 km altitude, the exact value is only R ÷ (R + h) = 0.941 of m g h (taking g = G M ÷ R² at the surface), so the simple formula overstates the energy by about 6.3%.
+
+## Common mistakes
+
+- **Measuring height to the wrong point.** Use the vertical rise of the centre of mass. Counting a 2 m tall, 1 tonne crate from its top instead of its middle adds 9.8 kJ that is not really there.
+- **Using the length of a slope.** Only vertical height counts; a 100 m ramp at 30° raises a load 50 m.
+- **Entering grams or pounds as kilograms.** The SI formula needs kilograms, metres and m/s² to give joules.
+- **Mixing kJ and kWh.** 1 kWh is 3,600 kJ, so 490.3 kJ is only 0.136 kWh, not 490 kWh.
+- **Treating potential energy as absolute.** Only differences matter, so pick one reference level and use it for every height in the problem.

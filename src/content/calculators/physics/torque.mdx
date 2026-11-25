@@ -2,10 +2,10 @@
 title: Torque Calculator (τ = F × r × sin θ)
 description: Calculate torque from force, lever arm length and angle, or the force needed to reach a target torque with a spanner or wrench — in N·m, lbf·ft or kgf·m.
 category: physics
-intro: "Torque is the turning effect of a force: the force multiplied by its perpendicular distance from the pivot. This torque calculator gives the torque from the force, the lever arm length and the angle between them, or works backwards to the force or spanner length needed for a target torque, in N·m, lbf·ft or kgf·m."
+intro: "Torque is the turning effect of a force, equal to the force times its perpendicular distance from the pivot. This torque calculator finds it from the force, lever arm length and the angle between them, and also shows the effective perpendicular lever arm.\n\nMechanics use it to check spanner and torque wrench settings, engineers to size levers, cranks and motors, and students to solve moment and lever balance problems in N·m, lbf·ft or kgf·m."
 keywords: [torque calculator, torque formula, torque equation, force times distance, moment of force calculator, wrench torque calculator, lever arm, newton metre]
 published: 2026-10-27
-updated: 2026-11-08
+updated: 2026-11-25
 variables:
   - { id: F, label: Force, family: force, unit: N, imperialUnit: lbf, default: 200, min: 0 }
   - { id: r, label: Lever arm length, family: length, unit: m, imperialUnit: ft, default: 0.3, min: 0 }
@@ -24,6 +24,10 @@ faq:
     a: Both have units of newton-metres, but torque is a turning effect (a vector along the axis of rotation), while work is energy (a scalar), normally written in joules.
   - q: How do I convert N·m to lbf·ft and kgf·m?
     a: 1 N·m = 0.7376 lbf·ft = 0.10197 kgf·m. So 100 N·m ≈ 73.8 lbf·ft ≈ 10.2 kgf·m.
+  - q: "Does the angle in the torque formula mean the angle to the ground?"
+    a: "No, it is the angle between the force and the lever. A 10 kg weight on a 0.3 m bar tilted 30° above horizontal meets the bar at 60°, giving 25.48 N·m rather than 29.42 N·m on a level bar."
+  - q: "How do I correct a torque wrench setting for an extension?"
+    a: "Set the wrench to target × L ÷ (L + extension), with L measured from the drive to the grip. For 60 N·m with a 40 cm wrench and a 5 cm in-line extension, set 53.3 N·m."
 related: [physics/thin-lens, conversion/torque-converter, engineering/torque-power-speed, engineering/bolt-torque, physics/rotational-kinetic-energy]
 ---
 
@@ -79,6 +83,38 @@ A lever balances when the torques on both sides are equal: F₁ × r₁ = F₂ �
 | Bicycle pedal (hard effort) | 50–100 N·m |
 | Car wheel nuts | 80–140 N·m |
 | Small car engine (peak) | 100–250 N·m |
+
+## Second scenario: a weight on a tilted bar
+
+The angle in the formula is between the force and the lever, not between the lever and the ground. Hang a 10 kg mass (98.07 N) at the end of a 0.3 m bar. With the bar horizontal the angle is 90°, so τ = 98.07 × 0.3 = **29.42 N·m**. Raise the bar to 30° above horizontal and gravity, which still points straight down, now meets the bar at 60°: τ = 98.07 × 0.3 × sin 60° = **25.48 N·m**. Entering 30° here would give half the torque, which is the most common error with this formula.
+
+## Torque wrench extensions
+
+A crowfoot or adapter that sticks out 5 cm in line with a 40 cm torque wrench lengthens the lever. Set to 60 N·m, the bolt actually receives 60 × (0.40 + 0.05) ÷ 0.40 = **67.5 N·m**. To deliver 60 N·m, set the wrench to 60 × 0.40 ÷ 0.45 = **53.3 N·m**. An adapter turned at 90° to the handle adds no length and needs no correction. Without any adapter, 60 N·m on this wrench needs 150 N at the grip.
+
+## Converting torque units
+
+The default answer of 60 N·m converts as shown in the middle row:
+
+| N·m | lbf·ft | lbf·in | kgf·m |
+|---|---|---|---|
+| 10 N·m | 7.38 lbf·ft | 88.5 lbf·in | 1.020 kgf·m |
+| 25 N·m | 18.44 lbf·ft | 221.3 lbf·in | 2.549 kgf·m |
+| 60 N·m | 44.25 lbf·ft | 531.0 lbf·in | 6.118 kgf·m |
+| 100 N·m | 73.76 lbf·ft | 885.1 lbf·in | 10.197 kgf·m |
+| 250 N·m | 184.39 lbf·ft | 2,212.7 lbf·in | 25.493 kgf·m |
+
+## How torque is measured
+
+Click type torque wrenches release at a preset value, beam and dial wrenches show the torque as it rises, and electronic wrenches read a strain gauge in the shaft. Workshop wrenches are usually certified to within about 4% of reading and should be checked on a calibrator every year or after a drop. On test benches, rotating torque is measured with an in-line torque transducer between motor and load, and static torque with a reaction sensor or with a known weight hung on a measured arm, exactly as in the scenario above.
+
+## Common mistakes
+
+- **Using the angle to the horizontal** instead of the angle between the force and the lever, as in the tilted bar example.
+- **Measuring the lever from the wrong point.** The arm runs from the centre of the bolt or axle to the line of the force, not from the end of the jaw.
+- **Confusing lbf·ft with lbf·in.** One lbf·ft is 12 lbf·in, so a spec of 60 lbf·in is only 6.78 N·m.
+- **Treating kgf as a mass.** A kgf·m is 9.80665 N·m; entering a mass in kg as the force gives a torque about ten times too small.
+- **Forgetting the friction share in bolting.** Most of a tightening torque is spent on thread and head friction, so the same torque gives very different clamp loads with dry and oiled threads.
 
 ## Practical notes
 

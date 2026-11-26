@@ -5,7 +5,7 @@ category: engineering
 intro: "Gauge pressure is measured relative to the surrounding air, absolute pressure relative to a perfect vacuum, and the difference is local atmospheric pressure. This absolute to gauge pressure calculator converts between them, with vacuum as negative gauge pressure, as explained in [absolute vs gauge pressure](https://www.instrumentationblog.in/absolute-vs-gauge-pressure/).\n\nInstrument engineers, process operators and HVAC technicians use it when a transmitter, datasheet or gas calculation uses a different reference from the gauge on the pipe."
 keywords: [absolute to gauge pressure calculator, gauge to absolute pressure, psia to psig, bar g to bar a, vacuum pressure calculator, atmospheric pressure altitude, absolute pressure formula]
 published: 2026-11-05
-updated: 2026-11-17
+updated: 2026-11-26
 variables:
   - { id: pg, label: Gauge pressure (negative = vacuum), family: pressure, unit: bar, imperialUnit: psi, default: 2, min: -1e7 }
   - { id: z, label: Altitude above sea level, family: length, unit: m, imperialUnit: ft, default: 0, min: -500, max: 11000 }
@@ -29,6 +29,10 @@ faq:
     a: "A gauge transmitter whose reference side is sealed at about 1 atm instead of vented. It is used where moisture could enter a vent, but it ignores weather and altitude changes in atmospheric pressure."
   - q: "How do I convert inches of mercury vacuum to absolute pressure?"
     a: "Multiply the vacuum reading by 33.864 to get mbar, then subtract it from atmospheric pressure. At sea level, 25 inHg vacuum is 25 × 33.864 = 846.6 mbar below 1,013.25 mbar, so the absolute pressure is about 166.7 mbar(a)."
+  - q: "Does a compression ratio use gauge or absolute pressure?"
+    a: "Absolute. A compressor from 0.2 bar(g) to 6 bar(g) at sea level has a ratio of (6 + 1.013) ÷ (0.2 + 1.013) = 5.78, not 30. At 1,500 m the same gauge readings give 6.55."
+  - q: "At what temperature does water boil under vacuum?"
+    a: "It depends on the absolute pressure. At sea level a reading of −0.8 bar(g) is about 213 mbar(a), where water boils near 62 °C; at 1,500 m the same gauge reading is only 46 mbar(a) and water boils near 31 °C."
 related: [engineering/hydrostatic-pressure, engineering/gas-flow-correction, engineering/manometer, engineering/compressor-power]
 ---
 
@@ -100,6 +104,24 @@ A rough vacuum pump that pulls 50 mbar(a) is already at about 95% vacuum, while 
 ## Checking a gauge against a barometer
 
 To check that a gauge transmitter and an absolute transmitter agree, read a local barometer and add its value to the gauge reading. With the default 2 bar(g) and a barometer showing 1,005 mbar, the absolute transmitter should read 3.005 bar(a), not the 3.01325 bar(a) the standard atmosphere predicts. The 8.3 mbar difference is weather, not a calibration fault.
+
+## Pressure ratios need absolute values
+
+A ratio of pressures is meaningless in gauge units. An air compressor drawing at 0.2 bar(g) and discharging at 6 bar(g) would appear to have a ratio of 30. In absolute terms at sea level it is (6 + 1.013) ÷ (0.2 + 1.013) = **5.78**. The same gauge readings on a plant at 1,500 m, where the atmosphere is 0.8456 bar, give a ratio of **6.55**, because the absolute suction pressure is lower. With air drawn in at 30 °C, the ideal (isentropic) discharge temperature T₂ = T₁ × r<sup>0.286</sup> rises from 227 °C at sea level to 245 °C at altitude, which is why compressor and blower ratings are always quoted against absolute inlet conditions.
+
+## Boiling point of water at a vacuum reading
+
+The temperature at which water boils depends on the absolute pressure, so a vacuum gauge alone does not fix it. Saturation temperatures from the Antoine equation:
+
+| Gauge reading | At sea level | At 1,500 m |
+|---|---|---|
+| −0.3 bar(g) | 713 mbar(a), 90.5 °C | 546 mbar(a), 83.6 °C |
+| −0.5 bar(g) | 513 mbar(a), 82.0 °C | 346 mbar(a), 72.5 °C |
+| −0.6 bar(g) | 413 mbar(a), 76.7 °C | 246 mbar(a), 64.6 °C |
+| −0.7 bar(g) | 313 mbar(a), 70.2 °C | 146 mbar(a), 53.4 °C |
+| −0.8 bar(g) | 213 mbar(a), 61.5 °C | 46 mbar(a), 31.3 °C |
+
+At −0.8 bar(g) the two sites differ by 30 °C, enough to decide whether an evaporator boils or a pump suction flashes.
 
 ## Common mistakes
 

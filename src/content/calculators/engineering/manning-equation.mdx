@@ -5,7 +5,7 @@ category: engineering
 intro: "The Manning equation is the standard formula for uniform flow in open channels, ditches and part-full gravity drains, linking velocity to roughness, hydraulic radius and slope. This Manning equation calculator works in SI units for a rectangular channel.\n\nCivil, drainage and wastewater engineers use it to size channels and check capacity, alongside [open channel flow measurement](https://www.instrumentationblog.in/open-channel-flow-measurement/) with a [Parshall flume](https://www.instrumentationblog.in/parshall-flume-open-channel-flow/)."
 keywords: [manning equation calculator, open channel flow calculator, manning formula, hydraulic radius calculator, channel flow rate, manning n values]
 published: 2026-10-29
-updated: 2026-11-16
+updated: 2026-11-26
 variables:
   - { id: nm, label: Manning roughness (n), default: 0.013, min: 0, decimals: 4 }
   - { id: b, label: Channel bottom width, family: length, unit: m, imperialUnit: ft, default: 2, min: 0 }
@@ -35,6 +35,10 @@ faq:
     a: "Fr = V ÷ √(g y) compares flow velocity with the speed of a surface wave. Below 1 the flow is subcritical and calm; above 1 it is supercritical and fast. The default channel has Fr = 0.53. Designs close to Fr = 1 are avoided because the surface becomes unstable and wavy."
   - q: "What velocity keeps a channel from silting up?"
     a: "A common design rule is a self-cleansing velocity of at least about 0.6 to 0.9 m/s at normal flow for sewers and storm drains. Unlined earth channels also have an upper limit, often around 0.6 to 1.0 m/s, above which the bed starts to erode."
+  - q: "What width to depth ratio gives the most flow in a rectangular channel?"
+    a: "A width of twice the depth, which gives the smallest wetted perimeter for the area. Reshaping a 2 m × 0.5 m concrete channel at 0.1% slope to 1.414 m × 0.707 m raises the flow from 1.169 to 1.216 m³/s with the same 1 m² of area."
+  - q: "How much does weed growth reduce channel capacity?"
+    a: "Flow falls in proportion to 1/n. If a concrete channel (n = 0.013) becomes weedy with n = 0.030, the flow at the same depth drops to 43% of the clean value, and the depth for the original flow rises from 0.5 m to about 0.91 m in the default channel."
 related: [engineering/api-gravity, engineering/weir-flow, engineering/hazen-williams, engineering/darcy-weisbach-head-loss, engineering/pipe-flow-velocity]
 ---
 
@@ -97,6 +101,35 @@ The same 2 m concrete channel (n = 0.013, slope 0.1%) must carry **2 m³/s**. Cl
 | 1% (1 in 100) | 3.698 m/s | 3.698 m³/s | 1.67 |
 
 Velocity rises with the square root of slope, so doubling the slope gives only 41% more flow. Steep channels quickly become supercritical (Fr above 1), with standing waves and hydraulic jumps where the slope eases.
+
+## Best width to depth ratio
+
+For a fixed flow area, the channel carries the most water when the wetted perimeter is smallest, because that gives the largest hydraulic radius. For a rectangle this happens when the width is twice the depth. The default channel (2 m × 0.5 m, area 1 m²) has a perimeter of 3.0 m. Reshaping the same 1 m² to 1.414 m wide by 0.707 m deep cuts the perimeter to 2.828 m, raises R to 0.3536 m and lifts the flow to **1.216 m³/s**, 4.0% more for the same excavation area:
+
+| Width × depth | b/y | Wetted perimeter | R | Flow |
+|---|---|---|---|---|
+| 1.000 m × 1.000 m | 1.00 | 3.000 m | 0.3333 m | 1.169 m³/s |
+| 1.414 m × 0.707 m | 2.00 | 2.828 m | 0.3536 m | 1.216 m³/s |
+| 2.000 m × 0.500 m | 4.00 | 3.000 m | 0.3333 m | 1.169 m³/s |
+| 3.000 m × 0.333 m | 9.00 | 3.667 m | 0.2727 m | 1.023 m³/s |
+| 4.000 m × 0.250 m | 16.00 | 4.500 m | 0.2222 m | 0.892 m³/s |
+
+The curve is flat near the optimum, so practical designs often choose a wider, shallower section for easier maintenance and a lower water level, at a small cost in capacity.
+
+## How roughness changes capacity
+
+Same 2 m × 0.5 m section at 0.1% slope, with the share of the clean concrete flow:
+
+| Surface condition | n | Velocity | Flow | Share |
+|---|---|---|---|---|
+| Smooth plastic lining | 0.011 | 1.382 m/s | 1.382 m³/s | 118% |
+| Finished concrete | 0.013 | 1.169 m/s | 1.169 m³/s | 100% |
+| Rough or worn concrete | 0.016 | 0.950 m/s | 0.950 m³/s | 81% |
+| Clean earth | 0.022 | 0.691 m/s | 0.691 m³/s | 59% |
+| Earth with weeds | 0.030 | 0.507 m/s | 0.507 m³/s | 43% |
+| Heavy weed growth | 0.040 | 0.380 m/s | 0.380 m³/s | 32% |
+
+Flow is inversely proportional to n. A concrete channel that has silted and grown weeds to n = 0.030 carries only 0.507 m³/s at the same depth; to pass the original 1.169 m³/s the water must rise to 0.910 m, which can overtop a channel built with little freeboard.
 
 ## How it is used in practice
 

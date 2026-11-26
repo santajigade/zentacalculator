@@ -5,12 +5,9 @@ physics/ideal-gas-law
 physics/speed-distance-time
 chemistry/moles
 chemistry/cell-potential
-chemistry/gibbs-free-energy
 chemistry/raoults-law
 chemistry/specific-heat
-chemistry/half-life
 chemistry/henderson-hasselbalch
-chemistry/boyles-law
 chemistry/henrys-law
 chemistry/ph
 chemistry/arrhenius-equation

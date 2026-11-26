@@ -5,7 +5,7 @@ category: electronics
 intro: "Signal-to-noise ratio compares the signal you want with the noise riding on it, usually in decibels. This SNR calculator turns RMS signal and noise voltages into SNR in dB, the power ratio and the ENOB, as explained in this [signal-to-noise ratio guide](https://www.instrumentationblog.in/signal-to-noise-ratio-snr-calculator/).\n\nInstrument, audio and RF engineers use it to judge how small a change a measurement can resolve and how many ADC bits are really useful. See also [decibels in electronics](https://www.instrumentationblog.in/decibel-in-electronics-db-dbm/)."
 keywords: [snr calculator, signal to noise ratio, snr in db, enob calculator, signal to noise formula, noise floor, 20 log snr]
 published: 2026-10-27
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: Vs, label: Signal (RMS), family: voltage, unit: mV, default: 1000, min: 0 }
   - { id: Vn, label: Noise (RMS), family: voltage, unit: mV, default: 1, min: 0.0000001 }
@@ -29,6 +29,10 @@ faq:
     a: "For random noise, averaging N samples improves SNR by 10 log₁₀ N dB: 4 samples give about 6 dB (one extra effective bit), 16 samples 12 dB and 256 samples about 24 dB. It does not remove hum or other noise that is correlated with the samples."
   - q: "What is the difference between SNR and SINAD?"
     a: "SNR counts only noise. SINAD (signal to noise and distortion) also counts harmonics of the signal, so it is always equal to or lower than SNR. ADC datasheets compute ENOB from SINAD."
+  - q: "Why does my ADC give a lower SNR than the datasheet?"
+    a: "Datasheet SNR is measured with a signal near full scale. An ideal 16 bit ADC reaches 98.08 dB at full scale, but a signal at 1/10 of full scale (−20 dBFS) gets only 78.08 dB, because the noise floor stays put while the signal shrinks. Scale the input to use most of the range."
+  - q: "How do I combine noise from several sources?"
+    a: "Add uncorrelated noise as √(n₁² + n₂² + ...). 1 mV and 0.5 mV combine to 1.118 mV, not 1.5 mV. Correlated noise such as hum from a common source adds directly, which is why it is treated separately."
 related: [physics/decibel, electronics/adc-resolution, electronics/rc-filter, electronics/op-amp-gain]
 ---
 
@@ -95,6 +99,29 @@ Averaging N readings of a steady signal reduces uncorrelated noise by √N, whic
 | 1,024 | 32 × | +30.1 dB | 90.1 dB | 14.7 |
 
 Averaging only helps against random noise. Mains hum and other correlated noise need filtering or an integration time that is a whole number of mains cycles.
+
+## Adding noise from several sources
+
+Uncorrelated noise sources add as the root of the sum of squares, not arithmetically. Suppose the default signal (1,000 mV RMS) has 1 mV of sensor noise, a preamplifier adds 0.5 mV, and a 12 bit ADC on a 2.5 V range adds quantisation noise of one LSB ÷ √12 = 0.6104 ÷ 3.464 = 0.176 mV:
+
+- Total noise = √(1² + 0.5² + 0.176²) = **1.132 mV**
+- SNR = 20 log₁₀(1,000 ÷ 1.132) = **58.92 dB**, 1.08 dB below the sensor alone
+- Halving the amplifier noise to 0.25 mV only recovers the SNR to 59.61 dB
+
+The largest source dominates, so effort is best spent on the sensor here, not on a quieter amplifier or a bigger ADC.
+
+## SNR from an amplifier noise density
+
+Datasheets give voltage noise density in nV/√Hz. Multiply by the square root of the noise bandwidth, which is 1.57 times the −3 dB frequency for a single pole filter, then by the gain. For an op amp with 10 nV/√Hz, a gain of 100 and a 10 mV input signal (1 V out):
+
+| −3 dB bandwidth | Noise bandwidth | Output noise | SNR | ENOB |
+|---|---|---|---|---|
+| 100 Hz | 157 Hz | 12.5 µV | 98.0 dB | 16.0 |
+| 1,000 Hz | 1,570 Hz | 39.6 µV | 88.0 dB | 14.3 |
+| 10,000 Hz | 15,700 Hz | 125.3 µV | 78.0 dB | 12.7 |
+| 100,000 Hz | 157,000 Hz | 396.2 µV | 68.0 dB | 11.0 |
+
+Every tenfold cut in bandwidth gains 10 dB. Resistor and current noise add on top of this, so treat the figures as the best case.
 
 ## How noise is measured in practice
 

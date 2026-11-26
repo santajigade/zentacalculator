@@ -5,7 +5,7 @@ category: engineering
 intro: "A bubbler pushes a small flow of air down a dip tube, and the pressure needed to release bubbles equals the liquid head above the tube end. This bubbler level calculator turns that back pressure into level, as described in [bubbler level measurement with a purge](https://www.instrumentationblog.in/bubbler-level-measurement-purge/).\n\nInstrument engineers use it to range the transmitter and check readings. Bubblers suit sludge, slurries and corrosive liquids, because only the dip tube touches the process."
 keywords: [bubbler level calculator, bubbler level measurement, purge level measurement, dip tube level calculation, back pressure to level, bubbler tube level formula, air purge level system]
 published: 2026-11-15
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: Pb, label: Dip tube back pressure (gauge), family: pressure, unit: mbar, imperialUnit: inH2O, default: 250, min: 0, help: 'Measured by the transmitter on the purge line, relative to the tank vapour space (an open tank: relative to atmosphere).' }
   - { id: sg, label: Liquid specific gravity, default: 1.05, min: 0 }
@@ -31,6 +31,10 @@ faq:
     a: "Yes, with a DP transmitter: the HP side connects to the purge line and the LP side to the vapour space. The DP is then the liquid head alone, and the gas supply pressure must exceed the tank pressure plus the maximum head."
   - q: Can bubblers measure density as well as level?
     a: "Yes. Two dip tubes ending at a known vertical distance apart give a pressure difference that depends only on density: ρ = ΔP ÷ (g × Δz). This is used in sugar, mining and chemical tanks, and the density can then compensate the level reading."
+  - q: "What mA output should a bubbler transmitter give at a known level?"
+    a: "Output = 4 + 16 × back pressure ÷ URV. For SG 1.05, a tube end 0.1 m above the bottom and a 3 m maximum, the URV is 298.6 mbar, so a reading of 250 mbar (level 2.528 m) gives 17.40 mA."
+  - q: "How much purge gas does a bubbler use in a year?"
+    a: "At 0.5 L/min a bubbler uses 0.72 m³ of free gas a day, about 263 m³ a year. Instrument air makes this trivial, but on bottled nitrogen it decides how often cylinders are changed."
 related: [engineering/hydrostatic-pressure, engineering/dp-level-range, engineering/interface-level, engineering/ultrasonic-level, engineering/vertical-tank-volume, engineering/4-20ma-scaling]
 ---
 
@@ -80,6 +84,30 @@ Two tubes whose ends are 1.000 m apart vertically give a pressure difference tha
 ## How a bubbler is installed
 
 A typical panel has a filter regulator, a **differential pressure flow regulator** or needle valve with a small rotameter, a check valve and the pressure transmitter, teed into the purge line close to the tank. The dip tube is usually 15 to 25 mm pipe in a material that suits the liquid, often with a notch or a 45° cut at the end so bubbles leave evenly instead of pulsing. Instrument air is common; nitrogen is used where air would oxidise or contaminate the product. Because the transmitter never touches the liquid, it can be mounted at a convenient height, and the tube can be rodded out or blown down if it fouls.
+
+## Transmitter output across the range
+
+With the transmitter ranged 0 to 298.6 mbar, 4 mA corresponds to the level at the tube end (0.1 m) and 20 mA to the 3 m maximum. The default reading of 250 mbar gives 4 + 16 × 250 ÷ 298.6 = **17.40 mA**:
+
+| Level from bottom | Back pressure | Percent of 3 m | Output |
+|---|---|---|---|
+| 0.1 m | 0.0 mbar | 3.3% | 4.00 mA |
+| 0.5 m | 41.2 mbar | 16.7% | 6.21 mA |
+| 1.0 m | 92.7 mbar | 33.3% | 8.97 mA |
+| 1.5 m | 144.2 mbar | 50.0% | 11.72 mA |
+| 2.0 m | 195.6 mbar | 66.7% | 14.48 mA |
+| 2.5 m | 247.1 mbar | 83.3% | 17.24 mA |
+| 3.0 m | 298.6 mbar | 100.0% | 20.00 mA |
+
+Below 0.1 m the tube end is uncovered, the back pressure stays at zero and the output sits at 4 mA, so a bubbler cannot tell 0.1 m from an empty tank.
+
+## Second example: density drift with temperature
+
+The same liquor is heated and its SG falls to 1.02. The level is still 2.528 m, but the head of 2.428 m now produces only 242.9 mbar. A transmitter or DCS block still configured for SG 1.05 reports 2.459 m, **69 mm low**. If the density varies this much in service, add a second dip tube and compensate, or configure the density at the normal operating temperature.
+
+## Purge gas consumption
+
+A steady 0.5 L/min of free air is 0.72 m³ a day, or about 263 m³ a year per tank. That is small for instrument air but worth counting when nitrogen is bought in cylinders, and a reason to fit a constant flow regulator rather than leaving a needle valve wide open.
 
 ## Common mistakes
 

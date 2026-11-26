@@ -5,7 +5,7 @@ category: engineering
 intro: "A mass balance says that what enters a mixing point must leave it, both in total and for each component. This mass balance calculator combines two streams of different flow and concentration, giving the outlet flow and strength, and the flow of the second stream needed for a target blend.\n\nProcess engineers use it to size dilution water for acids and caustic, to blend products and to check plant data; students use it for material balance problems."
 keywords: [mass balance calculator, mixing two streams, blending calculation, material balance calculator, mixing concentration calculator, dilution water flow, component mass balance]
 published: 2026-11-15
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: m1, label: Stream 1 mass flow, family: massflow, unit: kgh, imperialUnit: lbh, default: 1200, min: 0 }
   - { id: x1, label: Stream 1 concentration (mass fraction), family: percent, unit: '%', default: 32, min: 0, max: 1 }
@@ -30,6 +30,10 @@ faq:
     a: "Only if the densities are equal and the liquids do not shrink on mixing. Concentrated acids, caustic and alcohol solutions change volume when diluted, so convert volume flows to mass with each stream's density first, or use mass flow meters."
   - q: What is the lever rule?
     a: "A graphical form of the same balance: the ratio of the two stream flows equals the inverse ratio of their distances from the mixed concentration, m₁ ÷ m₂ = (x₃ − x₂) ÷ (x₁ − x₃). It is quick for mental checks on blends."
+  - q: "How much water must be evaporated to concentrate a solution?"
+    a: "Water removed = F × (1 − x_feed ÷ x_product), because the dissolved solids are conserved. Concentrating 5,000 kg/h of 12% solution to 60% removes 4,000 kg/h of water and leaves 1,000 kg/h of product."
+  - q: "How do I use a mass balance to check plant instruments?"
+    a: "Calculate the component flow in and out from the meters and analysers. If they differ by more than the combined uncertainty, usually 1 to 2%, one of the instruments is wrong; working out which value would close the balance shows where to look first."
 related: [chemistry/dilution, chemistry/mass-percent, physics/final-temperature, engineering/mass-flow-rate, engineering/residence-time, chemistry/solution-preparation]
 ---
 
@@ -79,6 +83,28 @@ Stream 1 fixed at 1,200 kg/h of 32%, stream 2 at 5%:
 | 15% | 2,333 kg | 3,333 kg | 3.33 |
 | 10% | 4,000 kg | 5,000 kg | 5.00 |
 | 5% | 9,000 kg | 10,000 kg | 10.00 |
+
+## Second example: concentrating by evaporation
+
+Removing solvent is a mass balance with one stream leaving instead of joining. An evaporator takes 5,000 kg/h of fruit juice at 12% dissolved solids and produces a 60% concentrate. The solids pass through unchanged, so:
+
+- Concentrate flow = 5,000 × 0.12 ÷ 0.6 = **1,000 kg/h**
+- Water evaporated = 5,000 − 1,000 = **4,000 kg/h**
+
+| Product strength | Product flow | Water removed | Share of feed evaporated |
+|---|---|---|---|
+| 20% | 3,000 kg/h | 2,000 kg/h | 40.0% |
+| 30% | 2,000 kg/h | 3,000 kg/h | 60.0% |
+| 40% | 1,500 kg/h | 3,500 kg/h | 70.0% |
+| 50% | 1,200 kg/h | 3,800 kg/h | 76.0% |
+| 60% | 1,000 kg/h | 4,000 kg/h | 80.0% |
+| 65% | 923 kg/h | 4,077 kg/h | 81.5% |
+
+Most of the water goes in the early stages: reaching 30% already removes 60% of the feed, while going from 50% to 60% removes only a further 4% of it.
+
+## Third example: checking plant data
+
+On the default mixer, the outlet analyser reads 22.6% while the inlet meters and grab samples still give 1,200 kg/h at 32% and 800 kg/h at 5%. NaOH in = 424 kg/h; NaOH out = 2,000 × 0.226 = 452 kg/h. The 28 kg/h gap is 6.6% of the input, far outside normal meter uncertainty. If the analyser were right, stream 1 would have to be about 1,498 kg/h, so the next step is to check the stream 1 flow meter and recalibrate the analyser against a laboratory sample.
 
 ## Mass balances in practice
 

@@ -5,7 +5,7 @@ category: engineering
 intro: "Valve authority is the share of the circuit's variable pressure drop taken by the control valve at full flow. Too low and the valve loses control at small openings. This valve authority calculator works out N from the valve and system pressure drops and rates the result.\n\nHVAC designers and control engineers use it when selecting a valve size, a useful check alongside the [control valve flow coefficient](https://www.instrumentationblog.in/control-valve-flow-coefficient/), and when tracing why a loop hunts at low load."
 keywords: [valve authority calculator, control valve authority, valve authority formula, hvac valve authority, control valve pressure drop, valve sizing authority, n = dp valve]
 published: 2026-11-05
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: dpv, label: Pressure drop across the fully open valve, family: pressure, unit: bar, imperialUnit: psi, default: 0.5, min: 0 }
   - { id: dps, label: "Pressure drop of the rest of the circuit (pipes, coil, fittings)", family: pressure, unit: bar, imperialUnit: psi, default: 1, min: 0 }
@@ -31,6 +31,10 @@ faq:
     a: Only the part of the circuit whose flow the valve varies — the coil, branch piping and fittings — not the constant-pressure parts upstream of a differential pressure controller.
   - q: "Do pressure independent control valves need an authority check?"
     a: "Much less. A pressure independent control valve (PICV) has a built-in regulator that holds a constant pressure across its control element, so its authority is effectively 1 within its working pressure range. You still need to make sure the minimum differential pressure the PICV requires is available at the index circuit."
+  - q: "How do I choose a valve Kv for a target authority?"
+    a: "Work out the circuit pressure drop at design flow, decide the valve drop from N (for N = 0.5 it equals the circuit drop), then use Kv = Q ÷ √Δp with Q in m³/h and Δp in bar. For 3.6 m³/h against a 40 kPa circuit that is Kv 5.69; pick the nearest standard size and recheck N, here 0.45 with Kv 6.3."
+  - q: "Why does valve authority get worse when other zones shut?"
+    a: "Closing branches raises the differential pressure across the ones still open, and the valve must absorb that rise as well. A valve sized for N = 0.45 at 73 kPa effectively controls with N = 0.33 if the branch pressure climbs to 100 kPa."
 related: [engineering/control-valve-kv-cv, engineering/minor-losses, engineering/darcy-weisbach-head-loss, engineering/pump-power]
 ---
 
@@ -75,6 +79,23 @@ Flow as a share of design flow at each stroke position, for an equal-percentage 
 | 90% | 68% | 79% | 85% | 88% | 95% |
 
 At N = 1 the curve is the inherent characteristic. As authority falls, the curve bows upward, so most of the flow change is squeezed into the first part of the stroke and the loop gain at low load becomes very high.
+
+## Second example: choosing a Kv for a coil branch
+
+A heating coil needs 3.6 m³/h of water. The coil drops 25 kPa and the branch pipe and fittings another 15 kPa, so the circuit drop is 40 kPa. For N = 0.5 the valve must also drop 40 kPa, which needs Kv = Q ÷ √Δp = 3.6 ÷ √0.40 = **5.69**. Valves come in a stepped Kv series, so check the neighbours:
+
+| Kv | Valve Δp at 3.6 m³/h | Authority N | Branch Δp needed |
+|---|---|---|---|
+| 2.5 | 2.074 bar (207.4 kPa) | 0.84 | 247.4 kPa |
+| 4 | 0.810 bar (81.0 kPa) | 0.67 | 121.0 kPa |
+| 6.3 | 0.327 bar (32.7 kPa) | 0.45 | 72.7 kPa |
+| 10 | 0.130 bar (13.0 kPa) | 0.24 | 53.0 kPa |
+
+Kv 6.3 gives N = 0.45, just under the target; Kv 4.0 gives 0.67 but asks the pump for 48 kPa more at this branch. Running 8,000 h a year with a 60% efficient pump set, that extra pressure costs about 81 W, or 645 kWh a year for this one branch, so most designers would take the Kv 6.3 valve.
+
+## Authority changes at part load
+
+The calculation assumes the branch sees 73 kPa at design flow. When other branches close on a constant speed pump, the pressure across this branch can rise to, say, 100 kPa. The valve then has to throttle the extra pressure as well, and the effective authority based on what it really controls becomes 32.7 ÷ 100 = **0.33**. A differential pressure controller on the branch, or variable speed pumping on a remote sensor, keeps the design figure close to the real one.
 
 ## How to get the pressure drops
 

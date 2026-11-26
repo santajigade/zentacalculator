@@ -5,7 +5,7 @@ category: engineering
 intro: "The Hazen-Williams equation is the standard empirical formula for friction loss in water pipes, with a single C factor for pipe roughness. This Hazen-Williams calculator gives head loss, pressure drop and velocity from flow, pipe diameter, length and C.\n\nWater supply, fire sprinkler and irrigation designers use it to size pipes and pumps quickly. See [how to calculate pressure drop in pipes](https://www.instrumentationblog.in/calculate-pressure-drop-in-pipes/) for the wider method."
 keywords: [hazen williams calculator, hazen williams equation, water pipe head loss calculator, pipe friction loss calculator, c factor pipe, pressure drop water pipe]
 published: 2026-10-29
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: Q, label: Flow rate, family: flow, unit: m3h, imperialUnit: gpm, default: 50, min: 0 }
   - { id: d, label: Pipe internal diameter, family: length, unit: mm, imperialUnit: in, default: 100, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: Strongly — head loss varies with d^−4.87, so one size larger pipe often cuts friction loss by more than half.
   - q: "How accurate is the Hazen-Williams equation?"
     a: "For clean water at normal temperatures in turbulent flow it is usually within about 5 to 10% of Darcy-Weisbach, which is good enough for distribution and sprinkler design. The main uncertainty is the C factor, not the formula. Accuracy falls at very low or very high velocities."
+  - q: "How do I size a water pipe for a maximum head loss?"
+    a: "Rearrange Hazen-Williams for the diameter: d = [10.67 L Q^1.852 ÷ (C^1.852 hf)]^(1/4.87) in SI units, then pick the next standard bore above the result. For 50 m³/h over 500 m with 5 m allowed at C = 130 the minimum is 129.3 mm, so a 150 mm bore (2.43 m loss) is chosen."
+  - q: "How much flow can a pipe carry at a given friction gradient?"
+    a: "Solve for Q: Q = [S C^1.852 d^4.87 ÷ 10.67]^(1/1.852), where S is head loss per metre. At 1 m per 100 m and C = 130 a 100 mm bore carries about 25.4 m³/h and a 150 mm bore about 73.9 m³/h."
 related: [engineering/darcy-weisbach-head-loss, engineering/minor-losses, engineering/pipe-flow-velocity, engineering/pump-power]
 ---
 
@@ -97,6 +101,30 @@ Friction loss rises with Q<sup>1.852</sup>, so doubling the flow multiplies head
 | 50 m³/h | 1.77 m/s | 3.498 m | 34.30 kPa |
 | 75 m³/h | 2.65 m/s | 7.411 m | 72.68 kPa |
 | 100 m³/h | 3.54 m/s | 12.626 m | 123.82 kPa |
+
+## Sizing a pipe for an allowed head loss
+
+Solving the equation for diameter gives d = [10.67 L Q<sup>1.852</sup> ÷ (C<sup>1.852</sup> h<sub>f</sub>)]<sup>1/4.87</sup>. Suppose 50 m³/h must travel 500 m with no more than 5 m of friction loss, C = 130:
+
+- Minimum bore d = **129.3 mm**
+- A 100 mm bore would lose 17.49 m, more than three times the limit
+- A 125 mm bore loses 5.90 m, still just over
+- A 150 mm bore loses **2.43 m**, so it is the size to choose
+
+## Carrying capacity at 1 m per 100 m
+
+Many water mains are laid out for a friction gradient near 1 m of head per 100 m. Solving for Q at that gradient gives each bore's capacity:
+
+| Pipe ID | Flow at C = 130 | Velocity | Flow at C = 100 |
+|---|---|---|---|
+| 50 mm | 4.1 m³/h | 0.58 m/s | 3.2 m³/h |
+| 80 mm | 14.1 m³/h | 0.78 m/s | 10.9 m³/h |
+| 100 mm | 25.4 m³/h | 0.90 m/s | 19.6 m³/h |
+| 150 mm | 73.9 m³/h | 1.16 m/s | 56.8 m³/h |
+| 200 mm | 157.4 m³/h | 1.39 m/s | 121.1 m³/h |
+| 300 mm | 457.2 m³/h | 1.80 m/s | 351.7 m³/h |
+
+At a fixed gradient flow is proportional to C, so an old main at C = 100 carries 77% of the flow it did when new, whatever its size.
 
 ## The US customary form
 

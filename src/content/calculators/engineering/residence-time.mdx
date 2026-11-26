@@ -5,7 +5,7 @@ category: engineering
 intro: "Residence time is the average time a fluid spends inside a vessel: the liquid volume divided by the throughput. This residence time calculator works out τ = V ÷ Q for tanks, reactors, settling basins and pipes, plus the space velocity.\n\nProcess and water treatment engineers use it to size buffer tanks and clarifiers, check reaction or contact time, and work out how long a change at the inlet takes to reach the outlet."
 keywords: [residence time calculator, hold up time calculator, hydraulic retention time calculator, space time reactor, retention time formula, tank residence time, space velocity calculator]
 published: 2026-11-05
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: V, label: Liquid volume (working volume), family: volume, unit: m3, imperialUnit: galUS, default: 10, min: 0 }
   - { id: Q, label: Volumetric flow rate (throughput), family: flow, unit: m3h, imperialUnit: gpm, default: 5, min: 0 }
@@ -25,6 +25,10 @@ faq:
     a: Only in ideal plug flow. In a well-mixed tank, residence times follow an exponential distribution — about 63% of the fluid leaves before τ.
   - q: "What is hydraulic retention time in wastewater treatment?"
     a: "Hydraulic retention time (HRT) is the same τ = V ÷ Q applied to an aeration tank, clarifier or digester using the average daily influent flow. It is different from sludge retention time (SRT), which is how long the biomass stays in the system and is controlled by sludge wasting."
+  - q: "How long does a tank take to respond to a change in feed?"
+    a: "For a well mixed tank the outlet reaches 63% of a step change after one residence time, 90% after 2.30 τ and 99% after 4.61 τ. A 10 m³ tank with 5 m³/h through it takes 4.61 h to reach 90%."
+  - q: "What is T10 and the baffle factor in contact tanks?"
+    a: "T10 is the time by which 10% of the water has left the tank, found by tracer testing, and the baffle factor is T10 ÷ τ. It ranges from 0.1 for an unbaffled tank to 1.0 for a pipeline, so a tank needing 30 min of T10 with a factor of 0.5 must have a residence time of 60 min."
 related: [engineering/vertical-tank-volume, engineering/horizontal-tank-volume, engineering/pipe-flow-velocity, engineering/mass-flow-rate]
 ---
 
@@ -76,6 +80,24 @@ For a pipe, τ = L ÷ v. A 100 mm line 300 m long at 1.5 m/s holds the fluid for
 ## Measuring residence time
 
 The actual residence time distribution is found with a tracer test: inject a pulse or step of salt, dye or a conductivity tracer at the inlet and log the outlet concentration. The mean of the response curve is the real residence time; if it is much shorter than V ÷ Q, part of the tank is a dead zone and flow is short-circuiting.
+
+## How long a change at the inlet takes to show
+
+When the feed composition steps to a new value, a mixed tank's outlet follows 1 − e<sup>−t/τ</sup>. For the 10 m³ tank at 5 m³/h the outlet is 90% of the way to the new value after τ ln 10 = **4.61 h** and 99% after 9.21 h. Splitting the volume into two 5 m³ tanks in series gives a short initial delay but reaches 90% at 3.89 h. These times decide how long to wait before sampling after a recipe change, and how far a buffer tank smooths a spike in an upstream stream.
+
+## Sizing a chlorine contact tank with a baffle factor
+
+Drinking water disinfection rules credit the time by which only 10% of the water has passed, T<sub>10</sub>, not the average. T<sub>10</sub> = baffle factor × τ, with tracer-based factors from the US EPA guidance manual. For a required T<sub>10</sub> of 30 min at a peak flow of 120 m³/h:
+
+| Tank design | Baffle factor | Residence time needed | Working volume |
+|---|---|---|---|
+| Unbaffled, mixed | 0.1 | 300 min | 600 m³ |
+| Poor (single inlet baffle) | 0.3 | 100 min | 200 m³ |
+| Average (some intra basin baffles) | 0.5 | 60 min | 120 m³ |
+| Superior (serpentine baffles) | 0.7 | 43 min | 86 m³ |
+| Perfect plug flow (pipeline) | 1.0 | 30 min | 60 m³ |
+
+An average baffled tank needs 120 m³, five times less than a single unbaffled tank. Size on peak hourly flow and the minimum operating level, because both shorten the real contact time.
 
 ## Common mistakes
 

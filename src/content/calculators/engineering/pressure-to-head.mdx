@@ -5,7 +5,7 @@ category: engineering
 intro: "Pump curves are drawn in metres or feet of head, while gauges read in bar or psi, so you often need to convert between them. This pressure to head calculator uses H = Δp ÷ (ρ·g) for any liquid density, and converts head back to pressure.\n\nPump engineers use it to check a pump against its curve, and instrument engineers use the same relation for [hydrostatic level measurement](https://www.instrumentationblog.in/hydrostatic-level-measurement/) and transmitter ranges."
 keywords: [pressure to head calculator, head to pressure calculator, bar to metres head, psi to feet of head, pump head from pressure, pressure head formula, metres of water column]
 published: 2026-11-05
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: dp, label: Pressure (or pressure difference), family: pressure, unit: bar, imperialUnit: psi, default: 5, min: 0 }
   - { id: rho, label: Liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 998, min: 0 }
@@ -25,6 +25,8 @@ faq:
     a: About 0.703 m or 2.31 ft of water at room temperature.
   - q: "How many metres of head is 1 kg/cm²?"
     a: "About 10.02 m of water. 1 kg/cm² is 98,066.5 Pa, and dividing by 998 kg/m³ × 9.80665 m/s² gives 10.02 m, which is why older gauges in kg/cm² read almost directly in tens of metres of water."
+  - q: "How do I calculate NPSH available from pressure readings?"
+    a: "Convert absolute suction pressure and vapour pressure to head with H = p ÷ (ρg), then NPSHa = (p_abs − p_vapour) ÷ (ρg) + static height − suction friction. For 60 °C water from an open tank 2 m above the pump with 0.8 m of friction, NPSHa is about 9.6 m."
 related: [engineering/hydrostatic-pressure, engineering/pump-power, engineering/pump-affinity-laws, engineering/darcy-weisbach-head-loss]
 ---
 
@@ -83,6 +85,31 @@ At 998 kg/m³ (water near 20 °C):
 | Ethylene glycol | 1110 | 9.187 m | 2.078 ft |
 | Sulphuric acid 98% | 1830 | 5.572 m | 1.260 ft |
 | Mercury | 13534 | 0.753 m | 0.170 ft |
+
+## NPSH available from pressures
+
+Net positive suction head is the same conversion applied to the suction side. A pump draws water at 60 °C (983.2 kg/m³) from an open tank whose level is 2 m above the pump centreline, with 0.8 m of friction loss in the suction line:
+
+- Atmospheric pressure as head: 101,325 ÷ (983.2 × 9.80665) = 10.51 m
+- Vapour pressure of water at 60 °C (19.95 kPa) as head: 2.07 m
+- NPSH available = 10.51 − 2.07 + 2.0 − 0.8 = **9.64 m**
+
+Against a pump needing 4.5 m, the margin is 5.14 m. The same system on 20 °C water gives 11.31 m, so heating the water has cost about 1.7 m of suction margin.
+
+## Velocity head when pipe sizes differ
+
+When suction and discharge pipes differ, total head also includes (v<sub>d</sub>² − v<sub>s</sub>²) ÷ 2g. At 60 m³/h, a 150 mm suction carries 0.94 m/s and a 100 mm discharge 2.12 m/s, adding 0.18 m. That is under 1% of the 51 m example head, but on a low head pump it can be several percent.
+
+## Head of 1 bar of water at higher temperatures
+
+| Water temperature | Density | Head per bar | Change from 20 °C |
+|---|---|---|---|
+| 20 °C | 998.2 kg/m³ | 10.216 m | +0.00% |
+| 40 °C | 992.2 kg/m³ | 10.277 m | +0.60% |
+| 60 °C | 983.2 kg/m³ | 10.371 m | +1.53% |
+| 80 °C | 971.8 kg/m³ | 10.493 m | +2.72% |
+| 90 °C | 965.3 kg/m³ | 10.564 m | +3.41% |
+| 100 °C | 958.4 kg/m³ | 10.640 m | +4.15% |
 
 ## Notes
 

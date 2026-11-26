@@ -5,7 +5,7 @@ category: engineering
 intro: "Availability is the fraction of time equipment is ready to work. It depends on how often the equipment fails (MTBF) and how quickly it is repaired (MTTR). This availability calculator also gives the failure rate, downtime per year and reliability over a mission time.\n\nMaintenance, reliability and control system engineers use it to compare instruments, pumps and controllers and to justify spares or redundancy, as in [SIS final element reliability](https://www.instrumentationblog.in/sis-final-element-reliability/)."
 keywords: [availability calculator, mtbf mttr calculator, availability formula, mtbf calculation, downtime per year, reliability calculator, failure rate calculator]
 published: 2026-10-28
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: mtbf, label: MTBF (mean time between failures), family: seconds, unit: h, default: 87600, min: 0 }
   - { id: mttr, label: MTTR (mean time to repair), family: seconds, unit: h, default: 8, min: 0 }
@@ -32,6 +32,10 @@ faq:
     a: "Divide the total operating hours of all units by the number of failures. 40 pumps running for 3 years (1,051,200 h in total) with 6 failures have an MTBF of 175,200 h, or 20 years. Count only failures of the function you care about, and use several years of data."
   - q: "What is the difference between MTBF and MTTF?"
     a: "MTTF (mean time to failure) is used for items that are replaced, not repaired. MTBF applies to repairable equipment and equals MTTF plus MTTR. When repairs take hours and failures come years apart, the two are practically the same number."
+  - q: "How do I calculate the availability of components in series?"
+    a: "Multiply their availabilities, because the system is down whenever any one part is down. A transmitter at 99.9909%, an I/O card at 99.9980% and a valve at 99.9520% give a loop availability of 99.9409%, about 5.18 h of downtime a year."
+  - q: "After how long will half of my units have failed?"
+    a: "With a constant failure rate, at MTBF × ln 2, which is 69.3% of the MTBF. For an MTBF of 87,600 h that is 60,720 h, about 6.9 years."
 related: [engineering/pfd-avg, statistics/poisson-probability, statistics/probability, finance/payback-period]
 ---
 
@@ -93,6 +97,37 @@ Two identical units in parallel, where either can do the job, have unavailabilit
 | 1,000 years | 0.001 per year | 114 |
 
 For safety instrumented functions, the dangerous undetected portion of the failure rate drives the [PFDavg](/engineering/pfd-avg/).
+
+## Second example: a complete control loop
+
+A flow loop works only if every element works, so the availabilities of the parts in series multiply. Typical figures for one loop:
+
+| Element | MTBF | MTTR | Availability | Downtime per year |
+|---|---|---|---|---|
+| Pressure transmitter | 87,600 h | 8 h | 99.9909% | 48.0 min |
+| PLC analogue I/O card | 200,000 h | 4 h | 99.9980% | 10.5 min |
+| Control valve and positioner | 50,000 h | 24 h | 99.9520% | 252.2 min |
+
+- Loop availability = product of the three = **99.9409%**
+- Expected loop downtime = 5.18 h a year, about 311 minutes
+- Failure rates add in series: 0.3190 failures a year, so the loop MTBF is 27,461 h (3.1 years)
+
+The valve, with the lowest MTBF and the longest repair, causes most of the outage. Fitting a second valve in parallel that can take over raises its availability to 99.999977% and the loop to 99.9888%, cutting downtime to 59 minutes a year. Spending on the weakest element gives the biggest return.
+
+## Chance of surviving longer missions
+
+For the default MTBF of 87,600 h, with a constant failure rate:
+
+| Mission time | Hours | Probability of no failure | Probability of at least one failure |
+|---|---|---|---|
+| 1 month | 730 h | 99.17% | 0.83% |
+| 6 months | 4,380 h | 95.12% | 4.88% |
+| 1 year | 8,760 h | 90.48% | 9.52% |
+| 5 years | 43,800 h | 60.65% | 39.35% |
+| 10 years | 87,600 h | 36.79% | 63.21% |
+| 20 years | 175,200 h | 13.53% | 86.47% |
+
+Half of a population has failed at least once by MTBF × ln 2 = 60,720 h, about 6.9 years, well before the MTBF itself.
 
 ## Common mistakes
 

@@ -1,11 +1,11 @@
 ---
 title: Gibbs Free Energy Calculator (ΔG = ΔH − TΔS)
-description: Calculate Gibbs free energy change to predict whether a reaction is spontaneous at a given temperature.
+description: "Gibbs free energy calculator: find ΔG = ΔH − TΔS at any temperature, see whether a reaction is spontaneous and find the crossover temperature."
 category: chemistry
-intro: "Gibbs free energy combines enthalpy and entropy to tell whether a reaction will happen on its own. A negative ΔG means the reaction is spontaneous at that temperature."
+intro: "Gibbs free energy combines the enthalpy change ΔH and the entropy change ΔS of a reaction into one number that says whether it can run on its own at a given temperature. This Gibbs free energy calculator works out ΔG = ΔH − TΔS and labels the result spontaneous or not.\n\nChemistry students use it for thermodynamics problems, and process chemists and metallurgists use it to choose operating temperatures and check whether a reaction is worth pursuing."
 keywords: [gibbs free energy, delta g, spontaneous reaction, enthalpy, entropy, thermodynamics]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-26
 variables:
   - { id: dH, label: Enthalpy change ΔH, suffix: kJ/mol, default: -92.2 }
   - { id: dS, label: Entropy change ΔS, suffix: J/mol·K, default: -198.7 }
@@ -29,6 +29,10 @@ faq:
     a: "ΔH is usually given in kJ/mol and ΔS in J/mol·K. The calculator divides ΔS by 1,000 for you."
   - q: "What is the Gibbs free energy equation?"
     a: "ΔG = ΔH − TΔS, where T is the absolute temperature in kelvin."
+  - q: "How is Gibbs free energy related to cell voltage?"
+    a: "ΔG = −nFE, where n is the electrons transferred and F = 96,485 C/mol. A Daniell cell with E = 1.1 V and n = 2 has ΔG = −212.3 kJ/mol, so a positive cell voltage always means a negative ΔG."
+  - q: "Does ΔG depend on how the reaction equation is written?"
+    a: "Yes. ΔG, ΔH and ΔS are per mole of reaction as written. For N₂ + 3H₂ → 2NH₃ at 25 °C ΔG is −33.0 kJ/mol; written per mole of ammonia it is −16.5 kJ/mol, and the reverse reaction has the opposite sign."
 related: [chemistry/arrhenius-equation, chemistry/specific-heat]
 ---
 
@@ -74,6 +78,34 @@ For ammonia synthesis (ΔH = −92.2 kJ/mol, ΔS = −198.7 J/mol·K), T = 92,20
 
 Every 5.7 kJ/mol change in ΔG° at 25 °C changes K by a factor of 10.
 
+## Ammonia synthesis at plant temperatures
+
+Treating ΔH and ΔS as constant, the calculator equation gives ΔG for N₂ + 3H₂ → 2NH₃ at higher temperatures, and K = e<sup>−ΔG/RT</sup> shows how the equilibrium constant falls:
+
+| Temperature | T | ΔG | K |
+|---|---|---|---|
+| 25 °C | 298.15 K | −33.0 kJ/mol | 5.94 × 10<sup>5</sup> |
+| 100 °C | 373.15 K | −18.1 kJ/mol | 3.37 × 10<sup>2</sup> |
+| 200 °C | 473.15 K | 1.8 kJ/mol | 6.30 × 10<sup>−1</sup> |
+| 300 °C | 573.15 K | 21.7 kJ/mol | 1.06 × 10<sup>−2</sup> |
+| 400 °C | 673.15 K | 41.6 kJ/mol | 5.96 × 10<sup>−4</sup> |
+| 450 °C | 723.15 K | 51.5 kJ/mol | 1.91 × 10<sup>−4</sup> |
+| 500 °C | 773.15 K | 61.4 kJ/mol | 7.08 × 10<sup>−5</sup> |
+
+At 25 °C, K is about 5.94 × 10<sup>5</sup>, so the equilibrium lies far towards ammonia, but the reaction is too slow without a catalyst. Industrial Haber plants run near 450 °C, where ΔG is 51.5 kJ/mol and K is below 1, and they compensate with pressures of 150 to 300 bar and an iron catalyst, recycling the unreacted gas. This trade between thermodynamics and rate is the classic use of ΔG in process design.
+
+## Second example: when does limestone decompose?
+
+CaCO₃ → CaO + CO₂ has ΔH = +178.3 kJ/mol and ΔS = +160.6 J/mol·K, both positive, so it becomes favourable only when hot:
+
+- At 25 °C: ΔG = 178.3 − 298.15 × 0.1606 = **+130.4 kJ/mol**, so limestone is stable
+- Crossover: T = 178,300 ÷ 160.6 = **1,110 K** (837 °C)
+- At 900 °C: ΔG = 178.3 − 1,173.15 × 0.1606 = **−10.1 kJ/mol**, so lime kilns run above about 900 °C
+
+## Where ΔH and ΔS come from
+
+Values are usually built from tables of standard enthalpies of formation (ΔH<sub>f</sub>°) and standard molar entropies (S°): ΔH = Σ ΔH<sub>f</sub>°(products) − Σ ΔH<sub>f</sub>°(reactants), and ΔS the same way with S°, each multiplied by its stoichiometric coefficient. ΔH can also be measured directly in a calorimeter. For redox reactions ΔG is measured electrically from the cell voltage, ΔG = −nFE, and for others it comes from a measured equilibrium constant through ΔG° = −RT ln K.
+
 ## Spontaneous is not the same as fast
 
 A negative ΔG means a reaction can proceed, not that it will be quick. Diamond turning into graphite has a negative ΔG at room conditions but takes an immeasurably long time. Speed depends on activation energy — see the [Arrhenius calculator](/chemistry/arrhenius-equation/).
@@ -90,3 +122,11 @@ A negative ΔG means a reaction can proceed, not that it will be quick. Diamond 
 | + | − | Never |
 | − | − | At low temperatures |
 | + | + | At high temperatures |
+
+## Common mistakes
+
+- **Leaving ΔS in J/mol·K when combining by hand.** −92.2 − 298.15 × (−198.7) gives 59,150, which mixes kJ and J; dividing ΔS by 1,000 gives the correct −32.96 kJ/mol.
+- **Using Celsius for T.** Putting 25 instead of 298.15 gives −87.2 kJ/mol, far too negative; the formula needs kelvin.
+- **Forgetting that ΔG is per mole of reaction as written.** The ammonia value is for 2 mol of NH₃; per mole of ammonia it is −16.5 kJ/mol. Doubling every coefficient doubles ΔG.
+- **Confusing ΔG with ΔG°.** Tables give standard values (1 bar, 1 mol/L). At other compositions ΔG = ΔG° + RT ln Q; with Q = 10<sup>−4</sup> the ammonia reaction at 25 °C has ΔG = −55.8 kJ/mol.
+- **Extrapolating too far.** ΔH and ΔS drift with temperature and phase changes, so values from 25 °C give estimates, not exact figures, hundreds of degrees away.

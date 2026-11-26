@@ -5,7 +5,7 @@ category: engineering
 intro: "The Ziegler-Nichols closed loop method finds the gain at which a loop just oscillates steadily (Ku) and the period of that oscillation (Pu), then sets the controller from simple ratios. This Ziegler-Nichols PID tuning calculator gives P, PI and PID settings.\n\nControl and commissioning engineers use it as a quick first tuning, as in the [PID controller tuning guide](https://www.instrumentationblog.in/pid-controller-tuning-guide/) and [step-test, relay and Ziegler-Nichols auto-tuning in a DCS](https://www.instrumentationblog.in/dcs-pid-auto-tune-step-test-relay-feedback-ziegler-nichols/)."
 keywords: [ziegler nichols calculator, pid tuning calculator, ultimate gain method, ziegler nichols tuning rules, ku pu tuning, closed loop pid tuning]
 published: 2026-10-29
-updated: 2026-11-16
+updated: 2026-11-26
 variables:
   - { id: Ku, label: Ultimate gain (Ku), default: 2, min: 0 }
   - { id: Pu, label: Ultimate period (Pu), family: seconds, unit: s, default: 60, min: 0 }
@@ -35,6 +35,8 @@ faq:
     a: "The controller output is switched up and down by a fixed amount d around its normal value, which makes the PV cycle at the ultimate period. The ultimate gain is Ku = 4d ÷ (π a), where a is the PV amplitude. A ±5% relay giving a 3.2% PV amplitude means Ku = 1.99."
   - q: "Do Ziegler-Nichols settings work in a series PID?"
     a: "Yes, after conversion. Because the classic rule has Ti = 4 Td, the series equivalents are Kc = 0.3 Ku, Ti = Td = Pu ÷ 4. For Ku = 2 and Pu = 60 s that is a gain of 0.6 with Ti and Td both 15 s."
+  - q: "Can I get Ku and Pu without an oscillation test?"
+    a: "Yes, from a step test model. Solve atan(ωτ) + ωθ = π for ω, then Ku = √(1 + (ωτ)²) ÷ K and Pu = 2π ÷ ω. A process with K = 1.5, τ = 120 s and θ = 20 s gives Ku = 6.71 and Pu = 75.2 s."
 related: [engineering/lambda-tuning, engineering/fopdt-step-test, engineering/sensor-response-time, engineering/4-20ma-scaling]
 ---
 
@@ -96,6 +98,27 @@ For the example the root is zero, so the series settings are K<sub>c</sub>′ = 
 | Pessen integral rule | 0.7 K<sub>u</sub> | 1.400 | 71% | 24.0 s | 9.0 s |
 | Some overshoot | 0.33 K<sub>u</sub> | 0.660 | 152% | 30.0 s | 20.0 s |
 | No overshoot | 0.2 K<sub>u</sub> | 0.400 | 250% | 30.0 s | 20.0 s |
+
+## Estimating Ku and Pu from a step test model
+
+If a step test has already given a first order plus dead time model (gain K, time constant τ, dead time θ), the ultimate values can be calculated instead of measured. The loop is at the stability limit at the frequency ω where the process phase lag reaches 180°, atan(ωτ) + ωθ = π, and the ultimate gain is K<sub>u</sub> = √(1 + (ωτ)²) ÷ K. For K = 1.5, τ = 120 s and θ = 20 s, solving numerically gives **K<sub>u</sub> = 6.71** and **P<sub>u</sub> = 75.2 s**, so the classic PID settings would be K<sub>c</sub> = 4.03, T<sub>i</sub> = 37.6 s and T<sub>d</sub> = 9.4 s.
+
+How the ultimate values depend on the dead time ratio (for a process gain of 1; divide K<sub>u</sub> by the real gain):
+
+| θ ÷ τ | K<sub>u</sub> × K | P<sub>u</sub> ÷ θ |
+|---|---|---|
+| 0.05 | 32.06 | 3.92 |
+| 0.1 | 16.35 | 3.85 |
+| 0.2 | 8.50 | 3.72 |
+| 0.5 | 3.81 | 3.42 |
+| 1 | 2.26 | 3.10 |
+| 2 | 1.52 | 2.75 |
+
+Lag dominant loops (small θ ÷ τ) tolerate high gain and cycle at about four dead times or less; in dead time dominant loops K<sub>u</sub> × K falls towards 1 and P<sub>u</sub> towards 2θ, which is where Ziegler-Nichols settings are least robust.
+
+## A slow temperature loop in minutes
+
+A jacketed reactor temperature loop cycles steadily at K<sub>u</sub> = 8 with P<sub>u</sub> = 12 min. The classic PID settings are K<sub>c</sub> = **4.8** (PB 20.8%), T<sub>i</sub> = **6 min** (0.167 repeats per minute) and T<sub>d</sub> = **1.5 min**. With a period this long, wait several cycles before reading P<sub>u</sub>, because a single peak to peak time can be distorted by load changes.
 
 ## Common mistakes
 

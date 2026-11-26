@@ -5,7 +5,7 @@ category: engineering
 intro: "Convection is heat carried away by a moving fluid, and its rate depends on the heat transfer coefficient h, the surface area and the temperature difference. This convection heat transfer calculator solves Q = h·A·(Ts − T∞) for any one unknown.\n\nProcess, HVAC and electronics engineers use it to estimate heat loss from hot equipment, size heaters and coolers, and check surface temperatures. It pairs with [calculating heat loss in piping](https://www.instrumentationblog.in/calculate-heat-loss-in-piping/)."
 keywords: [convection heat transfer calculator, q = h a delta t calculator, heat transfer coefficient calculator, convective heat transfer formula, newton's law of cooling convection, heat flux calculator]
 published: 2026-11-05
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: h, label: Heat transfer coefficient h, suffix: W/m²·K, default: 25, min: 0 }
   - { id: A, label: Surface area, family: area, unit: m2, imperialUnit: ft2, default: 2, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: The fluid is hotter than the surface, so heat flows into the surface instead of out of it.
   - q: "How do I calculate the heat transfer coefficient h?"
     a: "From a Nusselt number correlation: h = Nu × k ÷ L. For turbulent water in a tube, Dittus-Boelter gives Nu = 0.023 Re^0.8 Pr^0.4; water at 1 m/s in a 25 mm tube has h of about 4,806 W/m²·K. For still air on a vertical wall, h is only about 3 to 6 W/m²·K."
+  - q: "How do I include radiation in a convection calculation?"
+    a: "Convert it to a radiation coefficient h_r = εσ(Ts² + T∞²)(Ts + T∞) using kelvin, then add it to the convective h. For a painted surface at 80 °C in a 25 °C room, h_r is about 7.1 W/m²·K."
+  - q: "How do I find the surface temperature for a known heat load?"
+    a: "Rearrange to ΔT = Q ÷ (h A). A 120 W panel with 0.8 m² of surface and h = 4 W/m²·K runs 37.5 K above ambient on convection alone, or about 14.4 K once radiation is included."
 related: [physics/newtons-law-of-cooling, physics/heat-conduction, engineering/lmtd, physics/stefan-boltzmann-law]
 ---
 
@@ -86,6 +90,29 @@ At ΔT = 55 K the laminar value is about 4.6 W/m²·K, so the 25 W/m²·K in the
 | 2 m/s | 75,988 | 332 | 8,368 W/m²·K |
 
 At 1 m/s, h ≈ 4,806 W/m²·K, about 192 times the air value in the example. That is why liquid cooling moves so much more heat through the same area.
+
+## Adding radiation as a second coefficient
+
+Radiation can be written in the same form, Q<sub>r</sub> = h<sub>r</sub> A (T<sub>s</sub> − T<sub>∞</sub>), with h<sub>r</sub> = εσ(T<sub>s</sub>² + T<sub>∞</sub>²)(T<sub>s</sub> + T<sub>∞</sub>) in kelvin. Then the two coefficients simply add. For a painted surface (ε = 0.9) in surroundings at 25 °C and the 2 m² area of the worked example:
+
+| Surface temperature | h<sub>r</sub> | Radiated heat from 2 m² |
+|---|---|---|
+| 40 °C | 5.8 W/m²·K | 175 W |
+| 60 °C | 6.4 W/m²·K | 451 W |
+| 80 °C | 7.1 W/m²·K | 781 W |
+| 120 °C | 8.6 W/m²·K | 1,632 W |
+| 200 °C | 12.3 W/m²·K | 4,309 W |
+
+At 80 °C, h<sub>r</sub> = 7.1 W/m²·K, which adds 781 W to the convective result. Bare polished aluminium (ε near 0.05) radiates almost nothing, which is why it is used as an outer jacket on insulation.
+
+## Second example: how hot will an enclosure run?
+
+A sealed control panel with 0.8 m² of exposed surface dissipates 120 W in a 35 °C plant room. Solving the formula for the temperature difference, ΔT = Q ÷ (hA):
+
+- Natural convection alone with h = 4 W/m²·K: ΔT = 120 ÷ (4 × 0.8) = **37.5 K**, a surface at 72.5 °C
+- Including radiation (ε = 0.9, solved by iteration because h<sub>r</sub> depends on T<sub>s</sub>): ΔT = **14.4 K**, a surface at 49.4 °C
+
+The air inside runs hotter than the skin, so with a skin near 49 °C this panel is already at the usual 40 to 50 °C limit for electronics and would need a filter fan or a cooler.
 
 ## Common mistakes
 

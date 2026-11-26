@@ -5,7 +5,7 @@ category: engineering
 intro: "A weir is a notch or plate across an open channel, and the height of water above it sets the flow. This weir flow calculator works out flow for a V-notch or a contracted rectangular weir from the measured head.\n\nEffluent plant operators, irrigation engineers and environmental inspectors use it to check flow meters and discharge permits. See [measuring flow rate with level sensors](https://www.instrumentationblog.in/measure-flow-rate-level-sensors/)."
 keywords: [weir flow calculator, v notch weir, rectangular weir, francis formula, open channel flow, weir head flow, thomson weir]
 published: 2026-10-27
-updated: 2026-11-17
+updated: 2026-11-26
 variables:
   - id: t
     label: Weir type
@@ -31,6 +31,10 @@ faq:
     a: Typically within 2–5% when the weir is installed to standard (sharp crest, free fall, ventilated nappe, adequate approach channel).
   - q: "How much does a 1 mm error in head change V-notch flow?"
     a: "Flow follows h^2.5, so the error is about 2.5 times the relative head error. At 150 mm head, 1 mm is 1.7% of flow; at 50 mm it is 5.1%."
+  - q: "How do I find the head a weir will give at a certain flow?"
+    a: "Rearrange the weir equation for h. For a 90° V-notch with Cd 0.585, h = [Q ÷ (1.3816 × tan 45°)]^0.4 with Q in m³/s, so 30 m³/h gives about 129 mm. For a rectangular weir solve iteratively, since the contraction term depends on h."
+  - q: "Can I average the head over a day to get the daily flow?"
+    a: "No. Flow is proportional to h^2.5, so the flow at the average head is lower than the average flow. In the example on this page averaging the heads under-reads the daily volume by 10.7%. Convert each reading to flow first, then total."
 related: [engineering/orifice-flow, engineering/pipe-flow-velocity, engineering/hydrostatic-pressure, conversion/flow-rate-converter]
 ---
 
@@ -114,6 +118,25 @@ Narrow notches suit small effluent flows; a 120° notch passes more water before
 ## How accurately must the head be measured?
 
 Because flow goes with h^2.5, a 1 mm head error at 150 mm shifts the V-notch flow by **1.7%**. At 50 mm head the same 1 mm error is **5.1%** of a flow of only 2.78 m³/h. That is why the head is read in a stilling well with a hook gauge or an ultrasonic sensor that has been zeroed against the notch bottom, not against the channel floor.
+
+## Head needed for a target flow
+
+Turning the formulas round gives the head that a chosen flow will produce, which is how a weir is sized: pick the notch so the normal flow gives at least 50 mm of head and the peak stays below the plate height. For the V-notch, h = [Q ÷ ((8/15) C<sub>d</sub> √(2g) tan(θ/2))]<sup>0.4</sup>; the rectangular case is solved by iteration because L − 0.2h also depends on h.
+
+| Flow | 60° V-notch | 90° V-notch | Rectangular, 0.5 m crest |
+|---|---|---|---|
+| 2 m³/h | 55 mm | 44 mm | 7 mm |
+| 5 m³/h | 79 mm | 63 mm | 13 mm |
+| 10 m³/h | 104 mm | 83 mm | 21 mm |
+| 25 m³/h | 150 mm | 120 mm | 39 mm |
+| 50 m³/h | 198 mm | 159 mm | 62 mm |
+| 100 m³/h | 261 mm | 210 mm | 100 mm |
+
+A 2 m³/h flow gives only 7 mm on the 0.5 m rectangular weir, too little to read reliably, while the 60° notch lifts it to 55 mm. A discharge permit capped at 30 m³/h corresponds to a head of 129 mm on a 90° notch, a useful alarm setpoint for the level transmitter.
+
+## Second example: daily volume from logged heads
+
+Flow over a 90° notch is logged as four steady periods in one day: 6 h at 60 mm, 6 h at 95 mm, 8 h at 120 mm and 4 h at 80 mm. Converting each head to flow and multiplying by its duration gives **344 m³** for the day. Averaging the heads first (92.1 mm) and converting once gives 307 m³, 10.7% low, because flow rises with h<sup>2.5</sup>. Totalisers must convert every sample to flow before summing.
 
 ## Common mistakes
 

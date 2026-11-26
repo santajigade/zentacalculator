@@ -5,7 +5,7 @@ category: engineering
 intro: "The affinity laws predict how a centrifugal pump's flow, head and power change with speed or impeller diameter: flow follows the ratio, head its square and power its cube. This pump affinity laws calculator applies them for a VFD speed change or an impeller trim.\n\nProcess, maintenance and energy engineers use it to estimate VFD savings, predict a trimmed duty and compare options, for example when sizing a [VFD](https://www.instrumentationblog.in/vfd-sizing-selection-guide/)."
 keywords: [pump affinity laws calculator, affinity laws, pump speed change calculator, impeller trimming calculator, vfd pump energy savings, pump flow head power speed, centrifugal pump laws]
 published: 2026-11-05
-updated: 2026-11-16
+updated: 2026-11-26
 variables:
   - { id: Q1, label: Original flow rate Q₁, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
   - { id: H1, label: Original head H₁, family: length, unit: m, imperialUnit: ft, default: 50, min: 0 }
@@ -32,6 +32,8 @@ faq:
     a: Reasonably for trims up to about 10–15% of diameter. Beyond that efficiency drops and the actual head and flow fall below the predicted values.
   - q: "How do I find the impeller diameter for a target head?"
     a: "Rearrange the head law: D₂ = D₁ × √(H₂ ÷ H₁). For a 250 mm impeller giving 50 m, a target of 45 m needs 237.2 mm. Flow then falls by the same diameter ratio."
+  - q: "What is the minimum speed before a pump stops delivering against static head?"
+    a: "The speed at which the scaled shutoff head equals the static head: N_min = N₁ × √(H_static ÷ H_shutoff). A pump with 65 m shutoff head at 1,450 rpm lifting 20 m stops delivering at about 804 rpm."
 related: [engineering/pump-power, engineering/fan-affinity-laws, engineering/pressure-to-head, engineering/torque-power-speed]
 ---
 
@@ -93,6 +95,22 @@ To reach a target head of 45 m at the same flow ratio, the diameter must be 250 
 ## Energy saving with a VFD
 
 In the speed example, power falls from 18.5 kW to 9.47 kW. Over 6,000 running hours a year that is (18.5 − 9.47) × 6,000 = **54,168 kWh** of shaft energy, before motor and VFD losses. The saving is this large only when the system is mostly friction head. If the system has, say, 20 m of static head, the pump cannot deliver any flow once its shutoff head falls below 20 m, and the real duty point must be found where the scaled pump curve crosses the system curve H = H<sub>static</sub> + kQ².
+
+## Worked example with 20 m of static head
+
+To see how static head changes the answer, model the pump curve at full speed as H = 65 − 0.0015 Q² (shutoff head 65 m, passing through 100 m³/h at 50 m). At speed ratio r the curve scales to H = 65 r² − 0.0015 Q². The system needs 20 m of static lift plus friction, H = 20 + 0.003 Q², which also passes through the original duty. The duty point is where the two curves cross: Q = √((65 r² − 20) ÷ 0.0045).
+
+At 80% speed this gives Q = **69.3 m³/h** at **34.4 m**, not the 80 m³/h and 32 m the affinity laws predict. The original duty has an efficiency of ρ g Q H ÷ P = 13.62 ÷ 18.5 = 73.6%; holding that efficiency, the shaft power is about **8.82 kW**.
+
+| Speed | Affinity flow | Real flow | Real head | Estimated power | Affinity power |
+|---|---|---|---|---|---|
+| 100% (1450 rpm) | 100.0 m³/h | 100.0 m³/h | 50.0 m | 18.50 kW | 18.50 kW |
+| 90% (1305 rpm) | 90.0 m³/h | 85.2 m³/h | 41.8 m | 13.16 kW | 13.49 kW |
+| 80% (1160 rpm) | 80.0 m³/h | 69.3 m³/h | 34.4 m | 8.82 kW | 9.47 kW |
+| 70% (1015 rpm) | 70.0 m³/h | 51.3 m³/h | 27.9 m | 5.30 kW | 6.35 kW |
+| 60% (870 rpm) | 60.0 m³/h | 27.5 m³/h | 22.3 m | 2.26 kW | 4.00 kW |
+
+Below r = √(20 ÷ 65) = 0.555, or 804 rpm, the shutoff head is lower than the static lift and the pump delivers nothing while still absorbing power. Set the VFD minimum speed well above this point.
 
 ## Common mistakes
 

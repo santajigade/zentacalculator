@@ -5,7 +5,7 @@ category: engineering
 intro: "Barlow's formula relates the internal pressure a pipe can hold to its wall thickness, outside diameter and material strength. This Barlow's formula calculator gives the burst and design pressure with a design factor, or the minimum wall for a given pressure.\n\nPiping and pipeline engineers, inspectors and fabricators use it for quick wall thickness checks, pressure ratings of tube and line pipe, and as a sanity check before [hydrostatic testing](https://www.instrumentationblog.in/hydrostatic-testing-in-oil-gas-industry/)."
 keywords: [barlow's formula calculator, pipe wall thickness calculator, pipe pressure rating calculator, barlow formula, pipe burst pressure calculator, hoop stress pipe, allowable pipe pressure]
 published: 2026-11-05
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: S, label: Material strength (SMYS or allowable stress), family: pressure, unit: MPa, imperialUnit: psi, default: 290, min: 0 }
   - { id: t, label: Wall thickness, family: length, unit: mm, imperialUnit: in, default: 7.11, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: No. Add corrosion allowance and mill tolerance (often 12.5% of wall) to the thickness — ASME B31.3 uses t = PD ÷ 2(SEW + PY) plus allowances.
   - q: "What is the difference between Barlow and Lamé equations?"
     a: "Barlow assumes the hoop stress is uniform through the wall, which is accurate for thin walls. Lamé's thick-cylinder solution shows the stress is highest at the bore and falls toward the outside surface. For thick walls Barlow with the outside diameter becomes increasingly conservative, and codes such as ASME B31.3 require thick-wall methods once the wall reaches one sixth of the diameter."
+  - q: "How do location class and temperature change a pipeline pressure rating?"
+    a: "ASME B31.8 multiplies the Barlow pressure by a design factor F, a joint factor E and a temperature factor T. The default 6\" X42 pipe gives 17.64 MPa in class 1 (F = 0.72) but only 9.80 MPa in class 4 (F = 0.40), and at 121 °C (T = 0.967) the class 1 value falls to 17.06 MPa."
 related: [engineering/hydrostatic-pressure, engineering/factor-of-safety, engineering/water-hammer, engineering/pipe-flow-velocity]
 ---
 
@@ -79,6 +81,32 @@ Hoop stress for an internal pressure P, comparing Barlow with the outside diamet
 | 6 | 3.00 P | 2.50 P | 2.60 P | +15.4% |
 
 Using the outside diameter keeps Barlow on the safe side of the exact bore stress at every D/t: by about 1% for thin pipe, rising to about 15% at a D/t of 6. The mean-diameter form is closer to Lamé but reads slightly low. ASME B31.3 limits its thin-wall equation to walls thinner than D/6; beyond that, thick-wall design is required.
+
+## Maximum operating pressure by location class
+
+ASME B31.8 sets the gas pipeline design pressure as P = (2 S t ÷ D) × F × E × T, where E is the longitudinal joint factor and T the temperature derating factor. For the default 6" X42 pipe, seamless (E = 1) and below 121 °C (T = 1), the design pressure falls as the location class rises with population density:
+
+| Location class | F | Design pressure | bar | psi |
+|---|---|---|---|---|
+| Class 1 | 0.72 | 17.64 MPa | 176 bar | 2,559 psi |
+| Class 2 | 0.60 | 14.70 MPa | 147 bar | 2,132 psi |
+| Class 3 | 0.50 | 12.25 MPa | 123 bar | 1,777 psi |
+| Class 4 | 0.40 | 9.80 MPa | 98 bar | 1,422 psi |
+
+If the gas runs at 121 °C, T = 0.967 and the class 1 figure drops to 17.06 MPa.
+
+## Choosing a schedule for a design pressure
+
+For the same 168.3 mm X42 line at F = 0.72, the minimum Barlow wall is increased for a 1.5 mm corrosion allowance and divided by 0.875 for the 12.5% mill under-tolerance, then the next standard schedule is picked:
+
+| Design pressure | Barlow wall | Nominal wall needed | Lightest schedule |
+|---|---|---|---|
+| 5 MPa | 2.02 mm | 4.02 mm | Sch 40 (7.11 mm) |
+| 10 MPa | 4.03 mm | 6.32 mm | Sch 40 (7.11 mm) |
+| 15 MPa | 6.05 mm | 8.62 mm | Sch 80 (10.97 mm) |
+| 20 MPa | 8.06 mm | 10.93 mm | Sch 80 (10.97 mm) |
+
+The allowances dominate at low pressure: at 5 MPa the pressure wall is barely 2 mm, yet the order wall is more than twice that.
 
 ## Where Barlow's formula is used
 

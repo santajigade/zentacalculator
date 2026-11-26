@@ -1,11 +1,11 @@
 ---
 title: Half-Life Calculator (Radioactive Decay)
-description: Calculate the amount remaining after radioactive decay — or the half-life or time elapsed.
+description: "Half-life calculator for radioactive decay, drugs and first-order reactions: find the amount left, the time elapsed or the half-life itself, step by step."
 category: chemistry
-intro: "The half-life is the time for half of a radioactive sample — or a drug in the body — to decay or be removed. After each half-life, half of what remains is gone."
+intro: "Half-life is the time it takes for half of a radioactive sample, a drug in the body or a first-order reactant to disappear, and it stays the same however much is left. This half-life calculator finds the amount remaining, the time elapsed or the half-life from the other values.\n\nStudents use it for decay and dating problems, while radiographers, nuclear medicine staff, pharmacists and archaeologists use it to plan doses, storage times and sample ages."
 keywords: [half life calculator, radioactive decay, decay calculator, carbon dating, exponential decay]
 published: 2026-10-27
-updated: 2026-10-27
+updated: 2026-11-26
 variables:
   - { id: N0, label: Initial amount, default: 100, min: 0 }
   - { id: T, label: Half-life, family: time, unit: yr, default: 5730, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: "About 6.64 half-lives, because 0.5^6.64 ≈ 0.01."
   - q: "Is half-life the same as average lifetime?"
     a: "No. The mean lifetime is half-life ÷ ln 2, about 1.44 times the half-life."
+  - q: "How do I find the half-life from two measurements?"
+    a: "Use T½ = t × ln 2 ÷ ln(N₀ ÷ N). A reading that falls from 100 to 80 in 3 days gives a half-life of 9.32 days. The two readings must be corrected for background in the same way."
+  - q: "Why do radiocarbon labs quote ages with a 5,568 year half-life?"
+    a: "By convention, conventional radiocarbon ages use the original Libby half-life of 5,568 years so results stay comparable, and calibration curves then convert them to calendar years. A sample with 40% carbon-14 left has a conventional age of 7,360 years, against 7,575 years with 5,730."
 related: [chemistry/arrhenius-equation, math/logarithm]
 ---
 
@@ -64,6 +68,32 @@ The half-life and the decay constant λ are related:
 
 <p class="formula">λ = ln 2 ÷ T<sub>½</sub>, &nbsp; N = N₀ × e<sup>−λt</sup></p>
 
+## Decay constants and lifetimes of common isotopes
+
+From λ = ln 2 ÷ T<sub>½</sub>, the mean lifetime τ = T<sub>½</sub> ÷ ln 2 and the time to fall to 1%, T<sub>½</sub> × log₂ 100:
+
+| Isotope | Half-life | Decay constant λ | Mean lifetime τ | Time to 1% |
+|---|---|---|---|---|
+| Technetium-99m | 6.01 h | 0.1153 per h | 8.7 h | 39.9 h |
+| Iodine-131 | 8.02 d | 0.0864 per d | 11.6 d | 53.3 d |
+| Cobalt-60 | 5.27 yr | 0.1315 per yr | 7.6 yr | 35.0 yr |
+| Caesium-137 | 30.1 yr | 0.0230 per yr | 43.4 yr | 200.0 yr |
+| Carbon-14 | 5,730 yr | 1.21 × 10<sup>−4</sup> per yr | 8,267 yr | 38,069 yr |
+
+For the default carbon-14 case, λ = 1.21 × 10<sup>−4</sup> per year and τ = 8,267 years.
+
+## Second example: activity of a medical source
+
+A patient receives 3.7 GBq of iodine-131 (half-life 8.02 days). After 30 days the activity is 3.7 × 0.5<sup>30/8.02</sup> = **0.277 GBq**, about 7.5% of the original. Activity in becquerels falls by the same fraction as the number of atoms, because activity = λN, so the calculator works with either.
+
+## Finding the half-life from two measurements
+
+If a count rate falls from 100 to 80 in 3 days, the half-life is T<sub>½</sub> = t × ln 2 ÷ ln(N₀ ÷ N) = 3 × 0.6931 ÷ ln 1.25 = **9.32 days**. Enter 100, 80 and 3 days and solve for the half-life to get the same figure.
+
+## How half-lives are measured
+
+Short half-lives are measured by counting decays with a Geiger tube or scintillation detector at regular intervals, subtracting the background count, and fitting a straight line to ln(count rate) against time; the slope is −λ. Very long half-lives such as uranium-238 cannot be watched directly, so they come from the specific activity: count the decays per second from a weighed sample and use λ = A ÷ N. Radiocarbon laboratories now count carbon-14 atoms directly by accelerator mass spectrometry, which needs only milligrams of carbon.
+
 ## Radiocarbon dating
 
 To find age from the fraction remaining:
@@ -91,3 +121,11 @@ Drug half-lives determine dosing intervals. A medicine with a 6-hour half-life f
 | Caesium-137 | 30.1 years |
 | Carbon-14 | 5,730 years |
 | Uranium-238 | 4.47 billion years |
+
+## Common mistakes
+
+- **Mixing time units.** The half-life and elapsed time must be in the same unit; each field here has its own unit selector. Entering the elapsed time as 10,000 days while the half-life stays at 5,730 years shows 99.7 units remaining instead of 29.8.
+- **Subtracting linearly.** Two half-lives do not remove everything; they leave 25%. Decay is exponential, so some always remains.
+- **Reporting the decayed amount as the remainder.** After 10,000 years 29.8 units remain and 70.2 have decayed; check which one a question asks for.
+- **Using the wrong half-life convention for radiocarbon.** Conventional radiocarbon ages use the Libby value of 5,568 years, then a calibration curve; 40% remaining gives 7,360 years with 5,568 and 7,575 years with 5,730.
+- **Applying one half-life to every drug situation.** Elimination half-life describes the falling phase; during absorption or infusion, or when the liver is saturated, levels do not follow a single exponential.

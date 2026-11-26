@@ -5,7 +5,7 @@ category: engineering
 intro: "Storage spheres for LPG, ammonia and other pressurised liquids hold more or less than a simple level percentage suggests, because the cross-section changes with height. This spherical tank volume calculator uses the spherical-cap formula to turn a liquid level into a volume.\n\nTerminal operators, instrument engineers and inventory accountants use it to build level-to-volume tables, set high-level alarms and check fill limits. See [LPG level measurement in bullets and spheres](https://www.instrumentationblog.in/lpg-level-measurement-bullet-sphere/)."
 keywords: [spherical tank volume calculator, partially filled sphere volume, sphere tank level to volume, spherical cap volume, lpg sphere volume, tank strapping sphere, sphere fill percentage]
 published: 2026-11-05
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: D, label: Sphere inside diameter, family: length, unit: m, imperialUnit: ft, default: 10, min: 0 }
   - { id: h, label: Liquid level (from bottom), family: length, unit: m, imperialUnit: ft, default: 4, min: 0 }
@@ -27,6 +27,10 @@ faq:
     a: Inside diameter. Subtract twice the wall thickness from the outside diameter for an accurate capacity.
   - q: "At what level is a sphere 85% full?"
     a: "At 75.6% of its inside diameter, whatever the size. For a 10 m sphere that is 7.56 m of liquid. The ratio is the same for every sphere because the shape scales."
+  - q: "How much volume does one millimetre of level represent in a sphere?"
+    a: "It equals the liquid surface area π h (D − h) times 1 mm. In a 10 m sphere that is 75.4 L at 4 m of level, 78.5 L at the 5 m equator and only 14.9 L at 9.5 m."
+  - q: "What level gives 25% of the volume in a spherical tank?"
+    a: "32.6% of the inside diameter for any sphere, which is 3.26 m in a 10 m sphere. 75% of the volume is reached at 67.4% of the diameter."
 related: [engineering/horizontal-tank-volume, engineering/vertical-tank-volume, math/sphere, engineering/dp-level-range]
 ---
 
@@ -89,6 +93,37 @@ Because the top of a sphere is narrow, 85% of the volume is reached well before 
 | 16 m | 2,145 m³ | 12.09 m (75.6%) | 911 t |
 | 18 m | 3,054 m³ | 13.60 m (75.6%) | 1,298 t |
 | 20 m | 4,189 m³ | 15.11 m (75.6%) | 1,780 t |
+
+## Level for a chosen volume
+
+The fraction of the diameter needed for a given percent of volume is the same for every sphere, so this table can be scaled to any size (the last column is for the 10 m example):
+
+| Volume filled | Level | Level in a 10 m sphere |
+|---|---|---|
+| 5% | 13.5% of D | 1.35 m |
+| 10% | 19.6% of D | 1.96 m |
+| 25% | 32.6% of D | 3.26 m |
+| 50% | 50.0% of D | 5.00 m |
+| 75% | 67.4% of D | 6.74 m |
+| 90% | 80.4% of D | 8.04 m |
+| 95% | 86.5% of D | 8.65 m |
+
+For example, to hold 300 m³ in the 10 m sphere the level must reach **5.49 m**. The calculator solves the same cubic when you clear the level and enter a volume.
+
+## How much volume one millimetre of level represents
+
+The liquid surface is a circle of area π h (D − h), so a small level change Δh changes the volume by that area times Δh. It is largest at the equator (78.5 m² for a 10 m sphere) and shrinks to nothing at the top and bottom:
+
+| Level | Surface area | Volume per mm of level |
+|---|---|---|
+| 0.5 m | 14.9 m² | 14.9 L |
+| 2.0 m | 50.3 m² | 50.3 L |
+| 4.0 m | 75.4 m² | 75.4 L |
+| 5.0 m | 78.5 m² | 78.5 L |
+| 8.0 m | 50.3 m² | 50.3 L |
+| 9.5 m | 14.9 m² | 14.9 L |
+
+At the 4 m example level a radar gauge with ±3 mm accuracy leaves an uncertainty of 75.4 × 0.003 = 226 L, or about 113 kg of propane. Near the top the same gauge error is worth far less volume, which helps when setting fill limits.
 
 ## Common mistakes
 

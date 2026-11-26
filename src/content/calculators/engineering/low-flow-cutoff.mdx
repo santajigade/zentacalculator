@@ -5,7 +5,7 @@ category: engineering
 intro: "With square-root extraction, flow = √DP, so tiny DP noise near zero becomes a large, jumping flow reading, and a cutoff forces the output to zero below a set point. This low flow cutoff calculator converts the cutoff between flow and DP and shows the noise gain.\n\nInstrument and DCS engineers use it when configuring orifice and other DP flow loops, as described in [square-root extraction in DP flow measurement](https://www.instrumentationblog.in/square-root-extraction-dp-flow/)."
 keywords: [low flow cutoff calculator, square root low flow cutoff, dp flow cutoff, flow cutoff percentage, square root extraction noise, orifice low flow cutoff]
 published: 2026-10-29
-updated: 2026-11-16
+updated: 2026-11-26
 variables:
   - { id: q, label: Cutoff (% of maximum flow), family: percent, unit: '%', default: 5, min: 0, max: 1 }
   - { id: Qmax, label: Maximum flow, family: flow, unit: m3h, imperialUnit: gpm, default: 100, min: 0 }
@@ -30,6 +30,10 @@ faq:
     a: Yes, anything below the cutoff reads zero. Totalizers will miss it, so choose a meter with better turndown if low flows matter.
   - q: "How much false flow does a DP zero error cause?"
     a: "Flow reading = √(zero error as a fraction of DP span). A 0.1% zero offset reads as 3.16% of flow and a 1% offset as 10% of flow, which is why the zero must be checked at line pressure before a cutoff is chosen."
+  - q: "What is a linear section below the cutoff?"
+    a: "Instead of forcing zero, the transmitter outputs flow proportional to DP below a break point and switches to the square root above it. With a 5% break, 0.1% DP reads 2.0% flow rather than 3.16%, and the noise gain stays at a constant 20 instead of climbing without limit near zero."
+  - q: "How much flow does the totalizer lose below the cutoff?"
+    a: "Everything below the cutoff is counted as zero. A line running at 4 m³/h for 6 hours a day under a 5 m³/h cutoff loses 24 m³ a day, about 8,760 m³ a year."
 related: [engineering/dp-flow-square-root, engineering/orifice-flow, engineering/turndown-ratio, engineering/4-20ma-scaling]
 ---
 
@@ -91,6 +95,27 @@ For a 250 mbar span and 100 m³/h maximum flow:
 ## Setting the cutoff in practice
 
 Re-zero the transmitter at line pressure with the equalising valve open, then watch the flow reading with the meter blocked in. The cutoff should sit comfortably above the noise band seen there, but below the lowest flow the process needs to see. Many smart transmitters offer a **linear section** below a break point instead of a hard cutoff, so the output follows DP in a straight line near zero rather than jumping. In a DCS, add a little hysteresis (for example cut out at 5% and back in at 6%) so the reading does not chatter around the set point.
+
+## Is the cutoff above the transmitter's own error?
+
+A cutoff only works if the DP it corresponds to is clearly larger than what the transmitter can resolve. Taking a reference accuracy of ±0.065% of calibrated span, the table compares the cutoff DP with that error band (the multiple in brackets) for four spans:
+
+| DP span | Error band | 3% flow | 5% flow | 10% flow |
+|---|---|---|---|---|
+| 62.5 mbar | 0.041 mbar | 0.056 mbar (1.4×) | 0.156 mbar (3.8×) | 0.625 mbar (15.4×) |
+| 250 mbar | 0.163 mbar | 0.225 mbar (1.4×) | 0.625 mbar (3.8×) | 2.500 mbar (15.4×) |
+| 1000 mbar | 0.650 mbar | 0.900 mbar (1.4×) | 2.500 mbar (3.8×) | 10.000 mbar (15.4×) |
+| 2500 mbar | 1.625 mbar | 2.250 mbar (1.4×) | 6.250 mbar (3.8×) | 25.000 mbar (15.4×) |
+
+The ratio does not depend on the span, because both the cutoff DP and the error scale with it: a 3% cutoff sits only 1.4 times above the error band, while 5% gives 3.8 times and 10% gives 15.4 times. Zero drift with static pressure and ambient temperature adds to the reference figure in service, which is why settings below about 5% of flow often chatter.
+
+## Linear section instead of a hard cutoff
+
+With a linear section the output follows a straight line from zero up to a break point q₀, where it joins the root curve. The line has slope 1 ÷ q₀ on the DP fraction, so with q₀ = 5% a DP of 0.1% of span reads 0.001 ÷ 0.05 = **2.0%** flow instead of √0.001 = 3.16% on the pure root curve. The noise gain below the break is a constant 20, twice the root curve's gain at the break but far below the 50 it reaches at 1% flow, and there is no step from zero.
+
+## What the cutoff costs the totalizer
+
+Suppose a line runs at 4 m³/h for 6 hours each night, just under the 5 m³/h cutoff in the example. The flow reads zero, so the totalizer misses 24 m³ a day, about 8,760 m³ a year. If the plant needs that flow measured, a smaller orifice, a second low range transmitter or a meter with wider turndown is the fix, not a lower cutoff. When hysteresis is used, the 5% cut out and 6% cut in points correspond to 0.625 mbar and 0.900 mbar on the 250 mbar span.
 
 ## Common mistakes
 

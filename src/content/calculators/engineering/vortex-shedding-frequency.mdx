@@ -5,7 +5,7 @@ category: engineering
 intro: "Fluid flowing past a bluff body sheds vortices from alternate sides at a frequency proportional to velocity. This vortex shedding frequency calculator uses f = St × V ÷ d, the principle explained in [how a vortex shedding flowmeter works](https://www.instrumentationblog.in/vortex-shedding-flowmeter-working/).\n\nInstrument engineers use it to size vortex meters and estimate K-factors, and mechanical engineers use it to check thermowells for resonance. For field problems see [vortex flow meter troubleshooting](https://www.instrumentationblog.in/vortex-flow-meter-troubleshooting/)."
 keywords: [vortex shedding frequency calculator, strouhal number calculator, vortex flow meter frequency, karman vortex frequency, bluff body shedding frequency, thermowell vortex shedding]
 published: 2026-10-29
-updated: 2026-11-16
+updated: 2026-11-26
 variables:
   - { id: V, label: Flow velocity, family: velocity, unit: ms, imperialUnit: fts, default: 3, min: 0 }
   - { id: d, label: Bluff body / cylinder width, family: length, unit: mm, imperialUnit: in, default: 20, min: 0 }
@@ -29,6 +29,8 @@ faq:
     a: No. The bluff body partly blocks the pipe, raising local velocity, and real meters are flow-calibrated. Use the meter's stamped K-factor for measurement.
   - q: "What is the minimum flow a vortex meter can measure?"
     a: "It is set by the minimum Reynolds number, often about 20,000. For water in a 100 mm pipe that is about 0.20 m/s, or 5.65 m³/h. A smaller meter or a higher velocity lowers the cutoff in m³/h."
+  - q: "How long can a thermowell be before vortex shedding becomes a problem?"
+    a: "Compare the shedding frequency with the well natural frequency. A straight 19 mm stainless well in 25 m/s gas sheds at 263 Hz; a cantilever estimate puts the 0.8 frequency ratio limit at about 205 mm immersion, before the PTC 19.3 TW corrections for mounting and fluid mass, which shorten it further."
 related: [engineering/flow-meter-k-factor, engineering/pipe-flow-velocity, engineering/reynolds-number, engineering/turndown-ratio]
 ---
 
@@ -89,6 +91,20 @@ The K-factor falls roughly with the cube of the bore, so large meters give few p
 ## Thermowells and other immersed bodies
 
 The same formula gives the forcing frequency on a thermowell, with d equal to the tip diameter. ASME PTC 19.3 TW compares that frequency with the well's natural frequency and requires the ratio to stay below set limits, so a short, stiff well or a smaller tip may be needed at high gas or steam velocities. A velocity collar is no longer recommended as a fix.
+
+## Worked example: is a thermowell too long?
+
+A straight stainless thermowell with a 19 mm tip and 6.6 mm bore sits in gas flowing at 25 m/s. With St = 0.2 the shedding frequency is f = 0.2 × 25 ÷ 0.019 = **263 Hz**. A simple cantilever estimate of the well's first natural frequency is f<sub>n</sub> = (1.875² ÷ 2πL²) × √(E I ÷ ρ A), with E = 193 GPa, ρ = 8,000 kg/m³, I = π(D⁴ − d⁴) ÷ 64 = 6,304 mm⁴ and A = 249.3 mm². For a 250 mm well f<sub>n</sub> = 221 Hz, so the ratio is 1.19. A common screening limit keeps f<sub>s</sub> below 0.8 f<sub>n</sub>:
+
+| Immersion length | Natural frequency | f<sub>s</sub> ÷ f<sub>n</sub> | Screening |
+|---|---|---|---|
+| 150 mm | 614 Hz | 0.43 | below 0.8 |
+| 200 mm | 346 Hz | 0.76 | below 0.8 |
+| 250 mm | 221 Hz | 1.19 | above 0.8 |
+| 300 mm | 154 Hz | 1.71 | above 0.8 |
+| 400 mm | 86 Hz | 3.05 | above 0.8 |
+
+The natural frequency falls with the square of the length, so the longest well that meets the 0.8 ratio here is about **205 mm**. PTC 19.3 TW also corrects for the mounting flexibility and the added mass of the fluid, which lower f<sub>n</sub>, so treat this estimate as an upper bound and run the full calculation before ordering.
 
 ## Common mistakes
 

@@ -5,7 +5,7 @@ category: engineering
 intro: "A rotameter is calibrated for one fluid, usually water, and reads wrong on a liquid of different density because the float settles at a different height. This rotameter correction calculator converts the scale reading to actual flow using the float density, as covered in the [metal tube rotameter working principle](https://www.instrumentationblog.in/metal-tube-rotameter-working/).\n\nOperators and instrument technicians use it when a meter is moved to a new liquid; see also [10 factors in rotameter selection](https://www.instrumentationblog.in/rotameter-selection-10-factors/)."
 keywords: [rotameter correction calculator, rotameter density correction, variable area flow meter correction factor, rotameter conversion factor, rotameter different liquid, float density correction]
 published: 2026-10-29
-updated: 2026-11-16
+updated: 2026-11-26
 variables:
   - { id: Q1, label: Scale reading, family: flow, unit: Lmin, imperialUnit: gpm, default: 10, min: 0 }
   - { id: r1, label: Calibration fluid density, family: density, unit: kgm3, default: 998, min: 0 }
@@ -29,6 +29,10 @@ faq:
     a: Yes, for viscous liquids. This correction assumes viscosity close to the calibration fluid; above a few cP the manufacturer's viscosity immunity ceiling should be checked.
   - q: "Which part of the rotameter float should I read?"
     a: "Read at the reading edge marked by the manufacturer. For most shaped floats this is the widest part (the top edge of the float body); for a ball float read the centre of the ball, at eye level."
+  - q: "How do I set a rotameter for a mass flow in kg/h?"
+    a: "Divide the mass flow by the liquid density to get the actual volume flow, then divide by the correction factor to get the scale reading. For 600 kg/h of 870 kg/m³ oil on a water scaled meter with a stainless float, that is 11.49 L/min actual and 10.64 L/min on the scale."
+  - q: "Does the correction change the full scale range of the meter?"
+    a: "Yes, every point on the scale is multiplied by the same factor. A 2 to 20 L/min water scale reads 2.16 to 21.62 L/min on an 870 kg/m³ oil with a stainless float."
 related: [engineering/gas-flow-correction, engineering/flow-meter-k-factor, engineering/turndown-ratio, physics/density]
 ---
 
@@ -86,6 +90,20 @@ For a water-calibrated meter (998 kg/m³), measuring a light liquid of 800 kg/m�
 | Aluminium | 2,700 kg/m³ | 1.1801 | 0.8561 |
 | PTFE | 2,170 kg/m³ | 1.2076 | 0.8297 |
 | PVDF | 1,780 kg/m³ | 1.2503 | 0.7854 |
+
+## Why the square root appears
+
+At a steady reading the float hangs where the fluid drag balances its weight less buoyancy, V<sub>f</sub> (ρ<sub>f</sub> − ρ) g. Drag at a given annulus opening scales with ρ v², so the velocity, and with it the flow, scales with √[(ρ<sub>f</sub> − ρ) ÷ ρ]. The correction factor is just this term for the actual liquid divided by the term for the calibration fluid. A 5 cm³ stainless float carries a net downward force of 343.3 mN in water and 353.0 mN in the 800 kg/m³ liquid; the lighter liquid also has less density to push with, so it must flow faster to hold the same float height.
+
+## Second example: setting a mass flow target
+
+A dosing line needs 600 kg/h of an oil at 870 kg/m³ through a water scaled meter with a stainless float:
+
+- Actual volume flow = 600 ÷ 870 = 0.6897 m³/h = **11.49 L/min**
+- Correction factor = √[(8000 − 870) × 998 ÷ ((8000 − 998) × 870)] = **1.0808**
+- Set the float at 11.49 ÷ 1.0808 = **10.64 L/min** on the water scale
+
+The corrected range also moves. A 2 to 20 L/min water scale now spans 2.16 to 21.62 L/min of oil, so check the maximum process flow against the corrected top of scale, not the printed one.
 
 ## Reading a rotameter in practice
 

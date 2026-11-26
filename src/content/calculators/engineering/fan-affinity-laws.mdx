@@ -5,7 +5,7 @@ category: engineering
 intro: "A fan's air power is airflow times pressure rise, and its shaft power is that divided by the fan efficiency. This fan affinity laws calculator finds both, then scales flow, pressure and power to a new speed: flow with the speed ratio, pressure with its square and power with its cube.\n\nHVAC designers, energy auditors and plant engineers use it to size fan motors and to estimate [VFD energy savings](https://www.instrumentationblog.in/vfd-sizing-selection-guide/) before slowing a fan instead of throttling it with a damper."
 keywords: [fan affinity laws calculator, fan power calculator, fan shaft power, blower power calculator, fan laws, cfm static pressure power, fan speed change]
 published: 2026-11-05
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: Q, label: Airflow, family: flow, unit: m3h, imperialUnit: cfm, default: 10000, min: 0 }
   - { id: dp, label: Fan total pressure rise, family: pressure, unit: Pa, imperialUnit: inH2O, default: 1000, min: 0 }
@@ -34,6 +34,10 @@ faq:
     a: Use fan total pressure with total efficiency, or fan static pressure with static efficiency — do not mix them. Both give the same shaft power.
   - q: "Why does a hot gas fan overload its motor at a cold start?"
     a: "Fan power is proportional to gas density. A fan designed for gas at 150 °C handles air about 1.44 times denser when it starts cold at 20 °C, so it draws about 1.44 times its hot running power. Size the motor for the cold start or keep the inlet damper closed until the gas warms up."
+  - q: "How much more power does a fan need if I speed it up 20%?"
+    a: "Power rises with the cube of speed, so 1.2³ = 1.728 times. The default fan goes from 3.97 kW to 6.86 kW to deliver 12,000 m³/h, while pressure rises 44%."
+  - q: "What happens to fan performance with a smaller impeller?"
+    a: "At the same speed, flow falls with the diameter ratio cubed, pressure with its square and power with its fifth power. Going from 630 to 560 mm cuts flow to 70.2%, pressure to 79.0% and power to 55.5% of the original."
 related: [engineering/pump-affinity-laws, engineering/pump-power, engineering/torque-power-speed, electrical/three-phase-motor-power]
 ---
 
@@ -89,6 +93,26 @@ Pressure and power scale with gas density at the same volume flow and speed. For
 ## Using the fan laws in practice
 
 The laws compare two operating points of the same fan in the same system, so they hold only if the system curve passes through the origin: all of the pressure is friction that varies with flow squared. Airflow is usually measured in the field with a pitot tube traverse across the duct, pressure rise with a manometer across the fan, and power with a clamp-on power meter at the motor. In variable air volume systems that hold a fixed duct static pressure, the fan cannot follow the cube law all the way down, so real savings are smaller than the calculator shows.
+
+## Speeding a fan up for more airflow
+
+The laws work just as well upwards, and the cube term is what catches people out. To raise the default fan from 10,000 to 12,000 m³/h the speed must rise to 1,450 × 12,000 ÷ 10,000 = **1,740 rpm**. Pressure then climbs to 1,440 Pa and shaft power to 3.968 × 1.2³ = **6.86 kW**, 1.73 times the original, so a 20% airflow increase usually means a bigger motor. Check the fan's maximum rated speed and the belt or pulley ratio before relying on a VFD to overspeed it.
+
+## Changing the impeller diameter
+
+For geometrically similar fans at the same speed, flow scales with the diameter cubed, pressure with its square and power with its fifth power. Trimming from 630 mm to 560 mm (ratio 0.8889) gives:
+
+| Quantity | Law | Ratio | Default fan |
+|---|---|---|---|
+| Airflow | (D₂/D₁)³ | 0.702 | 7,023 m³/h |
+| Pressure | (D₂/D₁)² | 0.790 | 790 Pa |
+| Shaft power | (D₂/D₁)⁵ | 0.555 | 2.20 kW |
+
+The diameter laws are less exact than the speed laws because a smaller impeller in the same casing has larger clearances.
+
+## Imperial example
+
+A fan moving 5,000 CFM against 2 in. w.g. total pressure at 65% efficiency needs 5,000 × 2 ÷ (6,356 × 0.65) = **2.42 bhp**. In SI that is 2.360 m³/s × 498 Pa ÷ 0.65 = 1.81 kW, the same answer within rounding of the 6,356 constant.
 
 ## Common mistakes
 

@@ -5,7 +5,7 @@ category: engineering
 intro: "A manometer measures pressure difference as the height of a liquid column, and tilting the tube spreads a small height over a longer, easier-to-read scale. This manometer calculator converts a U-tube or inclined manometer reading into pressure, including the fluid above the manometer liquid.\n\nHVAC technicians use it for duct and filter pressures, and instrument technicians use it as a simple reference standard. See the [U-tube manometer working principle and formula](https://www.instrumentationblog.in/u-tube-manometer-working-formula/)."
 keywords: [manometer calculator, u tube manometer calculator, inclined manometer calculator, manometer formula, differential pressure manometer, mm water column to pa, manometer reading to pressure]
 published: 2026-11-05
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: rm, label: Manometer liquid density, family: density, unit: kgm3, imperialUnit: lbft3, default: 1000, min: 0 }
   - { id: rf, label: Density of the fluid above it (process fluid), family: density, unit: kgm3, imperialUnit: lbft3, default: 1.2, min: 0 }
@@ -27,6 +27,8 @@ faq:
     a: About 9.81 Pa (9.80665 Pa by definition at standard gravity).
   - q: "What is a well-type manometer?"
     a: "One leg is replaced by a large reservoir, so its level hardly moves and you read only the single tube. The small fall of the reservoir is allowed for in the scale, which is compressed by the ratio of the tube area to the reservoir area."
+  - q: "Does temperature affect a manometer reading?"
+    a: "Yes, through the density of the filling liquid. Water at 40 °C is about 0.8% less dense than at 4 °C, so the same reading means about 0.8% less pressure. Gauge oils expand more, so oil-filled gauges are often marked with the temperature their scale assumes."
 related: [engineering/hydrostatic-pressure, engineering/absolute-gauge-pressure, engineering/pressure-to-head, engineering/pitot-tube-velocity]
 ---
 
@@ -45,13 +47,13 @@ A water-filled inclined manometer at 30° reads 150 mm along the tube, measuring
 - h = 150 × sin 30° = **75 mm**
 - Δp = (1,000 − 1.2) × 9.80665 × 0.075 = **734.6 Pa**
 
-Check the default result: 75 mm of water is 75 × 9.79 ≈ 734616.2 Pa, or 74910.0 mm H₂O once the air above the water is allowed for.
+Check the default result: 75 mm of water column is 75 × 9.80665 = 735.5 Pa, and the column of air above the water (0.88 Pa) is subtracted, leaving 734.6 Pa.
 
 ## Liquid over liquid example
 
 A vertical mercury U-tube measures the pressure drop across an orifice in a water line. The mercury levels differ by 200 mm, with water filling both legs above the mercury:
 
-- Δp = (13,546 − 998) × 9.80665 × 0.2 = **24610.77 kPa**
+- Δp = (13,546 − 998) × 9.80665 × 0.2 = 24,611 Pa = **24.61 kPa**
 
 Ignoring the water above the mercury would give 26.57 kPa, an error of about 8%.
 
@@ -81,6 +83,30 @@ Ignoring the water above the mercury would give 26.57 kPa, an error of about 8%.
 | Red gauge oil (SG 0.826) | 808.9 | 404.4 | 140.5 |
 | Paraffin (SG 0.80) | 783.4 | 391.7 | 136.0 |
 | Mercury | 13331.0 | 6665.5 | 2314.9 |
+
+## Second example: furnace draft on an oil gauge
+
+Boiler draft is read on an inclined gauge filled with red oil (SG 0.826, 826.0 kg/m³) set at 10°. The meniscus has moved 72 mm along the scale:
+
+- h = 72 × sin 10° = 12.50 mm
+- Δp = (826.0 − 1.2) × 9.80665 × 0.01250 = **101.1 Pa**, which is 10.31 mm of water column
+
+On a vertical water tube the same draft would move the level only 10.3 mm, too little to read to the precision needed for burner tuning.
+
+## Reservoir drop in a well-type gauge
+
+Most portable inclined gauges have one leg as a reservoir. As liquid rises in the tube, the reservoir falls by the tube area ÷ reservoir area times the scale movement, so the true height is h = L (sin θ + a ÷ A). With a 6 mm bore and a 60 mm reservoir, a ÷ A = 0.0100. At the default 150 mm and 30° the true height is 76.50 mm and the pressure 749.3 Pa, 2.0% more than the plain L sin θ figure. Commercial scales already include this correction; it matters when you make your own scale or calculate from a ruler.
+
+## Effect of water temperature (100 mm vertical reading, air above)
+
+| Water temperature | Density | Pressure | Change from 4 °C |
+|---|---|---|---|
+| 4 °C | 999.97 kg/m³ | 979.5 Pa | +0.00% |
+| 10 °C | 999.70 kg/m³ | 979.2 Pa | -0.03% |
+| 20 °C | 998.21 kg/m³ | 977.7 Pa | -0.18% |
+| 30 °C | 995.65 kg/m³ | 975.2 Pa | -0.43% |
+| 40 °C | 992.22 kg/m³ | 971.9 Pa | -0.78% |
+| 60 °C | 983.20 kg/m³ | 963.0 Pa | -1.68% |
 
 ## Notes
 

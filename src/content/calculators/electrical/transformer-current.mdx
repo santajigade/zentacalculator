@@ -1,11 +1,11 @@
 ---
 title: Transformer Current Calculator (Full-Load Amps)
-description: Calculate primary and secondary full-load current of single-phase and three-phase transformers from kVA and voltages.
+description: "Calculate primary and secondary full-load current of single-phase and three-phase transformers from the kVA rating and line voltages, with sizing notes."
 category: electrical
 intro: "A transformer's kVA rating and line voltages set the full-load current on each winding. This transformer current calculator gives primary and secondary full-load amps and the voltage ratio for single-phase and three-phase units. Learn [how to calculate transformer kVA rating](https://www.instrumentationblog.in/how-to-calculate-transformer-kva-rating/).\n\nElectrical engineers, contractors and substation staff use it to size breakers, fuses, cables, busbars and current transformers, and to check how heavily a unit is loaded."
 keywords: [transformer current calculator, transformer full load current, kva to amps transformer, primary current, secondary current, 3 phase transformer current]
 published: 2026-10-27
-updated: 2026-11-17
+updated: 2026-11-26
 variables:
   - { id: S, label: Transformer rating, suffix: kVA, default: 500, min: 0 }
   - id: ph
@@ -34,6 +34,10 @@ faq:
     a: Not the rating calculation — transformers are rated in kVA, so full-load current depends only on kVA and voltage.
   - q: "How do I check transformer loading with a clamp meter?"
     a: "Measure the LV phase currents, take the highest, and divide by the full-load current. For a 500 kVA, 433 V unit, 480 A is 72% of the 667 A rating."
+  - q: "What current flows inside a delta winding?"
+    a: "The line current divided by √3. For a 500 kVA, 11 kV delta primary the line current is 26.24 A and each winding carries 15.15 A."
+  - q: "How do I find the kVA being supplied when phase currents are unequal?"
+    a: "Multiply √3 by the line voltage and the average of the three currents. Readings of 520, 470 and 430 A at 433 V give about 355 kVA, but the 520 A phase sets the heating at 78% of rating."
 related: [electrical/transformer-short-circuit, electrical/kva-to-kw, electrical/kw-to-amps, electrical/cable-voltage-drop]
 ---
 
@@ -109,6 +113,28 @@ The current ratio is the inverse of the voltage ratio: 666.7 ÷ 26.24 = 25.40.
 | 25 kVA | 108.7 A | 104.2 A | 208.3 A |
 | 50 kVA | 217.4 A | 208.3 A | 416.7 A |
 | 100 kVA | 434.8 A | 416.7 A | 833.3 A |
+
+## Winding currents in a Dyn11 transformer
+
+The calculator gives line currents. Inside the windings they differ with the connection. In the common Dyn11 distribution unit the 11 kV side is delta, so each HV winding carries 26.24 ÷ √3 = **15.15 A** while the line carries 26.24 A. The 433 V side is star, so the winding current equals the line current of 666.7 A, and each winding sees the phase voltage 433 ÷ √3 = 250 V. Winding temperature indicators and internal CTs are rated on these winding values.
+
+## Loading from unbalanced phase currents
+
+Real loads are rarely balanced. If the LV phases read 520 A, 470 A and 430 A, the supplied power is about √3 × 433 × 473.3 A = **355 kVA** using the average current, but the worst phase is at 520 ÷ 666.7 = **78%** of its rating. Winding heating follows the most loaded phase, so judge thermal loading by the highest current and use the average only for energy and kVA.
+
+## A single-phase unit on a three-phase line
+
+A 25 kVA pole mounted transformer connected between two 11 kV lines has an 11 kV primary and a 240 V secondary. It draws 25,000 ÷ 11,000 = **2.27 A** from the line and delivers up to 25,000 ÷ 240 = **104.2 A**. Set the calculator to single phase and enter the voltage actually across the winding.
+
+## Full-load current at other line voltages (three-phase)
+
+| Rating | 400 V | 690 V | 3.3 kV | 6.6 kV | 33 kV |
+|---|---|---|---|---|---|
+| 250 kVA | 360.8 A | 209.2 A | 43.7 A | 21.9 A | 4.4 A |
+| 500 kVA | 721.7 A | 418.4 A | 87.5 A | 43.7 A | 8.7 A |
+| 1,000 kVA | 1,443.4 A | 836.7 A | 175.0 A | 87.5 A | 17.5 A |
+| 2,000 kVA | 2,886.8 A | 1,673.5 A | 349.9 A | 175.0 A | 35.0 A |
+| 5,000 kVA | 7,216.9 A | 4,183.7 A | 874.8 A | 437.4 A | 87.5 A |
 
 ## Common mistakes
 

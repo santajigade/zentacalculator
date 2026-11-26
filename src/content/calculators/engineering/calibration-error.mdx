@@ -5,7 +5,7 @@ category: engineering
 intro: "Calibration compares an instrument's reading with a reference standard and decides whether the error is inside tolerance. This calibration error calculator gives the error in units, percent of span and percent of reading, as explained in [how to calculate calibration error](https://www.instrumentationblog.in/calibration-error-calculation/).\n\nInstrument technicians and quality engineers use it to record as-found and as-left results and decide on adjustment; see [as-found and as-left on calibration certificates](https://www.instrumentationblog.in/calibration-certificate-as-found-as-left/)."
 keywords: [calibration error calculator, percent of span error, as found as left tolerance, transmitter calibration error, calibration tolerance check, instrument error calculation]
 published: 2026-10-29
-updated: 2026-11-16
+updated: 2026-11-26
 variables:
   - { id: Lo, label: Output range low (e.g. 4 mA), default: 4, help: 'Use any unit — mA, bar, °C — as long as all values match.' }
   - { id: Hi, label: Output range high (e.g. 20 mA), default: 20 }
@@ -34,6 +34,10 @@ faq:
     a: "Divide the mA error by the 16 mA span and multiply by the process range. A 0.05 mA error on a 0 to 10 bar transmitter is 0.05 ÷ 16 × 10 = 0.03125 bar, or 31.25 mbar."
   - q: "What is a guard band in calibration?"
     a: "It is a tighter adjust limit inside the tolerance, used so an instrument is reset before it drifts out. With a ±0.25% of span tolerance on 4 to 20 mA (±0.040 mA), an 80% guard band means adjusting any point beyond ±0.032 mA."
+  - q: "How do I tell a zero error from a span error?"
+    a: "Look at the error across several test points. A zero error is the same at every point; a span error grows in proportion to the input. In a run reading 4.008, 8.017, 12.027, 16.036 and 20.046 mA, the fitted zero error is +0.0078 mA and the span error +0.0380 mA, so the span needs adjusting."
+  - q: "How do I calculate the test uncertainty ratio?"
+    a: "Divide the tolerance by the reference uncertainty at the same point. A ±0.25% of span tolerance on 4 to 20 mA is ±40 µA; a calibrator good to ±(0.01% of reading + 2 µA) is ±3.2 µA at 12 mA, so TUR = 12.5:1."
 related: [engineering/pfd-avg, engineering/five-point-calibration, engineering/instrument-accuracy, engineering/4-20ma-scaling, math/percent-error]
 ---
 
@@ -89,6 +93,32 @@ For a 4 to 20 mA, 0 to 10 bar transmitter with a ±0.25% of span tolerance:
 | 50% | 5.00 bar | 12.000 mA | 11.960 mA | 12.040 mA |
 | 75% | 7.50 bar | 16.000 mA | 15.960 mA | 16.040 mA |
 | 100% | 10.00 bar | 20.000 mA | 19.960 mA | 20.040 mA |
+
+## Second example: a temperature transmitter
+
+The calculator works in any unit. A temperature transmitter ranged 0 to 200 °C is checked in a dry block at 150 °C and reads 150.6 °C, with a tolerance of ±0.5% of span:
+
+- Error = 150.6 − 150 = **+0.6 °C**
+- % of span = 0.6 ÷ 200 = **0.30%**, % of reading = 0.6 ÷ 150 = 0.40%
+- Tolerance used = 0.30 ÷ 0.5 = **60%**, so this point passes as found
+
+## Reading a five-point run: zero error or span error?
+
+A single point cannot tell you what to adjust. This as-found run on a 4 to 20 mA transmitter with ±0.25% of span tolerance shows an error that grows up the scale:
+
+| Input | Expected | Measured | Error | % of span | Tolerance used |
+|---|---|---|---|---|---|
+| 0% | 4.000 mA | 4.008 mA | +0.008 mA | 0.0500% | 20% |
+| 25% | 8.000 mA | 8.017 mA | +0.017 mA | 0.1062% | 42% |
+| 50% | 12.000 mA | 12.027 mA | +0.027 mA | 0.1687% | 67% |
+| 75% | 16.000 mA | 16.036 mA | +0.036 mA | 0.2250% | 90% |
+| 100% | 20.000 mA | 20.046 mA | +0.046 mA | 0.2875% | 115% |
+
+A straight-line fit through the five points gives a zero error of **+0.0078 mA** at 4 mA and a span error of **+0.0380 mA** over the 16 mA span (0.238% of span). 1 point fails, and the pattern says the span adjustment is the main fix, with a small zero trim. An error that is the same at every point would be a pure zero shift.
+
+## Is the calibrator good enough?
+
+A typical loop calibrator specified at ±(0.01% of reading + 2 µA) has an uncertainty of 0.0001 × 12 + 0.002 = **3.2 µA** at 12 mA. Against the ±40 µA tolerance that is a test uncertainty ratio of 40 ÷ 3.2 = **12.5:1**, comfortably above the 4:1 rule.
 
 ## Calibration in practice
 

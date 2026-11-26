@@ -5,7 +5,7 @@ category: electrical
 intro: "A winding resistance test measures the DC resistance of each motor phase with a low resistance ohmmeter. This motor winding resistance unbalance calculator gives the average, the percent unbalance and the spread, and corrects the average to a reference temperature, as covered in [the motor winding resistance test](https://www.instrumentationblog.in/motor-winding-resistance-test/).\n\nMaintenance electricians and rewind shops use it to find shorted turns, loose joints and broken strands before a fault burns out the winding."
 keywords: [motor winding resistance unbalance calculator, winding resistance test, resistance unbalance formula, motor winding resistance temperature correction, phase resistance imbalance, three phase motor resistance test]
 published: 2026-11-15
-updated: 2026-11-15
+updated: 2026-11-26
 variables:
   - { id: R1, label: Resistance U to V (or phase 1), family: resistance, unit: ohm, default: 0.512, min: 0 }
   - { id: R2, label: Resistance V to W (or phase 2), family: resistance, unit: ohm, default: 0.508, min: 0 }
@@ -40,6 +40,10 @@ faq:
     a: "Motor windings are often well below 1 Ω, so the test leads and contact resistance of a two wire multimeter swamp the reading. A four wire (Kelvin) micro ohmmeter injects a test current through one pair of leads and measures voltage with another, so lead resistance drops out and milliohm differences become visible."
   - q: Do I measure line to line or phase resistance?
     a: "On a three terminal motor you can only measure line to line. In star, each reading is two phase windings in series, so phase resistance is half the reading. In delta, each reading is one winding in parallel with the other two in series, so phase resistance is 1.5 times the reading. Unbalance can be judged on the line to line readings directly."
+  - q: "How can winding resistance tell me the winding temperature?"
+    a: "Use T_hot = (R_hot ÷ R_cold) × (234.5 + T_cold) − 234.5 for copper. A winding reading 0.5002 Ω at 25 °C and 0.6105 Ω after a heat run averaged 82.2 °C. This gives the average temperature; the hot spot is higher."
+  - q: "How do I work out stator copper loss from the readings?"
+    a: "Correct the line to line average to the rated temperature, convert to phase resistance (half for star, 1.5 times for delta) and use 3 I² R. The example motor at 30 A loses about 805 W in the stator copper at 75 °C."
 related: [electrical/voltage-unbalance, electrical/wire-resistance, electrical/polarization-index, electrical/three-phase-motor-power, electrical/induction-motor-slip, electrical/motor-starting-current]
 ---
 
@@ -96,6 +100,28 @@ Because the average includes the faulty phase, the deviation from average is onl
 ## How the test is done
 
 Isolate and lock out the motor, disconnect the supply cables at the terminal box so the cable is not in the measurement, and remove the star or delta links if you want each phase separately. Use a four wire micro ohmmeter with a test current of at least 1 A, and wait for the reading to settle, because winding inductance makes the current rise slowly. Take each reading in both current directions and average them to cancel thermal EMFs. Record the temperature at the same time. Comparing results with earlier tests on the same motor is often more useful than any fixed limit.
+
+## Using the readings for copper loss
+
+The corrected resistance also gives the stator copper loss used in efficiency calculations. For the worked example, wound in star with a rated current of 30 A:
+
+- Line to line at 75 °C = 0.5137 × (234.5 + 75) ÷ (234.5 + 32) = **0.5965 Ω**
+- Phase resistance in star = half of that = 0.2983 Ω
+- Copper loss = 3 × I² × R<sub>phase</sub> = 3 × 30² × 0.2983 = **805 W**
+
+## Measuring winding temperature by resistance
+
+Because copper resistance tracks temperature so closely, the resistance method is the standard way to find the average winding temperature after a heat run: T<sub>hot</sub> = (R<sub>hot</sub> ÷ R<sub>cold</sub>) × (234.5 + T<sub>cold</sub>) − 234.5. If the motor above reads 0.5002 Ω cold at 25 °C and 0.6105 Ω immediately after shutdown, the winding averaged **82.2 °C**, a rise of 57.2 K over a 25 °C ambient. Measure within a minute or two of stopping, or take several readings and extrapolate back to the moment of shutdown.
+
+| Hot ÷ cold resistance (cold at 25 °C) | Average winding temperature | Rise over 25 °C |
+|---|---|---|
+| 1.05 | 38.0 °C | 13.0 K |
+| 1.10 | 51.0 °C | 26.0 K |
+| 1.20 | 76.9 °C | 51.9 K |
+| 1.30 | 102.9 °C | 77.9 K |
+| 1.40 | 128.8 °C | 103.8 K |
+
+A class F insulation system is commonly limited to a 105 K rise by resistance, so a ratio near 1.40 is close to the limit.
 
 ## Common mistakes
 

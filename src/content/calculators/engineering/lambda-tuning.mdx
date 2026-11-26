@@ -5,7 +5,7 @@ category: engineering
 intro: "Lambda tuning sets a PI controller so the closed loop responds like a first order lag with a time constant λ that you choose, fast or gentle, with no overshoot. This lambda tuning calculator uses process gain, time constant and dead time from a step test and compares the result with Cohen-Coon.\n\nControl engineers use it to tune flow, pressure and temperature loops predictably, as covered in [PID controller tuning parameters](https://www.instrumentationblog.in/pid-controller-tuning-parameters/) and [how to tune a PID controller](https://www.instrumentationblog.in/how-to-tune-a-pid-controller/)."
 keywords: [lambda tuning calculator, imc tuning calculator, cohen coon calculator, pi controller tuning, fopdt tuning rules, self regulating loop tuning]
 published: 2026-10-29
-updated: 2026-11-16
+updated: 2026-11-26
 variables:
   - { id: K, label: Process gain (Δ PV % ÷ Δ output %), default: 2, min: 0 }
   - { id: tau, label: Process time constant (τ), family: seconds, unit: s, default: 60, min: 0 }
@@ -33,6 +33,8 @@ faq:
     a: "Use the integrating rule: Kc = (2λ + θ) ÷ (Ki (λ + θ)²) and Ti = 2λ + θ, where Ki is the ramp rate of the level in % per second per % of output and λ is the arrest time you want after a disturbance."
   - q: "How do I check that the loop responds as designed?"
     a: "Make a small set point step in automatic. The PV should start to move after the dead time, reach about 63% of the step at λ + θ (here 40 s) and settle without overshoot. A faster or oscillating response means the process gain or dead time was underestimated."
+  - q: "Does lambda tuning work when dead time is longer than the time constant?"
+    a: "Yes. The gain falls automatically because λ + θ grows. For K = 2, τ = 60 s and θ = 120 s with λ = 360 s, Kc = 60 ÷ (2 × 480) = 0.0625. Keep λ at least equal to θ; for strongly dead time dominant loops some engineers also set Ti a little above τ."
 related: [engineering/pfd-avg, engineering/fopdt-step-test, engineering/ziegler-nichols-pid-tuning, engineering/sensor-response-time, engineering/turndown-ratio]
 ---
 
@@ -100,6 +102,33 @@ For a tank with K<sub>i</sub> = 0.01 %/s per % and θ = 20 s:
 | 900 s | 0.22 | 465% | 1820 s (30.3 min) |
 
 A surge tank is tuned slowly (large λ) so the outlet flow stays smooth; a reactor level that must stay tight uses a short λ. With λ = 300 s the settings are K<sub>c</sub> = 0.61 and T<sub>i</sub> = 620 s.
+
+## Second example: heat exchanger outlet temperature
+
+A steam heated exchanger is step tested: the outlet temperature moves 1.5 % of span per % of valve, with τ = 180 s and θ = 30 s. Temperature loops are usually tuned for robustness, so take λ = τ = 180 s:
+
+- K<sub>c</sub> = 180 ÷ (1.5 × (180 + 30)) = **0.571**, a proportional band of **175%**
+- T<sub>i</sub> = τ = **180 s** (3.0 min per repeat)
+- After a set point step the outlet should reach 63% of the change about 210 s later, without overshoot
+- Cohen-Coon would give K<sub>c</sub> = 3.656 and T<sub>i</sub> = 74.2 s, a loop that would fight the slow steam valve
+
+## How dead time changes the comparison
+
+Same process gain (2) and time constant (60 s), λ set to 3θ in each case:
+
+| Dead time θ | θ ÷ τ | λ = 3θ | Lambda K<sub>c</sub> | Cohen-Coon K<sub>c</sub> | Cohen-Coon T<sub>i</sub> | Ratio |
+|---|---|---|---|---|---|---|
+| 5 s | 0.08 | 15 s | 1.500 | 5.442 | 14.2 s | 3.6 × |
+| 10 s | 0.17 | 30 s | 0.750 | 2.742 | 24.7 s | 3.7 × |
+| 30 s | 0.50 | 90 s | 0.250 | 0.942 | 49.7 s | 3.8 × |
+| 60 s | 1.00 | 180 s | 0.125 | 0.492 | 68.3 s | 3.9 × |
+| 120 s | 2.00 | 360 s | 0.062 | 0.267 | 88.2 s | 4.3 × |
+
+The lambda gain falls with dead time while T<sub>i</sub> stays at τ; Cohen-Coon stays nearly four times more aggressive across the range.
+
+## Robustness to a wrong process gain
+
+If the real process gain is twice the step test value, the loop with K<sub>c</sub> = 0.750 behaves as if λ had been set to 10 s instead of 30 s: faster, with less margin. Choosing λ of 3θ or more leaves room for that kind of error, which is common when valve gain varies across the stroke.
 
 ## Common mistakes
 

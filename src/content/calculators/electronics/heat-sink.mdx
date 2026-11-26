@@ -5,7 +5,7 @@ category: electronics
 intro: "Power transistors, MOSFETs and regulators turn part of their energy into heat, and too much heat shortens their life. This heat sink calculator finds the highest sink thermal resistance that keeps the junction below your design limit, as described in this [heat sink calculation](https://www.instrumentationblog.in/heat-sink-calculation/) guide.\n\nElectronics designers and repair technicians use it to choose a heat sink, compare insulating pads and decide early whether a design needs forced air cooling."
 keywords: [heat sink calculator, thermal resistance calculator, heatsink selection, junction temperature calculation, rth sa, mosfet heat sink, regulator heat sink]
 published: 2026-10-27
-updated: 2026-11-17
+updated: 2026-11-26
 variables:
   - { id: P, label: Power dissipated, family: power, unit: W, default: 10, min: 0 }
   - { id: Tj, label: Maximum junction temperature (design), family: temperature, unit: C, imperialUnit: F, default: 125 }
@@ -28,6 +28,10 @@ faq:
     a: 0.1–0.5 °C/W for a TO-220 with thermal paste; 0.5–1.5 °C/W with a silicone or mica insulating pad.
   - q: "How do I calculate the junction temperature with a given heat sink?"
     a: "Add up the thermal resistances and multiply by the power: Tj = Ta + P × (Rθjc + Rθcs + Rθsa). For 10 W, 40 °C ambient, 1.5 and 0.5 °C/W and a 5 °C/W sink, Tj = 40 + 10 × 7 = 110 °C."
+  - q: "How do I size a heat sink shared by two or more devices?"
+    a: "Subtract each device's own rise P × (Rθjc + Rθcs) from Tj − Ta, then divide by the total power into the sink. Two 10 W MOSFETs with 2 °C/W each, 40 °C ambient and a 125 °C limit need Rθsa ≤ (125 − 40 − 20) ÷ 20 = 3.25 °C/W."
+  - q: "Why does a linear regulator need such a large heat sink?"
+    a: "It dissipates the full input to output voltage difference times the load current. Dropping 12 V to 5 V at 0.8 A wastes 5.6 W, so with 50 °C ambient the sink must be 9.89 °C/W or better; a switching regulator or a lower input voltage cuts the heat."
 related: [electronics/mosfet-power-loss, electronics/lm317, physics/heat-conduction, electronics/ntc-thermistor, electronics/capacitor-lifetime, electronics/buck-converter]
 ---
 
@@ -96,6 +100,20 @@ For the default 125 °C junction target, 40 °C ambient, R<sub>θjc</sub> 1.5 an
 | 30 W | 2.83 °C/W | 0.83 °C/W | 100 °C |
 
 The last column is the junction temperature with an ideal (zero resistance) heat sink. Once it passes the target, no passive heat sink is enough.
+
+## Second example: a linear regulator
+
+Linear regulators waste the whole voltage drop as heat. A 5 V regulator fed from 12 V and supplying 0.8 A dissipates (12 − 5) × 0.8 = **5.6 W**. With a TO-220 package of R<sub>θjc</sub> 3 °C/W, a 0.5 °C/W pad, 50 °C inside the box and the same 125 °C target:
+
+- Total allowed = (125 − 50) ÷ 5.6 = 13.39 °C/W
+- R<sub>θsa</sub> ≤ 13.39 − 3 − 0.5 = **9.89 °C/W**, a medium extruded sink
+- With no sink at all (R<sub>θja</sub> about 60 °C/W) the junction would head for 50 + 5.6 × 60 = 386 °C; the bare package can only shed 1.25 W, which limits the current to about 179 mA
+
+Lowering the input to 9 V cuts the loss to 3.2 W and relaxes the sink to 19.94 °C/W, which is often cheaper than a bigger heat sink.
+
+## Several devices on one heat sink
+
+When two of the default 10 W MOSFETs share one sink, the sink carries 20 W while each junction still sits 20 °C above it through its own R<sub>θjc</sub> + R<sub>θcs</sub>. The limit becomes R<sub>θsa</sub> ≤ (125 − 40 − 10 × 2) ÷ 20 = **3.25 °C/W**, half of what a separate sink for each device could be, with the sink running at 105 °C.
 
 ## Measuring temperatures in practice
 

@@ -1,0 +1,48 @@
+# Zenta Calculator — Apache / Hostinger settings
+Options -Indexes
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Force HTTPS and non-www
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://zentacalculator.com%{REQUEST_URI} [L,R=301]
+  # Moved calculators (Oct 2026)
+  RewriteRule ^(embed/)?engineering/kva-to-kw/?$ /$1electrical/kva-to-kw/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/kw-to-amps/?$ /$1electrical/kw-to-amps/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/amps-to-watts/?$ /$1electrical/amps-to-watts/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/cable-voltage-drop/?$ /$1electrical/cable-voltage-drop/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/transformer-current/?$ /$1electrical/transformer-current/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/transformer-short-circuit/?$ /$1electrical/transformer-short-circuit/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/three-phase-motor-power/?$ /$1electrical/three-phase-motor-power/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/reactance/?$ /$1electronics/reactance/ [L,R=301]
+  RewriteRule ^(embed/)?engineering/resonant-frequency/?$ /$1electronics/resonant-frequency/ [L,R=301]
+  RewriteRule ^(embed/)?other/led-resistor/?$ /$1electronics/led-resistor/ [L,R=301]
+  RewriteRule ^(embed/)?other/voltage-divider/?$ /$1electronics/voltage-divider/ [L,R=301]
+  # Add trailing slash to folder URLs (/physics/ohms-law -> /physics/ohms-law/)
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/xml
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+# Always revalidate HTML so visitors get the latest page (assets are content-hashed and cached for a year)
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(css|js|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
